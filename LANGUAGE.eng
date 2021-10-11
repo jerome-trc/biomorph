@@ -1,0 +1,63 @@
+/*
+	Commonwealth English localization.
+
+	Some notes:
+
+	- Indented in hopes that your text editor of choice provides folding (YMMV).
+	- Many of these strings are predefined instead of generated algorithmically due
+	to a need for different indefinite articles (a/an); I don't know of a programmatic
+	solution which doesn't break when moved from English to, for instance, French.
+	- Color escape codes often get substituted at runtime.
+*/
+
+[eng default]
+	BIO_MODTITLE = "Biomorph";
+
+// Player strings (display name) ===============================================
+
+	BIO_PLAYER_DISPLAYNAME = "Biomorph";
+
+// Grades (a.k.a. rarities) ====================================================
+
+	BIO_GRADE_STANDARD = "Standard";
+	BIO_GRADE_ADVANCED = "Advanced";
+	BIO_GRADE_SPECIALTY = "Specialty";
+	BIO_GRADE_EXPERIMENTAL = "Experimental";
+	BIO_GRADE_CLASSIFIED = "Classified";
+
+// Weapons (tags, pickup messages, obituaries) =================================
+
+	BIO_WEAP_PICKUP_TEMPLATE = "%s a %s.";
+
+	BIO_WEAP_PICKUP_STANDARD = "Grabbed";
+	BIO_WEAP_PICKUP_ADVANCED = "Picked up";
+	BIO_WEAP_PICKUP_SPECIALTY = "Obtained";
+	BIO_WEAP_PICKUP_EXPERIMENTAL = "Acquired";
+	BIO_WEAP_PICKUP_CLASSIFIED = "Secured";
+
+// Mutagens (tags, pickup messages, usage strings) =============================
+
+	BIO_MUTA_FAIL_NULLWEAP = "This weapon isn't a part of you; it can't be mutated.";
+	BIO_MUTA_FAIL_UNIQUE = "This weapon is unique; it can't be mutated in this way.";
+	BIO_MUTA_FAIL_MAXAFFIXES = "This weapon has evolved to its limits; it can't be mutated in this way.";
+	BIO_MUTA_FAIL_NOAFFIXES = "This weapon has no affixes; it can't be mutated in this way.";
+
+	BIO_MUTA_RESET_TAG = "R.E.S.E.T. Mutagen";
+	BIO_MUTA_RESET_PICKUP = "Absorbed a sample of R.S.E.T. Mutagen.";
+	BIO_MUTA_RESET_USE = "Your weapon returns to its normal state.";
+
+	BIO_MUTA_RANDOM_TAG = "W.I.L.D. Mutagen";
+	BIO_MUTA_RANDOM_PICKUP = "Obtained a sample of W.I.L.D. Mutagen.";
+	BIO_MUTA_RANDOM_USE = "Your weapon mutates violently.";
+
+	BIO_MUTA_ADD_TAG = "A.D.D. Mutagen";
+	BIO_MUTA_ADD_PICKUP = "Obtained a sample of A.D.D. Mutagen.";
+	BIO_MUTA_ADD_USE = "Your weapon mutates and changes before your eyes.";
+
+	BIO_MUTA_REROLL_TAG = "R.O.L.L. Mutagen";
+	BIO_MUTA_REROLL_PICKUP = "Obtained a sample of R.O.L.L. Mutagen.";
+	BIO_MUTA_REROLL_USE = "Your weapon mutates subtly.";
+
+	BIO_MUTA_REMOVE_TAG = "T.R.I.M. Mutagen";
+	BIO_MUTA_REMOVE_PICKUP = "Obtained a sample of T.R.I.M. Mutagen.";
+	BIO_MUTA_REMOVE_USE = "Your weapon returns partly to normal.";

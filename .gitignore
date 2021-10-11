@@ -1,0 +1,17 @@
+acs/*
+actors/*
+decorate/*
+
+*.pk3
+*.pk3.bak
+
+# IDEs, text editors, etc.
+.vscode
+.atomignore
+
+# Sprites-in-progress
+*.xcf
+
+# Audio-in-progress
+*.aup
+*.au

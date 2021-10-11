@@ -1,0 +1,6 @@
+GameInfo
+{
+	AddEventHandlers = "BIO_EventHandler"
+	PlayerClasses = "BIO_Player"
+	StatusBarClass = "BIO_StatusBar"
+}
