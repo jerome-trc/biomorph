@@ -17,7 +17,7 @@
 
 	BIO_PLAYER_DISPLAYNAME = "Biomorph";
 
-// Grades (a.k.a. rarities) ====================================================
+// Grades ======================================================================
 
 	BIO_GRADE_STANDARD = "Standard";
 	BIO_GRADE_ADVANCED = "Advanced";
@@ -61,3 +61,7 @@
 	BIO_MUTA_REMOVE_TAG = "T.R.I.M. Mutagen";
 	BIO_MUTA_REMOVE_PICKUP = "Obtained a sample of T.R.I.M. Mutagen.";
 	BIO_MUTA_REMOVE_USE = "Your weapon returns partly to normal.";
+
+// Miscellaneous ===============================================================
+
+	BIO_NONE = "None";

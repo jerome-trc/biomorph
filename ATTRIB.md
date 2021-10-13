@@ -1,5 +1,9 @@
 # Attributions
 
+## Code
+
+Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https://github.com/jekyllgrim/Easy-Dual-Wield) (MIT license) by [Jekyll Grim Payne](https://github.com/jekyllgrim).
+
 ## Graphics
 
 Any graphical asset which is not mentioned here is custom-made by RatCircus.
