@@ -245,6 +245,7 @@ class BIO_Weapon : DoomWeapon abstract
 			article = StringTable.Localize("$BIO_PICKUP_ARTICLE_MUTATEDWEAP");
 
 		ret = String.Format(ret, prefix, article, GetTag());
+		ret = ret .. " [\cn" .. SlotNumber .. "\c-]";
 		return ret;
 	}
 
