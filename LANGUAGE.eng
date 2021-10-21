@@ -27,13 +27,15 @@
 
 // Weapons (tags, pickup messages, obituaries) =================================
 
-	BIO_WEAP_PICKUP_TEMPLATE = "%s a %s.";
+	BIO_WEAP_PICKUP_TEMPLATE = "%s%s%s.";
+
+	BIO_WEAP_PICKUP_ARTICLE_A = " a ";
 
 	BIO_WEAP_PICKUP_STANDARD = "Grabbed";
-	BIO_WEAP_PICKUP_ADVANCED = "Picked up";
 	BIO_WEAP_PICKUP_SPECIALTY = "Obtained";
-	BIO_WEAP_PICKUP_EXPERIMENTAL = "Acquired";
-	BIO_WEAP_PICKUP_CLASSIFIED = "Secured";
+	BIO_WEAP_PICKUP_EXPERIMENTAL = "Procured";
+	BIO_WEAP_PICKUP_CLASSIFIED = "Acquired";
+
 	BIO_WEAP_TAG_FIST = "Fist";
 
 // Fired things (puff/projectile tags) =========================================
@@ -68,6 +70,14 @@
 	BIO_MUTA_REMOVE_TAG = "T.R.I.M. Mutagen";
 	BIO_MUTA_REMOVE_PICKUP = "Obtained a sample of T.R.I.M. Mutagen.";
 	BIO_MUTA_REMOVE_USE = "Your weapon returns partly to normal.";
+
+// Dropping and digestion ======================================================
+
+	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";
+
+// Keybindings =================================================================
+
+	BIO_KB_DROPWEAP = "Drop Weapon";
 
 // Miscellaneous ===============================================================
 

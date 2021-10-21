@@ -9,6 +9,7 @@ class BIO_Player : DoomPlayer
 	
 		Player.StartItem "BIO_Pistol";
 		Player.StartItem "BIO_Fist";
+		Player.StartItem "BIO_WeaponDrop";
 		Player.StartItem "Clip", 50;
 		Player.StartItem "Shell", 0;
 		Player.StartItem "RocketAmmo", 0;
@@ -16,4 +17,18 @@ class BIO_Player : DoomPlayer
 
 		BIO_Player.MaxWeaponsHeld 6;
 	}
+
+	uint HeldWeaponCount() const
+	{
+		uint ret = 0;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+			if (i is "BIO_Weapon" && !(i is "BIO_Fist")) ret++; 
+
+		return ret;
+	}
+
+	bool IsFullOnWeapons() const { return HeldWeaponCount() >= MaxWeaponsHeld; }
+}
+
 }

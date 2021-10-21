@@ -144,9 +144,24 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Parent overrides ========================================================
 
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+		SetTag(GetColoredTag());
+	}
+
 	override void AttachToOwner(Actor newOwner)
 	{
 		super.AttachToOwner(newOwner);
+
+		// Weapon::AttachToOwner() calls AddAmmo() for both types, which we
+		// don't want. This next bit is silly, but beats re-implementing
+		// that function (and having to watch if it changes upstream)
+		AmmoGive1 = AmmoGive2 = 0;
+		super.AttachToOwner(newOwner);
+		let defs = GetDefaultByType(GetClass());
+		AmmoGive1 = defs.AmmoGive1;
+		AmmoGive2 = defs.AmmoGive2;
 
 		// Get a pointer to primary ammo (which is either AmmoType1 or MagazineType1):
 		if (Magazine1 == null && AmmoType1 != null)
@@ -177,6 +192,54 @@ class BIO_Weapon : DoomWeapon abstract
 				Magazine2.AttachToOwner(newOwner);
 			}
 		}
+	}
+
+	// The player can't pick up a weapon if they're full on them,
+	// or already have one of this class.
+	override bool CanPickup(Actor toucher)
+	{
+		// Fundamental checks (toucher isn't null, class restrictions)
+		if (!super.CanPickup(toucher)) return false;
+
+		let bioPlayer = BIO_Player(toucher);
+		if (bioPlayer == null) return false;
+
+		if (bioPlayer.IsFullOnWeapons()) return false;
+		if (bioPlayer.CountInv(GetClass()) >= MaxAmount) return false;
+
+		return true;
+	}
+
+	// For now, weapons cannot be cannibalised for ammunition.
+	override bool TryPickupRestricted(in out Actor toucher) { return false; }
+
+	override string PickupMessage()
+	{
+		string ret = StringTable.Localize("$BIO_WEAP_PICKUP_TEMPLATE");
+		string prefix = "", article = "";
+		
+		switch (Grade)
+		{
+		case BIO_GRADE_STANDARD:
+			prefix = StringTable.Localize("$BIO_WEAP_PICKUP_STANDARD");
+			break;
+		default:
+		case BIO_GRADE_SPECIALTY:
+			prefix = StringTable.Localize("$BIO_WEAP_PICKUP_SPECIALTY");
+			break;
+		case BIO_GRADE_EXPERIMENTAL:
+			prefix = StringTable.Localize("$BIO_WEAP_PICKUP_EXPERIMENTAL");
+			break;
+		case BIO_GRADE_CLASSIFIED:
+			prefix = StringTable.Localize("$BIO_WEAP_PICKUP_CLASSIFIED");
+			break;
+		}
+
+		if (Affixes.Size() < 1)
+			article = StringTable.Localize("$BIO_WEAP_PICKUP_ARTICLE_A");
+
+		ret = String.Format(ret, prefix, article, GetTag());
+		return ret;
 	}
 
 	// Virtuals/abstracts ======================================================
@@ -277,7 +340,7 @@ class BIO_Weapon : DoomWeapon abstract
 		for (int i = 0; i < fireCount; i++)
 		{
 			Actor proj = A_FireProjectile(fireType,
-				invoker.Angle + FRandom(-hSpread, hSpread),
+				FRandom(-hSpread, hSpread),
 				false, pitch: FRandom(-vSpread, vSpread));
 			if (proj == null) continue;
 			proj.bMISSILE = true;

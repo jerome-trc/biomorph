@@ -63,8 +63,6 @@ class BIO_Utils abstract
 		{
 		case BIO_GRADE_STANDARD:
 			return StringTable.Localize("$BIO_GRADE_STANDARD");
-		case BIO_GRADE_ADVANCED:
-			return StringTable.Localize("$BIO_GRADE_ADVANCED");
 		case BIO_GRADE_SPECIALTY:
 			return StringTable.Localize("$BIO_GRADE_SPECIALTY");
 		case BIO_GRADE_EXPERIMENTAL:
@@ -83,16 +81,10 @@ class BIO_Utils abstract
 		{
 		default:
 		case BIO_GRADE_NONE:
-		case BIO_GRADE_STANDARD:
-			return Font.CR_WHITE;
-		case BIO_GRADE_ADVANCED:
-			return Font.CR_GREEN;
-		case BIO_GRADE_SPECIALTY:
-			return Font.CR_CYAN;
-		case BIO_GRADE_EXPERIMENTAL:
-			return Font.CR_PURPLE;
-		case BIO_GRADE_CLASSIFIED:
-			return Font.CR_RED;
+		case BIO_GRADE_STANDARD: return Font.CR_WHITE;
+		case BIO_GRADE_SPECIALTY: return Font.CR_GREEN;
+		case BIO_GRADE_EXPERIMENTAL: return Font.CR_CYAN;
+		case BIO_GRADE_CLASSIFIED: return Font.CR_ORANGE;
 		}
 	}
 

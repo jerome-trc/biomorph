@@ -1,0 +1,5 @@
+AddKeySection "$BIO_MODTITLE" BIO_Section
+
+addmenukey "$RLA_KB_DROPWEAP" bio_dropweap
+alias bio_dropweap "use BIO_WeaponDrop"
+defaultbind Y bio_dropweap
