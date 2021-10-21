@@ -55,4 +55,10 @@ class BIO_EventHandler : EventHandler
 
 		super.PlayerSpawned(event);
 	}
+
+	override void WorldThingSpawned(WorldEvent event)
+	{
+		if (event.Thing == null || event.Thing.bIsMonster || event.Thing.bMissile)
+			return;
+	}
 }
