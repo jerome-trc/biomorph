@@ -26,3 +26,4 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/base.zs"
 
 #include "zscript/biomorph/weapons/standard/pistol.zs"
+#include "zscript/biomorph/weapons/standard/shotgun.zs"
