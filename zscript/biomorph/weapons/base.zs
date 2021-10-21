@@ -100,6 +100,7 @@ class BIO_Weapon : DoomWeapon abstract
 	
 	Default
 	{
+		+DONTGIB
 		+NOBLOCKMONST
 
 		Height 8;
