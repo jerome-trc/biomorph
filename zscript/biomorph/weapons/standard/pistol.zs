@@ -18,7 +18,7 @@ class BIO_Pistol : BIO_Weapon
 		BIO_Weapon.MagazineSize 15;
 		BIO_Weapon.MagazineType "BIO_Magazine_Pistol";
 		BIO_Weapon.Spread 4.0, 2.0;
-		BIO_Weapon.SwitchSpeeds 4, 4;
+		BIO_Weapon.SwitchSpeeds 8, 8;
 	}
 
 	States
