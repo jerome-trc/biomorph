@@ -1,5 +1,9 @@
 AddKeySection "$BIO_MODTITLE" BIO_Section
 
-addmenukey "$RLA_KB_DROPWEAP" bio_dropweap
+addmenukey "$BIO_KB_DROPWEAP" bio_dropweap
 alias bio_dropweap "use BIO_WeaponDrop"
 defaultbind Y bio_dropweap
+
+addmenukey "$BIO_KB_UNEQUIPARMOR" bio_unequiparmor
+alias bio_unequiparmor "use BIO_UnequipArmor"
+defaultbind V bio_unequiparmor

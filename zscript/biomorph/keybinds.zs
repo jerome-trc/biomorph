@@ -56,3 +56,34 @@ class BIO_WeaponDrop : BIO_Keybind
 		return false;
 	}
 }
+
+class BIO_UnequipArmor : BIO_Keybind
+{
+	private bool Primed;
+
+	override bool Use(bool pickup)
+	{
+		let bioPlayer = BIO_Player(Owner);
+		if (bioPlayer == null) return false;
+
+		let armor = bioPlayer.EquippedArmor;
+		
+		if (!Primed)
+		{
+			int k1, k2;
+			[k1, k2] = Bindings.GetKeysForCommand("bio_unequiparmor");
+			string prompt = String.Format(
+				StringTable.Localize("$BIO_ARMORUNEQUIP_CONFIRM"),
+				Keybindings.NameKeys(k1, k2));
+			bioPlayer.A_Print(prompt);
+			Primed = true;
+		}
+		else
+		{
+			bioPlayer.UnequipArmor(false);
+			Primed = false;
+		}
+
+		return false;
+	}
+}

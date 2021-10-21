@@ -13,7 +13,6 @@ mixin class BIO_Gear
 	const FONTCR_STATMODIFIED = "\cn"; // Light blue
 
 	meta BIO_Grade Grade; property Grade: Grade;
-	Array<BIO_Affix> Affixes;
 
 	// GetTag() only comes with color escape codes after BeginPlay(); use this
 	// when derefencing defaults. Always comes with a '\c-' at the end.

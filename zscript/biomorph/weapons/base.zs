@@ -97,6 +97,8 @@ class BIO_Weapon : DoomWeapon abstract
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
 
 	protected Ammo Magazine1, Magazine2;
+
+	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
 	
 	Default
 	{
@@ -215,28 +217,32 @@ class BIO_Weapon : DoomWeapon abstract
 
 	override string PickupMessage()
 	{
-		string ret = StringTable.Localize("$BIO_WEAP_PICKUP_TEMPLATE");
+		string ret = StringTable.Localize("$BIO_PICKUP_TEMPLATE_WEAP");
 		string prefix = "", article = "";
 		
 		switch (Grade)
 		{
 		case BIO_GRADE_STANDARD:
-			prefix = StringTable.Localize("$BIO_WEAP_PICKUP_STANDARD");
+			prefix = StringTable.Localize("$BIO_PICKUP_STANDARD");
 			break;
 		default:
 		case BIO_GRADE_SPECIALTY:
-			prefix = StringTable.Localize("$BIO_WEAP_PICKUP_SPECIALTY");
+			prefix = StringTable.Localize("$BIO_PICKUP_SPECIALTY");
 			break;
 		case BIO_GRADE_EXPERIMENTAL:
-			prefix = StringTable.Localize("$BIO_WEAP_PICKUP_EXPERIMENTAL");
+			prefix = StringTable.Localize("$BIO_PICKUP_EXPERIMENTAL");
 			break;
 		case BIO_GRADE_CLASSIFIED:
-			prefix = StringTable.Localize("$BIO_WEAP_PICKUP_CLASSIFIED");
+			prefix = StringTable.Localize("$BIO_PICKUP_CLASSIFIED");
 			break;
 		}
 
-		if (Affixes.Size() < 1)
-			article = StringTable.Localize("$BIO_WEAP_PICKUP_ARTICLE_A");
+		if (Grade == BIO_GRADE_CLASSIFIED)
+			{} // Do nothing
+		else if (Affixes.Size() < 1)
+			article = StringTable.Localize("$BIO_PICKUP_ARTICLE_A");
+		else
+			article = StringTable.Localize("$BIO_PICKUP_ARTICLE_MUTATEDWEAP");
 
 		ret = String.Format(ret, prefix, article, GetTag());
 		return ret;

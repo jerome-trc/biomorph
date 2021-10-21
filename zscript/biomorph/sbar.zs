@@ -44,11 +44,15 @@ class BIO_StatusBar : BaseStatusBar
 			DrawInventoryIcon(armor, (20, -22));
 			DrawString(Font_HUD, FormatNumber(armor.Amount, 3),
 				(44, -36), 0, Font.CR_DARKGREEN);
+			DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3),
+				(18, -30), 0, Font.CR_WHITE);
 		}
 
 		if (deathmatch)
+		{
 			DrawString(Font_HUD, FormatNumber(CPlayer.FragCount, 3),
 				(-3, 1), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+		}
 		else
 			DrawFullscreenKeys();
 		

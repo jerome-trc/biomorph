@@ -25,16 +25,21 @@
 	BIO_GRADE_EXPERIMENTAL = "Experimental";
 	BIO_GRADE_CLASSIFIED = "Classified";
 
+// Pickup messaging ============================================================
+
+	BIO_PICKUP_TEMPLATE_WEAP = "%s%s%s.";
+	BIO_PICKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
+
+	BIO_PICKUP_STANDARD = "Grabbed";
+	BIO_PICKUP_SPECIALTY = "Obtained";
+	BIO_PICKUP_EXPERIMENTAL = "Procured";
+	BIO_PICKUP_CLASSIFIED = "Acquired";
+	
+	BIO_PICKUP_ARTICLE_A = " a ";
+	BIO_PICKUP_ARTICLE_MUTATEDWEAP = " a mutated ";
+	BIO_PICKUP_ARTICLE_EQUIP = " a set of ";
+
 // Weapons (tags, pickup messages, obituaries) =================================
-
-	BIO_WEAP_PICKUP_TEMPLATE = "%s%s%s.";
-
-	BIO_WEAP_PICKUP_ARTICLE_A = " a ";
-
-	BIO_WEAP_PICKUP_STANDARD = "Grabbed";
-	BIO_WEAP_PICKUP_SPECIALTY = "Obtained";
-	BIO_WEAP_PICKUP_EXPERIMENTAL = "Procured";
-	BIO_WEAP_PICKUP_CLASSIFIED = "Acquired";
 
 	BIO_WEAP_TAG_FIST = "Fist";
 
@@ -71,6 +76,17 @@
 	BIO_MUTA_REMOVE_PICKUP = "Obtained a sample of T.R.I.M. Mutagen.";
 	BIO_MUTA_REMOVE_USE = "Your weapon returns partly to normal.";
 
+// Equipment (tags, UI messaging) ==============================================
+
+	BIO_ARMOREQUIP_FAIL_ALREADYWEARING = "You are already wearing armour.";
+	BIO_ARMORUNEQUIP_CONFIRM = "Press \cn%s\ci again to take off this armour.";
+
+	BIO_EQUIP_DEFAULT = "Equipped %s.";
+	BIO_EQUIP_ARMORDEFAULT = "Equipped a set of %s.";
+
+	BIO_ARMOR_TAG_GREEN = "Standard Armour";
+	BIO_ARMOR_TAG_BLUE = "Specialty Armour";
+
 // Dropping and digestion ======================================================
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";
@@ -78,6 +94,7 @@
 // Keybindings =================================================================
 
 	BIO_KB_DROPWEAP = "Drop Weapon";
+	BIO_KB_UNEQUIPARMOR = "Take off Armour";
 
 // Miscellaneous ===============================================================
 
