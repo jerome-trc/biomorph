@@ -17,9 +17,12 @@ class Biomorph abstract
 #include "zscript/biomorph/gear.zs"
 #include "zscript/biomorph/global.zs"
 #include "zscript/biomorph/player.zs"
+#include "zscript/biomorph/projectiles.zs"
 #include "zscript/biomorph/sbar.zs"
 #include "zscript/biomorph/utils.zs"
 
 #include "zscript/biomorph/affixes/base.zs"
 
 #include "zscript/biomorph/weapons/base.zs"
+
+#include "zscript/biomorph/weapons/standard/pistol.zs"

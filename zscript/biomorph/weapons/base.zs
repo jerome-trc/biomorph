@@ -1,19 +1,29 @@
 enum BIO_WeaponFlags : uint8
 {
-	BIO_WMF_NONE = 0,
+	BIO_WEAPF_NONE = 0,
 	// The following 3 are applicable only to dual-wielded weapons
-	BIO_WMF_NOAUTOPRIMARY = 1 << 0,
-	BIO_WMF_NOAUTOSECONDARY = 1 << 1,
-	BIO_WMF_AKIMBORELOAD = 1 << 2
+	BIO_WEAPF_NOAUTOPRIMARY = 1 << 0,
+	BIO_WEAPF_NOAUTOSECONDARY = 1 << 1,
+	BIO_WEAPF_AKIMBORELOAD = 1 << 2
+}
+
+class BIO_Magazine : Ammo abstract
+{
+	Default
+	{
+		+INVENTORY.IGNORESKILL
+		Inventory.Icon "";
+		Inventory.MaxAmount 99999;
+	}
 }
 
 class BIO_Weapon : DoomWeapon abstract
 {
 	mixin BIO_Gear;
 
-	BIO_WeaponFlags WeaponFlags;
+	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
 
-	meta Class<Ammo> MagazineType1, MagazineType2;
+	meta Class<BIO_Magazine> MagazineType1, MagazineType2;
 	property MagazineType: MagazineType1;
 	property MagazineType1: MagazineType1;
 	property MagazineType2: MagazineType2;
@@ -25,15 +35,23 @@ class BIO_Weapon : DoomWeapon abstract
 	property ReloadFactor2: ReloadFactor2;
 	property ReloadFactors: ReloadFactor1, ReloadFactor2;
 
+	int MagazineSize1, MagazineSize2;
+	property MagazineSize: MagazineSize1;
+	property MagazineSize1: MagazineSize1;
+	property MagazineSize2: MagazineSize2;
+	property MagazineSizes: MagazineSize1, MagazineSize2;
+
+	int MinAmmoReserve1, MinAmmoReserve2;
+	property MinAmmoReserve: MinAmmoReserve1;
+	property MinAmmoReserve1: MinAmmoReserve1;
+	property MinAmmoReserve2: MinAmmoReserve2;
+	property MinAmmoReserves: MinAmmoReserve1, MinAmmoReserve2;
+
 	Class<Actor> FireType1, FireType2;
 	property FireType: FireType1;
 	property FireType1: FireType1;
 	property FireType2: FireType2;
 	property FireTypes: FireType1, FireType2;
-
-	bool PrimaryIsProjectile, SecondaryIsProjectile;
-	property PrimaryIsProjectile: PrimaryIsProjectile;
-	property SecondaryIsProjectile: SecondaryIsProjectile;
 
 	int FireCount1, FireCount2;
 	property FireCount: FireCount1;
@@ -53,6 +71,11 @@ class BIO_Weapon : DoomWeapon abstract
 	property MaxDamage2: MaxDamage2;
 	property MaxDamages: MaxDamage1, MaxDamage2;
 
+	property DamageRange: MinDamage1, MaxDamage1;
+	property DamageRange1: MinDamage1, MaxDamage1;
+	property DamageRange2: MinDamage2, MaxDamage2;
+	property DamageRanges: MinDamage1, MaxDamage1, MinDamage2, MaxDamage2;
+
 	float HSpread1, HSpread2;
 	property HSpread: HSpread1;
 	property HSpread1: HSpread1;
@@ -65,11 +88,16 @@ class BIO_Weapon : DoomWeapon abstract
 	property VSpread2: VSpread2;
 	property VSpreads: VSpread1, VSpread2;
 
+	property Spread: HSpread1, VSpread2;
+	property Spread1: HSpread1, VSpread2;
+	property Spread2: HSpread2, VSpread2;
+	property Spreads: HSpread1, VSpread1, HSpread2, VSpread2;
+
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
 
 	protected Ammo Magazine1, Magazine2;
-
+	
 	Default
 	{
 		+NOBLOCKMONST
@@ -77,11 +105,23 @@ class BIO_Weapon : DoomWeapon abstract
 		Height 8;
 		Radius 16;
 
+		Inventory.PickupMessage "";
+
 		Weapon.BobRangeX 0.5;
         Weapon.BobRangeY 0.5;
         Weapon.BobSpeed 1.2;
         Weapon.BobStyle "Alpha";
-		Weapon.UpSound "weapon/raise";
+
+		BIO_Weapon.DamageRanges -2, -2, -2, -2;
+		BIO_Weapon.FireCounts 1, 1;
+		BIO_Weapon.FireTypes "", "";
+		BIO_Weapon.Flags BIO_WEAPF_NONE;
+		BIO_Weapon.MagazineSizes 0, 0;
+		BIO_Weapon.MagazineTypes "", "";
+		BIO_Weapon.MinAmmoReserves 1, 1;
+		BIO_Weapon.ReloadFactors 1, 1;
+		BIO_Weapon.Spreads 0.0, 0.0, 0.0, 0.0;
+		BIO_Weapon.SwitchSpeeds 6, 6;
 	}
 
 	States
@@ -141,20 +181,86 @@ class BIO_Weapon : DoomWeapon abstract
 
 	virtual void OnDeselect() {}
 	virtual void OnSelect() {}
+	virtual void OnProjectileFired(Actor proj) const {}
 
-	virtual void OnProjectileFired(Actor proj) const
+	// Getters =================================================================
+
+	bool MagazineEmpty(bool secondary = false) const
 	{
-		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"OnProjectileFired() is unimplemented.");
+		return !secondary ? Magazine1.Amount <= 0 : Magazine2.Amount <= 0;
+	}
+
+	bool CanReload(bool secondary = false) const
+	{
+		let magAmmo = !secondary ? Magazine1 : Magazine2;
+		let reserveAmmo = Owner.FindInventory(
+			!secondary ? AmmoType1 : AmmoType2);
+		let minReserve = !secondary ? MinAmmoReserve1 : MinAmmoReserve2;
+		let factor = !secondary ? ReloadFactor1 : ReloadFactor2;
+		let magSize = !secondary ? MagazineSize1 : MagazineSize2;
+		
+		int minAmt = minReserve * factor;
+
+		// Insufficient reserves
+		if (reserveAmmo == null || reserveAmmo.Amount < minAmt)
+			return false;
+
+		// Magazine's already full
+		if (magAmmo.Amount >= magSize)
+			return false;
+
+		return true;
+	}
+
+	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
+
+	abstract void StatsToString(in out Array<string> stats) const;
+
+	protected string FireTypeFontColor(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+			return FireType1 != defs.FireType1 ?
+				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
+		else
+			return FireType2 != defs.FireType2 ?
+				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
+	}
+
+	protected string FireCountFontColor(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+			return FireCount1 != defs.FireCount1 ?
+				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
+		else
+			return FireCount2 != defs.FireCount2 ?
+				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED; 
+	}
+
+	protected string DamageFontColor(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+			return MinDamage1 != defs.MinDamage1 || MaxDamage1 != defs.MaxDamage1 ?
+				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
+		else
+			return MinDamage2 != defs.MinDamage2 || MaxDamage2 != defs.MaxDamage2 ?
+				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
 	}
 
 	// Actions =================================================================
+
+	action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
+	action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
 
 	action bool A_BIO_Fire(bool secondary = false)
 	{
 		Class<Actor> fireType = !secondary ? invoker.FireType1 : invoker.FireType2;
 		int fireCount = !secondary ? invoker.FireCount1 : invoker.FireCount2;
-		bool isProj = !secondary ? invoker.PrimaryIsProjectile : invoker.SecondaryIsProjectile;
 
 		float
 			hSpread = !secondary ? invoker.HSpread1 : invoker.HSpread2,
@@ -163,30 +269,22 @@ class BIO_Weapon : DoomWeapon abstract
 		int minDmg = !secondary ? invoker.MinDamage1 : invoker.MinDamage2,
 			maxDmg = !secondary ? invoker.MaxDamage1 : invoker.MaxDamage2;
 
-		if (isProj)
-		{
-			if (!invoker.DepleteAmmo(invoker.bAltFire, true))
-				return false;
-			
-			for (int i = 0; i < fireCount; i++)
-			{
-				Actor a1 = null, a2 = null;
-				[a1, a2] = SpawnPlayerMissile(fireType,
-					invoker.Angle + FRandom(-hSpread, hSpread));
-				a2.bMISSILE = true;
-				invoker.OnProjectileFired(a2);
-
-				for (uint i = 0; i < invoker.Affixes.Size(); i++)
-					invoker.Affixes[i].OnProjectileFired(invoker, a2);
-			}
-		}
-		else
-		{
-			A_FireBullets(hSpread, vSpread, fireCount,
-				Random(minDmg, maxDmg), fireType, FBF_USEAMMO | FBF_NORANDOM);
+		if (!invoker.DepleteAmmo(invoker.bAltFire, true))
+			return false;
 		
+		for (int i = 0; i < fireCount; i++)
+		{
+			Actor proj = A_FireProjectile(fireType,
+				invoker.Angle + FRandom(-hSpread, hSpread),
+				false, pitch: FRandom(-vSpread, vSpread));
+			if (proj == null) continue;
+			proj.bMISSILE = true;
+			proj.SetDamage(Random(minDmg, maxDmg));
+			invoker.OnProjectileFired(proj);
+			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
+
 			for (uint i = 0; i < invoker.Affixes.Size(); i++)
-				invoker.Affixes[i].OnBulletFired(invoker);
+				invoker.Affixes[i].OnProjectileFired(invoker, proj);
 		}
 
 		return true;
@@ -200,20 +298,68 @@ class BIO_Weapon : DoomWeapon abstract
 		let reserveAmmo = invoker.Owner.FindInventory(
 			!secondary ? invoker.AmmoType1 : invoker.AmmoType2);
 		let factor = !secondary ? invoker.ReloadFactor1 : invoker.ReloadFactor2;
-
+		int magSize = !secondary ? invoker.MagazineSize1 : invoker.MagazineSize2;
 		int reserve = reserveAmmo.Amount / factor;
 
-		let diff = Min(reserve, amt > 0 ? amt : magAmmo.MaxAmount - magAmmo.Amount);
+		let diff = Min(reserve, amt > 0 ? amt : magSize - magAmmo.Amount);
 		magAmmo.Amount += diff;
 
 		int subtract = diff * factor;
 		reserveAmmo.Amount -= subtract;
 	}
+
+	override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
+	{
+		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
+			return false;
+
+		if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammoUse))
+			return false;
+
+		if (!altFire)
+		{
+			if (Magazine1 != null)
+			{
+				if (ammoUse >= 0 && bDehAmmo)
+				{
+					Magazine1.Amount -= ammoUse;
+				}
+				else
+				{
+					Magazine1.Amount -= AmmoUse1;
+				}
+			}
+			if (bPRIMARY_USES_BOTH && Magazine2 != null)
+			{
+				Magazine2.Amount -= AmmoUse2;
+			}
+		}
+		else
+		{
+			if (Magazine2 != null)
+			{
+				Magazine2.Amount -= AmmoUse2;
+			}
+			if (bALT_USES_BOTH && Magazine1 != null)
+			{
+				Magazine1.Amount -= AmmoUse1;
+			}
+		}
+
+		if (Magazine1 != null && Magazine1.Amount < 0)
+			Magazine1.Amount = 0;
+
+		if (Magazine2 != null && Magazine2.Amount < 0)
+			Magazine2.Amount = 0;
+		
+		return true;
+	}
 }
 
-// Adapted from the Easy Dual Wield library by Jekyll Grim Payne.
-// Used under the MIT License.
-// https://github.com/jekyllgrim/Easy-Dual-Wield
+/*  Adapted from the Easy Dual Wield library by Jekyll Grim Payne.
+	Used under the MIT License.
+	https://github.com/jekyllgrim/Easy-Dual-Wield
+*/
 class BIO_DualWieldWeapon : BIO_Weapon abstract
 {
 	// Aliases for gun overlays.
@@ -334,7 +480,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 		if (Player.Cmd.Buttons & BT_RELOAD)
 		{
 			// Check if guns can be reloaded independently:
-			if (invoker.WeaponFlags & BIO_WMF_AKIMBORELOAD)
+			if (invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD)
 			{
 				// Reload right gun
 				if (reloadReadyRight) A_Reload_R();
@@ -359,7 +505,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 			This is done to reload both guns in succession without having to
 			press the Reload button twice.
 		*/
-		else if (!invoker.WeaponFlags & BIO_WMF_AKIMBORELOAD &&
+		else if (!invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD &&
 			invoker.continueReload && reloadReadyLeft)
 		{
 			invoker.continueReload = false;
@@ -474,7 +620,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 			}
 			else if (invoker.MagazineType1 && invoker.Ammo1.amount > 0)
 			{
-				if (invoker.WeaponFlags & BIO_WMF_AKIMBORELOAD || A_CheckReadyForReload_L())
+				if (invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD || A_CheckReadyForReload_L())
 				{
 					A_Reload_R();
 					return;
@@ -514,7 +660,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 			}
 			else if (invoker.MagazineType2 && invoker.Ammo2.amount > 0)
 			{
-				if (invoker.WeaponFlags & BIO_WMF_AKIMBORELOAD || A_CheckReadyForReload_R())
+				if (invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD || A_CheckReadyForReload_R())
 				{
 					A_Reload_L();
 					return;
@@ -620,7 +766,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 		if (!A_CheckReadyForReload_R(left)) return;
 
 		// If WMF_AKIMBORELOAD isn't set, set the other gun into ReloadWait state sequence:
-		if (!invoker.WeaponFlags & BIO_WMF_AKIMBORELOAD)
+		if (!invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD)
 		{
 			int otherGun = left ? PSP_RIGHTGUN : PSP_LEFTGUN;
 			state waitState = left ? invoker.s_ReloadWaitRight : invoker.s_ReloadWaitLeft;
@@ -760,53 +906,5 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 		A_RailAttack(damage, spawnOffs_xy, useAmmo, color1, color2, flags, maxDiff,
 			puff_t, spread_xy, spread_z, range, duration, sparsity, driftSpeed,
 			spawn_t, spawnOffs_z, spiralOffs, limit);
-	}
-
-	override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
-	{
-		if (!A_EDW_CheckInfiniteAmmo())
-		{
-			if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammouse))
-			{
-				return false;
-			}
-
-			if (!altFire)
-			{
-				if (Magazine1 != null)
-				{
-					if (ammoUse >= 0 && bDehAmmo)
-					{
-						Magazine1.Amount -= ammoUse;
-					}
-					else
-					{
-						Magazine1.Amount -= AmmoUse1;
-					}
-				}
-				if (bPRIMARY_USES_BOTH && Magazine2 != null)
-				{
-					Magazine2.Amount -= AmmoUse2;
-				}
-			}
-			else
-			{
-				if (Magazine2 != null)
-				{
-					Magazine2.Amount -= AmmoUse2;
-				}
-				if (bALT_USES_BOTH && Magazine1 != null)
-				{
-					Magazine1.Amount -= AmmoUse1;
-				}
-			}
-
-			if (Magazine1 != null && Magazine1.Amount < 0)
-				Magazine1.Amount = 0;
-
-			if (Magazine2 != null && Magazine2.Amount < 0)
-				Magazine2.Amount = 0;
-		}
-		return true;
 	}
 }

@@ -42,96 +42,23 @@ class BIO_StatusBar : BaseStatusBar
 		if (armor != null && armor.Amount > 0)
 		{
 			DrawInventoryIcon(armor, (20, -22));
-			DrawString(Font_HUD, FormatNumber(armor.Amount, 3), (44, -36), 0, Font.CR_DARKGREEN);
-		}
-
-		Inventory ammotype1, ammotype2;
-		[ammotype1, ammotype2] = GetCurrentAmmo();
-		int invY = -20;
-		if (ammotype1 != null)
-		{
-			DrawInventoryIcon(ammotype1, (-14, -4));
-			DrawString(Font_HUD,
-				String.Format("%s / %s",
-					FormatNumber(ammotype1.Amount, 3, 6),
-					FormatNumber(ammotype1.MaxAmount, 3, 6)),
-				(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
-			invY -= 20;
-		}
-
-		if (ammotype2 != null && ammotype2 != ammotype1)
-		{
-			DrawInventoryIcon(ammotype2, (-14, invY + 17));
-			DrawString(Font_HUD,
-				String.Format("%s / %s",
-					FormatNumber(ammotype2.Amount, 3, 6),
-					FormatNumber(ammotype2.MaxAmount, 3, 6)),
-				(-30, invY), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
-			invY -= 20;
-		}
-
-		if (!isInventoryBarVisible() && !Level.NoInventoryBar && CPlayer.MO.InvSel != null)
-		{
-			DrawInventoryIcon(CPlayer.MO.InvSel, (-14, invY));
-			DrawString(Font_HUD, FormatNumber(CPlayer.MO.InvSel.Amount, 3), (-30, invY - 16), DI_TEXT_ALIGN_RIGHT);
+			DrawString(Font_HUD, FormatNumber(armor.Amount, 3),
+				(44, -36), 0, Font.CR_DARKGREEN);
 		}
 
 		if (deathmatch)
-			DrawString(Font_HUD, FormatNumber(CPlayer.FragCount, 3), (-3, 1), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+			DrawString(Font_HUD, FormatNumber(CPlayer.FragCount, 3),
+				(-3, 1), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 		else
 			DrawFullscreenKeys();
 		
 		if (isInventoryBarVisible())
 			DrawInventoryBar(InvBarState, (0, 0), 7, DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
 
-		// Leave room for automap timers
-		int weapInfoY = 18;
-	
-		// Biomorph weapon information
-		// BIO_Weapon weap = BIO_Weapon(CPlayer.ReadyWeapon);
-		// if (weap)
-		// {
-		// 	DrawString(Font_Small, weap.GetTag(),
-		// 		(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT, Font.CR_BROWN
-		// 	);
+		// Biomorph-specific logic begins now ==================================
 
-		// 	weapInfoY += 8;
-
-		// 	for (uint i = 0; i < weap.FireData.Size(); i++)
-		// 	{
-		// 		DrawString(Font_Small, weap.Firedata[i].ToString(),
-		// 			(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
-		// 			weap.FireData[i].IsUnmodified() ? Font.CR_WHITE : Font.CR_SAPPHIRE);
-		// 		weapInfoY += 8;
-		// 	}
-
-		// 	for (uint i = 0; i < weap.FireTimes.Size(); i++)
-		// 	{
-		// 		DrawString(Font_Small, weap.FireTimes[i].ToString(),
-		// 			(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
-		// 			weap.FireTimes[i].IsUnmodified() ? Font.CR_WHITE : Font.CR_SAPPHIRE);
-		// 		weapInfoY += 8;
-		// 	}
-
-		// 	for (uint i = 0; i < weap.Spread.Size(); i++)
-		// 	{
-		// 		DrawString(Font_Small, weap.Spread[i].ToString(),
-		// 			(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
-		// 			weap.Spread[i].IsUnmodified() ? Font.CR_WHITE : Font.CR_SAPPHIRE);
-		// 		weapInfoY += 8;
-		// 	}
-
-		// 	weapInfoY += 8; // Blank line between stats and affixes
-
-		// 	for (uint i = 0; i < weap.Affixes.Size(); i++)
-		// 	{
-		// 		DrawString(Font_Small, weap.Affixes[i].ToString(weap),
-		// 			(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
-		// 			weap.Affixes[i].GetFontColour()
-		// 		);
-		// 		weapInfoY += 8;
-		// 	}
-		// }
+		int invY = -20;
+		DrawWeaponAndAmmoDetails(invY);
 	}
 	
 	protected virtual void DrawFullscreenKeys()
@@ -159,6 +86,102 @@ class BIO_StatusBar : BaseStatusBar
 					rowc = 0;
 				}
 			}
+		}
+	}
+
+	private void DrawWeaponAndAmmoDetails(in out int invY)
+	{
+		BIO_Weapon weap = BIO_Weapon(CPlayer.ReadyWeapon);
+		if (weap == null) return;
+
+		Ammo mag1 = null, mag2 = null;
+		[mag1, mag2] = weap.GetMagazines();
+		Inventory ammoItem1, ammoItem2;
+		[ammoItem1, ammoItem2] = GetCurrentAmmo();
+
+		if (ammoItem1 != null)
+		{
+			DrawInventoryIcon(ammoItem1, (-14, -4));
+			if (mag1 is "BIO_Magazine")
+			{
+				DrawString(Font_HUD,
+					String.Format("%s / %s / %s",
+						FormatNumber(mag1.Amount, 3, 6),
+						FormatNumber(ammoItem1.Amount, 3, 6),
+						FormatNumber(ammoItem1.MaxAmount, 3, 6)),
+					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+			}
+			else
+			{
+				DrawString(Font_HUD,
+					String.Format("%s / %s",
+						FormatNumber(ammoItem1.Amount, 3, 6),
+						FormatNumber(ammoItem1.MaxAmount, 3, 6)),
+					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+			}
+			
+			invY -= 20;
+		}
+		
+		if (ammoItem2 != null)
+		{
+			DrawInventoryIcon(ammoItem2, (-14, -24));
+			if (mag2 is "BIO_Magazine")
+			{
+				DrawString(Font_HUD,
+					String.Format("%s / %s / %s",
+						FormatNumber(mag2.Amount, 3, 6),
+						FormatNumber(ammoItem2.Amount, 3, 6),
+						FormatNumber(ammoItem2.MaxAmount, 3, 6)),
+					(-30, -36), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+			}
+			else
+			{
+				DrawString(Font_HUD,
+					String.Format("%s / %s",
+						FormatNumber(ammoItem2.Amount, 3, 6),
+						FormatNumber(ammoItem2.MaxAmount, 3, 6)),
+					(-30, -36), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+			}
+
+			invY -= 20;
+		}
+
+		if (!isInventoryBarVisible() && !Level.NoInventoryBar && CPlayer.MO.InvSel != null)
+		{
+			DrawInventoryIcon(CPlayer.MO.InvSel, (-14, invY));
+			DrawString(Font_HUD, FormatNumber(CPlayer.MO.InvSel.Amount, 3),
+				(-30, invY - 16), DI_TEXT_ALIGN_RIGHT);
+		}
+
+		// Leave room for automap timers
+		int weapInfoY = 18;
+
+		DrawString(Font_Small, weap.GetTag(), (WEAPINFO_X, weapInfoY),
+			DI_TEXT_ALIGN_RIGHT, BIO_Utils.GradeFontColor(weap.Grade));
+
+		// Blank line between weapon's tag and its stats
+		weapInfoY += 16;
+
+		Array<string> stats;
+		weap.StatsToString(stats);
+
+		for (uint i = 0; i < stats.Size(); i++)
+		{
+			DrawString(Font_Small, stats[i], (WEAPINFO_X, weapInfoY),
+				DI_TEXT_ALIGN_RIGHT, Font.CR_UNTRANSLATED);
+
+			weapInfoY += 8;
+		}
+
+		weapInfoY += 8; // Blank line between stats and affixes
+
+		for (uint i = 0; i < weap.Affixes.Size(); i++)
+		{
+			DrawString(Font_Small, weap.Affixes[i].ToString(),
+				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
+				weap.Affixes[i].GetFontColour());
+			weapInfoY += 8;
 		}
 	}
 }

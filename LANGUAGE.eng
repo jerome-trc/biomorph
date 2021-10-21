@@ -35,6 +35,10 @@
 	BIO_WEAP_PICKUP_EXPERIMENTAL = "Acquired";
 	BIO_WEAP_PICKUP_CLASSIFIED = "Secured";
 
+// Fired things (puff/projectile tags) =========================================
+
+	BIO_PROJ_TAG_BULLET = "bullet(s)";
+
 // Mutagens (tags, pickup messages, usage strings) =============================
 
 	BIO_MUTA_FAIL_NULLWEAP = "This weapon isn't a part of you; it can't be mutated.";
@@ -64,4 +68,6 @@
 
 // Miscellaneous ===============================================================
 
+	BIO_STAT_FIREDATA = "\cjDamage: %s(%d - %d)\cj x %s%d\cj %s%s\c-";
+	BIO_STAT_SPREAD = "\cjSpread angles: %.2f horizontal, %.2f vertical";
 	BIO_NONE = "None";
