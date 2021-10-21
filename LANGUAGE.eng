@@ -34,8 +34,11 @@
 	BIO_WEAP_PICKUP_SPECIALTY = "Obtained";
 	BIO_WEAP_PICKUP_EXPERIMENTAL = "Acquired";
 	BIO_WEAP_PICKUP_CLASSIFIED = "Secured";
+	BIO_WEAP_TAG_FIST = "Fist";
 
 // Fired things (puff/projectile tags) =========================================
+
+	BIO_MELEE_HIT = "hit(s)";
 
 	BIO_PROJ_TAG_BULLET = "bullet(s)";
 

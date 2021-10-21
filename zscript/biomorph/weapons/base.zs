@@ -117,6 +117,7 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_Weapon.FireCounts 1, 1;
 		BIO_Weapon.FireTypes "", "";
 		BIO_Weapon.Flags BIO_WEAPF_NONE;
+		BIO_Weapon.Grade BIO_GRADE_NONE;
 		BIO_Weapon.MagazineSizes 0, 0;
 		BIO_Weapon.MagazineTypes "", "";
 		BIO_Weapon.MinAmmoReserves 1, 1;

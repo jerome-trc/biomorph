@@ -8,6 +8,7 @@ class BIO_Player : DoomPlayer
 		Player.DisplayName "$BIO_PLAYER_DISPLAYNAME";
 	
 		Player.StartItem "BIO_Pistol";
+		Player.StartItem "BIO_Fist";
 		Player.StartItem "Clip", 50;
 		Player.StartItem "Shell", 0;
 		Player.StartItem "RocketAmmo", 0;
