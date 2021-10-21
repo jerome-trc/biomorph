@@ -12,6 +12,7 @@ class BIO_Pistol : BIO_Weapon
 		Weapon.SlotNumber 2;
 		Weapon.UpSound "weapons/gunswap1";
 
+		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireType "BIO_Bullet";
 		BIO_Weapon.MagazineSize 15;
