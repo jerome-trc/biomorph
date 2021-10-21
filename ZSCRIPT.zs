@@ -23,6 +23,7 @@ class Biomorph abstract
 #include "zscript/biomorph/utils.zs"
 
 #include "zscript/biomorph/affixes/base.zs"
+#include "zscript/biomorph/affixes/armor.zs"
 
 #include "zscript/biomorph/equip/base.zs"
 #include "zscript/biomorph/equip/armor.zs"

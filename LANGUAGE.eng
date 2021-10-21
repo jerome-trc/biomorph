@@ -87,6 +87,11 @@
 	BIO_ARMOR_TAG_GREEN = "Standard Armour";
 	BIO_ARMOR_TAG_BLUE = "Specialty Armour";
 
+// Affixes (tags, details, to-string templates) ================================
+
+	BIO_AFFIX_TOSTR_ARMORSAVEAMOUNT = "Durability: %s%s%d";
+	BIO_AFFIX_TOSTR_ARMORSAVEPERCENT = "Damage absorption: %s%s%d%%";
+
 // Dropping and digestion ======================================================
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";

@@ -9,8 +9,8 @@ enum BIO_Grade : uint8
 
 mixin class BIO_Gear
 {
-	const FONTCR_STATUNMODIFIED = "\cj"; // White
-	const FONTCR_STATMODIFIED = "\cn"; // Light blue
+	const CRESC_STATUNMODIFIED = "\cj"; // White
+	const CRESC_STATMODIFIED = "\cn"; // Light blue
 
 	meta BIO_Grade Grade; property Grade: Grade;
 

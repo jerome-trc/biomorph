@@ -61,6 +61,7 @@ class BIO_Player : DoomPlayer
 		if (equippable is "BIO_Armor")
 		{
 			EquippedArmor = BIO_Armor(equippable);
+			EquippedArmor.Equipped = true;
 			let armor_t = (Class<BIO_Armor>)(equippable.GetClass());
 			GiveInventory(GetDefaultByType(armor_t).StatClass, 1);
 		}
@@ -69,14 +70,22 @@ class BIO_Player : DoomPlayer
 	void UnequipArmor(bool broken)
 	{
 		EquippedArmor.OnUnequip(self, broken);
+		EquippedArmor.Equipped = false;
 		EquippedArmor = null;
 		TakeInventory("BasicArmor", BIO_Armor.INFINITE_ARMOR);
 	}
 
-	// Allow passives to modify incoming BasicArmor.
+	// Used to apply armor's affixes to BasicArmor, as well as opening it up to 
+	// modification by passives.
 	void PreBasicArmorUse(BIO_ArmorStats armor)
 	{
-		// TODO
+		for (uint i = 0; i < EquippedArmor.ImplicitAffixes.Size(); i++)
+			EquippedArmor.ImplicitAffixes[i].OnArmorEquip(EquippedArmor, armor);
+
+		for (uint i = 0; i < EquippedArmor.Affixes.Size(); i++)
+			EquippedArmor.Affixes[i].OnArmorEquip(EquippedArmor, armor);
+
+		// TODO: Player passive effects
 	}
 
 	void OnAmmoPickup(Inventory item)

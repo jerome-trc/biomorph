@@ -293,10 +293,10 @@ class BIO_Weapon : DoomWeapon abstract
 
 		if (!secondary)
 			return FireType1 != defs.FireType1 ?
-				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
+				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
 		else
 			return FireType2 != defs.FireType2 ?
-				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
+				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
 	}
 
 	protected string FireCountFontColor(bool secondary = false) const
@@ -305,10 +305,10 @@ class BIO_Weapon : DoomWeapon abstract
 
 		if (!secondary)
 			return FireCount1 != defs.FireCount1 ?
-				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
+				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
 		else
 			return FireCount2 != defs.FireCount2 ?
-				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED; 
+				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED; 
 	}
 
 	protected string DamageFontColor(bool secondary = false) const
@@ -317,10 +317,10 @@ class BIO_Weapon : DoomWeapon abstract
 
 		if (!secondary)
 			return MinDamage1 != defs.MinDamage1 || MaxDamage1 != defs.MaxDamage1 ?
-				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
+				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
 		else
 			return MinDamage2 != defs.MinDamage2 || MaxDamage2 != defs.MaxDamage2 ?
-				FONTCR_STATMODIFIED : FONTCR_STATUNMODIFIED;
+				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
 	}
 
 	// Actions =================================================================

@@ -4,6 +4,7 @@ class BIO_StatusBar : BaseStatusBar
 	private InventoryBarState InvBarState;
 
 	const WEAPINFO_X = -22; // Leave room for keys at top-right corner
+	const ARMORINFO_X = 4;
 
 	override void Init()
 	{
@@ -46,6 +47,31 @@ class BIO_StatusBar : BaseStatusBar
 				(44, -36), 0, Font.CR_DARKGREEN);
 			DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3),
 				(18, -30), 0, Font.CR_WHITE);
+
+			let bioPlayer = BIO_Player(CPlayer.MO);
+			if (bioPlayer != null)
+			{
+				let bioArmor = bioPlayer.EquippedArmor;
+				int affixY = -54;
+				
+				for (uint i = bioArmor.Affixes.Size() - 1; i >= 0; i--)
+				{
+					DrawString(Font_Small, bioArmor.Affixes[i].ToString(),
+						(ARMORINFO_X, affixY), 0, Font.CR_WHITE);
+					
+					affixY -= 8;
+				}
+
+				affixY -= 8;
+
+				for (uint i = bioArmor.ImplicitAffixes.Size() - 1; i >= 0; i--)
+				{
+					DrawString(Font_Small, bioArmor.ImplicitAffixes[i].ToString(),
+						(ARMORINFO_X, affixY), 0, Font.CR_WHITE);
+					
+					affixY -= 8;
+				}
+			}
 		}
 
 		if (deathmatch)
@@ -58,8 +84,6 @@ class BIO_StatusBar : BaseStatusBar
 		
 		if (isInventoryBarVisible())
 			DrawInventoryBar(InvBarState, (0, 0), 7, DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
-
-		// Biomorph-specific logic begins now ==================================
 
 		int invY = -20;
 		DrawWeaponAndAmmoDetails(invY);
@@ -184,7 +208,7 @@ class BIO_StatusBar : BaseStatusBar
 		{
 			DrawString(Font_Small, weap.Affixes[i].ToString(),
 				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
-				weap.Affixes[i].GetFontColour());
+				Font.CR_WHITE);
 			weapInfoY += 8;
 		}
 	}
