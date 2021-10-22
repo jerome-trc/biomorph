@@ -49,7 +49,7 @@ class BIO_StandardArmor : BIO_Armor
 {
 	Default
 	{
-		Tag "$BIO_ARMOR_TAG_GREEN";
+		Tag "$BIO_ARMOR_TAG_STD";
 		Inventory.Icon "ARM1A0";
 		Inventory.PickupMessage "$BIO_PICKUP_TEMPLATE_ARMORDEFAULT";
 		BIO_Equipment.Grade BIO_GRADE_STANDARD;
@@ -79,7 +79,7 @@ class BIO_SpecialtyArmor : BIO_Armor
 {
 	Default
 	{
-		Tag "$BIO_ARMOR_TAG_BLUE";
+		Tag "$BIO_ARMOR_TAG_SPEC";
 		Inventory.Icon "ARM2A0";
 		Inventory.PickupMessage "$BIO_PICKUP_TEMPLATE_ARMORDEFAULT";
 		BIO_Equipment.Grade BIO_GRADE_SPECIALTY;
