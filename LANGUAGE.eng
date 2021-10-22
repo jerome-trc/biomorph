@@ -86,7 +86,10 @@
 // Equipment (tags, UI messaging) ==============================================
 
 	BIO_ARMOREQUIP_FAIL_ALREADYWEARING = "You are already wearing armour.";
-	BIO_ARMORUNEQUIP_CONFIRM = "Press \cn%s\ci again to take off this armour.";
+	
+	BIO_ARMORUNEQUIP_FAIL_NOARMOR = "You can't unequip your armour; you aren't wearing any.";
+	BIO_ARMORUNEQUIP_CONFIRM = "Press \cn%s\c- again to take off this armour.";
+	BIO_ARMORUNEQUIP = "You strip off your %s.";
 
 	BIO_EQUIP_DEFAULT = "Equipped %s.";
 	BIO_EQUIP_ARMORDEFAULT = "Equipped a set of %s.";

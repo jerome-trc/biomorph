@@ -67,6 +67,11 @@ class BIO_UnequipArmor : BIO_Keybind
 		if (bioPlayer == null) return false;
 
 		let armor = bioPlayer.EquippedArmor;
+		if (armor == null)
+		{
+			A_Print("$BIO_ARMORUNEQUIP_FAIL_NOARMOR");
+			return false;
+		}
 		
 		if (!Primed)
 		{
@@ -80,6 +85,9 @@ class BIO_UnequipArmor : BIO_Keybind
 		}
 		else
 		{
+			bioPlayer.A_Print(String.Format(
+				StringTable.Localize("$BIO_ARMORUNEQUIP"),
+				bioPlayer.EquippedArmor.GetTag()));
 			bioPlayer.UnequipArmor(false);
 			Primed = false;
 		}

@@ -53,7 +53,7 @@ class BIO_Equipment : Inventory abstract
 
 		if (GetClass() is "BIO_Armor" && bioPlayer.IsWearingArmor())
 		{
-			bioPlayer.A_Print("$BIO_ARMOR_FAIL_ALREADYWEARING");
+			bioPlayer.A_Print("$BIO_ARMOREQUIP_FAIL_ALREADYWEARING");
 			return false;
 		}
 
