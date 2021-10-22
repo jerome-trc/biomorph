@@ -8,26 +8,52 @@ enum BIO_WeaponFlags : uint8
 }
 
 // Dictate what stats can be affected by affixes. If a bit is set,
-// the affix should stop itself from altering that stat.
+// the affix should stop itself from altering that stat, or applying itself
+// to a weapon which it can't even affect.
 enum BIO_WeaponAffixMask : uint
 {
 	BIO_WAM_NONE = 0,
+	// Fire data: bits
 	BIO_WAM_FIRETYPE_1 = 1 << 0,
 	BIO_WAM_FIRETYPE_2 = 1 << 1,
 	BIO_WAM_FIRECOUNT_1 = 1 << 2,
 	BIO_WAM_FIRECOUNT_2 = 1 << 3,
+	// Fire data: combinations
+	BIO_WAM_FIRETYPE = BIO_WAM_FIRETYPE_1 | BIO_WAM_FIRETYPE_2,
+	BIO_WAM_FIRECOUNT = BIO_WAM_FIRECOUNT_1 | BIO_WAM_FIRECOUNT_2,
+	BIO_WAM_FIREDATA_1 = BIO_WAM_FIRETYPE_1 | BIO_WAM_FIRECOUNT_1,
+	BIO_WAM_FIREDATA_2 = BIO_WAM_FIRETYPE_2 | BIO_WAM_FIRECOUNT_2,
+	BIO_WAM_FIREDATA = BIO_WAM_FIRETYPE | BIO_WAM_FIRECOUNT,
+	// Damage: bits
 	BIO_WAM_MINDAMAGE_1 = 1 << 4,
 	BIO_WAM_MINDAMAGE_2 = 1 << 5,
 	BIO_WAM_MAXDAMAGE_1 = 1 << 6,
 	BIO_WAM_MAXDAMAGE_2 = 1 << 7,
+	// Damage: combinations
+	BIO_WAM_MINDAMAGE = BIO_WAM_MINDAMAGE_1 | BIO_WAM_MINDAMAGE_2,
+	BIO_WAM_MAXDAMAGE = BIO_WAM_MAXDAMAGE_1 | BIO_WAM_MAXDAMAGE_2,
+	BIO_WAM_DAMAGE_1 = BIO_WAM_MINDAMAGE_1 | BIO_WAM_MAXDAMAGE_1,
+	BIO_WAM_DAMAGE_2 = BIO_WAM_MINDAMAGE_2 | BIO_WAM_MAXDAMAGE_2,
+	BIO_WAM_DAMAGE = BIO_WAM_MINDAMAGE | BIO_WAM_MAXDAMAGE,
+	// Spread: bits
 	BIO_WAM_HSPREAD_1 = 1 << 8,
 	BIO_WAM_HSPREAD_2 = 1 << 9,
 	BIO_WAM_VSPREAD_1 = 1 << 10,
 	BIO_WAM_VSPREAD_2 = 1 << 11,
+	// Spread: combinations
+	BIO_WAM_HSPREAD = BIO_WAM_HSPREAD_1 | BIO_WAM_HSPREAD_2,
+	BIO_WAM_VSPREAD = BIO_WAM_VSPREAD_1 | BIO_WAM_VSPREAD_2,
+	BIO_WAM_SPREAD_1 = BIO_WAM_HSPREAD_1 | BIO_WAM_VSPREAD_1,
+	BIO_WAM_SPREAD_2 = BIO_WAM_HSPREAD_2 | BIO_WAM_VSPREAD_2,
+	BIO_WAM_SPREAD = BIO_WAM_HSPREAD | BIO_WAM_VSPREAD,
+	// Magazine
 	BIO_WAM_MAGSIZE_1 = 1 << 12,
 	BIO_WAM_MAGSIZE_2 = 1 << 13,
+	BIO_WAM_MAGSIZE = BIO_WAM_MAGSIZE_1 | BIO_WAM_MAGSIZE_2,
+	// Switch speeds
 	BIO_WAM_RAISESPEED = 1 << 14,
-	BIO_WAM_LOWERSPEED = 1 << 15
+	BIO_WAM_LOWERSPEED = 1 << 15,
+	BIO_WAM_SWITCHSPEED = BIO_WAM_RAISESPEED | BIO_WAM_LOWERSPEED
 }
 
 class BIO_Magazine : Ammo abstract
@@ -44,32 +70,10 @@ class BIO_Weapon : DoomWeapon abstract
 {
 	mixin BIO_Gear;
 
+	const MAX_AFFIXES = 6;
+
 	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
 	BIO_WeaponAffixMask AffixMask; property AffixMask: AffixMask;
-
-	meta Class<BIO_Magazine> MagazineType1, MagazineType2;
-	property MagazineType: MagazineType1;
-	property MagazineType1: MagazineType1;
-	property MagazineType2: MagazineType2;
-	property MagazineTypes: MagazineType1, MagazineType2;
-
-	int ReloadFactor1, ReloadFactor2;
-	property ReloadFactor: ReloadFactor1;
-	property ReloadFactor1: ReloadFactor1;
-	property ReloadFactor2: ReloadFactor2;
-	property ReloadFactors: ReloadFactor1, ReloadFactor2;
-
-	int MagazineSize1, MagazineSize2;
-	property MagazineSize: MagazineSize1;
-	property MagazineSize1: MagazineSize1;
-	property MagazineSize2: MagazineSize2;
-	property MagazineSizes: MagazineSize1, MagazineSize2;
-
-	int MinAmmoReserve1, MinAmmoReserve2;
-	property MinAmmoReserve: MinAmmoReserve1;
-	property MinAmmoReserve1: MinAmmoReserve1;
-	property MinAmmoReserve2: MinAmmoReserve2;
-	property MinAmmoReserves: MinAmmoReserve1, MinAmmoReserve2;
 
 	Class<Actor> FireType1, FireType2;
 	property FireType: FireType1;
@@ -119,6 +123,30 @@ class BIO_Weapon : DoomWeapon abstract
 
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
+
+	meta Class<BIO_Magazine> MagazineType1, MagazineType2;
+	property MagazineType: MagazineType1;
+	property MagazineType1: MagazineType1;
+	property MagazineType2: MagazineType2;
+	property MagazineTypes: MagazineType1, MagazineType2;
+
+	int ReloadFactor1, ReloadFactor2;
+	property ReloadFactor: ReloadFactor1;
+	property ReloadFactor1: ReloadFactor1;
+	property ReloadFactor2: ReloadFactor2;
+	property ReloadFactors: ReloadFactor1, ReloadFactor2;
+
+	int MagazineSize1, MagazineSize2;
+	property MagazineSize: MagazineSize1;
+	property MagazineSize1: MagazineSize1;
+	property MagazineSize2: MagazineSize2;
+	property MagazineSizes: MagazineSize1, MagazineSize2;
+
+	int MinAmmoReserve1, MinAmmoReserve2;
+	property MinAmmoReserve: MinAmmoReserve1;
+	property MinAmmoReserve1: MinAmmoReserve1;
+	property MinAmmoReserve2: MinAmmoReserve2;
+	property MinAmmoReserves: MinAmmoReserve1, MinAmmoReserve2;
 
 	protected Ammo Magazine1, Magazine2;
 
@@ -314,6 +342,26 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
+	bool HasAffixOfType(Class<BIO_WeaponAffix> t, bool implicit = false) const
+	{
+		if (!implicit)
+		{
+			for (uint i = 0; i < Affixes.Size(); i++)
+				if (Affixes[i].GetClass() == t)
+					return true;
+
+			return false;
+		}
+		else
+		{
+			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+				if (ImplicitAffixes[i].GetClass() == t)
+					return true;
+
+			return false;
+		}
+	}
+
 	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
 
 	abstract void StatsToString(in out Array<string> stats) const;
@@ -355,6 +403,66 @@ class BIO_Weapon : DoomWeapon abstract
 		else
 			return MinDamage2 != defs.MinDamage2 || MaxDamage2 != defs.MaxDamage2 ?
 				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
+	}
+
+	// Setters =================================================================
+
+	// Does not affect affixes in any way.
+	void ResetStats()
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		BIOFlags = defs.BIOFlags;
+		AffixMask = defs.AffixMask;
+
+		FireType1 = defs.FireType1;
+		FireType2 = defs.FireType2;
+		FireCount1 = defs.FireCount1;
+		FireCount2 = defs.FireCount2;
+
+		MinDamage1 = defs.MinDamage1;
+		MinDamage2 = defs.MinDamage2;
+		MaxDamage1 = defs.MaxDamage1;
+		MaxDamage2 = defs.MaxDamage2;
+
+		HSpread1 = defs.HSpread1;
+		HSpread2 = defs.HSpread2;
+		VSpread1 = defs.VSpread1;
+		VSpread2 = defs.VSpread2;
+
+		RaiseSpeed = defs.RaiseSpeed;
+		LowerSpeed = defs.LowerSpeed;
+
+		MagazineSize1 = defs.MagazineSize1;
+		MagazineSize2 = defs.MagazineSize2;
+		MinAmmoReserve1 = defs.MinAmmoReserve1;
+		MinAmmoReserve2 = defs.MinAmmoReserve2;
+		ReloadFactor1 = defs.ReloadFactor1;
+		ReloadFactor2 = defs.ReloadFactor2;
+	}
+
+	// Includes implciits.
+	void ApplyAllAffixes()
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].Apply(self);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].Apply(self);
+	}
+
+	// Returns `false` if there are no compatible affixes to add.
+	bool AddRandomAffix()
+	{
+		Array<BIO_WeaponAffix> eligibles;
+
+		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, self))
+			return false;
+
+		ResetStats();
+		uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
+		Affixes[e].Init(self);
+		ApplyAllAffixes();
+		return true;
 	}
 
 	// Actions =================================================================

@@ -211,7 +211,7 @@ class BIO_StatusBar : BaseStatusBar
 
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
 		{
-			DrawString(Font_Small, weap.Affixes[i].ToString(),
+			DrawString(Font_Small, weap.Affixes[i].ToString(weap),
 				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
 				Font.CR_WHITE);
 			weapInfoY += 8;

@@ -19,6 +19,7 @@ class Biomorph abstract
 #include "zscript/biomorph/global.zs"
 #include "zscript/biomorph/health.zs"
 #include "zscript/biomorph/keybinds.zs"
+#include "zscript/biomorph/mutagens.zs"
 #include "zscript/biomorph/player.zs"
 #include "zscript/biomorph/projectiles.zs"
 #include "zscript/biomorph/sbar.zs"
@@ -26,6 +27,7 @@ class Biomorph abstract
 
 #include "zscript/biomorph/affixes/base.zs"
 #include "zscript/biomorph/affixes/armor.zs"
+#include "zscript/biomorph/affixes/weapon.zs"
 
 #include "zscript/biomorph/equip/base.zs"
 #include "zscript/biomorph/equip/armor.zs"

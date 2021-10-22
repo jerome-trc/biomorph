@@ -61,6 +61,7 @@
 	BIO_MUTA_FAIL_UNIQUE = "This weapon is unique; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_MAXAFFIXES = "This weapon has evolved to its limits; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_NOAFFIXES = "This weapon has no affixes; it can't be mutated in this way.";
+	BIO_MUTA_FAIL_NOCOMPATIBLEAFFIXES = "No affixes are compatible with this weapon; it can't be mutated in this way.";
 
 	BIO_MUTA_RESET_TAG = "R.E.S.E.T. Mutagen";
 	BIO_MUTA_RESET_PICKUP = "Absorbed a sample of R.S.E.T. Mutagen.";
@@ -94,6 +95,10 @@
 	BIO_ARMOR_TAG_BLUE = "Specialty Armour";
 
 // Affixes (tags, details, to-string templates) ================================
+
+	BIO_AFFIX_TOSTR_WEAPDMG1 = "Primary damage: %s%s%d";
+	BIO_AFFIX_TOSTR_WEAPDMG2 = "Secondary damage: %s%s%d";
+	BIO_AFFIX_TOSTR_WEAPDMG = "Damage: %s%s%d primary, %s%s%d secondary";
 
 	BIO_AFFIX_TOSTR_ARMORSAVEAMOUNT = "Durability: %s%s%d";
 	BIO_AFFIX_TOSTR_ARMORSAVEPERCENT = "Damage absorption: %s%s%d%%";
