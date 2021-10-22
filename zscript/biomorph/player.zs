@@ -1,5 +1,7 @@
 class BIO_Player : DoomPlayer
 {
+	Array<BIO_Passive> Passives;
+
 	uint MaxWeaponsHeld, MaxEquipmentHeld;
 	property MaxWeaponsHeld: MaxWeaponsHeld;
 	property MaxEquipmentHeld: MaxEquipmentHeld;
@@ -10,9 +12,6 @@ class BIO_Player : DoomPlayer
 	{
 		Player.DisplayName "$BIO_PLAYER_DISPLAYNAME";
 	
-		Player.StartItem "BIO_Pistol";
-		Player.StartItem "BIO_Fist";
-
 		Player.StartItem "BIO_WeaponDrop";
 		Player.StartItem "BIO_UnequipArmor";
 
@@ -21,8 +20,32 @@ class BIO_Player : DoomPlayer
 		Player.StartItem "RocketAmmo", 0;
 		Player.StartItem "Cell", 0;
 
+		Player.StartItem "BIO_Pistol";
+		Player.StartItem "BIO_Fist";
+
 		BIO_Player.MaxWeaponsHeld 6;
 		BIO_Player.MaxEquipmentHeld 3;
+	}
+
+	// Parent overrides ========================================================
+
+	override int TakeSpecialDamage(Actor inflictor, Actor source, int damage, name dmgType)
+	{
+		int ret = super.TakeSpecialDamage(inflictor, source, damage, dmgType);
+
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].OnDamageTaken(self, inflictor, source, damage, dmgType);
+
+		if (EquippedArmor != null)
+		{
+			EquippedArmor.OnDamageTaken(inflictor, source, damage, dmgType);
+
+			if (CountInv("BasicArmor") < 1)
+				UnequipArmor(true);
+			// TODO: Armor break sound
+		}
+
+		return ret;
 	}
 
 	// Getters =================================================================
@@ -56,7 +79,10 @@ class BIO_Player : DoomPlayer
 
 	void Equip(BIO_Equipment equippable)
 	{
-		equippable.OnEquip(self);
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].OnEquip(self, equippable);
+
+		equippable.OnEquip();
 
 		if (equippable is "BIO_Armor")
 		{
@@ -69,33 +95,39 @@ class BIO_Player : DoomPlayer
 
 	void UnequipArmor(bool broken)
 	{
-		EquippedArmor.OnUnequip(self, broken);
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].OnUnequip(self, EquippedArmor, broken);
+
+		EquippedArmor.OnUnequip(broken);
 		EquippedArmor.Equipped = false;
 		EquippedArmor = null;
 		TakeInventory("BasicArmor", BIO_Armor.INFINITE_ARMOR);
 		FindInventory("BasicArmor").MaxAmount = 1;
 	}
 
-	// Used to apply armor's affixes to BasicArmor, as well as opening it up to 
-	// modification by passives.
-	void PreBasicArmorUse(BIO_ArmorStats armor)
+	// Used to apply armor's affixes to BasicArmor, as well as
+	// opening it up to modification by passives.
+	void PreArmorApply(BIO_ArmorStats armor)
 	{
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].PreArmorApply(self, EquippedArmor, armor);
+
 		for (uint i = 0; i < EquippedArmor.ImplicitAffixes.Size(); i++)
-			EquippedArmor.ImplicitAffixes[i].OnArmorEquip(EquippedArmor, armor);
+			EquippedArmor.ImplicitAffixes[i].PreArmorApply(EquippedArmor, armor);
 
 		for (uint i = 0; i < EquippedArmor.Affixes.Size(); i++)
-			EquippedArmor.Affixes[i].OnArmorEquip(EquippedArmor, armor);
-
-		// TODO: Player passive effects
+			EquippedArmor.Affixes[i].PreArmorApply(EquippedArmor, armor);
 	}
 
 	void OnAmmoPickup(Inventory item)
 	{
-		// TODO
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].OnAmmoPickup(self, item);
 	}
 
 	void OnHealthPickup(Inventory item)
 	{
-		// TODO
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].OnHealthPickup(self, item);
 	}
 }

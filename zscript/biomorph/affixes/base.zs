@@ -21,10 +21,15 @@ class BIO_WeaponAffix : BIO_Affix abstract
 
 class BIO_EquipmentAffix : BIO_Affix abstract
 {
-	abstract void Init(BIO_Armor armor);
-	abstract bool Compatible(BIO_Armor armor) const;
+	abstract void Init(BIO_Equipment equip);
+	abstract bool Compatible(BIO_Equipment equip) const;
 
-	virtual void OnArmorEquip(BIO_Armor armor, BIO_ArmorStats stats) const {}
+	virtual void OnEquip(BIO_Equipment equip) const {}
+	virtual void OnUnequip(BIO_Equipment equip, bool broken) const {}
+	virtual void PreArmorApply(BIO_Armor armor, BIO_ArmorStats stats) const {}
+
+	virtual void OnDamageTaken(BIO_Equipment equip, Actor inflictor,
+		Actor source, in out int damage, name dmgType) const {}
 
 	// Output should be fully localized.
 	abstract string ToString() const;

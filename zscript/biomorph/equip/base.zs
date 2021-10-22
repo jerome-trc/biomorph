@@ -95,16 +95,34 @@ class BIO_Equipment : Inventory abstract
 
 	// Called before the PlayerPawn's equipment pointer gets set, and any
 	// related items (e.g. armor StatClass) get added to the player's inventory.
-	virtual void OnEquip(BIO_Player bioPlayer) const {}
+	virtual void OnEquip()
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].OnEquip(self);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnEquip(self);
+	}
 
 	// Called before the PlayerPawn's equipment pointer gets nullified, and any
 	// related items (e.g. armor StatClass) get taken away.
-	virtual void OnUnequip(BIO_Player bioPlayer, bool broken) const {}
+	virtual void OnUnequip(bool broken)
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].OnUnequip(self, broken);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnUnequip(self, broken);
+	}
 
 	// Called before BIO_Player checks if armor has broken, so modifying
 	// BasicArmor is always valid here.
-	virtual void OnDamageTaken(BIO_PLayer bioPlayer,
-		Actor inflictor, Actor source, in out int damage, name dmgType) const {}
+	virtual void OnDamageTaken(Actor inflictor, Actor source,
+		in out int damage, name dmgType)
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].OnDamageTaken(self, inflictor, source, damage, dmgType);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnDamageTaken(self, inflictor, source, damage, dmgType);
+	}
 
 	// If this equipment item can not be removed, the user will get
 	// a message sourced from a call to this function.
@@ -112,6 +130,28 @@ class BIO_Equipment : Inventory abstract
 	{
 		Console.Printf(Biomorph.LOGPFX_ERR .. "NoRemoveMessage() is unimplemented.");
 		return "";
+	}
+
+	// Getters =================================================================
+
+	bool HasAffixOfType(Class<BIO_EquipmentAffix> t, bool implicit = false) const
+	{
+		if (!implicit)
+		{
+			for (uint i = 0; i < Affixes.Size(); i++)
+				if (Affixes[i].GetClass() == t)
+					return true;
+
+			return false;
+		}
+		else
+		{
+			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+				if (ImplicitAffixes[i].GetClass() == t)
+					return true;
+
+			return false;
+		}
 	}
 }
 
@@ -161,7 +201,7 @@ class BIO_ArmorStats : BasicArmorPickup abstract
 		let bioPlayer = BIO_Player(Owner);
 		if (bioPlayer == null) return false;
 
-		bioPlayer.PreBasicArmorUse(self);
+		bioPlayer.PreArmorApply(self);
 
 		return super.Use(pickup);
 	}
