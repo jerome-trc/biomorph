@@ -98,6 +98,23 @@
 	BIO_AFFIX_TOSTR_ARMORSAVEAMOUNT = "Durability: %s%s%d";
 	BIO_AFFIX_TOSTR_ARMORSAVEPERCENT = "Damage absorption: %s%s%d%%";
 
+// Ammo ========================================================================
+
+	BIO_AMMO_PICKUP_CLIP = "Picked up a bullet magazine.";
+	BIO_AMMO_PICKUP_CLIPBOX = "Picked up a bullet box.";
+	BIO_AMMO_PICKUP_SHELL = "Picked up a handful of shotshells.";
+	BIO_AMMO_PICKUP_SHELLBOX = "Picked up a box of shotshells.";
+	BIO_AMMO_PICKUP_ROCKETAMMO = "Picked up a rocket.";
+	BIO_AMMO_PICKUP_ROCKETBOX = "Picked up a rocket box.";
+	BIO_AMMO_PICKUP_CELL = "Picked up an energy cell.";
+	BIO_AMMO_PICKUP_CELLPACK = "Picked up an energy cell pack.";
+
+// Health ======================================================================
+	
+	BIO_HEALTH_PICKUP_BONUS = "Drank a health bonus.";
+	BIO_HEALTH_PICKUP_STIMPACK = "Picked up a stimpack.";
+	BIO_HEALTH_PICKUP_MEDIKIT = "Picked up a first-aid kit.";
+
 // Dropping and digestion ======================================================
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";

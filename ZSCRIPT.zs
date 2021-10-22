@@ -12,10 +12,12 @@ class Biomorph abstract
 	const LOGPFX_DEBUG = "\cfBIO: \cn(DEBUG)\c- "; // Light blue
 }
 
+#include "zscript/biomorph/ammo.zs"
 #include "zscript/biomorph/cvars.zs"
 #include "zscript/biomorph/events.zs"
 #include "zscript/biomorph/gear.zs"
 #include "zscript/biomorph/global.zs"
+#include "zscript/biomorph/health.zs"
 #include "zscript/biomorph/keybinds.zs"
 #include "zscript/biomorph/player.zs"
 #include "zscript/biomorph/projectiles.zs"
