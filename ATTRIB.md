@@ -4,7 +4,11 @@
 
 Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https://github.com/jekyllgrim/Easy-Dual-Wield) (MIT license) by [Jekyll Grim Payne](https://github.com/jekyllgrim).
 
+The GLDEFS for `BIO_ArmorBonus` were devised by Realm667 user Infirnex.
+
 ## Graphics
+
+Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
 Any graphical asset which is not mentioned here is custom-made by RatCircus.
 
@@ -19,4 +23,6 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "vssdraw.wave" (GUNMECH0)
 - "weapondropped.wav" (GUNDROP0)
 
-["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (replaces the sound played when a secret is found) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
+["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (replaces DSSECRET) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
+
+AMRSHRD (pickup sound for `BIO_ArmorBonus`) is courtesy of id Software LLC.

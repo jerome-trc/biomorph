@@ -73,6 +73,7 @@ class BIO_Player : DoomPlayer
 		EquippedArmor.Equipped = false;
 		EquippedArmor = null;
 		TakeInventory("BasicArmor", BIO_Armor.INFINITE_ARMOR);
+		FindInventory("BasicArmor").MaxAmount = 1;
 	}
 
 	// Used to apply armor's affixes to BasicArmor, as well as opening it up to 

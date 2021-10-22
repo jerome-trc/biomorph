@@ -1,3 +1,50 @@
+class BIO_ArmorBonus : Inventory replaces ArmorBonus
+{
+	Default
+	{
+		-COUNTITEM
+		+INVENTORY.AUTOACTIVATE
+
+		Height 16;
+		Radius 20;
+
+		Inventory.MaxAmount 0;
+
+		Inventory.PickupMessage "";
+		Inventory.PickupSound "pickup/armorshard";
+	}
+
+	States
+	{
+	Spawn:
+		ARSD ABCDCB 6;
+		Loop;
+	}
+
+	override bool Use(bool pickup)
+	{
+		let bioPlayer = BIO_Player(Owner);
+		if (bioPlayer == null) return false;
+
+		// Nothing to repair if the player isn't wearing armor
+		if (bioPlayer.EquippedArmor == null) return false;
+
+		// TODO: Armor grade, intrinsic properties, affixes decide if it
+		// can be repaired
+
+		// Is the currently-equipped armor already in perfect condition?
+		let armor = BasicArmor(bioPlayer.FindInventory("BasicArmor"));
+		if (armor.Amount >= armor.MaxAmount)
+			return false;
+
+		armor.Amount = Min(armor.Amount + 1, armor.MaxAmount);
+		PrintPickupMessage(Owner.CheckLocalView(), String.Format(
+			StringTable.Localize("$BIO_ARMORBONUS_PICKUP"),
+			bioPlayer.EquippedArmor.GetTag()));
+		return true;
+	}
+}
+
 class BIO_StandardArmor : BIO_Armor
 {
 	Default

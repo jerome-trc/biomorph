@@ -91,6 +91,8 @@
 	BIO_EQUIP_DEFAULT = "Equipped %s.";
 	BIO_EQUIP_ARMORDEFAULT = "Equipped a set of %s.";
 
+	BIO_ARMORBONUS_PICKUP = "Repaired your %s using an armour shard.";
+
 	BIO_ARMOR_TAG_GREEN = "Standard Armour";
 	BIO_ARMOR_TAG_BLUE = "Specialty Armour";
 
