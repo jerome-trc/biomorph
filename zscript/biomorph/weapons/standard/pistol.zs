@@ -53,7 +53,7 @@ class BIO_Pistol : BIO_Weapon
 		PISG A 1 Offset(0, 32 + 16);
 		PISG A 1 Offset(0, 32 + 18);
 		PISG A 30 Offset(0, 32 + 20);
-		TNT1 A 0 A_LoadMag();
+		TNT1 A 0 A_LoadMag(); // TODO: Reload sounds
 		PISG A 1 Offset(0, 32 + 18);
 		PISG A 1 Offset(0, 32 + 16);
 		PISG A 1 Offset(0, 32 + 14);
@@ -76,7 +76,7 @@ class BIO_Pistol : BIO_Weapon
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_STAT_FIREDATA"),
+		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
 			DamageFontColor(),
 			MinDamage1, MaxDamage1,
 			FireCountFontColor(),
@@ -84,7 +84,7 @@ class BIO_Pistol : BIO_Weapon
 			FireTypeFontColor(),
 			GetDefaultByType(FireType1).GetTag()));
 
-		stats.Push(String.Format(StringTable.Localize("$BIO_STAT_SPREAD"),
+		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_SPREAD"),
 			HSpread1, VSpread1));
 	}
 }

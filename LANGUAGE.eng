@@ -39,7 +39,10 @@
 	BIO_PICKUP_ARTICLE_MUTATEDWEAP = " a mutated ";
 	BIO_PICKUP_ARTICLE_EQUIP = " a set of ";
 
-// Weapons (tags, pickup messages, obituaries) =================================
+// Weapons (tags, pickup messages, obituaries, stat readouts) ==================
+
+	BIO_WEAPSTAT_FIREDATA = "\cjDamage: %s(%d - %d)\cj x %s%d\cj %s%s\c-";
+	BIO_WEAPSTAT_SPREAD = "\cjSpread angles: %.2f horizontal, %.2f vertical";
 
 	BIO_WEAP_TAG_FIST = "Fist";
 
@@ -48,6 +51,9 @@
 	BIO_MELEE_HIT = "hit(s)";
 
 	BIO_PROJ_TAG_BULLET = "bullet(s)";
+	BIO_PROJ_TAG_BFGBALL = "ball(s)";
+
+	BIO_PROJEXTRA_TAG_BFGRAY = "ray(s)";
 
 // Mutagens (tags, pickup messages, usage strings) =============================
 
@@ -103,6 +109,4 @@
 
 // Miscellaneous ===============================================================
 
-	BIO_STAT_FIREDATA = "\cjDamage: %s(%d - %d)\cj x %s%d\cj %s%s\c-";
-	BIO_STAT_SPREAD = "\cjSpread angles: %.2f horizontal, %.2f vertical";
 	BIO_NONE = "None";

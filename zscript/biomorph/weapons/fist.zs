@@ -35,7 +35,7 @@ class BIO_Fist : BIO_Weapon
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_STAT_FIREDATA"),
+		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
 			DamageFontColor(),
 			MinDamage1, MaxDamage1,
 			FireCountFontColor(),

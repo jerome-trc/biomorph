@@ -7,6 +7,29 @@ enum BIO_WeaponFlags : uint8
 	BIO_WEAPF_AKIMBORELOAD = 1 << 2
 }
 
+// Dictate what stats can be affected by affixes. If a bit is set,
+// the affix should stop itself from altering that stat.
+enum BIO_WeaponAffixMask : uint
+{
+	BIO_WAM_NONE = 0,
+	BIO_WAM_FIRETYPE_1 = 1 << 0,
+	BIO_WAM_FIRETYPE_2 = 1 << 1,
+	BIO_WAM_FIRECOUNT_1 = 1 << 2,
+	BIO_WAM_FIRECOUNT_2 = 1 << 3,
+	BIO_WAM_MINDAMAGE_1 = 1 << 4,
+	BIO_WAM_MINDAMAGE_2 = 1 << 5,
+	BIO_WAM_MAXDAMAGE_1 = 1 << 6,
+	BIO_WAM_MAXDAMAGE_2 = 1 << 7,
+	BIO_WAM_HSPREAD_1 = 1 << 8,
+	BIO_WAM_HSPREAD_2 = 1 << 9,
+	BIO_WAM_VSPREAD_1 = 1 << 10,
+	BIO_WAM_VSPREAD_2 = 1 << 11,
+	BIO_WAM_MAGSIZE_1 = 1 << 12,
+	BIO_WAM_MAGSIZE_2 = 1 << 13,
+	BIO_WAM_RAISESPEED = 1 << 14,
+	BIO_WAM_LOWERSPEED = 1 << 15
+}
+
 class BIO_Magazine : Ammo abstract
 {
 	Default
@@ -22,6 +45,7 @@ class BIO_Weapon : DoomWeapon abstract
 	mixin BIO_Gear;
 
 	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
+	BIO_WeaponAffixMask AffixMask; property AffixMask: AffixMask;
 
 	meta Class<BIO_Magazine> MagazineType1, MagazineType2;
 	property MagazineType: MagazineType1;
@@ -115,6 +139,7 @@ class BIO_Weapon : DoomWeapon abstract
         Weapon.BobSpeed 1.2;
         Weapon.BobStyle "Alpha";
 
+		BIO_Weapon.AffixMask BIO_WAM_NONE;
 		BIO_Weapon.DamageRanges -2, -2, -2, -2;
 		BIO_Weapon.FireCounts 1, 1;
 		BIO_Weapon.FireTypes "", "";
@@ -253,6 +278,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 	virtual void OnDeselect() {}
 	virtual void OnSelect() {}
+
+	// Always gets called before affixes get their version of this invoked.
 	virtual void OnProjectileFired(Actor proj) const {}
 
 	// Getters =================================================================
@@ -287,6 +314,9 @@ class BIO_Weapon : DoomWeapon abstract
 	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
 
 	abstract void StatsToString(in out Array<string> stats) const;
+
+	// The following 3 functions serve to color stats differently if those stats
+	// have been modified from their defaults by an affix.
 
 	protected string FireTypeFontColor(bool secondary = false) const
 	{
@@ -350,7 +380,6 @@ class BIO_Weapon : DoomWeapon abstract
 				FRandom(-hSpread, hSpread),
 				false, pitch: FRandom(-vSpread, vSpread));
 			if (proj == null) continue;
-			proj.bMISSILE = true;
 			proj.SetDamage(Random(minDmg, maxDmg));
 			invoker.OnProjectileFired(proj);
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);

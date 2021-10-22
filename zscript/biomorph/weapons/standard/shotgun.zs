@@ -60,7 +60,7 @@ class BIO_Shotgun : BIO_Weapon
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_STAT_FIREDATA"),
+		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
 			DamageFontColor(),
 			MinDamage1, MaxDamage1,
 			FireCountFontColor(),
@@ -68,7 +68,7 @@ class BIO_Shotgun : BIO_Weapon
 			FireTypeFontColor(),
 			GetDefaultByType(FireType1).GetTag()));
 
-		stats.Push(String.Format(StringTable.Localize("$BIO_STAT_SPREAD"),
+		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_SPREAD"),
 			HSpread1, VSpread1));
 	}
 }
