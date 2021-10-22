@@ -408,7 +408,7 @@ class BIO_Weapon : DoomWeapon abstract
 	// Setters =================================================================
 
 	// Does not affect affixes in any way.
-	void ResetStats()
+	virtual void ResetStats()
 	{
 		let defs = GetDefaultByType(GetClass());
 
