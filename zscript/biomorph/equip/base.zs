@@ -126,6 +126,30 @@ class BIO_Armor : BIO_Equipment abstract
 	{
 		BIO_Equipment.EquipMessage "$BIO_EQUIP_ARMORDEFAULT";
 	}
+
+	// Generate a set of affixes for this armour.
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+
+		uint c = 0;
+		switch (Grade)
+		{
+		case BIO_GRADE_STANDARD: c = 1; break;
+		case BIO_GRADE_SPECIALTY: c = 2; break;
+		case BIO_GRADE_EXPERIMENTAL: c = 3; break;
+		default: return;
+		}
+
+		for (uint i = 0; i < c; i++)
+		{
+			Array<BIO_EquipmentAffix> eligibles;
+			BIO_GlobalData.Get().AllEligibleEquipmentAffixes(eligibles, self);
+			if (eligibles.Size() < 1) return;
+			uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
+			Affixes[e].Init(self);
+		}
+	}
 }
 
 // Intangible items given when a BIO_Armor is used (equipped), which

@@ -73,6 +73,9 @@ class BIO_EventHandler : EventHandler
 
 		if (ReplaceSmallAmmo(event) || ReplaceBigAmmo(event))
 			return;
+
+		if (ReplaceArmor(event))
+			return;
 	}
 
 	private void FinalizeSpawn(Class<Actor> toSpawn, Actor eventThing) const
@@ -115,6 +118,23 @@ class BIO_EventHandler : EventHandler
 			FinalizeSpawn("BIO_RocketBox", event.Thing);
 		else if (event.Thing.GetClass() == "CellPack")
 			FinalizeSpawn("BIO_CellPack", event.Thing);
+		else
+			return false;
+
+		return true;
+	}
+
+	private bool ReplaceArmor(WorldEvent event)
+	{
+		if (event.Thing.GetClass() == "GreenArmor")
+			FinalizeSpawn("BIO_StandardArmor", event.Thing);
+		else if (event.Thing.GetClass() == "BlueArmor")
+		{
+			if (Random(1, 6))
+				FinalizeSpawn("BIO_ExperimentalArmor", event.Thing);
+			else
+				FinalizeSpawn("BIO_SpecialtyArmor", event.Thing);
+		}
 		else
 			return false;
 

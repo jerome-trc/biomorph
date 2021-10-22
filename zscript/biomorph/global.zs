@@ -3,6 +3,9 @@ class BIO_GlobalData : Thinker
 	private Array<Class<BIO_WeaponAffix> > AllWeaponAffixClasses;
 	private Array<BIO_WeaponAffix> WeaponAffixDefaults;
 
+	private Array<Class<BIO_EquipmentAffix> > AllEquipmentAffixClasses;
+	private Array<BIO_EquipmentAffix> EquipmentAffixDefaults;
+
 	// Getters =================================================================
 
 	bool WeaponAffixCompatible(Class<BIO_WeaponAffix> afx_t, BIO_Weapon weap) const
@@ -35,6 +38,22 @@ class BIO_GlobalData : Thinker
 		return eligibles.Size() > 0;
 	}
 
+	bool AllEligibleEquipmentAffixes(Array<BIO_EquipmentAffix> eligibles, BIO_Equipment equip) const
+	{
+		for (uint i = 0; i < AllEquipmentAffixClasses.Size(); i++)
+		{
+			let eafx_t = AllEquipmentAffixClasses[i];
+			if (equip.HasAffixOfType(eafx_t)) continue;
+
+			let eafx = BIO_EquipmentAffix(new(eafx_t));
+			if (!eafx.Compatible(equip)) continue;
+
+			eligibles.Push(eafx);
+		}
+
+		return eligibles.Size() > 0;
+	}
+
 	// The singleton getter and its "constructor" ==============================
 
 	private static BIO_GlobalData Create()
@@ -45,12 +64,18 @@ class BIO_GlobalData : Thinker
 
 		for (uint i = 0; i < AllClasses.Size(); i++)
 		{
-			if (!(AllClasses[i].GetParentClass() is "BIO_WeaponAffix"))
-				continue;
-
-			ret.AllWeaponAffixClasses.Push(AllClasses[i]);
-			let wafx = BIO_WeaponAffix(new(AllClasses[i]));
-			ret.WeaponAffixDefaults.Push(wafx);
+			if (AllClasses[i].GetParentClass() is "BIO_WeaponAffix")
+			{
+				ret.AllWeaponAffixClasses.Push(AllClasses[i]);
+				let wafx = BIO_WeaponAffix(new(AllClasses[i]));
+				ret.WeaponAffixDefaults.Push(wafx);
+			}
+			else if (AllClasses[i].GetParentClass() is "BIO_EquipmentAffix")
+			{
+				ret.AllEquipmentAffixClasses.Push(AllClasses[i]);
+				let eafx = BIO_EquipmentAffix(new(AllClasses[i]));
+				ret.EquipmentAffixDefaults.Push(eafx);
+			}
 		}
 
 		if (BIO_CVar.Debug())
