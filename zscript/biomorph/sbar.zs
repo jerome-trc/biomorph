@@ -39,40 +39,7 @@ class BIO_StatusBar : BaseStatusBar
 				FormatNumber(CPlayer.MO.GetMaxHealth(true), 3, 5)), 
 			(44, -16), 0, Font.CR_DARKRED);
 		
-		let armor = CPlayer.MO.FindInventory("BasicArmor");
-		if (armor != null && armor.Amount > 0)
-		{
-			DrawInventoryIcon(armor, (20, -22));
-			DrawString(Font_HUD, FormatNumber(armor.Amount, 3),
-				(44, -36), 0, Font.CR_DARKGREEN);
-			DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3),
-				(18, -30), 0, Font.CR_WHITE);
-
-			let bioPlayer = BIO_Player(CPlayer.MO);
-			if (bioPlayer != null)
-			{
-				let bioArmor = bioPlayer.EquippedArmor;
-				int affixY = -54;
-				
-				for (uint i = bioArmor.Affixes.Size() - 1; i >= 0; i--)
-				{
-					DrawString(Font_Small, bioArmor.Affixes[i].ToString(),
-						(ARMORINFO_X, affixY), 0, Font.CR_WHITE);
-					
-					affixY -= 8;
-				}
-
-				affixY -= 8;
-
-				for (uint i = bioArmor.ImplicitAffixes.Size() - 1; i >= 0; i--)
-				{
-					DrawString(Font_Small, bioArmor.ImplicitAffixes[i].ToString(),
-						(ARMORINFO_X, affixY), 0, Font.CR_WHITE);
-					
-					affixY -= 8;
-				}
-			}
-		}
+		DrawArmorDetails();
 
 		if (deathmatch)
 		{
@@ -114,6 +81,44 @@ class BIO_StatusBar : BaseStatusBar
 					rowc = 0;
 				}
 			}
+		}
+	}
+
+	private void DrawArmorDetails()
+	{
+		let armor = CPlayer.MO.FindInventory("BasicArmor");
+		if (armor == null || armor.Amount <= 0) return;
+
+		DrawInventoryIcon(armor, (20, -22));
+		DrawString(Font_HUD, FormatNumber(armor.Amount, 3),
+			(44, -36), 0, Font.CR_DARKGREEN);
+		DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3),
+			(18, -30), 0, Font.CR_WHITE);
+
+		let bioPlayer = BIO_Player(CPlayer.MO);
+		if (bioPlayer == null) return;
+
+		let bioArmor = bioPlayer.EquippedArmor;
+		if (bioArmor == null) return;
+
+		int affixY = -54;
+		
+		for (uint i = bioArmor.Affixes.Size() - 1; i >= 0; i--)
+		{
+			DrawString(Font_Small, bioArmor.Affixes[i].ToString(),
+				(ARMORINFO_X, affixY), 0, Font.CR_WHITE);
+			
+			affixY -= 8;
+		}
+
+		affixY -= 8;
+
+		for (uint i = bioArmor.ImplicitAffixes.Size() - 1; i >= 0; i--)
+		{
+			DrawString(Font_Small, bioArmor.ImplicitAffixes[i].ToString(),
+				(ARMORINFO_X, affixY), 0, Font.CR_WHITE);
+			
+			affixY -= 8;
 		}
 	}
 
