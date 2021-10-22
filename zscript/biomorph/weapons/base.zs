@@ -140,6 +140,7 @@ class BIO_Weapon : DoomWeapon abstract
         Weapon.BobRangeY 0.5;
         Weapon.BobSpeed 1.2;
         Weapon.BobStyle "Alpha";
+		Weapon.Kickback 100;
 
 		BIO_Weapon.AffixMask BIO_WAM_NONE;
 		BIO_Weapon.DamageRanges -2, -2, -2, -2;
