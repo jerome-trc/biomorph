@@ -57,9 +57,8 @@ class BIO_Pistol : BIO_Weapon
 		PISG A 1 Offset(0, 32 + 14);
 		PISG A 1 Offset(0, 32 + 16);
 		PISG A 1 Offset(0, 32 + 18);
-		PISG A 30 Offset(0, 32 + 20);
-		TNT1 A 0 A_LoadMag(); // TODO: Reload sounds
-		PISG A 1 Offset(0, 32 + 18);
+		PISG A 30 Offset(0, 32 + 20); // TODO: Reload sounds
+		PISG A 1 Offset(0, 32 + 18) A_LoadMag;
 		PISG A 1 Offset(0, 32 + 16);
 		PISG A 1 Offset(0, 32 + 14);
 		PISG A 1 Offset(0, 32 + 12);

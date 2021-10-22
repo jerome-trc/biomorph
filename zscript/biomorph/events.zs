@@ -61,6 +61,16 @@ class BIO_EventHandler : EventHandler
 		if (event.Thing == null || event.Thing.bIsMonster || event.Thing.bMissile)
 			return;
 
+		if (event.Thing is "Inventory")
+		{
+			let item = Inventory(event.Thing);
+			if (item.Owner != null || item.Master != null)
+			{
+				super.WorldThingSpawned(event);
+				return;
+			}
+		}
+
 		if (ReplaceSmallAmmo(event) || ReplaceBigAmmo(event))
 			return;
 	}
