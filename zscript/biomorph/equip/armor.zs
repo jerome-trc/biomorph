@@ -104,3 +104,33 @@ class BIO_SpecialtyArmorStats : BIO_ArmorStats
 		Armor.SaveAmount 200;
 	}
 }
+
+class BIO_ExperimentalArmor : BIO_Armor
+{
+	Default
+	{
+		Tag "$BIO_ARMOR_TAG_EXP";
+		Inventory.Icon "ARM3A0";
+		Inventory.PickupMessage "$BIO_PICKUP_TEMPLATE_ARMORDEFAULT";
+		BIO_Equipment.Grade BIO_GRADE_EXPERIMENTAL;
+		BIO_Armor.StatClass "BIO_ExperimentalArmorStats";
+	}
+
+	States
+	{
+	Spawn:
+		ARM3 A 6;
+		ARM3 A 6 Bright;
+		Loop;
+	}
+}
+
+class BIO_ExperimentalArmorStats : BIO_ArmorStats
+{
+	Default
+	{
+		Inventory.Icon "ARM3A0";
+		Armor.SavePercent 65;
+		Armor.SaveAmount 250;
+	}
+}

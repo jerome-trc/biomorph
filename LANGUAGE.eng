@@ -98,6 +98,7 @@
 
 	BIO_ARMOR_TAG_GREEN = "Standard Armour";
 	BIO_ARMOR_TAG_BLUE = "Specialty Armour";
+	BIO_ARMOR_TAG_EXP = "Experimental Armour";
 
 // Affixes (tags, details, to-string templates) ================================
 

@@ -10,6 +10,8 @@ The GLDEFS for `BIO_ArmorBonus` were devised by Realm667 user Infirnex.
 
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
+Experimental Armour sprites are courtesy of id Software LLC, and edited by Realm667 user Ghastly_dragon.
+
 Any graphical asset which is not mentioned here is custom-made by RatCircus.
 
 ## Audio
