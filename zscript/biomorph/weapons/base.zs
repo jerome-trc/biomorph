@@ -156,8 +156,9 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		+DONTGIB
 		+NOBLOCKMONST
-		+WEAPON.AMMO_OPTIONAL
 		+WEAPON.ALT_AMMO_OPTIONAL
+		+WEAPON.AMMO_OPTIONAL
+		+WEAPON.NOALERT
 
 		Height 8;
 		Radius 16;
@@ -499,6 +500,19 @@ class BIO_Weapon : DoomWeapon abstract
 				invoker.ImplicitAffixes[i].OnProjectileFired(invoker, proj);
 			for (uint i = 0; i < invoker.Affixes.Size(); i++)
 				invoker.Affixes[i].OnProjectileFired(invoker, proj);
+		}
+
+		{
+			double maxDist = 0;
+			int flags = 0;
+
+			for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
+				invoker.ImplicitAffixes[i].PreAlertMonsters(invoker, maxDist, flags);
+
+			for (uint i = 0; i < invoker.Affixes.Size(); i++)
+				invoker.Affixes[i].PreAlertMonsters(invoker, maxDist, flags);
+
+			A_AlertMonsters(maxDist, flags);
 		}
 
 		return true;

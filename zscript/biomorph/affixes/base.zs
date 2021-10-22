@@ -15,6 +15,9 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	virtual void OnBulletFired(BIO_Weapon weap) const {}
 	virtual void OnProjectileFired(BIO_Weapon weap, Actor proj) const {}
 
+	virtual void PreAlertMonsters(BIO_Weapon weap,
+		in out double maxDist, in out int flags) const {}
+
 	// Output should be fully localized.
 	abstract string ToString(BIO_Weapon weap) const;
 }
