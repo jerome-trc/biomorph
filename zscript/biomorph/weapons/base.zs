@@ -116,7 +116,7 @@ class BIO_Weapon : DoomWeapon abstract
 	property VSpread2: VSpread2;
 	property VSpreads: VSpread1, VSpread2;
 
-	property Spread: HSpread1, VSpread2;
+	property Spread: HSpread1, VSpread1;
 	property Spread1: HSpread1, VSpread2;
 	property Spread2: HSpread2, VSpread2;
 	property Spreads: HSpread1, VSpread1, HSpread2, VSpread2;
