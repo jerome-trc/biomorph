@@ -1,2 +1,15 @@
+weapons/gundrop0 GUNDROP0
+
+$RANDOM weapons/gunswap
+{
+	weapons/gunswap0
+	weapons/gunswap1
+}
+
+weapons/gunswap0 GUNSWAP0
 weapons/gunswap1 GUNSWAP1
-weapons/gunswap2 GUNSWAP2
+
+// Generic sounds of assembly parts moving
+weapons/gunmech0 GUNMECH0
+weapons/gunmech1 GUNMECH1
+weapons/gunmech2 GUNMECH2

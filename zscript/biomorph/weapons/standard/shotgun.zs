@@ -10,7 +10,7 @@ class BIO_Shotgun : BIO_Weapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1300;
 		Weapon.SlotNumber 3;
-		Weapon.UpSound "weapons/gunswap1";
+		Weapon.UpSound "weapons/gunswap";
 
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;

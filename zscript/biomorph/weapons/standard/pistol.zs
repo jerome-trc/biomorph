@@ -4,13 +4,15 @@ class BIO_Pistol : BIO_Weapon
 	{
 		Obituary "$OB_MPPISTOL";
 		Tag "$TAG_PISTOL";
+
+		Inventory.Icon "PISTA0";
 		
 		Weapon.AmmoGive 15;
 		Weapon.AmmoType "Clip";
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1900;
 		Weapon.SlotNumber 2;
-		Weapon.UpSound "weapons/gunswap1";
+		Weapon.UpSound "weapons/gunswap0";
 
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
@@ -35,8 +37,11 @@ class BIO_Pistol : BIO_Weapon
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		PISG A 4;
-		PISG B 6 A_BIO_Fire;
-		TNT1 A 0 A_StartSound("weapons/pistol", CHAN_WEAPON);
+		PISG B 6
+		{
+			A_BIO_Fire();
+			A_StartSound("weapons/pistol", CHAN_WEAPON);
+		}
 		PISG C 4;
 		PISG B 5 A_ReFire;
 		Goto Ready;
