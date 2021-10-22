@@ -495,6 +495,8 @@ class BIO_Weapon : DoomWeapon abstract
 			invoker.OnProjectileFired(proj);
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 
+			for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
+				invoker.ImplicitAffixes[i].OnProjectileFired(invoker, proj);
 			for (uint i = 0; i < invoker.Affixes.Size(); i++)
 				invoker.Affixes[i].OnProjectileFired(invoker, proj);
 		}
