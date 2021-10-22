@@ -128,6 +128,8 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		+DONTGIB
 		+NOBLOCKMONST
+		+WEAPON.AMMO_OPTIONAL
+		+WEAPON.ALT_AMMO_OPTIONAL
 
 		Height 8;
 		Radius 16;
