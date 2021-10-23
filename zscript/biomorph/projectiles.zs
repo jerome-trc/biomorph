@@ -108,6 +108,14 @@ class BIO_Bullet : BIO_FastProjectile
 	}
 }
 
+class BIO_ShotPellet : BIO_Bullet
+{
+	Default
+	{
+		Tag "$BIO_PROJ_TAG_SHOTPELLET";
+	}
+}
+
 // Real projectiles ============================================================
 
 class BIO_PlasmaBall : BIO_Projectile

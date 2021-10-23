@@ -15,7 +15,7 @@ class BIO_Shotgun : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireCount 7;
-		BIO_Weapon.FireType "BIO_Bullet";
+		BIO_Weapon.FireType "BIO_ShotPellet";
 		BIO_Weapon.MagazineSize 1;
 		BIO_Weapon.MagazineType "BIO_Magazine_Shotgun";
 		BIO_Weapon.Spread 4.0, 2.0;
