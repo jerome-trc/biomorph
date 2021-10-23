@@ -688,6 +688,19 @@ class BIO_Weapon : DoomWeapon abstract
 	}
 }
 
+mixin class BIO_MeleeWeapon
+{
+	float MeleeRange, LifeSteal;
+	property MeleeRange: MeleeRange;
+	property LifeSteal: LifeSteal;
+
+	void ApplyLifeSteal(int dmg)
+	{
+		let fDmg = float(dmg);
+		Owner.GiveBody(int(fDmg * LifeSteal), Owner.GetMaxHealth(true) + 100);
+	}
+}
+
 /*  Adapted from the Easy Dual Wield library by Jekyll Grim Payne.
 	Used under the MIT License.
 	https://github.com/jekyllgrim/Easy-Dual-Wield
@@ -942,7 +955,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 		// Enable bobbing:
 		A_OverlayFlags(OverlayID(), PSPF_ADDBOB, true);
 		state targetState = null;
-		bool pressingFire = player.cmd.buttons & BT_ATTACK;		
+		bool pressingFire = Player.Cmd.Buttons & BT_ATTACK;		
 		if (pressingFire)
 		{
 			if (A_CheckAmmo_R())
@@ -1051,17 +1064,18 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 		let psp = Player.FindPSprite(OverlayID());
 		if (!psp) return;
 		
-		let s_fire = left ? invoker.s_FireLeft : invoker.s_FireRight; //pointer to Fire
-		let s_hold = left ? invoker.s_HoldLeft : invoker.s_Holdright; //pointer to Hold
-		int atkbutton = left ? BT_ALTATTACK : BT_ATTACK; //check attack button is being held
+		let s_fire = left ? invoker.s_FireLeft : invoker.s_FireRight; // Pointer to Fire
+		let s_hold = left ? invoker.s_HoldLeft : invoker.s_Holdright; // Pointer to Hold
+		int atkbutton = left ? BT_ALTATTACK : BT_ATTACK; // Check attack button is being held
 		state targetState = null;
 		// Check if this is being called from Fire or Hold:
-		if (s_fire && (InStateSequence(psp.curstate,s_fire) || InStateSequence(psp.curstate,s_hold)))
+		if (s_fire && (InStateSequence(psp.CurState, s_fire) ||
+			InStateSequence(psp.CurState, s_hold)))
 		{
 			//Check if we have enough ammo and the attack button is being held:
 			if (A_CheckAmmo_R(left) &&
-				Player.cmd.buttons & atkbutton &&
-				player.oldbuttons & atkbutton)
+				Player.Cmd.Buttons & atkButton &&
+				player.OldButtons & atkButton)
 			{
 				//if so, jump to Hold (if it exists) or to Fire
 				targetState = s_hold ? s_hold : s_fire;

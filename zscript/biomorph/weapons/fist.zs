@@ -1,5 +1,7 @@
 class BIO_Fist : BIO_Weapon
 {
+	mixin BIO_MeleeWeapon;
+
 	int FireTime1, FireTime2, FireTime3, FireTime4, FireTime5;
 	property FireTimes: FireTime1, FireTime2, FireTime3, FireTime4, FireTime5;
 
@@ -17,6 +19,8 @@ class BIO_Fist : BIO_Weapon
 		BIO_Weapon.DamageRange 2, 20;
 
 		BIO_Fist.FireTimes 4, 4, 5, 4, 5;
+		BIO_Fist.MeleeRange DEFMELEERANGE;
+		BIO_Fist.LifeSteal 0.0;
 	}
 
 	States
@@ -24,10 +28,10 @@ class BIO_Fist : BIO_Weapon
 	Ready:
 		PUNG A 1 A_WeaponReady;
 		Loop;
-	Deselect:
+	Deselect.Loop:
 		PUNG A 1 A_BIO_Lower;
 		Loop;
-	Select:
+	Select.Loop:
 		PUNG A 1 A_BIO_Raise;
 		Loop;
 	Fire:
@@ -74,6 +78,9 @@ class BIO_Fist : BIO_Weapon
 		FireTime3 = defs.FireTime3;
 		FireTime4 = defs.FireTime4;
 		FireTime5 = defs.FireTime5;
+
+		MeleeRange = defs.MeleeRange;
+		LifeSteal = defs.LifeSteal;
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -103,20 +110,25 @@ class BIO_Fist : BIO_Weapon
 	{
 		FTranslatedLineTarget t;
 
-		int dmg = random[Punch](invoker.MinDamage1, invoker.MaxDamage1);
+		int dmg = Random[Punch](invoker.MinDamage1, invoker.MaxDamage1);
 
 		if (FindInventory("PowerStrength")) dmg *= 10;
 
 		double ang = Angle + Random2[Punch]() * (5.625 / 256);
 		double pitch = AimLineAttack(ang, DEFMELEERANGE, null, 0.0, ALF_CHECK3D);
 
-		LineAttack(ang, DEFMELEERANGE, pitch, dmg, 'Melee', "BulletPuff", LAF_ISMELEEATTACK, t);
+		Actor puff = null;
+		int actualDmg = -1;
+
+		[puff, actualDmg] = LineAttack(ang, DEFMELEERANGE, pitch, dmg,
+			'Melee', "BulletPuff", LAF_ISMELEEATTACK, t);
 
 		// Turn to face target
 		if (t.LineTarget)
 		{
-			A_StartSound ("*fist", CHAN_WEAPON);
+			A_StartSound("*fist", CHAN_WEAPON);
 			Angle = t.AngleFromSource;
+			if (!t.lineTarget.bDontDrain) invoker.ApplyLifeSteal(actualDmg);
 		}
 	}
 }
