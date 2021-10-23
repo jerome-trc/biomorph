@@ -65,6 +65,7 @@
 	BIO_MUTA_FAIL_MAXAFFIXES = "This weapon has evolved to its limits; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_NOAFFIXES = "This weapon has no affixes; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_NOCOMPATIBLEAFFIXES = "No affixes are compatible with this weapon; it can't be mutated in this way.";
+	BIO_MUTA_FAIL_CORRUPTED = "This weapon has been corrupted by R.O.T. Mutagen; it can't be mutated at all.";
 
 	BIO_MUTA_RESET_TAG = "R.E.S.E.T. Mutagen";
 	BIO_MUTA_RESET_PICKUP = "Absorbed a sample of R.S.E.T. Mutagen.";
@@ -86,6 +87,10 @@
 	BIO_MUTA_REMOVE_PICKUP = "Obtained a sample of T.R.I.M. Mutagen.";
 	BIO_MUTA_REMOVE_USE = "Your weapon returns partly to normal.";
 
+	BIO_MUTA_CORRUPT_TAG = "R.O.T. Mutagen";
+	BIO_MUTA_CORRUPT_PICKUP = "Obtained a sample of R.O.T. Mutagen.";
+	BIO_MUTA_CORRUPT_HIDDENRAND = "Your weapon mutates in ways you cannot understand.";
+
 // Equipment (tags, UI messaging) ==============================================
 
 	BIO_ARMOREQUIP_FAIL_ALREADYWEARING = "You are already wearing armour.";
@@ -104,6 +109,8 @@
 	BIO_ARMOR_TAG_EXP = "Experimental Armour";
 
 // Affixes (tags, details, to-string templates) ================================
+
+	BIO_AFFIXESUNKNOWN = "Affixes unknown";
 
 	BIO_AFFIX_TOSTR_WEAPDMG1 = "Primary damage: %s%s%d";
 	BIO_AFFIX_TOSTR_WEAPDMG2 = "Secondary damage: %s%s%d";

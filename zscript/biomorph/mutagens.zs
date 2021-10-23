@@ -27,6 +27,12 @@ class BIO_Mutagen : Inventory abstract
 			return false;
 		}
 
+		if (weap.BIOFlags & BIO_WEAPF_CORRUPTED)
+		{
+			Owner.A_Print("$BIO_MUTA_FAIL_CORRUPTED");
+			return false;
+		}
+
 		if (!worksOnUniques && weap.Grade == BIO_GRADE_CLASSIFIED)
 		{
 			Owner.A_Print("$BIO_MUTA_FAIL_UNIQUE", 4.0);
@@ -226,6 +232,51 @@ class BIO_MutagenRemove : BIO_Mutagen
 		weap.ApplyAllAffixes();
 
 		Owner.A_Print("$BIO_MUTA_REROLL_USE");
+		return true;
+	}
+}
+
+class BIO_MutagenCorrupting : BIO_Mutagen
+{
+	Default
+	{
+		Tag "$BIO_MUTA_CORRUPT_TAG";
+		Inventory.Icon "MUCOA0";
+		Inventory.PickupMessage "$BIO_MUTA_CORRUPT_PICKUP";
+	}
+
+	States
+	{
+	Spawn:
+		MUCO A 6;
+		---- A 6 Bright;
+		Loop;
+	}
+
+	override bool Use(bool pickup)
+	{
+		if (!CanUse(true)) return false;
+		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
+
+		weap.ResetStats();
+
+		switch (Random(0, 0))
+		{
+		default:
+			// Randomize affixes and then hide them
+			weap.Affixes.Clear();
+		
+			uint c = Random(2, BIO_Weapon.MAX_AFFIXES);
+
+			for (uint i = 0; i < c; i++)
+				weap.AddRandomAffix();
+
+			weap.ApplyAllAffixes();
+			weap.BIOFlags |= BIO_WEAPF_AFFIXESHIDDEN;
+			Owner.A_Print("$BIO_MUTA_CORRUPT_HIDDENRAND");
+			break;
+		}
+
 		return true;
 	}
 }

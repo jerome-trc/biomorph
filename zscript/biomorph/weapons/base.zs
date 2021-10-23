@@ -1,10 +1,12 @@
 enum BIO_WeaponFlags : uint8
 {
 	BIO_WEAPF_NONE = 0,
+	BIO_WEAPF_CORRUPTED = 1 << 0,
+	BIO_WEAPF_AFFIXESHIDDEN = 1 << 1, // Caused by corruption
 	// The following 3 are applicable only to dual-wielded weapons
-	BIO_WEAPF_NOAUTOPRIMARY = 1 << 0,
-	BIO_WEAPF_NOAUTOSECONDARY = 1 << 1,
-	BIO_WEAPF_AKIMBORELOAD = 1 << 2
+	BIO_WEAPF_NOAUTOPRIMARY = 1 << 2,
+	BIO_WEAPF_NOAUTOSECONDARY = 1 << 3,
+	BIO_WEAPF_AKIMBORELOAD = 1 << 4
 }
 
 // Dictate what stats can be affected by affixes. If a bit is set,

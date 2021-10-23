@@ -212,6 +212,24 @@ class BIO_StatusBar : BaseStatusBar
 
 		weapInfoY += 8; // Blank line between stats and affixes
 
+		for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
+		{
+			DrawString(Font_Small, weap.Affixes[i].ToString(weap),
+				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
+				Font.CR_WHITE);
+			weapInfoY += 8;
+		}
+
+		if (weap.BIOFlags & BIO_WEAPF_AFFIXESHIDDEN)
+		{
+			DrawString(Font_Small, StringTable.Localize("$BIO_AFFIXESUNKNOWN"),
+				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
+				Font.CR_RED);
+			return;
+		}
+
+		weapInfoY += 8; // Blank line beween implicit and explicit affixes
+
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
 		{
 			DrawString(Font_Small, weap.Affixes[i].ToString(weap),
