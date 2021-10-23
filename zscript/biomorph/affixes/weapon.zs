@@ -64,8 +64,12 @@ class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 
 		if (rft == 1)
 			Modifier = -1;
-		else
+		else if (rft > 1)
 			Modifier = -Random(1, rft);
+		else
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Illegally initialized %s against reducible fire time of %d.",
+				GetClassName(), rft);
 	}
 
 	override bool Compatible(BIO_Weapon weap) const

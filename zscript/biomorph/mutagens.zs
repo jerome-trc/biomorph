@@ -17,7 +17,7 @@ class BIO_Mutagen : Inventory abstract
         Inventory.MaxAmount 9999;
     }
 
-	// Also prints failure messaging
+	// Also prints failure messaging.
 	protected bool CanUse(bool worksOnUniques = false) const
 	{
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
@@ -106,6 +106,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 			return false;
 		}
 
+		weap.ApplyAllAffixes();
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
 		return true;
 	}
@@ -130,8 +131,21 @@ class BIO_MutagenRandom : BIO_Mutagen
 
 	override bool Use(bool pickup)
 	{
-		// TODO: Best implementation relies on more affixes being present
-		return false;
+		if (!CanUse()) return false;
+		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
+
+		weap.ResetStats();
+		weap.Affixes.Clear();
+
+		uint c = Random(2, BIO_Weapon.MAX_AFFIXES);
+
+		for (uint i = 0; i < c; i++)
+			weap.AddRandomAffix();
+
+		weap.ApplyAllAffixes();
+
+		Owner.A_Print("$BIO_MUTA_RANDOM_USE");
+		return true;
 	}
 }
 
@@ -164,7 +178,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 			return false;
 		}
 
-		// TODO: Check if any affixes have random numeric values
+		// TODO: If no affixes have randomizable values, forbid usage
 
 		weap.ResetStats();
 		

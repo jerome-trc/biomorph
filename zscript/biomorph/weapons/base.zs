@@ -485,6 +485,7 @@ class BIO_Weapon : DoomWeapon abstract
 			Affixes[i].Apply(self);
 	}
 
+	// Does not alter stats, and does not apply affixes.
 	// Returns `false` if there are no compatible affixes to add.
 	bool AddRandomAffix()
 	{
@@ -493,10 +494,8 @@ class BIO_Weapon : DoomWeapon abstract
 		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, self))
 			return false;
 
-		ResetStats();
 		uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
 		Affixes[e].Init(self);
-		ApplyAllAffixes();
 		return true;
 	}
 
