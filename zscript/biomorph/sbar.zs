@@ -8,6 +8,9 @@ class BIO_StatusBar : BaseStatusBar
 
 	override void Init()
 	{
+		if (BIO_CVar.Debug())
+			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Initialising status bar...");
+	
 		super.Init();
 		SetSize(32, 320, 200);
 
