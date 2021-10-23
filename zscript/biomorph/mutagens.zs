@@ -102,7 +102,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 
 		if (!weap.AddRandomAffix())
 		{
-			Owner.A_Print("BIO_MUTA_FAIL_NOCOMPATIBLEAFFIXES", 4.0);
+			Owner.A_Print("$BIO_MUTA_FAIL_NOCOMPATIBLEAFFIXES", 4.0);
 			return false;
 		}
 
