@@ -25,7 +25,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 		BIO_Weapon.Spread 0.2, 0.2;
 
 		BIO_PlasmaRifle.FireTimes 3, 20;
-		BIO_PlasmaRifle.ReloadTimes 30;
+		BIO_PlasmaRifle.ReloadTimes 40;
 	}
 
 	States

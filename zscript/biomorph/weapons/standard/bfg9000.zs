@@ -28,7 +28,7 @@ class BIO_BFG9000 : BIO_Weapon
 		BIO_Weapon.SwitchSpeeds 5, 5;
 
 		BIO_BFG9000.FireTimes 20, 10, 10, 20;
-		BIO_BFG9000.ReloadTimes 30;
+		BIO_BFG9000.ReloadTimes 50;
 	}
 
 	States
