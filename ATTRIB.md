@@ -12,6 +12,8 @@ Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 use
 
 Experimental Armour sprites are courtesy of id Software LLC, and edited by Realm667 user Ghastly_dragon.
 
+Salvo Launcher sprites are courtesy of ZDoom forum user LossForWords, alongside zrrion the insect, id Software LLC, and Apogee Entertainment.
+
 Any graphical asset which is not mentioned here is custom-made by RatCircus.
 
 ## Audio

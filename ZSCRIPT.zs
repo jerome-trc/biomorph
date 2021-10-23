@@ -45,3 +45,5 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/standard/rocket_launcher.zs"
 #include "zscript/biomorph/weapons/standard/shotgun.zs"
 #include "zscript/biomorph/weapons/standard/super_shotgun.zs"
+
+#include "zscript/biomorph/weapons/experimental/salvo_launcher.zs"
