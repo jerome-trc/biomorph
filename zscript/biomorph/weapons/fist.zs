@@ -93,7 +93,7 @@ class BIO_Fist : BIO_Weapon
 			FireTypeFontColor(),
 			StringTable.Localize("$BIO_MELEE_HIT")));
 
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
+		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_ATKTIME"),
 			FireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
 			float(FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5) / 35.0));
 	}

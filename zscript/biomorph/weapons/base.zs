@@ -613,19 +613,7 @@ class BIO_Weapon : DoomWeapon abstract
 			invoker.OnProjectileFired(proj);
 		}
 
-		{
-			double maxDist = 0;
-			int flags = 0;
-
-			for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
-				invoker.ImplicitAffixes[i].PreAlertMonsters(invoker, maxDist, flags);
-
-			for (uint i = 0; i < invoker.Affixes.Size(); i++)
-				invoker.Affixes[i].PreAlertMonsters(invoker, maxDist, flags);
-
-			A_AlertMonsters(maxDist, flags);
-		}
-
+		A_BIO_AlertMonsters();
 		return true;
 	}
 
@@ -645,6 +633,20 @@ class BIO_Weapon : DoomWeapon abstract
 
 		int subtract = diff * factor;
 		reserveAmmo.Amount -= subtract;
+	}
+
+	protected action void A_BIO_AlertMonsters()
+	{
+		double maxDist = 0;
+		int flags = 0;
+
+		for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
+			invoker.ImplicitAffixes[i].PreAlertMonsters(invoker, maxDist, flags);
+
+		for (uint i = 0; i < invoker.Affixes.Size(); i++)
+			invoker.Affixes[i].PreAlertMonsters(invoker, maxDist, flags);
+
+		A_AlertMonsters(maxDist, flags);
 	}
 
 	// Utility functions =======================================================
