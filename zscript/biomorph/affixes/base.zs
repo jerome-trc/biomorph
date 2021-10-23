@@ -12,8 +12,11 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	abstract bool Compatible(BIO_Weapon weap) const;
 
 	virtual void Apply(BIO_Weapon weap) const {}
-	virtual void OnBulletFired(BIO_Weapon weap) const {}
-	virtual void OnProjectileFired(BIO_Weapon weap, Actor proj) const {}
+
+	virtual void ModifySplash(BIO_Weapon weap, in out int dmg, in out int radius) const {}
+
+	virtual void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const {}	
+	virtual void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const {}
 
 	virtual void PreAlertMonsters(BIO_Weapon weap,
 		in out double maxDist, in out int flags) const {}

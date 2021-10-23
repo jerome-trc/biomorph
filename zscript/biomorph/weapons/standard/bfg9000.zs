@@ -78,7 +78,7 @@ class BIO_BFG9000 : BIO_Weapon
 		BFGG A 1 Offset(0, 32 + 16);
 		BFGG A 1 Offset(0, 32 + 18);
 		// TODO: Reload sounds
-		BFGG A 30 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
+		BFGG A 50 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
 		TNT1 A 0 A_LoadMag(); 
 		BFGG A 1 Offset(0, 32 + 18);
 		BFGG A 1 Offset(0, 32 + 16);
@@ -99,7 +99,7 @@ class BIO_BFG9000 : BIO_Weapon
 		Stop;
 	}
 
-	override void OnProjectileFired(Actor proj) const
+	override void OnTrueProjectileFired(BIO_Projectile proj) const
 	{
 		let bfgBall = BIO_BFGBall(proj);
 		bfgBall.BFGRays = FireCount2;

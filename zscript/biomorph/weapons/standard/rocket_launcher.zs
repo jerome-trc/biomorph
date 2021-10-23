@@ -1,88 +1,90 @@
-class BIO_PlasmaRifle : BIO_Weapon
+class BIO_RocketLauncher : BIO_Weapon
 {
 	int FireTime1, FireTime2; property FireTimes: FireTime1, FireTime2;
 	int ReloadTime; property ReloadTimes: ReloadTime;
 
 	Default
 	{
-		Tag "$TAG_PLASMARIFLE";
-		Obituary "$OB_MPPLASMARIFLE";
+		+WEAPON.NOAUTOFIRE
 
-		Inventory.Icon "PLASA0";
+		Tag "$TAG_ROCKETLAUNCHER";
+		
+		Inventory.Icon "LAUNA0";
 
-		Weapon.AmmoGive 50;
-		Weapon.AmmoType "Cell";
+		Weapon.AmmoGive 2;
+		Weapon.AmmoType "RocketAmmo";
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder 100;
-		Weapon.SlotNumber 6;
+		Weapon.SelectionOrder 2500;
+		Weapon.SlotNumber 5;
 
 		BIO_Weapon.AffixMask BIO_WAM_SECONDARY;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
-		BIO_Weapon.DamageRange 5, 40;
-		BIO_Weapon.FireType "BIO_PlasmaBall";
-		BIO_Weapon.MagazineSize 50;
-		BIO_Weapon.MagazineType "BIO_Magazine_PlasmaRifle";
+		BIO_Weapon.DamageRange 20, 160;
+		BIO_Weapon.FireType "BIO_Rocket";
+		BIO_Weapon.MagazineSize 1;
+		BIO_Weapon.MagazineType "BIO_Magazine_RocketLauncher";
 		BIO_Weapon.Spread 0.2, 0.2;
-
-		BIO_PlasmaRifle.FireTimes 3, 20;
-		BIO_PlasmaRifle.ReloadTimes 40;
+		
+		BIO_RocketLauncher.FireTimes 8, 12;
+		BIO_RocketLauncher.ReloadTimes 45;
 	}
 
 	States
 	{
 	Ready:
-		PLSG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		MISG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
 	Deselect.Loop:
-		PLSG A 1 A_BIO_Lower;
+		MISG A 1 A_BIO_Lower;
 		Loop;
 	Select.Loop:
-		PLSG A 1 A_BIO_Raise;
+		MISG A 1 A_BIO_Raise;
 		Loop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
-		PLSG A 3
+		MISG B 8
 		{
 			A_SetTics(invoker.FireTime1);
-			A_BIO_Fire();
+			A_GunFlash();
 		}
-		PLSG B 20
+		MISG B 12
 		{
 			A_SetTics(invoker.FireTime2);
-			A_ReFire();
+			A_BIO_Fire();
 		}
+		MISG B 0 A_ReFire;
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
-		PLSG A 1 A_WeaponReady(WRF_NOFIRE);
-		PLSG A 1 Offset(0, 32 + 2);
-		PLSG A 1 Offset(0, 32 + 4);
-		PLSG A 1 Offset(0, 32 + 6);
-		PLSG A 1 Offset(0, 32 + 8);
-		PLSG A 1 Offset(0, 32 + 10);
-		PLSG A 1 Offset(0, 32 + 12);
-		PLSG A 1 Offset(0, 32 + 14);
-		PLSG A 1 Offset(0, 32 + 16);
-		PLSG A 1 Offset(0, 32 + 18);
+		MISG A 1 A_WeaponReady(WRF_NOFIRE);
+		MISG A 1 Offset(0, 32 + 2);
+		MISG A 1 Offset(0, 32 + 4);
+		MISG A 1 Offset(0, 32 + 6);
+		MISG A 1 Offset(0, 32 + 8);
+		MISG A 1 Offset(0, 32 + 10);
+		MISG A 1 Offset(0, 32 + 12);
+		MISG A 1 Offset(0, 32 + 14);
+		MISG A 1 Offset(0, 32 + 16);
+		MISG A 1 Offset(0, 32 + 18);
 		// TODO: Reload sounds
-		PLSG A 40 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
-		PLSG A 1 Offset(0, 32 + 18) A_LoadMag();
-		PLSG A 1 Offset(0, 32 + 16);
-		PLSG A 1 Offset(0, 32 + 14);
-		PLSG A 1 Offset(0, 32 + 12);
-		PLSG A 1 Offset(0, 32 + 10);
-		PLSG A 1 Offset(0, 32 + 8);
-		PLSG A 1 Offset(0, 32 + 6);
-		PLSG A 1 Offset(0, 32 + 4);
-		PLSG A 1 Offset(0, 32 + 2);
+		MISG A 45 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
+		MISG A 1 Offset(0, 32 + 18) A_LoadMag();
+		MISG A 1 Offset(0, 32 + 16);
+		MISG A 1 Offset(0, 32 + 14);
+		MISG A 1 Offset(0, 32 + 12);
+		MISG A 1 Offset(0, 32 + 10);
+		MISG A 1 Offset(0, 32 + 8);
+		MISG A 1 Offset(0, 32 + 6);
+		MISG A 1 Offset(0, 32 + 4);
+		MISG A 1 Offset(0, 32 + 2);
 		Goto Ready;
 	Flash:
-		PLSF A 4 Bright A_Light(1);
-		Goto LightDone;
-		PLSF B 4 Bright A_Light(1);
+		MISF A 3 Bright A_Light1;
+		MISF B 4 Bright;
+		MISF CD 4 Bright A_Light2;
 		Goto LightDone;
 	Spawn:
-		PLAS A -1;
+		LAUN A -1;
 		Stop;
 	}
 
@@ -133,19 +135,15 @@ class BIO_PlasmaRifle : BIO_Weapon
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
 			FireTime1 != defs.FireTime1 ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
 			float(FireTime1) / 35.0));
-
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_POSTFIREDELAY"),
-			FireTime2 != defs.FireTime2 ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
-			float(FireTime2) / 35.0));
 	}
 }
 
-class BIO_Magazine_PlasmaRifle : Ammo
+class BIO_Magazine_RocketLauncher : Ammo
 {
 	mixin BIO_Magazine;
 
 	Default
 	{
-		Inventory.Amount 50;
+		Inventory.Amount 1;
 	}
 }

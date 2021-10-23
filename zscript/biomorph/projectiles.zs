@@ -5,6 +5,8 @@ mixin class BIO_ProjectileCommon
 	protected bool Dead;
 
 	int BFGRays; property BFGRays: BFGRays;
+	int SplashDamage, SplashRadius; property Splash: SplashDamage, SplashRadius;
+	int Shrapnel; property Shrapnel: Shrapnel;
 
 	Default
 	{
@@ -33,7 +35,13 @@ mixin class BIO_ProjectileCommon
 	// Note that you never need to call `super.OnProjectileDeath()`.
 	virtual void OnProjectileDeath() {}
 
-	action void A_ProjectileDeath() { invoker.OnProjectileDeath(); }
+	action void A_ProjectileDeath()
+	{
+		invoker.OnProjectileDeath();
+		// TODO: Subtle sound if Shrapnel is >0
+		A_Explode(invoker.SplashDamage, invoker.SplashRadius,
+			nails: invoker.Shrapnel, nailDamage: invoker.Damage);
+	}
 }
 
 class BIO_Projectile : Actor abstract
@@ -44,6 +52,8 @@ class BIO_Projectile : Actor abstract
 	{
 		Projectile;
 		BIO_Projectile.BFGRays 0;
+		BIO_Projectile.Splash 0, 0;
+		BIO_Projectile.Shrapnel 0;
 	}
 
 	// The hacky part that makes it all work.
@@ -73,6 +83,8 @@ class BIO_FastProjectile : FastProjectile abstract
 	Default
 	{
 		BIO_FastProjectile.BFGRays 0;
+		BIO_FastProjectile.Splash 0, 0;
+		BIO_FastProjectile.Shrapnel 0;
 	}
 }
 
@@ -116,7 +128,44 @@ class BIO_ShotPellet : BIO_Bullet
 	}
 }
 
-// Real projectiles ============================================================
+// True projectiles ============================================================
+
+class BIO_Rocket : BIO_Projectile
+{
+	Default
+	{
+		+DEHEXPLOSION
+		+RANDOMIZE
+		+ROCKETTRAIL
+		+ZDOOMTRANS
+
+		DeathSound "weapons/rocklx";
+		Height 8;
+		Obituary "$OB_MPROCKET";
+		Radius 11;
+		SeeSound "weapons/rocklf";
+		Speed 20;
+		Tag "$BIO_PROJ_TAG_ROCKET";
+
+		BIO_Projectile.Splash 128, 128;
+	}
+
+	States
+	{
+	Spawn:
+		MISL A 1 Bright;
+		Loop;
+	Death.Impl:
+		MISL B 8 Bright A_ProjectileDeath;
+		MISL C 6 Bright;
+		MISL D 4 Bright;
+		Stop;
+	BrainExplode:
+		MISL BC 10 Bright;
+		MISL D 10 A_BrainExplode;
+		Stop;
+	}
+}
 
 class BIO_PlasmaBall : BIO_Projectile
 {

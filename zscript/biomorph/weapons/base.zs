@@ -324,7 +324,8 @@ class BIO_Weapon : DoomWeapon abstract
 	virtual void OnSelect() {}
 
 	// Always gets called before affixes get their version of this invoked.
-	virtual void OnProjectileFired(Actor proj) const {}
+	virtual void OnTrueProjectileFired(BIO_Projectile proj) const {}
+	virtual void OnFastProjectileFired(BIO_FastProjectile proj) const {}
 
 	abstract void GetFireTimes(in out Array<int> fireTimes,
 		bool secondary = false) const;
@@ -605,15 +606,11 @@ class BIO_Weapon : DoomWeapon abstract
 			Actor proj = A_FireProjectile(fireType,
 				FRandom(-hSpread, hSpread),
 				false, pitch: FRandom(-vSpread, vSpread));
+			
 			if (proj == null) continue;
 			proj.SetDamage(Random(minDmg, maxDmg));
-			invoker.OnProjectileFired(proj);
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
-
-			for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
-				invoker.ImplicitAffixes[i].OnProjectileFired(invoker, proj);
-			for (uint i = 0; i < invoker.Affixes.Size(); i++)
-				invoker.Affixes[i].OnProjectileFired(invoker, proj);
+			invoker.OnProjectileFired(proj);
 		}
 
 		{
@@ -648,6 +645,46 @@ class BIO_Weapon : DoomWeapon abstract
 
 		int subtract = diff * factor;
 		reserveAmmo.Amount -= subtract;
+	}
+
+	// Utility functions =======================================================
+
+	private void OnProjectileFired(Actor proj)
+	{
+		if (proj is "BIO_Projectile")
+		{
+			let tProj = BIO_Projectile(proj);
+			OnTrueProjectileFired(tProj);
+
+			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			{
+				ImplicitAffixes[i].ModifySplash(self, tProj.SplashDamage, tProj.SplashRadius);
+				ImplicitAffixes[i].OnTrueProjectileFired(self, tProj);
+			}
+
+			for (uint i = 0; i < Affixes.Size(); i++)
+			{
+				Affixes[i].ModifySplash(self, tProj.SplashDamage, tProj.SplashRadius);
+				Affixes[i].OnTrueProjectileFired(self, tProj);
+			}
+		}
+		else if (proj is "BIO_FastProjectile")
+		{
+			let fProj = BIO_FastProjectile(proj);
+			OnFastProjectileFired(fProj);
+
+			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			{
+				ImplicitAffixes[i].ModifySplash(self, fProj.SplashDamage, fProj.SplashRadius);
+				ImplicitAffixes[i].OnFastProjectileFired(self, fProj);
+			}
+
+			for (uint i = 0; i < Affixes.Size(); i++)
+			{
+				Affixes[i].ModifySplash(self, fProj.SplashDamage, fProj.SplashRadius);
+				Affixes[i].OnFastProjectileFired(self, fProj);
+			}
+		}
 	}
 }
 
