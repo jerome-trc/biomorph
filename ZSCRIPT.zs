@@ -6,7 +6,7 @@ class Biomorph abstract
 {
 	const VERS_STR = "0.0.1";
 
-	const LOGPFX_INFO = "\cfBIO:\c-";
+	const LOGPFX_INFO = "\cfBIO: \c-";
 	const LOGPFX_WARN = "\cfBIO: \ck(WARNING)\c- "; // Yellow
 	const LOGPFX_ERR = "\cfBIO: \cg(ERROR)\c- "; // Red
 	const LOGPFX_DEBUG = "\cfBIO: \cn(DEBUG)\c- "; // Light blue
