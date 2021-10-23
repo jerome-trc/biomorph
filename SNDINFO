@@ -14,4 +14,7 @@ weapons/gunmech0 GUNMECH0
 weapons/gunmech1 GUNMECH1
 weapons/gunmech2 GUNMECH2
 
+weapons/incursion INCUFIRE
+weapons/incursionreload INCURELO
+
 pickup/armorshard AMRSHRD
