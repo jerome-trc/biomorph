@@ -1,5 +1,9 @@
 class BIO_BFG9000 : BIO_Weapon
 {
+	int FireTime1, FireTime2, FireTime3, FireTime4;
+	property FireTimes: FireTime1, FireTime2, FireTime3, FireTime4;
+	int ReloadTime; property ReloadTimes: ReloadTime;
+
 	Default
 	{
 		+WEAPON.NOAUTOFIRE;
@@ -21,6 +25,9 @@ class BIO_BFG9000 : BIO_Weapon
 		BIO_Weapon.MagazineType "BIO_Magazine_BFG9000";
 		BIO_Weapon.Spread 0.2, 0.2;
 		BIO_Weapon.SwitchSpeeds 5, 5;
+
+		BIO_BFG9000.FireTimes 20, 10, 10, 20;
+		BIO_BFG9000.ReloadTimes 30;
 	}
 
 	States
@@ -36,10 +43,26 @@ class BIO_BFG9000 : BIO_Weapon
 		Loop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
-		BFGG A 20 A_BFGsound;
-		BFGG B 10 A_GunFlash;
-		BFGG B 10 A_BIO_Fire;
-		BFGG B 20 A_ReFire;
+		BFGG A 20
+		{
+			A_SetTics(invoker.FireTime1);
+			A_BFGSound();
+		}
+		BFGG B 10
+		{
+			A_SetTics(invoker.FireTime2);
+			A_GunFlash();
+		}
+		BFGG B 10
+		{
+			A_SetTics(invoker.FireTime3);
+			A_BIO_Fire();
+		}
+		BFGG B 20
+		{
+			A_SetTics(invoker.FireTime4);
+			A_ReFire();
+		}
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
@@ -53,8 +76,9 @@ class BIO_BFG9000 : BIO_Weapon
 		BFGG A 1 Offset(0, 32 + 14);
 		BFGG A 1 Offset(0, 32 + 16);
 		BFGG A 1 Offset(0, 32 + 18);
-		BFGG A 30 Offset(0, 32 + 20);
-		TNT1 A 0 A_LoadMag(); // TODO: Reload sounds
+		// TODO: Reload sounds
+		BFGG A 30 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
+		TNT1 A 0 A_LoadMag(); 
 		BFGG A 1 Offset(0, 32 + 18);
 		BFGG A 1 Offset(0, 32 + 16);
 		BFGG A 1 Offset(0, 32 + 14);
@@ -82,6 +106,42 @@ class BIO_BFG9000 : BIO_Weapon
 		bfgBall.MaxRayDamage = MaxDamage2;
 	}
 
+	override void GetFireTimes(in out Array<int> fireTimes, bool _) const
+	{
+		fireTimes.PushV(FireTime1, FireTime2, FireTime3, FireTime4);
+	}
+
+	override void SetFireTimes(Array<int> fireTimes, bool _)
+	{
+		FireTime1 = fireTimes[0];
+		FireTime2 = fireTimes[1];
+		FireTime3 = fireTimes[2];
+		FireTime4 = fireTimes[3];
+	}
+
+	override void GetReloadTimes(in out Array<int> reloadTimes, bool _) const
+	{
+		reloadTimes.Push(ReloadTime);
+	}
+
+	override void SetReloadTimes(Array<int> reloadTimes, bool _)
+	{
+		ReloadTime = reloadTimes[0];
+	}
+
+	override void ResetStats()
+	{
+		super.ResetStats();
+		let defs = GetDefaultByType(GetClass());
+
+		FireTime1 = defs.FireTime1;
+		FireTime2 = defs.FireTime2;
+		FireTime3 = defs.FireTime3;
+		FireTime4 = defs.FireTime4;
+
+		ReloadTime = defs.ReloadTime;
+	}
+
 	override void StatsToString(in out Array<string> stats) const
 	{
 		// Ball stats
@@ -101,6 +161,18 @@ class BIO_BFG9000 : BIO_Weapon
 			FireCount2 == -1 ? 1 : FireCount2,
 			FireTypeFontColor(true),
 			GetDefaultByType(FireType2).GetTag()));
+
+		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
+			FireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
+			float(FireTime1 + FireTime2 + FireTime3 + FireTime4) / 35.0));
+	}
+
+	protected bool FireTimeModified() const
+	{
+		let defs = GetDefaultByType(GetClass());
+		return
+			(FireTime1 + FireTime2 + FireTime3 + FireTime4) !=
+			(defs.FireTime1 + defs.FireTime2 + defs.FireTime3 + defs.FireTime4);
 	}
 }
 

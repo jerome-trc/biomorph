@@ -1,5 +1,8 @@
 class BIO_PlasmaRifle : BIO_Weapon
 {
+	int FireTime1, FireTime2; property FireTimes: FireTime1, FireTime2;
+	int ReloadTime; property ReloadTimes: ReloadTime;
+
 	Default
 	{
 		Tag "$TAG_PLASMARIFLE";
@@ -18,7 +21,10 @@ class BIO_PlasmaRifle : BIO_Weapon
 		BIO_Weapon.FireType "BIO_PlasmaBall";
 		BIO_Weapon.MagazineSize 50;
 		BIO_Weapon.MagazineType "BIO_Magazine_PlasmaRifle";
-		BIO_Weapon.Spread 0.2, 0.2; 
+		BIO_Weapon.Spread 0.2, 0.2;
+
+		BIO_PlasmaRifle.FireTimes 3, 20;
+		BIO_PlasmaRifle.ReloadTimes 30;
 	}
 
 	States
@@ -34,8 +40,16 @@ class BIO_PlasmaRifle : BIO_Weapon
 		Loop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
-		PLSG A 3 A_BIO_Fire;
-		PLSG B 20 A_ReFire;
+		PLSG A 3
+		{
+			A_SetTics(invoker.FireTime1);
+			A_BIO_Fire();
+		}
+		PLSG B 20
+		{
+			A_SetTics(invoker.FireTime2);
+			A_ReFire();
+		}
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
@@ -49,9 +63,9 @@ class BIO_PlasmaRifle : BIO_Weapon
 		PLSG A 1 Offset(0, 32 + 14);
 		PLSG A 1 Offset(0, 32 + 16);
 		PLSG A 1 Offset(0, 32 + 18);
-		PLSG A 30 Offset(0, 32 + 20);
-		TNT1 A 0 A_LoadMag(); // TODO: Reload sounds
-		PLSG A 1 Offset(0, 32 + 18);
+		// TODO: Reload sounds
+		PLSG A 30 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
+		PLSG A 1 Offset(0, 32 + 18) A_LoadMag();
 		PLSG A 1 Offset(0, 32 + 16);
 		PLSG A 1 Offset(0, 32 + 14);
 		PLSG A 1 Offset(0, 32 + 12);
@@ -71,6 +85,38 @@ class BIO_PlasmaRifle : BIO_Weapon
 		Stop;
 	}
 
+	override void GetFireTimes(in out Array<int> fireTimes, bool _) const
+	{
+		fireTimes.PushV(FireTime1, FireTime2);
+	}
+
+	override void SetFireTimes(Array<int> fireTimes, bool _)
+	{
+		FireTime1 = fireTimes[0];
+		FireTime2 = fireTimes[1];
+	}
+
+	override void GetReloadTimes(in out Array<int> reloadTimes, bool _) const
+	{
+		reloadTimes.Push(ReloadTime);
+	}
+
+	override void SetReloadTimes(Array<int> reloadTimes, bool _)
+	{
+		ReloadTime = reloadTimes[0];
+	}
+
+	override void ResetStats()
+	{
+		super.ResetStats();
+		let defs = GetDefaultByType(GetClass());
+
+		FireTime1 = defs.FireTime1;
+		FireTime2 = defs.FireTime2;
+
+		ReloadTime = defs.ReloadTime;
+	}
+
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
@@ -80,6 +126,16 @@ class BIO_PlasmaRifle : BIO_Weapon
 			FireCount1 == -1 ? 1 : FireCount1,
 			FireTypeFontColor(),
 			GetDefaultByType(FireType1).GetTag()));
+		
+		let defs = GetDefaultByType(GetClass());
+
+		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
+			FireTime1 != defs.FireTime1 ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
+			float(FireTime1) / 35.0));
+
+		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_POSTFIREDELAY"),
+			FireTime2 != defs.FireTime2 ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
+			float(FireTime2) / 35.0));
 	}
 }
 

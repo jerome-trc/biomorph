@@ -314,6 +314,16 @@ class BIO_Weapon : DoomWeapon abstract
 	// Always gets called before affixes get their version of this invoked.
 	virtual void OnProjectileFired(Actor proj) const {}
 
+	protected abstract void GetFireTimes(in out Array<int> fireTimes,
+		bool secondary = false) const;
+	protected abstract void SetFireTimes(Array<int> fireTimes,
+		bool secondary = false);
+
+	protected abstract void GetReloadTimes(in out Array<int> reloadTimes,
+		bool secondary = false) const;
+	protected abstract void SetReloadTimes(Array<int> reloadTimes,
+		bool secondary = false);
+
 	// Getters =================================================================
 
 	bool MagazineEmpty(bool secondary = false) const

@@ -57,6 +57,38 @@ class BIO_Utils abstract
 		TRANSLUCENCY_FUZZ = 2
 	}
 
+	// The first return value is the first element in the array to be the max.
+	// The second is the actual max.
+	static uint, int IntArrayMax(Array<int> arr)
+	{
+		uint idx = arr.Size(), max = 2147483647;
+		for (uint i = 0; i < arr.Size(); i++)
+		{
+			if (arr[i] > max)
+			{
+				idx = i;
+				max = arr[i];
+			}
+		}
+		return idx, max;
+	}
+
+	// The first return value is the first element in the array to be the min.
+	// The second is the actual min.
+	static uint, int IntArrayMin(Array<int> arr)
+	{
+		uint idx = arr.Size(), min = -2147483647;
+		for (uint i = 0; i < arr.Size(); i++)
+		{
+			if (arr[i] < min)
+			{
+				idx = i;
+				min = arr[i];
+			}
+		}
+		return idx, min;
+	}
+
 	static string GradeToString(BIO_Grade grade)
 	{
 		switch (grade)
