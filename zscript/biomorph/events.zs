@@ -78,6 +78,77 @@ class BIO_EventHandler : EventHandler
 			return;
 	}
 
+	override void ConsoleProcess(ConsoleEvent event)
+	{
+		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
+		if (bioPlayer == null) return;
+
+		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
+
+		if (event.Name ~== "bio_weapdiag" && weap != null)
+		{
+			string output = Biomorph.LOGPFX_INFO;
+			output.AppendFormat("%s\n%s\n", weap.GetClassName(), weap.GetTag());
+
+			string ft1, ft2;
+
+			if (weap.FireType1 != null)
+				ft1 = weap.FireType1.GetClassName();
+			else
+				ft1 = "null";
+
+			if (weap.FireType2 != null)
+				ft2 = weap.FireType2.GetClassName();
+			else
+				ft2 = "null";
+
+			output = output .. "Primary stats:\n";
+			output.AppendFormat("Fire data: %d x %s\n", weap.FireCount1, ft1);
+			output.AppendFormat("Damage: [%d, %d]\n", weap.MinDamage1, weap.MaxDamage1);
+
+			output = output .. "Secondary stats:\n";
+			output.AppendFormat("Fire data: %d x %s\n", weap.FireCount2, ft2);
+			output.AppendFormat("Damage: [%d, %d]\n", weap.MinDamage2, weap.MaxDamage2);
+
+			Array<int> fireTimes;
+			weap.GetFireTimes(fireTimes);
+			if (fireTimes.Size() > 0)
+			{
+				output = output .. "Fire times:\n";
+				for (uint i = 0; i < fireTimes.Size(); i++)
+					output = output .. "\t" .. fireTimes[i] .. "\n";
+			}
+
+			Array<int> reloadTimes;
+			weap.GetReloadTimes(reloadTimes);
+			if (reloadTimes.Size() > 0)
+			{
+				output = output .. "Reload times:\n";
+				for (uint i = 0; i < reloadTimes.Size(); i++)
+					output = output .. "\t" .. reloadTimes[i] .. "\n";
+			}
+
+			output.AppendFormat("Switch speeds: %d lower, %d raise\n",
+				weap.LowerSpeed, weap.RaiseSpeed);
+
+			if (weap.ImplicitAffixes.Size() > 0)
+			{
+				output = output .. "Implicit affixes:\n";
+				for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
+					output.AppendFormat("\t%s\n", weap.ImplicitAffixes[i].GetClassName());
+			}
+
+			if (weap.Affixes.Size() > 0)
+			{
+				output = output .. "Affixes:\n";
+				for (uint i = 0; i < weap.Affixes.Size(); i++)
+					output.AppendFormat("\t%s\n", weap.Affixes[i].GetClassName());
+			}
+
+			Console.Printf(output);
+		}
+	}
+
 	private void FinalizeSpawn(Class<Actor> toSpawn, Actor eventThing) const
 	{
 		if (toSpawn == null)
