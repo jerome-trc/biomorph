@@ -133,6 +133,7 @@ class BIO_PlasmaBall : BIO_Projectile
 		RenderStyle "Add";
 		SeeSound "weapons/plasmaf";
 		Speed 25;
+		Tag "$BIO_PROJ_TAG_PLASMABALL";
 	}
 
 	States

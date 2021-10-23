@@ -54,6 +54,7 @@
 
 	BIO_PROJ_TAG_BULLET = "bullet(s)";
 	BIO_PROJ_TAG_SHOTPELLET = "pellet(s)";
+	BIO_PROJ_TAG_PLASMABALL = "plasma ball(s)";
 	BIO_PROJ_TAG_BFGBALL = "ball(s)";
 
 	BIO_PROJEXTRA_TAG_BFGRAY = "ray(s)";
