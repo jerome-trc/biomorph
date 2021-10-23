@@ -53,7 +53,17 @@ enum BIO_WeaponAffixMask : uint
 	// Switch speeds
 	BIO_WAM_RAISESPEED = 1 << 14,
 	BIO_WAM_LOWERSPEED = 1 << 15,
-	BIO_WAM_SWITCHSPEED = BIO_WAM_RAISESPEED | BIO_WAM_LOWERSPEED
+	BIO_WAM_SWITCHSPEED = BIO_WAM_RAISESPEED | BIO_WAM_LOWERSPEED,
+	// Fire and reload times
+	BIO_WAM_FIRETIME = 1 << 16,
+	BIO_WAM_RELOADTIME = 1 << 17,
+	// Completely lock off the primary or secondary side of the weapon
+	BIO_WAM_PRIMARY =
+		BIO_WAM_FIREDATA_1 | BIO_WAM_DAMAGE_1 |
+		BIO_WAM_SPREAD_1 | BIO_WAM_MAGSIZE_1,
+	BIO_WAM_SECONDARY =
+		BIO_WAM_FIREDATA_2 | BIO_WAM_DAMAGE_2 |
+		BIO_WAM_SPREAD_2 | BIO_WAM_MAGSIZE_2
 }
 
 mixin class BIO_Magazine
@@ -377,6 +387,20 @@ class BIO_Weapon : DoomWeapon abstract
 
 	abstract void StatsToString(in out Array<string> stats) const;
 
+	// No fire state can have a tic time below 1. Fire rate-affecting affixes need
+	// to know in advance if they can even have any effect, given this caveat.
+	int ReducibleFireTime() const
+	{
+		int ret = 0;
+		Array<int> fireTimes;
+		GetFireTimes(fireTimes);
+		
+		for (uint i = 0; i < fireTimes.Size(); i++)
+			ret += Max(fireTimes[i] - 1, 0);
+
+		return ret;
+	}
+
 	// The following 3 functions serve to color stats differently if those stats
 	// have been modified from their defaults by an affix.
 
@@ -474,6 +498,42 @@ class BIO_Weapon : DoomWeapon abstract
 		Affixes[e].Init(self);
 		ApplyAllAffixes();
 		return true;
+	}
+
+	void ModifyFireTime(int modifier)
+	{
+		if (modifier == 0)
+		{
+			Console.Printf(
+				"Illegal fire time modifier of 0 given to %s.",
+				GetClassName());
+			return;
+		}
+
+		Array<int> fireTimes;
+		GetFireTimes(fireTimes);
+
+		if (fireTimes.Size() < 1)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"%s attempted to illegally modify fire times.",
+				GetClassName());
+		}
+
+		uint e = Abs(modifier);
+		for (uint i = 0; i < e; i++)
+		{
+			uint idx = 0, minOrMax = 0;
+
+			if (modifier > 0)
+				[idx, minOrMax] = BIO_Utils.IntArrayMin(fireTimes);
+			else
+				[idx, minOrMax] = BIO_Utils.IntArrayMax(fireTimes);
+
+			fireTimes[idx] = modifier > 0 ? fireTimes[idx] + 1 : fireTimes[idx] - 1;
+		}
+
+		SetFireTimes(fireTimes);
 	}
 
 	// Actions =================================================================

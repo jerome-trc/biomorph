@@ -10,7 +10,7 @@ class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return !(weap.AffixMask & BIO_WAM_DAMAGE);
+		return (weap.AffixMask & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
 	}
 
 	override void Apply(BIO_Weapon weap) const
@@ -51,5 +51,40 @@ class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 				Modifier2 >= 0 ? "+" : "-", Modifier2);
 		}
+	}
+}
+
+class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
+{
+	int Modifier;
+
+	override void Init(BIO_Weapon weap)
+	{
+		int rft = weap.ReducibleFireTime();
+
+		if (rft == 1)
+			Modifier = -1;
+		else
+			Modifier = -Random(1, rft);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return
+			!(weap.AffixMask & BIO_WAM_FIRETIME) &&
+			weap.ReducibleFireTime() > 0;
+	}
+
+	override void Apply(BIO_Weapon weap)
+	{
+		weap.ModifyFireTime(Modifier);
+	}
+
+	override string ToString(BIO_Weapon weap) const
+	{
+		return String.Format(
+			StringTable.Localize("$BIO_AFFIX_TOSTR_FIRERATE"),
+			Modifier >= 0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
+			Modifier >= 0 ? "+" : "", float(Modifier) / 35.0);
 	}
 }

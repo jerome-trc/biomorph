@@ -13,6 +13,7 @@ class BIO_Fist : BIO_Weapon
 		Weapon.SelectionOrder 3700;
 		Weapon.SlotNumber 1;
 
+		BIO_Weapon.AffixMask BIO_WAM_SECONDARY | BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE;
 		BIO_Weapon.DamageRange 2, 20;
 
 		BIO_Fist.FireTimes 4, 4, 5, 4, 5;

@@ -108,6 +108,7 @@
 	BIO_AFFIX_TOSTR_WEAPDMG1 = "Primary damage: %s%s%d";
 	BIO_AFFIX_TOSTR_WEAPDMG2 = "Secondary damage: %s%s%d";
 	BIO_AFFIX_TOSTR_WEAPDMG = "Damage: %s%s%d primary, %s%s%d secondary";
+	BIO_AFFIX_TOSTR_FIRERATE = "Fire rate: %s%s%.2f seconds";
 
 	BIO_AFFIX_TOSTR_ARMORSAVEAMOUNT = "Durability: %s%s%d";
 	BIO_AFFIX_TOSTR_ARMORSAVEPERCENT = "Damage absorption: %s%s%d%%";
