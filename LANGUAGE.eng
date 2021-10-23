@@ -142,6 +142,12 @@
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";
 
+// Menus =======================================================================
+
+	BIO_OPTLBL_MULTIBARRELFIRE = "Multi-Barrel Fire Mode";
+	BIO_OPTVAL_MBF_PRIM = "Primary Fires Multiple Barrels";
+	BIO_OPTVAL_MBF_SEC = "Secondary Fires Multiple Barrels";
+
 // Keybindings =================================================================
 
 	BIO_KB_DROPWEAP = "Drop Weapon";

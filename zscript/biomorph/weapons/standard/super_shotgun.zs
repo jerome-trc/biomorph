@@ -18,6 +18,7 @@ class BIO_SuperShotgun : BIO_Weapon
 		Weapon.SlotNumber 3;
 		Weapon.UpSound "weapons/gunswap";
 
+		BIO_Weapon.AffixMask BIO_WAM_SECONDARY;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireCount 7;
@@ -42,25 +43,40 @@ class BIO_SuperShotgun : BIO_Weapon
 		SHT2 A 1 A_BIO_Raise;
 		Loop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
+		TNT1 A 0
+		{
+			if (BIO_CVar.MultiBarrelPrimary(Player))
+				return ResolveState("Fire.Double");
+			else
+				return ResolveState("Fire.Single");
+		}
+	AltFire:
+		TNT1 A 0
+		{
+			invoker.bAltFire = false;
+			if (BIO_CVar.MultiBarrelPrimary(Player))
+				return ResolveState("Fire.Single");
+			else
+				return ResolveState("Fire.Double");
+		}
+	Fire.Single:
+		TNT1 A 0 A_JumpIf(invoker.Magazine1.Amount < 1, "Reload");
 		SHT2 A 3 A_SetTics(invoker.FireTime1);
 		SHT2 A 7
 		{
 			A_SetTics(invoker.FireTime2);
-			A_BIO_Fire(false, 2);
+			A_BIO_Fire();
+			// TODO: Replace with a smaller sound
 			A_StartSound("weapons/sshotf", CHAN_WEAPON);
 		}
 		Goto Ready;
-	AltFire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
+	Fire.Double:
+		TNT1 A 0 A_JumpIf(invoker.Magazine1.Amount < 2, "Reload");
 		SHT2 A 3 A_SetTics(invoker.FireTime1);
 		SHT2 A 7
 		{
 			A_SetTics(invoker.FireTime2);
-
-			invoker.bAltFire = false;
-			A_BIO_Fire();
-			// TODO: Replace with a smaller sound
+			A_BIO_Fire(factor: 2);
 			A_StartSound("weapons/sshotf", CHAN_WEAPON);
 		}
 		Goto Ready;

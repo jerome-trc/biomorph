@@ -444,6 +444,44 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Setters =================================================================
 
+	override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
+	{
+		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
+			return false;
+
+		if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammoUse))
+			return false;
+
+		if (!altFire)
+		{
+			if (Magazine1 != null)
+			{
+				if (ammoUse >= 0)
+					Magazine1.Amount -= ammoUse;
+				else
+					Magazine1.Amount -= AmmoUse1;
+			}
+
+			if (bPRIMARY_USES_BOTH && Magazine2 != null)
+				Magazine2.Amount -= AmmoUse2;
+		}
+		else
+		{
+			if (Magazine2 != null)
+				Magazine2.Amount -= AmmoUse2;
+			if (bALT_USES_BOTH && Magazine1 != null)
+				Magazine1.Amount -= AmmoUse1;
+		}
+
+		if (Magazine1 != null && Magazine1.Amount < 0)
+			Magazine1.Amount = 0;
+
+		if (Magazine2 != null && Magazine2.Amount < 0)
+			Magazine2.Amount = 0;
+		
+		return true;
+	}
+
 	// Does not affect affixes in any way.
 	virtual void ResetStats()
 	{
@@ -610,53 +648,6 @@ class BIO_Weapon : DoomWeapon abstract
 
 		int subtract = diff * factor;
 		reserveAmmo.Amount -= subtract;
-	}
-
-	override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
-	{
-		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
-			return false;
-
-		if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammoUse))
-			return false;
-
-		if (!altFire)
-		{
-			if (Magazine1 != null)
-			{
-				if (ammoUse >= 0 && bDehAmmo)
-				{
-					Magazine1.Amount -= ammoUse;
-				}
-				else
-				{
-					Magazine1.Amount -= AmmoUse1;
-				}
-			}
-			if (bPRIMARY_USES_BOTH && Magazine2 != null)
-			{
-				Magazine2.Amount -= AmmoUse2;
-			}
-		}
-		else
-		{
-			if (Magazine2 != null)
-			{
-				Magazine2.Amount -= AmmoUse2;
-			}
-			if (bALT_USES_BOTH && Magazine1 != null)
-			{
-				Magazine1.Amount -= AmmoUse1;
-			}
-		}
-
-		if (Magazine1 != null && Magazine1.Amount < 0)
-			Magazine1.Amount = 0;
-
-		if (Magazine2 != null && Magazine2.Amount < 0)
-			Magazine2.Amount = 0;
-		
-		return true;
 	}
 }
 

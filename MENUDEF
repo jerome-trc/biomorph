@@ -1,0 +1,19 @@
+// TODO: Fancy custom menu with context-sensitive help messages
+
+AddOptionMenu "OptionsMenu"
+{
+	SubMenu "$BIO_MODTITLE", "BIO_Options"
+}
+
+OptionMenu "BIO_Options"
+{
+	Title "$BIO_MODTITLE"
+	StaticText ""
+	Option "$BIO_OPTLBL_MULTIBARRELFIRE", "BIO_multibarrelfire", "BIO_MultiBarrelFire"
+}
+
+OptionValue "BIO_MultiBarrelFire"
+{
+	0, "$BIO_OPTVAL_MBF_PRIM"
+	1, "$BIO_OPTVAL_MBF_SEC"
+}
