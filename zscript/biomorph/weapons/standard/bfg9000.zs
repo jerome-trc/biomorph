@@ -36,10 +36,10 @@ class BIO_BFG9000 : BIO_Weapon
 	Ready:
 		BFGG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect:
+	Deselect.Loop:
 		BFGG A 1 A_BIO_Lower;
 		Loop;
-	Select:
+	Select.Loop:
 		BFGG A 1 A_BIO_Raise;
 		Loop;
 	Fire:

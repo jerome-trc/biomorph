@@ -33,10 +33,10 @@ class BIO_PlasmaRifle : BIO_Weapon
 	Ready:
 		PLSG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect:
+	Deselect.Loop:
 		PLSG A 1 A_BIO_Lower;
 		Loop;
-	Select:
+	Select.Loop:
 		PLSG A 1 A_BIO_Raise;
 		Loop;
 	Fire:
