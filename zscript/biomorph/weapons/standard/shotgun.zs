@@ -140,8 +140,10 @@ class BIO_Shotgun : BIO_Weapon
 	}
 }
 
-class BIO_Magazine_Shotgun : BIO_Magazine
+class BIO_Magazine_Shotgun : Ammo
 {
+	mixin BIO_Magazine;
+
 	Default
 	{
 		Inventory.Amount 1;

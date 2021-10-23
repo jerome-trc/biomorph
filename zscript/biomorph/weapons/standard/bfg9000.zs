@@ -176,8 +176,10 @@ class BIO_BFG9000 : BIO_Weapon
 	}
 }
 
-class BIO_Magazine_BFG9000 : BIO_Magazine
+class BIO_Magazine_BFG9000 : Ammo
 {
+	mixin BIO_Magazine;
+
 	Default
 	{
 		Inventory.Amount 80;

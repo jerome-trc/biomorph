@@ -139,8 +139,10 @@ class BIO_PlasmaRifle : BIO_Weapon
 	}
 }
 
-class BIO_Magazine_PlasmaRifle : BIO_Magazine
+class BIO_Magazine_PlasmaRifle : Ammo
 {
+	mixin BIO_Magazine;
+
 	Default
 	{
 		Inventory.Amount 50;

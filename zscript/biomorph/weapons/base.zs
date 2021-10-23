@@ -56,13 +56,13 @@ enum BIO_WeaponAffixMask : uint
 	BIO_WAM_SWITCHSPEED = BIO_WAM_RAISESPEED | BIO_WAM_LOWERSPEED
 }
 
-class BIO_Magazine : Ammo abstract
+mixin class BIO_Magazine
 {
 	Default
 	{
 		+INVENTORY.IGNORESKILL
 		Inventory.Icon "";
-		Inventory.MaxAmount 99999;
+		Inventory.MaxAmount 32767;
 	}
 }
 
@@ -124,7 +124,7 @@ class BIO_Weapon : DoomWeapon abstract
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
 
-	meta Class<BIO_Magazine> MagazineType1, MagazineType2;
+	meta Class<Ammo> MagazineType1, MagazineType2;
 	property MagazineType: MagazineType1;
 	property MagazineType1: MagazineType1;
 	property MagazineType2: MagazineType2;

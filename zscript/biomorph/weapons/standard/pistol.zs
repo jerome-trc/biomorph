@@ -154,8 +154,10 @@ class BIO_Pistol : BIO_Weapon
 	}
 }
 
-class BIO_Magazine_Pistol : BIO_Magazine
+class BIO_Magazine_Pistol : Ammo
 {
+	mixin BIO_Magazine;
+
 	Default
 	{
 		Inventory.Amount 15;

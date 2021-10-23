@@ -132,8 +132,10 @@ class BIO_Chaingun : BIO_Weapon
 	}
 }
 
-class BIO_Magazine_Chaingun : BIO_Magazine
+class BIO_Magazine_Chaingun : Ammo
 {
+	mixin BIO_Magazine;
+
 	Default
 	{
 		Inventory.Amount 40;

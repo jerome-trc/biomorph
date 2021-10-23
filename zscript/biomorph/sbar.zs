@@ -135,7 +135,7 @@ class BIO_StatusBar : BaseStatusBar
 		if (ammoItem1 != null)
 		{
 			DrawInventoryIcon(ammoItem1, (-14, -4));
-			if (mag1 is "BIO_Magazine")
+			if (mag1.bIgnoreSkill)
 			{
 				DrawString(Font_HUD,
 					String.Format("%s / %s / %s",
@@ -159,7 +159,7 @@ class BIO_StatusBar : BaseStatusBar
 		if (ammoItem2 != null)
 		{
 			DrawInventoryIcon(ammoItem2, (-14, -24));
-			if (mag2 is "BIO_Magazine")
+			if (mag2.bIgnoreSkill)
 			{
 				DrawString(Font_HUD,
 					String.Format("%s / %s / %s",
