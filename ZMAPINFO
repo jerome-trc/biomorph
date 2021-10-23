@@ -3,6 +3,9 @@ GameInfo
 	AddEventHandlers = "BIO_EventHandler"
 	PlayerClasses = "BIO_Player"
 	StatusBarClass = "BIO_StatusBar"
+
+	QuitMessages = "$BIO_QUITMSG_MUTACORR", "$BIO_QUITMSG_GRADES",
+		"$BIO_QUITMSG_MULTIBARREL"
 }
 
 DamageType BIO_NullDamage

@@ -153,6 +153,15 @@
 	BIO_KB_DROPWEAP = "Drop Weapon";
 	BIO_KB_UNEQUIPARMOR = "Take off Armour";
 
+// Quit messages ===============================================================
+
+	BIO_QUITMSG_MUTACORR = "\cjThe effects of \cgR.O.T. Mutagen\cj "
+		"are unpredictable and irreversible, but potentially very powerful.";
+	BIO_QUITMSG_GRADES = "\cjAll gear fits into one of four grades: "
+		"Standard, \cdSpecialty\cj, \cvExperimental\cj, and \ciClassified\cj.";
+	BIO_QUITMSG_MULTIBARREL = "\cjMulti-barrelled weapons like the Super Shotgun "
+		"always allow firing only one barrel (try your \cnalt-fire\cj button).";
+
 // Miscellaneous ===============================================================
 
 	BIO_NONE = "None";
