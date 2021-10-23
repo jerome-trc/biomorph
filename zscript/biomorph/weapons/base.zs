@@ -542,10 +542,12 @@ class BIO_Weapon : DoomWeapon abstract
 	action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
 	action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
 
-	action bool A_BIO_Fire(bool secondary = false)
+	action bool A_BIO_Fire(bool secondary = false, int factor = 1)
 	{
 		Class<Actor> fireType = !secondary ? invoker.FireType1 : invoker.FireType2;
+		
 		int fireCount = !secondary ? invoker.FireCount1 : invoker.FireCount2;
+		fireCount *= factor;
 
 		float
 			hSpread = !secondary ? invoker.HSpread1 : invoker.HSpread2,
@@ -554,7 +556,10 @@ class BIO_Weapon : DoomWeapon abstract
 		int minDmg = !secondary ? invoker.MinDamage1 : invoker.MinDamage2,
 			maxDmg = !secondary ? invoker.MaxDamage1 : invoker.MaxDamage2;
 
-		if (!invoker.DepleteAmmo(invoker.bAltFire, true))
+		int ammoUse = !secondary ? invoker.AmmoUse1 : invoker.AmmoUse2;
+		ammoUse *= factor;
+
+		if (!invoker.DepleteAmmo(invoker.bAltFire, true, ammoUse))
 			return false;
 		
 		for (int i = 0; i < fireCount; i++)
