@@ -1,12 +1,18 @@
 class BIO_GlobalData : Thinker
 {
+	private uint PartyXP;
+
 	private Array<Class<BIO_WeaponAffix> > AllWeaponAffixClasses;
 	private Array<BIO_WeaponAffix> WeaponAffixDefaults;
 
 	private Array<Class<BIO_EquipmentAffix> > AllEquipmentAffixClasses;
 	private Array<BIO_EquipmentAffix> EquipmentAffixDefaults;
 
+	private WeightedRandomTable WRT_Mutagens;
+
 	// Getters =================================================================
+
+	uint GetPartyXP() const { return PartyXP; }
 
 	bool WeaponAffixCompatible(Class<BIO_WeaponAffix> afx_t, BIO_Weapon weap) const
 	{
@@ -54,6 +60,15 @@ class BIO_GlobalData : Thinker
 		return eligibles.Size() > 0;
 	}
 
+	Class<BIO_Mutagen> RandomMutagenType() const
+	{
+		return (Class<BIO_Mutagen>)(WRT_Mutagens.Result());
+	}
+
+	// Setters =================================================================
+
+	void AddPartyXP(uint xp) { PartyXP += xp; }
+
 	// The singleton getter and its "constructor" ==============================
 
 	private static BIO_GlobalData Create()
@@ -61,6 +76,8 @@ class BIO_GlobalData : Thinker
 		uint ms = MsTime();
 		let ret = new("BIO_GlobalData");
 		ret.ChangeStatNum(STAT_STATIC);
+
+		ret.WRT_Mutagens = new("WeightedRandomTable");
 
 		for (uint i = 0; i < AllClasses.Size(); i++)
 		{
@@ -75,6 +92,12 @@ class BIO_GlobalData : Thinker
 				ret.AllEquipmentAffixClasses.Push(AllClasses[i]);
 				let eafx = BIO_EquipmentAffix(new(AllClasses[i]));
 				ret.EquipmentAffixDefaults.Push(eafx);
+			}
+			else if (AllClasses[i].GetParentClass() is "BIO_Mutagen")
+			{
+				let mut_t = (Class<BIO_Mutagen>)(AllClasses[i]);
+				let defs = GetDefaultByType(mut_t);
+				ret.WRT_Mutagens.Push(mut_t, defs.DropWeight);
 			}
 		}
 

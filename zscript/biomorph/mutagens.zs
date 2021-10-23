@@ -4,6 +4,8 @@
 
 class BIO_Mutagen : Inventory abstract
 {
+	meta uint DropWeight; property DropWeight: DropWeight;
+
 	Default
     {
 		-COUNTITEM
@@ -15,6 +17,8 @@ class BIO_Mutagen : Inventory abstract
 
 		Inventory.InterHubAmount 9999;
         Inventory.MaxAmount 9999;
+
+		BIO_Mutagen.DropWeight 0;
     }
 
 	// Also prints failure messaging.
@@ -50,6 +54,8 @@ class BIO_MutagenReset : BIO_Mutagen
 		Tag "$BIO_MUTA_RESET_TAG";
 		Inventory.Icon "MUREA0";
 		Inventory.PickupMessage "$BIO_MUTA_RESET_PICKUP";
+
+		BIO_Mutagen.DropWeight 4;
 	}
 
 	States
@@ -85,6 +91,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 		Tag "$BIO_MUTA_ADD_TAG";
 		Inventory.Icon "MUADA0";
 		Inventory.PickupMessage "$BIO_MUTA_ADD_PICKUP";
+		BIO_Mutagen.DropWeight 2;
 	}
 
 	States
@@ -125,6 +132,7 @@ class BIO_MutagenRandom : BIO_Mutagen
 		Tag "$BIO_MUTA_RANDOM_TAG";
 		Inventory.Icon "MURAA0";
 		Inventory.PickupMessage "$BIO_MUTA_RANDOM_PICKUP";
+		BIO_Mutagen.DropWeight 4;
 	}
 
 	States
@@ -163,6 +171,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 		Tag "$BIO_MUTA_REROLL_TAG";
 		Inventory.Icon "MURRA0";
 		Inventory.PickupMessage "$BIO_MUTA_REROLL_PICKUP";
+		BIO_Mutagen.DropWeight 2;
 	}
 
 	States
@@ -206,6 +215,7 @@ class BIO_MutagenRemove : BIO_Mutagen
 		Tag "$BIO_MUTA_REMOVE_TAG";
 		Inventory.Icon "MURMA0";
 		Inventory.PickupMessage "$BIO_MUTA_REMOVE_PICKUP";
+		BIO_Mutagen.DropWeight 3;
 	}
 
 	States
@@ -243,6 +253,7 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 		Tag "$BIO_MUTA_CORRUPT_TAG";
 		Inventory.Icon "MUCOA0";
 		Inventory.PickupMessage "$BIO_MUTA_CORRUPT_PICKUP";
+		BIO_Mutagen.DropWeight 1;
 	}
 
 	States

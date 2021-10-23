@@ -1,3 +1,5 @@
+// Symbols common to weapons and equippables like armour.
+
 enum BIO_Grade : uint8
 {
 	BIO_GRADE_NONE,
