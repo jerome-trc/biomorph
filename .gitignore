@@ -15,3 +15,5 @@ decorate/*
 # Audio-in-progress
 *.aup
 *.au
+
+gzdoom-crash.log
