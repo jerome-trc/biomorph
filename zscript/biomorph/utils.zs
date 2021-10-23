@@ -12,7 +12,7 @@ mixin class BIO_ExternalTypeFunctions
 	{
 		Class<Inventory> t = typeName;
 		if (t == null) return;
-		self.GiveInventory("RLA_Pistol", 1);
+		self.GiveInventory(t, 1);
 	}
 
 	action void A_GiveInv_Ext(
