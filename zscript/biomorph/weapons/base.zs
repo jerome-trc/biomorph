@@ -657,6 +657,16 @@ class BIO_Weapon : DoomWeapon abstract
 		A_AlertMonsters(maxDist, flags);
 	}
 
+	protected action void A_Kickback(float xVelMult, float zVelMult)
+	{
+		// Don't apply any if the wielding player isn't on the ground
+		if (invoker.Owner.Pos.Z > invoker.Owner.FloorZ) return;
+
+		A_ChangeVelocity(
+			Cos(invoker.Pitch) * -xVelMult, 0.0,
+			Sin(invoker.Pitch) * zVelMult, CVF_RELATIVE);
+	}
+
 	// Utility functions =======================================================
 
 	private void OnProjectileFired(Actor proj)

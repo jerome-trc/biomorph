@@ -67,6 +67,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_StartSound("weapons/incursion", CHAN_BODY);
 			A_StartSound("weapons/incursion", CHAN_6);
 			A_StartSound("weapons/incursion", CHAN_7);
+			A_Kickback(2.5, 2.5);
 		}
 		INCU C 4 Bright A_SetTics(invoker.FireTime2);
 		INCU D 2 A_SetTics(invoker.FireTime3);
