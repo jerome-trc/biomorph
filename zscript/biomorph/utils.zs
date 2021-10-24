@@ -61,7 +61,8 @@ class BIO_Utils abstract
 	// The second is the actual max.
 	static uint, int IntArrayMax(Array<int> arr)
 	{
-		uint idx = arr.Size(), max = -2147483647;
+		uint idx = arr.Size(), max = int.MIN;
+		
 		for (uint i = 0; i < arr.Size(); i++)
 		{
 			if (arr[i] > max)
@@ -70,6 +71,7 @@ class BIO_Utils abstract
 				max = arr[i];
 			}
 		}
+
 		return idx, max;
 	}
 
@@ -77,7 +79,8 @@ class BIO_Utils abstract
 	// The second is the actual min.
 	static uint, int IntArrayMin(Array<int> arr)
 	{
-		uint idx = arr.Size(), min = 2147483647;
+		uint idx = arr.Size(), min = int.MAX;
+
 		for (uint i = 0; i < arr.Size(); i++)
 		{
 			if (arr[i] < min)
@@ -86,6 +89,7 @@ class BIO_Utils abstract
 				min = arr[i];
 			}
 		}
+
 		return idx, min;
 	}
 
