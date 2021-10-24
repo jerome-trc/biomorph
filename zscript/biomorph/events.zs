@@ -62,14 +62,15 @@ class BIO_EventHandler : EventHandler
 	{
 		if (ConEvent_WeapDiag(event)) return;
 		if (ConEvent_PartyXP(event)) return;
+		if (ConEvent_WeapAfxCompat(event)) return;
 	}
 
-	private ui bool ConEvent_WeapDiag(ConsoleEvent event)
+	private ui bool ConEvent_WeapDiag(ConsoleEvent event) const
 	{
 		if (!(event.Name ~== "bio_weapdiag")) return false;
 		if (!event.IsManual)
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
+			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"This event can only be invoked manually.");
 			return true;
 		}
@@ -78,7 +79,12 @@ class BIO_EventHandler : EventHandler
 		if (bioPlayer == null) return true;
 
 		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
-		if (weap == null) return true;
+		if (weap == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on a Biomorph weapon.");
+			return true;
+		}
 
 		string output = Biomorph.LOGPFX_INFO;
 		output.AppendFormat("%s\n%s\n", weap.GetClassName(), weap.GetTag());
@@ -142,7 +148,59 @@ class BIO_EventHandler : EventHandler
 		return true;
 	}
 
-	private ui bool ConEvent_PartyXP(ConsoleEvent event)
+	private ui bool ConEvent_WeapAfxCompat(ConsoleEvent event) const
+	{
+		Array<string> nameParts;
+		event.Name.Split(nameParts, ":");
+
+		if (!nameParts[0] || !(nameParts[0] ~== "bio_weapafxcompat"))
+			return false;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked manually.");
+			return true;
+		}
+
+		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
+		if (weap == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on a Biomorph weapon.");
+			return true;
+		}
+
+		if (!nameParts[1])
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Please provide a weapon affix class name.");
+			return true;
+		}
+	
+		Class<BIO_WeaponAffix> afx_t = nameParts[1];
+		if (!afx_t)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"%s is not a valid weapon affix class name.", nameParts[1]);
+			return true;
+		}
+
+		bool compat = BIO_WeaponAffix(new(afx_t)).Compatible(weap);
+		string output;
+		
+		if (compat)
+			output.AppendFormat("\ck%s\c- is \cdcompatible\c- with this weapon.",
+				afx_t.GetClassName());
+		else
+			output.AppendFormat("\ck%s\c- is \cgincompatible\c- with this weapon.",
+				afx_t.GetClassName());
+		
+		Console.Printf(Biomorph.LOGPFX_INFO .. output);
+		return true;
+	}
+
+	private ui bool ConEvent_PartyXP(ConsoleEvent event) const
 	{
 		if (!(event.Name ~== "bio_xp")) return false;
 		if (!event.IsManual)

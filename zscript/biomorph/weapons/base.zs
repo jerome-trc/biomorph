@@ -400,29 +400,61 @@ class BIO_Weapon : DoomWeapon abstract
 
 	bool AllDamageAffixMasked() const
 	{
-		return (AffixMask & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE;
+		return (AffixMask & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
 	}
 
-	bool WeaponDealsAnyDamage() const
+	bool PrimaryDamageAffixMasked() const
+	{
+		return (AffixMask & BIO_WAM_DAMAGE_1) == BIO_WAM_DAMAGE_1;
+	}
+
+	bool SecondaryDamageAffixMasked() const
+	{
+		return (AffixMask & BIO_WAM_DAMAGE_2) == BIO_WAM_DAMAGE_2;
+	}
+
+	bool DealsAnyDamage() const
 	{
 		return (MaxDamage1 + MaxDamage2) > 0;
 	}
 
-	bool FireTypeMutableTo(Class<Actor> newFT, bool secondary = false) const
+	bool FireTypeMutableFrom(Class<Actor> curFT, bool secondary = false) const
 	{
+		if (bMeleeWeapon) return false;
+
 		if (!secondary)
 		{
 			return
 				FireTypeIsDefault(false) &&
-				!(AffixMask & BIO_WAM_FIRETYPE_1)
-				&& FireType1 != newFT;
+				!(AffixMask & BIO_WAM_FIRETYPE_1) &&
+				FireType1 == curFT;
 		}
 		else
 		{
 			return
 				FireTypeIsDefault(true) &&
-				!(AffixMask & BIO_WAM_FIRETYPE_2)
-				&& FireType2 != newFT;
+				!(AffixMask & BIO_WAM_FIRETYPE_2) &&
+				FireType2 == curFT;
+		}
+	}
+
+	bool FireTypeMutableTo(Class<Actor> newFT, bool secondary = false) const
+	{
+		if (bMeleeWeapon) return false;
+
+		if (!secondary)
+		{
+			return
+				FireTypeIsDefault(false) &&
+				!(AffixMask & BIO_WAM_FIRETYPE_1) &&
+				FireType1 != newFT;
+		}
+		else
+		{
+			return
+				FireTypeIsDefault(true) &&
+				!(AffixMask & BIO_WAM_FIRETYPE_2) &&
+				FireType2 != newFT;
 		}
 	}
 
@@ -569,16 +601,20 @@ class BIO_Weapon : DoomWeapon abstract
 		ReloadFactor2 = defs.ReloadFactor2;
 	}
 
-	// Includes implciits.
-	void ApplyAllAffixes()
+	void ApplyImplicitAffixes()
 	{
 		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			ImplicitAffixes[i].Apply(self);
+	}
+
+	void ApplyAllAffixes()
+	{
+		ApplyImplicitAffixes();
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].Apply(self);
 	}
 
-	// Does not alter stats, and does not apply affixes.
+	// Does not alter stats, and does not apply the newly-added affixes.
 	// Returns `false` if there are no compatible affixes to add.
 	bool AddRandomAffix()
 	{
@@ -590,6 +626,22 @@ class BIO_Weapon : DoomWeapon abstract
 		uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
 		Affixes[e].Init(self);
 		return true;
+	}
+
+	// Affects explicits only.
+	void RandomizeAffixes()
+	{
+		ResetStats();
+		Affixes.Clear();
+		ApplyImplicitAffixes();
+
+		uint c = Random(2, MAX_AFFIXES);
+
+		for (uint i = 0; i < c; i++)
+		{
+			if (AddRandomAffix())
+				Affixes[Affixes.Size() - 1].Apply(self);
+		}
 	}
 
 	void ModifyFireTime(int modifier)

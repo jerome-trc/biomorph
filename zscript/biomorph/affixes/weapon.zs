@@ -12,7 +12,7 @@ class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return (weap.AffixMask & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
+		return !weap.AllDamageAffixMasked();
 	}
 
 	override void Apply(BIO_Weapon weap) const
@@ -68,9 +68,7 @@ class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return
-			((weap.AffixMask & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE) &&
-			(weap.MaxDamage1 + weap.MaxDamage2) > 0;
+		return !weap.AllDamageAffixMasked() && weap.DealsAnyDamage();
 	}
 
 	override void Apply(BIO_Weapon weap)
@@ -122,29 +120,17 @@ class BIO_WeaponAffix_Plasma : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		if (weap.bMeleeWeapon) return false;
-
-		bool ret = false;
-
-		if (!(weap.FireType1 is "BIO_PlasmaBall") &&
-			!(weap.AffixMask & BIO_WAM_FIRETYPE_1) &&
-			weap.FireTypeIsDefault(false))
-			ret = true;
-
-		if (!(weap.FireType2 is "BIO_PlasmaBall") &&
-			!(weap.AffixMask & BIO_WAM_FIRETYPE_2) &&
-			weap.FireTypeIsDefault(true))
-			ret = true;
-
-		return ret;
+		return
+			weap.FireTypeMutableTo("BIO_PlasmaBall", false) ||
+			weap.FireTypeMutableTo("BIO_PlasmaBall", true);
 	}
 
 	override void Apply(BIO_Weapon weap) const
 	{
-		if (!(weap.AffixMask & BIO_WAM_FIRETYPE_1))
+		if (weap.FireTypeMutableTo("BIO_PlasmaBall", false))
 			weap.FireType1 = "BIO_PlasmaBall";
 		
-		if (!(weap.AffixMask & BIO_WAM_FIRETYPE_2))
+		if (weap.FireTypeMutableTo("BIO_PlasmaBall", true))
 			weap.FireType2 = "BIO_PlasmaBall";
 	}
 
@@ -161,32 +147,23 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 	// Weapon must be firing shot pellets for this affix to be applicable.
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		if (weap.bMeleeWeapon) return false;
-
-		bool ret = false;
-
-		if (weap.FireType1 is "BIO_ShotPellet" &&
-			!(weap.AffixMask & BIO_WAM_FIRETYPE_1) &&
+		if (weap.FireTypeMutableFrom("BIO_ShotPellet", false) &&
 			!(weap.AffixMask & BIO_WAM_SPREAD_1) &&
-			!(weap.AffixMask & BIO_WAM_DAMAGE_1) &&
-			weap.FireTypeIsDefault(false))
-			ret = true;
-
-		if (weap.FireType2 is "BIO_ShotPellet" &&
-			!(weap.AffixMask & BIO_WAM_FIRETYPE_2) &&
+			!(weap.AffixMask & BIO_WAM_DAMAGE_1))
+			return true;
+		else if (weap.FireTypeMutableFrom("BIO_ShotPellet", true) &&
 			!(weap.AffixMask & BIO_WAM_SPREAD_2) &&
-			!(weap.AffixMask & BIO_WAM_DAMAGE_2) &&
-			weap.FireTypeIsDefault(true))
-			ret = true;
-
-		return ret;
+			!(weap.AffixMask & BIO_WAM_DAMAGE_2))
+			return true;
+		else
+			return false;
 	}
 
 	override void Apply(BIO_Weapon weap) const
 	{
 		weap.UpdateDictionary();
 
-		if (!(weap.AffixMask & BIO_WAM_FIRETYPE_1) &&
+		if (weap.FireTypeMutableFrom("BIO_ShotPellet", false) &&
 			!(weap.AffixMask & BIO_WAM_SPREAD_1) &&
 			!(weap.AffixMask & BIO_WAM_DAMAGE_1))
 		{
@@ -203,7 +180,6 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 			{
 				int pc1 = val.ToInt();
 				weap.FireType1 = "BIO_Slug";
-				Console.Printf("%d", pc1);
 				weap.FireCount1 /= pc1;
 				weap.MinDamage1 *= pc1;
 				weap.MaxDamage1 *= pc1;
@@ -212,7 +188,7 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 			}
 		}
 		
-		if (!(weap.AffixMask & BIO_WAM_FIRETYPE_2) &&
+		if (weap.FireTypeMutableFrom("BIO_ShotPellet", true) &&
 			!(weap.AffixMask & BIO_WAM_SPREAD_2) &&
 			!(weap.AffixMask & BIO_WAM_DAMAGE_2))
 		{
@@ -369,17 +345,12 @@ class BIO_WeaponAffix_ProjSeek : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		bool ret = false;
-
-		if ((weap.AffixMask & BIO_WAM_PRIMARY) != BIO_WAM_PRIMARY &&
-			weap.FiresTrueProjectile(false))
-			ret = true;
-
-		if ((weap.AffixMask & BIO_WAM_SECONDARY) != BIO_WAM_SECONDARY &&
-			weap.FiresTrueProjectile(true))
-			ret = true;
-
-		return ret;
+		if (!weap.PrimaryAffixMasked() && weap.FiresTrueProjectile(false))
+			return true;
+		else if (!weap.SecondaryAffixMasked() && weap.FiresTrueProjectile(true))
+			return true;
+		else
+			return false;
 	}
 
 	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const

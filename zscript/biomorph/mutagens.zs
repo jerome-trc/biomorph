@@ -119,6 +119,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 			return false;
 		}
 
+		weap.ResetStats();
 		weap.ApplyAllAffixes();
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
 		return true;
@@ -147,17 +148,7 @@ class BIO_MutagenRandom : BIO_Mutagen
 	{
 		if (!CanUse()) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
-
-		weap.ResetStats();
-		weap.Affixes.Clear();
-
-		uint c = Random(2, BIO_Weapon.MAX_AFFIXES);
-
-		for (uint i = 0; i < c; i++)
-			weap.AddRandomAffix();
-
-		weap.ApplyAllAffixes();
-
+		weap.RandomizeAffixes();
 		Owner.A_Print("$BIO_MUTA_RANDOM_USE");
 		return true;
 	}
@@ -276,14 +267,7 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 		{
 		default:
 			// Randomize affixes and then hide them
-			weap.Affixes.Clear();
-		
-			uint c = Random(2, BIO_Weapon.MAX_AFFIXES);
-
-			for (uint i = 0; i < c; i++)
-				weap.AddRandomAffix();
-
-			weap.ApplyAllAffixes();
+			weap.RandomizeAffixes();
 			weap.BIOFlags |= BIO_WEAPF_AFFIXESHIDDEN;
 			Owner.A_Print("$BIO_MUTA_CORRUPT_HIDDENRAND");
 			break;
