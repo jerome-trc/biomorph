@@ -270,6 +270,7 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
 		weap.ResetStats();
+		weap.BIOFlags |= BIO_WEAPF_CORRUPTED;
 
 		switch (Random(0, 0))
 		{
