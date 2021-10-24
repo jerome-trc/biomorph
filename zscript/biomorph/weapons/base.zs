@@ -59,16 +59,26 @@ enum BIO_WeaponAffixMask : uint
 	// Fire and reload times
 	BIO_WAM_FIRETIME = 1 << 16,
 	BIO_WAM_RELOADTIME = 1 << 17,
+	// Callbacks
+	BIO_WAM_ONPROJFIRED_1 = 1 << 18,
+	BIO_WAM_ONPROJFIRED_2 = 1 << 19,
+	BIO_WAM_ONPROJFIRED_TRUE = 1 << 20,
+	BIO_WAM_ONPROJFIRED_FAST = 1 << 21,
+	BIO_WAM_ONPROJFIRED =
+		BIO_WAM_ONPROJFIRED_1 | BIO_WAM_ONPROJFIRED_2 |
+		BIO_WAM_ONPROJFIRED_TRUE | BIO_WAM_ONPROJFIRED_FAST,
+	BIO_WAM_PREALERT = 1 << 22,
 	// Melee-weapon only
-	BIO_WAM_LIFESTEAL = 1 << 18,
-	BIO_WAM_MELEERANGE = 1 << 19,
+	BIO_WAM_LIFESTEAL = 1 << 23,
+	BIO_WAM_MELEERANGE = 1 << 24,
 	// Completely lock off the primary or secondary side of the weapon
 	BIO_WAM_PRIMARY =
 		BIO_WAM_FIREDATA_1 | BIO_WAM_DAMAGE_1 |
-		BIO_WAM_SPREAD_1 | BIO_WAM_MAGSIZE_1,
+		BIO_WAM_SPREAD_1 | BIO_WAM_MAGSIZE_1 | BIO_WAM_ONPROJFIRED_1,
 	BIO_WAM_SECONDARY =
 		BIO_WAM_FIREDATA_2 | BIO_WAM_DAMAGE_2 |
-		BIO_WAM_SPREAD_2 | BIO_WAM_MAGSIZE_2
+		BIO_WAM_SPREAD_2 | BIO_WAM_MAGSIZE_2 | BIO_WAM_ONPROJFIRED_2,
+	BIO_WAM_ALL = uint.MAX
 }
 
 mixin class BIO_Magazine
@@ -375,6 +385,44 @@ class BIO_Weapon : DoomWeapon abstract
 					return true;
 
 			return false;
+		}
+	}
+
+	bool PrimaryAffixMasked() const
+	{
+		return (AffixMask & BIO_WAM_PRIMARY) == BIO_WAM_PRIMARY;
+	}
+
+	bool SecondaryAffixMasked() const
+	{
+		return (AffixMask & BIO_WAM_SECONDARY) == BIO_WAM_SECONDARY;
+	}
+
+	bool AllDamageAffixMasked() const
+	{
+		return (AffixMask & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE;
+	}
+
+	bool WeaponDealsAnyDamage() const
+	{
+		return (MaxDamage1 + MaxDamage2) > 0;
+	}
+
+	bool FireTypeMutableTo(Class<Actor> newFT, bool secondary = false) const
+	{
+		if (!secondary)
+		{
+			return
+				FireTypeIsDefault(false) &&
+				!(AffixMask & BIO_WAM_FIRETYPE_1)
+				&& FireType1 != newFT;
+		}
+		else
+		{
+			return
+				FireTypeIsDefault(true) &&
+				!(AffixMask & BIO_WAM_FIRETYPE_2)
+				&& FireType2 != newFT;
 		}
 	}
 
