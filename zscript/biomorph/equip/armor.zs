@@ -7,9 +7,9 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 
 		Height 16;
 		Radius 20;
+		Tag "$BIO_ARMORBONUS_TAG";
 
 		Inventory.MaxAmount 0;
-
 		Inventory.PickupMessage "";
 		Inventory.PickupSound "pickup/armorshard";
 	}

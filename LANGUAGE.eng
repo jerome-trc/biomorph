@@ -107,6 +107,7 @@
 	BIO_ARMOR_TAG_STD = "Standard Armour";
 	BIO_ARMOR_TAG_SPEC = "Specialty Armour";
 	BIO_ARMOR_TAG_EXP = "Experimental Armour";
+	BIO_ARMORBONUS_TAG = "Armour Shard";
 
 	BIO_PICKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
 	BIO_ARMORBONUS_PICKUP = "Repaired your %s using an armour shard.";
