@@ -207,9 +207,11 @@ class BIO_StatusBar : BaseStatusBar
 
 		if (!isInventoryBarVisible() && !Level.NoInventoryBar && CPlayer.MO.InvSel != null)
 		{
-			DrawInventoryIcon(CPlayer.MO.InvSel, (-14, invY));
+			DrawInventoryIcon(CPlayer.MO.InvSel, (-22, invY + 12));
 			DrawString(Font_HUD, FormatNumber(CPlayer.MO.InvSel.Amount, 3),
-				(-30, invY - 16), DI_TEXT_ALIGN_RIGHT);
+				(-40, invY - 10), DI_TEXT_ALIGN_RIGHT);
+			
+			invY -= 40;
 		}
 
 		// Leave room for automap timers
