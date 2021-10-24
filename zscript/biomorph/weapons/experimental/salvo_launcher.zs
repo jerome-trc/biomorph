@@ -93,7 +93,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		Goto Ready;
 	Spawn:
 		SALV X -1;
-		Loop;
+		Stop;
 	}
 
 	override void OnTrueProjectileFired(BIO_Projectile proj)
