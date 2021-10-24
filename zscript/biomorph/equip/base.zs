@@ -1,6 +1,24 @@
+// Dictate what stats can be affected by affixes. If a bit is set,
+// the affix should stop itself from altering that stat, or applying itself
+// to a weapon which it can't even affect.
+enum BIO_EquipmentAffixMask : uint
+{
+	BIO_EAM_NONE = 0,
+	// General
+	BIO_EAM_ONDAMAGETAKEN = 1 << 0,
+	BIO_EAM_ONEQUIP = 1 << 1,
+	BIO_EAM_ONUNEQUIP = 1 << 2,
+	// Armor-related
+	BIO_EAM_SAVEAMOUNT = 1 << 3,
+	BIO_EAM_SAVEPERCENT = 1 << 4,
+	BIO_EAM_ALL = uint.MAX
+}
+
 class BIO_Equipment : Inventory abstract
 {
 	mixin BIO_Gear;
+
+	BIO_EquipmentAffixMask AffixMask; property AffixMask: AffixMask;
 
 	string EquipMessage; property EquipMessage: EquipMessage;
 
@@ -22,6 +40,7 @@ class BIO_Equipment : Inventory abstract
 		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "";
 
+		BIO_Equipment.AffixMask BIO_EAM_NONE;
 		BIO_Equipment.Grade BIO_GRADE_NONE;
 		BIO_Equipment.EquipMessage "$BIO_EQUIP_DEFAULT";
 	}
