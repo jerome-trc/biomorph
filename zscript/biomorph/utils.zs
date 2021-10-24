@@ -229,7 +229,7 @@ class WeightedRandomTableEntry
 	uint Weight;
 }
 
-// Simple running-sum random picker with weights for Actor classes with nesting support.
+// Simple running-sum weighted random Actor class picker with nesting support.
 class WeightedRandomTable
 {
 	private Array<WeightedRandomTableEntry> Entries;
