@@ -25,29 +25,6 @@
 	BIO_GRADE_EXPERIMENTAL = "Experimental";
 	BIO_GRADE_CLASSIFIED = "Classified";
 
-// Pickup messaging ============================================================
-
-	BIO_PICKUP_STANDARD = "Grabbed";
-	BIO_PICKUP_SPECIALTY = "Obtained";
-	BIO_PICKUP_EXPERIMENTAL = "Procured";
-	BIO_PICKUP_CLASSIFIED = "Acquired";
-	
-	BIO_WEAP_PICKUP_BFG90000 = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_CHAINGUN = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_CHAINSAW = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_PISTOL = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_PLASMARIFLE = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_ROCKETLAUNCHER = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_SHOTGUN = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_SUPERSHOTGUN = "Grabbed a %s.";
-
-	BIO_WEAP_PICKUP_AUTOCANNON = "Procured an %s.";
-	BIO_WEAP_PICKUP_HBR = "Procured a %s.";
-	BIO_WEAP_PICKUP_INCURSIONSHOTGUN = "Procured an %s.";
-	BIO_WEAP_PICKUP_SALVOLAUNCHER = "Procured a %s.";
-
-	BIO_PICKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
-
 // Weapons (tags, pickup messages, obituaries, stat readouts) ==================
 
 	BIO_WEAPSTAT_FIREDATA = "\cjDamage: %s(%d - %d)\cj x %s%d\cj %s%s\c-";
@@ -63,6 +40,20 @@
 	BIO_WEAP_TAG_HBR = "Heavy Battle Rifle";
 	BIO_WEAP_TAG_INCURSIONSHOTGUN = "Incursion Shotgun";
 	BIO_WEAP_TAG_SALVOLAUNCHER = "Salvo Launcher";
+
+	BIO_WEAP_PICKUP_BFG90000 = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_CHAINGUN = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_CHAINSAW = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_PISTOL = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_PLASMARIFLE = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_ROCKETLAUNCHER = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_SHOTGUN = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_SUPERSHOTGUN = "Grabbed a %s.";
+
+	BIO_WEAP_PICKUP_AUTOCANNON = "Procured an %s.";
+	BIO_WEAP_PICKUP_HBR = "Procured a %s.";
+	BIO_WEAP_PICKUP_INCURSIONSHOTGUN = "Procured an %s.";
+	BIO_WEAP_PICKUP_SALVOLAUNCHER = "Procured a %s.";
 
 // Fired things (puff/projectile tags) =========================================
 
@@ -113,20 +104,20 @@
 
 // Equipment (tags, UI messaging) ==============================================
 
-	BIO_ARMOREQUIP_FAIL_ALREADYWEARING = "You are already wearing armour.";
-	
-	BIO_ARMORUNEQUIP_FAIL_NOARMOR = "You can't unequip your armour; you aren't wearing any.";
-	BIO_ARMORUNEQUIP_CONFIRM = "Press \cn%s\c- again to take off this armour.";
-	BIO_ARMORUNEQUIP = "You strip off your %s.";
-
-	BIO_EQUIP_DEFAULT = "Equipped %s.";
-	BIO_EQUIP_ARMORDEFAULT = "Equipped a set of %s.";
-
-	BIO_ARMORBONUS_PICKUP = "Repaired your %s using an armour shard.";
-
 	BIO_ARMOR_TAG_STD = "Standard Armour";
 	BIO_ARMOR_TAG_SPEC = "Specialty Armour";
 	BIO_ARMOR_TAG_EXP = "Experimental Armour";
+
+	BIO_PICKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
+	BIO_ARMORBONUS_PICKUP = "Repaired your %s using an armour shard.";
+
+	BIO_EQUIP_DEFAULT = "Equipped %s.";
+	BIO_EQUIP_ARMORDEFAULT = "Equipped a set of %s.";
+	BIO_ARMOREQUIP_FAIL_ALREADYWEARING = "You are already wearing armour.";
+
+	BIO_ARMORUNEQUIP_CONFIRM = "Press \cn%s\c- again to take off this armour.";
+	BIO_ARMORUNEQUIP = "You strip off your %s.";
+	BIO_ARMORUNEQUIP_FAIL_NOARMOR = "You can't unequip your armour; you aren't wearing any.";
 
 // Affixes (tags, details, to-string templates) ================================
 
@@ -197,3 +188,8 @@
 
 	BIO_NONE = "None";
 	BIO_CORRUPTED = "Corrupted";
+
+	BIO_PICKUP_STANDARD = "Grabbed";
+	BIO_PICKUP_SPECIALTY = "Obtained";
+	BIO_PICKUP_EXPERIMENTAL = "Procured";
+	BIO_PICKUP_CLASSIFIED = "Acquired";
