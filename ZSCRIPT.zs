@@ -12,6 +12,8 @@ class Biomorph abstract
 	const LOGPFX_DEBUG = "\cfBIO: \cn(DEBUG)\c- "; // Light blue
 }
 
+#include "zscript/bio_zjson/Include.zs"
+
 #include "zscript/biomorph/ammo.zs"
 #include "zscript/biomorph/cvars.zs"
 #include "zscript/biomorph/events.zs"

@@ -4,6 +4,8 @@
 
 Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https://github.com/jekyllgrim/Easy-Dual-Wield) (MIT license) by [Jekyll Grim Payne](https://github.com/jekyllgrim).
 
+The [ZJSON library](https://github.com/RicardoLuis0/ZJSON) is courtesy of [RicardoLuis0](https://github.com/RicardoLuis0) and used under the MIT license.
+
 The GLDEFS for `BIO_ArmorBonus` were devised by Realm667 user Infirnex.
 
 ## Graphics
