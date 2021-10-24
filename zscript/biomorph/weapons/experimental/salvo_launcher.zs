@@ -165,14 +165,14 @@ class BIO_SalvoLauncher : BIO_Weapon
 			((FireTime3 + 1) * 2);
 	}
 
-	protected bool BurstFireTimeModified()
+	protected bool BurstFireTimeModified() const
 	{
 		return
 			TotalBurstFireTime() !=
 			GetDefaultByType(GetClass()).TotalBurstFireTime();
 	}
 
-	protected bool AutoFireTimeModified()
+	protected bool AutoFireTimeModified() const
 	{
 		return
 			TotalAutoFireTime() !=

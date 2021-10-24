@@ -145,7 +145,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			HSpread1, VSpread1));
 	}
 
-	protected bool FireTimeModified()
+	protected bool FireTimeModified() const
 	{
 		let defs = GetDefaultByType(GetClass());
 		return
