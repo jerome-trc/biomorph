@@ -118,6 +118,13 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		ReloadTime5 = defs.ReloadTime5;
 	}
 
+	override void UpdateDictionary()
+	{
+		Dict = Dictionary.FromString(
+			String.Format("{\"PelletCount1\": \"%d\"}",
+			GetDefaultByType(GetClass()).FireCount1));
+	}
+
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),

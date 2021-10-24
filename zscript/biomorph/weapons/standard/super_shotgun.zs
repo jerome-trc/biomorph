@@ -121,6 +121,13 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		Stop;
 	}
 
+	override void UpdateDictionary()
+	{
+		Dict = Dictionary.FromString(
+			String.Format("{\"PelletCount1\": \"%d\"}",
+			GetDefaultByType(GetClass()).FireCount1));
+	}
+
 	override void GetFireTimes(in out Array<int> fireTimes, bool _) const
 	{
 		fireTimes.PushV(FireTime1, FireTime2);

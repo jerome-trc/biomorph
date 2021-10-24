@@ -225,7 +225,6 @@ class BIO_Utils abstract
 	}
 }
 
-
 class WeightedRandomTableEntry
 {
 	Class<Actor> Type;

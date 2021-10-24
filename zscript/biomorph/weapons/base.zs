@@ -166,6 +166,8 @@ class BIO_Weapon : DoomWeapon abstract
 	protected Ammo Magazine1, Magazine2;
 
 	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
+
+	protected transient Dictionary Dict;
 	
 	Default
 	{
@@ -299,6 +301,10 @@ class BIO_Weapon : DoomWeapon abstract
 	virtual void OnDeselect() {}
 	virtual void OnSelect() {}
 
+	// If the weapon carries special data that can't be known without having the
+	// exact class type (e.g. from a mixin), store it in `Dict` in this function.
+	virtual void UpdateDictionary() {}
+
 	// Always gets called before affixes get their version of this invoked.
 	virtual void OnTrueProjectileFired(BIO_Projectile proj) const {}
 	virtual void OnFastProjectileFired(BIO_FastProjectile proj) const {}
@@ -316,6 +322,12 @@ class BIO_Weapon : DoomWeapon abstract
 	// Getters =================================================================
 
 	abstract void StatsToString(in out Array<string> stats) const;
+
+	string, bool TryGetDictValue(string key)
+	{
+		string ret = Dict.At(key);
+		return ret, ret.Length() > 0;
+	}
 
 	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
 

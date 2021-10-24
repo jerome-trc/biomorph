@@ -154,6 +154,96 @@ class BIO_WeaponAffix_Plasma : BIO_WeaponAffix
 	}
 }
 
+class BIO_WeaponAffix_Slug : BIO_WeaponAffix
+{
+	override void Init(BIO_Weapon weap) {}
+
+	// Weapon must be firing shot pellets for this affix to be applicable.
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		if (weap.bMeleeWeapon) return false;
+
+		bool ret = false;
+
+		if (weap.FireType1 is "BIO_ShotPellet" &&
+			!(weap.AffixMask & BIO_WAM_FIRETYPE_1) &&
+			!(weap.AffixMask & BIO_WAM_SPREAD_1) &&
+			!(weap.AffixMask & BIO_WAM_DAMAGE_1) &&
+			weap.FireTypeIsDefault(false))
+			ret = true;
+
+		if (weap.FireType2 is "BIO_ShotPellet" &&
+			!(weap.AffixMask & BIO_WAM_FIRETYPE_2) &&
+			!(weap.AffixMask & BIO_WAM_SPREAD_2) &&
+			!(weap.AffixMask & BIO_WAM_DAMAGE_2) &&
+			weap.FireTypeIsDefault(true))
+			ret = true;
+
+		return ret;
+	}
+
+	override void Apply(BIO_Weapon weap) const
+	{
+		weap.UpdateDictionary();
+
+		if (!(weap.AffixMask & BIO_WAM_FIRETYPE_1) &&
+			!(weap.AffixMask & BIO_WAM_SPREAD_1) &&
+			!(weap.AffixMask & BIO_WAM_DAMAGE_1))
+		{
+			bool valid = false;
+			string val = "";
+			[val, valid] = weap.TryGetDictValue("PelletCount1");
+
+			if (!valid)
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR ..
+					"%s is a shotgun with no PelletCount1 dictionary value.");
+			}
+			else
+			{
+				int pc1 = val.ToInt();
+				weap.FireType1 = "BIO_Slug";
+				Console.Printf("%d", pc1);
+				weap.FireCount1 /= pc1;
+				weap.MinDamage1 *= pc1;
+				weap.MaxDamage1 *= pc1;
+				weap.HSpread1 = 0.1;
+				weap.VSpread1 = 0.1;
+			}
+		}
+		
+		if (!(weap.AffixMask & BIO_WAM_FIRETYPE_2) &&
+			!(weap.AffixMask & BIO_WAM_SPREAD_2) &&
+			!(weap.AffixMask & BIO_WAM_DAMAGE_2))
+		{
+			bool valid = false;
+			string val = "";
+			[val, valid] = weap.TryGetDictValue("PelletCount2");
+
+			if (!valid)
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR ..
+					"%s is a shotgun with no PelletCount1 dictionary value.");
+			}
+			else
+			{
+				int pc2 = val.ToInt();
+				weap.FireType2 = "BIO_Slug";
+				weap.FireCount2 /= pc2;
+				weap.MinDamage2 *= pc2;
+				weap.MaxDamage2 *= pc2;
+				weap.HSpread2 = 0.1;
+				weap.VSpread2 = 0.1;
+			}
+		}
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_SLUG"));
+	}
+}
+
 // Miscellaneous ===============================================================
 
 class BIO_WeaponAffix_FireCount : BIO_WeaponAffix

@@ -151,6 +151,14 @@ class BIO_ShotPellet : BIO_Bullet
 	}
 }
 
+class BIO_Slug : BIO_Bullet
+{
+	Default
+	{
+		Tag "$BIO_PROJ_TAG_SLUG";
+	}
+}
+
 // True projectiles ============================================================
 
 class BIO_Rocket : BIO_Projectile
