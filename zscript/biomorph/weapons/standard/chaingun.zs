@@ -1,4 +1,4 @@
-class BIO_Chaingun : BIO_Weapon
+class BIO_Chaingun : BIO_Weapon replaces Chaingun
 {
 	int FireTime; property FireTimes: FireTime;
 	int ReloadTime; property ReloadTimes: ReloadTime;

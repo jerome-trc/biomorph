@@ -1,4 +1,4 @@
-class BIO_PlasmaRifle : BIO_Weapon
+class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 {
 	int FireTime1, FireTime2; property FireTimes: FireTime1, FireTime2;
 	int ReloadTime; property ReloadTimes: ReloadTime;

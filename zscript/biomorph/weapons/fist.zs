@@ -1,4 +1,4 @@
-class BIO_Fist : BIO_Weapon
+class BIO_Fist : BIO_Weapon replaces Fist
 {
 	mixin BIO_MeleeWeapon;
 

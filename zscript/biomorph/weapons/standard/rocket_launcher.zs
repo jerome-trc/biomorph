@@ -1,4 +1,4 @@
-class BIO_RocketLauncher : BIO_Weapon
+class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 {
 	int FireTime1, FireTime2; property FireTimes: FireTime1, FireTime2;
 	int ReloadTime; property ReloadTimes: ReloadTime;

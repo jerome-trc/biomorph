@@ -1,4 +1,4 @@
-class BIO_Chainsaw : BIO_Weapon
+class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 {
 	mixin BIO_MeleeWeapon;
 

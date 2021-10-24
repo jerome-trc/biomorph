@@ -1,4 +1,4 @@
-class BIO_SuperShotgun : BIO_Weapon
+class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 {
 	int FireTime1, FireTime2; property FireTimes: FireTime1, FireTime2;
 	int ReloadTime1, ReloadTime2, ReloadTime3;

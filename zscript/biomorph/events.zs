@@ -176,6 +176,9 @@ class BIO_EventHandler : EventHandler
 
 		if (ReplaceArmor(event))
 			return;
+
+		if (ReplaceShotgun(event) || ReplaceChaingun(event))
+			return;
 	}
 
 	private void FinalizeSpawn(Class<Actor> toSpawn, Actor eventThing) const
@@ -192,7 +195,7 @@ class BIO_EventHandler : EventHandler
 		}
 	}
 
-	private bool ReplaceSmallAmmo(WorldEvent event)
+	private bool ReplaceSmallAmmo(WorldEvent event) const
 	{
 		if (event.Thing.GetClass() == "Clip")
 			FinalizeSpawn("BIO_Clip", event.Thing);
@@ -208,7 +211,7 @@ class BIO_EventHandler : EventHandler
 		return true;
 	}
 
-	private bool ReplaceBigAmmo(WorldEvent event)
+	private bool ReplaceBigAmmo(WorldEvent event) const
 	{
 		if (event.Thing.GetClass() == "ClipBox")
 			FinalizeSpawn("BIO_ClipBox", event.Thing);
@@ -224,7 +227,7 @@ class BIO_EventHandler : EventHandler
 		return true;
 	}
 
-	private bool ReplaceArmor(WorldEvent event)
+	private bool ReplaceArmor(WorldEvent event) const
 	{
 		if (event.Thing.GetClass() == "GreenArmor")
 			FinalizeSpawn("BIO_StandardArmor", event.Thing);
@@ -237,6 +240,30 @@ class BIO_EventHandler : EventHandler
 		}
 		else
 			return false;
+
+		return true;
+	}
+
+	private bool ReplaceShotgun(WorldEvent event) const
+	{
+		if (event.Thing.GetClass() != "BIO_Shotgun") return false;
+
+		// If a Shotgun has been dropped (as opposed to hand-placed on the map),
+		// almost always replace it with an ammo pickup
+		if (Level.MapTime > 0 && Random(0, 15) != 0)
+			FinalizeSpawn("BIO_Shell", event.Thing);
+
+		return true;
+	}
+
+	private bool ReplaceChaingun(WorldEvent event) const
+	{
+		if (event.Thing.GetClass() != "BIO_Chaingun") return false;
+
+		// If a Chaingun has been dropped (as opposed to hand-placed on the map),
+		// almost always replace it with an ammo pickup
+		if (Level.MapTime > 0 && Random(0, 15) != 0)
+			FinalizeSpawn("BIO_Clip", event.Thing);
 
 		return true;
 	}

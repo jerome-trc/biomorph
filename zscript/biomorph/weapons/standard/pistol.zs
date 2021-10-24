@@ -1,4 +1,4 @@
-class BIO_Pistol : BIO_Weapon
+class BIO_Pistol : BIO_Weapon replaces Pistol
 {
 	int FireTime1, FireTime2, FireTime3, FireTime4;
 	property FireTimes: FireTime1, FireTime2, FireTime3, FireTime4;

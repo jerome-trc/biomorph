@@ -1,4 +1,4 @@
-class BIO_BFG9000 : BIO_Weapon
+class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 {
 	int FireTime1, FireTime2, FireTime3, FireTime4;
 	property FireTimes: FireTime1, FireTime2, FireTime3, FireTime4;
