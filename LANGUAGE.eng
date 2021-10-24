@@ -50,6 +50,7 @@
 	BIO_WEAPSTAT_SPREAD = "\cjSpread angles: %.2f horizontal, %.2f vertical";
 
 	BIO_WEAP_TAG_FIST = "Fist";
+	BIO_WEAP_TAG_AUTOCANNON = "Autocannon";
 	BIO_WEAP_TAG_INCURSIONSHOTGUN = "Incursion Shotgun";
 	BIO_WEAP_TAG_SALVOLAUNCHER = "Salvo Launcher";
 
