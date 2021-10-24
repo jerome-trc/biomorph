@@ -8,15 +8,15 @@ The GLDEFS for `BIO_ArmorBonus` were devised by Realm667 user Infirnex.
 
 ## Graphics
 
-Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
-
-Experimental Armour sprites are courtesy of id Software LLC, and edited by Realm667 user Ghastly_dragon.
-
-Salvo Launcher sprites are courtesy of ZDoom forum user LossForWords, alongside zrrion the insect, id Software LLC, and Apogee Entertainment.
+Autocannon and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
 Incursion Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
 
-Autocannon HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
+Salvo Launcher sprites are courtesy of ZDoom forum user LossForWords, alongside zrrion the insect, id Software LLC, and Apogee Entertainment.
+
+Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
+
+Experimental Armour sprites are courtesy of id Software LLC, and edited by Realm667 user Ghastly_dragon.
 
 Any graphical asset which is not mentioned here is custom-made by RatCircus.
 
@@ -34,6 +34,8 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "ShotgunSnatch.wav" (INCURELO)
 - "vssdraw.wav" (GUNMECH0)
 - "weapondropped.wav" (GUNDROP0)
+
+"m60-1.wav" (HVBRFIRE) is courtesy of ZDoom forum user Joblez_I. 
 
 ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (replaces DSSECRET) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
 
