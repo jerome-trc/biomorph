@@ -4,8 +4,8 @@ class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 
 	override void Init(BIO_Weapon weap)
 	{
-		Modifier1 = Random(weap.MinDamage1, weap.MaxDamage1) * 0.2;
-		Modifier2 = Random(weap.MinDamage2, weap.MaxDamage2) * 0.2;
+		Modifier1 = Random(weap.MinDamage1, weap.MaxDamage1) * 0.4;
+		Modifier2 = Random(weap.MinDamage2, weap.MaxDamage2) * 0.4;
 	}
 
 	override bool Compatible(BIO_Weapon weap) const
