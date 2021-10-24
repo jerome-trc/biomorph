@@ -54,6 +54,64 @@ class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 	}
 }
 
+class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
+{
+	float Multi1, Multi2;
+
+	override void Init(BIO_Weapon weap)
+	{
+		Multi1 = FRandom(0.25, 0.75);
+		Multi2 = FRandom(0.25, 0.75);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return
+			((weap.AffixMask & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE) &&
+			(weap.MaxDamage1 + weap.MaxDamage2) > 0;
+	}
+
+	override void Apply(BIO_Weapon weap)
+	{
+		if (!(weap.AffixMask & BIO_WAM_MINDAMAGE_1))
+			weap.MinDamage1 *= (1.0 + Multi1);
+		if (!(weap.AffixMask & BIO_WAM_MAXDAMAGE_1))
+			weap.MaxDamage1 *= (1.0 + Multi1);
+
+		if (!(weap.AffixMask & BIO_WAM_MINDAMAGE_2))
+			weap.MinDamage2 *= (1.0 + Multi2);
+		if (!(weap.AffixMask & BIO_WAM_MAXDAMAGE_2))
+			weap.MaxDamage2 *= (1.0 + Multi2);
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		if (weap.AffixMask & BIO_WAM_DAMAGE_2)
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMGPERCENT1"),
+				Multi1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Multi1 >= 0 ? "+" : "-", int(Multi1 * 100)));
+		}
+		else if (weap.AffixMask & BIO_WAM_DAMAGE_1)
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMGPERCENT2"),
+				Multi2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Multi2 >= 0 ? "+" : "-", int(Multi2 * 100)));
+		}
+		else
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMGPERCENT"),
+				Multi1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Multi1 >= 0 ? "+" : "-", int(Multi1 * 100),
+				Multi2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Multi2 >= 0 ? "+" : "-", int(Multi2 * 100)));
+		}
+	}
+}
+
 class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 {
 	int Modifier;
