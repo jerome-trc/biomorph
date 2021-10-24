@@ -28,6 +28,7 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "gun_fetch4.wav" (GUNMECH2);
 - "hankland.wav" (DSOOF replacement)
 - "Lever_draw.wav" (GUNSWAP1)
+- "Magnum-3.wav" (ACANFIRE)
 - "Shotgun-1.wav" (INCUFIRE)
 - "Shotgun-sweetener1.wav (INCUFIRE)
 - "ShotgunSnatch.wav" (INCURELO)
