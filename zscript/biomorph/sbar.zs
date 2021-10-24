@@ -57,6 +57,28 @@ class BIO_StatusBar : BaseStatusBar
 
 		int invY = -20;
 		DrawWeaponAndAmmoDetails(invY);
+
+		// Held weapon/equipment counts vs. maximums
+
+		let bioPlayer = BIO_Player(CPlayer.MO);
+
+		let hwc = bioPlayer.HeldWeaponCount();
+
+		DrawImage("PISTA0", (-24, invY + 12));
+		DrawString(Font_Small,
+			String.Format("%d / %d", hwc, bioPlayer.MaxWeaponsHeld),
+			(-44, invY), DI_TEXT_ALIGN_RIGHT,
+			hwc < bioPlayer.MaxWeaponsHeld ? Font.CR_WHITE : Font.CR_YELLOW);
+
+		invY -= 8;
+
+		let hec = bioPlayer.HeldEquipmentCount();
+		
+		DrawImage("ARM1A0", (-24, invY));
+		DrawString(Font_Small,
+			String.Format("%d / %d", hec, bioPlayer.MaxEquipmentHeld),
+			(-44, invY - 12), DI_TEXT_ALIGN_RIGHT,
+			hec < bioPlayer.MaxEquipmentHeld ? Font.CR_WHITE : Font.CR_YELLOW);
 	}
 	
 	protected virtual void DrawFullscreenKeys()
