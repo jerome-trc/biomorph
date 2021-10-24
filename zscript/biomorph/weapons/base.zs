@@ -59,6 +59,9 @@ enum BIO_WeaponAffixMask : uint
 	// Fire and reload times
 	BIO_WAM_FIRETIME = 1 << 16,
 	BIO_WAM_RELOADTIME = 1 << 17,
+	// Melee-weapon only
+	BIO_WAM_LIFESTEAL = 1 << 18,
+	BIO_WAM_MELEERANGE = 1 << 19,
 	// Completely lock off the primary or secondary side of the weapon
 	BIO_WAM_PRIMARY =
 		BIO_WAM_FIREDATA_1 | BIO_WAM_DAMAGE_1 |
@@ -717,7 +720,14 @@ mixin class BIO_MeleeWeapon
 	void ApplyLifeSteal(int dmg)
 	{
 		let fDmg = float(dmg);
-		Owner.GiveBody(int(fDmg * LifeSteal), Owner.GetMaxHealth(true) + 100);
+		float lsp = LifeSteal;
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].ModifyLifesteal(self, lsp);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].ModifyLifesteal(self, lsp);
+
+		Owner.GiveBody(int(fDmg * Min(lsp, 1.0)), Owner.GetMaxHealth(true) + 100);
 	}
 }
 

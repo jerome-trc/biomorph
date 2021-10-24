@@ -272,3 +272,27 @@ class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 			Modifier >= 0 ? "+" : "", float(Modifier) / 35.0));
 	}
 }
+
+class BIO_WeaponAffix_LifeSteal : BIO_WeaponAffix
+{
+	float Percent;
+	
+	override void Init(BIO_Weapon weap) { Percent = FRandom(0.2, 0.8); }
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return weap.bMeleeWeapon && !(weap.AffixMask & BIO_WAM_LIFESTEAL);
+	}
+
+	override void ModifyLifesteal(BIO_Weapon weap, in out float lifeSteal) const
+	{
+		lifeSteal += Percent;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_AFFIX_TOSTR_LIFESTEAL"),
+			int(Percent * 100.0)));
+	}
+}

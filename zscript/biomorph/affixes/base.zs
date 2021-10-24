@@ -18,6 +18,8 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	virtual void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const {}	
 	virtual void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const {}
 
+	virtual void ModifyLifesteal(BIO_Weapon weap, in out float lifeSteal) const {}
+
 	virtual void PreAlertMonsters(BIO_Weapon weap,
 		in out double maxDist, in out int flags) const {}
 
