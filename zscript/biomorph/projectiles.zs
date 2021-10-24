@@ -1,8 +1,18 @@
 // Abstract and detail classes =================================================
 
+// For details about projectiles that can't be expressed any other way.
+enum BIO_ProjectileMetaFlags : uint
+{
+	BIO_PMF_NONE = 0,
+	BIO_PMF_BALLISTIC = 1 << 0,
+	BIO_PMF_ENERGY = 1 << 1
+}
+
 mixin class BIO_ProjectileCommon
 {
 	protected bool Dead;
+
+	meta BIO_ProjectileMetaFlags MetaFlags; property MetaFlags: MetaFlags;
 
 	int BFGRays; property BFGRays: BFGRays;
 	int SplashDamage, SplashRadius; property Splash: SplashDamage, SplashRadius;
@@ -51,6 +61,8 @@ class BIO_Projectile : Actor abstract
 	Default
 	{
 		Projectile;
+		
+		BIO_Projectile.MetaFlags BIO_PMF_NONE;
 		BIO_Projectile.BFGRays 0;
 		BIO_Projectile.Splash 0, 0;
 		BIO_Projectile.Shrapnel 0;
@@ -82,6 +94,7 @@ class BIO_FastProjectile : FastProjectile abstract
 
 	Default
 	{
+		BIO_FastProjectile.MetaFlags BIO_PMF_NONE;
 		BIO_FastProjectile.BFGRays 0;
 		BIO_FastProjectile.Splash 0, 0;
 		BIO_FastProjectile.Shrapnel 0;
@@ -102,6 +115,8 @@ class BIO_Bullet : BIO_FastProjectile
 		Radius 1;
 		Speed 80;
 		Tag "$BIO_PROJ_TAG_BULLET";
+
+		BIO_FastProjectile.MetaFlags BIO_PMF_BALLISTIC;
 	}
 
 	States
@@ -183,6 +198,8 @@ class BIO_PlasmaBall : BIO_Projectile
 		SeeSound "weapons/plasmaf";
 		Speed 25;
 		Tag "$BIO_PROJ_TAG_PLASMABALL";
+
+		BIO_Projectile.MetaFlags BIO_PMF_ENERGY;
 	}
 
 	States
@@ -215,6 +232,7 @@ class BIO_BFGBall : BIO_Projectile
 		Speed 25;
 		Tag "$BIO_PROJ_TAG_BFGBALL";
 
+		BIO_Projectile.MetaFlags BIO_PMF_ENERGY;
 		BIO_BFGBall.RayDamageRange 15, 120;
 	}
 
