@@ -289,34 +289,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	override string PickupMessage()
 	{
-		string ret = StringTable.Localize("$BIO_PICKUP_TEMPLATE_WEAP");
-		string prefix = "", article = "";
-		
-		switch (Grade)
-		{
-		case BIO_GRADE_STANDARD:
-			prefix = StringTable.Localize("$BIO_PICKUP_STANDARD");
-			break;
-		default:
-		case BIO_GRADE_SPECIALTY:
-			prefix = StringTable.Localize("$BIO_PICKUP_SPECIALTY");
-			break;
-		case BIO_GRADE_EXPERIMENTAL:
-			prefix = StringTable.Localize("$BIO_PICKUP_EXPERIMENTAL");
-			break;
-		case BIO_GRADE_CLASSIFIED:
-			prefix = StringTable.Localize("$BIO_PICKUP_CLASSIFIED");
-			break;
-		}
-
-		if (Grade == BIO_GRADE_CLASSIFIED)
-			{} // Do nothing
-		else if (Affixes.Size() < 1)
-			article = StringTable.Localize("$BIO_PICKUP_ARTICLE_A");
-		else
-			article = StringTable.Localize("$BIO_PICKUP_ARTICLE_MUTATEDWEAP");
-
-		ret = String.Format(ret, prefix, article, GetTag());
+		string ret = String.Format(StringTable.Localize(PickupMsg), GetTag());
 		ret = ret .. " [\cn" .. SlotNumber .. "\c-]";
 		return ret;
 	}

@@ -11,6 +11,8 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		Height 20;
 		Tag "$TAG_BFG9000";
 
+		Inventory.PickupMessage "$BIO_WEAP_PICKUP_BFG90000";
+
 		Weapon.SlotNumber 7;
 		Weapon.AmmoUse 40;
 		Weapon.AmmoGive 80;

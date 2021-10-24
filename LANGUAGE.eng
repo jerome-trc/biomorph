@@ -27,17 +27,25 @@
 
 // Pickup messaging ============================================================
 
-	BIO_PICKUP_TEMPLATE_WEAP = "%s%s%s.";
-	BIO_PICKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
-
 	BIO_PICKUP_STANDARD = "Grabbed";
 	BIO_PICKUP_SPECIALTY = "Obtained";
 	BIO_PICKUP_EXPERIMENTAL = "Procured";
 	BIO_PICKUP_CLASSIFIED = "Acquired";
 	
-	BIO_PICKUP_ARTICLE_A = " a ";
-	BIO_PICKUP_ARTICLE_MUTATEDWEAP = " a mutated ";
-	BIO_PICKUP_ARTICLE_EQUIP = " a set of ";
+	BIO_WEAP_PICKUP_BFG90000 = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_CHAINGUN = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_CHAINSAW = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_PISTOL = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_PLASMARIFLE = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_ROCKETLAUNCHER = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_SHOTGUN = "Grabbed a %s.";
+	BIO_WEAP_PICKUP_SUPERSHOTGUN = "Grabbed a %s.";
+
+	BIO_WEAP_PICKUP_AUTOCANNON = "Procured an %s.";
+	BIO_WEAP_PICKUP_INCURSIONSHOTGUN = "Procured an %s.";
+	BIO_WEAP_PICKUP_SALVOLAUNCHER = "Procured a %s.";
+
+	BIO_PICKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
 
 // Weapons (tags, pickup messages, obituaries, stat readouts) ==================
 
