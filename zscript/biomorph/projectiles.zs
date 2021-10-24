@@ -198,6 +198,21 @@ class BIO_Rocket : BIO_Projectile
 	}
 }
 
+class BIO_MiniMissile : BIO_Rocket
+{
+	Default
+	{
+		Tag "$BIO_PROJ_TAG_MINIMISSILE";
+
+		Height 2;
+		Radius 3;
+		Scale 0.3;
+		Speed 50;
+
+		BIO_Projectile.Splash 32, 32;
+	}
+}
+
 class BIO_PlasmaBall : BIO_Projectile
 {
 	Default

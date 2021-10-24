@@ -220,6 +220,32 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 	}
 }
 
+class BIO_WeaponAffix_MiniMissile : BIO_WeaponAffix
+{
+	override void Init(BIO_Weapon weap) {}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return
+			weap.FireTypeMutableTo("BIO_MiniMissile", false) ||
+			weap.FireTypeMutableTo("BIO_MiniMissile", true);
+	}
+
+	override void Apply(BIO_Weapon weap) const
+	{
+		if (weap.FireTypeMutableTo("BIO_MiniMissile", false))
+			weap.FireType1 = "BIO_MiniMissile";
+		
+		if (weap.FireTypeMutableTo("BIO_MiniMissile", true))
+			weap.FireType2 = "BIO_MiniMissile";
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_MINIMISSILE"));
+	}
+}
+
 // Miscellaneous ===============================================================
 
 class BIO_WeaponAffix_FireCount : BIO_WeaponAffix

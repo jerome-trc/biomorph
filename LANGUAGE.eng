@@ -72,6 +72,7 @@
 	BIO_PROJ_TAG_SHOTPELLET = "pellet(s)";
 	BIO_PROJ_TAG_SLUG = "slug(s)";
 	BIO_PROJ_TAG_ROCKET = "rocket(s)";
+	BIO_PROJ_TAG_MINIMISSILE = "mini-missile(s)";
 	BIO_PROJ_TAG_PLASMABALL = "plasma ball(s)";
 	BIO_PROJ_TAG_BFGBALL = "ball(s)";
 
@@ -139,6 +140,7 @@
 	BIO_AFFIX_TOSTR_WEAPDMGPERCENT = "Damage: %s%s%%%d primary, %s%s%%%d secondary";
 	BIO_AFFIX_TOSTR_PLASMA = "Fires balls of plasma";
 	BIO_AFFIX_TOSTR_SLUG = "Fires highly-accurate solid slugs";
+	BIO_AFFIX_TOSTR_MINIMISSILE = "Fires fast mini-missiles";
 	BIO_AFFIX_TOSTR_FIRECOUNT1 = "Primary fires %s%s%d %s";
 	BIO_AFFIX_TOSTR_FIRECOUNT2 = "Secondary fires %s%s%d %s";
 	BIO_AFFIX_TOSTR_FIRECOUNT = "Primary fires %s%s%d %s; secondary fires %s%s%d %s";
