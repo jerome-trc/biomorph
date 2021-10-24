@@ -273,11 +273,36 @@ class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 	}
 }
 
+class BIO_WeaponAffix_MeleeRange : BIO_WeaponAffix
+{
+	float Modifier;
+
+	override void Init(BIO_Weapon weap) { Modifier = FRandom(16.0, 32.0); }
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return weap.bMeleeWeapon && !(weap.AffixMask & BIO_WAM_MELEERANGE);
+	}
+
+	override void ModifyMeleeRange(BIO_Weapon weap, in out float range) const
+	{
+		range += Modifier;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_AFFIX_TOSTR_MELEERANGE"),
+			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+			Modifier >= 0 ? "+" : "", Modifier));
+	}
+}
+
 class BIO_WeaponAffix_LifeSteal : BIO_WeaponAffix
 {
-	float Percent;
+	float AddPercent;
 	
-	override void Init(BIO_Weapon weap) { Percent = FRandom(0.2, 0.8); }
+	override void Init(BIO_Weapon weap) { AddPercent = FRandom(0.2, 0.8); }
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
@@ -286,13 +311,13 @@ class BIO_WeaponAffix_LifeSteal : BIO_WeaponAffix
 
 	override void ModifyLifesteal(BIO_Weapon weap, in out float lifeSteal) const
 	{
-		lifeSteal += Percent;
+		lifeSteal += AddPercent;
 	}
 
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
-		strings.Push(String.Format(
+		strings.Push(CRESC_POSITIVE .. String.Format(
 			StringTable.Localize("$BIO_AFFIX_TOSTR_LIFESTEAL"),
-			int(Percent * 100.0)));
+			int(AddPercent * 100.0)));
 	}
 }

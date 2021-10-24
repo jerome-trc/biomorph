@@ -96,13 +96,14 @@ class BIO_Chainsaw : BIO_Weapon
 		if (Player == null) return;
 		FTranslatedLineTarget t;
 
+		float range = invoker.CalcMeleeRange();
 		double ang = Angle + 2.8125 * (Random2[Saw]() / 255.0);
-		double slope = AimLineAttack(ang, invoker.MeleeRange, t) *
+		double slope = AimLineAttack(ang, range, t) *
 			(Random2[Saw]() / 255.0);
 
 		Actor puff;
 		int actualDmg;
-		[puff, actualDmg] = LineAttack(ang, invoker.MeleeRange, slope, 
+		[puff, actualDmg] = LineAttack(ang, range, slope, 
 			Random[Saw](invoker.MinDamage1, invoker.MaxDamage1),
 			'Melee', "BulletPuff", 0, t);
 

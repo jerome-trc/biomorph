@@ -717,6 +717,18 @@ mixin class BIO_MeleeWeapon
 	property MeleeRange: MeleeRange;
 	property LifeSteal: LifeSteal;
 
+	float CalcMeleeRange()
+	{
+		float ret = MeleeRange;
+		
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].ModifyMeleeRange(self, ret);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].ModifyMeleeRange(self, ret);
+
+		return ret;
+	}
+
 	void ApplyLifeSteal(int dmg)
 	{
 		let fDmg = float(dmg);

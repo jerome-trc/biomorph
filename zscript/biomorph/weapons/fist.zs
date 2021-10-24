@@ -113,14 +113,15 @@ class BIO_Fist : BIO_Weapon
 		int dmg = Random[Punch](invoker.MinDamage1, invoker.MaxDamage1);
 
 		if (FindInventory("PowerStrength")) dmg *= 10;
-
+		
+		float range = invoker.CalcMeleeRange();
 		double ang = Angle + Random2[Punch]() * (5.625 / 256);
-		double pitch = AimLineAttack(ang, DEFMELEERANGE, null, 0.0, ALF_CHECK3D);
+		double pitch = AimLineAttack(ang, range, null, 0.0, ALF_CHECK3D);
 
 		Actor puff = null;
 		int actualDmg = -1;
 
-		[puff, actualDmg] = LineAttack(ang, DEFMELEERANGE, pitch, dmg,
+		[puff, actualDmg] = LineAttack(ang, range, pitch, dmg,
 			'Melee', "BulletPuff", LAF_ISMELEEATTACK, t);
 
 		// Turn to face target
