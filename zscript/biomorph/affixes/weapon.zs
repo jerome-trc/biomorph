@@ -1,3 +1,5 @@
+// Damage ======================================================================
+
 class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 {
 	int Modifier1, Modifier2;
@@ -111,6 +113,46 @@ class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
 		}
 	}
 }
+
+// Fire type ===================================================================
+
+class BIO_WeaponAffix_Plasma : BIO_WeaponAffix
+{
+	override void Init(BIO_Weapon weapon) {}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		bool ret = false;
+
+		if (!(weap.FireType1 is "BIO_PlasmaBall") &&
+			!(weap.AffixMask & BIO_WAM_FIRETYPE_1) &&
+			weap.FireTypeIsDefault(false))
+			ret = true;
+
+		if (!(weap.FireType2 is "BIO_PlasmaBall") &&
+			!(weap.AffixMask & BIO_WAM_FIRETYPE_2) &&
+			weap.FireTypeIsDefault(true))
+			ret = true;
+
+		return ret;
+	}
+
+	override void Apply(BIO_Weapon weap) const
+	{
+		if (!(weap.AffixMask & BIO_WAM_FIRETYPE_1))
+			weap.FireType1 = "BIO_PlasmaBall";
+		
+		if (!(weap.AffixMask & BIO_WAM_FIRETYPE_2))
+			weap.FireType2 = "BIO_PlasmaBall";
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_PLASMA"));
+	}
+}
+
+// Miscellaneous ===============================================================
 
 class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 {

@@ -339,6 +339,10 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Getters =================================================================
 
+	abstract void StatsToString(in out Array<string> stats) const;
+
+	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
+
 	bool MagazineEmpty(bool secondary = false) const
 	{
 		return !secondary ? Magazine1.Amount <= 0 : Magazine2.Amount <= 0;
@@ -386,9 +390,13 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
-
-	abstract void StatsToString(in out Array<string> stats) const;
+	bool FireTypeIsDefault(bool secondary = false) const
+	{
+		if (!secondary)
+			return FireType1 == GetDefaultByType(GetClass()).FireType1;
+		else
+			return FireType2 == GetDefaultByType(GetClass()).FireType2;
+	}
 
 	// No fire state can have a tic time below 1. Fire rate-affecting affixes need
 	// to know in advance if they can even have any effect, given this caveat.
