@@ -171,3 +171,4 @@
 // Miscellaneous ===============================================================
 
 	BIO_NONE = "None";
+	BIO_CORRUPTED = "Corrupted";
