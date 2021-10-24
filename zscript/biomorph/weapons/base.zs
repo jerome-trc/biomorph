@@ -401,6 +401,14 @@ class BIO_Weapon : DoomWeapon abstract
 			return FireType2 == GetDefaultByType(GetClass()).FireType2;
 	}
 
+	bool FiresTrueProjectile(bool secondary = false) const
+	{
+		if (!secondary)
+			return FireType1 is "BIO_Projectile";
+		else
+			return FireType2 is "BIO_Projectile";
+	}
+
 	// No fire state can have a tic time below 1. Fire rate-affecting affixes need
 	// to know in advance if they can even have any effect, given this caveat.
 	int ReducibleFireTime() const

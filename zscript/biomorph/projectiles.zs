@@ -58,6 +58,8 @@ class BIO_Projectile : Actor abstract
 {
 	mixin BIO_ProjectileCommon;
 
+	float MaxSeekAngle; property MaxSeekAngle: MaxSeekAngle;
+
 	Default
 	{
 		Projectile;
@@ -66,6 +68,7 @@ class BIO_Projectile : Actor abstract
 		BIO_Projectile.BFGRays 0;
 		BIO_Projectile.Splash 0, 0;
 		BIO_Projectile.Shrapnel 0;
+		BIO_Projectile.MaxSeekAngle 0.0;
 	}
 
 	// The hacky part that makes it all work.
@@ -85,6 +88,11 @@ class BIO_Projectile : Actor abstract
 			}
 			return ResolveState("Death.Impl");
 		}
+	}
+
+	action void A_Travel()
+	{
+		A_SeekerMissile(4.0, invoker.MaxSeekAngle, SMF_LOOK);
 	}
 }
 
@@ -168,7 +176,7 @@ class BIO_Rocket : BIO_Projectile
 	States
 	{
 	Spawn:
-		MISL A 1 Bright;
+		MISL A 1 Bright A_Travel;
 		Loop;
 	Death.Impl:
 		MISL B 8 Bright A_ProjectileDeath;
@@ -205,7 +213,10 @@ class BIO_PlasmaBall : BIO_Projectile
 	States
 	{
 	Spawn:
-		PLSS AB 6 Bright;
+		PLSS A 3 Bright A_Travel;
+		#### # 3 Bright A_Travel;
+		PLSS B 3 Bright A_Travel;
+		#### # 3 Bright A_Travel;
 		Loop;
 	Death.Impl:
 		PLSE ABCDE 4 Bright A_ProjectileDeath;
@@ -239,7 +250,10 @@ class BIO_BFGBall : BIO_Projectile
 	States
 	{
 	Spawn:
-		BFS1 AB 6 Bright;
+		BFS1 A 3 Bright A_Travel;
+		#### # 3 Bright A_Travel;
+		BFS1 B 3 Bright A_Travel;
+		#### # 3 Bright A_Travel;
 		Loop;
 	Death.Impl:
 		BFE1 AB 8 Bright;

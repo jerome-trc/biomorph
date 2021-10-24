@@ -273,6 +273,36 @@ class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 	}
 }
 
+class BIO_WeaponAffix_ProjSeek : BIO_WeaponAffix
+{
+	override void Init(BIO_Weapon weap) {}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		bool ret = false;
+
+		if ((weap.AffixMask & BIO_WAM_PRIMARY) != BIO_WAM_PRIMARY &&
+			weap.FiresTrueProjectile(false))
+			ret = true;
+
+		if ((weap.AffixMask & BIO_WAM_SECONDARY) != BIO_WAM_SECONDARY &&
+			weap.FiresTrueProjectile(true))
+			ret = true;
+
+		return ret;
+	}
+
+	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.MaxSeekAngle = 4.0;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_PROJSEEK"));
+	}
+}
+
 class BIO_WeaponAffix_MeleeRange : BIO_WeaponAffix
 {
 	float Modifier;
