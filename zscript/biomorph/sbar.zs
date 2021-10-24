@@ -105,22 +105,21 @@ class BIO_StatusBar : BaseStatusBar
 		if (bioArmor == null) return;
 
 		int affixY = -54;
+
+		Array<string> afxStrings;
 		
 		for (uint i = bioArmor.Affixes.Size() - 1; i >= 0; i--)
-		{
-			DrawString(Font_Small, bioArmor.Affixes[i].ToString(),
-				(ARMORINFO_X, affixY), 0, Font.CR_WHITE);
-			
-			affixY -= 8;
-		}
+			bioArmor.Affixes[i].ToString(afxStrings, bioArmor);
 
-		affixY -= 8;
+		afxStrings.Push(""); // Blank line between implicit and explicit affixes
 
 		for (uint i = bioArmor.ImplicitAffixes.Size() - 1; i >= 0; i--)
+			bioArmor.ImplicitAffixes[i].ToString(afxStrings, bioArmor);
+
+		for (uint i = 0; i < afxStrings.Size(); i++)
 		{
-			DrawString(Font_Small, bioArmor.ImplicitAffixes[i].ToString(),
+			DrawString(Font_Small, afxStrings[i],
 				(ARMORINFO_X, affixY), 0, Font.CR_WHITE);
-			
 			affixY -= 8;
 		}
 	}
@@ -211,28 +210,25 @@ class BIO_StatusBar : BaseStatusBar
 		}
 
 		weapInfoY += 8; // Blank line between stats and affixes
+		
+		Array<string> afxStrings;
 
 		for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
-		{
-			DrawString(Font_Small, weap.Affixes[i].ToString(weap),
-				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
-				Font.CR_WHITE);
-			weapInfoY += 8;
-		}
+			weap.ImplicitAffixes[i].ToString(afxStrings, weap);
+		
+		afxStrings.Push(""); // Blank line between implicit and explicit affixes
 
 		if (weap.BIOFlags & BIO_WEAPF_AFFIXESHIDDEN)
+			afxStrings.Push("\cg" .. StringTable.Localize("$BIO_AFFIXESUNKNOWN"));
+		else
 		{
-			DrawString(Font_Small, StringTable.Localize("$BIO_AFFIXESUNKNOWN"),
-				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
-				Font.CR_RED);
-			return;
+			for (uint i = 0; i < weap.Affixes.Size(); i++)
+				weap.Affixes[i].ToString(afxStrings, weap);
 		}
 
-		weapInfoY += 8; // Blank line beween implicit and explicit affixes
-
-		for (uint i = 0; i < weap.Affixes.Size(); i++)
+		for (uint i = 0; i < afxStrings.Size(); i++)
 		{
-			DrawString(Font_Small, weap.Affixes[i].ToString(weap),
+			DrawString(Font_Small, afxStrings[i],
 				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
 				Font.CR_WHITE);
 			weapInfoY += 8;

@@ -22,7 +22,7 @@ class BIO_WeaponAffix : BIO_Affix abstract
 		in out double maxDist, in out int flags) const {}
 
 	// Output should be fully localized.
-	abstract string ToString(BIO_Weapon weap) const;
+	abstract void ToString(in out Array<string> strings, BIO_Weapon weap) const;
 }
 
 class BIO_EquipmentAffix : BIO_Affix abstract
@@ -38,5 +38,5 @@ class BIO_EquipmentAffix : BIO_Affix abstract
 		Actor source, in out int damage, name dmgType) const {}
 
 	// Output should be fully localized.
-	abstract string ToString() const;
+	abstract void ToString(in out Array<string> strings, BIO_Equipment equip) const;
 }

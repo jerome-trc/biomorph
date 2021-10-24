@@ -26,30 +26,30 @@ class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 			weap.MaxDamage2 += Modifier2;
 	}
 
-	override string ToString(BIO_Weapon weap) const
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
 		if (weap.AffixMask & BIO_WAM_DAMAGE_2)
 		{
-			return String.Format(
+			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMG1"),
 				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier1 >= 0 ? "+" : "-", Modifier1);
+				Modifier1 >= 0 ? "+" : "-", Modifier1));
 		}
 		else if (weap.AffixMask & BIO_WAM_DAMAGE_1)
 		{
-			return String.Format(
+			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMG2"),
 				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier2 >= 0 ? "+" : "-", Modifier2);
+				Modifier2 >= 0 ? "+" : "-", Modifier2));
 		}
 		else
 		{
-			return String.Format(
+			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMG"),
 				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 				Modifier1 >= 0 ? "+" : "-", Modifier1,
 				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier2 >= 0 ? "+" : "-", Modifier2);
+				Modifier2 >= 0 ? "+" : "-", Modifier2));
 		}
 	}
 }
@@ -84,11 +84,11 @@ class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 		weap.ModifyFireTime(Modifier);
 	}
 
-	override string ToString(BIO_Weapon weap) const
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
-		return String.Format(
+		strings.Push(String.Format(
 			StringTable.Localize("$BIO_AFFIX_TOSTR_FIRERATE"),
 			Modifier >= 0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
-			Modifier >= 0 ? "+" : "", float(Modifier) / 35.0);
+			Modifier >= 0 ? "+" : "", float(Modifier) / 35.0));
 	}
 }

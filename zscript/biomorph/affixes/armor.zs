@@ -19,12 +19,12 @@ class BIO_ArmorAffix_SaveAmount : BIO_EquipmentAffix
 		return equip is "BIO_Armor";
 	}
 
-	override string ToString() const
+	override void ToString(in out Array<string> strings, BIO_Equipment equip) const
 	{
-		return String.Format(
+		strings.Push(String.Format(
 			StringTable.Localize("$BIO_AFFIX_TOSTR_ARMORSAVEAMOUNT"),
 			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-			Modifier >= 0 ? "+" : "-", Modifier);
+			Modifier >= 0 ? "+" : "-", Modifier));
 	}
 }
 
@@ -52,11 +52,11 @@ class BIO_ArmorAffix_SavePercent : BIO_EquipmentAffix
 		return statDefs.SavePercent < 100;		
 	}
 
-	override string ToString() const
+	override void ToString(in out Array<string> strings, BIO_Equipment equip) const
 	{
-		return String.Format(
+		strings.Push(String.Format(
 			StringTable.Localize("$BIO_AFFIX_TOSTR_ARMORSAVEPERCENT"),
 			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-			Modifier >= 0 ? "+" : "-", Modifier);
+			Modifier >= 0 ? "+" : "-", Modifier));
 	}
 }
