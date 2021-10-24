@@ -118,7 +118,7 @@ class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
 
 class BIO_WeaponAffix_Plasma : BIO_WeaponAffix
 {
-	override void Init(BIO_Weapon weapon) {}
+	override void Init(BIO_Weapon weap) {}
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
@@ -153,6 +153,82 @@ class BIO_WeaponAffix_Plasma : BIO_WeaponAffix
 }
 
 // Miscellaneous ===============================================================
+
+class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
+{
+	int Modifier1, Modifier2;
+
+	override void Init(BIO_Weapon weap)
+	{
+		if (weap.FireCount1 <= 1)
+			Modifier1 = Random(1, 2);
+		else
+			Modifier1 = Random(1, weap.FireCount1);
+
+		if (weap.FireCount2 <= 1)
+			Modifier2 = Random(1, 2);
+		else
+			Modifier2 = Random(1, weap.FireCount2);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		bool ret = false;
+
+		if (weap.FireCount1 != 0 && !(weap.AffixMask & BIO_WAM_FIRECOUNT_1))
+			ret = true;
+		if (weap.FireCount2 != 0 && !(weap.AffixMask & BIO_WAM_FIRECOUNT_2))
+			ret = true;
+
+		return ret;
+	}
+
+	override void Apply(BIO_Weapon weap) const
+	{
+		if (!(weap.AffixMask & BIO_WAM_FIRECOUNT_1))
+		{
+			if (weap.FireCount1 == -1) weap.FireCount1 = 1;
+			weap.FireCount1 += Modifier1;
+		}
+		
+		if (!(weap.AffixMask & BIO_WAM_FIRECOUNT_2))
+		{
+			if (weap.FireCount2 == -1) weap.FireCount2 = 1;
+			weap.FireCount2 += Modifier2;
+		}
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		if (weap.AffixMask & BIO_WAM_FIRECOUNT_2)
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT1"),
+				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Modifier1 >= 0 ? "+" : "-", Modifier1,
+				GetDefaultByType(weap.FireType1).GetTag()));
+		}
+		else if (weap.AffixMask & BIO_WAM_FIRECOUNT_1)
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT2"),
+				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Modifier2 >= 0 ? "+" : "-", Modifier2,
+				GetDefaultByType(weap.FireType2).GetTag()));
+		}
+		else
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT"),
+				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Modifier1 >= 0 ? "+" : "-", Modifier1,
+				GetDefaultByType(weap.FireType1).GetTag(),
+				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Modifier2 >= 0 ? "+" : "-", Modifier2,
+				GetDefaultByType(weap.FireType2).GetTag()));
+		}
+	}
+}
 
 class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 {

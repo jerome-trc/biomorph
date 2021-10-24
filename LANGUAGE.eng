@@ -126,6 +126,9 @@
 	BIO_AFFIX_TOSTR_WEAPDMGPERCENT2 = "Secondary damage: %s%s%%%d";
 	BIO_AFFIX_TOSTR_WEAPDMGPERCENT = "Damage: %s%s%%%d primary, %s%s%%%d secondary";
 	BIO_AFFIX_TOSTR_PLASMA = "Fires balls of plasma";
+	BIO_AFFIX_TOSTR_FIRECOUNT1 = "Primary fires %s%s%d %s";
+	BIO_AFFIX_TOSTR_FIRECOUNT2 = "Secondary fires %s%s%d %s";
+	BIO_AFFIX_TOSTR_FIRECOUNT = "Primary fires %s%s%d %s; secondary fires %s%s%d %s";
 	BIO_AFFIX_TOSTR_FIRERATE = "Fire rate: %s%s%.2f seconds";
 
 	BIO_AFFIX_TOSTR_ARMORSAVEAMOUNT = "Durability: %s%s%d";
