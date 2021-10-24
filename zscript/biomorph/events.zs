@@ -158,7 +158,7 @@ class BIO_EventHandler : EventHandler
 
 	override void WorldThingSpawned(WorldEvent event)
 	{
-		if (event.Thing == null || event.Thing.bIsMonster || event.Thing.bMissile)
+		if (event.Thing == null || event.Thing.bMissile || event.Thing.bIsMonster)
 			return;
 
 		if (event.Thing is "Inventory")
