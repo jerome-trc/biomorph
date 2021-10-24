@@ -116,7 +116,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		FireTime1 = fireTimes[0];
 		FireTime2 = fireTimes[1];
 		FireTime3 = fireTimes[2];
-		FireTime4 = fireTimes[4];
+		FireTime4 = fireTimes[3];
 	}
 
 	override void GetReloadTimes(in out Array<int> _, bool _) const {}
