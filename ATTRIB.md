@@ -14,7 +14,9 @@ Experimental Armour sprites are courtesy of id Software LLC, and edited by Realm
 
 Salvo Launcher sprites are courtesy of ZDoom forum user LossForWords, alongside zrrion the insect, id Software LLC, and Apogee Entertainment.
 
-Incursion Shotgun sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
+Incursion Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
+
+Autocannon HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
 Any graphical asset which is not mentioned here is custom-made by RatCircus.
 

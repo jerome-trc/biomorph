@@ -34,7 +34,7 @@ class BIO_Autocannon : BIO_Weapon
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Ready");
 	WindUp:
-		ACAN EF 1;
+		ACAN BCD 1;
 		ACAN EFGH 1;
 	Wound:
 		ACAN E 1 Bright
@@ -55,9 +55,7 @@ class BIO_Autocannon : BIO_Weapon
 		Loop;
 	WindDown:
 		ACAN EFGH 1;
-		ACAN EF 1;
-		ACAN CD 1;
-		ACAN B 1;
+		ACAN ABCD 1;
 		Goto Ready;
 	Flash:
 		TNT1 A 0;
