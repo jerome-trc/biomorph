@@ -75,7 +75,7 @@
 	BIO_MUTA_FAIL_CORRUPTED = "This weapon has been corrupted by R.O.T. Mutagen; it can't be mutated at all.";
 
 	BIO_MUTA_RESET_TAG = "R.E.S.E.T. Mutagen";
-	BIO_MUTA_RESET_PICKUP = "Absorbed a sample of R.S.E.T. Mutagen.";
+	BIO_MUTA_RESET_PICKUP = "Obtained a sample of R.E.S.E.T. Mutagen.";
 	BIO_MUTA_RESET_USE = "Your weapon returns to its normal state.";
 
 	BIO_MUTA_RANDOM_TAG = "W.I.L.D. Mutagen";
