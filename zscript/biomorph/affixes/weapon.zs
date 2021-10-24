@@ -122,6 +122,8 @@ class BIO_WeaponAffix_Plasma : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
+		if (weap.bMeleeWeapon) return false;
+
 		bool ret = false;
 
 		if (!(weap.FireType1 is "BIO_PlasmaBall") &&
@@ -173,6 +175,8 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
+		if (weap.bMeleeWeapon) return false;
+
 		bool ret = false;
 
 		if (weap.FireCount1 != 0 && !(weap.AffixMask & BIO_WAM_FIRECOUNT_1))
