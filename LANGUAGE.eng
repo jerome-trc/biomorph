@@ -179,6 +179,8 @@
 	BIO_AMMO_PICKUP_CELL = "Picked up an energy cell.";
 	BIO_AMMO_PICKUP_CELLPACK = "Picked up an energy cell pack.";
 
+	BIO_BACKPACK_PICKUP = "Obtained a backpack full of ammo.";
+
 // Health ======================================================================
 	
 	BIO_HEALTH_PICKUP_BONUS = "Drank a health bonus.";

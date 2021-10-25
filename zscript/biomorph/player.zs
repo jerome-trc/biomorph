@@ -130,4 +130,10 @@ class BIO_Player : DoomPlayer
 		for (uint i = 0; i < Passives.Size(); i++)
 			Passives[i].OnHealthPickup(self, item);
 	}
+
+	void OnBackpackPickup(BIO_Backpack bkpk)
+	{
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].OnBackpackPickup(self, bkpk);
+	}
 }

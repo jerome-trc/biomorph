@@ -175,3 +175,45 @@ class BIO_CellPack : CellPack
 			bioPlayer.OnAmmoPickup(self);
 	}
 }
+
+// Backpack ====================================================================
+
+class BIO_Backpack : BackpackItem replaces Backpack
+{
+	static const Class<Ammo> DOOM_AMMO_TYPES[] =
+		{ "Clip", "Shell", "RocketAmmo", "Cell" };
+
+	Default
+	{
+		Height 26;
+		Inventory.PickupMessage "$BIO_BACKPACK_PICKUP";
+	}
+
+	States
+	{
+	Spawn:
+		BPAK A -1;
+		Stop;
+	}
+
+	override Inventory CreateCopy(Actor other)
+	{
+		let bioPlayer = BIO_Player(Owner);
+		
+		if (bioPlayer != null)
+		{
+			// Assume that all of these ammo items are non-null
+			for (uint i = 0; i < DOOM_AMMO_TYPES.Size(); i++)
+			{
+				let ammo_t = DOOM_AMMO_TYPES[i];
+				let defs = GetDefaultByType(ammo_t);
+				let ammoItem = bioPlayer.FindInventory(ammo_t);
+				ammoItem.MaxAmount = defs.BackpackMaxAmount;
+				bioPlayer.GiveInventory(ammo_t, defs.BackpackAmount);
+			}
+			bioPlayer.OnBackpackPickup(self);
+		}
+
+		return Inventory.CreateCopy(other);
+	}
+}

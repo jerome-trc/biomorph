@@ -12,6 +12,7 @@ class BIO_Passive abstract
 		Actor source, in out int damage, name dmgType) const {}
 	virtual void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const {}
 	virtual void OnAmmoPickup(BIO_Player bioPlayer, Inventory item) const {}
+	virtual void OnBackpackPickup(BIO_Player bioPlayer, BIO_Backpack bkpk) const {}
 
 	// Before any pointers get set, and before the equipment's
 	// version of this callback gets invoked.
