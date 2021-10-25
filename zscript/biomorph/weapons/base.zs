@@ -179,6 +179,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected transient Dictionary Dict;
 	
+	Array<string> StatReadout, AffixReadout;
+	
 	Default
 	{
 		+DONTGIB
@@ -235,6 +237,8 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		super.BeginPlay();
 		SetTag(GetColoredTag());
+		RewriteAffixReadout();
+		RewriteStatReadout();
 	}
 
 	override void AttachToOwner(Actor newOwner)
@@ -330,9 +334,12 @@ class BIO_Weapon : DoomWeapon abstract
 	protected abstract void SetReloadTimes(Array<int> reloadTimes,
 		bool secondary = false);
 
+	protected virtual int DefaultFireTime() const { return 0; }
+	protected virtual int DefaultReloadTime() const { return 0; }
+
 	// Getters =================================================================
 
-	abstract void StatsToString(in out Array<string> stats) const;
+	protected abstract void StatsToString(in out Array<string> stats) const;
 
 	string, bool TryGetDictValue(string key)
 	{
@@ -500,45 +507,6 @@ class BIO_Weapon : DoomWeapon abstract
 		return ret;
 	}
 
-	// The following 3 functions serve to color stats differently if those stats
-	// have been modified from their defaults by an affix.
-
-	protected string FireTypeFontColor(bool secondary = false) const
-	{
-		let defs = GetDefaultByType(GetClass());
-
-		if (!secondary)
-			return FireType1 != defs.FireType1 ?
-				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
-		else
-			return FireType2 != defs.FireType2 ?
-				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
-	}
-
-	protected string FireCountFontColor(bool secondary = false) const
-	{
-		let defs = GetDefaultByType(GetClass());
-
-		if (!secondary)
-			return FireCount1 != defs.FireCount1 ?
-				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
-		else
-			return FireCount2 != defs.FireCount2 ?
-				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED; 
-	}
-
-	protected string DamageFontColor(bool secondary = false) const
-	{
-		let defs = GetDefaultByType(GetClass());
-
-		if (!secondary)
-			return MinDamage1 != defs.MinDamage1 || MaxDamage1 != defs.MaxDamage1 ?
-				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
-		else
-			return MinDamage2 != defs.MinDamage2 || MaxDamage2 != defs.MaxDamage2 ?
-				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED;
-	}
-
 	// Setters =================================================================
 
 	override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
@@ -617,13 +585,20 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			ImplicitAffixes[i].Apply(self);
+
+		RewriteAffixReadout();
+		RewriteStatReadout();
 	}
 
 	void ApplyAllAffixes()
 	{
-		ApplyImplicitAffixes();
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].Apply(self);
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].Apply(self);
+
+		RewriteAffixReadout();
+		RewriteStatReadout();
 	}
 
 	// Does not alter stats, and does not apply the newly-added affixes.
@@ -661,6 +636,17 @@ class BIO_Weapon : DoomWeapon abstract
 			if (AddRandomAffix())
 				Affixes[Affixes.Size() - 1].Apply(self);
 		}
+
+		RewriteAffixReadout();
+		RewriteStatReadout();
+	}
+
+	void ClearAffixes(bool implicitsToo = false)
+	{
+		if (implicitsToo) ImplicitAffixes.Clear();
+		Affixes.Clear();
+		RewriteAffixReadout();
+		RewriteStatReadout();
 	}
 
 	void ModifyFireTime(int modifier)
@@ -820,6 +806,271 @@ class BIO_Weapon : DoomWeapon abstract
 				Affixes[i].OnFastProjectileFired(self, fProj);
 			}
 		}
+	}
+
+	private void RewriteStatReadout()
+	{
+		StatReadout.Clear();
+		StatsToString(StatReadout);
+	}
+
+	private void RewriteAffixReadout()
+	{
+		AffixReadout.Clear();
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].ToString(AffixReadout, self);
+
+		// Blank line between implicit and explicit affixes
+		if (ImplicitAffixes.Size() > 0)
+			AffixReadout.Push("");
+
+		if (BIOFlags & BIO_WEAPF_AFFIXESHIDDEN)
+			AffixReadout.Push("\cg" .. StringTable.Localize("$BIO_AFFIXESUNKNOWN"));
+		else
+		{
+			for (uint i = 0; i < Affixes.Size(); i++)
+				Affixes[i].ToString(AffixReadout, self);
+		}
+	}
+
+	// The following 3 functions serve to color stats differently if those stats
+	// have been modified from their defaults by an affix.
+
+	protected string FireTypeFontColor(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+			return FireType1 != defs.FireType1 ?
+				CRESC_STATMODIFIED : CRESC_STATDEFAULT;
+		else
+			return FireType2 != defs.FireType2 ?
+				CRESC_STATMODIFIED : CRESC_STATDEFAULT;
+	}
+
+	protected string FireCountFontColor(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+		{
+			if (FireCount1 > defs.FireCount1)
+				return CRESC_STATBETTER;
+			else if (FireCount1 < defs.FireCount1)
+				return CRESC_STATWORSE;
+			else
+				return CRESC_STATDEFAULT;
+		}
+		else
+		{
+			if (FireCount2 > defs.FireCount2)
+				return CRESC_STATBETTER;
+			else if (FireCount2 < defs.FireCount2)
+				return CRESC_STATWORSE;
+			else
+				return CRESC_STATDEFAULT;
+		}
+	}
+
+	protected string MinDamageFontColor(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+		{
+			if (MinDamage1 > defs.MinDamage1)
+				return CRESC_STATBETTER;
+			else if (MinDamage1 < defs.MinDamage1)
+				return CRESC_STATWORSE;
+			else
+				return CRESC_STATDEFAULT;
+		}
+		else
+		{
+			if (MinDamage2 > defs.MinDamage2)
+				return CRESC_STATBETTER;
+			else if (MinDamage2 < defs.MinDamage2)
+				return CRESC_STATWORSE;
+			else
+				return CRESC_STATDEFAULT;
+		}
+	}
+
+	protected string MaxDamageFontColor(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+		{
+			if (MaxDamage1 > defs.MaxDamage1)
+				return CRESC_STATBETTER;
+			else if (MaxDamage1 < defs.MaxDamage1)
+				return CRESC_STATWORSE;
+			else
+				return CRESC_STATDEFAULT;
+		}
+		else
+		{
+			if (MaxDamage2 > defs.MaxDamage2)
+				return CRESC_STATBETTER;
+			else if (MaxDamage2 < defs.MaxDamage2)
+				return CRESC_STATWORSE;
+			else
+				return CRESC_STATDEFAULT;
+		}
+	}
+
+	protected string HorizSpreadFontColor(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+		{
+			if (HSpread1 > defs.HSpread1)
+				return CRESC_STATWORSE;
+			else if (HSpread1 < defs.HSpread1)
+				return CRESC_STATBETTER;
+			else
+				return CRESC_STATDEFAULT;
+		}
+		else
+		{
+			if (HSpread2 > defs.HSpread2)
+				return CRESC_STATWORSE;
+			else if (HSpread2 < defs.HSpread2)
+				return CRESC_STATBETTER;
+			else
+				return CRESC_STATDEFAULT;
+		}
+	}
+
+	protected string VertSpreadFontColor(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+		{
+			if (VSpread1 > defs.VSpread1)
+				return CRESC_STATWORSE;
+			else if (VSpread1 < defs.VSpread1)
+				return CRESC_STATBETTER;
+			else
+				return CRESC_STATDEFAULT;
+		}
+		else
+		{
+			if (VSpread2 > defs.VSpread2)
+				return CRESC_STATWORSE;
+			else if (VSpread2 < defs.VSpread2)
+				return CRESC_STATBETTER;
+			else
+				return CRESC_STATDEFAULT;
+		}
+	}
+
+	protected string GenericFireDataReadout(bool secondary = false,
+		string fireTypeTag = "") const
+	{
+		string tag = "";
+
+		if (!secondary)
+		{
+			if (fireTypeTag.Length() < 1)
+				tag = GetDefaultByType(FireType1).GetTag();
+			else
+				tag = StringTable.Localize(fireTypeTag);
+
+			return String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
+				MinDamageFontColor(false), MinDamage1,
+				MaxDamageFontColor(false), MaxDamage1,
+				FireCountFontColor(false),
+				FireCount1 == -1 ? 1 : FireCount1,
+				FireTypeFontColor(false), tag);
+		}
+		else
+		{
+			if (fireTypeTag.Length() < 1)
+				tag = GetDefaultByType(FireType2).GetTag();
+			else
+				tag = StringTable.Localize(fireTypeTag);
+
+			return String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
+				MinDamageFontColor(false), MinDamage2,
+				MaxDamageFontColor(false), MaxDamage2,
+				FireCountFontColor(true),
+				FireCount2 == -1 ? 1 : FireCount2,
+				FireTypeFontColor(true), tag);
+		}
+	}
+
+	protected string GenericSpreadReadout(bool secondary = false) const
+	{
+		let defs = GetDefaultByType(GetClass());
+
+		if (!secondary)
+		{
+			return String.Format(StringTable.Localize("$BIO_WEAPSTAT_SPREAD"),
+				HorizSpreadFontColor(false), HSpread1,
+				VertSpreadFontColor(false), VSpread1);
+		}
+		else
+		{
+			return String.Format(StringTable.Localize("$BIO_WEAPSTAT_SPREAD"),
+				HorizSpreadFontColor(true), HSpread2,
+				VertSpreadFontColor(true), VSpread2);
+		}
+	}
+
+	protected string GenericFireTimeReadout(int totalFireTime) const
+	{
+		string crEsc = "";
+		int defFT = DefaultFireTime();
+
+		if (totalFireTime > defFT)
+			crEsc = CRESC_STATWORSE;
+		else if (totalFireTime < defFT)
+			crEsc = CRESC_STATBETTER;
+		else
+			crEsc = CRESC_STATDEFAULT;
+
+		return String.Format(
+			StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
+			crEsc, float(totalFireTime) / 35.0);
+	}
+
+	// Analogous to GenericFireTimeReadout, but for melee weapons.
+	protected string GenericAttackTimeReadout(int totalFireTime) const
+	{
+		string crEsc = "";
+		int defFT = DefaultFireTime();
+
+		if (totalFireTime > defFT)
+			crEsc = CRESC_STATWORSE;
+		else if (totalFireTime < defFT)
+			crEsc = CRESC_STATBETTER;
+		else
+			crEsc = CRESC_STATDEFAULT;
+
+		return String.Format(
+			StringTable.Localize("$BIO_WEAPSTAT_ATKTIME"),
+			crEsc, float(totalFireTime) / 35.0);
+	}
+
+	protected string GenericReloadTimeReadout(int totalReloadTime) const
+	{
+		string crEsc = "";
+		int defRT = DefaultReloadTime();
+
+		if (totalReloadTime > defRT)
+			crEsc = CRESC_STATWORSE;
+		else if (totalReloadTime < defRT)
+			crEsc = CRESC_STATBETTER;
+		else
+			crEsc = CRESC_STATDEFAULT;
+
+		return String.Format(StringTable.Localize("$BIO_WEAPSTAT_RELOADTIME"),
+			crEsc, float(totalReloadTime) / 35.0);
 	}
 }
 

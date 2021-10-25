@@ -85,18 +85,10 @@ class BIO_Autocannon : BIO_Weapon
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
-			DamageFontColor(),
-			MinDamage1, MaxDamage1,
-			FireCountFontColor(),
-			FireCount1 == -1 ? 1 : FireCount1,
-			FireTypeFontColor(),
-			GetDefaultByType(FireType1).GetTag()));
-
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
-			CRESC_STATUNMODIFIED, 2.0 / 35.0));
-
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_SPREAD"),
-			HSpread1, VSpread1));
+		stats.Push(GenericFireDataReadout());
+		stats.Push(GenericSpreadReadout());
+		stats.Push(GenericFireTimeReadout(2));
 	}
+	
+	override int DefaultFireTime() const { return 2; }
 }

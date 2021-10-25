@@ -77,8 +77,8 @@ class BIO_MutagenReset : BIO_Mutagen
 			return false;
 		}
 
-		weap.Affixes.Clear();
 		weap.ResetStats();
+		weap.ClearAffixes();
 		Owner.A_Print("$BIO_MUTA_RESET_USE");
 		return true;
 	}
@@ -178,7 +178,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 		if (!CanUse(true)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
-		if (weap.NoAffixes() < 1)
+		if (weap.NoAffixes())
 		{
 			Owner.A_Print("$BIO_MUTA_FAIL_NOAFFIXES", 4.0);
 			return false;

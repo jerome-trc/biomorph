@@ -148,35 +148,23 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		// Ball stats
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
-			DamageFontColor(false),
-			MinDamage1, MaxDamage1,
-			FireCountFontColor(false),
-			FireCount1 == -1 ? 1 : FireCount1,
-			FireTypeFontColor(false),
-			GetDefaultByType(FireType1).GetTag()));
-
-		// Ray stats
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
-			DamageFontColor(true),
-			MinDamage2, MaxDamage2,
-			FireCountFontColor(true),
-			FireCount2 == -1 ? 1 : FireCount2,
-			FireTypeFontColor(true),
-			GetDefaultByType(FireType2).GetTag()));
-
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
-			FireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
-			float(FireTime1 + FireTime2 + FireTime3 + FireTime4) / 35.0));
+		stats.Push(GenericFireDataReadout(false));
+		stats.Push(GenericFireDataReadout(true));
+		stats.Push(GenericFireDataReadout(FireTime1 + FireTime2 + FireTime3 + FireTime4));
+		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
 	}
 
-	protected bool FireTimeModified() const
+	override int DefaultFireTime() const
 	{
 		let defs = GetDefaultByType(GetClass());
 		return
-			(FireTime1 + FireTime2 + FireTime3 + FireTime4) !=
-			(defs.FireTime1 + defs.FireTime2 + defs.FireTime3 + defs.FireTime4);
+			defs.FireTime1 + defs.FireTime2 +
+			defs.FireTime3 + defs.FireTime4;
+	}
+
+	override int DefaultReloadTime() const
+	{
+		return GetDefaultByType(GetClass()).ReloadTime + 19;
 	}
 }
 

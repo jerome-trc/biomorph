@@ -136,21 +136,23 @@ class BIO_SalvoLauncher : BIO_Weapon
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
-			DamageFontColor(),
-			MinDamage1, MaxDamage1,
-			FireCountFontColor(),
-			FireCount1 == -1 ? 1 : FireCount1,
-			FireTypeFontColor(),
-			GetDefaultByType(FireType1).GetTag()));
+		stats.Push(GenericFireDataReadout());
 
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME_BURST"),
-			BurstFireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
+			BurstFireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			TotalBurstFireTime() / 35.0));
 
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME_AUTO"),
-			AutoFireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
+			AutoFireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			TotalAutoFireTime() / 35.0));
+	}
+
+	override int DefaultFireTime() const
+	{
+		let defs = GetDefaultByType(GetClass());
+		return
+			defs.FireTime1 + defs.FireTime2 +
+			defs.FireTime3 + defs.FireTime4;
 	}
 
 	protected bool TotalBurstFireTime() const

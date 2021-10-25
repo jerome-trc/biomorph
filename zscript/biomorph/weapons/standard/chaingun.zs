@@ -116,21 +116,20 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
-			DamageFontColor(),
-			MinDamage1, MaxDamage1,
-			FireCountFontColor(),
-			FireCount1 == -1 ? 1 : FireCount1,
-			FireTypeFontColor(),
-			GetDefaultByType(FireType1).GetTag()));
+		stats.Push(GenericFireDataReadout());
+		stats.Push(GenericFireTimeReadout(FireTime));
+		stats.Push(GenericSpreadReadout());
+		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
+	}
 
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
-			FireTime != GetDefaultByType(GetClass()).FireTime ?
-				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
-			float(FireTime) / 35.0));
+	override int DefaultFireTime() const
+	{
+		return GetDefaultByType(GetClass()).FireTime;
+	}
 
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_SPREAD"),
-			HSpread1, VSpread1));
+	override int DefaultReloadTime() const
+	{
+		return GetDefaultByType(GetClass()).ReloadTime + 19;
 	}
 }
 

@@ -124,28 +124,20 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
-			DamageFontColor(),
-			MinDamage1, MaxDamage1,
-			FireCountFontColor(),
-			FireCount1 == -1 ? 1 : FireCount1,
-			FireTypeFontColor(),
-			GetDefaultByType(FireType1).GetTag()));
-
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
-			FireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
-			float(FireTime1 + FireTime2 + FireTime3) / 35.0));
-
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_SPREAD"),
-			HSpread1, VSpread1));
+		stats.Push(GenericFireDataReadout());
+		stats.Push(GenericSpreadReadout());
+		stats.Push(GenericFireTimeReadout(FireTime1 + FireTime2 + FireTime3));
 	}
 
-	protected bool FireTimeModified() const
+	override int DefaultFireTime() const
 	{
 		let defs = GetDefaultByType(GetClass());
-		return
-			(FireTime1 + FireTime2 + FireTime3) !=
-			(defs.FireTime1 + defs.FireTime2 + defs.FireTime3);
+		return defs.FireTime1 + defs.FireTime2 + defs.FireTime3;
+	}
+
+	override int DefaultReloadTime() const
+	{
+		return GetDefaultByType(GetClass()).ReloadTime;
 	}
 }
 

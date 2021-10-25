@@ -31,13 +31,14 @@
 
 // Weapons (tags, pickup messages, obituaries, stat readouts) ==================
 
-	BIO_WEAPSTAT_FIREDATA = "\cjDamage: %s(%d - %d)\cj x %s%d\cj %s%s\c-";
+	BIO_WEAPSTAT_FIREDATA = "\cjDamage: (%s%d\cj - %s%d\cj) x %s%d\cj %s%s\c-";
 	BIO_WEAPSTAT_FIRETIME = "\cjFire time: %s%.2f\cj seconds";
 	BIO_WEAPSTAT_FIRETIME_BURST = "\cjFire time (\ckburst\cj): %s%.2f\cj seconds";
 	BIO_WEAPSTAT_FIRETIME_AUTO = "\cjFire time (\ckfull-auto\cj): %s%.2f\cj seconds";
 	BIO_WEAPSTAT_ATKTIME = "\cjAttack time: %s%.2f\cj seconds";
+	BIO_WEAPSTAT_RELOADTIME = "\cjReload time: %s%.2f\cj seconds";
 	BIO_WEAPSTAT_POSTFIREDELAY = "\cjPost-fire delay: %s%.2f\cj seconds";
-	BIO_WEAPSTAT_SPREAD = "\cjSpread angles: %.2f horizontal, %.2f vertical";
+	BIO_WEAPSTAT_SPREAD = "\cjSpread angles: %s%.2f\cj horizontal, %s%.2f\cj vertical";
 
 	BIO_WEAP_TAG_FIST = "Fist";
 	BIO_WEAP_TAG_AUTOCANNON = "Autocannon";

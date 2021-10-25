@@ -79,18 +79,13 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
-			DamageFontColor(),
-			MinDamage1, MaxDamage1,
-			FireCountFontColor(),
-			FireCount1 == -1 ? 1 : FireCount1,
-			FireTypeFontColor(),
-			StringTable.Localize("$BIO_MELEE_HIT")));
+		stats.Push(GenericFireDataReadout(fireTypeTag: "$BIO_MELEE_HIT"));
+		stats.Push(GenericAttackTimeReadout(FireTime));
+	}
 
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_ATKTIME"),
-			FireTime != GetDefaultByType(GetClass()).FireTime ?
-				CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
-			float(FireTime) / 35.0));
+	override int DefaultFireTime() const
+	{
+		return GetDefaultByType(GetClass()).FireTime;
 	}
 
 	action void A_BIO_Saw(int flags = 0)

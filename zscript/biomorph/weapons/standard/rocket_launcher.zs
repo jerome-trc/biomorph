@@ -123,19 +123,20 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
-			DamageFontColor(),
-			MinDamage1, MaxDamage1,
-			FireCountFontColor(),
-			FireCount1 == -1 ? 1 : FireCount1,
-			FireTypeFontColor(),
-			GetDefaultByType(FireType1).GetTag()));
-		
-		let defs = GetDefaultByType(GetClass());
+		stats.Push(GenericFireDataReadout());
+		stats.Push(GenericFireTimeReadout(FireTime1 + FireTime2));
+		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
+	}
 
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
-			FireTime1 != defs.FireTime1 ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
-			float(FireTime1) / 35.0));
+	override int DefaultFireTime() const
+	{
+		let defs = GetDefaultByType(GetClass());
+		return defs.FireTime1 + defs.FireTime2;
+	}
+
+	override int DefaultReloadTime() const
+	{
+		return GetDefaultByType(GetClass()).ReloadTime + 19;
 	}
 }
 

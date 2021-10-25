@@ -223,12 +223,9 @@ class BIO_StatusBar : BaseStatusBar
 		// Blank line between weapon's tag and its stats
 		weapInfoY += 16;
 
-		Array<string> stats;
-		weap.StatsToString(stats);
-
-		for (uint i = 0; i < stats.Size(); i++)
+		for (uint i = 0; i < weap.StatReadout.Size(); i++)
 		{
-			DrawString(Font_Small, stats[i], (WEAPINFO_X, weapInfoY),
+			DrawString(Font_Small, weap.StatReadout[i], (WEAPINFO_X, weapInfoY),
 				DI_TEXT_ALIGN_RIGHT, Font.CR_UNTRANSLATED);
 
 			weapInfoY += 8;
@@ -243,26 +240,10 @@ class BIO_StatusBar : BaseStatusBar
 		}
 
 		weapInfoY += 8; // Blank line between stats and affixes
-		
-		Array<string> afxStrings;
 
-		for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
-			weap.ImplicitAffixes[i].ToString(afxStrings, weap);
-		
-		if (weap.ImplicitAffixes.Size() > 0)
-			afxStrings.Push(""); // Blank line between implicit and explicit affixes
-
-		if (weap.BIOFlags & BIO_WEAPF_AFFIXESHIDDEN)
-			afxStrings.Push("\cg" .. StringTable.Localize("$BIO_AFFIXESUNKNOWN"));
-		else
+		for (uint i = 0; i < weap.AffixReadout.Size(); i++)
 		{
-			for (uint i = 0; i < weap.Affixes.Size(); i++)
-				weap.Affixes[i].ToString(afxStrings, weap);
-		}
-
-		for (uint i = 0; i < afxStrings.Size(); i++)
-		{
-			DrawString(Font_Small, afxStrings[i],
+			DrawString(Font_Small, weap.AffixReadout[i],
 				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
 				Font.CR_WHITE);
 			weapInfoY += 8;

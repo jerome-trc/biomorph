@@ -88,25 +88,16 @@ class BIO_Fist : BIO_Weapon replaces Fist
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIREDATA"),
-			DamageFontColor(),
-			MinDamage1, MaxDamage1,
-			FireCountFontColor(),
-			FireCount1 == -1 ? 1 : FireCount1,
-			FireTypeFontColor(),
-			StringTable.Localize("$BIO_MELEE_HIT")));
-
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_ATKTIME"),
-			FireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATUNMODIFIED,
-			float(FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5) / 35.0));
+		stats.Push(GenericFireDataReadout(fireTypeTag: "$BIO_MELEE_HIT"));
+		stats.Push(GenericAttackTimeReadout(
+			FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5));
 	}
 
-	protected bool FireTimeModified() const
+	override int DefaultFireTime() const
 	{
 		let defs = GetDefaultByType(GetClass());
-		return
-			(FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5) !=
-			(defs.FireTime1 + defs.FireTime2 + defs.FireTime3 + defs.FireTime4 + defs.FireTime5);
+		return defs.FireTime1 + defs.FireTime2 + defs.FireTime3 +
+			defs.FireTime4 + defs.FireTime5;
 	}
 
 	action void A_BIO_Punch()
