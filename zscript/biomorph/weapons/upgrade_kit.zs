@@ -34,7 +34,13 @@ class BIO_WeaponUpgradeKit : Inventory
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 		if (weap == null)
 		{
-			Owner.A_Print("$BIO_WUK_FAIL_NULLWEAP");
+			Owner.A_Print("$BIO_WUK_FAIL_NULLWEAP", 4.0);
+			return false;
+		}
+
+		if (weap.Rarity == BIO_RARITY_UNIQUE)
+		{
+			Owner.A_Print("$BIO_WUK_FAIL_UNIQUE", 4.0);
 			return false;
 		}
 

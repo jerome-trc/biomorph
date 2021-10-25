@@ -16,13 +16,18 @@
 
 	BIO_PLAYER_DISPLAYNAME = "Biomorph";
 
-// Grades ======================================================================
+// Grades and rarities =========================================================
 
+	BIO_GRADE_SURPLUS = "Surplus";
 	BIO_GRADE_STANDARD = "Standard";
 	BIO_GRADE_ADVANCED = "Advanced";
 	BIO_GRADE_SPECIALTY = "Specialty";
 	BIO_GRADE_EXPERIMENTAL = "Experimental";
 	BIO_GRADE_CLASSIFIED = "Classified";
+
+	BIO_RARITY_COMMON = "Common";
+	BIO_RARITY_MUTATED = "Mutated";
+	BIO_RARITY_UNIQUE = "Unique";
 
 // Weapons (tags, pickup messages, obituaries, stat readouts) ==================
 
@@ -58,7 +63,8 @@
 
 	BIO_WUK_TAG = "Weapon Upgrade Kit";
 	BIO_WUK_PICKUP = "Picked up a \ckWeapon Upgrade Kit\c-.";
-	BIO_WUK_FAIL_NULLWEAP = "This weapon can't be upgraded.";
+	BIO_WUK_FAIL_NULLWEAP = "This weapon can't be upgraded in any way.";
+	BIO_WUK_FAIL_UNIQUE = "This weapon is unique; it can't be upgraded.";
 	BIO_WUK_FAIL_NOOPTIONS = "No upgraded versions of this weapon exist.";
 	BIO_WUK_FAIL_INSUFFICIENT = "You don't have enough upgrade kits for this.";
 

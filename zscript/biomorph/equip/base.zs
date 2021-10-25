@@ -42,6 +42,7 @@ class BIO_Equipment : Inventory abstract
 
 		BIO_Equipment.AffixMask BIO_EAM_NONE;
 		BIO_Equipment.Grade BIO_GRADE_NONE;
+		BIO_Equipment.Rarity BIO_RARITY_MUTATED;
 		BIO_Equipment.EquipMessage "$BIO_EQUIP_DEFAULT";
 	}
 

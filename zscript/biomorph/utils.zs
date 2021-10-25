@@ -97,6 +97,8 @@ class BIO_Utils abstract
 	{
 		switch (grade)
 		{
+		case BIO_GRADE_SURPLUS:
+			return StringTable.Localize("$BIO_GRADE_SURPLUS");
 		case BIO_GRADE_STANDARD:
 			return StringTable.Localize("$BIO_GRADE_STANDARD");
 		case BIO_GRADE_SPECIALTY:
@@ -111,16 +113,31 @@ class BIO_Utils abstract
 		}
 	}
 
-	static int GradeFontColor(BIO_Grade grade)
+	static string RarityToString(BIO_Rarity rarity)
 	{
-		switch (grade)
+		switch (rarity)
+		{
+		case BIO_RARITY_COMMON:
+			return StringTable.Localize("$BIO_GRADE_SURPLUS");
+		case BIO_RARITY_MUTATED:
+			return StringTable.Localize("$BIO_GRADE_STANDARD");
+		case BIO_RARITY_UNIQUE:
+			return StringTable.Localize("$BIO_GRADE_SPECIALTY");
+		case BIO_RARITY_NONE:
+		default:
+			return StringTable.Localize("$BIO_NONE");
+		}
+	}
+
+	static int RarityFontColor(BIO_Rarity rarity)
+	{
+		switch (rarity)
 		{
 		default:
 		case BIO_GRADE_NONE:
-		case BIO_GRADE_STANDARD: return Font.CR_WHITE;
-		case BIO_GRADE_SPECIALTY: return Font.CR_GREEN;
-		case BIO_GRADE_EXPERIMENTAL: return Font.CR_CYAN;
-		case BIO_GRADE_CLASSIFIED: return Font.CR_ORANGE;
+		case BIO_RARITY_COMMON: return Font.CR_WHITE;
+		case BIO_RARITY_MUTATED: return Font.CR_CYAN;
+		case BIO_RARITY_UNIQUE: return Font.CR_ORANGE;
 		}
 	}
 

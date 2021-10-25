@@ -37,7 +37,7 @@ class BIO_Mutagen : Inventory abstract
 			return false;
 		}
 
-		if (!worksOnUniques && weap.Grade == BIO_GRADE_CLASSIFIED)
+		if (!worksOnUniques && weap.Rarity == BIO_RARITY_UNIQUE)
 		{
 			Owner.A_Print("$BIO_MUTA_FAIL_UNIQUE", 4.0);
 			return false;

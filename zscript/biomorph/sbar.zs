@@ -218,7 +218,7 @@ class BIO_StatusBar : BaseStatusBar
 		int weapInfoY = 18;
 
 		DrawString(Font_Small, weap.GetTag(), (WEAPINFO_X, weapInfoY),
-			DI_TEXT_ALIGN_RIGHT, BIO_Utils.GradeFontColor(weap.Grade));
+			DI_TEXT_ALIGN_RIGHT, BIO_Utils.RarityFontColor(weap.Rarity));
 
 		// Blank line between weapon's tag and its stats
 		weapInfoY += 16;

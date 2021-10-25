@@ -1,10 +1,11 @@
 // Track the highest-grade weapon the party has found.
 enum BIO_PartyMaxWeaponGrade : uint8
 {
-	BIO_PMWG_STANDARD = 0,
-	BIO_PMWG_SPECIALTY = 1,
-	BIO_PMWG_EXPERIMENTAL = 2,
-	BIO_PMWG_CLASSIFIED = 3
+	BIO_PWMG_SURPLUS,
+	BIO_PMWG_STANDARD,
+	BIO_PMWG_SPECIALTY,
+	BIO_PMWG_EXPERIMENTAL,
+	BIO_PMWG_CLASSIFIED
 }
 
 class BIO_WeaponUpgrade
@@ -104,6 +105,9 @@ class BIO_GlobalData : Thinker
 
 		switch (grade)
 		{
+		case BIO_GRADE_STANDARD:
+			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_STANDARD);
+			break;
 		case BIO_GRADE_SPECIALTY:
 			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_SPECIALTY);
 			break;

@@ -207,6 +207,7 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_Weapon.MagazineSizes 0, 0;
 		BIO_Weapon.MagazineTypes "", "";
 		BIO_Weapon.MinAmmoReserves 1, 1;
+		BIO_Weapon.Rarity BIO_RARITY_COMMON;
 		BIO_Weapon.ReloadFactors 1, 1;
 		BIO_Weapon.Spreads 0.0, 0.0, 0.0, 0.0;
 		BIO_Weapon.SwitchSpeeds 6, 6;
@@ -622,6 +623,13 @@ class BIO_Weapon : DoomWeapon abstract
 
 		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, self))
 			return false;
+
+		if (Rarity == BIO_RARITY_COMMON)
+		{
+			Rarity = BIO_RARITY_MUTATED;
+			SetTag(GetDefaultByType(GetClass()).GetTag());
+			SetTag(GetColoredTag());
+		}
 
 		uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
 		Affixes[e].Init(self);
