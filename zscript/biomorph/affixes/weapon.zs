@@ -35,23 +35,23 @@ class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMG1"),
 				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier1 >= 0 ? "+" : "-", Modifier1));
+				Modifier1 >= 0 ? "+" : "", Modifier1));
 		}
 		else if (weap.AffixMask & BIO_WAM_DAMAGE_1)
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMG2"),
 				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier2 >= 0 ? "+" : "-", Modifier2));
+				Modifier2 >= 0 ? "+" : "", Modifier2));
 		}
 		else
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMG"),
 				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier1 >= 0 ? "+" : "-", Modifier1,
+				Modifier1 >= 0 ? "+" : "", Modifier1,
 				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier2 >= 0 ? "+" : "-", Modifier2));
+				Modifier2 >= 0 ? "+" : "", Modifier2));
 		}
 	}
 }
@@ -91,23 +91,23 @@ class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMGPERCENT1"),
 				Multi1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Multi1 >= 0 ? "+" : "-", int(Multi1 * 100)));
+				Multi1 >= 0 ? "+" : "", int(Multi1 * 100)));
 		}
 		else if (weap.AffixMask & BIO_WAM_DAMAGE_1)
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMGPERCENT2"),
 				Multi2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Multi2 >= 0 ? "+" : "-", int(Multi2 * 100)));
+				Multi2 >= 0 ? "+" : "", int(Multi2 * 100)));
 		}
 		else
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMGPERCENT"),
 				Multi1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Multi1 >= 0 ? "+" : "-", int(Multi1 * 100),
+				Multi1 >= 0 ? "+" : "", int(Multi1 * 100),
 				Multi2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Multi2 >= 0 ? "+" : "-", int(Multi2 * 100)));
+				Multi2 >= 0 ? "+" : "", int(Multi2 * 100)));
 		}
 	}
 }
@@ -301,7 +301,7 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT1"),
 				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier1 >= 0 ? "+" : "-", Modifier1,
+				Modifier1 >= 0 ? "+" : "", Modifier1,
 				GetDefaultByType(weap.FireType1).GetTag()));
 		}
 		else if (weap.AffixMask & BIO_WAM_FIRECOUNT_1)
@@ -309,7 +309,7 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT2"),
 				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier2 >= 0 ? "+" : "-", Modifier2,
+				Modifier2 >= 0 ? "+" : "", Modifier2,
 				GetDefaultByType(weap.FireType2).GetTag()));
 		}
 		else
@@ -317,10 +317,10 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT"),
 				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier1 >= 0 ? "+" : "-", Modifier1,
+				Modifier1 >= 0 ? "+" : "", Modifier1,
 				GetDefaultByType(weap.FireType1).GetTag(),
 				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier2 >= 0 ? "+" : "-", Modifier2,
+				Modifier2 >= 0 ? "+" : "", Modifier2,
 				GetDefaultByType(weap.FireType2).GetTag()));
 		}
 	}

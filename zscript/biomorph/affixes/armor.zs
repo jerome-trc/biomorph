@@ -24,7 +24,7 @@ class BIO_ArmorAffix_SaveAmount : BIO_EquipmentAffix
 		strings.Push(String.Format(
 			StringTable.Localize("$BIO_AFFIX_TOSTR_ARMORSAVEAMOUNT"),
 			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-			Modifier >= 0 ? "+" : "-", Modifier));
+			Modifier >= 0 ? "+" : "", Modifier));
 	}
 }
 
@@ -57,6 +57,6 @@ class BIO_ArmorAffix_SavePercent : BIO_EquipmentAffix
 		strings.Push(String.Format(
 			StringTable.Localize("$BIO_AFFIX_TOSTR_ARMORSAVEPERCENT"),
 			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-			Modifier >= 0 ? "+" : "-", Modifier));
+			Modifier >= 0 ? "+" : "", Modifier));
 	}
 }
