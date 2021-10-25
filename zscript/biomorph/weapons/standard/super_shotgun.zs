@@ -169,7 +169,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		stats.Push(GenericFireDataReadout());
 		stats.Push(GenericSpreadReadout());
 		stats.Push(GenericFireTimeReadout(FireTime1 + FireTime2));
-		stats.Push(GenericReloadTimeReadout(19 + ReloadTime1 + ReloadTime2 + ReloadTime3));
+		stats.Push(GenericReloadTimeReadout(ReloadTime1 + ReloadTime2 + ReloadTime3));
 	}
 
 	override int DefaultFireTime() const
