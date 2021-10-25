@@ -6,7 +6,9 @@ Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https:
 
 The [ZJSON library](https://github.com/RicardoLuis0/ZJSON) is courtesy of [RicardoLuis0](https://github.com/RicardoLuis0) and used under the MIT license.
 
-The GLDEFS for `BIO_ArmorBonus` were devised by Realm667 user Infirnex.
+The GLDEFS for the Armor Bonus were devised by Realm667 user Infirnex.
+
+The GLDEFS for the Weapon Upgrade Kit were devised by Realm667 user Dreadopp.
 
 ## Graphics
 
@@ -20,12 +22,14 @@ Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 use
 
 Experimental Armour sprites are courtesy of id Software LLC, and edited by Realm667 user Ghastly_dragon.
 
+Weapon Upgrade Kit sprites are courtesy of Rogue Entertainment, and edited by Realm667 user Dreadopp.
+
 Any graphical asset which is not mentioned here is custom-made by RatCircus.
 
 ## Audio
 
 The following audio files are provided by CturiX Kemilon, under no license:
-- "gun_fetch2.wav" (GUNSWAP0)
+- "gun_fetch2.wav" (WEAPUPGR)
 - "gun_fetch3.wav" (GUNMECH1)
 - "gun_fetch4.wav" (GUNMECH2);
 - "hankland.wav" (DSOOF replacement)

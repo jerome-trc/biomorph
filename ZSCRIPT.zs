@@ -34,10 +34,14 @@ class Biomorph abstract
 #include "zscript/biomorph/equip/base.zs"
 #include "zscript/biomorph/equip/armor.zs"
 
+#include "zscript/biomorph/overlays/modal_base.zs"
+#include "zscript/biomorph/overlays/weapon_upgrade.zs"
+
 #include "zscript/biomorph/passives/base.zs"
 
 #include "zscript/biomorph/weapons/base.zs"
 #include "zscript/biomorph/weapons/fist.zs"
+#include "zscript/biomorph/weapons/upgrade_kit.zs"
 
 #include "zscript/biomorph/weapons/standard/bfg9000.zs"
 #include "zscript/biomorph/weapons/standard/chaingun.zs"

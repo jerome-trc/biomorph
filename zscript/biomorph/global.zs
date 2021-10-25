@@ -1,3 +1,9 @@
+class BIO_WeaponUpgrade
+{
+	Class<BIO_Weapon> Input, Output;
+	uint KitCost;
+}
+
 class BIO_GlobalData : Thinker
 {
 	private uint PartyXP;
@@ -7,6 +13,8 @@ class BIO_GlobalData : Thinker
 
 	private Array<Class<BIO_EquipmentAffix> > AllEquipmentAffixClasses;
 	private Array<BIO_EquipmentAffix> EquipmentAffixDefaults;
+
+	private Array<BIO_WeaponUpgrade> WeaponUpgrades;
 
 	private WeightedRandomTable WRT_Mutagens;
 
@@ -65,6 +73,17 @@ class BIO_GlobalData : Thinker
 		return (Class<BIO_Mutagen>)(WRT_Mutagens.Result());
 	}
 
+	void PossibleWeaponUpgrades(in out Array<BIO_WeaponUpgrade> options,
+		Class<BIO_Weapon> weap_t) const
+	{
+		for (uint i = 0; i < WeaponUpgrades.Size(); i++)
+		{
+			if (WeaponUpgrades[i].Input != weap_t) continue;
+
+			options.Push(WeaponUpgrades[i]);
+		}
+	}
+
 	// Setters =================================================================
 
 	void AddPartyXP(uint xp) { PartyXP += xp; }
@@ -101,11 +120,101 @@ class BIO_GlobalData : Thinker
 			}
 		}
 
+		ret.ReadWeaponLumps();
+
 		if (BIO_CVar.Debug())
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Global init done (took %d ms).", MsTime() - ms);
 
 		return ret;
+	}
+
+	const LMPNAME_WEAPONS = "BIOWEAP";
+
+	private void ReadWeaponLumps()
+	{
+		int lump = -1, next = 0;
+		
+		do
+		{
+			lump = Wads.FindLump(LMPNAME_WEAPONS, next, Wads.GLOBALNAMESPACE);
+			if (lump == -1) break;
+			next = lump + 1;
+
+			BIO_JsonElementOrError fileOpt = BIO_JSON.parse(Wads.ReadLump(lump));
+			if (fileOpt is "BIO_JsonError")
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. 
+					"Skipping malformed %s lump %d. Details: %s", lump,
+					LMPNAME_WEAPONS, BIO_JsonError(fileOpt).what);
+				continue;
+			}
+
+			let obj = BIO_Utils.TryGetJsonObject(BIO_JsonElement(fileOpt));
+			if (obj == null)
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+					" lump %d has malformed contents.", lump);
+				continue;
+			}
+
+			let upgrades = BIO_Utils.TryGetJsonArray(obj.get("upgrades"));
+			if (upgrades != null)
+			{
+				for (uint i = 0; i < upgrades.size(); i++)
+				{
+					string errpfx = String.Format(Biomorph.LOGPFX_ERR ..
+						LMPNAME_WEAPONS .. " lump %d, upgrade object %d; ", lump, i);
+
+					let upgrade = BIO_Utils.TryGetJsonObject(upgrades.get(i));
+					if (upgrade == null)
+					{
+						Console.Printf(errpfx .. "skipping it.");
+						continue;
+					}
+
+					Class<BIO_Weapon> input_t = (Class<BIO_Weapon>)
+						(BIO_Utils.TryGetJsonClassName(upgrade.get("input")));
+					if (input_t == null)
+					{
+						Console.Printf(errpfx .. "invalid input class given.");
+						continue;
+					}
+
+					Class<BIO_Weapon> output_t = (Class<BIO_Weapon>)
+						(BIO_Utils.TryGetJsonClassName(upgrade.get("output")));
+					if (output_t == null)
+					{
+						Console.Printf(errpfx .. "invalid output class given.");
+						continue;
+					}
+
+					let kitCost = BIO_Utils.TryGetJsonInt(upgrade.get("cost"));
+					if (kitCost == null)
+					{
+						Console.Printf(errpfx ..
+							"upgrade kit cost field is missing or malformed.");
+						continue;
+					}
+
+					let kc = kitCost.i;
+					let wukDefs = GetDefaultByType("BIO_WeaponUpgradeKit");
+					if (kc < 0 || kc > wukDefs.MaxAmount)
+					{
+						Console.Printf(errpfx ..
+							"upgrade kit cost is invalid (must be between 0 and %d inclusive).",
+							wukDefs.MaxAmount);
+						continue;
+					}
+
+					uint e = WeaponUpgrades.Push(new("BIO_WeaponUpgrade"));
+					WeaponUpgrades[e].Input = input_t;
+					WeaponUpgrades[e].Output = output_t;
+					WeaponUpgrades[e].KitCost = kc;
+				}
+			}
+		}
+		while (true);
 	}
 
 	static BIO_GlobalData Get()

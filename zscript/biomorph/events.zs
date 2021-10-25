@@ -271,17 +271,23 @@ class BIO_EventHandler : EventHandler
 
 	private bool ReplaceBigAmmo(WorldEvent event) const
 	{
+		Class<Actor> choice = null;
+
 		if (event.Thing.GetClass() == "ClipBox")
-			FinalizeSpawn("BIO_ClipBox", event.Thing);
+			choice = "BIO_ClipBox";
 		else if (event.Thing.GetClass() == "ShellBox")
-			FinalizeSpawn("BIO_ShellBox", event.Thing);
+			choice = "BIO_ShellBox";
 		else if (event.Thing.GetClass() == "RocketBox")
-			FinalizeSpawn("BIO_RocketBox", event.Thing);
+			choice = "BIO_RocketBox";
 		else if (event.Thing.GetClass() == "CellPack")
-			FinalizeSpawn("BIO_CellPack", event.Thing);
+			choice = "BIO_CellPack";
 		else
 			return false;
 
+		if (Random(0, 8) == 0)
+			Actor.Spawn("BIO_WeaponUpgradeKitSpawner", event.Thing.Pos);
+
+		FinalizeSpawn(choice, event.Thing);
 		return true;
 	}
 
@@ -387,5 +393,127 @@ class BIO_EventHandler : EventHandler
 				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
 				FRandom(0.0, 360.0));
 		}
+	}
+
+	override void NetworkProcess(ConsoleEvent event)
+	{
+		if (NetEvent_WUKOverlay(event) || NetEvent_WeaponUpgrade(event))
+			return;
+	}
+
+	const EVENT_WUKOVERLAY = "bio_wukoverlay";
+	const EVENT_WEAPUPGRADE = "bio_weapupgrade";
+
+	private transient BIO_WeaponUpgradeOverlay WeaponUpgradeOverlay;
+
+	private bool NetEvent_WUKOverlay(ConsoleEvent event)
+	{
+		if (!(event.Name ~== EVENT_WUKOVERLAY)) return false;
+		if (event.Player != ConsolePlayer) return true;
+
+		if (event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event cannot be invoked manually.");
+			return true;
+		}
+
+		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
+		if (bioPlayer == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_WUKOVERLAY ..
+				" was illegally invoked by a non-Biomorph PlayerPawn.");
+			return true;
+		}
+
+		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
+		if (weap == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_WUKOVERLAY ..
+				" was illegally invoked for a non-Biomorph weapon.");
+			return true;
+		}
+
+		Array<BIO_WeaponUpgrade> options;
+		Globals.PossibleWeaponUpgrades(options, weap.GetClass());
+
+		if (options.Size() < 1)
+		{
+			bioPlayer.A_Print("$BIO_WUK_FAIL_NOOPTIONS");
+			return true;
+		}
+
+		WeaponUpgradeOverlay = BIO_WeaponUpgradeOverlay.Create(options);
+		return true;
+	}
+
+	private bool NetEvent_WeaponUpgrade(ConsoleEvent event)
+	{
+		if (event.Player != ConsolePlayer) return false;
+
+		Array<string> nameParts;
+		event.Name.Split(nameParts, ":");
+
+		if (!nameParts[0] || !(nameParts[0] ~== EVENT_WEAPUPGRADE))
+			return false;
+
+		if (event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event cannot be invoked manually.");
+			return true;
+		}
+
+		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
+		if (bioPlayer == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_WEAPUPGRADE ..
+				" was illegally invoked by a non-Biomorph PlayerPawn.");
+			return true;
+		}
+
+		if (nameParts[1] == "_")
+		{
+			// The user cancelled this weapon upgrade operation
+			WeaponUpgradeOverlay.Destroy();
+			// TODO: Feedback sound
+			return true;
+		}
+
+		Class<BIO_Weapon> outputChoice = nameParts[1];
+
+		if (outputChoice == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Invalid weapon upgrade choice submitted: %s", nameParts[1]);
+			return true;
+		}
+
+		if (event.Args[0] > bioPlayer.CountInv("BIO_WeaponUpgradeKit"))
+		{
+			bioPlayer.A_Print("$BIO_WUK_FAIL_INSUFFICIENT", 4.0);
+			return true;
+		}
+
+		bioPlayer.GiveInventory(outputChoice, 1);
+		bioPlayer.A_SelectWeapon(outputChoice);
+		bioPlayer.TakeInventory(bioPlayer.Player.ReadyWeapon.GetClass(), 1);
+		bioPlayer.A_StartSound("misc/weapupgrade", CHAN_ITEM);
+		bioPlayer.TakeInventory("BIO_WeaponUpgradeKit", event.Args[0]);
+		WeaponUpgradeOverlay.Destroy();
+		return true;
+	}
+
+	override bool InputProcess(InputEvent event)
+	{
+		if (WeaponUpgradeOverlay != null && WeaponUpgradeOverlay.Input(event))
+			return true;
+		
+		return false; // Don't absorb this input
+	}
+
+	override void RenderOverlay(RenderEvent event)
+	{
+		if (WeaponUpgradeOverlay != null) WeaponUpgradeOverlay.Draw(event);
 	}
 }

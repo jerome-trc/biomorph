@@ -11,6 +11,8 @@ class BIO_Fist : BIO_Weapon replaces Fist
 
 		Obituary "$OB_MPFIST";
 		Tag "$BIO_WEAP_TAG_FIST";
+
+		Inventory.Icon "PUNGA0";
 		
 		Weapon.SelectionOrder 3700;
 		Weapon.SlotNumber 1;

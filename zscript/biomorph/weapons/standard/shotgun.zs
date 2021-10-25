@@ -9,6 +9,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		Obituary "$OB_MPSHOTGUN";
 		Tag "$TAG_SHOTGUN";
 
+		Inventory.Icon "SHOTA0";
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_SHOTGUN";
 
 		Weapon.AmmoGive 8;

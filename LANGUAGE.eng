@@ -1,5 +1,4 @@
-/*
-	Commonwealth English localization.
+/*	Commonwealth English localization.
 
 	Some notes:
 
@@ -54,6 +53,17 @@
 	BIO_WEAP_PICKUP_HBR = "Procured a %s.";
 	BIO_WEAP_PICKUP_INCURSIONSHOTGUN = "Procured an %s.";
 	BIO_WEAP_PICKUP_SALVOLAUNCHER = "Procured a %s.";
+
+// Weapon upgrade kit (tag, pickup message, UI messaging) ======================
+
+	BIO_WUK_TAG = "Weapon Upgrade Kit";
+	BIO_WUK_PICKUP = "Picked up a \ckWeapon Upgrade Kit\c-.";
+	BIO_WUK_FAIL_NULLWEAP = "This weapon can't be upgraded.";
+	BIO_WUK_FAIL_NOOPTIONS = "No upgraded versions of this weapon exist.";
+	BIO_WUK_FAIL_INSUFFICIENT = "You don't have enough upgrade kits for this.";
+
+	BIO_WUK_UIHELP_0 = "Use %s and %s to choose weapon to upgrade to.";
+	BIO_WUK_UIHELP_1 = "Press %s to confirm or %s to cancel.";
 
 // Fired things (puff/projectile tags) =========================================
 
@@ -172,6 +182,8 @@
 	BIO_OPTVAL_MBF_SEC = "Secondary Fires Multiple Barrels";
 
 // Keybindings =================================================================
+
+	BIO_UNASSIGNED_KEY = "\ccUnassigned Key\c-";
 
 	BIO_KB_DROPWEAP = "Drop Weapon";
 	BIO_KB_UNEQUIPARMOR = "Take off Armour";

@@ -7,6 +7,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 	{
 		Tag "$BIO_WEAP_TAG_INCURSIONSHOTGUN";
 
+		Inventory.Icon "INCUX0";
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_INCURSIONSHOTGUN";
 
 		Weapon.AmmoGive 20;

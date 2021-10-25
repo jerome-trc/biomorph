@@ -11,6 +11,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		Obituary "$OB_MPCHAINSAW";
 		Tag "$TAG_CHAINSAW";
 	
+		Inventory.Icon "CSAWA0";
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_CHAINSAW";
 		
 		Weapon.Kickback 0;
