@@ -407,7 +407,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	bool AllDamageAffixMasked() const
 	{
-		return (AffixMask & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
+		return (AffixMask & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE;
 	}
 
 	bool PrimaryDamageAffixMasked() const
@@ -479,6 +479,11 @@ class BIO_Weapon : DoomWeapon abstract
 			return FireType1 is "BIO_Projectile";
 		else
 			return FireType2 is "BIO_Projectile";
+	}
+
+	bool SpreadAffixMasked() const
+	{
+		return (AffixMask & BIO_WAM_SPREAD) == BIO_WAM_SPREAD;
 	}
 
 	// No fire state can have a tic time below 1. Fire rate-affecting affixes need

@@ -365,6 +365,65 @@ class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 	}
 }
 
+class BIO_WeaponAffix_Spread : BIO_WeaponAffix
+{
+	float HSpread1, VSpread1, HSpread2, VSpread2;
+
+	override void Init(BIO_Weapon weap)
+	{
+		HSpread1 = -(FRandom(0.1, weap.HSpread1) / 2.0);
+		VSpread1 = -(FRandom(0.1, weap.VSpread1) / 2.0);
+		HSpread2 = -(FRandom(0.1, weap.HSpread2) / 2.0);
+		VSpread2 = -(FRandom(0.1, weap.VSpread2) / 2.0);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return !weap.SpreadAffixMasked();
+	}
+
+	override void Apply(BIO_Weapon weap)
+	{
+		if (!(weap.AffixMask & BIO_WAM_HSPREAD_1))
+			weap.HSpread1 += HSpread1;
+		if (!(weap.AffixMask & BIO_WAM_VSPREAD_1))
+			weap.VSpread1 += VSpread1;
+
+		if (!(weap.AffixMask & BIO_WAM_HSPREAD_2))
+			weap.HSpread2 += HSpread2;
+		if (!(weap.AffixMask & BIO_WAM_VSPREAD_2))
+			weap.VSpread2 += VSpread2;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		string output = StringTable.Localize("$BIO_AFFIX_TOSTR_SPREAD");
+
+		if (!(weap.AffixMask & BIO_WAM_HSPREAD_1))
+			output.AppendFormat("%s%s%.1f/",
+			HSpread1 >= 0.0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
+			HSpread1 >= 0.0 ? "+" : "", HSpread1);
+
+		if (!(weap.AffixMask & BIO_WAM_VSPREAD_1))
+			output.AppendFormat("%s%s%.1f ",
+			VSpread1 >= 0.0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
+			VSpread1 >= 0.0 ? "+" : "", VSpread1);
+
+		if (!(weap.AffixMask & BIO_WAM_HSPREAD_2))
+			output.AppendFormat("%s%s%.1f/",
+			HSpread2 >= 0.0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
+			HSpread2 >= 0.0 ? "+" : "", HSpread2);
+
+		if (!(weap.AffixMask & BIO_WAM_VSPREAD_2))
+			output.AppendFormat("%s%s%.1f ",
+			VSpread2 >= 0.0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
+			VSpread2 >= 0.0 ? "+" : "", VSpread2);
+
+		output.DeleteLastCharacter();
+		strings.Push(output);
+	}
+}
+
 class BIO_WeaponAffix_ProjSeek : BIO_WeaponAffix
 {
 	override void Init(BIO_Weapon weap) {}
