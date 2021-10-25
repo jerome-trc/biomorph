@@ -136,14 +136,13 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 	override void ResetStats()
 	{
 		super.ResetStats();
-		let defs = GetDefaultByType(GetClass());
 
-		FireTime1 = defs.FireTime1;
-		FireTime2 = defs.FireTime2;
-		FireTime3 = defs.FireTime3;
-		FireTime4 = defs.FireTime4;
+		FireTime1 = Default.FireTime1;
+		FireTime2 = Default.FireTime2;
+		FireTime3 = Default.FireTime3;
+		FireTime4 = Default.FireTime4;
 
-		ReloadTime = defs.ReloadTime;
+		ReloadTime = Default.ReloadTime;
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -156,10 +155,10 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 
 	override int DefaultFireTime() const
 	{
-		let defs = GetDefaultByType(GetClass());
+		let Default = GetDefaultByType(GetClass());
 		return
-			defs.FireTime1 + defs.FireTime2 +
-			defs.FireTime3 + defs.FireTime4;
+			Default.FireTime1 + Default.FireTime2 +
+			Default.FireTime3 + Default.FireTime4;
 	}
 
 	override int DefaultReloadTime() const

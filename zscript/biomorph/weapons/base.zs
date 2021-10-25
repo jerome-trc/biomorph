@@ -248,9 +248,8 @@ class BIO_Weapon : DoomWeapon abstract
 		// that function (and having to watch if it changes upstream)
 		AmmoGive1 = AmmoGive2 = 0;
 		super.AttachToOwner(newOwner);
-		let defs = GetDefaultByType(GetClass());
-		AmmoGive1 = defs.AmmoGive1;
-		AmmoGive2 = defs.AmmoGive2;
+		AmmoGive1 = Default.AmmoGive1;
+		AmmoGive2 = Default.AmmoGive2;
 
 		BIO_GlobalData.Get().OnWeaponAcquired(Grade);
 
@@ -475,9 +474,9 @@ class BIO_Weapon : DoomWeapon abstract
 	bool FireTypeIsDefault(bool secondary = false) const
 	{
 		if (!secondary)
-			return FireType1 == GetDefaultByType(GetClass()).FireType1;
+			return FireType1 == Default.FireType1;
 		else
-			return FireType2 == GetDefaultByType(GetClass()).FireType2;
+			return FireType2 == Default.FireType2;
 	}
 
 	bool FiresTrueProjectile(bool secondary = false) const
@@ -550,35 +549,33 @@ class BIO_Weapon : DoomWeapon abstract
 	// Does not affect affixes in any way.
 	virtual void ResetStats()
 	{
-		let defs = GetDefaultByType(GetClass());
+		BIOFlags = Default.BIOFlags;
+		AffixMask = Default.AffixMask;
 
-		BIOFlags = defs.BIOFlags;
-		AffixMask = defs.AffixMask;
+		FireType1 = Default.FireType1;
+		FireType2 = Default.FireType2;
+		FireCount1 = Default.FireCount1;
+		FireCount2 = Default.FireCount2;
 
-		FireType1 = defs.FireType1;
-		FireType2 = defs.FireType2;
-		FireCount1 = defs.FireCount1;
-		FireCount2 = defs.FireCount2;
+		MinDamage1 = Default.MinDamage1;
+		MinDamage2 = Default.MinDamage2;
+		MaxDamage1 = Default.MaxDamage1;
+		MaxDamage2 = Default.MaxDamage2;
 
-		MinDamage1 = defs.MinDamage1;
-		MinDamage2 = defs.MinDamage2;
-		MaxDamage1 = defs.MaxDamage1;
-		MaxDamage2 = defs.MaxDamage2;
+		HSpread1 = Default.HSpread1;
+		HSpread2 = Default.HSpread2;
+		VSpread1 = Default.VSpread1;
+		VSpread2 = Default.VSpread2;
 
-		HSpread1 = defs.HSpread1;
-		HSpread2 = defs.HSpread2;
-		VSpread1 = defs.VSpread1;
-		VSpread2 = defs.VSpread2;
+		RaiseSpeed = Default.RaiseSpeed;
+		LowerSpeed = Default.LowerSpeed;
 
-		RaiseSpeed = defs.RaiseSpeed;
-		LowerSpeed = defs.LowerSpeed;
-
-		MagazineSize1 = defs.MagazineSize1;
-		MagazineSize2 = defs.MagazineSize2;
-		MinAmmoReserve1 = defs.MinAmmoReserve1;
-		MinAmmoReserve2 = defs.MinAmmoReserve2;
-		ReloadFactor1 = defs.ReloadFactor1;
-		ReloadFactor2 = defs.ReloadFactor2;
+		MagazineSize1 = Default.MagazineSize1;
+		MagazineSize2 = Default.MagazineSize2;
+		MinAmmoReserve1 = Default.MinAmmoReserve1;
+		MinAmmoReserve2 = Default.MinAmmoReserve2;
+		ReloadFactor1 = Default.ReloadFactor1;
+		ReloadFactor2 = Default.ReloadFactor2;
 	}
 
 	void ApplyImplicitAffixes()
@@ -613,7 +610,7 @@ class BIO_Weapon : DoomWeapon abstract
 		if (Rarity == BIO_RARITY_COMMON)
 		{
 			Rarity = BIO_RARITY_MUTATED;
-			SetTag(GetDefaultByType(GetClass()).GetTag());
+			SetTag(Default.GetTag());
 			SetTag(GetColoredTag());
 		}
 
@@ -839,34 +836,30 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected string FireTypeFontColor(bool secondary = false) const
 	{
-		let defs = GetDefaultByType(GetClass());
-
 		if (!secondary)
-			return FireType1 != defs.FireType1 ?
+			return FireType1 != Default.FireType1 ?
 				CRESC_STATMODIFIED : CRESC_STATDEFAULT;
 		else
-			return FireType2 != defs.FireType2 ?
+			return FireType2 != Default.FireType2 ?
 				CRESC_STATMODIFIED : CRESC_STATDEFAULT;
 	}
 
 	protected string FireCountFontColor(bool secondary = false) const
 	{
-		let defs = GetDefaultByType(GetClass());
-
 		if (!secondary)
 		{
-			if (FireCount1 > defs.FireCount1)
+			if (FireCount1 > Default.FireCount1)
 				return CRESC_STATBETTER;
-			else if (FireCount1 < defs.FireCount1)
+			else if (FireCount1 < Default.FireCount1)
 				return CRESC_STATWORSE;
 			else
 				return CRESC_STATDEFAULT;
 		}
 		else
 		{
-			if (FireCount2 > defs.FireCount2)
+			if (FireCount2 > Default.FireCount2)
 				return CRESC_STATBETTER;
-			else if (FireCount2 < defs.FireCount2)
+			else if (FireCount2 < Default.FireCount2)
 				return CRESC_STATWORSE;
 			else
 				return CRESC_STATDEFAULT;
@@ -875,22 +868,20 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected string MinDamageFontColor(bool secondary = false) const
 	{
-		let defs = GetDefaultByType(GetClass());
-
 		if (!secondary)
 		{
-			if (MinDamage1 > defs.MinDamage1)
+			if (MinDamage1 > Default.MinDamage1)
 				return CRESC_STATBETTER;
-			else if (MinDamage1 < defs.MinDamage1)
+			else if (MinDamage1 < Default.MinDamage1)
 				return CRESC_STATWORSE;
 			else
 				return CRESC_STATDEFAULT;
 		}
 		else
 		{
-			if (MinDamage2 > defs.MinDamage2)
+			if (MinDamage2 > Default.MinDamage2)
 				return CRESC_STATBETTER;
-			else if (MinDamage2 < defs.MinDamage2)
+			else if (MinDamage2 < Default.MinDamage2)
 				return CRESC_STATWORSE;
 			else
 				return CRESC_STATDEFAULT;
@@ -899,22 +890,20 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected string MaxDamageFontColor(bool secondary = false) const
 	{
-		let defs = GetDefaultByType(GetClass());
-
 		if (!secondary)
 		{
-			if (MaxDamage1 > defs.MaxDamage1)
+			if (MaxDamage1 > Default.MaxDamage1)
 				return CRESC_STATBETTER;
-			else if (MaxDamage1 < defs.MaxDamage1)
+			else if (MaxDamage1 < Default.MaxDamage1)
 				return CRESC_STATWORSE;
 			else
 				return CRESC_STATDEFAULT;
 		}
 		else
 		{
-			if (MaxDamage2 > defs.MaxDamage2)
+			if (MaxDamage2 > Default.MaxDamage2)
 				return CRESC_STATBETTER;
-			else if (MaxDamage2 < defs.MaxDamage2)
+			else if (MaxDamage2 < Default.MaxDamage2)
 				return CRESC_STATWORSE;
 			else
 				return CRESC_STATDEFAULT;
@@ -923,22 +912,20 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected string HorizSpreadFontColor(bool secondary = false) const
 	{
-		let defs = GetDefaultByType(GetClass());
-
 		if (!secondary)
 		{
-			if (HSpread1 > defs.HSpread1)
+			if (HSpread1 > Default.HSpread1)
 				return CRESC_STATWORSE;
-			else if (HSpread1 < defs.HSpread1)
+			else if (HSpread1 < Default.HSpread1)
 				return CRESC_STATBETTER;
 			else
 				return CRESC_STATDEFAULT;
 		}
 		else
 		{
-			if (HSpread2 > defs.HSpread2)
+			if (HSpread2 > Default.HSpread2)
 				return CRESC_STATWORSE;
-			else if (HSpread2 < defs.HSpread2)
+			else if (HSpread2 < Default.HSpread2)
 				return CRESC_STATBETTER;
 			else
 				return CRESC_STATDEFAULT;
@@ -947,22 +934,20 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected string VertSpreadFontColor(bool secondary = false) const
 	{
-		let defs = GetDefaultByType(GetClass());
-
 		if (!secondary)
 		{
-			if (VSpread1 > defs.VSpread1)
+			if (VSpread1 > Default.VSpread1)
 				return CRESC_STATWORSE;
-			else if (VSpread1 < defs.VSpread1)
+			else if (VSpread1 < Default.VSpread1)
 				return CRESC_STATBETTER;
 			else
 				return CRESC_STATDEFAULT;
 		}
 		else
 		{
-			if (VSpread2 > defs.VSpread2)
+			if (VSpread2 > Default.VSpread2)
 				return CRESC_STATWORSE;
-			else if (VSpread2 < defs.VSpread2)
+			else if (VSpread2 < Default.VSpread2)
 				return CRESC_STATBETTER;
 			else
 				return CRESC_STATDEFAULT;
@@ -1006,8 +991,6 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected string GenericSpreadReadout(bool secondary = false) const
 	{
-		let defs = GetDefaultByType(GetClass());
-
 		if (!secondary)
 		{
 			return String.Format(StringTable.Localize("$BIO_WEAPSTAT_SPREAD"),

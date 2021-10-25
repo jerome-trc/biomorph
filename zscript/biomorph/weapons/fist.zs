@@ -74,16 +74,15 @@ class BIO_Fist : BIO_Weapon replaces Fist
 	override void ResetStats()
 	{
 		super.ResetStats();
-		let defs = GetDefaultByType(GetClass());
 
-		FireTime1 = defs.FireTime1;
-		FireTime2 = defs.FireTime2;
-		FireTime3 = defs.FireTime3;
-		FireTime4 = defs.FireTime4;
-		FireTime5 = defs.FireTime5;
+		FireTime1 = Default.FireTime1;
+		FireTime2 = Default.FireTime2;
+		FireTime3 = Default.FireTime3;
+		FireTime4 = Default.FireTime4;
+		FireTime5 = Default.FireTime5;
 
-		MeleeRange = defs.MeleeRange;
-		LifeSteal = defs.LifeSteal;
+		MeleeRange = Default.MeleeRange;
+		LifeSteal = Default.LifeSteal;
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -95,9 +94,9 @@ class BIO_Fist : BIO_Weapon replaces Fist
 
 	override int DefaultFireTime() const
 	{
-		let defs = GetDefaultByType(GetClass());
-		return defs.FireTime1 + defs.FireTime2 + defs.FireTime3 +
-			defs.FireTime4 + defs.FireTime5;
+		let Default = GetDefaultByType(GetClass());
+		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3 +
+			Default.FireTime4 + Default.FireTime5;
 	}
 
 	action void A_BIO_Punch()

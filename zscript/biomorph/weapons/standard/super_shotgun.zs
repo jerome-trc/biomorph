@@ -155,14 +155,13 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 	override void ResetStats()
 	{
 		super.ResetStats();
-		let defs = GetDefaultByType(GetClass());
 
-		FireTime1 = defs.FireTime1;
-		FireTime2 = defs.FireTime2;
+		FireTime1 = Default.FireTime1;
+		FireTime2 = Default.FireTime2;
 
-		ReloadTime1 = defs.ReloadTime1;
-		ReloadTime2 = defs.ReloadTime2;
-		ReloadTime3 = defs.ReloadTime3;
+		ReloadTime1 = Default.ReloadTime1;
+		ReloadTime2 = Default.ReloadTime2;
+		ReloadTime3 = Default.ReloadTime3;
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -175,14 +174,12 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 
 	override int DefaultFireTime() const
 	{
-		let defs = GetDefaultByType(GetClass());
-		return defs.FireTime1 + defs.FireTime2;
+		return Default.FireTime1 + Default.FireTime2;
 	}
 
 	override int DefaultReloadTime() const
 	{
-		let defs = GetDefaultByType(GetClass());
-		return defs.ReloadTime1 + defs.ReloadTime2 + defs.ReloadTime3;
+		return Default.ReloadTime1 + Default.ReloadTime2 + Default.ReloadTime3;
 	}
 }
 

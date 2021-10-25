@@ -113,13 +113,12 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	override void ResetStats()
 	{
 		super.ResetStats();
-		let defs = GetDefaultByType(GetClass());
 
-		FireTime1 = defs.FireTime1;
-		FireTime2 = defs.FireTime2;
-		FireTime3 = defs.FireTime3;
+		FireTime1 = Default.FireTime1;
+		FireTime2 = Default.FireTime2;
+		FireTime3 = Default.FireTime3;
 
-		ReloadTime = defs.ReloadTime;
+		ReloadTime = Default.ReloadTime;
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -131,8 +130,8 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 
 	override int DefaultFireTime() const
 	{
-		let defs = GetDefaultByType(GetClass());
-		return defs.FireTime1 + defs.FireTime2 + defs.FireTime3;
+		let Default = GetDefaultByType(GetClass());
+		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3;
 	}
 
 	override int DefaultReloadTime() const

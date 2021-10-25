@@ -113,12 +113,11 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 	override void ResetStats()
 	{
 		super.ResetStats();
-		let defs = GetDefaultByType(GetClass());
 
-		FireTime1 = defs.FireTime1;
-		FireTime2 = defs.FireTime2;
+		FireTime1 = Default.FireTime1;
+		FireTime2 = Default.FireTime2;
 
-		ReloadTime = defs.ReloadTime;
+		ReloadTime = Default.ReloadTime;
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -130,8 +129,8 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 
 	override int DefaultFireTime() const
 	{
-		let defs = GetDefaultByType(GetClass());
-		return defs.FireTime1 + defs.FireTime2;
+		let Default = GetDefaultByType(GetClass());
+		return Default.FireTime1 + Default.FireTime2;
 	}
 
 	override int DefaultReloadTime() const

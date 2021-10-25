@@ -111,26 +111,25 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 	override void ResetStats()
 	{
 		super.ResetStats();
-		let defs = GetDefaultByType(GetClass());
 
-		FireTime1 = defs.FireTime1;
-		FireTime2 = defs.FireTime2;
+		FireTime1 = Default.FireTime1;
+		FireTime2 = Default.FireTime2;
 
-		ReloadTime = defs.ReloadTime;
+		ReloadTime = Default.ReloadTime;
 	}
 
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout());
 		
-		let defs = GetDefaultByType(GetClass());
+		let Default = GetDefaultByType(GetClass());
 
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
-			FireTime1 != defs.FireTime1 ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
+			FireTime1 != Default.FireTime1 ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			float(FireTime1) / 35.0));
 
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_POSTFIREDELAY"),
-			FireTime2 != defs.FireTime2 ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
+			FireTime2 != Default.FireTime2 ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			float(FireTime2) / 35.0));
 
 		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
@@ -138,8 +137,8 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 
 	override int DefaultFireTime() const
 	{
-		let defs = GetDefaultByType(GetClass());
-		return defs.FireTime1 + defs.FireTime2;
+		let Default = GetDefaultByType(GetClass());
+		return Default.FireTime1 + Default.FireTime2;
 	}
 
 	override int DefaultReloadTime() const

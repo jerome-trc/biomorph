@@ -108,10 +108,9 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 	override void ResetStats()
 	{
 		super.ResetStats();
-		let defs = GetDefaultByType(GetClass());
 
-		FireTime = defs.FireTime;
-		ReloadTime = defs.ReloadTime;
+		FireTime = Default.FireTime;
+		ReloadTime = Default.ReloadTime;
 	}
 
 	override void StatsToString(in out Array<string> stats) const

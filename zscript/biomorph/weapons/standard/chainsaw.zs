@@ -69,12 +69,11 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 	override void ResetStats()
 	{
 		super.ResetStats();
-		let defs = GetDefaultByType(GetClass());
 
-		FireTime = defs.FireTime;
+		FireTime = Default.FireTime;
 
-		MeleeRange = defs.MeleeRange;
-		LifeSteal = defs.LifeSteal;
+		MeleeRange = Default.MeleeRange;
+		LifeSteal = Default.LifeSteal;
 	}
 
 	override void StatsToString(in out Array<string> stats) const
