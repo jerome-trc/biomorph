@@ -851,7 +851,7 @@ mixin class BIO_MeleeWeapon
 }
 
 /*  Adapted from the Easy Dual Wield library by Jekyll Grim Payne.
-	Used under the MIT License.
+	Used under the MIT License (/zscript/LICENSE.edw).
 	https://github.com/jekyllgrim/Easy-Dual-Wield
 */
 class BIO_DualWieldWeapon : BIO_Weapon abstract
