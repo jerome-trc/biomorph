@@ -1,3 +1,12 @@
+// Track the highest-grade weapon the party has found.
+enum BIO_PartyMaxWeaponGrade : uint8
+{
+	BIO_PMWG_STANDARD = 0,
+	BIO_PMWG_SPECIALTY = 1,
+	BIO_PMWG_EXPERIMENTAL = 2,
+	BIO_PMWG_CLASSIFIED = 3
+}
+
 class BIO_WeaponUpgrade
 {
 	Class<BIO_Weapon> Input, Output;
@@ -7,6 +16,7 @@ class BIO_WeaponUpgrade
 class BIO_GlobalData : Thinker
 {
 	private uint PartyXP;
+	private BIO_PartyMaxWeaponGrade MaxWeaponGrade;
 
 	private Array<Class<BIO_WeaponAffix> > AllWeaponAffixClasses;
 	private Array<BIO_WeaponAffix> WeaponAffixDefaults;
@@ -87,6 +97,33 @@ class BIO_GlobalData : Thinker
 	// Setters =================================================================
 
 	void AddPartyXP(uint xp) { PartyXP += xp; }
+
+	void OnWeaponAcquired(BIO_Grade grade)
+	{
+		let prev = MaxWeaponGrade;
+
+		switch (grade)
+		{
+		case BIO_GRADE_SPECIALTY:
+			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_SPECIALTY);
+			break;
+		case BIO_GRADE_EXPERIMENTAL:
+			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_EXPERIMENTAL);
+			break;
+		case BIO_GRADE_CLASSIFIED:
+			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_CLASSIFIED);
+			break;
+		default:
+			return;
+		}
+
+		if (prev != MaxWeaponGrade && BIO_CVar.Debug())
+		{
+			Console.Printf(Biomorph.LOGPFX_DEBUG ..
+				"Max weapon grade increased to %s.",
+				BIO_Utils.GradeToString(grade));
+		}
+	}
 
 	// The singleton getter and its "constructor" ==============================
 

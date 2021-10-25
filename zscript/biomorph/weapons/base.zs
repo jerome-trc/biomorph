@@ -249,6 +249,8 @@ class BIO_Weapon : DoomWeapon abstract
 		AmmoGive1 = defs.AmmoGive1;
 		AmmoGive2 = defs.AmmoGive2;
 
+		BIO_GlobalData.Get().OnWeaponAcquired(Grade);
+
 		// Get a pointer to primary ammo (which is either AmmoType1 or MagazineType1):
 		if (Magazine1 == null && AmmoType1 != null)
 		{

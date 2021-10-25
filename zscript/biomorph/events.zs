@@ -232,10 +232,10 @@ class BIO_EventHandler : EventHandler
 		if (ReplaceSmallAmmo(event) || ReplaceBigAmmo(event))
 			return;
 
-		if (ReplaceArmor(event))
+		if (ReplaceShotgun(event) || ReplaceChaingun(event))
 			return;
 
-		if (ReplaceShotgun(event) || ReplaceChaingun(event))
+		if (ReplaceArmor(event))
 			return;
 	}
 
@@ -494,7 +494,8 @@ class BIO_EventHandler : EventHandler
 			bioPlayer.A_Print("$BIO_WUK_FAIL_INSUFFICIENT", 4.0);
 			return true;
 		}
-
+		
+		Globals.OnWeaponAcquired(GetDefaultByType(outputChoice).Grade);
 		bioPlayer.GiveInventory(outputChoice, 1);
 		bioPlayer.A_SelectWeapon(outputChoice);
 		bioPlayer.TakeInventory(bioPlayer.Player.ReadyWeapon.GetClass(), 1);
