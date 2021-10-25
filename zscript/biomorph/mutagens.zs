@@ -175,10 +175,10 @@ class BIO_MutagenReroll : BIO_Mutagen
 
 	override bool Use(bool pickup)
 	{
-		if (!CanUse()) return false;
+		if (!CanUse(true)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
-		if (weap.Affixes.Size() < 1)
+		if (weap.NoAffixes() < 1)
 		{
 			Owner.A_Print("$BIO_MUTA_FAIL_NOAFFIXES", 4.0);
 			return false;

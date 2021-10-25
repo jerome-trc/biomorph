@@ -389,6 +389,12 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
+	// Includes implicits.
+	bool NoAffixes() const
+	{
+		return Affixes.Size() < 1 && ImplicitAffixes.Size() < 1;
+	}
+
 	bool PrimaryAffixMasked() const
 	{
 		return (AffixMask & BIO_WAM_PRIMARY) == BIO_WAM_PRIMARY;
