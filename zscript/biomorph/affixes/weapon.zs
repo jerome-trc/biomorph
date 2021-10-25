@@ -440,7 +440,7 @@ class BIO_WeaponAffix_ProjSeek : BIO_WeaponAffix
 
 	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
 	{
-		proj.MaxSeekAngle = 4.0;
+		proj.Seek = true;
 	}
 
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const

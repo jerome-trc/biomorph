@@ -58,7 +58,7 @@ class BIO_Projectile : Actor abstract
 {
 	mixin BIO_ProjectileCommon;
 
-	float MaxSeekAngle; property MaxSeekAngle: MaxSeekAngle;
+	bool Seek; property Seek: Seek;
 
 	Default
 	{
@@ -68,7 +68,7 @@ class BIO_Projectile : Actor abstract
 		BIO_Projectile.BFGRays 0;
 		BIO_Projectile.Splash 0, 0;
 		BIO_Projectile.Shrapnel 0;
-		BIO_Projectile.MaxSeekAngle 0.0;
+		BIO_Projectile.Seek false;
 	}
 
 	// The hacky part that makes it all work.
@@ -92,7 +92,7 @@ class BIO_Projectile : Actor abstract
 
 	action void A_Travel()
 	{
-		A_SeekerMissile(4.0, invoker.MaxSeekAngle, SMF_LOOK);
+		if (invoker.Seek) A_SeekerMissile(4.0, 4.0, SMF_LOOK);
 	}
 }
 
