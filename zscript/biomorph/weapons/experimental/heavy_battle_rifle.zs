@@ -130,13 +130,12 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 
 	override int DefaultFireTime() const
 	{
-		let Default = GetDefaultByType(GetClass());
 		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3;
 	}
 
 	override int DefaultReloadTime() const
 	{
-		return GetDefaultByType(GetClass()).ReloadTime;
+		return Default.ReloadTime;
 	}
 }
 

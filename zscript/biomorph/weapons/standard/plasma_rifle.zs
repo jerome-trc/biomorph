@@ -131,8 +131,6 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 	{
 		stats.Push(GenericFireDataReadout());
 		
-		let Default = GetDefaultByType(GetClass());
-
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
 			FireTime1 != Default.FireTime1 ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			float(FireTime1) / 35.0));
@@ -146,13 +144,12 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 
 	override int DefaultFireTime() const
 	{
-		let Default = GetDefaultByType(GetClass());
 		return Default.FireTime1 + Default.FireTime2;
 	}
 
 	override int DefaultReloadTime() const
 	{
-		return GetDefaultByType(GetClass()).ReloadTime + 19;
+		return Default.ReloadTime + 19;
 	}
 }
 

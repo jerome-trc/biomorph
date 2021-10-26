@@ -84,7 +84,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 
 	override int DefaultFireTime() const
 	{
-		return GetDefaultByType(GetClass()).FireTime;
+		return Default.FireTime;
 	}
 
 	action void A_BIO_Saw(int flags = 0)

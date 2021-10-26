@@ -209,6 +209,7 @@ class BIO_Backpack : BackpackItem replaces Backpack
 				let defs = GetDefaultByType(ammo_t);
 				let ammoItem = bioPlayer.FindInventory(ammo_t);
 				ammoItem.MaxAmount = defs.BackpackMaxAmount;
+				Console.Printf("%d", defs.BackpackAmount);
 				bioPlayer.GiveInventory(ammo_t, defs.BackpackAmount);
 			}
 			bioPlayer.OnBackpackPickup(self);

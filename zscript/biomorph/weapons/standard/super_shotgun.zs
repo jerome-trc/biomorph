@@ -127,8 +127,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 	override void UpdateDictionary()
 	{
 		Dict = Dictionary.FromString(
-			String.Format("{\"PelletCount1\": \"%d\"}",
-			GetDefaultByType(GetClass()).FireCount1));
+			String.Format("{\"PelletCount1\": \"%d\"}", Default.FireCount1));
 	}
 
 	override void GetFireTimes(in out Array<int> fireTimes, bool _) const

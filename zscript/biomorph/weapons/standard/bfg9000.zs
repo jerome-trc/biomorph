@@ -163,7 +163,6 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 
 	override int DefaultFireTime() const
 	{
-		let Default = GetDefaultByType(GetClass());
 		return
 			Default.FireTime1 + Default.FireTime2 +
 			Default.FireTime3 + Default.FireTime4;
@@ -171,7 +170,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 
 	override int DefaultReloadTime() const
 	{
-		return GetDefaultByType(GetClass()).ReloadTime + 19;
+		return Default.ReloadTime + 19;
 	}
 }
 

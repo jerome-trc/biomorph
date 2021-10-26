@@ -114,7 +114,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 	{
 		Dict = Dictionary.FromString(
 			String.Format("{\"PelletCount1\": \"%d\"}",
-			GetDefaultByType(GetClass()).FireCount1));
+			Default.FireCount1));
 	}
 
 	override void GetFireTimes(in out Array<int> fireTimes, bool _) const
@@ -155,8 +155,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 
 	override int DefaultFireTime() const
 	{
-		let Default = GetDefaultByType(GetClass());
-		return  Default.FireTime1 + Default.FireTime2 + Default.FireTime3 +
+		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3 +
 			Default.FireTime4 + Default.FireTime5;
 	}
 }

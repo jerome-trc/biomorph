@@ -129,13 +129,12 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 
 	override int DefaultFireTime() const
 	{
-		let Default = GetDefaultByType(GetClass());
 		return Default.FireTime1 + Default.FireTime2;
 	}
 
 	override int DefaultReloadTime() const
 	{
-		return GetDefaultByType(GetClass()).ReloadTime + 19;
+		return Default.ReloadTime + 19;
 	}
 }
 

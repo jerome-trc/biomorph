@@ -125,12 +125,12 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 
 	override int DefaultFireTime() const
 	{
-		return GetDefaultByType(GetClass()).FireTime;
+		return Default.FireTime;
 	}
 
 	override int DefaultReloadTime() const
 	{
-		return GetDefaultByType(GetClass()).ReloadTime + 19;
+		return Default.ReloadTime + 19;
 	}
 }
 

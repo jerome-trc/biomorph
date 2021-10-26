@@ -134,8 +134,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 	override void UpdateDictionary()
 	{
 		Dict = Dictionary.FromString(
-			String.Format("{\"PelletCount1\": \"%d\"}",
-			GetDefaultByType(GetClass()).FireCount1));
+			String.Format("{\"PelletCount1\": \"%d\"}", Default.FireCount1));
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -149,13 +148,11 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 
 	override int DefaultFireTime() const
 	{
-		let Default = GetDefaultByType(GetClass());
 		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3;
 	}
 
 	override int DefaultReloadTime() const
 	{
-		let Default = GetDefaultByType(GetClass());
 		return
 			Default.ReloadTime1 + Default.ReloadTime2 + Default.ReloadTime3 +
 			Default.ReloadTime4 + Default.ReloadTime5;

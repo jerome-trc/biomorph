@@ -148,7 +148,6 @@ class BIO_SalvoLauncher : BIO_Weapon
 
 	override int DefaultFireTime() const
 	{
-		let Default = GetDefaultByType(GetClass());
 		return
 			Default.FireTime1 + Default.FireTime2 +
 			Default.FireTime3 + Default.FireTime4;
@@ -169,15 +168,11 @@ class BIO_SalvoLauncher : BIO_Weapon
 
 	protected bool BurstFireTimeModified() const
 	{
-		return
-			TotalBurstFireTime() !=
-			GetDefaultByType(GetClass()).TotalBurstFireTime();
+		return TotalBurstFireTime() != Default.TotalBurstFireTime();
 	}
 
 	protected bool AutoFireTimeModified() const
 	{
-		return
-			TotalAutoFireTime() !=
-			GetDefaultByType(GetClass()).TotalAutoFireTime();
+		return TotalAutoFireTime() != Default.TotalAutoFireTime();
 	}
 }

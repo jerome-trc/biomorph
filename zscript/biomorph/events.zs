@@ -348,15 +348,14 @@ class BIO_EventHandler : EventHandler
 			this chance can overflow such that a monster drops multiple
 		*/
 
-		let defs = GetDefaultByType(event.Thing.GetClass());
 		// Killing a Baron guarantees one mutagen
-		int val = LOOT_RNG_THRESHOLD * (float(defs.Health) / 1000.0);
+		int val = LOOT_RNG_THRESHOLD * (float(event.Thing.Default.Health) / 1000.0);
 
 		// More pain resistance means more value
-		val += ((256 - defs.PainChance) / 4);
+		val += ((256 - event.Thing.Default.PainChance) / 4);
 
 		// How much faster is it than a ZombieMan?
-		val += (Max(defs.Speed - 8, 0) * 3);
+		val += (Max(event.Thing.Default.Speed - 8, 0) * 3);
 
 		if (event.Thing.bBoss) val += 600;
 
