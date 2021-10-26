@@ -42,12 +42,14 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		CHGG A 1 A_BIO_Raise;
 		Loop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
-		CHGG AB 4
+		CHGG AB 4 Bright
 		{
-			A_SetTics(invoker.FireTime);
+			if (invoker.MagazineEmpty()) return ResolveState("Reload");
 			A_BIO_Fire();
+			Player.SetSafeFlash(invoker, ResolveState("Flash"),
+				ResolveState("Fire") == Player.GetPSprite(PSP_WEAPON).CurState ? 0 : 1);
 			A_StartSound("weapons/chngun", CHAN_WEAPON);
+			return state(null);
 		}
 		CHGG B 0 A_ReFire;
 		Goto Ready;

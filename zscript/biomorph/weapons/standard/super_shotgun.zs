@@ -63,10 +63,11 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 	Fire.Single:
 		TNT1 A 0 A_JumpIf(invoker.Magazine1.Amount < 1, "Reload");
 		SHT2 A 3 A_SetTics(invoker.FireTime1);
-		SHT2 A 7
+		SHT2 A 7 Bright
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire();
+			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			// TODO: Replace with a smaller sound
 			A_StartSound("weapons/sshotf", CHAN_WEAPON);
 		}
@@ -74,10 +75,11 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 	Fire.Double:
 		TNT1 A 0 A_JumpIf(invoker.Magazine1.Amount < 2, "Reload");
 		SHT2 A 3 A_SetTics(invoker.FireTime1);
-		SHT2 A 7
+		SHT2 A 7 Bright
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire(factor: 2);
+			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			A_StartSound("weapons/sshotf", CHAN_WEAPON);
 		}
 		Goto Ready;

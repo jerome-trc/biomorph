@@ -46,6 +46,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		{
 			A_SetTics(invoker.FireTime1);
 			A_BIO_Fire();
+			Player.SetSafeFlash(invoker, FindState("Flash"), Random(0, 1));
 		}
 		PLSG B 20
 		{
@@ -78,9 +79,17 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		PLSG A 1 Offset(0, 32 + 2);
 		Goto Ready;
 	Flash:
-		PLSF A 4 Bright A_Light(1);
+		PLSF A 4 Bright
+		{
+			A_SetTics(invoker.FireTime1 + 1);
+			A_Light(1);
+		}
 		Goto LightDone;
-		PLSF B 4 Bright A_Light(1);
+		PLSF B 4 Bright
+		{
+			A_SetTics(invoker.FireTime1 + 1);
+			A_Light(1);
+		}
 		Goto LightDone;
 	Spawn:
 		PLAS A -1;

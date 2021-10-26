@@ -45,6 +45,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		{
 			A_SetTics(invoker.FireTime1);
 			A_BIO_Fire();
+			A_GunFlash();
 			A_StartSound("weapons/incursion", CHAN_WEAPON);
 		}
 		INCU C 4 Bright A_SetTics(invoker.FireTime2);
@@ -63,6 +64,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			invoker.bAltFire = false;
 			A_SetTics(invoker.FireTime1);
 			A_BIO_Fire(factor: Min(invoker.Magazine1.Amount, 4));
+			A_GunFlash();
 			// TODO: Mix a fatter sound for quad-shot
 			A_StartSound("weapons/incursion", CHAN_WEAPON);
 			A_StartSound("weapons/incursion", CHAN_BODY);
@@ -92,8 +94,16 @@ class BIO_IncursionShotgun : BIO_Weapon
 		INCU A 3 Offset(0, 32 + 3);
 		Goto Ready;
 	Flash:
-		TNT1 A 2 A_Light(1);
-		TNT1 A 2 A_Light(2);
+		TNT1 A 3
+		{
+			A_SetTics(invoker.FireTime1);
+			A_Light(1);
+		}
+		TNT1 A 4 
+		{
+			A_SetTics(invoker.FireTime2);
+			A_Light(2);
+		}
 		Goto LightDone;
 	Spawn:
 		INCU X -1;

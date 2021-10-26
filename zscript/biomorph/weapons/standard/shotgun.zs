@@ -1,6 +1,7 @@
 class BIO_Shotgun : BIO_Weapon replaces Shotgun
 {
-	int FireTime1, FireTime2; property FireTimes: FireTime1, FireTime2;
+	int FireTime1, FireTime2, FireTime3;
+	property FireTimes: FireTime1, FireTime2, FireTime3;
 	int ReloadTime1, ReloadTime2, ReloadTime3, ReloadTime4, ReloadTime5;
 	property ReloadTimes: ReloadTime1, ReloadTime2, ReloadTime3, ReloadTime4, ReloadTime5;
 
@@ -28,7 +29,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		BIO_Weapon.MagazineType "BIO_Magazine_Shotgun";
 		BIO_Weapon.Spread 4.0, 2.0;
 
-		BIO_Shotgun.FireTimes 3, 7;
+		BIO_Shotgun.FireTimes 3, 4, 3;
 		BIO_Shotgun.ReloadTimes 5, 4, 5, 3, 7;
 	}
 
@@ -46,12 +47,14 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		SHTG A 3 A_SetTics(invoker.FireTime1);
-		SHTG A 7
+		SHTG A 4 Bright
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire();
+			A_GunFlash();
 			A_StartSound("weapons/shotgf", CHAN_WEAPON);
 		}
+		SHTG A 3 Bright A_SetTics(invoker.FireTime3);
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
@@ -70,8 +73,16 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		}
 		Goto Ready;
 	Flash:
-		SHTF A 4 Bright A_Light(1);
-		SHTF B 3 Bright A_Light(2);
+		SHTF A 4 Bright
+		{
+			A_SetTics(invoker.FireTime2);
+			A_Light(1);
+		}
+		SHTF B 3 Bright
+		{
+			A_SetTics(invoker.FireTime3);
+			A_Light(2);
+		}
 		Goto LightDone;
 	Spawn:
 		SHOT A -1;
@@ -80,13 +91,14 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 
 	override void GetFireTimes(in out Array<int> fireTimes, bool _) const
 	{
-		fireTimes.PushV(FireTime1, FireTime2);
+		fireTimes.PushV(FireTime1, FireTime2, FireTime3);
 	}
 
 	override void SetFireTimes(Array<int> fireTimes, bool _)
 	{
 		FireTime1 = fireTimes[0];
 		FireTime2 = fireTimes[1];
+		FireTime3 = fireTimes[2];
 	}
 
 	override void GetReloadTimes(in out Array<int> reloadTimes, bool _) const
@@ -110,6 +122,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 
 		FireTime1 = Default.FireTime1;
 		FireTime2 = Default.FireTime2;
+		FireTime3 = Default.FireTime3;
 
 		ReloadTime1 = Default.ReloadTime1;
 		ReloadTime2 = Default.ReloadTime2;
@@ -129,7 +142,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 	{
 		stats.Push(GenericFireDataReadout());
 		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericFireTimeReadout(FireTime1 + FireTime2));
+		stats.Push(GenericFireTimeReadout(FireTime1 + FireTime2 + FireTime3));
 		stats.Push(GenericReloadTimeReadout(
 			ReloadTime1 + ReloadTime2 + ReloadTime3 + ReloadTime4 + ReloadTime5));
 	}
@@ -137,7 +150,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 	override int DefaultFireTime() const
 	{
 		let Default = GetDefaultByType(GetClass());
-		return Default.FireTime1 + Default.FireTime2;
+		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3;
 	}
 
 	override int DefaultReloadTime() const

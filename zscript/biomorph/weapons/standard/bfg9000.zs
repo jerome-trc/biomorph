@@ -94,8 +94,16 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		BFGG A 1 Offset(0, 32 + 2);
 		Goto Ready;
 	Flash:
-		BFGF A 11 Bright A_Light(1);
-		BFGF B 6 Bright A_Light(2);
+		BFGF A 11 Bright
+		{
+			A_SetTics(invoker.FireTime2 + 1);
+			A_Light(1);
+		}
+		BFGF B 6 Bright
+		{
+			A_SetTics(invoker.FireTime3 - 3);
+			A_Light(2);
+		}
 		Goto LightDone;
 	Spawn:
 		BFUG A -1;

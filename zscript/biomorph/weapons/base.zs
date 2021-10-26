@@ -715,7 +715,6 @@ class BIO_Weapon : DoomWeapon abstract
 			
 			if (proj == null) continue;
 			proj.SetDamage(Random(minDmg, maxDmg));
-			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			invoker.OnProjectileFired(proj);
 		}
 
