@@ -424,6 +424,45 @@ class BIO_WeaponAffix_Spread : BIO_WeaponAffix
 	}
 }
 
+class BIO_WeaponAffix_ReloadSpeed : BIO_WeaponAffix
+{
+	int Modifier;
+
+	override void Init(BIO_Weapon weap)
+	{
+		int rrt = weap.ReducibleReloadTime();
+
+		if (rrt == 1)
+			Modifier = -1;
+		else if (rrt > 1)
+			Modifier = -Random(1, rrt);
+		else
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Illegally initialized %s against reducible reload time of %d.",
+				GetClassName(), rrt);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return
+			!(weap.AffixMask & BIO_WAM_RELOADTIME) &&
+			weap.ReducibleReloadTime() > 0;
+	}
+
+	override void Apply(BIO_Weapon weap)
+	{
+		weap.ModifyReloadTime(Modifier);
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_AFFIX_TOSTR_RELOADSPEED"),
+			Modifier >= 0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
+			Modifier >= 0 ? "+" : "", float(Modifier) / 35.0));
+	}
+}
+
 class BIO_WeaponAffix_ProjSeek : BIO_WeaponAffix
 {
 	override void Init(BIO_Weapon weap) {}

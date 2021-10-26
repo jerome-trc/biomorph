@@ -506,6 +506,19 @@ class BIO_Weapon : DoomWeapon abstract
 		return ret;
 	}
 
+	// See the above.
+	int ReducibleReloadTime() const
+	{
+		int ret = 0;
+		Array<int> reloadTimes;
+		GetReloadTimes(reloadTimes);
+
+		for (uint i = 0; i < reloadTimes.Size(); i++)
+			ret += Max(reloadTimes[i] - 1, 0);
+
+		return ret;
+	}
+
 	// Setters =================================================================
 
 	override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
@@ -680,6 +693,42 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 
 		SetFireTimes(fireTimes);
+	}
+
+	void ModifyReloadTime(int modifier)
+	{
+		if (modifier == 0)
+		{
+			Console.Printf(
+				"Illegal reload time modifier of 0 given to %s.",
+				GetClassName());
+			return;
+		}
+
+		Array<int> reloadTimes;
+		GetReloadTimes(reloadTimes);
+
+		if (reloadTimes.Size() < 1)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"%s attempted to illegally modify reload times.",
+				GetClassName());
+		}
+
+		uint e = Abs(modifier);
+		for (uint i = 0; i < e; i++)
+		{
+			uint idx = 0, minOrMax = 0;
+
+			if (modifier > 0)
+				[idx, minOrMax] = BIO_Utils.IntArrayMin(reloadTimes);
+			else
+				[idx, minOrMax] = BIO_Utils.IntArrayMax(reloadTimes);
+
+			reloadTimes[idx] = modifier > 0 ? reloadTimes[idx] + 1 : reloadTimes[idx] - 1;
+		}
+
+		SetReloadTimes(reloadTimes);
 	}
 
 	// Actions =================================================================
