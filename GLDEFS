@@ -1,24 +1,24 @@
 // Armor bonus
 
-pointlight ARMORSHARD1
+pointlight BIO_ArmorBonus_A
 {
     color 0.0 0.7 0.0
     size 6
 }
 
-pointlight ARMORSHARD2
+pointlight BIO_ArmorBonus_B
 {
     color 0.0 0.7 0.0
     size 7
 }
 
-pointlight ARMORSHARD3
+pointlight BIO_ArmorBonus_C
 {
     color 0.0 0.7 0.0
     size 8
 }
 
-pointlight ARMORSHARD4
+pointlight BIO_ArmorBonus_D
 {
     color 0.0 0.7 0.0
     size 9
@@ -26,15 +26,15 @@ pointlight ARMORSHARD4
 
 object BIO_ArmorBonus
 {
-    frame ARSDA { light ARMORSHARD1 }
-    frame ARSDB { light ARMORSHARD2 }
-	frame ARSDC { light ARMORSHARD3 }
-	frame ARSDD { light ARMORSHARD4 }
+    frame ARSDA { light BIO_ArmorBonus_A }
+    frame ARSDB { light BIO_ArmorBonus_B }
+	frame ARSDC { light BIO_ArmorBonus_C }
+	frame ARSDD { light BIO_ArmorBonus_D }
 }
 
 // Weapon Upgrade Kit
 
-pointlight WeapUpKitLight
+pointlight BIO_WeaponUpgradeKit
 {
 	color 0.0 0.8 0.2
     size 16
@@ -42,5 +42,5 @@ pointlight WeapUpKitLight
 
 object BIO_WeaponUpgradeKit
 {
-	Frame WUPKB { Light WeapUpKitLight }
+	frame WUPKB { Light BIO_WeaponUpgradeKit }
 }
