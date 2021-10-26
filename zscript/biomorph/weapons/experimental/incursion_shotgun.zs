@@ -2,6 +2,8 @@ class BIO_IncursionShotgun : BIO_Weapon
 {
 	int FireTime1, FireTime2, FireTime3, FireTime4, FireTime5;
 	property FireTimes: FireTime1, FireTime2, FireTime3, FireTime4, FireTime5;
+	int ReloadTime1, ReloadTime2, ReloadTime3, ReloadTime4, ReloadTime5;
+	property ReloadTimes: ReloadTime1, ReloadTime2, ReloadTime3, ReloadTime4, ReloadTime5;
 
 	Default
 	{
@@ -16,7 +18,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		Weapon.SelectionOrder 1600;
 		Weapon.SlotNumber 3;
 
-		BIO_Weapon.AffixMask BIO_WAM_SECONDARY | BIO_WAM_RELOADTIME;
+		BIO_Weapon.AffixMask BIO_WAM_SECONDARY;
 		BIO_Weapon.Grade BIO_GRADE_EXPERIMENTAL;
 		BIO_Weapon.DamageRange 7, 17;
 		BIO_Weapon.FireCount 9;
@@ -26,6 +28,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		BIO_Weapon.Spread 4.0, 2.0;
 		
 		BIO_IncursionShotgun.FireTimes 3, 4, 2, 2, 2;
+		BIO_IncursionShotgun.ReloadTimes 3, 3, 2, 3, 3;
 	}
 
 	States
@@ -84,15 +87,16 @@ class BIO_IncursionShotgun : BIO_Weapon
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
-		INCU A 3 Offset(0, 32 + 3);
-		INCU A 3 Offset(0, 32 + 6);
-		INCU A 2 Offset(0, 32 + 9);
+		INCU A 3 Offset(0, 32 + 3) A_SetTics(invoker.ReloadTime1);
+		INCU A 3 Offset(0, 32 + 6) A_SetTics(invoker.ReloadTime2);
+		INCU A 2 Offset(0, 32 + 9) A_SetTics(invoker.ReloadTime3);
 		INCU A 3 Offset(0, 32 + 6)
 		{
+			A_SetTics(invoker.ReloadTime4);
 			A_LoadMag();
 			A_StartSound("weapons/incursionreload", CHAN_7);
 		}
-		INCU A 3 Offset(0, 32 + 3);
+		INCU A 3 Offset(0, 32 + 3) A_SetTics(invoker.ReloadTime5);
 		Goto Ready;
 	Flash:
 		TNT1 A 3
@@ -132,8 +136,19 @@ class BIO_IncursionShotgun : BIO_Weapon
 		FireTime5 = fireTimes[4];
 	}
 
-	override void GetReloadTimes(in out Array<int> reloadTimes, bool _) const {}
-	override void SetReloadTimes(Array<int> reloadTimes, bool _) {}
+	override void GetReloadTimes(in out Array<int> reloadTimes, bool _) const
+	{
+		reloadTimes.PushV(ReloadTime1, ReloadTime2, ReloadTime3, ReloadTime4, ReloadTime5);
+	}
+
+	override void SetReloadTimes(Array<int> reloadTimes, bool _)
+	{
+		ReloadTime1 = reloadTimes[0];
+		ReloadTime2 = reloadTimes[1];
+		ReloadTime3 = reloadTimes[2];
+		ReloadTime4 = reloadTimes[3];
+		ReloadTime5 = reloadTimes[4];
+	}
 
 	override void ResetStats()
 	{
@@ -144,6 +159,12 @@ class BIO_IncursionShotgun : BIO_Weapon
 		FireTime3 = Default.FireTime3;
 		FireTime4 = Default.FireTime4;
 		FireTime5 = Default.FireTime5;
+
+		ReloadTime1 = Default.ReloadTime1;
+		ReloadTime2 = Default.ReloadTime2;
+		ReloadTime3 = Default.ReloadTime3;
+		ReloadTime4 = Default.ReloadTime4;
+		ReloadTime5 = Default.ReloadTime5;
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -152,12 +173,20 @@ class BIO_IncursionShotgun : BIO_Weapon
 		stats.Push(GenericSpreadReadout());
 		stats.Push(GenericFireTimeReadout(
 			FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5));
+		stats.Push(GenericReloadTimeReadout(
+			ReloadTime1 + ReloadTime2 + ReloadTime3 + ReloadTime4 + ReloadTime5));
 	}
 
 	override int DefaultFireTime() const
 	{
 		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3 +
 			Default.FireTime4 + Default.FireTime5;
+	}
+
+	override int DefaultReloadTime() const
+	{
+		return Default.ReloadTime1 + Default.ReloadTime2 + Default.ReloadTime3 +
+			Default.ReloadTime4 + Default.ReloadTime5;
 	}
 }
 
