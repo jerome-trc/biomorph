@@ -50,7 +50,9 @@ mixin class BIO_ProjectileCommon
 		invoker.OnProjectileDeath();
 		// TODO: Subtle sound if Shrapnel is >0
 		A_Explode(invoker.SplashDamage, invoker.SplashRadius,
-			nails: invoker.Shrapnel, nailDamage: invoker.Damage);
+			nails: invoker.Shrapnel,
+			nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
+			puffType: "BIO_Shrapnel");
 	}
 }
 
@@ -290,6 +292,22 @@ class BIO_BFGBall : BIO_Projectile
 }
 
 // Projectile-adjacent actors ==================================================
+
+class BIO_Shrapnel : BulletPuff
+{
+	Default
+	{
+		+ALLOWTHRUFLAGS
+		+MTHRUSPECIES
+		+THRUGHOST
+	}
+
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+		if (Deathmatch) bMTHRUSPECIES = false;
+	}
+}
 
 class BIO_BFGExtra : BFGExtra
 {

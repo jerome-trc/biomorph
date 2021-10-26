@@ -10,6 +10,8 @@ class BIO_Player : DoomPlayer
 
 	Default
 	{
+		Species "Player";
+
 		Player.DisplayName "$BIO_PLAYER_DISPLAYNAME";
 	
 		Player.StartItem "BIO_WeaponDrop";
