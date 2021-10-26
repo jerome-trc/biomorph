@@ -169,12 +169,13 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 		{
 			bool valid = false;
 			string val = "";
-			[val, valid] = weap.TryGetDictValue("PelletCount1");
+			[val, valid] = weap.TryGetDictValue(BIO_Weapon.DICTKEY_PELLETCOUNT_1);
 
 			if (!valid)
 			{
 				Console.Printf(Biomorph.LOGPFX_ERR ..
-					"%s is a shotgun with no PelletCount1 dictionary value.");
+					"%s is a shotgun with no %s dictionary value.",
+					BIO_Weapon.DICTKEY_PELLETCOUNT_1);
 			}
 			else
 			{
@@ -194,12 +195,13 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 		{
 			bool valid = false;
 			string val = "";
-			[val, valid] = weap.TryGetDictValue("PelletCount2");
+			[val, valid] = weap.TryGetDictValue(BIO_Weapon.DICTKEY_PELLETCOUNT_2);
 
 			if (!valid)
 			{
 				Console.Printf(Biomorph.LOGPFX_ERR ..
-					"%s is a shotgun with no PelletCount1 dictionary value.");
+					"%s is a shotgun with no %s dictionary value.",
+					BIO_Weapon.DICTKEY_PELLETCOUNT_2);
 			}
 			else
 			{

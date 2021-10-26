@@ -177,7 +177,14 @@ class BIO_Weapon : DoomWeapon abstract
 
 	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
 
+	// If the weapon carries special data that can't be known without knowing the
+	// exact class type in advance (e.g. from a mixin), store it in here.
 	protected transient Dictionary Dict;
+
+	const DICTKEY_PELLETCOUNT_1 = "PelletCount1";
+	const DICTKEY_PELLETCOUNT_2 = "PelletCount2";
+	const DICTKEY_MELEERANGE = "MeleeRange";
+	const DICTKEY_LIFESTEAL = "LifeSteal";
 	
 	Array<string> StatReadout, AffixReadout;
 
@@ -329,8 +336,8 @@ class BIO_Weapon : DoomWeapon abstract
 	virtual void OnDeselect() {}
 	virtual void OnSelect() {}
 
-	// If the weapon carries special data that can't be known without having the
-	// exact class type (e.g. from a mixin), store it in `Dict` in this function.
+	// If the weapon carries special data that can't be known without knowing the
+	// exact class type in advance (e.g. from a mixin), store it in `Dict`.
 	virtual void UpdateDictionary() {}
 
 	// Always gets called before affixes get their version of this invoked.

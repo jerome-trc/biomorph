@@ -134,8 +134,8 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 
 	override void UpdateDictionary()
 	{
-		Dict = Dictionary.FromString(
-			String.Format("{\"PelletCount1\": \"%d\"}", Default.FireCount1));
+		Dict = Dictionary.FromString(String.Format("{\"%s\": \"%d\"}",
+			DICTKEY_PELLETCOUNT_1, Default.FireCount1));
 	}
 
 	override void StatsToString(in out Array<string> stats) const
