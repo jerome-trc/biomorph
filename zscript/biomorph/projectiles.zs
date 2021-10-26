@@ -60,6 +60,7 @@ class BIO_Projectile : Actor abstract
 {
 	mixin BIO_ProjectileCommon;
 
+	float Acceleration; property Acceleration: Acceleration;
 	bool Seek; property Seek: Seek;
 
 	Default
@@ -67,6 +68,7 @@ class BIO_Projectile : Actor abstract
 		Projectile;
 		
 		BIO_Projectile.MetaFlags BIO_PMF_NONE;
+		BIO_Projectile.Acceleration 1.0;
 		BIO_Projectile.BFGRays 0;
 		BIO_Projectile.Splash 0, 0;
 		BIO_Projectile.Shrapnel 0;
@@ -94,6 +96,7 @@ class BIO_Projectile : Actor abstract
 
 	action void A_Travel()
 	{
+		A_ScaleVelocity(invoker.Acceleration);
 		if (invoker.Seek) A_SeekerMissile(4.0, 4.0, SMF_LOOK);
 	}
 }
