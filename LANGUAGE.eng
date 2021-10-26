@@ -161,7 +161,8 @@
 	BIO_AFFIX_TOSTR_RELOADSPEED = "Reload time: %s%s%.2f seconds";
 	
 	BIO_AFFIX_TOSTR_PROJSEEK = "Projectiles home in on targets";
-	
+	BIO_AFFIX_TOSTR_FORCEPAIN = "Always causes monsters to flinch";
+
 	BIO_AFFIX_TOSTR_MELEERANGE = "%s%s%.1f\cj range";
 	BIO_AFFIX_TOSTR_LIFESTEAL = "%d%% of damage dealt gained as health";
 

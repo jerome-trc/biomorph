@@ -488,6 +488,31 @@ class BIO_WeaponAffix_ProjSeek : BIO_WeaponAffix
 	}
 }
 
+class BIO_WeaponAffix_ForcePain : BIO_WeaponAffix
+{
+	override void Init(BIO_Weapon weap) {}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return (weap.AffixMask & BIO_WAM_ONPROJFIRED) != BIO_WAM_ONPROJFIRED;
+	}
+
+	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.bForcePain = true;
+	}
+
+	override void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const
+	{
+		proj.bForcePain = true;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_FORCEPAIN"));
+	}
+}
+
 class BIO_WeaponAffix_MeleeRange : BIO_WeaponAffix
 {
 	float Modifier;
