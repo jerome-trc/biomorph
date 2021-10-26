@@ -49,10 +49,17 @@ mixin class BIO_ProjectileCommon
 	{
 		invoker.OnProjectileDeath();
 		// TODO: Subtle sound if Shrapnel is >0
-		A_Explode(invoker.SplashDamage, invoker.SplashRadius,
-			nails: invoker.Shrapnel,
-			nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
-			puffType: "BIO_Shrapnel");
+		if (invoker.Shrapnel > 0)
+		{
+			A_Explode(invoker.SplashDamage, invoker.SplashRadius,
+				nails: invoker.Shrapnel,
+				nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
+				puffType: "BIO_Shrapnel");
+		}
+		else
+		{
+			A_Explode(invoker.SplashDamage, invoker.SplashRadius);
+		}
 	}
 }
 
