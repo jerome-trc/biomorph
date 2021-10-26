@@ -383,7 +383,7 @@ class BIO_EventHandler : EventHandler
 
 		// If not even at threshold, maybe push it over
 		if (val < LOOT_RNG_THRESHOLD)
-			val += Random(0, LOOT_RNG_THRESHOLD - val);
+			val += Random(0, LOOT_RNG_THRESHOLD - val) + 5;
 
 		for (int i = 0; i < (val / LOOT_RNG_THRESHOLD); i++)
 		{
