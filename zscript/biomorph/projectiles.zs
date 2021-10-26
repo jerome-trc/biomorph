@@ -115,8 +115,6 @@ class BIO_Bullet : BIO_FastProjectile
 {
 	Default
 	{
-		+NOEXTREMEDEATH
-
 		Alpha 1.0;
 		Decal "Bulletchip";
 		Height 1;
