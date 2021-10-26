@@ -687,7 +687,8 @@ class BIO_Weapon : DoomWeapon abstract
 	action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
 	action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
 
-	action bool A_BIO_Fire(bool secondary = false, int factor = 1)
+	action bool A_BIO_Fire(bool secondary = false, int factor = 1,
+		float spreadFactor = 1.0)
 	{
 		Class<Actor> fireType = !secondary ? invoker.FireType1 : invoker.FireType2;
 		
@@ -710,8 +711,9 @@ class BIO_Weapon : DoomWeapon abstract
 		for (int i = 0; i < fireCount; i++)
 		{
 			Actor proj = A_FireProjectile(fireType,
-				FRandom(-hSpread, hSpread),
-				false, pitch: FRandom(-vSpread, vSpread));
+				angle: FRandom(-hSpread, hSpread) * spreadFactor,
+				useAmmo: false,
+				pitch: FRandom(-vSpread, vSpread) * spreadFactor);
 			
 			if (proj == null) continue;
 			proj.SetDamage(Random(minDmg, maxDmg));

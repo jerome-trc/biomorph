@@ -66,7 +66,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		SHT2 A 7 Bright
 		{
 			A_SetTics(invoker.FireTime2);
-			A_BIO_Fire();
+			A_BIO_Fire(spreadFactor: 0.5);
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			// TODO: Replace with a smaller sound
 			A_StartSound("weapons/sshotf", CHAN_WEAPON);

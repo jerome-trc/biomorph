@@ -63,7 +63,8 @@ class BIO_IncursionShotgun : BIO_Weapon
 		{
 			invoker.bAltFire = false;
 			A_SetTics(invoker.FireTime1);
-			A_BIO_Fire(factor: Min(invoker.Magazine1.Amount, 4));
+			A_BIO_Fire(factor: Min(invoker.Magazine1.Amount, 4),
+				spreadFactor: 4.0);
 			A_GunFlash();
 			// TODO: Mix a fatter sound for quad-shot
 			A_StartSound("weapons/incursion", CHAN_WEAPON);
