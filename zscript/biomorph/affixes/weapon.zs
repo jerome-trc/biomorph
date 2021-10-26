@@ -175,7 +175,7 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 			{
 				Console.Printf(Biomorph.LOGPFX_ERR ..
 					"%s is a shotgun with no %s dictionary value.",
-					BIO_Weapon.DICTKEY_PELLETCOUNT_1);
+					weap.GetClassName(), BIO_Weapon.DICTKEY_PELLETCOUNT_1);
 			}
 			else
 			{
@@ -201,7 +201,7 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 			{
 				Console.Printf(Biomorph.LOGPFX_ERR ..
 					"%s is a shotgun with no %s dictionary value.",
-					BIO_Weapon.DICTKEY_PELLETCOUNT_2);
+					weap.GetClassName(), BIO_Weapon.DICTKEY_PELLETCOUNT_2);
 			}
 			else
 			{
@@ -522,7 +522,26 @@ class BIO_WeaponAffix_MeleeRange : BIO_WeaponAffix
 {
 	float Modifier;
 
-	override void Init(BIO_Weapon weap) { Modifier = FRandom(16.0, 32.0); }
+	override void Init(BIO_Weapon weap)
+	{
+		weap.UpdateDictionary();
+
+		bool valid = false;
+		string val = "";
+		[val, valid] = weap.TryGetDictValue(BIO_Weapon.DICTKEY_MELEERANGE);
+
+		if (!valid)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"%s is a melee weapon with no %s dictionary value.",
+				weap.GetClassName(), BIO_Weapon.DICTKEY_MELEERANGE);
+		}
+		else
+		{
+			let f = float(val.ToDouble());
+			Modifier = FRandom(f * 0.25, f * 0.5);
+		}
+	}
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
