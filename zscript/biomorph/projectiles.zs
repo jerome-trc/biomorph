@@ -204,7 +204,7 @@ class BIO_Bullet : BIO_FastProjectile
 		Decal "Bulletchip";
 		Height 1;
 		Radius 1;
-		Speed 80;
+		Speed 400;
 		Tag "$BIO_PROJ_TAG_BULLET";
 
 		BIO_FastProjectile.MetaFlags BIO_PMF_BALLISTIC;
