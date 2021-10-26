@@ -137,13 +137,29 @@ class BIO_SalvoLauncher : BIO_Weapon
 	{
 		stats.Push(GenericFireDataReadout());
 
+		string crEsc_burst = "", crEsc_auto = "";
+		int tbft = TotalBurstFireTime(), tbft_def = Default.TotalBurstFireTime();
+		int taft = TotalAutoFireTime(), taft_def = Default.TotalAutoFireTime();
+
+		if (tbft > tbft_def)
+			crEsc_burst = CRESC_STATWORSE;
+		else if (tbft < tbft_def)
+			crEsc_burst = CRESC_STATBETTER;
+		else
+			crEsc_burst = CRESC_STATDEFAULT;
+
+		if (taft > taft_def)
+			crEsc_auto = CRESC_STATWORSE;
+		else if (taft < taft_def)
+			crEsc_auto = CRESC_STATBETTER;
+		else
+			crEsc_auto = CRESC_STATDEFAULT;
+
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME_BURST"),
-			BurstFireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
-			TotalBurstFireTime() / 35.0));
+			crEsc_burst, float(tbft) / 35.0));
 
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME_AUTO"),
-			AutoFireTimeModified() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
-			TotalAutoFireTime() / 35.0));
+			crEsc_auto, float(taft) / 35.0));
 	}
 
 	override int DefaultFireTime() const
@@ -153,26 +169,16 @@ class BIO_SalvoLauncher : BIO_Weapon
 			Default.FireTime3 + Default.FireTime4;
 	}
 
-	protected bool TotalBurstFireTime() const
+	protected int TotalBurstFireTime() const
 	{
 		return (FireTime1 * 3) + (FireTime2 * 3) + (FireTime3 * 3) + FireTime4;
 	}
 
-	protected bool TotalAutoFireTime() const
+	protected int TotalAutoFireTime() const
 	{
 		return
 			((FireTime1 + 1) * 2) +
 			((FireTime2 + 1) * 2) +
 			((FireTime3 + 1) * 2);
-	}
-
-	protected bool BurstFireTimeModified() const
-	{
-		return TotalBurstFireTime() != Default.TotalBurstFireTime();
-	}
-
-	protected bool AutoFireTimeModified() const
-	{
-		return TotalAutoFireTime() != Default.TotalAutoFireTime();
 	}
 }

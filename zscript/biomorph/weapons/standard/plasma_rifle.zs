@@ -130,14 +130,28 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout());
+
+		string crEsc_ft = "", crEsc_delay = "";
+
+		if (FireTime1 > Default.FireTime1)
+			crEsc_ft = CRESC_STATWORSE;
+		else if (FireTime1 < Default.FireTime1)
+			crEsc_ft = CRESC_STATBETTER;
+		else
+			crEsc_ft = CRESC_STATDEFAULT;
+
+		if (FireTime2 > Default.FireTime2)
+			crEsc_delay = CRESC_STATWORSE;
+		else if (FireTime2 < Default.FireTime2)
+			crEsc_delay = CRESC_STATBETTER;
+		else
+			crEsc_delay = CRESC_STATDEFAULT;
 		
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
-			FireTime1 != Default.FireTime1 ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
-			float(FireTime1) / 35.0));
+			crEsc_ft, float(FireTime1) / 35.0));
 
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_POSTFIREDELAY"),
-			FireTime2 != Default.FireTime2 ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
-			float(FireTime2) / 35.0));
+			crEsc_delay, float(FireTime2) / 35.0));
 
 		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
 	}
