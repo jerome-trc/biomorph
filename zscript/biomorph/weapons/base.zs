@@ -71,13 +71,32 @@ enum BIO_WeaponAffixMask : uint
 	// Melee-weapon only
 	BIO_WAM_LIFESTEAL = 1 << 23,
 	BIO_WAM_MELEERANGE = 1 << 24,
+	// Functors: bits
+	BIO_WAM_PROJTRAVELFUNCTORS_1 = 1 << 25,
+	BIO_WAM_PROJDAMAGEFUNCTORS_1 = 1 << 26,
+	BIO_WAM_PROJDEATHFUNCTORS_1 = 1 << 27,
+	BIO_WAM_PROJTRAVELFUNCTORS_2 = 1 << 28,
+	BIO_WAM_PROJDAMAGEFUNCTORS_2 = 1 << 29,
+	BIO_WAM_PROJDEATHFUNCTORS_2 = 1 << 30,
+	// Functors: combinations
+	BIO_WAM_PROJTRAVELFUNCTORS =
+		BIO_WAM_PROJTRAVELFUNCTORS_1 | BIO_WAM_PROJTRAVELFUNCTORS_2,
+	BIO_WAM_PROJDAMAGEFUNCTORS =
+		BIO_WAM_PROJDAMAGEFUNCTORS_1 | BIO_WAM_PROJDAMAGEFUNCTORS_2,
+	BIO_WAM_PROJDEATHFUNCTORS = 
+		BIO_WAM_PROJDEATHFUNCTORS_1 | BIO_WAM_PROJDEATHFUNCTORS_2,
+	BIO_WAM_PROJFUNCTORS_1 =
+		BIO_WAM_PROJTRAVELFUNCTORS_1 | BIO_WAM_PROJDAMAGEFUNCTORS_1 | BIO_WAM_PROJDEATHFUNCTORS_1,
+	BIO_WAM_PROJFUNCTORS_2 =
+		BIO_WAM_PROJTRAVELFUNCTORS_2 | BIO_WAM_PROJDAMAGEFUNCTORS_2 | BIO_WAM_PROJDEATHFUNCTORS_2,
+	BIO_WAM_PROJFUNCTORS = BIO_WAM_PROJFUNCTORS_1 | BIO_WAM_PROJFUNCTORS_2,
 	// Completely lock off the primary or secondary side of the weapon
 	BIO_WAM_PRIMARY =
-		BIO_WAM_FIREDATA_1 | BIO_WAM_DAMAGE_1 |
-		BIO_WAM_SPREAD_1 | BIO_WAM_MAGSIZE_1 | BIO_WAM_ONPROJFIRED_1,
+		BIO_WAM_FIREDATA_1 | BIO_WAM_DAMAGE_1 | BIO_WAM_SPREAD_1 |
+		BIO_WAM_MAGSIZE_1 | BIO_WAM_ONPROJFIRED_1 | BIO_WAM_PROJFUNCTORS_1,
 	BIO_WAM_SECONDARY =
-		BIO_WAM_FIREDATA_2 | BIO_WAM_DAMAGE_2 |
-		BIO_WAM_SPREAD_2 | BIO_WAM_MAGSIZE_2 | BIO_WAM_ONPROJFIRED_2,
+		BIO_WAM_FIREDATA_2 | BIO_WAM_DAMAGE_2 | BIO_WAM_SPREAD_2 | 
+		BIO_WAM_MAGSIZE_2 | BIO_WAM_ONPROJFIRED_2 | BIO_WAM_PROJFUNCTORS_2,
 	BIO_WAM_ALL = uint.MAX
 }
 
@@ -176,6 +195,9 @@ class BIO_Weapon : DoomWeapon abstract
 	protected Ammo Magazine1, Magazine2;
 
 	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
+	Array<BIO_ProjTravelFunctor> ProjTravelFunctors;
+	Array<BIO_ProjDamageFunctor> ProjDamageFunctors;
+	Array<BIO_ProjDeathFunctor> ProjDeathFunctors;
 
 	// If the weapon carries special data that can't be known without knowing the
 	// exact class type in advance (e.g. from a mixin), store it in here.
@@ -611,6 +633,10 @@ class BIO_Weapon : DoomWeapon abstract
 		MinAmmoReserve2 = Default.MinAmmoReserve2;
 		ReloadFactor1 = Default.ReloadFactor1;
 		ReloadFactor2 = Default.ReloadFactor2;
+
+		ProjTravelFunctors.Clear();
+		ProjDamageFunctors.Clear();
+		ProjDeathFunctors.Clear();
 	}
 
 	void ApplyImplicitAffixes()
@@ -854,6 +880,9 @@ class BIO_Weapon : DoomWeapon abstract
 		if (proj is "BIO_Projectile")
 		{
 			let tProj = BIO_Projectile(proj);
+			tProj.ProjDamageFunctors.Copy(ProjDamageFunctors);
+			tProj.ProjTravelFunctors.Copy(ProjTravelFunctors);
+			tProj.ProjDeathFunctors.Copy(ProjDeathFunctors);
 			OnTrueProjectileFired(tProj);
 
 			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
@@ -872,6 +901,8 @@ class BIO_Weapon : DoomWeapon abstract
 		{
 			let fProj = BIO_FastProjectile(proj);
 			OnFastProjectileFired(fProj);
+			fProj.ProjDamageFunctors.Copy(ProjDamageFunctors);
+			fProj.ProjDeathFunctors.Copy(ProjDeathFunctors);
 
 			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			{

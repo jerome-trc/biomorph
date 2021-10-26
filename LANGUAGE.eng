@@ -150,6 +150,8 @@
 	BIO_AFFIX_TOSTR_WEAPDMGPERCENT2 = "Secondary damage: %s%s%%%d";
 	BIO_AFFIX_TOSTR_WEAPDMGPERCENT = "Damage: %s%s%%%d primary, %s%s%%%d secondary";
 	
+	BIO_AFFIX_TOSTR_ENEMYHEALTHDAMAGE = "%s%.1f%% of enemy's health %s damage";
+
 	BIO_AFFIX_TOSTR_PLASMA = "Fires balls of plasma";
 	BIO_AFFIX_TOSTR_SLUG = "Fires highly-accurate solid slugs";
 	BIO_AFFIX_TOSTR_MINIMISSILE = "Fires fast mini-missiles";
@@ -228,6 +230,9 @@
 
 	BIO_NONE = "None";
 	BIO_CORRUPTED = "Corrupted";
+
+	BIO_ADDED_TO = "added to";
+	BIO_REMOVED_FROM = "removed from";
 
 	BIO_PICKUP_STANDARD = "Grabbed";
 	BIO_PICKUP_SPECIALTY = "Obtained";

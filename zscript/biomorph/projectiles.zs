@@ -18,6 +18,11 @@ mixin class BIO_ProjectileCommon
 	int SplashDamage, SplashRadius; property Splash: SplashDamage, SplashRadius;
 	int Shrapnel; property Shrapnel: Shrapnel;
 
+	// These are set by the firing weapon to point to that 
+	// weapon's own counterparts of these arrays.
+	Array<BIO_ProjDamageFunctor> ProjDamageFunctors;
+	Array<BIO_ProjDeathFunctor> ProjDeathFunctors;
+
 	Default
 	{
 		+BLOODSPLATTER
@@ -28,32 +33,6 @@ mixin class BIO_ProjectileCommon
 		Damage -1;
 		Species "Player";
 	}
-
-	// Don't multiply damage by Random(1, 8).
-	override int DoSpecialDamage(Actor target, int dmg, name dmgType)
-	{
-		return Damage;
-	}
-
-	// Note that you never need to call `super.OnProjectileDeath()`.
-	virtual void OnProjectileDeath() {}
-
-	action void A_ProjectileDeath()
-	{
-		invoker.OnProjectileDeath();
-		// TODO: Subtle sound if Shrapnel is >0
-		if (invoker.Shrapnel > 0)
-		{
-			A_Explode(invoker.SplashDamage, invoker.SplashRadius,
-				nails: invoker.Shrapnel,
-				nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
-				puffType: "BIO_Shrapnel");
-		}
-		else
-		{
-			A_Explode(invoker.SplashDamage, invoker.SplashRadius);
-		}
-	}
 }
 
 class BIO_Projectile : Actor abstract
@@ -62,6 +41,10 @@ class BIO_Projectile : Actor abstract
 
 	float Acceleration; property Acceleration: Acceleration;
 	bool Seek; property Seek: Seek;
+
+	// Set by the firing weapon to point to that 
+	// weapon's own counterpart of this arrays.
+	Array<BIO_ProjTravelFunctor> ProjTravelFunctors;
 
 	Default
 	{
@@ -94,10 +77,51 @@ class BIO_Projectile : Actor abstract
 		}
 	}
 
+	// Don't multiply damage by Random(1, 8).
+	override int DoSpecialDamage(Actor target, int dmg, name dmgType)
+	{
+		int ret = Damage;
+
+		for (uint i = 0; i < ProjDamageFunctors.Size(); i++)
+			ProjDamageFunctors[i].InvokeTrue(BIO_Projectile(self),
+				target, ret, dmgType);
+
+		return ret;
+	}
+
 	action void A_Travel()
 	{
+		for (uint i = 0; i < invoker.ProjTravelFunctors.Size(); i++)
+			invoker.ProjTravelFunctors[i].Invoke(BIO_Projectile(self));
+
 		A_ScaleVelocity(invoker.Acceleration);
+
 		if (invoker.Seek) A_SeekerMissile(4.0, 4.0, SMF_LOOK);
+	}
+
+	// Invoked before A_ProjectileDeath() does anything else.
+	// Note that you never need to call `super.OnProjectileDeath()`.
+	virtual void OnProjectileDeath() {}
+
+	action void A_ProjectileDeath()
+	{
+		invoker.OnProjectileDeath();
+
+		for (uint i = 0; i < invoker.ProjDeathFunctors.Size(); i++)
+			invoker.ProjDeathFunctors[i].InvokeTrue(BIO_Projectile(self));
+
+		// TODO: Subtle sound if Shrapnel is >0
+		if (invoker.Shrapnel > 0)
+		{
+			A_Explode(invoker.SplashDamage, invoker.SplashRadius,
+				nails: invoker.Shrapnel,
+				nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
+				puffType: "BIO_Shrapnel");
+		}
+		else
+		{
+			A_Explode(invoker.SplashDamage, invoker.SplashRadius);
+		}
 	}
 }
 
@@ -112,6 +136,62 @@ class BIO_FastProjectile : FastProjectile abstract
 		BIO_FastProjectile.Splash 0, 0;
 		BIO_FastProjectile.Shrapnel 0;
 	}
+
+	// Don't multiply damage by Random(1, 8).
+	override int DoSpecialDamage(Actor target, int dmg, name dmgType)
+	{
+		int ret = Damage;
+
+		for (uint i = 0; i < ProjDamageFunctors.Size(); i++)
+			ProjDamageFunctors[i].InvokeFast(BIO_FastProjectile(self),
+				target, ret, dmgType);
+
+		return ret;
+	}
+
+	// Invoked before the A_ProjectileDeath does anything else.
+	// Note that you never need to call `super.OnProjectileDeath()`.
+	virtual void OnProjectileDeath() {}
+
+	action void A_ProjectileDeath()
+	{
+		invoker.OnProjectileDeath();
+		
+		for (uint i = 0; i < invoker.ProjDeathFunctors.Size(); i++)
+			invoker.ProjDeathFunctors[i].InvokeFast(BIO_FastProjectile(self));
+
+		// TODO: Subtle sound if Shrapnel is >0
+		if (invoker.Shrapnel > 0)
+		{
+			A_Explode(invoker.SplashDamage, invoker.SplashRadius,
+				nails: invoker.Shrapnel,
+				nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
+				puffType: "BIO_Shrapnel");
+		}
+		else
+		{
+			A_Explode(invoker.SplashDamage, invoker.SplashRadius);
+		}
+	}
+}
+
+class BIO_ProjTravelFunctor abstract
+{
+	abstract void Invoke(BIO_Projectile proj);
+}
+
+class BIO_ProjDamageFunctor abstract
+{
+	virtual void InvokeTrue(BIO_Projectile proj,
+		Actor target, in out int damage, name dmgType) const {}
+	virtual void InvokeFast(BIO_FastProjectile proj,
+		Actor target, in out int damage, name dmgType) const {}
+}
+
+class BIO_ProjDeathFunctor abstract
+{
+	virtual void InvokeTrue(BIO_Projectile proj) const {}
+	virtual void InvokeFast(BIO_FastProjectile proj) const {}
 }
 
 // Fast projectiles (used like puffs) ==========================================

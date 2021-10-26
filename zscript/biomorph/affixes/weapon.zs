@@ -71,7 +71,7 @@ class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
 		return !weap.AllDamageAffixMasked() && weap.DealsAnyDamage();
 	}
 
-	override void Apply(BIO_Weapon weap)
+	override void Apply(BIO_Weapon weap) const
 	{
 		if (!(weap.AffixMask & BIO_WAM_MINDAMAGE_1))
 			weap.MinDamage1 *= (1.0 + Multi1);
@@ -109,6 +109,58 @@ class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
 				Multi2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 				Multi2 >= 0 ? "+" : "", int(Multi2 * 100)));
 		}
+	}
+}
+
+// n% of the hit enemy's health is given to the projectile's dealt damage.
+class BIO_WeaponAffix_EnemyHealthDamage : BIO_WeaponAffix
+{
+	float Factor;
+
+	override void Init(BIO_Weapon weap)
+	{
+		Factor = FRandom(0.025, 0.05);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return
+			(weap.AffixMask & BIO_WAM_PROJDAMAGEFUNCTORS) !=
+			BIO_WAM_PROJDAMAGEFUNCTORS;
+	}
+
+	override void Apply(BIO_Weapon weap) const
+	{
+		uint e = weap.ProjDamageFunctors.Push(new("BIO_ProjDmgFunc_EnemyHealthDamage"));
+		let func = BIO_ProjDmgFunc_EnemyHealthDamage(weap.ProjDamageFunctors[e]);
+		func.Factor = Factor;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(StringTable.Localize(
+			"$BIO_AFFIX_TOSTR_ENEMYHEALTHDAMAGE"),
+			Factor > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+			Factor * 100.0, Factor > 0.0 ?
+				StringTable.Localize("$BIO_ADDED_TO") :
+				StringTable.Localize("$BIO_REMOVED_FROM")));
+	}
+}
+
+class BIO_ProjDmgFunc_EnemyHealthDamage : BIO_ProjDamageFunctor
+{
+	float Factor;
+
+	override void InvokeTrue(BIO_Projectile proj,
+		Actor target, in out int damage, name dmgType) const
+	{
+		damage += (target.Health * Factor);
+	}
+
+	override void InvokeFast(BIO_FastProjectile proj,
+		Actor target, in out int damage, name dmgType) const
+	{
+		damage += (target.Health * Factor);
 	}
 }
 
