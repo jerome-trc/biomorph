@@ -106,7 +106,8 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		}
 		Goto LightDone;
 	Spawn:
-		BFUG A -1;
+		BFUG A 0;
+		BFUG A 0 A_BIO_Spawn;
 		Stop;
 	}
 

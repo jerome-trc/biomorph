@@ -84,7 +84,8 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		HVBR A 1 Offset(0, 32 + 2);
 		Goto Ready;
 	Spawn:
-		HVBR X -1;
+		HVBR X 0;
+		HVBR X 0 A_BIO_Spawn;
 		Loop;
 	}
 

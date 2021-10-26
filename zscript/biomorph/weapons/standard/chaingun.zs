@@ -83,7 +83,8 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		CHGF B 5 Bright A_Light(2);
 		Goto LightDone;
 	Spawn:
-		MGUN A -1;
+		MGUN A 0;
+		MGUN A 0 A_BIO_Spawn;
 		Stop;
 	}
 

@@ -120,7 +120,8 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		SHT2 J 3 Bright A_Light(2);
 		Goto LightDone;
 	Spawn:
-		SGN2 A -1;
+		SGN2 A 0;
+		SGN2 A 0 A_BIO_Spawn;
 		Stop;
 	}
 

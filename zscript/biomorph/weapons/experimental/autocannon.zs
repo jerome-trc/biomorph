@@ -74,7 +74,8 @@ class BIO_Autocannon : BIO_Weapon
 		ACAN L 1 Bright A_Light(2);
 		Goto LightDone;
 	Spawn:
-		ACAN X -1;
+		ACAN X 0;
+		ACAN X 0 A_BIO_Spawn;
 		Loop;
 	}
 

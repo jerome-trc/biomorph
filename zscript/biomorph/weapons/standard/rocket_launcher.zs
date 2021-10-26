@@ -85,7 +85,8 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		MISF CD 4 Bright A_Light2;
 		Goto LightDone;
 	Spawn:
-		LAUN A -1;
+		LAUN A 0;
+		LAUN A 0 A_BIO_Spawn;
 		Stop;
 	}
 

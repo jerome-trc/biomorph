@@ -93,8 +93,9 @@ class BIO_SalvoLauncher : BIO_Weapon
 		TNT1 A 0 A_JumpIf(Player.Cmd.Buttons & BT_ALTATTACK, "AltFire");
 		Goto Ready;
 	Spawn:
-		SALV X -1;
-		Stop;
+		SALV X 0;
+		SALV X 0 A_BIO_Spawn;
+		Loop;
 	}
 
 	override void OnTrueProjectileFired(BIO_Projectile proj)

@@ -1,0 +1,4 @@
+// Rarity colors, used for blinking weapon pickups
+
+BIO_Mutated = "0:255 = %[0.0, 0.0, 0.0]:[0.0, 1.0, 1.0]"
+BIO_Unique = "0:255 = %[0.0, 0.0, 0.0]:[1.0, 0.5, 0.0]"

@@ -180,7 +180,7 @@ class BIO_Weapon : DoomWeapon abstract
 	protected transient Dictionary Dict;
 	
 	Array<string> StatReadout, AffixReadout;
-	
+
 	Default
 	{
 		+DONTGIB
@@ -229,6 +229,20 @@ class BIO_Weapon : DoomWeapon abstract
 			invoker.OnDeselect();
 			return ResolveState("Deselect.Loop");
 		}
+	Spawn:
+		TNT1 A 0;
+		Stop;
+	Spawn.Common:
+		#### # -1;
+		Stop;
+	Spawn.Mutated:
+		#### # 6 A_SetTranslation("");
+		#### # 6 Bright A_SetTranslation("BIO_Mutated");
+		Loop;
+	Spawn.Unique:
+		#### # 6 A_SetTranslation("");
+		#### # 6 Bright A_SetTranslation("BIO_Unique");
+		Loop;
 	}
 
 	// Parent overrides ========================================================
@@ -813,6 +827,16 @@ class BIO_Weapon : DoomWeapon abstract
 		A_ChangeVelocity(
 			Cos(invoker.Pitch) * -xVelMult, 0.0,
 			Sin(invoker.Pitch) * zVelMult, CVF_RELATIVE);
+	}
+
+	protected action state A_BIO_Spawn()
+	{
+		if (invoker.Rarity == BIO_RARITY_UNIQUE)
+			return ResolveState("Spawn.Unique");
+		else if (invoker.Affixes.Size() > 0)
+			return ResolveState("Spawn.Mutated");
+		else
+			return ResolveState("Spawn.Common");
 	}
 
 	// Utility functions =======================================================

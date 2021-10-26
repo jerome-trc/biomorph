@@ -49,7 +49,8 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		SAWG B 0 A_ReFire;
 		Goto Ready;
 	Spawn:
-		CSAW A -1;
+		CSAW A 0;
+		CSAW A 0 A_BIO_Spawn;
 		Stop;
 	}
 

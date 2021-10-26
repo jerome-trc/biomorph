@@ -92,7 +92,8 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		}
 		Goto LightDone;
 	Spawn:
-		PLAS A -1;
+		PLAS A 0;
+		PLAS A 0 A_BIO_Spawn;
 		Stop;
 	}
 

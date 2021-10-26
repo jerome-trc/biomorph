@@ -97,9 +97,10 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 			A_Light(1);
 		}
 		Goto LightDone;
- 	Spawn:
-		PIST A -1;
-		Stop;
+	Spawn:
+		PIST A 0;
+		PIST A 0 A_BIO_Spawn;
+		Loop;
 	}
 
 	override void GetFireTimes(in out Array<int> fireTimes, bool _) const

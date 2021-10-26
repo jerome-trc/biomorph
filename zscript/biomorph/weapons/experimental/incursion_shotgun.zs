@@ -111,8 +111,9 @@ class BIO_IncursionShotgun : BIO_Weapon
 		}
 		Goto LightDone;
 	Spawn:
-		INCU X -1;
-		Stop;
+		INCU X 0;
+		INCU X 0 A_BIO_Spawn;
+		Loop;
 	}
 
 	override void UpdateDictionary()
