@@ -9,7 +9,15 @@ OptionMenu "BIO_Options"
 {
 	Title "$BIO_MODTITLE"
 	StaticText ""
+	Option "$BIO_OPTLBL_BERSERKSWITCH", "BIO_berserkswitch", "BIO_BerserkSwitch"
 	Option "$BIO_OPTLBL_MULTIBARRELFIRE", "BIO_multibarrelfire", "BIO_MultiBarrelFire"
+}
+
+OptionValue "BIO_BerserkSwitch"
+{
+	0, "$BIO_OPTVAL_BSKS_NONE"
+	1, "$BIO_OPTVAL_BSKS_MELEE"
+	2, "$BIO_OPTVAL_BSKS_FIRSTONLY"
 }
 
 OptionValue "BIO_MultiBarrelFire"

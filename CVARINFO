@@ -1,3 +1,4 @@
 server noarchive bool BIO_debug = true;
 
 user int BIO_multibarrelfire = 0;
+user int BIO_berserkswitch = 1;

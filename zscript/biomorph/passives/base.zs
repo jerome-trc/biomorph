@@ -13,6 +13,9 @@ class BIO_Passive abstract
 	virtual void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const {}
 	virtual void OnAmmoPickup(BIO_Player bioPlayer, Inventory item) const {}
 	virtual void OnBackpackPickup(BIO_Player bioPlayer, BIO_Backpack bkpk) const {}
+	virtual void OnPowerupPickup(BIO_Player bioPlayer, Inventory item) const {}
+	virtual void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const {}
+	virtual void OnBerserk(BIO_Player bioPlayer, BIO_PowerStrength power) const {}
 
 	// Before any pointers get set, and before the equipment's
 	// version of this callback gets invoked.

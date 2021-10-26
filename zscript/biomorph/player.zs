@@ -138,4 +138,22 @@ class BIO_Player : DoomPlayer
 		for (uint i = 0; i < Passives.Size(); i++)
 			Passives[i].OnBackpackPickup(self, bkpk);
 	}
+
+	void OnPowerupPickup(Inventory item)
+	{
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].OnPowerupPickup(self, item);
+	}
+
+	void OnPowerupAttach(Powerup power)
+	{
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].OnPowerupAttach(self, power);
+	}
+
+	void OnBerserk(BIO_PowerStrength power)
+	{
+		for (uint i = 0; i < Passives.Size(); i++)
+			Passives[i].OnBerserk(self, power);
+	}
 }

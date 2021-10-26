@@ -198,6 +198,11 @@
 	BIO_OPTVAL_MBF_PRIM = "Primary Fires Multiple Barrels";
 	BIO_OPTVAL_MBF_SEC = "Secondary Fires Multiple Barrels";
 
+	BIO_OPTLBL_BERSERKSWITCH = "Going Berserk switches to Fist";
+	BIO_OPTVAL_BSKS_NONE = "Never";
+	BIO_OPTVAL_BSKS_MELEE = "Always";
+	BIO_OPTVAL_BSKS_FIRSTONLY = "Only on first pickup";
+
 // Keybindings =================================================================
 
 	BIO_UNASSIGNED_KEY = "\ccUnassigned Key\c-";

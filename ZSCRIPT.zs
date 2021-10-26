@@ -23,6 +23,7 @@ class Biomorph abstract
 #include "zscript/biomorph/keybinds.zs"
 #include "zscript/biomorph/mutagens.zs"
 #include "zscript/biomorph/player.zs"
+#include "zscript/biomorph/powerups.zs"
 #include "zscript/biomorph/projectiles.zs"
 #include "zscript/biomorph/sbar.zs"
 #include "zscript/biomorph/utils.zs"

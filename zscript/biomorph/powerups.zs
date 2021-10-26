@@ -1,0 +1,42 @@
+class BIO_Berserk : Berserk replaces Berserk
+{
+	States
+	{
+	Pickup:
+		TNT1 A 0;
+		Stop;
+	}
+
+	override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+		HealThing(100, 0);
+
+		let bioPlayer = BIO_Player(toucher);
+		if (bioPlayer == null) return;
+		
+		let bsks = BIO_CVar.BerserkSwitch(bioPlayer.Player);
+
+		if (bsks == BIO_CV_BSKS_MELEE ||
+			(bsks == BIO_CV_BSKS_ONLYFIRST &&
+			!bioPlayer.FindInventory("PowerStrength", true)))
+		{
+			bioPlayer.A_SelectWeapon("BIO_Fist");
+		}
+
+		bioPlayer.GiveInventory("BIO_PowerStrength", 1);
+		bioPlayer.OnPowerupPickup(self);
+	}
+}
+
+class BIO_PowerStrength : PowerStrength
+{
+	override void AttachToOwner(Actor other)
+	{
+		super.AttachToOwner(other);
+		let bioPlayer = BIO_Player(other);
+		if (bioPlayer == null) return;
+		bioPlayer.OnPowerupAttach(self);
+		bioPlayer.OnBerserk(self);
+	}
+}

@@ -8,6 +8,18 @@ class BIO_CVar abstract
 		return CVar.GetCVar("BIO_multibarrelfire", pInfo)
 			.GetInt() == BIO_CV_MBF_PRIM;
 	}
+
+	static int BerserkSwitch(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar("BIO_berserkswitch", pInfo).GetInt();
+	}
+}
+
+enum BIO_CVar_BerserkSwitch : int
+{
+	BIO_CV_BSKS_NO = 0,
+	BIO_CV_BSKS_MELEE = 1,
+	BIO_CV_BSKS_ONLYFIRST = 2
 }
 
 // For the Super Shotgun and similar weapons, does primary fire multiple barrels
