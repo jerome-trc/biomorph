@@ -46,7 +46,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		{
 			A_SetTics(invoker.FireTime1);
 			A_BIO_Fire();
-			Player.SetSafeFlash(invoker, FindState("Flash"), Random(0, 1));
+			Player.SetSafeFlash(invoker, ResolveState("Flash"), Random(0, 1));
 		}
 		PLSG B 20
 		{
