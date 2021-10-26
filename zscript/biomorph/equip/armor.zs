@@ -28,9 +28,7 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 
 		// Nothing to repair if the player isn't wearing armor
 		if (bioPlayer.EquippedArmor == null) return false;
-
-		// TODO: Armor grade, intrinsic properties, affixes decide if it
-		// can be repaired
+		if (!bioPlayer.EquippedArmor.Reparable()) return false;
 
 		// Is the currently-equipped armor already in perfect condition?
 		let armor = BasicArmor(bioPlayer.FindInventory("BasicArmor"));

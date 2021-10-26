@@ -1,3 +1,4 @@
+
 /*	Commonwealth English localization.
 
 	Some notes:
@@ -187,6 +188,10 @@
 	BIO_HEALTH_PICKUP_BONUS = "Drank a health bonus.";
 	BIO_HEALTH_PICKUP_STIMPACK = "Picked up a stimpack.";
 	BIO_HEALTH_PICKUP_MEDIKIT = "Picked up a first-aid kit.";
+
+// Powerups ====================================================================
+
+	BIO_MEGASPHERE_ARMORREPAIR = "Your %s\c- is repaired to perfect condition.";
 
 // Dropping and digestion ======================================================
 

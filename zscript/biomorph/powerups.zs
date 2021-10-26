@@ -40,3 +40,33 @@ class BIO_PowerStrength : PowerStrength
 		bioPlayer.OnBerserk(self);
 	}
 }
+
+class BIO_Megasphere : Megasphere replaces Megasphere
+{
+	States
+	{
+	Pickup:
+		TNT1 A 0;
+		Stop;
+	}
+
+	override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+		toucher.GiveBody(-200);
+
+		let bioPlayer = BIO_Player(toucher);
+		if (bioPlayer == null) return;
+		
+		if (bioPlayer.EquippedArmor != null && bioPlayer.EquippedArmor.Reparable())
+		{
+			let armor = BasicArmor(bioPlayer.FindInventory("BasicArmor"));
+			armor.Amount = armor.MaxAmount;
+			PrintPickupMessage(toucher.CheckLocalView(), String.Format(
+				StringTable.Localize("$BIO_MEGASPHERE_ARMORREPAIR"),
+				bioPlayer.EquippedArmor.GetTag()));
+		}
+
+		bioPlayer.OnPowerupPickup(self);
+	}
+}

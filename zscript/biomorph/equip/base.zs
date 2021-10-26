@@ -210,6 +210,11 @@ class BIO_Armor : BIO_Equipment abstract
 			Affixes[e].Init(self);
 		}
 	}
+
+	// Does not check if already in perfect condition.
+	// TODO: Armor grade, intrinsic properties, affixes 
+	// decide if armor can be repaired
+	bool Reparable() const { return true; }
 }
 
 // Intangible items given when a BIO_Armor is used (equipped), which
