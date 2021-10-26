@@ -496,7 +496,10 @@ class BIO_WeaponAffix_ForcePain : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return (weap.AffixMask & BIO_WAM_ONPROJFIRED) != BIO_WAM_ONPROJFIRED;
+		if (weap.bMeleeWeapon)
+			return false;
+		else
+			return (weap.AffixMask & BIO_WAM_ONPROJFIRED) != BIO_WAM_ONPROJFIRED;
 	}
 
 	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
