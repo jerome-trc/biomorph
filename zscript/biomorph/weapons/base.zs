@@ -784,36 +784,41 @@ class BIO_Weapon : DoomWeapon abstract
 	action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
 	action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
 
-	action bool A_BIO_Fire(bool secondary = false, int factor = 1,
-		float spreadFactor = 1.0)
+	action bool A_BIO_Fire(int fireFactor = 1, float spreadFactor = 1.0)
 	{
-		Class<Actor> fireType = !secondary ? invoker.FireType1 : invoker.FireType2;
-		
-		int fireCount = !secondary ? invoker.FireCount1 : invoker.FireCount2;
-		fireCount *= factor;
-
-		float
-			hSpread = !secondary ? invoker.HSpread1 : invoker.HSpread2,
-			vSpread = !secondary ? invoker.VSpread1 : invoker.VSpread2;
-
-		int minDmg = !secondary ? invoker.MinDamage1 : invoker.MinDamage2,
-			maxDmg = !secondary ? invoker.MaxDamage1 : invoker.MaxDamage2;
-
-		int ammoUse = !secondary ? invoker.AmmoUse1 : invoker.AmmoUse2;
-		ammoUse *= factor;
-
-		if (!invoker.DepleteAmmo(invoker.bAltFire, true, ammoUse))
+		if (!invoker.DepleteAmmo(invoker.bAltFire, true, invoker.AmmoUse1 * fireFactor))
 			return false;
 		
-		for (int i = 0; i < fireCount; i++)
+		for (int i = 0; i < (invoker.FireCount1 * fireFactor); i++)
 		{
-			Actor proj = A_FireProjectile(fireType,
-				angle: FRandom(-hSpread, hSpread) * spreadFactor,
+			Actor proj = A_FireProjectile(invoker.FireType1,
+				angle: FRandom(-invoker.HSpread1, invoker.HSpread1) * spreadFactor,
 				useAmmo: false,
-				pitch: FRandom(-vSpread, vSpread) * spreadFactor);
+				pitch: FRandom(-invoker.VSpread1, invoker.VSpread1) * spreadFactor);
 			
 			if (proj == null) continue;
-			proj.SetDamage(Random(minDmg, maxDmg));
+			proj.SetDamage(Random(invoker.MinDamage1, invoker.MaxDamage1));
+			invoker.OnProjectileFired(proj);
+		}
+
+		A_BIO_AlertMonsters();
+		return true;
+	}
+
+	action bool A_BIO_FireSecondary(int fireFactor = 1, float spreadFactor = 1.0)
+	{
+		if (!invoker.DepleteAmmo(invoker.bAltFire, true, invoker.AmmoUse2 * fireFactor))
+			return false;
+		
+		for (int i = 0; i < (invoker.FireCount2 * fireFactor); i++)
+		{
+			Actor proj = A_FireProjectile(invoker.FireType2,
+				angle: FRandom(-invoker.HSpread2, invoker.HSpread2) * spreadFactor,
+				useAmmo: false,
+				pitch: FRandom(-invoker.VSpread2, invoker.VSpread2) * spreadFactor);
+			
+			if (proj == null) continue;
+			proj.SetDamage(Random(invoker.MinDamage2, invoker.MaxDamage2));
 			invoker.OnProjectileFired(proj);
 		}
 
