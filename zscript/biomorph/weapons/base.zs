@@ -580,7 +580,8 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
-	// Does not affect affixes in any way.
+	// This function's base form does not affect any affixes
+	// or the dictionary, and neither should any overrides.
 	virtual void ResetStats()
 	{
 		BIOFlags = Default.BIOFlags;

@@ -29,17 +29,10 @@ mixin class BIO_ProjectileCommon
 		Species "Player";
 	}
 
-	// Overriden so projectiles deal damage without built-in randomisation.
-	override int SpecialMissileHit(Actor victim)
+	// Don't multiply damage by Random(1, 8).
+	override int DoSpecialDamage(Actor target, int dmg, name dmgType)
 	{
-		if (Damage <= 0)
-			return 1; // Ignored for now
-
-		if (victim == Target || !victim.bShootable || victim.Health <= 0)
-			return 1; // Ignored
-
-		victim.DamageMobj(self, Target, Damage, self.DamageType);
-		return 0; // Hit, do nothing
+		return Damage;
 	}
 
 	// Note that you never need to call `super.OnProjectileDeath()`.
