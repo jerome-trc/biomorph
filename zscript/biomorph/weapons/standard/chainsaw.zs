@@ -21,7 +21,9 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		Weapon.SlotPriority 0.0;
 		Weapon.UpSound "weapons/sawup";
 
-		BIO_Weapon.AffixMask BIO_WAM_SECONDARY | BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE;
+		BIO_Weapon.AffixMasks
+			BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE,
+			BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 2, 20;
 		

@@ -20,8 +20,9 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		Weapon.AmmoType "Cell";
 		
 		// Affixes cannot change that this weapon fires exactly 1 BFG ball
-		BIO_Weapon.AffixMask
-			BIO_WAM_FIRECOUNT_1 | BIO_WAM_FIRETYPE_1 | BIO_WAM_SECONDARY;
+		BIO_Weapon.AffixMasks
+			BIO_WAM_FIRECOUNT | BIO_WAM_FIRETYPE,
+			BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.FireTypes "BIO_BFGBall", "BIO_BFGExtra";
 		BIO_Weapon.FireCounts 1, 40;
 		BIO_Weapon.DamageRanges 100, 800, 49, 87;

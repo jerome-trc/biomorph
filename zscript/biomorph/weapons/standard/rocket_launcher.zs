@@ -18,7 +18,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		Weapon.SelectionOrder 2500;
 		Weapon.SlotNumber 5;
 
-		BIO_Weapon.AffixMask BIO_WAM_SECONDARY;
+		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 20, 160;
 		BIO_Weapon.FireType "BIO_Rocket";

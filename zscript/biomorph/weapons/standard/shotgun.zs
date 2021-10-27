@@ -20,7 +20,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		Weapon.SlotNumber 3;
 		Weapon.UpSound "weapons/gunswap";
 
-		BIO_Weapon.AffixMask BIO_WAM_SECONDARY;
+		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireCount 7;

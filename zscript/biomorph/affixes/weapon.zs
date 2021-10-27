@@ -12,32 +12,32 @@ class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return !weap.AllDamageAffixMasked();
+		return !weap.AfxMask_AllDamage();
 	}
 
 	override void Apply(BIO_Weapon weap) const
 	{
-		if (!(weap.AffixMask & BIO_WAM_MINDAMAGE_1))
+		if (!(weap.AffixMask1 & BIO_WAM_MINDAMAGE))
 			weap.MinDamage1 += Modifier1;
-		if (!(weap.AffixMask & BIO_WAM_MAXDAMAGE_1))
+		if (!(weap.AffixMask1 & BIO_WAM_MAXDAMAGE))
 			weap.MaxDamage1 += Modifier1;
 
-		if (!(weap.AffixMask & BIO_WAM_MINDAMAGE_2))
+		if (!(weap.AffixMask2 & BIO_WAM_MINDAMAGE))
 			weap.MinDamage2 += Modifier2;
-		if (!(weap.AffixMask & BIO_WAM_MAXDAMAGE_2))
+		if (!(weap.AffixMask2 & BIO_WAM_MAXDAMAGE))
 			weap.MaxDamage2 += Modifier2;
 	}
 
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
-		if (weap.AffixMask & BIO_WAM_DAMAGE_2)
+		if ((weap.AffixMask2 & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE)
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMG1"),
 				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 				Modifier1 >= 0 ? "+" : "", Modifier1));
 		}
-		else if (weap.AffixMask & BIO_WAM_DAMAGE_1)
+		else if ((weap.AffixMask1 & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE)
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMG2"),
@@ -68,32 +68,46 @@ class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return !weap.AllDamageAffixMasked() && weap.DealsAnyDamage();
+		return !(PrimaryIncompatible(weap) && SecondaryIncompatible(weap));
+	}
+
+	private bool PrimaryIncompatible(BIO_Weapon weap) const
+	{
+		return
+			((weap.AffixMask1 & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE) ||
+			weap.MaxDamage1 <= 0;
+	}
+
+	private bool SecondaryIncompatible(BIO_Weapon weap) const
+	{
+		return
+			((weap.AffixMask2 & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE) ||
+			weap.MaxDamage2 <= 0;
 	}
 
 	override void Apply(BIO_Weapon weap) const
 	{
-		if (!(weap.AffixMask & BIO_WAM_MINDAMAGE_1))
+		if (!(weap.AffixMask1 & BIO_WAM_MINDAMAGE))
 			weap.MinDamage1 *= (1.0 + Multi1);
-		if (!(weap.AffixMask & BIO_WAM_MAXDAMAGE_1))
+		if (!(weap.AffixMask1 & BIO_WAM_MAXDAMAGE))
 			weap.MaxDamage1 *= (1.0 + Multi1);
 
-		if (!(weap.AffixMask & BIO_WAM_MINDAMAGE_2))
+		if (!(weap.AffixMask2 & BIO_WAM_MINDAMAGE))
 			weap.MinDamage2 *= (1.0 + Multi2);
-		if (!(weap.AffixMask & BIO_WAM_MAXDAMAGE_2))
+		if (!(weap.AffixMask2 & BIO_WAM_MAXDAMAGE))
 			weap.MaxDamage2 *= (1.0 + Multi2);
 	}
 
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
-		if (weap.AffixMask & BIO_WAM_DAMAGE_2)
+		if (SecondaryIncompatible(weap))
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMGPERCENT1"),
 				Multi1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 				Multi1 >= 0 ? "+" : "", int(Multi1 * 100)));
 		}
-		else if (weap.AffixMask & BIO_WAM_DAMAGE_1)
+		else if (PrimaryIncompatible(weap))
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_WEAPDMGPERCENT2"),
@@ -125,8 +139,8 @@ class BIO_WeaponAffix_EnemyHealthDamage : BIO_WeaponAffix
 	override bool Compatible(BIO_Weapon weap) const
 	{
 		return
-			(weap.AffixMask & BIO_WAM_PROJDAMAGEFUNCTORS) !=
-			BIO_WAM_PROJDAMAGEFUNCTORS;
+			!(weap.AffixMask1 & BIO_WAM_PROJDAMAGEFUNCTORS) ||
+			!(weap.AffixMask2 & BIO_WAM_PROJDAMAGEFUNCTORS);
 	}
 
 	override void Apply(BIO_Weapon weap) const
@@ -199,25 +213,30 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 	// Weapon must be firing shot pellets for this affix to be applicable.
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		if (weap.FireTypeMutableFrom("BIO_ShotPellet", false) &&
-			!(weap.AffixMask & BIO_WAM_SPREAD_1) &&
-			!(weap.AffixMask & BIO_WAM_DAMAGE_1))
-			return true;
-		else if (weap.FireTypeMutableFrom("BIO_ShotPellet", true) &&
-			!(weap.AffixMask & BIO_WAM_SPREAD_2) &&
-			!(weap.AffixMask & BIO_WAM_DAMAGE_2))
-			return true;
-		else
-			return false;
+		return PrimaryCompatible(weap) || SecondaryCompatible(weap);
+	}
+	
+	private bool PrimaryCompatible(BIO_Weapon weap) const
+	{
+		return
+			weap.FireTypeMutableFrom("BIO_ShotPellet", false) &&
+			!(weap.AffixMask1 & BIO_WAM_SPREAD) &&
+			!(weap.AffixMask1 & BIO_WAM_DAMAGE);
+	}
+
+	private bool SecondaryCompatible(BIO_Weapon weap) const
+	{
+		return
+			weap.FireTypeMutableFrom("BIO_ShotPellet", true) &&
+			!(weap.AffixMask2 & BIO_WAM_SPREAD) &&
+			!(weap.AffixMask2 & BIO_WAM_DAMAGE);
 	}
 
 	override void Apply(BIO_Weapon weap) const
 	{
 		weap.UpdateDictionary();
 
-		if (weap.FireTypeMutableFrom("BIO_ShotPellet", false) &&
-			!(weap.AffixMask & BIO_WAM_SPREAD_1) &&
-			!(weap.AffixMask & BIO_WAM_DAMAGE_1))
+		if (PrimaryCompatible(weap))
 		{
 			bool valid = false;
 			string val = "";
@@ -241,9 +260,7 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 			}
 		}
 		
-		if (weap.FireTypeMutableFrom("BIO_ShotPellet", true) &&
-			!(weap.AffixMask & BIO_WAM_SPREAD_2) &&
-			!(weap.AffixMask & BIO_WAM_DAMAGE_2))
+		if (SecondaryCompatible(weap))
 		{
 			bool valid = false;
 			string val = "";
@@ -325,9 +342,9 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 
 		bool ret = false;
 
-		if (weap.FireCount1 != 0 && !(weap.AffixMask & BIO_WAM_FIRECOUNT_1))
+		if (weap.FireCount1 != 0 && !(weap.AffixMask1 & BIO_WAM_FIRECOUNT))
 			ret = true;
-		if (weap.FireCount2 != 0 && !(weap.AffixMask & BIO_WAM_FIRECOUNT_2))
+		if (weap.FireCount2 != 0 && !(weap.AffixMask2 & BIO_WAM_FIRECOUNT))
 			ret = true;
 
 		return ret;
@@ -335,13 +352,13 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 
 	override void Apply(BIO_Weapon weap) const
 	{
-		if (!(weap.AffixMask & BIO_WAM_FIRECOUNT_1))
+		if (!(weap.AffixMask1 & BIO_WAM_FIRECOUNT))
 		{
 			if (weap.FireCount1 == -1) weap.FireCount1 = 1;
 			weap.FireCount1 += Modifier1;
 		}
 		
-		if (!(weap.AffixMask & BIO_WAM_FIRECOUNT_2))
+		if (!(weap.AffixMask2 & BIO_WAM_FIRECOUNT))
 		{
 			if (weap.FireCount2 == -1) weap.FireCount2 = 1;
 			weap.FireCount2 += Modifier2;
@@ -350,7 +367,7 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
-		if (weap.AffixMask & BIO_WAM_FIRECOUNT_2)
+		if (weap.AffixMask2 & BIO_WAM_FIRECOUNT)
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT1"),
@@ -358,7 +375,7 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 				Modifier1 >= 0 ? "+" : "", Modifier1,
 				GetDefaultByType(weap.FireType1).GetTag()));
 		}
-		else if (weap.AffixMask & BIO_WAM_FIRECOUNT_1)
+		else if (weap.AffixMask1 & BIO_WAM_FIRECOUNT)
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT2"),
@@ -401,7 +418,7 @@ class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 	override bool Compatible(BIO_Weapon weap) const
 	{
 		return
-			!(weap.AffixMask & BIO_WAM_FIRETIME) &&
+			!(weap.AffixMask1 & BIO_WAM_FIRETIME) &&
 			weap.ReducibleFireTime() > 0;
 	}
 
@@ -433,19 +450,21 @@ class BIO_WeaponAffix_Spread : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return !weap.SpreadAffixMasked();
+		return
+			!((weap.AffixMask1 & BIO_WAM_SPREAD) == BIO_WAM_SPREAD) ||
+			!((weap.AffixMask2 & BIO_WAM_SPREAD) == BIO_WAM_SPREAD);
 	}
 
 	override void Apply(BIO_Weapon weap)
 	{
-		if (!(weap.AffixMask & BIO_WAM_HSPREAD_1))
+		if (!(weap.AffixMask1 & BIO_WAM_HSPREAD))
 			weap.HSpread1 += HSpread1;
-		if (!(weap.AffixMask & BIO_WAM_VSPREAD_1))
+		if (!(weap.AffixMask1 & BIO_WAM_VSPREAD))
 			weap.VSpread1 += VSpread1;
 
-		if (!(weap.AffixMask & BIO_WAM_HSPREAD_2))
+		if (!(weap.AffixMask2 & BIO_WAM_HSPREAD))
 			weap.HSpread2 += HSpread2;
-		if (!(weap.AffixMask & BIO_WAM_VSPREAD_2))
+		if (!(weap.AffixMask2 & BIO_WAM_VSPREAD))
 			weap.VSpread2 += VSpread2;
 	}
 
@@ -453,22 +472,22 @@ class BIO_WeaponAffix_Spread : BIO_WeaponAffix
 	{
 		string output = StringTable.Localize("$BIO_AFFIX_TOSTR_SPREAD");
 
-		if (!(weap.AffixMask & BIO_WAM_HSPREAD_1))
+		if (!(weap.AffixMask1 & BIO_WAM_HSPREAD))
 			output.AppendFormat("%s%s%.1f/",
 			HSpread1 >= 0.0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
 			HSpread1 >= 0.0 ? "+" : "", HSpread1);
 
-		if (!(weap.AffixMask & BIO_WAM_VSPREAD_1))
+		if (!(weap.AffixMask1 & BIO_WAM_VSPREAD))
 			output.AppendFormat("%s%s%.1f ",
 			VSpread1 >= 0.0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
 			VSpread1 >= 0.0 ? "+" : "", VSpread1);
 
-		if (!(weap.AffixMask & BIO_WAM_HSPREAD_2))
+		if (!(weap.AffixMask2 & BIO_WAM_HSPREAD))
 			output.AppendFormat("%s%s%.1f/",
 			HSpread2 >= 0.0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
 			HSpread2 >= 0.0 ? "+" : "", HSpread2);
 
-		if (!(weap.AffixMask & BIO_WAM_VSPREAD_2))
+		if (!(weap.AffixMask2 & BIO_WAM_VSPREAD))
 			output.AppendFormat("%s%s%.1f ",
 			VSpread2 >= 0.0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
 			VSpread2 >= 0.0 ? "+" : "", VSpread2);
@@ -499,7 +518,7 @@ class BIO_WeaponAffix_ReloadSpeed : BIO_WeaponAffix
 	override bool Compatible(BIO_Weapon weap) const
 	{
 		return
-			!(weap.AffixMask & BIO_WAM_RELOADTIME) &&
+			!(weap.AffixMask1 & BIO_WAM_RELOADTIME) &&
 			weap.ReducibleReloadTime() > 0;
 	}
 
@@ -523,9 +542,9 @@ class BIO_WeaponAffix_ProjSeek : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		if (!weap.PrimaryAffixMasked() && weap.FiresTrueProjectile(false))
+		if (!(weap.AffixMask1 == BIO_WAM_ALL) && weap.FiresTrueProjectile(false))
 			return true;
-		else if (!weap.SecondaryAffixMasked() && weap.FiresTrueProjectile(true))
+		else if (!(weap.AffixMask2 == BIO_WAM_ALL) && weap.FiresTrueProjectile(true))
 			return true;
 		else
 			return false;
@@ -551,7 +570,7 @@ class BIO_WeaponAffix_ForcePain : BIO_WeaponAffix
 		if (weap.bMeleeWeapon)
 			return false;
 		else
-			return (weap.AffixMask & BIO_WAM_ONPROJFIRED) != BIO_WAM_ONPROJFIRED;
+			return (weap.AffixMask1 & BIO_WAM_ONPROJFIRED) != BIO_WAM_ONPROJFIRED;
 	}
 
 	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
@@ -597,7 +616,7 @@ class BIO_WeaponAffix_MeleeRange : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return weap.bMeleeWeapon && !(weap.AffixMask & BIO_WAM_MELEERANGE);
+		return weap.bMeleeWeapon && !(weap.AffixMask1 & BIO_WAM_MELEERANGE);
 	}
 
 	override void ModifyMeleeRange(BIO_Weapon weap, in out float range) const
@@ -622,7 +641,7 @@ class BIO_WeaponAffix_LifeSteal : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return weap.bMeleeWeapon && !(weap.AffixMask & BIO_WAM_LIFESTEAL);
+		return weap.bMeleeWeapon && !(weap.AffixMask1 & BIO_WAM_LIFESTEAL);
 	}
 
 	override void ModifyLifesteal(BIO_Weapon weap, in out float lifeSteal) const

@@ -17,7 +17,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		Weapon.SelectionOrder 100;
 		Weapon.SlotNumber 6;
 
-		BIO_Weapon.AffixMask BIO_WAM_SECONDARY;
+		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 40;
 		BIO_Weapon.FireType "BIO_PlasmaBall";

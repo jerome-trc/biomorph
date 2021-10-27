@@ -18,7 +18,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		Weapon.SelectionOrder 1600;
 		Weapon.SlotNumber 3;
 
-		BIO_Weapon.AffixMask BIO_WAM_SECONDARY;
+		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_EXPERIMENTAL;
 		BIO_Weapon.DamageRange 7, 17;
 		BIO_Weapon.FireCount 9;

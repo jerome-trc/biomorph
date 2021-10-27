@@ -15,89 +15,35 @@ enum BIO_WeaponFlags : uint8
 enum BIO_WeaponAffixMask : uint
 {
 	BIO_WAM_NONE = 0,
-	// Fire data: bits
-	BIO_WAM_FIRETYPE_1 = 1 << 0,
-	BIO_WAM_FIRETYPE_2 = 1 << 1,
-	BIO_WAM_FIRECOUNT_1 = 1 << 2,
-	BIO_WAM_FIRECOUNT_2 = 1 << 3,
-	// Fire data: combinations
-	BIO_WAM_FIRETYPE = BIO_WAM_FIRETYPE_1 | BIO_WAM_FIRETYPE_2,
-	BIO_WAM_FIRECOUNT = BIO_WAM_FIRECOUNT_1 | BIO_WAM_FIRECOUNT_2,
-	BIO_WAM_FIREDATA_1 = BIO_WAM_FIRETYPE_1 | BIO_WAM_FIRECOUNT_1,
-	BIO_WAM_FIREDATA_2 = BIO_WAM_FIRETYPE_2 | BIO_WAM_FIRECOUNT_2,
-	BIO_WAM_FIREDATA = BIO_WAM_FIRETYPE | BIO_WAM_FIRECOUNT,
-	// Damage: bits
-	BIO_WAM_MINDAMAGE_1 = 1 << 4,
-	BIO_WAM_MINDAMAGE_2 = 1 << 5,
-	BIO_WAM_MAXDAMAGE_1 = 1 << 6,
-	BIO_WAM_MAXDAMAGE_2 = 1 << 7,
-	// Damage: combinations
-	BIO_WAM_MINDAMAGE = BIO_WAM_MINDAMAGE_1 | BIO_WAM_MINDAMAGE_2,
-	BIO_WAM_MAXDAMAGE = BIO_WAM_MAXDAMAGE_1 | BIO_WAM_MAXDAMAGE_2,
-	BIO_WAM_DAMAGE_1 = BIO_WAM_MINDAMAGE_1 | BIO_WAM_MAXDAMAGE_1,
-	BIO_WAM_DAMAGE_2 = BIO_WAM_MINDAMAGE_2 | BIO_WAM_MAXDAMAGE_2,
-	BIO_WAM_DAMAGE = BIO_WAM_MINDAMAGE | BIO_WAM_MAXDAMAGE,
-	// Spread: bits
-	BIO_WAM_HSPREAD_1 = 1 << 8,
-	BIO_WAM_HSPREAD_2 = 1 << 9,
-	BIO_WAM_VSPREAD_1 = 1 << 10,
-	BIO_WAM_VSPREAD_2 = 1 << 11,
-	// Spread: combinations
-	BIO_WAM_HSPREAD = BIO_WAM_HSPREAD_1 | BIO_WAM_HSPREAD_2,
-	BIO_WAM_VSPREAD = BIO_WAM_VSPREAD_1 | BIO_WAM_VSPREAD_2,
-	BIO_WAM_SPREAD_1 = BIO_WAM_HSPREAD_1 | BIO_WAM_VSPREAD_1,
-	BIO_WAM_SPREAD_2 = BIO_WAM_HSPREAD_2 | BIO_WAM_VSPREAD_2,
-	BIO_WAM_SPREAD = BIO_WAM_HSPREAD | BIO_WAM_VSPREAD,
-	// Magazine
-	BIO_WAM_MAGSIZE_1 = 1 << 12,
-	BIO_WAM_MAGSIZE_2 = 1 << 13,
-	BIO_WAM_MAGSIZE = BIO_WAM_MAGSIZE_1 | BIO_WAM_MAGSIZE_2,
-	// Switch speeds
-	BIO_WAM_RAISESPEED = 1 << 14,
-	BIO_WAM_LOWERSPEED = 1 << 15,
+	BIO_WAM_ALL = uint.MAX,
+	// The first 8 bits are reserved for `MiscAffixMask`, which is 8 bits wide.
+	BIO_WAM_RAISESPEED = 1 << 0,
+	BIO_WAM_LOWERSPEED = 1 << 1,
 	BIO_WAM_SWITCHSPEED = BIO_WAM_RAISESPEED | BIO_WAM_LOWERSPEED,
-	// Fire and reload times
+	BIO_WAM_BIOFLAGS = 1 << 2,
+	// The following bits should only be assigned to `AffixMask1` or `AffixMask2`.
+	BIO_WAM_FIRETYPE = 1 << 9,
+	BIO_WAM_FIRECOUNT = 1 << 10,
+	BIO_WAM_FIREDATA = BIO_WAM_FIRETYPE | BIO_WAM_FIRECOUNT,
+	BIO_WAM_MINDAMAGE = 1 << 11,
+	BIO_WAM_MAXDAMAGE = 1 << 12,
+	BIO_WAM_DAMAGE = BIO_WAM_MINDAMAGE | BIO_WAM_MAXDAMAGE,
+	BIO_WAM_HSPREAD = 1 << 13,
+	BIO_WAM_VSPREAD = 1 << 14,
+	BIO_WAM_SPREAD = BIO_WAM_HSPREAD | BIO_WAM_VSPREAD,
+	BIO_WAM_MAGSIZE = 1 << 15,
 	BIO_WAM_FIRETIME = 1 << 16,
 	BIO_WAM_RELOADTIME = 1 << 17,
-	// Callbacks
-	BIO_WAM_ONPROJFIRED_1 = 1 << 18,
-	BIO_WAM_ONPROJFIRED_2 = 1 << 19,
-	BIO_WAM_ONPROJFIRED_TRUE = 1 << 20,
-	BIO_WAM_ONPROJFIRED_FAST = 1 << 21,
-	BIO_WAM_ONPROJFIRED =
-		BIO_WAM_ONPROJFIRED_1 | BIO_WAM_ONPROJFIRED_2 |
-		BIO_WAM_ONPROJFIRED_TRUE | BIO_WAM_ONPROJFIRED_FAST,
-	BIO_WAM_PREALERT = 1 << 22,
-	// Melee-weapon only
-	BIO_WAM_LIFESTEAL = 1 << 23,
-	BIO_WAM_MELEERANGE = 1 << 24,
-	// Functors: bits
-	BIO_WAM_PROJTRAVELFUNCTORS_1 = 1 << 25,
-	BIO_WAM_PROJDAMAGEFUNCTORS_1 = 1 << 26,
-	BIO_WAM_PROJDEATHFUNCTORS_1 = 1 << 27,
-	BIO_WAM_PROJTRAVELFUNCTORS_2 = 1 << 28,
-	BIO_WAM_PROJDAMAGEFUNCTORS_2 = 1 << 29,
-	BIO_WAM_PROJDEATHFUNCTORS_2 = 1 << 30,
-	// Functors: combinations
-	BIO_WAM_PROJTRAVELFUNCTORS =
-		BIO_WAM_PROJTRAVELFUNCTORS_1 | BIO_WAM_PROJTRAVELFUNCTORS_2,
-	BIO_WAM_PROJDAMAGEFUNCTORS =
-		BIO_WAM_PROJDAMAGEFUNCTORS_1 | BIO_WAM_PROJDAMAGEFUNCTORS_2,
-	BIO_WAM_PROJDEATHFUNCTORS = 
-		BIO_WAM_PROJDEATHFUNCTORS_1 | BIO_WAM_PROJDEATHFUNCTORS_2,
-	BIO_WAM_PROJFUNCTORS_1 =
-		BIO_WAM_PROJTRAVELFUNCTORS_1 | BIO_WAM_PROJDAMAGEFUNCTORS_1 | BIO_WAM_PROJDEATHFUNCTORS_1,
-	BIO_WAM_PROJFUNCTORS_2 =
-		BIO_WAM_PROJTRAVELFUNCTORS_2 | BIO_WAM_PROJDAMAGEFUNCTORS_2 | BIO_WAM_PROJDEATHFUNCTORS_2,
-	BIO_WAM_PROJFUNCTORS = BIO_WAM_PROJFUNCTORS_1 | BIO_WAM_PROJFUNCTORS_2,
-	// Completely lock off the primary or secondary side of the weapon
-	BIO_WAM_PRIMARY =
-		BIO_WAM_FIREDATA_1 | BIO_WAM_DAMAGE_1 | BIO_WAM_SPREAD_1 |
-		BIO_WAM_MAGSIZE_1 | BIO_WAM_ONPROJFIRED_1 | BIO_WAM_PROJFUNCTORS_1,
-	BIO_WAM_SECONDARY =
-		BIO_WAM_FIREDATA_2 | BIO_WAM_DAMAGE_2 | BIO_WAM_SPREAD_2 | 
-		BIO_WAM_MAGSIZE_2 | BIO_WAM_ONPROJFIRED_2 | BIO_WAM_PROJFUNCTORS_2,
-	BIO_WAM_ALL = uint.MAX
+	BIO_WAM_LIFESTEAL = 1 << 18,
+	BIO_WAM_MELEERANGE = 1 << 19,
+	BIO_WAM_MELEE = BIO_WAM_LIFESTEAL | BIO_WAM_MELEERANGE,
+	BIO_WAM_ONPROJFIRED = 1 << 20,
+	BIO_WAM_PROJTRAVELFUNCTORS = 1 << 21,
+	BIO_WAM_PROJDAMAGEFUNCTORS = 1 << 22,
+	BIO_WAM_PROJDEATHFUNCTORS = 1 << 23,
+	BIO_WAM_PROJFUNCTORS = BIO_WAM_PROJTRAVELFUNCTORS |
+		BIO_WAM_PROJDAMAGEFUNCTORS | BIO_WAM_PROJDEATHFUNCTORS,
+	BIO_WAM_AFFIXMASK = 1 << 24
 }
 
 mixin class BIO_Magazine
@@ -117,7 +63,9 @@ class BIO_Weapon : DoomWeapon abstract
 	const MAX_AFFIXES = 6;
 
 	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
-	BIO_WeaponAffixMask AffixMask; property AffixMask: AffixMask;
+	BIO_WeaponAffixMask AffixMask1, AffixMask2;
+	uint8 MiscAffixMask;
+	property AffixMasks: AffixMask1, AffixMask2, MiscAffixMask;
 
 	Class<Actor> FireType1, FireType2;
 	property FireType: FireType1;
@@ -230,7 +178,7 @@ class BIO_Weapon : DoomWeapon abstract
         Weapon.BobStyle "Alpha";
 		Weapon.Kickback 100;
 
-		BIO_Weapon.AffixMask BIO_WAM_NONE;
+		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_NONE, BIO_WAM_NONE;
 		BIO_Weapon.DamageRanges -2, -2, -2, -2;
 		BIO_Weapon.FireCounts 1, 1;
 		BIO_Weapon.FireTypes "", "";
@@ -439,41 +387,11 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	// Includes implicits.
-	bool NoAffixes() const
-	{
-		return Affixes.Size() < 1 && ImplicitAffixes.Size() < 1;
-	}
+	bool NoImplicitAffixes() const { return ImplicitAffixes.Size() < 1; }
+	bool NoExplicitAffixes() const { return Affixes.Size() < 1; }
+	bool NoAffixes() const { return NoImplicitAffixes() && NoExplicitAffixes(); }
 
-	bool PrimaryAffixMasked() const
-	{
-		return (AffixMask & BIO_WAM_PRIMARY) == BIO_WAM_PRIMARY;
-	}
-
-	bool SecondaryAffixMasked() const
-	{
-		return (AffixMask & BIO_WAM_SECONDARY) == BIO_WAM_SECONDARY;
-	}
-
-	bool AllDamageAffixMasked() const
-	{
-		return (AffixMask & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE;
-	}
-
-	bool PrimaryDamageAffixMasked() const
-	{
-		return (AffixMask & BIO_WAM_DAMAGE_1) == BIO_WAM_DAMAGE_1;
-	}
-
-	bool SecondaryDamageAffixMasked() const
-	{
-		return (AffixMask & BIO_WAM_DAMAGE_2) == BIO_WAM_DAMAGE_2;
-	}
-
-	bool DealsAnyDamage() const
-	{
-		return (MaxDamage1 + MaxDamage2) > 0;
-	}
+	bool DealsAnyDamage() const { return (MaxDamage1 + MaxDamage2) > 0; }
 
 	bool FireTypeMutableFrom(Class<Actor> curFT, bool secondary = false) const
 	{
@@ -483,14 +401,14 @@ class BIO_Weapon : DoomWeapon abstract
 		{
 			return
 				FireTypeIsDefault(false) &&
-				!(AffixMask & BIO_WAM_FIRETYPE_1) &&
+				!(AffixMask1 & BIO_WAM_FIRETYPE) &&
 				FireType1 == curFT;
 		}
 		else
 		{
 			return
 				FireTypeIsDefault(true) &&
-				!(AffixMask & BIO_WAM_FIRETYPE_2) &&
+				!(AffixMask2 & BIO_WAM_FIRETYPE) &&
 				FireType2 == curFT;
 		}
 	}
@@ -503,14 +421,14 @@ class BIO_Weapon : DoomWeapon abstract
 		{
 			return
 				FireTypeIsDefault(false) &&
-				!(AffixMask & BIO_WAM_FIRETYPE_1) &&
+				!(AffixMask1 & BIO_WAM_FIRETYPE) &&
 				FireType1 != newFT;
 		}
 		else
 		{
 			return
 				FireTypeIsDefault(true) &&
-				!(AffixMask & BIO_WAM_FIRETYPE_2) &&
+				!(AffixMask2 & BIO_WAM_FIRETYPE) &&
 				FireType2 != newFT;
 		}
 	}
@@ -529,11 +447,6 @@ class BIO_Weapon : DoomWeapon abstract
 			return FireType1 is "BIO_Projectile";
 		else
 			return FireType2 is "BIO_Projectile";
-	}
-
-	bool SpreadAffixMasked() const
-	{
-		return (AffixMask & BIO_WAM_SPREAD) == BIO_WAM_SPREAD;
 	}
 
 	// No fire state can have a tic time below 1. Fire rate-affecting affixes need
@@ -561,6 +474,13 @@ class BIO_Weapon : DoomWeapon abstract
 			ret += Max(reloadTimes[i] - 1, 0);
 
 		return ret;
+	}
+
+	bool AfxMask_AllDamage() const
+	{
+		return
+			((AffixMask1 & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE) &&
+			((AffixMask2 & BIO_WAM_DAMAGE) == BIO_WAM_DAMAGE);
 	}
 
 	// Setters =================================================================
@@ -608,7 +528,9 @@ class BIO_Weapon : DoomWeapon abstract
 	virtual void ResetStats()
 	{
 		BIOFlags = Default.BIOFlags;
-		AffixMask = Default.AffixMask;
+		AffixMask1 = Default.AffixMask1;
+		AffixMask2 = Default.AffixMask2;
+		MiscAffixMask = Default.MiscAffixMask;
 
 		FireType1 = Default.FireType1;
 		FireType2 = Default.FireType2;
