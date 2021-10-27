@@ -85,8 +85,8 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		}
 		Goto LightDone;
 	Spawn:
-		SHOT A 0;
-		SHOT A 0 A_BIO_Spawn;
+		SHOT B 0;
+		SHOT B 0 A_BIO_Spawn;
 		Stop;
 	}
 
