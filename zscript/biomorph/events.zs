@@ -360,27 +360,27 @@ class BIO_EventHandler : EventHandler
 		// How much faster is it than a ZombieMan?
 		val += (Max(event.Thing.Default.Speed - 8, 0) * 3);
 
-		if (event.Thing.bBoss) val += 600;
+		if (event.Thing.bBoss) val *= 2;
 
-		if (event.Thing.bNoRadiusDmg) val += 15;
-		if (event.Thing.bNoPain) val += 20;
-		if (event.Thing.bAlwaysFast) val += 20;
-		if (event.Thing.bMissileMore) val += 25;
-		if (event.Thing.bMissileEvenMore) val += 40;
-		if (event.Thing.bQuickToRetaliate) val += 10;
-		if (event.Thing.bNoFear) val += 5;
-		if (event.Thing.bSeeInvisible) val += 5;
+		if (event.Thing.bNoRadiusDmg) val *= 1.1;
+		if (event.Thing.bNoPain) val *= 1.1;
+		if (event.Thing.bAlwaysFast) val *= 1.1;
+		if (event.Thing.bMissileMore) val *= 1.1;
+		if (event.Thing.bMissileEvenMore) val *= 1.1;
+		if (event.Thing.bQuickToRetaliate) val *= 1.1;
+		if (event.Thing.bNoFear) val *= 1.02;
+		if (event.Thing.bSeeInvisible) val *= 1.02;
 
 		// Refusing to infight and being unable to draw infighting aggro
 		// are small difficulty increases
-		if (event.Thing.bNoTarget) val += 5;
-		if (event.Thing.bNoInfighting) val += 5;
+		if (event.Thing.bNoTarget) val *= 1.05;
+		if (event.Thing.bNoInfighting) val *= 1.05;
 
 		// JUMPDOWN increases monster aggression and agility
-		if (event.Thing.bJumpDown) val += 10;
+		if (event.Thing.bJumpDown) val *= 1.01;
 
 		// Slightly better value if the monster was gibbed
-		if (event.Thing.Health < event.Thing.GibHealth) val += 10;
+		if (event.Thing.Health < event.Thing.GibHealth) val += 15;
 
 		Globals.AddPartyXP(val);
 
