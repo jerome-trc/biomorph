@@ -22,6 +22,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		Weapon.UpSound "weapons/sawup";
 
 		BIO_Weapon.AffixMask BIO_WAM_SECONDARY | BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE;
+		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 2, 20;
 		
 		BIO_Chainsaw.FireTimes 4;
