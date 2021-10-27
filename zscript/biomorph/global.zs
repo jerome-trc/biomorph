@@ -16,7 +16,7 @@ class BIO_WeaponUpgrade
 
 class BIO_GlobalData : Thinker
 {
-	private uint PartyXP;
+	private uint PartyXP, PartyLevel;
 	private BIO_PartyMaxWeaponGrade MaxWeaponGrade;
 
 	private Array<Class<BIO_WeaponAffix> > AllWeaponAffixClasses;
@@ -32,6 +32,8 @@ class BIO_GlobalData : Thinker
 	// Getters =================================================================
 
 	uint GetPartyXP() const { return PartyXP; }
+	uint GetPartyLevel() const { return PartyLevel; }
+	uint XPToNextLevel() const { return 1000 * (PartyLevel ** 1.4); }
 
 	bool WeaponAffixCompatible(Class<BIO_WeaponAffix> afx_t, BIO_Weapon weap) const
 	{
@@ -97,7 +99,18 @@ class BIO_GlobalData : Thinker
 
 	// Setters =================================================================
 
-	void AddPartyXP(uint xp) { PartyXP += xp; }
+	void AddPartyXP(uint xp)
+	{
+		PartyXP += xp;
+		while (PartyXP >= XPToNextLevel())
+		{
+			PartyLevel++;
+
+			if (BIO_CVar.Debug())
+				Console.Printf(Biomorph.LOGPFX_DEBUG ..
+					"Party leveled up to %d.", PartyLevel);
+		}
+	}
 
 	void OnWeaponAcquired(BIO_Grade grade)
 	{

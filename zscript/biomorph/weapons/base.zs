@@ -174,6 +174,7 @@ class BIO_Weapon : DoomWeapon abstract
 	property MagazineType2: MagazineType2;
 	property MagazineTypes: MagazineType1, MagazineType2;
 
+	// Reloading 1 round costs ReloadFactor rounds in reserve.
 	int ReloadFactor1, ReloadFactor2;
 	property ReloadFactor: ReloadFactor1;
 	property ReloadFactor1: ReloadFactor1;

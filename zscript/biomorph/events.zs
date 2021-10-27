@@ -61,7 +61,7 @@ class BIO_EventHandler : EventHandler
 	override void ConsoleProcess(ConsoleEvent event)
 	{
 		if (ConEvent_WeapDiag(event)) return;
-		if (ConEvent_PartyXP(event)) return;
+		if (ConEvent_XPInfo(event)) return;
 		if (ConEvent_WeapAfxCompat(event)) return;
 	}
 
@@ -200,7 +200,7 @@ class BIO_EventHandler : EventHandler
 		return true;
 	}
 
-	private ui bool ConEvent_PartyXP(ConsoleEvent event) const
+	private ui bool ConEvent_XPInfo(ConsoleEvent event) const
 	{
 		if (!(event.Name ~== "bio_xp")) return false;
 		if (!event.IsManual)
@@ -210,7 +210,10 @@ class BIO_EventHandler : EventHandler
 			return true;
 		}
 
-		Console.Printf(Biomorph.LOGPFX_INFO .. "Party's XP: %d", Globals.GetPartyXP());
+		Console.Printf(Biomorph.LOGPFX_INFO .. "Party XP and levelling info:\n");
+		Console.Printf("Party level: %d", Globals.GetPartyLevel());
+		Console.Printf("Current party XP: %d", Globals.GetPartyXP());
+		Console.Printf("XP to next level: %d", Globals.XPToNextLevel());
 		return true;
 	}
 
