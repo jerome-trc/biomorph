@@ -231,7 +231,7 @@ class BIO_StatusBar : BaseStatusBar
 			weapInfoY += 8;
 		}
 
-		if (weap.BIOFlags & BIO_WEAPF_CORRUPTED)
+		if (weap.BIOFlags & BIO_WF_CORRUPTED)
 		{
 			DrawString(Font_Small, StringTable.Localize("$BIO_CORRUPTED"),
 				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT, Font.CR_RED);

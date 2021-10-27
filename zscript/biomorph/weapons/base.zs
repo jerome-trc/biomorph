@@ -1,12 +1,12 @@
 enum BIO_WeaponFlags : uint8
 {
-	BIO_WEAPF_NONE = 0,
-	BIO_WEAPF_CORRUPTED = 1 << 0,
-	BIO_WEAPF_AFFIXESHIDDEN = 1 << 1, // Caused by corruption
+	BIO_WF_NONE = 0,
+	BIO_WF_CORRUPTED = 1 << 0,
+	BIO_WF_AFFIXESHIDDEN = 1 << 1, // Caused by corruption
 	// The following 3 are applicable only to dual-wielded weapons
-	BIO_WEAPF_NOAUTOPRIMARY = 1 << 2,
-	BIO_WEAPF_NOAUTOSECONDARY = 1 << 3,
-	BIO_WEAPF_AKIMBORELOAD = 1 << 4
+	BIO_WF_NOAUTOPRIMARY = 1 << 2,
+	BIO_WF_NOAUTOSECONDARY = 1 << 3,
+	BIO_WF_AKIMBORELOAD = 1 << 4
 }
 
 // Dictate what stats can be affected by affixes. If a bit is set,
@@ -182,7 +182,7 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_Weapon.DamageRanges -2, -2, -2, -2;
 		BIO_Weapon.FireCounts 1, 1;
 		BIO_Weapon.FireTypes "", "";
-		BIO_Weapon.Flags BIO_WEAPF_NONE;
+		BIO_Weapon.Flags BIO_WF_NONE;
 		BIO_Weapon.Grade BIO_GRADE_NONE;
 		BIO_Weapon.MagazineSizes 0, 0;
 		BIO_Weapon.MagazineTypes "", "";
@@ -887,7 +887,7 @@ class BIO_Weapon : DoomWeapon abstract
 		if (ImplicitAffixes.Size() > 0)
 			AffixReadout.Push("");
 
-		if (BIOFlags & BIO_WEAPF_AFFIXESHIDDEN)
+		if (BIOFlags & BIO_WF_AFFIXESHIDDEN)
 			AffixReadout.Push("\cg" .. StringTable.Localize("$BIO_AFFIXESUNKNOWN"));
 		else
 		{

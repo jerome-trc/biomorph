@@ -31,7 +31,7 @@ class BIO_Mutagen : Inventory abstract
 			return false;
 		}
 
-		if (weap.BIOFlags & BIO_WEAPF_CORRUPTED)
+		if (weap.BIOFlags & BIO_WF_CORRUPTED)
 		{
 			Owner.A_Print("$BIO_MUTA_FAIL_CORRUPTED");
 			return false;
@@ -261,14 +261,14 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
 		weap.ResetStats();
-		weap.BIOFlags |= BIO_WEAPF_CORRUPTED;
+		weap.BIOFlags |= BIO_WF_CORRUPTED;
 
 		switch (Random(0, 0))
 		{
 		default:
 			// Randomize affixes and then hide them
 			weap.RandomizeAffixes();
-			weap.BIOFlags |= BIO_WEAPF_AFFIXESHIDDEN;
+			weap.BIOFlags |= BIO_WF_AFFIXESHIDDEN;
 			Owner.A_Print("$BIO_MUTA_CORRUPT_HIDDENRAND");
 			break;
 		}

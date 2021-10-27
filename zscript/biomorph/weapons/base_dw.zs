@@ -143,7 +143,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 		if (Player.Cmd.Buttons & BT_RELOAD)
 		{
 			// Check if guns can be reloaded independently:
-			if (invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD)
+			if (invoker.BIOFlags & BIO_WF_AKIMBORELOAD)
 			{
 				// Reload right gun
 				if (reloadReadyRight) A_Reload_R();
@@ -168,7 +168,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 			This is done to reload both guns in succession without having to
 			press the Reload button twice.
 		*/
-		else if (!invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD &&
+		else if (!invoker.BIOFlags & BIO_WF_AKIMBORELOAD &&
 			invoker.continueReload && reloadReadyLeft)
 		{
 			invoker.continueReload = false;
@@ -283,7 +283,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 			}
 			else if (invoker.MagazineType1 && invoker.Ammo1.amount > 0)
 			{
-				if (invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD || A_CheckReadyForReload_L())
+				if (invoker.BIOFlags & BIO_WF_AKIMBORELOAD || A_CheckReadyForReload_L())
 				{
 					A_Reload_R();
 					return;
@@ -323,7 +323,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 			}
 			else if (invoker.MagazineType2 && invoker.Ammo2.amount > 0)
 			{
-				if (invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD || A_CheckReadyForReload_R())
+				if (invoker.BIOFlags & BIO_WF_AKIMBORELOAD || A_CheckReadyForReload_R())
 				{
 					A_Reload_L();
 					return;
@@ -430,7 +430,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 		if (!A_CheckReadyForReload_R(left)) return;
 
 		// If WMF_AKIMBORELOAD isn't set, set the other gun into ReloadWait state sequence:
-		if (!invoker.BIOFlags & BIO_WEAPF_AKIMBORELOAD)
+		if (!invoker.BIOFlags & BIO_WF_AKIMBORELOAD)
 		{
 			int otherGun = left ? PSP_RIGHTGUN : PSP_LEFTGUN;
 			state waitState = left ? invoker.s_ReloadWaitRight : invoker.s_ReloadWaitLeft;
