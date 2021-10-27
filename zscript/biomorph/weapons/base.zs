@@ -791,6 +791,30 @@ class BIO_Weapon : DoomWeapon abstract
 			Sin(invoker.Pitch) * zVelMult, CVF_RELATIVE);
 	}
 
+	protected action void A_LightRecoil()
+	{
+		A_Recoil(0.1);
+		A_SetPitch(Pitch - 0.65);
+		A_Quake(1, 1, 0, 10);
+	}
+
+	protected action void A_MediumRecoil()
+	{
+		A_Recoil(0.15);
+		A_SetPitch(Pitch - 1.5);	
+		A_Quake(2, 2, 0, 20);
+	}
+
+	protected action void A_HeavyRecoil()
+	{
+		A_Recoil(0.4);
+		A_SetPitch(Pitch - 3.0);	
+		A_Quake(3, 3, 0, 20);
+	}
+
+	// Call from the weapon's Spawn state, after two frames of the weapon's 
+	// pickup sprite (each 0 tics long). Puts the weapon into a new loop with
+	// appropriate behaviour for its rarity (e.g., blinking cyan if mutated).
 	protected action state A_BIO_Spawn()
 	{
 		if (invoker.Rarity == BIO_RARITY_UNIQUE)
