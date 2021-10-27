@@ -36,8 +36,6 @@ mixin class BIO_Gear
 	string GetColoredTag() const
 	{
 		return String.Format("%s%s\c-",
-			BIO_Utils.FontColorToEscapeCode(
-				BIO_Utils.RarityFontColor(Rarity)),
-			GetTag());
+			BIO_Utils.RarityColorEscapeCode(Rarity), GetTag());
 	}
 }

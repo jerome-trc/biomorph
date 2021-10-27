@@ -129,6 +129,29 @@ class BIO_Utils abstract
 		}
 	}
 
+	static string GradeColorEscapeCode(BIO_Grade grade)
+	{
+		switch (grade)
+		{
+		case BIO_GRADE_SURPLUS: return "\c[Surp]";
+		case BIO_GRADE_SPECIALTY: return "\c[Spec]";
+		case BIO_GRADE_EXPERIMENTAL: return "\c[Exp]";
+		case BIO_GRADE_CLASSIFIED: return "\c[Clsf]";
+		default: return "\c[White]";
+		}
+	}
+
+	static string RarityColorEscapeCode(BIO_Rarity rarity)
+	{
+		switch (rarity)
+		{
+		default:
+		case BIO_RARITY_COMMON: return "\c[White]";
+		case BIO_RARITY_MUTATED: return "\c[Cyan]";
+		case BIO_RARITY_UNIQUE: return "\c[Orange]";
+		}
+	}
+
 	static int RarityFontColor(BIO_Rarity rarity)
 	{
 		switch (rarity)
