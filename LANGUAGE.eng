@@ -239,6 +239,8 @@
 	BIO_ADDED_TO = "added to";
 	BIO_REMOVED_FROM = "removed from";
 
+	BIO_PER_BARREL = "per barrel";
+
 	BIO_PICKUP_STANDARD = "Grabbed";
 	BIO_PICKUP_SPECIALTY = "Obtained";
 	BIO_PICKUP_EXPERIMENTAL = "Procured";
