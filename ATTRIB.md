@@ -12,6 +12,8 @@ The GLDEFS for the Weapon Upgrade Kit were devised by Realm667 user Dreadopp.
 
 ## Graphics
 
+The Shotgun pickup sprite is an edit by RatCircus of the original version by id Software LLC.
+
 Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as well as id Software LLC.
 
 Autocannon and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
@@ -33,7 +35,8 @@ Any graphical asset which is not mentioned here is custom-made by RatCircus.
 The following audio files are provided by CturiX Kemilon, under no license:
 - "gun_fetch2.wav" (WEAPUPGR)
 - "gun_fetch3.wav" (GUNMECH1)
-- "gun_fetch4.wav" (GUNMECH2);
+- "gun_fetch4.wav" (GUNMECH2)
+- "Gunshot_Warped.wav" (CRITDAMG, edited heavily by RatCircus)
 - "hankland.wav" (DSOOF replacement)
 - "Lever_draw.wav" (GUNSWAP1)
 - "Magnum-3.wav" (ACANFIRE)
