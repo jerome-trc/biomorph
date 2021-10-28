@@ -7,3 +7,5 @@ Doom mod inspired by [Path of Exile](https://www.pathofexile.com/), [Torchlight 
 Biomorph is early in development; expect its features and graphical/audio presentation to change rapidly.
 
 A complete list of attributions and third-party licensing information can be found [here](/ATTRIB.md). Licensing information for this mod is [here](/LICENSE).
+
+This mod depends upon a minimum ZScript version of 2.4.
