@@ -689,3 +689,49 @@ class BIO_WeaponAffix_LifeSteal : BIO_WeaponAffix
 			int(AddPercent * 100.0)));
 	}
 }
+
+class BIO_WeaponAffix_SwitchSpeed : BIO_WeaponAffix
+{
+	int Modifier;
+
+	override void Init(BIO_Weapon weap)
+	{
+		Modifier = Random(5, 9);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return
+			!(weap.MiscAffixMask & BIO_WAM_LOWERSPEED) ||
+			!(weap.MiscAffixMask & BIO_WAM_RAISESPEED);
+	}
+
+	override void Apply(BIO_Weapon weap) const
+	{
+		if (!(weap.MiscAffixMask & BIO_WAM_LOWERSPEED))
+			weap.LowerSpeed += Modifier;
+		if (!(weap.MiscAffixMask & BIO_WAM_RAISESPEED))
+			weap.RaiseSpeed += Modifier;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		if (!(weap.MiscAffixMask & BIO_WAM_LOWERSPEED))
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_SWITCHSPEED_LOWER"),
+				Modifier > 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				(float(Modifier) / float(weap.LowerSpeed)) * 100.0,
+				StringTable.Localize(Modifier > 0 ? "$BIO_FASTER" : "$BIO_SLOWER")));	
+		}
+
+		if (!(weap.MiscAffixMask & BIO_WAM_RAISESPEED))
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_SWITCHSPEED_RAISE"),
+				Modifier > 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				(float(Modifier) / float(weap.RaiseSpeed)) * 100.0,
+				StringTable.Localize(Modifier > 0 ? "$BIO_FASTER" : "$BIO_SLOWER")));
+		}
+	}
+}
