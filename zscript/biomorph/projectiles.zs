@@ -62,23 +62,16 @@ class BIO_Projectile : Actor abstract
 		BIO_Projectile.Seek false;
 	}
 
-	// The hacky part that makes it all work.
-	States
+	// Overriden so projectiles live long enough to receive their data from the
+	// weapon which fired them. If `Damage` is still at the default of -1,
+	// don't expire quite yet.
+	override int SpecialMissileHit(Actor victim)
 	{
-	// Let the projectile live for one more tic so it can have its data set.
-	PreDeath:
-		#### # 1;
-		Goto Death;
-	Death:
-		#### # 0
-		{
-			if (!invoker.Dead)
-			{
-				invoker.Dead = true;
-				return ResolveState("PreDeath");
-			}
-			return ResolveState("Death.Impl");
-		}
+		// (a.k.a. the part which keeps half this mod from toppling over)
+		if (Damage <= -1)
+			return 1; // Ignored for now
+		else
+			return super.SpecialMissileHit(victim);
 	}
 
 	// Don't multiply damage by Random(1, 8).
@@ -280,7 +273,7 @@ class BIO_Rocket : BIO_Projectile
 	Spawn:
 		MISL A 1 Bright A_Travel;
 		Loop;
-	Death.Impl:
+	Death:
 		MISL B 8 Bright A_ProjectileDeath;
 		MISL C 6 Bright;
 		MISL D 4 Bright;
@@ -337,7 +330,7 @@ class BIO_PlasmaBall : BIO_Projectile
 		PLSS B 3 Bright A_Travel;
 		#### # 3 Bright A_Travel;
 		Loop;
-	Death.Impl:
+	Death:
 		PLSE ABCDE 4 Bright A_ProjectileDeath;
 		Stop;
 	}
@@ -375,7 +368,7 @@ class BIO_BFGBall : BIO_Projectile
 		BFS1 B 3 Bright A_Travel;
 		#### # 3 Bright A_Travel;
 		Loop;
-	Death.Impl:
+	Death:
 		BFE1 AB 8 Bright;
 		BFE1 C 8 Bright A_ProjectileDeath;
 		BFE1 DEF 8 Bright;
