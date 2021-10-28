@@ -219,18 +219,38 @@ class BIO_WeaponAffix_Plasma : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
+		return PrimaryCompatible(weap) || SecondaryCompatible(weap);
+	}
+
+	private bool PrimaryCompatible(BIO_Weapon weap) const
+	{
 		return
-			weap.FireTypeMutableTo("BIO_PlasmaBall", false) ||
-			weap.FireTypeMutableTo("BIO_PlasmaBall", true);
+			weap.FireTypeMutableTo("BIO_PlasmaBall", false) &&
+			(weap.AffixMask1 & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
+	}
+
+	private bool SecondaryCompatible(BIO_Weapon weap) const
+	{
+		return
+			weap.FireTypeMutableTo("BIO_PlasmaBall", true) &&
+			(weap.AffixMask1 & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
 	}
 
 	override void Apply(BIO_Weapon weap) const
 	{
-		if (weap.FireTypeMutableTo("BIO_PlasmaBall", false))
+		if (PrimaryCompatible(weap))
+		{
 			weap.FireType1 = "BIO_PlasmaBall";
+			weap.MinDamage1 *= 0.5;
+			weap.MaxDamage1 *= 2.0;
+		}
 		
-		if (weap.FireTypeMutableTo("BIO_PlasmaBall", true))
+		if (SecondaryCompatible(weap))
+		{
 			weap.FireType2 = "BIO_PlasmaBall";
+			weap.MinDamage2 *= 0.5;
+			weap.MaxDamage2 *= 2.0;
+		}
 	}
 
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
