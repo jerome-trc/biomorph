@@ -885,13 +885,13 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	private void RewriteStatReadout()
+	void RewriteStatReadout()
 	{
 		StatReadout.Clear();
 		StatsToString(StatReadout);
 	}
 
-	private void RewriteAffixReadout()
+	void RewriteAffixReadout()
 	{
 		AffixReadout.Clear();
 

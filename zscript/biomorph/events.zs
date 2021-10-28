@@ -401,6 +401,9 @@ class BIO_EventHandler : EventHandler
 	{
 		if (NetEvent_WUKOverlay(event) || NetEvent_WeaponUpgrade(event))
 			return;
+
+		if (NetEvent_AddWeapAffix(event) || NetEvent_RemoveWeapAffix(event))
+			return;
 	}
 
 	const EVENT_WUKOVERLAY = "bio_wukoverlay";
@@ -504,6 +507,136 @@ class BIO_EventHandler : EventHandler
 		bioPlayer.A_StartSound("misc/weapupgrade", CHAN_ITEM);
 		bioPlayer.TakeInventory("BIO_WeaponUpgradeKit", event.Args[0]);
 		WeaponUpgradeOverlay.Destroy();
+		return true;
+	}
+
+	private bool NetEvent_AddWeapAffix(ConsoleEvent event)
+	{
+		if (event.Player != ConsolePlayer) return false;
+
+		Array<string> nameParts;
+		event.Name.Split(nameParts, ":");
+
+		if (!nameParts[0] || !(nameParts[0] ~== "bio_addwafx"))
+			return false;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked manually.");
+			return true;
+		}
+
+		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
+		if (weap == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on a Biomorph weapon.");
+			return true;
+		}
+
+		if (!nameParts[1])
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Please provide the class name of a weapon affix to add.");
+			return true;
+		}
+
+		Class<BIO_WeaponAffix> wafx_t = nameParts[1];
+		if (wafx_t == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"%s is not a legal weapon affix class name.",
+				nameParts[1]);
+			return true;
+		}
+
+		uint e = weap.Affixes.Push(BIO_WeaponAffix(new(wafx_t)));
+		weap.Affixes[e].Init(weap);
+		weap.Affixes[e].Apply(weap);
+		weap.RewriteAffixReadout();
+		weap.RewriteStatReadout();
+		Console.Printf(Biomorph.LOGPFX_INFO ..
+			"Applied %s to your current weapon.", wafx_t.GetClassName());
+		return true;
+	}
+
+	private bool NetEvent_RemoveWeapAffix(ConsoleEvent event)
+	{
+		if (event.Player != ConsolePlayer) return false;
+
+		Array<string> nameParts;
+		event.Name.Split(nameParts, ":");
+
+		if (!nameParts[0] || !(nameParts[0] ~== "bio_rmwafx"))
+			return false;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked manually.");
+			return true;
+		}
+
+		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
+		if (weap == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on a Biomorph weapon.");
+			return true;
+		}
+
+		if (!nameParts[1])
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Please provide the class name of a weapon affix to remove.");
+			return true;
+		}
+
+		Class<BIO_WeaponAffix> wafx_t = "" nameParts[1];
+		if (wafx_t == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"%s is not a legal weapon affix class name.",
+				nameParts[1]);
+			return true;
+		}
+
+		if (weap.HasAffixOfType(wafx_t, false))
+		{
+			for (uint i = 0; i < weap.Affixes.Size(); i++)
+			{
+				if (weap.Affixes[i].GetClass() == wafx_t)
+				{
+					weap.Affixes.Delete(i);
+					break;
+				}
+			}
+		}
+		else if (weap.HasAffixOfType(wafx_t, true))
+		{
+			for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
+			{
+				if (weap.ImplicitAffixes[i].GetClass() == wafx_t)
+				{
+					weap.ImplicitAffixes.Delete(i);
+					break;
+				}
+			}
+		}
+		else
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Your current weapon has no affix of class %s.",
+				wafx_t.GetClassName());
+			return true;
+		}
+
+		weap.ResetStats();
+		weap.ApplyAllAffixes();
+
+		Console.Printf(Biomorph.LOGPFX_INFO ..
+			"Removed %s from your current weapon.", wafx_t.GetClassName());
 		return true;
 	}
 
