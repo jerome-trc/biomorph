@@ -35,12 +35,12 @@ class BIO_SalvoLauncher : BIO_Weapon
 	Ready:
 		SALV A 1 A_WeaponReady;
 		Loop;
-	Deselect.Loop:
-		SALV A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		SALV A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		SALV A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		SALV A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		#### # 0 A_JumpIf(invoker.MagazineEmpty(), "Ready");
 		SALV A 2 Offset(0, 32 + 3) A_SetTics(invoker.FireTime1);

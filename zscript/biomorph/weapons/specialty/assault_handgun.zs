@@ -37,12 +37,12 @@ class BIO_AssaultHandgun : BIO_Weapon
 	Ready:
 		ASHG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		ASHG A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		ASHG A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		ASHG A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		ASHG A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		ASHG B 2 A_SetTics(invoker.FireTime1);

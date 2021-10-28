@@ -28,12 +28,12 @@ class BIO_Autocannon : BIO_Weapon
 	Ready:
 		ACAN A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		ACAN A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		ACAN A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		ACAN A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		ACAN A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Ready");
 	WindUp:

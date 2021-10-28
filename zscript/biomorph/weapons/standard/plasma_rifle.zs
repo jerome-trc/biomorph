@@ -34,12 +34,12 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 	Ready:
 		PLSG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		PLSG A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		PLSG A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		PLSG A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		PLSG A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		PLSG A 3

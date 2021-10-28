@@ -33,11 +33,11 @@ class BIO_Fist : BIO_Weapon replaces Fist
 	Ready:
 		PUNG A 1 A_WeaponReady;
 		Loop;
-	Deselect.Loop:
-		PUNG A 1 A_BIO_Lower;
+	Deselect:
+		PUNG A 0 A_BIO_Deselect;
 		Loop;
-	Select.Loop:
-		PUNG A 1 A_BIO_Raise;
+	Select:
+		PUNG A 0 A_BIO_Select;
 		Loop;
 	Fire:
 		PUNG B 4 A_SetTics(invoker.FireTime1);

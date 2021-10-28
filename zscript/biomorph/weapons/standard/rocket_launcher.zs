@@ -35,12 +35,12 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 	Ready:
 		MISG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		MISG A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		MISG A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		MISG A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		MISG A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		MISG B 8

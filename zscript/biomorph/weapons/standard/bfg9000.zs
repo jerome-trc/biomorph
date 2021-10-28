@@ -40,12 +40,12 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 	Ready:
 		BFGG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		BFGG A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		BFGG A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		BFGG A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		BFGG A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		BFGG A 20

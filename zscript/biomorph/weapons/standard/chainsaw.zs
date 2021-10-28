@@ -37,12 +37,12 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 	Ready:
 		SAWG CD 4 A_WeaponReady;
 		Loop;
-	Deselect.Loop:
+	Deselect:
 		SAWG C 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
+		Stop;
+	Select:
 		SAWG C 1 A_BIO_Raise;
-		Loop;
+		Stop;
 	Fire:
 		SAWG AB 4
 		{

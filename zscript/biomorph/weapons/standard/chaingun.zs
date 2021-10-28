@@ -35,12 +35,12 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 	Ready:
 		CHGG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		CHGG A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		CHGG A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		CHGG A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		CHGG A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		CHGG AB 4 Bright
 		{

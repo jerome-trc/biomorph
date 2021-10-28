@@ -37,12 +37,12 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 	Ready:
 		SHT2 A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		SHT2 A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		SHT2 A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		SHT2 A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		SHT2 A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		TNT1 A 0
 		{

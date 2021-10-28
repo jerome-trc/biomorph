@@ -198,18 +198,12 @@ class BIO_Weapon : DoomWeapon abstract
 
 	States
 	{
-	Select:
-		TNT1 A 0
-		{
-			invoker.OnSelect();
-			return ResolveState("Select.Loop");
-		}
-	Deselect:
-		TNT1 A 0
-		{
-			invoker.OnDeselect();
-			return ResolveState("Deselect.Loop");
-		}
+	Select.Loop:
+		#### # 1 A_BIO_Raise;
+		Loop;
+	Deselect.Loop:
+		#### # 1 A_BIO_Lower;
+		Loop;
 	Spawn:
 		TNT1 A 0;
 		Stop;
@@ -876,6 +870,24 @@ class BIO_Weapon : DoomWeapon abstract
 			return ResolveState("Spawn.Mutated");
 		else
 			return ResolveState("Spawn.Common");
+	}
+
+	// Call from the weapon's Deselect state, during one frame of the weapon's
+	// ready sprite (0 tics long). Runs a callback and puts the weapon in a 
+	// lowering loop.
+	protected action state A_BIO_Deselect()
+	{
+		invoker.OnDeselect();
+		return ResolveState("Deselect.Loop");
+	}
+
+	// Call from the weapon's Select state, during one frame of the weapon's
+	// ready sprite (0 tics long). Runs a callback and puts the weapon in a 
+	// raising loop.
+	protected action state A_BIO_Select()
+	{
+		invoker.OnSelect();
+		return ResolveState("Select.Loop");
 	}
 
 	protected action void A_GroundHit()

@@ -36,12 +36,12 @@ class BIO_IncursionShotgun : BIO_Weapon
 	Ready:
 		INCU A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		INCU A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		INCU A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		INCU A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		INCU A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		INCU B 3 Bright

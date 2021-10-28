@@ -38,12 +38,12 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 	Ready:
 		PISG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		PISG A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		PISG A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		PISG A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		PISG A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		PISG A 4 A_SetTics(invoker.FireTime1);

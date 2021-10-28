@@ -38,12 +38,12 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 	Ready:
 		SHTG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
-	Deselect.Loop:
-		SHTG A 1 A_BIO_Lower;
-		Loop;
-	Select.Loop:
-		SHTG A 1 A_BIO_Raise;
-		Loop;
+	Deselect:
+		SHTG A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		SHTG A 0 A_BIO_Select;
+		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		SHTG A 3 A_SetTics(invoker.FireTime1);
