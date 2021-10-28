@@ -156,6 +156,7 @@
 	BIO_AFFIX_TOSTR_WEAPDMGPERCENT = "Damage: %s%s%%%d primary, %s%s%%%d secondary";
 	
 	BIO_AFFIX_TOSTR_ENEMYHEALTHDAMAGE = "%s%.1f%% of enemy's health %s damage";
+	BIO_AFFIX_TOSTR_CRIT = "%d%% chance of %s%s%.0f%% damage";
 
 	BIO_AFFIX_TOSTR_PLASMA = "Fires balls of plasma";
 	BIO_AFFIX_TOSTR_SLUG = "Fires highly-accurate solid slugs";
@@ -224,12 +225,13 @@
 
 // Quit messages ===============================================================
 
-	BIO_QUITMSG_MUTACORR = "\cjThe effects of \cgR.O.T. Mutagen\cj "
-		"are unpredictable and irreversible, but potentially very powerful.";
+	BIO_QUITMSG_CRIT = "\cjCritical strike affixes can only roll on pistols.";
 	BIO_QUITMSG_GRADES = "\cjAll gear fits into one of three grades: "
 		"Standard, \c[Spec]Specialty\cj, and \c[Exp]Experimental\cj.";
 	BIO_QUITMSG_MULTIBARREL = "\cjMulti-barrelled weapons like the Super Shotgun "
 		"always allow firing only one barrel (try your \cnalt-fire\cj button).";
+	BIO_QUITMSG_MUTACORR = "\cjThe effects of \cgR.O.T. Mutagen\cj "
+		"are unpredictable and irreversible, but potentially very powerful.";
 
 // Miscellaneous ===============================================================
 

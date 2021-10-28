@@ -19,6 +19,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		Weapon.UpSound "weapons/gunswap0";
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
+		BIO_Weapon.Flags BIO_WF_PISTOL;
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.DamageRange 6, 16;
 		BIO_Weapon.FireType "BIO_Bullet";

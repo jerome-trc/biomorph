@@ -20,6 +20,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		Weapon.UpSound "weapons/gunswap0";
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
+		BIO_Weapon.Flags BIO_WF_PISTOL;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireType "BIO_Bullet";

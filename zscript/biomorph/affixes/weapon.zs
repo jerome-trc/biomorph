@@ -178,6 +178,39 @@ class BIO_ProjDmgFunc_EnemyHealthDamage : BIO_ProjDamageFunctor
 	}
 }
 
+class BIO_WeaponAffix_Crit : BIO_WeaponAffix
+{
+	uint Chance;
+	float DamageMulti; // Percentage of rolled damage added to outgoing damage
+
+	override void Init(BIO_Weapon weap)
+	{
+		Chance = Random(15, 30);
+		DamageMulti = FRandom(1.0, 2.0);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return weap.BIOFlags & BIO_WF_PISTOL;
+	}
+
+	override void ModifyDamage(BIO_Weapon weap, in out int dmg) const
+	{
+		if (Random(0, 100) < Chance)
+		{
+			dmg += (dmg * DamageMulti);
+			weap.Owner.A_StartSound("weapons/crit", CHAN_AUTO);
+		}
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(StringTable.Localize("$BIO_AFFIX_TOSTR_CRIT"),
+			Chance, DamageMulti > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+			DamageMulti > 0.0 ? "+" : "", int(DamageMulti * 100.0)));
+	}
+}
+
 // Fire type ===================================================================
 
 class BIO_WeaponAffix_Plasma : BIO_WeaponAffix

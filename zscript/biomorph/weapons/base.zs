@@ -3,10 +3,11 @@ enum BIO_WeaponFlags : uint8
 	BIO_WF_NONE = 0,
 	BIO_WF_CORRUPTED = 1 << 0,
 	BIO_WF_AFFIXESHIDDEN = 1 << 1, // Caused by corruption
+	BIO_WF_PISTOL = 1 << 2,
 	// The following 3 are applicable only to dual-wielded weapons
-	BIO_WF_NOAUTOPRIMARY = 1 << 2,
-	BIO_WF_NOAUTOSECONDARY = 1 << 3,
-	BIO_WF_AKIMBORELOAD = 1 << 4
+	BIO_WF_NOAUTOPRIMARY = 1 << 3,
+	BIO_WF_NOAUTOSECONDARY = 1 << 4,
+	BIO_WF_AKIMBORELOAD = 1 << 5
 }
 
 // Dictate what stats can be affected by affixes. If a bit is set,
@@ -720,7 +721,14 @@ class BIO_Weapon : DoomWeapon abstract
 				pitch: FRandom(-invoker.VSpread1, invoker.VSpread1) * spreadFactor);
 			
 			if (proj == null) continue;
-			proj.SetDamage(Random(invoker.MinDamage1, invoker.MaxDamage1));
+			int dmg = Random(invoker.MinDamage1, invoker.MaxDamage1);
+
+			for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
+				invoker.ImplicitAffixes[i].ModifyDamage(invoker, dmg);
+			for (uint i = 0; i < invoker.Affixes.Size(); i++)
+				invoker.Affixes[i].ModifyDamage(invoker, dmg);
+
+			proj.SetDamage(dmg);
 			invoker.OnProjectileFired(proj);
 		}
 
@@ -741,7 +749,14 @@ class BIO_Weapon : DoomWeapon abstract
 				pitch: FRandom(-invoker.VSpread2, invoker.VSpread2) * spreadFactor);
 			
 			if (proj == null) continue;
-			proj.SetDamage(Random(invoker.MinDamage2, invoker.MaxDamage2));
+			int dmg = Random(invoker.MinDamage2, invoker.MaxDamage2);
+
+			for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
+				invoker.ImplicitAffixes[i].ModifyDamage(invoker, dmg);
+			for (uint i = 0; i < invoker.Affixes.Size(); i++)
+				invoker.Affixes[i].ModifyDamage(invoker, dmg);
+
+			proj.SetDamage(dmg);
 			invoker.OnProjectileFired(proj);
 		}
 

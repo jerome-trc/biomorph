@@ -13,6 +13,8 @@ weapons/gunswap1 GUNSWAP1
 weapons/gunmech0 GUNMECH0
 weapons/gunmech1 GUNMECH1
 
+weapons/crit CRITDAMG
+
 weapons/assaulthandgun ASHGFIRE
 
 weapons/autocannon ACANFIRE
