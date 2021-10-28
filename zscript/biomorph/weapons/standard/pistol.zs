@@ -100,7 +100,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 	Spawn:
 		PIST A 0;
 		PIST A 0 A_BIO_Spawn;
-		Loop;
+		Stop;
 	}
 
 	override void GetFireTimes(in out Array<int> fireTimes, bool _) const

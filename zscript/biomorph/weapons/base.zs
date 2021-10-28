@@ -1070,10 +1070,12 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	protected string GenericFireTimeReadout(int totalFireTime) const
+	protected string GenericFireTimeReadout(int totalFireTime,
+		string template = "$BIO_WEAPSTAT_FIRETIME",
+		int defaultArg = -1) const
 	{
 		string crEsc = "";
-		int defFT = DefaultFireTime();
+		int defFT = defaultArg == -1 ? DefaultFireTime() : defaultArg;
 
 		if (totalFireTime > defFT)
 			crEsc = CRESC_STATWORSE;
@@ -1082,26 +1084,7 @@ class BIO_Weapon : DoomWeapon abstract
 		else
 			crEsc = CRESC_STATDEFAULT;
 
-		return String.Format(
-			StringTable.Localize("$BIO_WEAPSTAT_FIRETIME"),
-			crEsc, float(totalFireTime) / 35.0);
-	}
-
-	// Analogous to GenericFireTimeReadout, but for melee weapons.
-	protected string GenericAttackTimeReadout(int totalFireTime) const
-	{
-		string crEsc = "";
-		int defFT = DefaultFireTime();
-
-		if (totalFireTime > defFT)
-			crEsc = CRESC_STATWORSE;
-		else if (totalFireTime < defFT)
-			crEsc = CRESC_STATBETTER;
-		else
-			crEsc = CRESC_STATDEFAULT;
-
-		return String.Format(
-			StringTable.Localize("$BIO_WEAPSTAT_ATKTIME"),
+		return String.Format(StringTable.Localize(template),
 			crEsc, float(totalFireTime) / 35.0);
 	}
 

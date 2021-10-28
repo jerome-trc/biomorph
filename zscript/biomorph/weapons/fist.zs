@@ -97,8 +97,9 @@ class BIO_Fist : BIO_Weapon replaces Fist
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout(fireTypeTag: "$BIO_MELEE_HIT"));
-		stats.Push(GenericAttackTimeReadout(
-			FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5));
+		stats.Push(GenericFireTimeReadout(
+			FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5,
+			"$BIO_WEAPSTAT_ATKTIME"));
 	}
 
 	override int DefaultFireTime() const

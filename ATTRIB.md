@@ -12,6 +12,8 @@ The GLDEFS for the Weapon Upgrade Kit were devised by Realm667 user Dreadopp.
 
 ## Graphics
 
+Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as well as id Software LLC.
+
 Autocannon and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
 Incursion Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
@@ -40,6 +42,8 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "ShotgunSnatch.wav" (INCURELO)
 - "vssdraw.wav" (GUNMECH0)
 - "weapondropped.wav" (GUNDROP0)
+
+Realm667 user cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 
 "m60-1.wav" (HVBRFIRE) is courtesy of ZDoom forum user Joblez_I. 
 

@@ -90,7 +90,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout(fireTypeTag: "$BIO_MELEE_HIT"));
-		stats.Push(GenericAttackTimeReadout(FireTime));
+		stats.Push(GenericFireTimeReadout(FireTime, "$BIO_WEAPSTAT_ATKTIME"));
 	}
 
 	override int DefaultFireTime() const

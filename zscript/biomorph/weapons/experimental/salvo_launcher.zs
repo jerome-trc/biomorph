@@ -139,30 +139,10 @@ class BIO_SalvoLauncher : BIO_Weapon
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout());
-
-		string crEsc_burst = "", crEsc_auto = "";
-		int tbft = TotalBurstFireTime(), tbft_def = Default.TotalBurstFireTime();
-		int taft = TotalAutoFireTime(), taft_def = Default.TotalAutoFireTime();
-
-		if (tbft > tbft_def)
-			crEsc_burst = CRESC_STATWORSE;
-		else if (tbft < tbft_def)
-			crEsc_burst = CRESC_STATBETTER;
-		else
-			crEsc_burst = CRESC_STATDEFAULT;
-
-		if (taft > taft_def)
-			crEsc_auto = CRESC_STATWORSE;
-		else if (taft < taft_def)
-			crEsc_auto = CRESC_STATBETTER;
-		else
-			crEsc_auto = CRESC_STATDEFAULT;
-
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME_BURST"),
-			crEsc_burst, float(tbft) / 35.0));
-
-		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_FIRETIME_AUTO"),
-			crEsc_auto, float(taft) / 35.0));
+		stats.Push(GenericFireTimeReadout(TotalBurstFireTime(),
+			"$BIO_WEAPSTAT_FIRETIME_BURST", Default.TotalBurstFireTime()));
+		stats.Push(GenericFireTimeReadout(TotalAutoFireTime(),
+			"$BIO_WEAPSTAT_FIRETIME_AUTO", Default.TotalAutoFireTime()));
 	}
 
 	override int DefaultFireTime() const
