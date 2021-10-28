@@ -44,7 +44,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		ASHG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
+		TNT1 A 0 A_AutoReload;
 		ASHG B 2 A_SetTics(invoker.FireTime1);
 		ASHG D 1 Bright
 		{
@@ -54,6 +54,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		}
 		ASHG C 1;
 		ASHG B 1;
+		TNT1 A 0 A_AutoReload;
 		ASHG E 1 Bright
 		{
 			A_BIO_Fire();
@@ -62,6 +63,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		}
 		ASHG C 2 A_SetTics(invoker.FireTime2);
 		ASHG C 1;
+		TNT1 A 0 A_AutoReload;
 		ASHG D 1 Bright
 		{
 			A_BIO_Fire();

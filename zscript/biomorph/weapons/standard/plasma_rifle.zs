@@ -41,7 +41,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		PLSG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
+		TNT1 A 0 A_AutoReload;
 		PLSG A 3
 		{
 			A_SetTics(invoker.FireTime1);

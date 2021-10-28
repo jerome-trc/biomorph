@@ -45,7 +45,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		PISG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
+		TNT1 A 0 A_AutoReload;
 		PISG A 4 A_SetTics(invoker.FireTime1);
 		PISG B 6 Bright
 		{

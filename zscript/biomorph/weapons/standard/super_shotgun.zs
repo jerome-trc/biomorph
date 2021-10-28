@@ -61,7 +61,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 				return ResolveState("Fire.Double");
 		}
 	Fire.Single:
-		TNT1 A 0 A_JumpIf(invoker.Magazine1.Amount < 1, "Reload");
+		TNT1 A 0 A_AutoReload;
 		SHT2 A 3 A_SetTics(invoker.FireTime1);
 		SHT2 A 7 Bright
 		{
@@ -73,7 +73,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		}
 		Goto Ready;
 	Fire.Double:
-		TNT1 A 0 A_JumpIf(invoker.Magazine1.Amount < 2, "Reload");
+		TNT1 A 0 A_AutoReload(single: true, min: 2);
 		SHT2 A 3 A_SetTics(invoker.FireTime1);
 		SHT2 A 7 Bright
 		{

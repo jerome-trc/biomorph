@@ -45,7 +45,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		SHTG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
+		TNT1 A 0 A_AutoReload(single: true);
 		SHTG A 3 A_SetTics(invoker.FireTime1);
 		SHTG A 4 Bright
 		{

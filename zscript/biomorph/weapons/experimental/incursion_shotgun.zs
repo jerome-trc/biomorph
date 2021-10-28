@@ -43,7 +43,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		INCU A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
+		TNT1 A 0 A_AutoReload;
 		INCU B 3 Bright
 		{
 			A_SetTics(invoker.FireTime1);
@@ -61,7 +61,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		}
 		Goto Ready;
 	AltFire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
+		TNT1 A 0 A_AutoReload;
 		INCU B 3 Bright
 		{
 			invoker.bAltFire = false;

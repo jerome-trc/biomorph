@@ -409,6 +409,13 @@ class BIO_Weapon : DoomWeapon abstract
 		return !secondary ? Magazine1.Amount <= 0 : Magazine2.Amount <= 0;
 	}
 
+	bool MagazineFull(bool secondary = false) const
+	{
+		return !secondary ?
+			Magazine1.Amount >= MagazineSize1 :
+			Magazine2.Amount >= MagazineSize2;
+	}
+
 	bool CanReload(bool secondary = false) const
 	{
 		let magAmmo = !secondary ? Magazine1 : Magazine2;
@@ -825,6 +832,25 @@ class BIO_Weapon : DoomWeapon abstract
 
 		A_BIO_AlertMonsters();
 		return true;
+	}
+
+	protected action state A_AutoReload(bool secondary = false,	
+		bool single = false, int min = -1)
+	{
+		if (!invoker.MagazineEmpty(secondary))
+			return state(null);
+		
+		if (min == -1) min = 1;
+		
+		if ((!secondary ? invoker.Magazine1 : invoker.Magazine2).Amount >= min)
+			return state(null);
+		
+		let cv = BIO_CVar.AutoReload(Player);
+
+		if (cv == BIO_CV_AUTOREL_ALWAYS || (cv == BIO_CV_AUTOREL_SINGLE && single))
+			return ResolveState("Reload");
+		else
+			return ResolveState("Ready");
 	}
 
 	// If no argument is given, try to reload as much of the magazine as possible.

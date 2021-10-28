@@ -42,7 +42,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		MISG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
+		TNT1 A 0 A_AutoReload;
 		MISG B 8
 		{
 			A_SetTics(invoker.FireTime1);
