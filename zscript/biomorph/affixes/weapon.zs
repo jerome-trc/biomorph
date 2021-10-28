@@ -1,6 +1,6 @@
 // Damage ======================================================================
 
-class BIO_WeaponAffix_Damage : BIO_WeaponAffix
+class BIO_WAFX_Damage : BIO_WeaponAffix
 {
 	int Modifier1, Modifier2;
 
@@ -56,7 +56,7 @@ class BIO_WeaponAffix_Damage : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
+class BIO_WAFX_DamagePercent : BIO_WeaponAffix
 {
 	float Multi1, Multi2;
 
@@ -127,7 +127,7 @@ class BIO_WeaponAffix_DamagePercent : BIO_WeaponAffix
 }
 
 // n% of the hit enemy's health is given to the projectile's dealt damage.
-class BIO_WeaponAffix_EnemyHealthDamage : BIO_WeaponAffix
+class BIO_WAFX_EnemyHealthDamage : BIO_WeaponAffix
 {
 	float Factor;
 
@@ -178,7 +178,7 @@ class BIO_ProjDmgFunc_EnemyHealthDamage : BIO_ProjDamageFunctor
 	}
 }
 
-class BIO_WeaponAffix_Crit : BIO_WeaponAffix
+class BIO_WAFX_Crit : BIO_WeaponAffix
 {
 	uint Chance;
 	float DamageMulti; // Percentage of rolled damage added to outgoing damage
@@ -213,7 +213,7 @@ class BIO_WeaponAffix_Crit : BIO_WeaponAffix
 
 // Fire type ===================================================================
 
-class BIO_WeaponAffix_Plasma : BIO_WeaponAffix
+class BIO_WAFX_Plasma : BIO_WeaponAffix
 {
 	override void Init(BIO_Weapon weap) {}
 
@@ -259,7 +259,7 @@ class BIO_WeaponAffix_Plasma : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_Slug : BIO_WeaponAffix
+class BIO_WAFX_Slug : BIO_WeaponAffix
 {
 	override void Init(BIO_Weapon weap) {}
 
@@ -344,7 +344,7 @@ class BIO_WeaponAffix_Slug : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_MiniMissile : BIO_WeaponAffix
+class BIO_WAFX_MiniMissile : BIO_WeaponAffix
 {
 	override void Init(BIO_Weapon weap) {}
 
@@ -372,7 +372,7 @@ class BIO_WeaponAffix_MiniMissile : BIO_WeaponAffix
 
 // Miscellaneous ===============================================================
 
-class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
+class BIO_WAFX_FireCount : BIO_WeaponAffix
 {
 	int Modifier1, Modifier2;
 
@@ -446,7 +446,7 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
+class BIO_WAFX_FireRate : BIO_WeaponAffix
 {
 	int Modifier;
 
@@ -485,7 +485,7 @@ class BIO_WeaponAffix_FireRate : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_Spread : BIO_WeaponAffix
+class BIO_WAFX_Spread : BIO_WeaponAffix
 {
 	float HSpread1, VSpread1, HSpread2, VSpread2;
 
@@ -546,7 +546,7 @@ class BIO_WeaponAffix_Spread : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_ReloadSpeed : BIO_WeaponAffix
+class BIO_WAFX_ReloadSpeed : BIO_WeaponAffix
 {
 	int Modifier;
 
@@ -585,7 +585,7 @@ class BIO_WeaponAffix_ReloadSpeed : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_ProjSeek : BIO_WeaponAffix
+class BIO_WAFX_ProjSeek : BIO_WeaponAffix
 {
 	override void Init(BIO_Weapon weap) {}
 
@@ -610,7 +610,7 @@ class BIO_WeaponAffix_ProjSeek : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_ForcePain : BIO_WeaponAffix
+class BIO_WAFX_ForcePain : BIO_WeaponAffix
 {
 	override void Init(BIO_Weapon weap) {}
 
@@ -638,7 +638,7 @@ class BIO_WeaponAffix_ForcePain : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_MeleeRange : BIO_WeaponAffix
+class BIO_WAFX_MeleeRange : BIO_WeaponAffix
 {
 	float Modifier;
 
@@ -682,7 +682,7 @@ class BIO_WeaponAffix_MeleeRange : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_LifeSteal : BIO_WeaponAffix
+class BIO_WAFX_LifeSteal : BIO_WeaponAffix
 {
 	float AddPercent;
 	
@@ -706,7 +706,7 @@ class BIO_WeaponAffix_LifeSteal : BIO_WeaponAffix
 	}
 }
 
-class BIO_WeaponAffix_SwitchSpeed : BIO_WeaponAffix
+class BIO_WAFX_SwitchSpeed : BIO_WeaponAffix
 {
 	int Modifier;
 
