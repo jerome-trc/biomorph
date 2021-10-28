@@ -67,6 +67,13 @@ class BIO_Equipment : Inventory abstract
 		return true;
 	}
 
+	override void AttachToOwner(Actor newOwner)
+	{
+		if (!PreviouslyPickedUp) RLMDangerLevel();
+		PreviouslyPickedUp = true;
+		super.AttachToOwner(newOwner);
+	}
+
 	override bool Use(bool pickup)
 	{
 		let bioPlayer = BIO_PLayer(Owner);

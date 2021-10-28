@@ -262,6 +262,9 @@ class BIO_Weapon : DoomWeapon abstract
 
 	override void AttachToOwner(Actor newOwner)
 	{
+		if (!PreviouslyPickedUp) RLMDangerLevel();
+		PreviouslyPickedUp = true;
+		
 		// Weapon::AttachToOwner() calls AddAmmo() for both types, which we
 		// don't want. This next bit is silly, but beats re-implementing
 		// that function (and having to watch if it changes upstream)

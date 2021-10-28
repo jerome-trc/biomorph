@@ -45,6 +45,24 @@ class BIO_Mutagen : Inventory abstract
 
 		return true;
 	}
+
+	protected void RLMDangerLevel(uint danger) const
+	{
+		// If the DoomRL Arsenal Monster Pack is loaded, use
+		// of certain mutagens increase its danger level
+		string mpt_tn = "RLMonsterpackThingo";
+		Class<Actor> mpt_t = mpt_tn;
+
+		if (mpt_t != null)
+		{
+			if (BIO_CVar.Debug() && danger > 0)
+				Console.Printf(Biomorph.LOGPFX_DEBUG ..
+					"Increasing DRLA danger level by %d.", danger);
+
+			string rldl_tn = "RLDangerLevel";
+			A_GiveInventory(rldl_tn, danger, AAPTR_PLAYER1);
+		}
+	}
 }
 
 class BIO_MutagenReset : BIO_Mutagen
@@ -123,6 +141,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 		weap.ResetStats();
 		weap.ApplyAllAffixes();
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
+		RLMDangerLevel(5);
 		return true;
 	}
 }
@@ -151,6 +170,7 @@ class BIO_MutagenRandom : BIO_Mutagen
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 		weap.RandomizeAffixes();
 		Owner.A_Print("$BIO_MUTA_RANDOM_USE");
+		RLMDangerLevel(5);
 		return true;
 	}
 }
@@ -195,6 +215,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 		weap.ApplyAllAffixes();
 
 		Owner.A_Print("$BIO_MUTA_REROLL_USE");
+		RLMDangerLevel(1);
 		return true;
 	}
 }
@@ -274,6 +295,7 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 			break;
 		}
 
+		RLMDangerLevel(25);
 		return true;
 	}
 }

@@ -31,7 +31,7 @@ mixin class BIO_Gear
 	meta BIO_Grade Grade; property Grade: Grade;
 	BIO_Rarity Rarity; property Rarity: Rarity;
 
-	protected bool HitGround;
+	protected bool HitGround, PreviouslyPickedUp;
 
 	// GetTag() only comes with color escape codes after BeginPlay(); use this
 	// when derefencing defaults. Always comes with a '\c-' at the end.
@@ -39,5 +39,39 @@ mixin class BIO_Gear
 	{
 		return String.Format("%s%s\c-",
 			BIO_Utils.RarityColorEscapeCode(Rarity), GetTag());
+	}
+
+	void RLMDangerLevel() const
+	{
+		// If the DoomRL Arsenal Monster Pack is loaded, rare 
+		// gear pickups increase its danger level
+		string mpt_tn = "RLMonsterpackThingo";
+		Class<Actor> mpt_t = mpt_tn;
+
+		if (mpt_t != null)
+		{
+			uint danger = 0;
+
+			switch (Rarity)
+			{
+			case BIO_RARITY_MUTATED: danger += 25; break;
+			case BIO_RARITY_UNIQUE: danger += 50; break;
+			default: break;
+			}
+
+			switch (Grade)
+			{
+			case BIO_GRADE_SPECIALTY: danger += 10; break;
+			case BIO_GRADE_EXPERIMENTAL: danger += 20; break;
+			default: break;
+			}
+
+			if (BIO_CVar.Debug() && danger > 0)
+				Console.Printf(Biomorph.LOGPFX_DEBUG ..
+					"Increasing DRLA danger level by %d.", danger);
+
+			string rldl_tn = "RLDangerLevel";
+			A_GiveInventory(rldl_tn, danger, AAPTR_PLAYER1);
+		}
 	}
 }
