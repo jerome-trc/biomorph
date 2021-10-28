@@ -31,6 +31,8 @@ mixin class BIO_Gear
 	meta BIO_Grade Grade; property Grade: Grade;
 	BIO_Rarity Rarity; property Rarity: Rarity;
 
+	protected bool HitGround;
+
 	// GetTag() only comes with color escape codes after BeginPlay(); use this
 	// when derefencing defaults. Always comes with a '\c-' at the end.
 	string GetColoredTag() const

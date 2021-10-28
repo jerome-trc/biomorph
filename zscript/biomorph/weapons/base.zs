@@ -162,8 +162,10 @@ class BIO_Weapon : DoomWeapon abstract
 
 	Default
 	{
+		-SPECIAL
 		+DONTGIB
 		+NOBLOCKMONST
+		+THRUACTORS
 		+WEAPON.ALT_AMMO_OPTIONAL
 		+WEAPON.AMMO_OPTIONAL
 		+WEAPON.NOALERT
@@ -212,16 +214,39 @@ class BIO_Weapon : DoomWeapon abstract
 		TNT1 A 0;
 		Stop;
 	Spawn.Common:
-		#### # -1;
-		Stop;
+		#### # 4;
+		#### # 1 A_GroundHit;
+		Goto Spawn.Common + 1;
 	Spawn.Mutated:
-		#### # 6 A_SetTranslation("");
-		#### # 6 Bright A_SetTranslation("BIO_Mutated");
-		Loop;
+		#### # 4;
+		#### # 1
+		{
+			A_GroundHit();
+			A_SetTranslation("");
+		}
+		#### ##### 1 A_GroundHit;
+		#### # 1 Bright
+		{
+			A_GroundHit();
+			A_SetTranslation("BIO_Mutated");
+		}
+		#### ##### 1 Bright A_GroundHit;
+		Goto Spawn.Mutated + 1;
 	Spawn.Unique:
-		#### # 6 A_SetTranslation("");
-		#### # 6 Bright A_SetTranslation("BIO_Unique");
-		Loop;
+		#### # 4;
+		#### # 1
+		{
+			A_GroundHit();
+			A_SetTranslation("");
+		}
+		#### ##### 1 A_GroundHit;
+		#### # 1 Bright
+		{
+			A_GroundHit();
+			A_SetTranslation("BIO_Unique");
+		}
+		#### ##### 1 Bright A_GroundHit;
+		Goto Spawn.Unique + 1;
 	}
 
 	// Parent overrides ========================================================
@@ -232,6 +257,13 @@ class BIO_Weapon : DoomWeapon abstract
 		SetTag(GetColoredTag());
 		RewriteAffixReadout();
 		RewriteStatReadout();
+
+		if (Abs(Vel.Z) <= 0.01)
+		{
+			bSpecial = true;
+			bThruActors = false;
+			HitGround = true;
+		}
 	}
 
 	override void AttachToOwner(Actor newOwner)
@@ -301,6 +333,12 @@ class BIO_Weapon : DoomWeapon abstract
 		string ret = String.Format(StringTable.Localize(PickupMsg), GetTag());
 		ret = ret .. " [\cn" .. SlotNumber .. "\c-]";
 		return ret;
+	}
+
+	override void OnDrop(Actor dropper)
+	{
+		super.OnDrop(dropper);
+		HitGround = false;
 	}
 
 	// Virtuals/abstracts ======================================================
@@ -838,6 +876,18 @@ class BIO_Weapon : DoomWeapon abstract
 			return ResolveState("Spawn.Mutated");
 		else
 			return ResolveState("Spawn.Common");
+	}
+
+	protected action void A_GroundHit()
+	{
+		if (Abs(Vel.Z) <= 0.01 && !invoker.HitGround)
+		{
+			A_StartSound("weapons/gundrop0");
+			A_ScaleVelocity(0.5);
+			bSpecial = true;
+			bThruActors = false;
+			invoker.HitGround = true;
+		}
 	}
 
 	// Utility functions =======================================================
