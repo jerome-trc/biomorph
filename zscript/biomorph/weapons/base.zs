@@ -365,6 +365,37 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected abstract void StatsToString(in out Array<string> stats) const;
 
+	string GetFireTypeTag(bool secondary = false) const
+	{
+		Class<Actor> fireType = !secondary ? FireType1 : FireType2;
+		int count = !secondary ? FireCount1 : FireCount2;
+		
+		if (fireType is "BIO_Projectile")
+		{
+			let defs = GetDefaultByType((Class<BIO_Projectile>)(fireType));
+
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
+		else if (fireType is "BIO_FastProjectile")
+		{
+			let defs = GetDefaultByType((Class<BIO_FastProjectile>)(fireType));
+		
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
+		else
+			return StringTable.Localize(GetDefaultByType(fireType).GetTag());
+	}
+
 	string, bool TryGetDictValue(string key)
 	{
 		string ret = Dict.At(key);
@@ -1104,7 +1135,7 @@ class BIO_Weapon : DoomWeapon abstract
 		if (!secondary)
 		{
 			if (fireTypeTag.Length() < 1)
-				tag = GetDefaultByType(FireType1).GetTag();
+				tag = GetFireTypeTag(false);
 			else
 				tag = StringTable.Localize(fireTypeTag);
 
@@ -1118,7 +1149,7 @@ class BIO_Weapon : DoomWeapon abstract
 		else
 		{
 			if (fireTypeTag.Length() < 1)
-				tag = GetDefaultByType(FireType2).GetTag();
+				tag = GetFireTypeTag(true);
 			else
 				tag = StringTable.Localize(fireTypeTag);
 

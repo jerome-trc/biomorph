@@ -12,6 +12,7 @@ mixin class BIO_ProjectileCommon
 {
 	protected bool Dead;
 
+	meta string PluralTag; property PluralTag: PluralTag;
 	meta BIO_ProjectileMetaFlags MetaFlags; property MetaFlags: MetaFlags;
 
 	int BFGRays; property BFGRays: BFGRays;
@@ -49,10 +50,13 @@ class BIO_Projectile : Actor abstract
 	Default
 	{
 		Projectile;
+
+		Tag "$BIO_PROJ_TAG_ROUND";
 		
 		BIO_Projectile.MetaFlags BIO_PMF_NONE;
 		BIO_Projectile.Acceleration 1.0;
 		BIO_Projectile.BFGRays 0;
+		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_ROUNDS";
 		BIO_Projectile.Splash 0, 0;
 		BIO_Projectile.Shrapnel 0;
 		BIO_Projectile.Seek false;
@@ -131,8 +135,11 @@ class BIO_FastProjectile : FastProjectile abstract
 
 	Default
 	{
+		Tag "$BIO_PROJ_TAG_ROUND";
+
 		BIO_FastProjectile.MetaFlags BIO_PMF_NONE;
 		BIO_FastProjectile.BFGRays 0;
+		BIO_FastProjectile.PluralTag "$BIO_PROJ_TAG_ROUNDS";
 		BIO_FastProjectile.Splash 0, 0;
 		BIO_FastProjectile.Shrapnel 0;
 	}
@@ -208,6 +215,7 @@ class BIO_Bullet : BIO_FastProjectile
 		Tag "$BIO_PROJ_TAG_BULLET";
 
 		BIO_FastProjectile.MetaFlags BIO_PMF_BALLISTIC;
+		BIO_FastProjectile.PluralTag "$BIO_PROJ_TAG_BULLETS";
 	}
 
 	States
@@ -231,6 +239,7 @@ class BIO_ShotPellet : BIO_Bullet
 	Default
 	{
 		Tag "$BIO_PROJ_TAG_SHOTPELLET";
+		BIO_FastProjectile.PluralTag "$BIO_PROJ_TAG_SHOTPELLETS";
 	}
 }
 
@@ -239,6 +248,7 @@ class BIO_Slug : BIO_Bullet
 	Default
 	{
 		Tag "$BIO_PROJ_TAG_SLUG";
+		BIO_FastProjectile.PluralTag "$BIO_PROJ_TAG_SLUGS";
 	}
 }
 
@@ -261,6 +271,7 @@ class BIO_Rocket : BIO_Projectile
 		Speed 20;
 		Tag "$BIO_PROJ_TAG_ROCKET";
 
+		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_ROCKETS";
 		BIO_Projectile.Splash 128, 128;
 	}
 
@@ -292,6 +303,7 @@ class BIO_MiniMissile : BIO_Rocket
 		Scale 0.3;
 		Speed 50;
 
+		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_MINIMISSILES";
 		BIO_Projectile.Splash 32, 32;
 	}
 }
@@ -313,6 +325,7 @@ class BIO_PlasmaBall : BIO_Projectile
 		Speed 25;
 		Tag "$BIO_PROJ_TAG_PLASMABALL";
 
+		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_PLASMABALLS";
 		BIO_Projectile.MetaFlags BIO_PMF_ENERGY;
 	}
 
@@ -349,6 +362,7 @@ class BIO_BFGBall : BIO_Projectile
 		Speed 25;
 		Tag "$BIO_PROJ_TAG_BFGBALL";
 
+		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_BFGBALLS";
 		BIO_Projectile.MetaFlags BIO_PMF_ENERGY;
 		BIO_BFGBall.RayDamageRange 15, 120;
 	}
@@ -375,6 +389,24 @@ class BIO_BFGBall : BIO_Projectile
 }
 
 // Projectile-adjacent actors ==================================================
+
+class BIO_MeleeHit : BulletPuff
+{
+	Default
+	{
+		Tag "$BIO_MELEE_HIT";
+	}
+
+	string CountBasedTag(int count) const
+	{
+		switch (count)
+		{
+		case -1:
+		case 1: return GetTag();
+		default: return StringTable.Localize("$BIO_MELEE_HITS");
+		}
+	}
+}
 
 class BIO_Shrapnel : BulletPuff
 {

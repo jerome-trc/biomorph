@@ -22,6 +22,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 			BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE,
 			BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.DamageRange 2, 20;
+		BIO_Weapon.FireType "BIO_MeleeHit";
 
 		BIO_Fist.FireTimes 4, 4, 5, 4, 5;
 		BIO_Fist.MeleeRange DEFMELEERANGE;
@@ -96,7 +97,8 @@ class BIO_Fist : BIO_Weapon replaces Fist
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(GenericFireDataReadout(fireTypeTag: "$BIO_MELEE_HIT"));
+		stats.Push(GenericFireDataReadout(fireTypeTag:
+			GetDefaultByType("BIO_MeleeHit").CountBasedTag(FireCount1)));
 		stats.Push(GenericFireTimeReadout(
 			FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5,
 			"$BIO_WEAPSTAT_ATKTIME"));
@@ -124,7 +126,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		int actualDmg = -1;
 
 		[puff, actualDmg] = LineAttack(ang, range, pitch, dmg,
-			'Melee', "BulletPuff", LAF_ISMELEEATTACK, t);
+			'Melee', invoker.FireType1, LAF_ISMELEEATTACK, t);
 
 		// Turn to face target
 		if (t.LineTarget)

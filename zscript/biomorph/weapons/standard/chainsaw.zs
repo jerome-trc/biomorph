@@ -24,8 +24,9 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		BIO_Weapon.AffixMasks
 			BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE,
 			BIO_WAM_ALL, BIO_WAM_NONE;
-		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 2, 20;
+		BIO_Weapon.FireType "BIO_MeleeHit";
+		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		
 		BIO_Chainsaw.FireTimes 4;
 		BIO_Chainsaw.MeleeRange SAWRANGE;
@@ -89,7 +90,8 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(GenericFireDataReadout(fireTypeTag: "$BIO_MELEE_HIT"));
+		stats.Push(GenericFireDataReadout(fireTypeTag:
+			GetDefaultByType("BIO_MeleeHit").CountBasedTag(FireCount1)));
 		stats.Push(GenericFireTimeReadout(FireTime, "$BIO_WEAPSTAT_ATKTIME"));
 	}
 
@@ -112,7 +114,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		int actualDmg;
 		[puff, actualDmg] = LineAttack(ang, range, slope, 
 			Random[Saw](invoker.MinDamage1, invoker.MaxDamage1),
-			'Melee', "BulletPuff", 0, t);
+			'Melee', invoker.FireType1, 0, t);
 
 		A_BIO_AlertMonsters();
 

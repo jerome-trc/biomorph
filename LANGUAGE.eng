@@ -80,17 +80,36 @@
 
 // Fired things (puff/projectile tags) =========================================
 
-	BIO_MELEE_HIT = "hit(s)";
+	// Generic tags used as defaults
+	BIO_PROJ_TAG_ROUND = "round";
+	BIO_PROJ_TAG_ROUNDS = "rounds";
 
-	BIO_PROJ_TAG_BULLET = "bullet(s)";
-	BIO_PROJ_TAG_SHOTPELLET = "pellet(s)";
-	BIO_PROJ_TAG_SLUG = "slug(s)";
-	BIO_PROJ_TAG_ROCKET = "rocket(s)";
-	BIO_PROJ_TAG_MINIMISSILE = "mini-missile(s)";
-	BIO_PROJ_TAG_PLASMABALL = "plasma ball(s)";
-	BIO_PROJ_TAG_BFGBALL = "ball(s)";
+	BIO_MELEE_HIT = "hit";
+	BIO_MELEE_HITS = "hits";
 
-	BIO_PROJEXTRA_TAG_BFGRAY = "ray(s)";
+	BIO_PROJ_TAG_BULLET = "bullet";
+	BIO_PROJ_TAG_BULLETS = "bullets";
+
+	BIO_PROJ_TAG_SHOTPELLET = "pellet";
+	BIO_PROJ_TAG_SHOTPELLETS = "pellets";
+
+	BIO_PROJ_TAG_SLUG = "slugs";
+	BIO_PROJ_TAG_SLUGS = "slugs";
+
+	BIO_PROJ_TAG_ROCKET = "rocket";
+	BIO_PROJ_TAG_ROCKETS = "rockets";
+
+	BIO_PROJ_TAG_MINIMISSILE = "mini-missile";
+	BIO_PROJ_TAG_MINIMISSILES = "mini-missiles";
+	
+	BIO_PROJ_TAG_PLASMABALL = "plasma ball";
+	BIO_PROJ_TAG_PLASMABALLS = "plasma balls";
+	
+	BIO_PROJ_TAG_BFGBALL = "ball";
+	BIO_PROJ_TAG_BFGBALLS = "balls";
+
+	BIO_PROJEXTRA_TAG_BFGRAY = "ray";
+	BIO_PROJEXTRA_TAG_BFGRAYS = "rays";
 
 // Mutagens (tags, pickup messages, usage strings) =============================
 
@@ -239,6 +258,7 @@
 // Miscellaneous ===============================================================
 
 	BIO_NONE = "None";
+	BIO_NOTHING = "nothing";
 	BIO_CORRUPTED = "Corrupted";
 
 	BIO_FASTER = "faster";

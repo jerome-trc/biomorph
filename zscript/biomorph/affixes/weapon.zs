@@ -425,27 +425,23 @@ class BIO_WeaponAffix_FireCount : BIO_WeaponAffix
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT1"),
 				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier1 >= 0 ? "+" : "", Modifier1,
-				GetDefaultByType(weap.FireType1).GetTag()));
+				Modifier1 >= 0 ? "+" : "", Modifier1, weap.GetFireTypeTag(false)));
 		}
 		else if (weap.AffixMask1 & BIO_WAM_FIRECOUNT)
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT2"),
 				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier2 >= 0 ? "+" : "", Modifier2,
-				GetDefaultByType(weap.FireType2).GetTag()));
+				Modifier2 >= 0 ? "+" : "", Modifier2, weap.GetFireTypeTag(true)));
 		}
 		else
 		{
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_AFFIX_TOSTR_FIRECOUNT"),
 				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier1 >= 0 ? "+" : "", Modifier1,
-				GetDefaultByType(weap.FireType1).GetTag(),
+				Modifier1 >= 0 ? "+" : "", Modifier1, weap.GetFireTypeTag(false),
 				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-				Modifier2 >= 0 ? "+" : "", Modifier2,
-				GetDefaultByType(weap.FireType2).GetTag()));
+				Modifier2 >= 0 ? "+" : "", Modifier2, weap.GetFireTypeTag(true)));
 		}
 	}
 }
