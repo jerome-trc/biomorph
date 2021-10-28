@@ -52,4 +52,6 @@ Realm667 user cites an unknown source as having created the sound used in Biomor
 
 ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (replaces DSSECRET) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
 
+["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) (USRINPT0, pitched down for USRINPUT1) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/) is licensed under Creative Commons Attributions 3.0 Unported.
+
 AMRSHRD (pickup sound for `BIO_ArmorBonus`) is courtesy of id Software LLC.

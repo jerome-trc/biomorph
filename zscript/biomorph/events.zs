@@ -593,7 +593,7 @@ class BIO_EventHandler : EventHandler
 			return true;
 		}
 
-		Class<BIO_WeaponAffix> wafx_t = "" nameParts[1];
+		Class<BIO_WeaponAffix> wafx_t = nameParts[1];
 		if (wafx_t == null)
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..

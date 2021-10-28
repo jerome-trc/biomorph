@@ -27,3 +27,6 @@ weapons/incursionreload INCURELO
 pickup/armorshard AMRSHRD
 
 misc/weapupgrade WEAPUPGR
+
+ui/beep0 USRINPT0
+ui/beep1 USRINPT1 // Same as above, but pitched down
