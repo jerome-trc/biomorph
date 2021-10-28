@@ -130,6 +130,8 @@ class BIO_EventHandler : EventHandler
 		output.AppendFormat("Switch speeds: %d lower, %d raise\n",
 			weap.LowerSpeed, weap.RaiseSpeed);
 
+		output.AppendFormat("Kickback: %d", weap.Kickback);
+
 		if (weap.ImplicitAffixes.Size() > 0)
 		{
 			output = output .. "Implicit affixes:\n";

@@ -186,6 +186,7 @@
 	BIO_AFFIX_TOSTR_FIRECOUNT = "Primary fires %s%s%d %s; secondary fires %s%s%d %s";
 	BIO_AFFIX_TOSTR_FIRERATE = "Fire rate: %s%s%.2f seconds";
 	BIO_AFFIX_TOSTR_SPREAD = "Spread: ";
+	BIO_AFFIX_TOSTR_KICKBACK = "%s%.1f%% %s\cj knockback";
 	BIO_AFFIX_TOSTR_RELOADSPEED = "Reload time: %s%s%.2f seconds";
 	
 	BIO_AFFIX_TOSTR_PROJSEEK = "Projectiles home in on targets";
@@ -265,6 +266,9 @@
 	BIO_NONE = "None";
 	BIO_NOTHING = "nothing";
 	BIO_CORRUPTED = "Corrupted";
+
+	BIO_MORE = "more";
+	BIO_LESS = "less";
 
 	BIO_FASTER = "faster";
 	BIO_SLOWER = "slower";

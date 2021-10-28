@@ -546,6 +546,35 @@ class BIO_WAFX_Spread : BIO_WeaponAffix
 	}
 }
 
+class BIO_WAFX_Kickback : BIO_WeaponAffix
+{
+	int Modifier;
+
+	override void Init(BIO_Weapon weap)
+	{
+		Modifier = Random(200, 400);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return !(weap.MiscAffixMask & BIO_WAM_KICKBACK);
+	}
+
+	override void Apply(BIO_Weapon weap) const
+	{
+		weap.Kickback += Modifier;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_AFFIX_TOSTR_KICKBACK"),
+			Modifier > 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+			(float(Modifier) / float(weap.Kickback)) * 100.0,
+			StringTable.Localize(Modifier > 0 ? "$BIO_MORE" : "$BIO_LESS")));
+	}
+}
+
 class BIO_WAFX_ReloadSpeed : BIO_WeaponAffix
 {
 	int Modifier;

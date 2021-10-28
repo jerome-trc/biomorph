@@ -22,6 +22,7 @@ enum BIO_WeaponAffixMask : uint
 	BIO_WAM_LOWERSPEED = 1 << 1,
 	BIO_WAM_SWITCHSPEED = BIO_WAM_RAISESPEED | BIO_WAM_LOWERSPEED,
 	BIO_WAM_BIOFLAGS = 1 << 2,
+	BIO_WAM_KICKBACK = 1 << 3,
 	// The following bits should only be assigned to `AffixMask1` or `AffixMask2`.
 	BIO_WAM_FIRETYPE = 1 << 9,
 	BIO_WAM_FIRECOUNT = 1 << 10,
@@ -179,7 +180,6 @@ class BIO_Weapon : DoomWeapon abstract
         Weapon.BobRangeY 0.5;
         Weapon.BobSpeed 1.2;
         Weapon.BobStyle "Alpha";
-		Weapon.Kickback 100;
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_NONE, BIO_WAM_NONE;
 		BIO_Weapon.DamageRanges -2, -2, -2, -2;
@@ -601,6 +601,8 @@ class BIO_Weapon : DoomWeapon abstract
 	// or the dictionary, and neither should any overrides.
 	virtual void ResetStats()
 	{
+		Kickback = Default.Kickback;
+
 		BIOFlags = Default.BIOFlags;
 		AffixMask1 = Default.AffixMask1;
 		AffixMask2 = Default.AffixMask2;
