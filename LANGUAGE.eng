@@ -49,6 +49,10 @@
 	BIO_WEAP_TAG_HBR = "Heavy Battle Rifle";
 	BIO_WEAP_TAG_INCURSIONSHOTGUN = "Incursion Shotgun";
 	BIO_WEAP_TAG_SALVOLAUNCHER = "Salvo Launcher";
+	
+	BIO_WEAP_TAG_MEGATON = "\c[Orange]Megaton\c[White] Incursion Shotgun";
+	BIO_WEAPSTAT_MEGATON_0 = "\c[Orange]Can load shells or bullets";
+	BIO_WEAPSTAT_MEGATON_1 = "\cnZoom\c[Orange] switches ammo type";
 
 	BIO_WEAP_PICKUP_BFG90000 = "Grabbed a %s.";
 	BIO_WEAP_PICKUP_CHAINGUN = "Grabbed a %s.";
@@ -65,6 +69,8 @@
 	BIO_WEAP_PICKUP_HBR = "Procured a %s.";
 	BIO_WEAP_PICKUP_INCURSIONSHOTGUN = "Procured an %s.";
 	BIO_WEAP_PICKUP_SALVOLAUNCHER = "Procured a %s.";
+
+	BIO_WEAP_PICKUP_MEGATON = "Acquired Megaton.";
 
 // Weapon upgrade kit (tag, pickup message, UI messaging) ======================
 

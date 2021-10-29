@@ -876,6 +876,17 @@ class BIO_Weapon : DoomWeapon abstract
 		reserveAmmo.Amount -= subtract;
 	}
 
+	action void A_EmptyMagazine(bool secondary = false)
+	{
+		let magAmmo = !secondary ? invoker.Magazine1 : invoker.Magazine2;
+		let reserveAmmo = invoker.Owner.FindInventory(
+			!secondary ? invoker.AmmoType1 : invoker.AmmoType2);
+		let factor = !secondary ? invoker.ReloadFactor1 : invoker.ReloadFactor2;
+		// reserveAmmo.MaxAmount intentionally not factored into this
+		reserveAmmo.Amount += magAmmo.Amount * factor;
+		magAmmo.Amount -= magAmmo.Amount;
+	}
+
 	protected action void A_BIO_AlertMonsters()
 	{
 		double maxDist = 0;
