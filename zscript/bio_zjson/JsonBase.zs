@@ -4,7 +4,8 @@ class BIO_JsonElementOrError {
 class BIO_JsonElement : BIO_JsonElementOrError {
 }
 
-class BIO_JsonNumber : BIO_JsonElement {
+class BIO_JsonNumber : BIO_JsonElement abstract {
+	abstract BIO_JsonNumber negate();
 }
 
 class BIO_JsonInt : BIO_JsonNumber {
@@ -14,6 +15,10 @@ class BIO_JsonInt : BIO_JsonNumber {
 		ii.i=i;
 		return ii;
 	}
+	override BIO_JsonNumber negate(){
+		i=-i;
+		return self;
+	}
 }
 
 class BIO_JsonDouble : BIO_JsonNumber {
@@ -22,6 +27,10 @@ class BIO_JsonDouble : BIO_JsonNumber {
 		BIO_JsonDouble dd=new("BIO_JsonDouble");
 		dd.d=d;
 		return dd;
+	}
+	override BIO_JsonNumber negate(){
+		d=-d;
+		return self;
 	}
 }
 
