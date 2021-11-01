@@ -38,6 +38,12 @@ class BIO_EventHandler : EventHandler
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Handling WorldLoaded event...");
 
 		super.WorldLoaded(event);
+
+		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
+		if (bioPlayer != null)
+		{
+			bioPlayer.WorldLoaded(event.IsSaveGame, event.IsReopen);
+		}
 	}
 
 	override void PlayerEntered(PlayerEvent event)
@@ -65,9 +71,42 @@ class BIO_EventHandler : EventHandler
 		if (ConEvent_PerkMenu(event)) return;
 
 		// Debugging events
+		if (ConEvent_PassiveDiag(event)) return;
 		if (ConEvent_WeapDiag(event)) return;
 		if (ConEvent_XPInfo(event)) return;
 		if (ConEvent_WeapAfxCompat(event)) return;
+	}
+
+	private ui bool ConEvent_PassiveDiag(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_passivediag" || event.Name ~== "bio_pasvdiag"))
+			return false;
+		
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked manually.");
+			return true;
+		}
+
+		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
+		if (bioPlayer == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on Biomorph-class players.");
+			return true;
+		}
+
+		string output = "\c[Gold]Passives:\n";
+
+		for (uint i = 0; i < bioPlayer.Passives.Size(); i++)
+			output.AppendFormat("%s x %d\n",
+				bioPlayer.Passives[i].GetClassName(),
+				bioPlayer.Passives[i].Count);
+
+		output.DeleteLastCharacter();
+		Console.Printf(output);
+		return true;
 	}
 
 	private ui bool ConEvent_PerkMenu(ConsoleEvent event) const
@@ -426,6 +465,9 @@ class BIO_EventHandler : EventHandler
 
 		// Debugging events
 
+		if (NetEvent_AddPassive(event) || NetEvent_RemovePassive(event))
+			return;
+
 		if (NetEvent_AddWeapAffix(event) || NetEvent_RemoveWeapAffix(event))
 			return;
 	}
@@ -435,7 +477,7 @@ class BIO_EventHandler : EventHandler
 
 	private transient BIO_WeaponUpgradeOverlay WeaponUpgradeOverlay;
 
-	private bool NetEvent_WUKOverlay(ConsoleEvent event)
+	private bool NetEvent_WUKOverlay(ConsoleEvent event) const
 	{
 		if (!(event.Name ~== EVENT_WUKOVERLAY)) return false;
 		if (event.Player != ConsolePlayer) return true;
@@ -476,7 +518,7 @@ class BIO_EventHandler : EventHandler
 		return true;
 	}
 
-	private bool NetEvent_WeaponUpgrade(ConsoleEvent event)
+	private bool NetEvent_WeaponUpgrade(ConsoleEvent event) const
 	{
 		if (event.Player != ConsolePlayer) return false;
 
@@ -534,7 +576,87 @@ class BIO_EventHandler : EventHandler
 		return true;
 	}
 
-	private bool NetEvent_AddWeapAffix(ConsoleEvent event)
+	private bool NetEvent_AddPassive(ConsoleEvent event) const
+	{
+		if (event.Player != ConsolePlayer) return false;
+
+		Array<string> nameParts;
+		event.Name.Split(nameParts, ":");
+
+		if (!nameParts[0] || !(nameParts[0] ~== "bio_addpasv"))
+			return false;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked manually.");
+			return true;
+		}
+
+		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
+		if (bioPlayer == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on Biomorph-class players.");
+			return true;
+		}
+
+		Class<BIO_Passive> pasv_t = nameParts[1];
+		if (pasv_t == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"%s is not a legal passive class name.", nameParts[1]);
+			return true;
+		}
+
+		uint count = event.Args[0] != 0 ? Max(event.Args[0], 0) : 1;
+		bioPlayer.PushPassive(pasv_t, count);
+		Console.Printf(Biomorph.LOGPFX_INFO ..
+			"Added passive effect %s x%d.", pasv_t.GetClassName(), count);
+		return true;
+	}
+
+	private bool NetEvent_RemovePassive(ConsoleEvent event) const
+	{
+		if (event.Player != ConsolePlayer) return false;
+
+		Array<string> nameParts;
+		event.Name.Split(nameParts, ":");
+
+		if (!nameParts[0] || !(nameParts[0] ~== "bio_rmpasv"))
+			return false;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked manually.");
+			return true;
+		}
+
+		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
+		if (bioPlayer == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on Biomorph-class players.");
+			return true;
+		}
+
+		Class<BIO_Passive> pasv_t = nameParts[1];
+		if (pasv_t == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"%s is not a legal passive class name.", nameParts[1]);
+			return true;
+		}
+
+		uint count = event.Args[0] != 0 ? Max(event.Args[0], 0) : 1;
+		bioPlayer.PopPassive(pasv_t, count);
+		Console.Printf(Biomorph.LOGPFX_INFO ..
+			"Removed passive effect %s x%d.", pasv_t.GetClassName(), count);
+		return true;
+	}
+
+	private bool NetEvent_AddWeapAffix(ConsoleEvent event) const
 	{
 		if (event.Player != ConsolePlayer) return false;
 
@@ -585,7 +707,7 @@ class BIO_EventHandler : EventHandler
 		return true;
 	}
 
-	private bool NetEvent_RemoveWeapAffix(ConsoleEvent event)
+	private bool NetEvent_RemoveWeapAffix(ConsoleEvent event) const
 	{
 		if (event.Player != ConsolePlayer) return false;
 

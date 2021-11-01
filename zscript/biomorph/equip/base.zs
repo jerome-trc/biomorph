@@ -140,17 +140,6 @@ class BIO_Equipment : Inventory abstract
 			Affixes[i].OnUnequip(self, broken);
 	}
 
-	// Called before BIO_Player checks if armor has broken, so modifying
-	// BasicArmor is always valid here.
-	virtual void OnDamageTaken(Actor inflictor, Actor source,
-		in out int damage, name dmgType)
-	{
-		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-			ImplicitAffixes[i].OnDamageTaken(self, inflictor, source, damage, dmgType);
-		for (uint i = 0; i < Affixes.Size(); i++)
-			Affixes[i].OnDamageTaken(self, inflictor, source, damage, dmgType);
-	}
-
 	// If this equipment item can not be removed, the user will get
 	// a message sourced from a call to this function.
 	virtual string NoRemoveMessage() const
@@ -216,6 +205,14 @@ class BIO_Armor : BIO_Equipment abstract
 			uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
 			Affixes[e].Init(self);
 		}
+	}
+
+	void PreArmorApply(BIO_Player bioPlayer, BIO_ArmorStats stats)
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].PreArmorApply(self, stats);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].PreArmorApply(self, stats);
 	}
 
 	// Does not check if already in perfect condition.

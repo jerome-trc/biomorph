@@ -1,22 +1,56 @@
-class BIO_Passive abstract
+// `Apply()` and `Remove()` are called exactly once per push/pop. This is true
+// whether `Count` gets modified or a whole instance is constructed/deleted.
+
+class BIO_Passive play abstract
 {
 	uint Count;
 
-	// Invokers of these callbacks never consider `Count`. The callback has the
-	// responsibility to read it and use or discard as appropriate.
-
+	// Called after `Count` is increased (or set on a new instance).
 	virtual void Apply(BIO_Player bioPlayer) const {}
+	// Called before `Count` is ever decreased.
 	virtual void Remove(BIO_Player bioPlayer) const {}
+}
 
+// Functor invocations never consider `Count`. The callbacks have the
+// responsibility to read it and use or discard as appropriate.
+
+class BIO_PlayerFunctor play abstract { uint Count; }
+
+class BIO_TransitionFunctor : BIO_PlayerFunctor abstract
+{
+	virtual void WorldLoaded(BIO_Player bioPlayer, bool saveGame, bool reopen) const {}
+	virtual void EnteredGame(BIO_Player bioPlayer, int playerNumber) const {}
+}
+
+class BIO_DamageTakenFunctor : BIO_PlayerFunctor abstract
+{
 	virtual void OnDamageTaken(BIO_Player bioPlayer, Actor inflictor,
 		Actor source, in out int damage, name dmgType) const {}
+}
+
+class BIO_ItemPickupFunctor : BIO_PlayerFunctor abstract
+{
 	virtual void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const {}
 	virtual void OnAmmoPickup(BIO_Player bioPlayer, Inventory item) const {}
 	virtual void OnBackpackPickup(BIO_Player bioPlayer, BIO_Backpack bkpk) const {}
 	virtual void OnPowerupPickup(BIO_Player bioPlayer, Inventory item) const {}
-	virtual void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const {}
-	virtual void OnBerserk(BIO_Player bioPlayer, BIO_PowerStrength power) const {}
+	virtual void OnMapPickup(BIO_Player bioPlayer, Allmap map) const {}
+}
 
+class BIO_PowerupFunctor : BIO_PlayerFunctor abstract
+{
+	virtual void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const {}
+	virtual void OnPowerupDetach(BIO_Player bioPlayer, Powerup power) const {}
+}
+
+class BIO_WeaponFunctor : BIO_PlayerFunctor abstract
+{
+	virtual void PreFire(BIO_Player bioPlayer, Class<Actor> fireType, int fireCount,
+		int damage, float angle, float pitch) const {}
+}
+
+class BIO_EquipmentFunctor : BIO_PlayerFunctor abstract
+{
 	// Before any pointers get set, and before the equipment's
 	// version of this callback gets invoked.
 	virtual void OnEquip(BIO_Player player, BIO_Equipment equip) const {}
@@ -25,6 +59,7 @@ class BIO_Passive abstract
 	// version of this callback gets invoked.
 	virtual void OnUnequip(BIO_Player player, BIO_Equipment equip, bool broken) const {}
 
-	// Allow for modifying armor stats (e.g. SaveAmount and SavePercent).
-	virtual void PreArmorApply(BIO_Player player, BIO_Armor armor, BIO_ArmorStats stats) const {}
+	// For modifying armor stats (e.g. SaveAmount and SavePercent).
+	virtual void PreArmorApply(BIO_Player player, BIO_Armor armor,
+		BIO_ArmorStats stats) const {}
 }

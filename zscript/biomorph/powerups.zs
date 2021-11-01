@@ -1,3 +1,25 @@
+class BIO_Allmap : Allmap replaces Allmap
+{
+	override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+
+		let bioPlayer = BIO_Player(toucher);
+		if (bioPlayer == null) return;
+
+		bioPlayer.OnMapPickup(self);
+	}
+}
+
+// Provides an infinitely-lasting variant of `PowerScanner` for perks.
+class BIO_PowerScanner : PowerScanner
+{
+	Default
+	{
+		Powerup.Duration -0x7FFFFFFF;
+	}
+}
+
 class BIO_Berserk : Berserk replaces Berserk
 {
 	States
@@ -37,7 +59,6 @@ class BIO_PowerStrength : PowerStrength
 		let bioPlayer = BIO_Player(other);
 		if (bioPlayer == null) return;
 		bioPlayer.OnPowerupAttach(self);
-		bioPlayer.OnBerserk(self);
 	}
 }
 
