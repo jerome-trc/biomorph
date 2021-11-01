@@ -526,6 +526,39 @@ class BIO_Weapon : DoomWeapon abstract
 			return FireType2 is "BIO_Projectile";
 	}
 
+	// Only accounts for the `SplashDamage` field of the fired actor (if it's present).
+	bool Splashes(bool secondary = false) const
+	{
+		if (!secondary)
+		{
+			if (FireType1 is "BIO_Projectile")
+			{
+				let defs = GetDefaultByType((Class<BIO_Projectile>)(FireType1));
+				return defs.SplashDamage > 0;
+			}
+			else if (FireType1 is "BIO_FastProjectile")
+			{
+				let defs = GetDefaultByType((Class<BIO_FastProjectile>)(FireType1));
+				return defs.SplashDamage > 0;
+			}
+			else return false; // Impossible to tell for certain
+		}
+		else
+		{
+			if (FireType1 is "BIO_Projectile")
+			{
+				let defs = GetDefaultByType((Class<BIO_Projectile>)(FireType2));
+				return defs.SplashDamage > 0;
+			}
+			else if (FireType1 is "BIO_FastProjectile")
+			{
+				let defs = GetDefaultByType((Class<BIO_FastProjectile>)(FireType2));
+				return defs.SplashDamage > 0;
+			}
+			else return false; // Impossible to tell for certain
+		}
+	}
+
 	// No fire state can have a tic time below 1. Fire rate-affecting affixes need
 	// to know in advance if they can even have any effect, given this caveat.
 	int ReducibleFireTime() const
@@ -799,14 +832,6 @@ class BIO_Weapon : DoomWeapon abstract
 				pitch: FRandom(-invoker.VSpread1, invoker.VSpread1) * spreadFactor);
 			
 			if (proj == null) continue;
-			int dmg = Random(invoker.MinDamage1, invoker.MaxDamage1);
-
-			for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
-				invoker.ImplicitAffixes[i].ModifyDamage(invoker, dmg);
-			for (uint i = 0; i < invoker.Affixes.Size(); i++)
-				invoker.Affixes[i].ModifyDamage(invoker, dmg);
-
-			proj.SetDamage(dmg);
 			invoker.OnProjectileFired(proj);
 		}
 
@@ -982,6 +1007,13 @@ class BIO_Weapon : DoomWeapon abstract
 
 	private void OnProjectileFired(Actor proj)
 	{
+		int dmg = Random(MinDamage1, MaxDamage1);
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].ModifyDamage(self, dmg);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].ModifyDamage(self, dmg);
+
 		if (proj is "BIO_Projectile")
 		{
 			let tProj = BIO_Projectile(proj);
@@ -992,13 +1024,15 @@ class BIO_Weapon : DoomWeapon abstract
 
 			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			{
-				ImplicitAffixes[i].ModifySplash(self, tProj.SplashDamage, tProj.SplashRadius);
+				ImplicitAffixes[i].ModifySplash(self,
+					tProj.SplashDamage, tProj.SplashRadius, dmg);
 				ImplicitAffixes[i].OnTrueProjectileFired(self, tProj);
 			}
 
 			for (uint i = 0; i < Affixes.Size(); i++)
 			{
-				Affixes[i].ModifySplash(self, tProj.SplashDamage, tProj.SplashRadius);
+				Affixes[i].ModifySplash(self,
+					tProj.SplashDamage, tProj.SplashRadius, dmg);
 				Affixes[i].OnTrueProjectileFired(self, tProj);
 			}
 		}
@@ -1011,16 +1045,20 @@ class BIO_Weapon : DoomWeapon abstract
 
 			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			{
-				ImplicitAffixes[i].ModifySplash(self, fProj.SplashDamage, fProj.SplashRadius);
+				ImplicitAffixes[i].ModifySplash(self,
+					fProj.SplashDamage, fProj.SplashRadius, dmg);
 				ImplicitAffixes[i].OnFastProjectileFired(self, fProj);
 			}
 
 			for (uint i = 0; i < Affixes.Size(); i++)
 			{
-				Affixes[i].ModifySplash(self, fProj.SplashDamage, fProj.SplashRadius);
+				Affixes[i].ModifySplash(self,
+					fProj.SplashDamage, fProj.SplashRadius, dmg);
 				Affixes[i].OnFastProjectileFired(self, fProj);
 			}
 		}
+
+		proj.SetDamage(dmg);
 	}
 
 	void RewriteStatReadout()

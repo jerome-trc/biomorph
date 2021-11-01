@@ -211,6 +211,40 @@ class BIO_WAFX_Crit : BIO_WeaponAffix
 	}
 }
 
+// All splash damage on the fired projectile is converted into direct hit damage.
+class BIO_WAFX_SplashForDamage : BIO_WeaponAffix
+{
+	override void Init(BIO_Weapon weap) {}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return PrimaryCompatible(weap) || SecondaryCompatible(weap);
+	}
+
+	protected bool PrimaryCompatible(BIO_Weapon weap) const
+	{
+		return weap.Splashes(false);
+	}
+
+	protected bool SecondaryCompatible(BIO_Weapon weap) const
+	{
+		return weap.Splashes(true);
+	}
+
+	override void ModifySplash(BIO_Weapon weap, in out int dmg, in out int radius,
+		in out int baseDmg) const
+	{
+		baseDmg += Max(dmg, 0);
+		dmg = 0;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(CRESC_MIXED .. StringTable.Localize(
+			"$BIO_AFFIX_TOSTR_SPLASHFORDAMAGE"));
+	}
+}
+
 // Fire type ===================================================================
 
 class BIO_WAFX_Plasma : BIO_WeaponAffix

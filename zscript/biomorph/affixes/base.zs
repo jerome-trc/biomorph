@@ -17,7 +17,8 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	virtual void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const {}
 
 	virtual void ModifyDamage(BIO_Weapon weap, in out int dmg) const {}
-	virtual void ModifySplash(BIO_Weapon weap, in out int dmg, in out int radius) const {}
+	virtual void ModifySplash(BIO_Weapon weap, in out int dmg, in out int radius,
+		in out int baseDmg) const {}
 	virtual void ModifyLifesteal(BIO_Weapon weap, in out float lifeSteal) const {}
 	virtual void ModifyMeleeRange(BIO_Weapon weap, in out float range) const {}
 

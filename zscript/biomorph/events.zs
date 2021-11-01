@@ -230,7 +230,7 @@ class BIO_EventHandler : EventHandler
 			return true;
 		}
 
-		if (!nameParts[1])
+		if (nameParts.Size() < 2 || !nameParts[1])
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"Please provide a weapon affix class name.");
@@ -543,6 +543,13 @@ class BIO_EventHandler : EventHandler
 			return true;
 		}
 
+		if (nameParts.Size() < 2)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				EVENT_WEAPUPGRADE .. " received no second part.");
+			return true;
+		}
+
 		if (nameParts[1] == "_")
 		{
 			// The user cancelled this weapon upgrade operation
@@ -601,6 +608,13 @@ class BIO_EventHandler : EventHandler
 			return true;
 		}
 
+		if (nameParts.Size() < 2 || !nameParts[1])
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Please provide the class name of a player passive to add.");
+			return true;
+		}
+
 		Class<BIO_Passive> pasv_t = nameParts[1];
 		if (pasv_t == null)
 		{
@@ -638,6 +652,13 @@ class BIO_EventHandler : EventHandler
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"This event can only be invoked on Biomorph-class players.");
+			return true;
+		}
+
+		if (nameParts.Size() < 2 || !nameParts[1])
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Please provide the class name of a player passive to remove.");
 			return true;
 		}
 
@@ -681,7 +702,7 @@ class BIO_EventHandler : EventHandler
 			return true;
 		}
 
-		if (!nameParts[1])
+		if (nameParts.Size() < 2 || !nameParts[1])
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"Please provide the class name of a weapon affix to add.");
@@ -732,7 +753,7 @@ class BIO_EventHandler : EventHandler
 			return true;
 		}
 
-		if (!nameParts[1])
+		if (nameParts.Size() < 2 || !nameParts[1])
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"Please provide the class name of a weapon affix to remove.");
