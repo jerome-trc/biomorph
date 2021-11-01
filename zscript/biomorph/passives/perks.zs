@@ -1,3 +1,40 @@
+// More duration from any supported powerup ====================================
+
+class BIO_Perk_PowerupDurationMinor : BIO_Passive
+{
+	override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor("BIO_Functor_PowerupDuration");
+	}
+
+	override void Remove(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PopFunctor("BIO_Functor_PowerupDuration");
+	}
+}
+
+class BIO_Perk_PowerupDurationMajor : BIO_Passive
+{
+	override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor("BIO_Functor_PowerupDuration", 5);
+	}
+
+	override void Remove(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PopFunctor("BIO_Functor_PowerupDuration", 5);
+	}
+}
+
+// Give the powerup extra duration based on 5% of its default duration.
+class BIO_Functor_PowerupDuration : BIO_PowerupFunctor
+{
+	override void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const
+	{
+		power.EffectTics += ((power.Default.EffectTics * 0.05) * Count);
+	}
+}
+
 // Player gets allmap at start of level ========================================
 
 class BIO_Perk_Allmap : BIO_Passive
