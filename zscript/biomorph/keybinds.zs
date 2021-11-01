@@ -40,7 +40,7 @@ class BIO_WeaponDrop : BIO_Keybind
 		if (!Primed)
 		{
 			int k1, k2;
-			[k1, k2] = Bindings.GetKeysForCommand("bio_dropweap");
+			[k1, k2] = Bindings.GetKeysForCommand("use BIO_WeaponDrop");
 			string prompt = String.Format(
 				StringTable.Localize("$BIO_WEAPDROP_CONFIRM"),
 				Keybindings.NameKeys(k1, k2));
@@ -76,7 +76,7 @@ class BIO_UnequipArmor : BIO_Keybind
 		if (!Primed)
 		{
 			int k1, k2;
-			[k1, k2] = Bindings.GetKeysForCommand("bio_unequiparmor");
+			[k1, k2] = Bindings.GetKeysForCommand("use BIO_UnequipArmor");
 			string prompt = String.Format(
 				StringTable.Localize("$BIO_ARMORUNEQUIP_CONFIRM"),
 				Keybindings.NameKeys(k1, k2));

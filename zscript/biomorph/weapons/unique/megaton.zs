@@ -1,4 +1,5 @@
-// Unique Incursion Shotgun, inspired by DRLA's Frag Shotgun. Can switch via
+// Unique Incursion Shotgun, inspired by DRLA's Frag Shotgun, and named after the
+// DRLA weapon off which the Incursion Shotgun itself is based. Can switch via
 // Zoom input to feeding bullets instead of shells.
 class BIO_Megaton : BIO_IncursionShotgun
 {

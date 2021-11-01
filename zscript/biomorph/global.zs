@@ -65,7 +65,7 @@ class BIO_GlobalData : Thinker
 		uint e = PerkGraphs.Push(new("BIO_PerkGraph"));
 		PerkGraphs[e].Player = pInfo;
 		PerkGraphs[e].Nodes.Copy(BasePerkGraph.Nodes);
-		return null;
+		return PerkGraphs[e];
 	}
 
 	bool WeaponAffixCompatible(Class<BIO_WeaponAffix> afx_t, BIO_Weapon weap) const
