@@ -62,6 +62,33 @@ class BIO_PowerStrength : PowerStrength
 	}
 }
 
+class BIO_Invulnerability : InvulnerabilitySphere replaces InvulnerabilitySphere
+{
+	Default
+	{
+		Powerup.Type "BIO_PowerInvulnerable";
+	}
+
+	override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+		let bioPlayer = BIO_Player(toucher);
+		if (bioPlayer == null) return;
+		bioPlayer.OnPowerupPickup(self);
+	}
+}
+
+class BIO_PowerInvulnerable : PowerInvulnerable
+{
+	override void AttachToOwner(Actor other)
+	{
+		super.AttachToOwner(other);
+		let bioPlayer = BIO_Player(other);
+		if (bioPlayer == null) return;
+		bioPlayer.OnPowerupAttach(self);
+	}
+}
+
 class BIO_Megasphere : Megasphere replaces Megasphere
 {
 	States
