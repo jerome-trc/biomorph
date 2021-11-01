@@ -545,12 +545,12 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 		else
 		{
-			if (FireType1 is "BIO_Projectile")
+			if (FireType2 is "BIO_Projectile")
 			{
 				let defs = GetDefaultByType((Class<BIO_Projectile>)(FireType2));
 				return defs.SplashDamage > 0;
 			}
-			else if (FireType1 is "BIO_FastProjectile")
+			else if (FireType2 is "BIO_FastProjectile")
 			{
 				let defs = GetDefaultByType((Class<BIO_FastProjectile>)(FireType2));
 				return defs.SplashDamage > 0;
