@@ -7,3 +7,6 @@ defaultbind Y bio_dropweap
 addmenukey "$BIO_KB_UNEQUIPARMOR" bio_unequiparmor
 alias bio_unequiparmor "use BIO_UnequipArmor"
 defaultbind V bio_unequiparmor
+
+addmenukey "$BIO_KB_PERKMENU" "event bio_perkmenu"
+defaultbind P "event bio_perkmenu"

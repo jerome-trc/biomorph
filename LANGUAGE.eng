@@ -250,12 +250,15 @@
 	BIO_OPTVAL_BSKS_MELEE = "Always";
 	BIO_OPTVAL_BSKS_FIRSTONLY = "Only on first pickup";
 
+	BIO_PERK_UIHELP_PAN = "\cjHold the \cnmouse wheel\cj and \cnmove the mouse\cj to pan";
+
 // Keybindings =================================================================
 
 	BIO_UNASSIGNED_KEY = "\ccUnassigned Key\c-";
 
 	BIO_KB_DROPWEAP = "Drop Weapon";
 	BIO_KB_UNEQUIPARMOR = "Take off Armour";
+	BIO_KB_PERKMENU = "Open Perk Menu";
 
 // Quit messages ===============================================================
 

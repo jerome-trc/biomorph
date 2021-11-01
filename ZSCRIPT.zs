@@ -35,6 +35,8 @@ class Biomorph abstract
 #include "zscript/biomorph/equip/base.zs"
 #include "zscript/biomorph/equip/armor.zs"
 
+#include "zscript/biomorph/menus/perk.zs"
+
 #include "zscript/biomorph/overlays/modal_base.zs"
 #include "zscript/biomorph/overlays/weapon_upgrade.zs"
 

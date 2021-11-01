@@ -13,7 +13,7 @@ class BIO_EventHandler : EventHandler
 
 		super.OnRegister();
 
-		Globals = BIO_GlobalData.Get();
+		Globals = BIO_GlobalData.Create();
 	}
 
 	override void OnUnregister()
@@ -46,7 +46,8 @@ class BIO_EventHandler : EventHandler
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Handling PlayerEntered (player %d)...", event.PlayerNumber);
 
-		super.PlayerEntered(event);
+		// Discarding retrieval to ensure this player's perk graph gets created
+		Globals.GetPerkGraph(Players[event.PlayerNumber]);
 	}
 
 	override void PlayerSpawned(PlayerEvent event)
@@ -60,9 +61,26 @@ class BIO_EventHandler : EventHandler
 
 	override void ConsoleProcess(ConsoleEvent event)
 	{
+		// Normal gameplay events
+		if (ConEvent_PerkMenu(event)) return;
+
+		// Debugging events
 		if (ConEvent_WeapDiag(event)) return;
 		if (ConEvent_XPInfo(event)) return;
 		if (ConEvent_WeapAfxCompat(event)) return;
+	}
+
+	private ui bool ConEvent_PerkMenu(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_perkmenu")) return false;
+
+		if (GameState != GS_LEVEL) return true;
+		if (Players[ConsolePlayer].Health <= 0) return true;
+		if (!(Players[ConsolePlayer].MO is "BIO_Player")) return true;
+		if (Menu.GetCurrentMenu() is "BIO_PerkMenu") return true;
+
+		Menu.SetMenu("BIO_PerkMenu");
+		return true;
 	}
 
 	private ui bool ConEvent_WeapDiag(ConsoleEvent event) const
@@ -401,8 +419,12 @@ class BIO_EventHandler : EventHandler
 
 	override void NetworkProcess(ConsoleEvent event)
 	{
+		// Normal gameplay events
+
 		if (NetEvent_WUKOverlay(event) || NetEvent_WeaponUpgrade(event))
 			return;
+
+		// Debugging events
 
 		if (NetEvent_AddWeapAffix(event) || NetEvent_RemoveWeapAffix(event))
 			return;
