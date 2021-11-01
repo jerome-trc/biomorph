@@ -1,0 +1,14 @@
+{
+	"upgrades": [
+		{
+			"input": "BIO_Pistol",
+			"output": "BIO_AssaultHandgun",
+			"cost": 3
+		},
+		{
+			"input": "BIO_AssaultHandgun",
+			"output": "BIO_HandCannon",
+			"cost": 7
+		}
+	]
+}
