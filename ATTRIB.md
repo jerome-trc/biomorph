@@ -18,6 +18,8 @@ Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as
 
 Autocannon and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
+Hand Cannon sprites are courtesy of Realm667 user Mor'ladim, id Software, and Legend of the Monster Hunter.
+
 Incursion Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
 
 Salvo Launcher sprites are courtesy of ZDoom forum user LossForWords, alongside zrrion the insect, id Software LLC, and Apogee Entertainment.
@@ -48,7 +50,7 @@ The following audio files are provided by CturiX Kemilon, under no license:
 
 Realm667 user cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 
-"m60-1.wav" (HVBRFIRE) is courtesy of ZDoom forum user Joblez_I. 
+"m60-1.wav" (HVBRFIRE) and "deagle.wav" (HANDCANN) are courtesy of ZDoom forum user Joblez_I. 
 
 ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (replaces DSSECRET) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
 

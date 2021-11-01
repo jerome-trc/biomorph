@@ -59,6 +59,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/specialty/assault_handgun.zs"
 
 #include "zscript/biomorph/weapons/experimental/autocannon.zs"
+#include "zscript/biomorph/weapons/experimental/hand_cannon.zs"
 #include "zscript/biomorph/weapons/experimental/heavy_battle_rifle.zs"
 #include "zscript/biomorph/weapons/experimental/incursion_shotgun.zs"
 #include "zscript/biomorph/weapons/experimental/salvo_launcher.zs"
