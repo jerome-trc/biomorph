@@ -10,5 +10,35 @@
 			"output": "BIO_HandCannon",
 			"cost": 7
 		}
-	]
+	],
+	"loot": {
+		"melee": [
+			"BIO_Chainsaw"
+		],
+		"pistols": [
+			"BIO_Pistol",
+			"BIO_AssaultHandgun",
+			"BIO_HandCannon"
+		],
+		"shotguns": [
+			"BIO_Shotgun",
+			"BIO_SuperShotgun",
+			"BIO_IncursionShotgun"
+		],
+		"autoguns": [
+			"BIO_Chaingun",
+			"BIO_Autocannon",
+			"BIO_HeavyBattleRifle"
+		],
+		"launchers": [
+			"BIO_RocketLauncher",
+			"BIO_SalvoLauncher"
+		],
+		"energy": [
+			"BIO_PlasmaRifle"
+		],
+		"super": [
+			"BIO_BFG9000"
+		]
+	}
 }

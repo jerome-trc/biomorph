@@ -14,6 +14,8 @@ class BIO_EventHandler : EventHandler
 		super.OnRegister();
 
 		Globals = BIO_GlobalData.Create();
+		string ldtoken_tn = "LDLegendaryMonsterToken";
+		LDToken = ldtoken_tn;
 	}
 
 	override void OnUnregister()
@@ -394,9 +396,35 @@ class BIO_EventHandler : EventHandler
 		return true;
 	}
 
+	private Class<Inventory> LDToken;
+
 	override void WorldThingDied(WorldEvent event)
 	{
 		if (event.Thing == null || !event.Thing.bIsMonster) return;
+
+		for (Inventory i = event.Thing.Inv; i != null; i = i.Inv)
+		{
+			if (!(i is LDToken)) continue;
+			
+			bool success = false;
+			Actor spawned = null;
+
+			// If we made it here, this was a legendary monster from LegenDoom
+			// or LegenDoom Lite. Drop some extra-special loot
+			[success, spawned] = event.Thing.A_SpawnItemEx(
+				Globals.LootWeaponType(), 0.0, 0.0, 32.0,
+				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
+				FRandom(0.0, 360.0));
+
+			if (success) 
+			{
+				let weap = BIO_Weapon(spawned);
+				weap.RandomizeAffixes();
+				weap.SetState(weap.FindState("Spawn"));
+			}
+			
+			break;
+		}
 
 		// There's no way to know if a Lost Soul was a Pain Elemental spawn,
 		// so just forbid Lost Souls from giving anything to prevent farming
@@ -449,7 +477,7 @@ class BIO_EventHandler : EventHandler
 
 		for (int i = 0; i < (val / LOOT_RNG_THRESHOLD); i++)
 		{
-			event.Thing.A_SpawnItemEx(BIO_GlobalData.Get().RandomMutagenType(),
+			event.Thing.A_SpawnItemEx(Globals.RandomMutagenType(),
 				0.0, 0.0, 32.0,
 				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
 				FRandom(0.0, 360.0));
