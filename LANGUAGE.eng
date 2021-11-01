@@ -265,6 +265,7 @@
 	BIO_QUITMSG_CRIT = "\cjCritical strike affixes can only roll on pistols.";
 	BIO_QUITMSG_GRADES = "\cjAll gear fits into one of three grades: "
 		"Standard, \c[Spec]Specialty\cj, and \c[Exp]Experimental\cj.";
+	BIO_QUITMSG_LIFESTEAL = "\cjLifesteal affixes can only roll on melee weapons.";
 	BIO_QUITMSG_MULTIBARREL = "\cjMulti-barrelled weapons like the Super Shotgun "
 		"always allow firing only one barrel (try your \cnalt-fire\cj button).";
 	BIO_QUITMSG_MUTACORR = "\cjThe effects of \cgR.O.T. Mutagen\cj "
