@@ -1,12 +1,10 @@
 AddKeySection "$BIO_MODTITLE" BIO_Section
 
-addmenukey "$BIO_KB_DROPWEAP" bio_dropweap
-alias bio_dropweap "use BIO_WeaponDrop"
-defaultbind Y bio_dropweap
+addmenukey "$BIO_KB_DROPWEAP" "use BIO_WeaponDrop"
+defaultbind Y "use BIO_WeaponDrop"
 
-addmenukey "$BIO_KB_UNEQUIPARMOR" bio_unequiparmor
-alias bio_unequiparmor "use BIO_UnequipArmor"
-defaultbind V bio_unequiparmor
+addmenukey "$BIO_KB_UNEQUIPARMOR" "use BIO_UnequipArmor"
+defaultbind V "use BIO_UnequipArmor"
 
 addmenukey "$BIO_KB_PERKMENU" "event bio_perkmenu"
 defaultbind P "event bio_perkmenu"
