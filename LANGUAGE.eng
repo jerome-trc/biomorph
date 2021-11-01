@@ -41,19 +41,9 @@
 	BIO_WEAPSTAT_RELOADTIME = "\cjReload time: %s%.2f\cj seconds";
 	BIO_WEAPSTAT_POSTFIREDELAY = "\cjPost-fire delay: %s%.2f\cj seconds";
 	BIO_WEAPSTAT_SPREAD = "\cjSpread angles: %s%.2f\cj horizontal, %s%.2f\cj vertical";
-
-	BIO_WEAP_TAG_ASSAULTHANDGUN = "Assault Handgun";
+	BIO_WEAPSTAT_FORCERADIUSDMG = "\cjIgnores splash damage immunity";
 
 	BIO_WEAP_TAG_FIST = "Fist";
-	BIO_WEAP_TAG_AUTOCANNON = "Autocannon";
-	BIO_WEAP_TAG_HANDCANNON = "Hand Cannon";
-	BIO_WEAP_TAG_HBR = "Heavy Battle Rifle";
-	BIO_WEAP_TAG_INCURSIONSHOTGUN = "Incursion Shotgun";
-	BIO_WEAP_TAG_SALVOLAUNCHER = "Salvo Launcher";
-	
-	BIO_WEAP_TAG_MEGATON = "\c[Orange]Megaton\c[White] Incursion Shotgun";
-	BIO_WEAPSTAT_MEGATON_0 = "\c[Orange]Can load shells or bullets";
-	BIO_WEAPSTAT_MEGATON_1 = "\cnZoom\c[Orange] switches ammo type";
 
 	BIO_WEAP_PICKUP_BFG90000 = "Grabbed a %s.";
 	BIO_WEAP_PICKUP_CHAINGUN = "Grabbed a %s.";
@@ -64,15 +54,29 @@
 	BIO_WEAP_PICKUP_SHOTGUN = "Grabbed a %s.";
 	BIO_WEAP_PICKUP_SUPERSHOTGUN = "Grabbed a %s.";
 
+	BIO_WEAP_TAG_ASSAULTHANDGUN = "Assault Handgun";
 	BIO_WEAP_PICKUP_ASSAULTHANDGUN = "Obtained an %s.";
-
+	
+	BIO_WEAP_TAG_AUTOCANNON = "Autocannon";
 	BIO_WEAP_PICKUP_AUTOCANNON = "Procured an %s.";
-	BIO_WEAP_PICKUP_HANDCANNON = "Procured a %s.";
-	BIO_WEAP_PICKUP_HBR = "Procured a %s.";
-	BIO_WEAP_PICKUP_INCURSIONSHOTGUN = "Procured an %s.";
-	BIO_WEAP_PICKUP_SALVOLAUNCHER = "Procured a %s.";
 
+	BIO_WEAP_TAG_HANDCANNON = "Hand Cannon";
+	BIO_WEAP_PICKUP_HANDCANNON = "Procured a %s.";
+
+	BIO_WEAP_TAG_HBR = "Heavy Battle Rifle";
+	BIO_WEAP_PICKUP_HBR = "Procured a %s.";
+
+	BIO_WEAP_TAG_INCURSIONSHOTGUN = "Incursion Shotgun";
+	BIO_WEAP_PICKUP_INCURSIONSHOTGUN = "Procured an %s.";
+	BIO_WEAPSTAT_INCURSIONSHOTGUN_QUAD = "\cnAlt-fire\cj shoots 4 barrels";
+
+	BIO_WEAP_TAG_SALVOLAUNCHER = "Salvo Launcher";
+	BIO_WEAP_PICKUP_SALVOLAUNCHER = "Procured a %s.";
+	
+	BIO_WEAP_TAG_MEGATON = "\c[Orange]Megaton\c[White] Incursion Shotgun";
 	BIO_WEAP_PICKUP_MEGATON = "Acquired Megaton.";
+	BIO_WEAPSTAT_MEGATON_DETAIL = "\c[Orange]Can load shells or bullets";
+	BIO_WEAPSTAT_MEGATON_HOWTO = "\cnZoom\c[Orange] switches ammo type";
 
 // Weapon upgrade kit (tag, pickup message, UI messaging) ======================
 

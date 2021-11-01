@@ -92,13 +92,10 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 	{
 		stats.Push(GenericFireDataReadout(fireTypeTag:
 			GetDefaultByType("BIO_MeleeHit").CountBasedTag(FireCount1)));
-		stats.Push(GenericFireTimeReadout(FireTime, "$BIO_WEAPSTAT_ATKTIME"));
+		stats.Push(GenericFireTimeReadout(TrueFireTime(), "$BIO_WEAPSTAT_ATKTIME"));
 	}
 
-	override int DefaultFireTime() const
-	{
-		return Default.FireTime;
-	}
+	override int TrueFireTime() const { return FireTime; }
 
 	action void A_BIO_Saw(int flags = 0)
 	{

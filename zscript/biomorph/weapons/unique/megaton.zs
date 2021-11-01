@@ -53,8 +53,8 @@ class BIO_Megaton : BIO_IncursionShotgun
 	override void StatsToString(in out Array<string> stats) const
 	{
 		super.StatsToString(stats);
-		stats.Push(StringTable.Localize("$BIO_WEAPSTAT_MEGATON_0"));
-		stats.Push(StringTable.Localize("$BIO_WEAPSTAT_MEGATON_1"));
+		stats.Push(StringTable.Localize("$BIO_WEAPSTAT_MEGATON_DETAIL"));
+		stats.Push(StringTable.Localize("$BIO_WEAPSTAT_MEGATON_HOWTO"));
 	}
 }
 

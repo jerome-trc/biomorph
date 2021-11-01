@@ -143,18 +143,15 @@ class BIO_SalvoLauncher : BIO_Weapon
 			"$BIO_WEAPSTAT_FIRETIME_BURST", Default.TotalBurstFireTime()));
 		stats.Push(GenericFireTimeReadout(TotalAutoFireTime(),
 			"$BIO_WEAPSTAT_FIRETIME_AUTO", Default.TotalAutoFireTime()));
+		stats.Push(StringTable.Localize("$BIO_WEAPSTAT_FORCERADIUSDMG"));
 	}
 
-	override int DefaultFireTime() const
-	{
-		return
-			Default.FireTime1 + Default.FireTime2 +
-			Default.FireTime3 + Default.FireTime4;
-	}
+	// Note: currently unused.
+	override int TrueFireTime() const { return TotalBurstFireTime(); }
 
 	protected int TotalBurstFireTime() const
 	{
-		return (FireTime1 * 3) + (FireTime2 * 3) + (FireTime3 * 3) + FireTime4;
+		return (3 * 3) + (FireTime1 * 3) + (FireTime2 * 3) + (FireTime3 * 3) + FireTime4;
 	}
 
 	protected int TotalAutoFireTime() const

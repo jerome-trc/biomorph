@@ -171,22 +171,19 @@ class BIO_IncursionShotgun : BIO_Weapon
 	{
 		stats.Push(GenericFireDataReadout());
 		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericFireTimeReadout(
-			FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5));
-		stats.Push(GenericReloadTimeReadout(
-			ReloadTime1 + ReloadTime2 + ReloadTime3 + ReloadTime4 + ReloadTime5));
+		stats.Push(GenericFireTimeReadout(TrueFireTime()));
+		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
+		stats.Push(StringTable.Localize("$BIO_WEAPSTAT_INCURSIONSHOTGUN_QUAD"));
 	}
 
-	override int DefaultFireTime() const
+	override int TrueFireTime() const
 	{
-		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3 +
-			Default.FireTime4 + Default.FireTime5;
+		return FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5;
 	}
 
-	override int DefaultReloadTime() const
+	override int TrueReloadTime() const
 	{
-		return Default.ReloadTime1 + Default.ReloadTime2 + Default.ReloadTime3 +
-			Default.ReloadTime4 + Default.ReloadTime5;
+		return ReloadTime1 + ReloadTime2 + ReloadTime3 + ReloadTime4 + ReloadTime5;
 	}
 }
 

@@ -94,8 +94,8 @@ class BIO_Autocannon : BIO_Weapon
 	{
 		stats.Push(GenericFireDataReadout());
 		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericFireTimeReadout(2));
+		stats.Push(GenericFireTimeReadout(TrueFireTime()));
 	}
 	
-	override int DefaultFireTime() const { return 2; }
+	override int TrueFireTime() const { return 2; }
 }

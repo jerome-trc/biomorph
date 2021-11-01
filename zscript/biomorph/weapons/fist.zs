@@ -99,15 +99,12 @@ class BIO_Fist : BIO_Weapon replaces Fist
 	{
 		stats.Push(GenericFireDataReadout(fireTypeTag:
 			GetDefaultByType("BIO_MeleeHit").CountBasedTag(FireCount1)));
-		stats.Push(GenericFireTimeReadout(
-			FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5,
-			"$BIO_WEAPSTAT_ATKTIME"));
+		stats.Push(GenericFireTimeReadout(TrueFireTime(), "$BIO_WEAPSTAT_ATKTIME"));
 	}
 
-	override int DefaultFireTime() const
+	override int TrueFireTime() const
 	{
-		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3 +
-			Default.FireTime4 + Default.FireTime5;
+		return FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5;
 	}
 
 	action void A_BIO_Punch()

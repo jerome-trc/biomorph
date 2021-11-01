@@ -118,20 +118,13 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout());
-		stats.Push(GenericFireTimeReadout(FireTime));
+		stats.Push(GenericFireTimeReadout(TrueFireTime()));
 		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
+		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
 	}
 
-	override int DefaultFireTime() const
-	{
-		return Default.FireTime;
-	}
-
-	override int DefaultReloadTime() const
-	{
-		return Default.ReloadTime + 19;
-	}
+	override int TrueFireTime() const { return FireTime; }
+	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
 class BIO_Magazine_Chaingun : Ammo

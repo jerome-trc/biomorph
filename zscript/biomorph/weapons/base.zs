@@ -351,18 +351,21 @@ class BIO_Weapon : DoomWeapon abstract
 	virtual void OnTrueProjectileFired(BIO_Projectile proj) const {}
 	virtual void OnFastProjectileFired(BIO_FastProjectile proj) const {}
 
+	// Only for getting mutable fire times; ignore any fixed state frame times.
 	abstract void GetFireTimes(in out Array<int> fireTimes,
 		bool secondary = false) const;
 	protected abstract void SetFireTimes(Array<int> fireTimes,
 		bool secondary = false);
 
+	// Only for getting mutable reload times; ignore any fixed state frame times.
 	abstract void GetReloadTimes(in out Array<int> reloadTimes,
 		bool secondary = false) const;
 	protected abstract void SetReloadTimes(Array<int> reloadTimes,
 		bool secondary = false);
 
-	protected virtual int DefaultFireTime() const { return 0; }
-	protected virtual int DefaultReloadTime() const { return 0; }
+	// Ensure that overrides include fixed state frame times.
+	abstract int TrueFireTime() const;
+	virtual int TrueReloadTime() const { return 0; }
 
 	// Getters =================================================================
 
@@ -1225,7 +1228,7 @@ class BIO_Weapon : DoomWeapon abstract
 		int defaultArg = -1) const
 	{
 		string crEsc = "";
-		int defFT = defaultArg == -1 ? DefaultFireTime() : defaultArg;
+		int defFT = defaultArg == -1 ? Default.TrueFireTime() : defaultArg;
 
 		if (totalFireTime > defFT)
 			crEsc = CRESC_STATWORSE;
@@ -1241,7 +1244,7 @@ class BIO_Weapon : DoomWeapon abstract
 	protected string GenericReloadTimeReadout(int totalReloadTime) const
 	{
 		string crEsc = "";
-		int defRT = DefaultReloadTime();
+		int defRT = Default.TrueReloadTime();
 
 		if (totalReloadTime > defRT)
 			crEsc = CRESC_STATWORSE;

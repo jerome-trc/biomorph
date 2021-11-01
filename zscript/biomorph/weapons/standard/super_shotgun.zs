@@ -170,19 +170,12 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 	{
 		stats.Push(GenericFireDataReadout() .. "\cj " .. StringTable.Localize("$BIO_PER_BARREL"));
 		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericFireTimeReadout(FireTime1 + FireTime2));
-		stats.Push(GenericReloadTimeReadout(ReloadTime1 + ReloadTime2 + ReloadTime3));
+		stats.Push(GenericFireTimeReadout(TrueFireTime()));
+		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
 	}
 
-	override int DefaultFireTime() const
-	{
-		return Default.FireTime1 + Default.FireTime2;
-	}
-
-	override int DefaultReloadTime() const
-	{
-		return Default.ReloadTime1 + Default.ReloadTime2 + Default.ReloadTime3;
-	}
+	override int TrueFireTime() const { return FireTime1 + FireTime2; }
+	override int TrueReloadTime() const { return ReloadTime1 + ReloadTime2 + ReloadTime3; }
 }
 
 class BIO_Magazine_SuperShotgun : Ammo

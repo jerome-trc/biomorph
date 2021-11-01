@@ -166,15 +166,9 @@ class BIO_AssaultHandgun : BIO_Weapon
 		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
 	}
 
-	override int DefaultFireTime() const
-	{
-		return Default.FireTime1 + Default.FireTime2;
-	}
-
-	override int DefaultReloadTime() const
-	{
-		return Default.ReloadTime + 19;
-	}
+	// Note: currently unused.
+	override int TrueFireTime() const { return TotalBurstFireTime(); }
+	override int TrueReloadTime() const { return ReloadTime + 19; }
 
 	protected int TotalBurstFireTime() const
 	{

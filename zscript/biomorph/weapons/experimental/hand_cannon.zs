@@ -126,21 +126,20 @@ class BIO_HandCannon : BIO_Weapon
 	{
 		stats.Push(GenericFireDataReadout());
 		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericFireTimeReadout(3 + FireTime1 + FireTime2 + FireTime3 +
-			FireTime4 + FireTime5 + FireTime6 + 1));
-		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
+		stats.Push(GenericFireTimeReadout(TrueFireTime()));
+		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
 	}
 
-	override int DefaultFireTime() const
+	override int TrueFireTime() const
 	{
 		return
 			3 + FireTime1 + FireTime2 + FireTime3 +
 			FireTime4 + FireTime5 + FireTime6 + 1;
 	}
 
-	override int DefaultReloadTime() const
+	override int TrueReloadTime() const
 	{
-		return Default.ReloadTime + 19;
+		return ReloadTime + 19;
 	}
 }
 

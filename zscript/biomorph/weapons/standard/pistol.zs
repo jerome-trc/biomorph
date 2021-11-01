@@ -143,19 +143,18 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 	{
 		stats.Push(GenericFireDataReadout());
 		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericFireTimeReadout(FireTime1 + FireTime2 + FireTime3 + FireTime4));
-		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
+		stats.Push(GenericFireTimeReadout(TrueFireTime()));
+		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
 	}
 
-	override int DefaultFireTime() const
+	override int TrueFireTime() const
 	{
-		return Default.FireTime1 + Default.FireTime2 +
-			Default.FireTime3 + Default.FireTime4;
+		return FireTime1 + FireTime2 + FireTime3 + FireTime4;
 	}
 
-	override int DefaultReloadTime() const
+	override int TrueReloadTime() const
 	{
-		return Default.ReloadTime + 19;
+		return ReloadTime + 19;
 	}
 }
 

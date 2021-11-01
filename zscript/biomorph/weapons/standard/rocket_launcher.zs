@@ -124,19 +124,12 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout());
-		stats.Push(GenericFireTimeReadout(FireTime1 + FireTime2));
-		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
+		stats.Push(GenericFireTimeReadout(TrueFireTime()));
+		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
 	}
 
-	override int DefaultFireTime() const
-	{
-		return Default.FireTime1 + Default.FireTime2;
-	}
-
-	override int DefaultReloadTime() const
-	{
-		return Default.ReloadTime + 19;
-	}
+	override int TrueFireTime() const { return FireTime1 + FireTime2; }
+	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
 class BIO_Magazine_RocketLauncher : Ammo

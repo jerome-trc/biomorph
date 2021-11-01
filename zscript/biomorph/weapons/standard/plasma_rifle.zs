@@ -154,18 +154,11 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		stats.Push(String.Format(StringTable.Localize("$BIO_WEAPSTAT_POSTFIREDELAY"),
 			crEsc_delay, float(FireTime2) / 35.0));
 
-		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
+		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
 	}
 
-	override int DefaultFireTime() const
-	{
-		return Default.FireTime1 + Default.FireTime2;
-	}
-
-	override int DefaultReloadTime() const
-	{
-		return Default.ReloadTime + 19;
-	}
+	override int TrueFireTime() const { return FireTime1; } // Unused
+	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
 class BIO_Magazine_PlasmaRifle : Ammo

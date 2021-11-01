@@ -126,17 +126,18 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	{
 		stats.Push(GenericFireDataReadout());
 		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericFireTimeReadout(FireTime1 + FireTime2 + FireTime3));
+		stats.Push(GenericFireTimeReadout(TrueFireTime()));
+		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
 	}
 
-	override int DefaultFireTime() const
+	override int TrueFireTime() const
 	{
-		return Default.FireTime1 + Default.FireTime2 + Default.FireTime3;
+		return 22;
 	}
 
-	override int DefaultReloadTime() const
+	override int TrueReloadTime() const
 	{
-		return Default.ReloadTime;
+		return ReloadTime + 19;
 	}
 }
 
