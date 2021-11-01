@@ -1,24 +1,23 @@
-class BIO_Allmap : Allmap replaces Allmap
+mixin class BIO_Powerup
 {
-	override void DoPickupSpecial(Actor toucher)
+	override void AttachToOwner(Actor other)
 	{
-		super.DoPickupSpecial(toucher);
-
-		let bioPlayer = BIO_Player(toucher);
+		super.AttachToOwner(other);
+		let bioPlayer = BIO_Player(other);
 		if (bioPlayer == null) return;
-
-		bioPlayer.OnMapPickup(self);
+		bioPlayer.OnPowerupAttach(self);
 	}
-}
 
-// Provides an infinitely-lasting variant of `PowerScanner` for perks.
-class BIO_PowerScanner : PowerScanner
-{
-	Default
+	override void DetachFromOwner()
 	{
-		Powerup.Duration -0x7FFFFFFF;
+		super.DetachFromOwner();
+		let bioPlayer = BIO_Player(Owner);
+		if (bioPlayer == null) return;
+		bioPlayer.OnPowerupDetach(self);
 	}
 }
+
+// Berserk =====================================================================
 
 class BIO_Berserk : Berserk replaces Berserk
 {
@@ -53,14 +52,56 @@ class BIO_Berserk : Berserk replaces Berserk
 
 class BIO_PowerStrength : PowerStrength
 {
-	override void AttachToOwner(Actor other)
+	mixin BIO_Powerup;
+}
+
+// Partial invisibility ========================================================
+
+class BIO_BlurSphere : BlurSphere replaces BlurSphere
+{
+	Default
 	{
-		super.AttachToOwner(other);
-		let bioPlayer = BIO_Player(other);
+		Powerup.Type "BIO_PowerInvisibility";
+	}
+
+	override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+		let bioPlayer = BIO_Player(toucher);
 		if (bioPlayer == null) return;
-		bioPlayer.OnPowerupAttach(self);
+		bioPlayer.OnPowerupPickup(self);
 	}
 }
+
+class BIO_PowerInvisibility : PowerInvisibility
+{
+	mixin BIO_Powerup;
+}
+
+// Light amplification goggles =================================================
+
+class BIO_Infrared : Infrared replaces Infrared
+{
+	Default
+	{
+		Powerup.Type "BIO_PowerLightAmp";
+	}
+
+	override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+		let bioPlayer = BIO_Player(toucher);
+		if (bioPlayer == null) return;
+		bioPlayer.OnPowerupPickup(self);
+	}
+}
+
+class BIO_PowerLightAmp : PowerLightAmp
+{
+	mixin BIO_Powerup;
+}
+
+// Invulnerability =============================================================
 
 class BIO_Invulnerability : InvulnerabilitySphere replaces InvulnerabilitySphere
 {
@@ -80,12 +121,53 @@ class BIO_Invulnerability : InvulnerabilitySphere replaces InvulnerabilitySphere
 
 class BIO_PowerInvulnerable : PowerInvulnerable
 {
-	override void AttachToOwner(Actor other)
+	mixin BIO_Powerup;
+}
+
+// Anti-radiation suit =========================================================
+
+class BIO_RadSuit : RadSuit replaces RadSuit
+{
+	Default
 	{
-		super.AttachToOwner(other);
-		let bioPlayer = BIO_Player(other);
+		Powerup.Type "BIO_PowerIronFeet";
+	}
+
+	override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+		let bioPlayer = BIO_Player(toucher);
 		if (bioPlayer == null) return;
-		bioPlayer.OnPowerupAttach(self);
+		bioPlayer.OnPowerupPickup(self);
+	}
+}
+
+class BIO_PowerIronFeet : PowerIronFeet
+{
+	mixin BIO_Powerup;
+}
+
+// Miscellaneous ===============================================================
+
+class BIO_Allmap : Allmap replaces Allmap
+{
+	override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+
+		let bioPlayer = BIO_Player(toucher);
+		if (bioPlayer == null) return;
+
+		bioPlayer.OnMapPickup(self);
+	}
+}
+
+// Provides an infinitely-lasting variant of `PowerScanner` for perks.
+class BIO_PowerScanner : PowerScanner
+{
+	Default
+	{
+		Powerup.Duration -0x7FFFFFFF;
 	}
 }
 
