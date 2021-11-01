@@ -23,9 +23,10 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		BIO_Weapon.AffixMasks
 			BIO_WAM_FIRECOUNT | BIO_WAM_FIRETYPE,
 			BIO_WAM_ALL, BIO_WAM_NONE;
+		BIO_Weapon.DamageRanges 100, 800, 49, 87;
 		BIO_Weapon.FireTypes "BIO_BFGBall", "BIO_BFGExtra";
 		BIO_Weapon.FireCounts 1, 40;
-		BIO_Weapon.DamageRanges 100, 800, 49, 87;
+		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 80;
 		BIO_Weapon.MagazineType "BIO_Magazine_BFG9000";
 		BIO_Weapon.Spread 0.2, 0.2;
