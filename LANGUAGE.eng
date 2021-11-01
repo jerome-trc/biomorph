@@ -189,6 +189,8 @@
 	BIO_AFFIX_TOSTR_ENEMYHEALTHDAMAGE = "%s%.1f%% of enemy's health %s damage";
 	BIO_AFFIX_TOSTR_CRIT = "%d%% chance of %s%s%.0f%% damage";
 	BIO_AFFIX_TOSTR_SPLASHFORDAMAGE = "All splash damage converted into direct hit damage";
+	BIO_AFFIX_TOSTR_FORWARDDAMAGE = "%s%.1f%% %s damage when moving forward";
+	BIO_AFFIX_TOSTR_STRAFEDAMAGE = "%s%.1f%% %s damage when strafing";
 
 	BIO_AFFIX_TOSTR_PLASMA = "Fires balls of plasma with a wide damage range";
 	BIO_AFFIX_TOSTR_SLUG = "Fires highly-accurate solid slugs";

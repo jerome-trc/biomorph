@@ -245,6 +245,69 @@ class BIO_WAFX_SplashForDamage : BIO_WeaponAffix
 	}
 }
 
+class BIO_WAFX_ForwardDamage : BIO_WeaponAffix
+{
+	float Multi;
+
+	override void Init(BIO_Weapon weap)
+	{
+		Multi = FRandom(0.25, 0.75);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return weap.DealsAnyDamage();
+	}
+
+	override void ModifyDamage(BIO_Weapon weap, in out int dmg) const
+	{
+		if (weap.Owner.Player.Cmd.Buttons & BT_FORWARD)
+		{
+			dmg += (dmg * Multi);
+		}
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_AFFIX_TOSTR_FORWARDDAMAGE"),
+			Multi > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE, Multi * 100,
+			StringTable.Localize(Multi > 0.0 ? "$BIO_MORE" : "$BIO_LESS")));
+	}
+}
+
+class BIO_WAFX_StrafeDamage : BIO_WeaponAffix
+{
+	float Multi;
+
+	override void Init(BIO_Weapon weap)
+	{
+		Multi = FRandom(0.25, 0.75);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return weap.DealsAnyDamage();
+	}
+
+	override void ModifyDamage(BIO_Weapon weap, in out int dmg) const
+	{
+		if (weap.Owner.Player.Cmd.Buttons & BT_MOVELEFT ||
+			weap.Owner.Player.Cmd.Buttons & BT_MOVERIGHT)
+		{
+			dmg += (dmg * Multi);
+		}
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_AFFIX_TOSTR_STRAFEDAMAGE"),
+			Multi > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE, Multi * 100,
+			StringTable.Localize(Multi > 0.0 ? "$BIO_MORE" : "$BIO_LESS")));
+	}
+}
+
 // Fire type ===================================================================
 
 class BIO_WAFX_Plasma : BIO_WeaponAffix
