@@ -738,6 +738,11 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		if (implicitsToo) ImplicitAffixes.Clear();
 		Affixes.Clear();
+		
+		Rarity = BIO_RARITY_COMMON;
+		SetTag(Default.GetTag());
+		SetTag(GetColoredTag());
+
 		RewriteAffixReadout();
 		RewriteStatReadout();
 	}
