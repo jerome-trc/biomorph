@@ -16,7 +16,7 @@ class BIO_ArmorAffix_SaveAmount : BIO_EquipmentAffix
 
 	override bool Compatible(BIO_Equipment equip) const
 	{
-		return equip is "BIO_Armor";
+		return equip is 'BIO_Armor';
 	}
 
 	override void ToString(in out Array<string> strings, BIO_Equipment equip) const

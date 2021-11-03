@@ -8,7 +8,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 
 	static BIO_WeaponUpgradeOverlay Create(Array<BIO_WeaponUpgrade> options)
 	{
-		let ret = new("BIO_WeaponUpgradeOverlay");
+		let ret = new('BIO_WeaponUpgradeOverlay');
 		ret.OnCreate();
 
 		ret.Help_0 = String.Format(StringTable.Localize("$BIO_WUK_UIHELP_0"),

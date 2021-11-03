@@ -9,11 +9,11 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		Obituary "$OB_MPPISTOL";
 		Tag "$TAG_PISTOL";
 
-		Inventory.Icon "PISTA0";
+		Inventory.Icon 'PISTA0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_PISTOL";
 
 		Weapon.AmmoGive 15;
-		Weapon.AmmoType "Clip";
+		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1900;
 		Weapon.SlotNumber 2;
@@ -23,9 +23,9 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		BIO_Weapon.Flags BIO_WF_PISTOL;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
-		BIO_Weapon.FireType "BIO_Bullet";
+		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 15;
-		BIO_Weapon.MagazineType "BIO_Magazine_Pistol";
+		BIO_Weapon.MagazineType 'BIO_Magazine_Pistol';
 		BIO_Weapon.Spread 4.0, 2.0;
 		BIO_Weapon.SwitchSpeeds 8, 8;
 
@@ -62,7 +62,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		}
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		PISG A 1 A_WeaponReady(WRF_NOFIRE);
 		PISG A 1 Offset(0, 32 + 2);
 		PISG A 1 Offset(0, 32 + 4);

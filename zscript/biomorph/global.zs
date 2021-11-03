@@ -66,7 +66,7 @@ class BIO_GlobalData : Thinker
 		}
 
 		// This player has no perk graph yet. Create it
-		uint e = PerkGraphs.Push(new("BIO_PerkGraph"));
+		uint e = PerkGraphs.Push(new('BIO_PerkGraph'));
 		PerkGraphs[e].Player = pInfo;
 		PerkGraphs[e].Nodes.Copy(BasePerkGraph.Nodes);
 		return PerkGraphs[e];
@@ -220,37 +220,37 @@ class BIO_GlobalData : Thinker
 	static BIO_GlobalData Create()
 	{
 		uint ms = MsTime();
-		let ret = new("BIO_GlobalData");
+		let ret = new('BIO_GlobalData');
 		ret.ChangeStatNum(STAT_STATIC);
 
 		for (uint i = 0; i < 3; i++)
 		{
-			ret.WRTA_MeleeWeapons.Push(new("WeightedRandomTable"));
-			ret.WRTA_Pistols.Push(new("WeightedRandomTable"));
-			ret.WRTA_Shotguns.Push(new("WeightedRandomTable"));
-			ret.WRTA_Autoguns.Push(new("WeightedRandomTable"));
-			ret.WRTA_Launchers.Push(new("WeightedRandomTable"));
-			ret.WRTA_EnergyWeapons.Push(new("WeightedRandomTable"));
-			ret.WRTA_SuperWeapons.Push(new("WeightedRandomTable"));
+			ret.WRTA_MeleeWeapons.Push(new('WeightedRandomTable'));
+			ret.WRTA_Pistols.Push(new('WeightedRandomTable'));
+			ret.WRTA_Shotguns.Push(new('WeightedRandomTable'));
+			ret.WRTA_Autoguns.Push(new('WeightedRandomTable'));
+			ret.WRTA_Launchers.Push(new('WeightedRandomTable'));
+			ret.WRTA_EnergyWeapons.Push(new('WeightedRandomTable'));
+			ret.WRTA_SuperWeapons.Push(new('WeightedRandomTable'));
 		}
 
-		ret.WRT_Mutagens = new("WeightedRandomTable");
+		ret.WRT_Mutagens = new('WeightedRandomTable');
 
 		for (uint i = 0; i < AllClasses.Size(); i++)
 		{
-			if (AllClasses[i].GetParentClass() is "BIO_WeaponAffix")
+			if (AllClasses[i].GetParentClass() is 'BIO_WeaponAffix')
 			{
 				ret.AllWeaponAffixClasses.Push(AllClasses[i]);
 				let wafx = BIO_WeaponAffix(new(AllClasses[i]));
 				ret.WeaponAffixDefaults.Push(wafx);
 			}
-			else if (AllClasses[i].GetParentClass() is "BIO_EquipmentAffix")
+			else if (AllClasses[i].GetParentClass() is 'BIO_EquipmentAffix')
 			{
 				ret.AllEquipmentAffixClasses.Push(AllClasses[i]);
 				let eafx = BIO_EquipmentAffix(new(AllClasses[i]));
 				ret.EquipmentAffixDefaults.Push(eafx);
 			}
-			else if (AllClasses[i].GetParentClass() is "BIO_Mutagen")
+			else if (AllClasses[i].GetParentClass() is 'BIO_Mutagen')
 			{
 				let mut_t = (Class<BIO_Mutagen>)(AllClasses[i]);
 				let defs = GetDefaultByType(mut_t);
@@ -272,11 +272,11 @@ class BIO_GlobalData : Thinker
 
 	private void CreateBasePerkGraph()
 	{
-		BasePerkGraph = new("BIO_PerkGraph");
+		BasePerkGraph = new('BIO_PerkGraph');
 
 		{
 			// Create the starter node
-			uint e = BasePerkGraph.Nodes.Push(new("BIO_PerkGraphNode"));
+			uint e = BasePerkGraph.Nodes.Push(new('BIO_PerkGraphNode'));
 			BasePerkGraph.Nodes[e].UUID = "bio_start";
 		}
 
@@ -289,7 +289,7 @@ class BIO_GlobalData : Thinker
 			next = lump + 1;
 
 			BIO_JsonElementOrError fileOpt = BIO_JSON.parse(Wads.ReadLump(lump));
-			if (fileOpt is "BIO_JsonError")
+			if (fileOpt is 'BIO_JsonError')
 			{
 				Console.Printf(Biomorph.LOGPFX_ERR .. 
 					"Skipping malformed %s lump %d. Details: %s", lump,
@@ -355,7 +355,7 @@ class BIO_GlobalData : Thinker
 						continue;
 					}
 
-					uint e = BasePerkGraph.Nodes.Push(new("BIO_PerkGraphNode"));
+					uint e = BasePerkGraph.Nodes.Push(new('BIO_PerkGraphNode'));
 					BasePerkGraph.Nodes[e].UUID = uuid;
 					BasePerkGraph.Nodes[e].PerkClass = perk_t;
 					BasePerkGraph.Nodes[e].Position = (posX_json.i, posY_json.i);
@@ -377,7 +377,7 @@ class BIO_GlobalData : Thinker
 			next = lump + 1;
 
 			BIO_JsonElementOrError fileOpt = BIO_JSON.parse(Wads.ReadLump(lump));
-			if (fileOpt is "BIO_JsonError")
+			if (fileOpt is 'BIO_JsonError')
 			{
 				Console.Printf(Biomorph.LOGPFX_ERR .. 
 					"Skipping malformed %s lump %d. Details: %s", lump,
@@ -442,7 +442,7 @@ class BIO_GlobalData : Thinker
 						continue;
 					}
 
-					uint e = WeaponUpgrades.Push(new("BIO_WeaponUpgrade"));
+					uint e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
 					WeaponUpgrades[e].Input = input_t;
 					WeaponUpgrades[e].Output = output_t;
 					WeaponUpgrades[e].KitCost = kc;
@@ -507,7 +507,7 @@ class BIO_GlobalData : Thinker
 
 	static clearscope BIO_GlobalData Get()
 	{
-		let iter = ThinkerIterator.Create("BIO_GlobalData", STAT_STATIC);
+		let iter = ThinkerIterator.Create('BIO_GlobalData', STAT_STATIC);
 		return BIO_GlobalData(iter.Next(true));
 	}
 }

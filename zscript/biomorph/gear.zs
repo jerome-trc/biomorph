@@ -45,7 +45,7 @@ mixin class BIO_Gear
 	{
 		// If the DoomRL Arsenal Monster Pack is loaded, rare 
 		// gear pickups increase its danger level
-		string mpt_tn = "RLMonsterpackThingo";
+		name mpt_tn = 'RLMonsterpackThingo';
 		Class<Actor> mpt_t = mpt_tn;
 
 		if (mpt_t != null)
@@ -70,7 +70,7 @@ mixin class BIO_Gear
 				Console.Printf(Biomorph.LOGPFX_DEBUG ..
 					"Increasing DRLA danger level by %d.", danger);
 
-			string rldl_tn = "RLDangerLevel";
+			name rldl_tn = 'RLDangerLevel';
 			A_GiveInventory(rldl_tn, danger, AAPTR_PLAYER1);
 		}
 	}

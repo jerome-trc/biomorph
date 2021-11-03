@@ -202,7 +202,7 @@ class BIO_Utils abstract
 	// Returns true if Zhs2's Intelligent Supplies has been loaded.
 	static bool IntelligentSupplies()
 	{
-		string zhs2IS_name = "Zhs2_IS_BaseItem";
+		name zhs2IS_name = 'Zhs2_IS_BaseItem';
 		Class<Actor> zhs2IS = zhs2IS_name;
 		return zhs2IS != null;
 	}
@@ -210,17 +210,17 @@ class BIO_Utils abstract
 	// Also checks for ThriftyStimpack.
 	static bool IsStimpack(Class<Inventory> inv)
 	{
-		string thriftyStimName = "ThriftyStimpack";
+		name thriftyStimName = 'ThriftyStimpack';
 		Class<Inventory> thriftyStim = thriftyStimName;
-		return inv is "Stimpack" || inv is thriftyStim;
+		return inv is 'Stimpack' || inv is thriftyStim;
 	}
 
 	// Also checks for ThriftyMedikit.
 	static bool IsMedikit(Class<Inventory> inv)
 	{
-		string thriftyMediName = "ThriftyMedikit";
+		name thriftyMediName = 'ThriftyMedikit';
 		Class<Inventory> thriftyMedi = thriftyMediName;
-		return inv is "Medikit" || inv is thriftyMedi;
+		return inv is 'Medikit' || inv is thriftyMedi;
 	}
 
 	static string PrimaryKeyName(int key1, int key2 = 0)
@@ -408,7 +408,7 @@ class WeightedRandomTable
 			return;
 		}
 
-		uint end = Entries.Push(new("WeightedRandomTableEntry"));
+		uint end = Entries.Push(new('WeightedRandomTableEntry'));
 		Entries[end].Type = type;
 		Entries[end].Weight = weight;
 		WeightSum += weight;
@@ -416,8 +416,8 @@ class WeightedRandomTable
 
 	WeightedRandomTable AddLayer(uint weight)
 	{
-		uint end = Entries.Push(new("WeightedRandomTableEntry"));
-		Entries[end].SubTable = new("WeightedRandomTable");
+		uint end = Entries.Push(new('WeightedRandomTableEntry'));
+		Entries[end].SubTable = new('WeightedRandomTable');
 		Entries[end].Weight = weight;
 		WeightSum += weight;
 		return Entries[end].SubTable;
@@ -432,7 +432,7 @@ class WeightedRandomTable
 			return;
 		}
 
-		uint end  = Entries.Push(new("WeightedRandomTableEntry"));
+		uint end  = Entries.Push(new('WeightedRandomTableEntry'));
 		Entries[end].SubTable = wrt;
 		Entries[end].Weight = weight;
 		WeightSUm += weight;
@@ -513,7 +513,7 @@ class TextureWrapper
 
 	static TextureWrapper Create(string texname, int useType, int flags = TexMan.TRYANY)
 	{
-		TextureWrapper ret = new("TextureWrapper");
+		TextureWrapper ret = new('TextureWrapper');
 
 		ret.ID = TexMan.CheckForTexture(texname, useType, flags);
 		[ret.Width, ret.Height] = TexMan.GetSize(ret.ID);
@@ -523,7 +523,7 @@ class TextureWrapper
 
 	static TextureWrapper FromID(TextureID id)
 	{
-		TextureWrapper ret = new("TextureWrapper");
+		TextureWrapper ret = new('TextureWrapper');
 		ret.ID = id;
 		[ret.Width, ret.Height] = TexMan.GetSize(ret.ID);
 

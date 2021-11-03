@@ -11,24 +11,24 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		Height 20;
 		Tag "$TAG_BFG9000";
 
-		Inventory.Icon "BFUGA0";
+		Inventory.Icon 'BFUGA0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_BFG90000";
 
 		Weapon.SlotNumber 7;
 		Weapon.AmmoUse 40;
 		Weapon.AmmoGive 80;
-		Weapon.AmmoType "Cell";
+		Weapon.AmmoType 'Cell';
 		
 		// Affixes cannot change that this weapon fires exactly 1 BFG ball
 		BIO_Weapon.AffixMasks
 			BIO_WAM_FIRECOUNT | BIO_WAM_FIRETYPE,
 			BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.DamageRanges 100, 800, 49, 87;
-		BIO_Weapon.FireTypes "BIO_BFGBall", "BIO_BFGExtra";
+		BIO_Weapon.FireTypes 'BIO_BFGBall', 'BIO_BFGExtra';
 		BIO_Weapon.FireCounts 1, 40;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 80;
-		BIO_Weapon.MagazineType "BIO_Magazine_BFG9000";
+		BIO_Weapon.MagazineType 'BIO_Magazine_BFG9000';
 		BIO_Weapon.Spread 0.2, 0.2;
 		BIO_Weapon.SwitchSpeeds 5, 5;
 
@@ -72,7 +72,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		}
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		BFGG A 1 A_WeaponReady(WRF_NOFIRE);
 		BFGG A 1 Offset(0, 32 + 2);
 		BFGG A 1 Offset(0, 32 + 4);

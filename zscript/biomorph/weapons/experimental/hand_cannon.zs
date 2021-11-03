@@ -8,11 +8,11 @@ class BIO_HandCannon : BIO_Weapon
 	{
 		Tag "$BIO_WEAP_TAG_HANDCANNON";
 
-		Inventory.Icon "HCANX0";
+		Inventory.Icon 'HCANX0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_HANDCANNON";
 
 		Weapon.AmmoGive 15;
-		Weapon.AmmoType "Clip";
+		Weapon.AmmoType 'Clip';
 		Weapon.Ammouse 1;
 		Weapon.SelectionOrder 1800;
 		Weapon.SlotNumber 2;
@@ -22,9 +22,9 @@ class BIO_HandCannon : BIO_Weapon
 		BIO_Weapon.Flags BIO_WF_PISTOL;
 		BIO_Weapon.Grade BIO_GRADE_EXPERIMENTAL;
 		BIO_Weapon.DamageRange 50, 70;
-		BIO_Weapon.FireType "BIO_Bullet";
+		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 7;
-		BIO_Weapon.MagazineType "BIO_Magazine_HandCannon";
+		BIO_Weapon.MagazineType 'BIO_Magazine_HandCannon';
 		BIO_Weapon.Spread 1.0, 1.0;
 		BIO_Weapon.SwitchSpeeds 8, 8;
 
@@ -62,7 +62,7 @@ class BIO_HandCannon : BIO_Weapon
 		HCAN A 1 A_ReFire;
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		HCAN A 1 A_WeaponReady(WRF_NOFIRE);
 		HCAN A 1 Offset(0, 32 + 2);
 		HCAN A 1 Offset(0, 32 + 4);

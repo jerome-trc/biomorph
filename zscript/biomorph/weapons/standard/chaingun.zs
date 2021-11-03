@@ -8,11 +8,11 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		Obituary "$OB_MPCHAINGUN";
 		Tag "$TAG_CHAINGUN";
 
-		Inventory.Icon "MGUNA0";
+		Inventory.Icon 'MGUNA0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_CHAINGUN";
 
 		Weapon.AmmoGive 40;
-		Weapon.AmmoType "Clip";
+		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 700;
 		Weapon.SlotNumber 4;
@@ -21,9 +21,9 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
-		BIO_Weapon.FireType "BIO_Bullet";
+		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 40;
-		BIO_Weapon.MagazineType "BIO_Magazine_Chaingun";
+		BIO_Weapon.MagazineType 'BIO_Magazine_Chaingun';
 		BIO_Weapon.Spread 4.0, 2.0;
 		
 		BIO_Chaingun.FireTimes 4;
@@ -46,14 +46,14 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		CHGG AB 4 Bright
 		{
 			A_BIO_Fire();
-			Player.SetSafeFlash(invoker, ResolveState("Flash"),
-				ResolveState("Fire") + 1 == Player.GetPSprite(PSP_WEAPON).CurState ? 0 : 1);
+			Player.SetSafeFlash(invoker, ResolveState('Flash'),
+				ResolveState('Fire') + 1 == Player.GetPSprite(PSP_WEAPON).CurState ? 0 : 1);
 			A_StartSound("weapons/chngun", CHAN_WEAPON);
 		}
 		CHGG B 0 A_ReFire;
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		CHGG A 1 A_WeaponReady(WRF_NOFIRE);
 		CHGG A 1 Offset(0, 32 + 2);
 		CHGG A 1 Offset(0, 32 + 4);

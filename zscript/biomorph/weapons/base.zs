@@ -53,7 +53,7 @@ mixin class BIO_Magazine
 	Default
 	{
 		+INVENTORY.IGNORESKILL
-		Inventory.Icon "";
+		Inventory.Icon '';
 		Inventory.MaxAmount 32767;
 	}
 }
@@ -179,16 +179,16 @@ class BIO_Weapon : DoomWeapon abstract
 		Weapon.BobRangeX 0.5;
         Weapon.BobRangeY 0.5;
         Weapon.BobSpeed 1.2;
-        Weapon.BobStyle "Alpha";
+        Weapon.BobStyle 'Alpha';
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_NONE, BIO_WAM_NONE;
 		BIO_Weapon.DamageRanges -2, -2, -2, -2;
 		BIO_Weapon.FireCounts 1, 1;
-		BIO_Weapon.FireTypes "", "";
+		BIO_Weapon.FireTypes '', '';
 		BIO_Weapon.Flags BIO_WF_NONE;
 		BIO_Weapon.Grade BIO_GRADE_NONE;
 		BIO_Weapon.MagazineSizes 0, 0;
-		BIO_Weapon.MagazineTypes "", "";
+		BIO_Weapon.MagazineTypes '', '';
 		BIO_Weapon.MinAmmoReserves 1, 1;
 		BIO_Weapon.Rarity BIO_RARITY_COMMON;
 		BIO_Weapon.ReloadFactors 1, 1;
@@ -216,13 +216,13 @@ class BIO_Weapon : DoomWeapon abstract
 		#### # 1
 		{
 			A_GroundHit();
-			A_SetTranslation("");
+			A_SetTranslation('');
 		}
 		#### ##### 1 A_GroundHit;
 		#### # 1 Bright
 		{
 			A_GroundHit();
-			A_SetTranslation("BIO_Mutated");
+			A_SetTranslation('BIO_Mutated');
 		}
 		#### ##### 1 Bright A_GroundHit;
 		Goto Spawn.Mutated + 1;
@@ -231,13 +231,13 @@ class BIO_Weapon : DoomWeapon abstract
 		#### # 1
 		{
 			A_GroundHit();
-			A_SetTranslation("");
+			A_SetTranslation('');
 		}
 		#### ##### 1 A_GroundHit;
 		#### # 1 Bright
 		{
 			A_GroundHit();
-			A_SetTranslation("BIO_Unique");
+			A_SetTranslation('BIO_Unique');
 		}
 		#### ##### 1 Bright A_GroundHit;
 		Goto Spawn.Unique + 1;
@@ -376,7 +376,7 @@ class BIO_Weapon : DoomWeapon abstract
 		Class<Actor> fireType = !secondary ? FireType1 : FireType2;
 		int count = !secondary ? FireCount1 : FireCount2;
 		
-		if (fireType is "BIO_Projectile")
+		if (fireType is 'BIO_Projectile')
 		{
 			let defs = GetDefaultByType((Class<BIO_Projectile>)(fireType));
 
@@ -387,7 +387,7 @@ class BIO_Weapon : DoomWeapon abstract
 			default: return StringTable.Localize(defs.PluralTag);
 			}
 		}
-		else if (fireType is "BIO_FastProjectile")
+		else if (fireType is 'BIO_FastProjectile')
 		{
 			let defs = GetDefaultByType((Class<BIO_FastProjectile>)(fireType));
 		
@@ -521,9 +521,9 @@ class BIO_Weapon : DoomWeapon abstract
 	bool FiresTrueProjectile(bool secondary = false) const
 	{
 		if (!secondary)
-			return FireType1 is "BIO_Projectile";
+			return FireType1 is 'BIO_Projectile';
 		else
-			return FireType2 is "BIO_Projectile";
+			return FireType2 is 'BIO_Projectile';
 	}
 
 	// Only accounts for the `SplashDamage` field of the fired actor (if it's present).
@@ -531,12 +531,12 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		if (!secondary)
 		{
-			if (FireType1 is "BIO_Projectile")
+			if (FireType1 is 'BIO_Projectile')
 			{
 				let defs = GetDefaultByType((Class<BIO_Projectile>)(FireType1));
 				return defs.SplashDamage > 0;
 			}
-			else if (FireType1 is "BIO_FastProjectile")
+			else if (FireType1 is 'BIO_FastProjectile')
 			{
 				let defs = GetDefaultByType((Class<BIO_FastProjectile>)(FireType1));
 				return defs.SplashDamage > 0;
@@ -545,12 +545,12 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 		else
 		{
-			if (FireType2 is "BIO_Projectile")
+			if (FireType2 is 'BIO_Projectile')
 			{
 				let defs = GetDefaultByType((Class<BIO_Projectile>)(FireType2));
 				return defs.SplashDamage > 0;
 			}
-			else if (FireType2 is "BIO_FastProjectile")
+			else if (FireType2 is 'BIO_FastProjectile')
 			{
 				let defs = GetDefaultByType((Class<BIO_FastProjectile>)(FireType2));
 				return defs.SplashDamage > 0;
@@ -886,9 +886,9 @@ class BIO_Weapon : DoomWeapon abstract
 		let cv = BIO_CVar.AutoReload(Player);
 
 		if (cv == BIO_CV_AUTOREL_ALWAYS || (cv == BIO_CV_AUTOREL_SINGLE && single))
-			return ResolveState("Reload");
+			return ResolveState('Reload');
 		else
-			return ResolveState("Ready");
+			return ResolveState('Ready');
 	}
 
 	// If no argument is given, try to reload as much of the magazine as possible.
@@ -971,11 +971,11 @@ class BIO_Weapon : DoomWeapon abstract
 	protected action state A_BIO_Spawn()
 	{
 		if (invoker.Rarity == BIO_RARITY_UNIQUE)
-			return ResolveState("Spawn.Unique");
+			return ResolveState('Spawn.Unique');
 		else if (invoker.Affixes.Size() > 0)
-			return ResolveState("Spawn.Mutated");
+			return ResolveState('Spawn.Mutated');
 		else
-			return ResolveState("Spawn.Common");
+			return ResolveState('Spawn.Common');
 	}
 
 	// Call from the weapon's Deselect state, during one frame of the weapon's
@@ -984,7 +984,7 @@ class BIO_Weapon : DoomWeapon abstract
 	protected action state A_BIO_Deselect()
 	{
 		invoker.OnDeselect();
-		return ResolveState("Deselect.Loop");
+		return ResolveState('Deselect.Loop');
 	}
 
 	// Call from the weapon's Select state, during one frame of the weapon's
@@ -993,7 +993,7 @@ class BIO_Weapon : DoomWeapon abstract
 	protected action state A_BIO_Select()
 	{
 		invoker.OnSelect();
-		return ResolveState("Select.Loop");
+		return ResolveState('Select.Loop');
 	}
 
 	protected action void A_GroundHit()
@@ -1019,7 +1019,7 @@ class BIO_Weapon : DoomWeapon abstract
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].ModifyDamage(self, dmg);
 
-		if (proj is "BIO_Projectile")
+		if (proj is 'BIO_Projectile')
 		{
 			let tProj = BIO_Projectile(proj);
 			tProj.ProjDamageFunctors.Copy(ProjDamageFunctors);
@@ -1041,7 +1041,7 @@ class BIO_Weapon : DoomWeapon abstract
 				Affixes[i].OnTrueProjectileFired(self, tProj);
 			}
 		}
-		else if (proj is "BIO_FastProjectile")
+		else if (proj is 'BIO_FastProjectile')
 		{
 			let fProj = BIO_FastProjectile(proj);
 			OnFastProjectileFired(fProj);

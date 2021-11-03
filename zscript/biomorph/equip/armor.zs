@@ -31,7 +31,7 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 		if (!bioPlayer.EquippedArmor.Reparable()) return false;
 
 		// Is the currently-equipped armor already in perfect condition?
-		let armor = BasicArmor(bioPlayer.FindInventory("BasicArmor"));
+		let armor = BasicArmor(bioPlayer.FindInventory('BasicArmor'));
 		if (armor.Amount >= armor.MaxAmount)
 			return false;
 
@@ -48,7 +48,7 @@ class BIO_StandardArmor : BIO_Armor
 	Default
 	{
 		Tag "$BIO_ARMOR_TAG_STD";
-		Inventory.Icon "ARM1A0";
+		Inventory.Icon 'ARM1A0';
 		Inventory.PickupMessage "$BIO_PICKUP_TEMPLATE_ARMORDEFAULT";
 		BIO_Equipment.Grade BIO_GRADE_STANDARD;
 		BIO_Armor.StatClass "BIO_StandardArmorStats";
@@ -81,7 +81,7 @@ class BIO_SpecialtyArmor : BIO_Armor
 		Inventory.Icon "ARM2A0";
 		Inventory.PickupMessage "$BIO_PICKUP_TEMPLATE_ARMORDEFAULT";
 		BIO_Equipment.Grade BIO_GRADE_SPECIALTY;
-		BIO_Armor.StatClass "BIO_SpecialtyArmorStats";
+		BIO_Armor.StatClass 'BIO_SpecialtyArmorStats';
 	}
 
 	States
@@ -97,7 +97,7 @@ class BIO_SpecialtyArmorStats : BIO_ArmorStats
 {
 	Default
 	{
-		Inventory.Icon "ARM2A0";
+		Inventory.Icon 'ARM2A0';
 		Armor.SavePercent 50;
 		Armor.SaveAmount 200;
 	}
@@ -108,10 +108,10 @@ class BIO_ExperimentalArmor : BIO_Armor
 	Default
 	{
 		Tag "$BIO_ARMOR_TAG_EXP";
-		Inventory.Icon "ARM3A0";
+		Inventory.Icon 'ARM3A0';
 		Inventory.PickupMessage "$BIO_PICKUP_TEMPLATE_ARMORDEFAULT";
 		BIO_Equipment.Grade BIO_GRADE_EXPERIMENTAL;
-		BIO_Armor.StatClass "BIO_ExperimentalArmorStats";
+		BIO_Armor.StatClass 'BIO_ExperimentalArmorStats';
 	}
 
 	States
@@ -127,7 +127,7 @@ class BIO_ExperimentalArmorStats : BIO_ArmorStats
 {
 	Default
 	{
-		Inventory.Icon "ARM3A0";
+		Inventory.Icon 'ARM3A0';
 		Armor.SavePercent 65;
 		Armor.SaveAmount 250;
 	}

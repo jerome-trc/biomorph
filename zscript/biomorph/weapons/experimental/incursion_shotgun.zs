@@ -9,11 +9,11 @@ class BIO_IncursionShotgun : BIO_Weapon
 	{
 		Tag "$BIO_WEAP_TAG_INCURSIONSHOTGUN";
 
-		Inventory.Icon "INCUX0";
+		Inventory.Icon 'INCUX0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_INCURSIONSHOTGUN";
 
 		Weapon.AmmoGive 20;
-		Weapon.AmmoType "Shell";
+		Weapon.AmmoType 'Shell';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1600;
 		Weapon.SlotNumber 3;
@@ -22,9 +22,9 @@ class BIO_IncursionShotgun : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_EXPERIMENTAL;
 		BIO_Weapon.DamageRange 7, 17;
 		BIO_Weapon.FireCount 9;
-		BIO_Weapon.FireType "BIO_ShotPellet";
+		BIO_Weapon.FireType 'BIO_ShotPellet';
 		BIO_Weapon.MagazineSize 4;
-		BIO_Weapon.MagazineType "BIO_Magazine_IncursionShotgun";
+		BIO_Weapon.MagazineType 'BIO_Magazine_IncursionShotgun';
 		BIO_Weapon.Spread 4.0, 2.0;
 		
 		BIO_IncursionShotgun.FireTimes 3, 4, 2, 2, 2;
@@ -86,7 +86,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		}
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		INCU A 3 Offset(0, 32 + 3) A_SetTics(invoker.ReloadTime1);
 		INCU A 3 Offset(0, 32 + 6) A_SetTics(invoker.ReloadTime2);
 		INCU A 2 Offset(0, 32 + 9) A_SetTics(invoker.ReloadTime3);

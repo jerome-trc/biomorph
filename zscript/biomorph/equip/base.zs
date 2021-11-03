@@ -78,7 +78,7 @@ class BIO_Equipment : Inventory abstract
 	{
 		let bioPlayer = BIO_PLayer(Owner);
 
-		if (GetClass() is "BIO_Armor" && bioPlayer.IsWearingArmor())
+		if (GetClass() is 'BIO_Armor' && bioPlayer.IsWearingArmor())
 		{
 			bioPlayer.A_Print("$BIO_ARMOREQUIP_FAIL_ALREADYWEARING");
 			return false;

@@ -4,7 +4,7 @@ class BIO_Keybind : Inventory abstract
 {
 	Default
 	{
-		Inventory.Icon "TNT1A0";
+		Inventory.Icon 'TNT1A0';
 		Inventory.InterHubAmount 1;
 		Inventory.MaxAmount 1;
 		Inventory.Pickupmessage

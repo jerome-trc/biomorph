@@ -9,11 +9,11 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 
 		Tag "$TAG_ROCKETLAUNCHER";
 		
-		Inventory.Icon "LAUNA0";
+		Inventory.Icon 'LAUNA0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_ROCKETLAUNCHER";
 
 		Weapon.AmmoGive 2;
-		Weapon.AmmoType "RocketAmmo";
+		Weapon.AmmoType 'RocketAmmo';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 2500;
 		Weapon.SlotNumber 5;
@@ -21,9 +21,9 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 20, 160;
-		BIO_Weapon.FireType "BIO_Rocket";
+		BIO_Weapon.FireType 'BIO_Rocket';
 		BIO_Weapon.MagazineSize 1;
-		BIO_Weapon.MagazineType "BIO_Magazine_RocketLauncher";
+		BIO_Weapon.MagazineType 'BIO_Magazine_RocketLauncher';
 		BIO_Weapon.Spread 0.2, 0.2;
 		
 		BIO_RocketLauncher.FireTimes 8, 12;
@@ -56,7 +56,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		MISG B 0 A_ReFire;
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		MISG A 1 A_WeaponReady(WRF_NOFIRE);
 		MISG A 1 Offset(0, 32 + 2);
 		MISG A 1 Offset(0, 32 + 4);

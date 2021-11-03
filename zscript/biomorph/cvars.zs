@@ -1,22 +1,22 @@
 // Helper functions for getting and setting Biomorph's CVars.
 class BIO_CVar abstract
 {
-	static bool Debug() { return CVar.GetCVar("BIO_debug").GetBool(); }
+	static bool Debug() { return CVar.GetCVar('BIO_debug').GetBool(); }
 
 	static int AutoReload(PlayerInfo pInfo)
 	{
-		return CVar.GetCVar("BIO_autoreload", pInfo).GetInt();
+		return CVar.GetCVar('BIO_autoreload', pInfo).GetInt();
 	}
 
 	static bool MultiBarrelPrimary(PlayerInfo pInfo)
 	{
-		return CVar.GetCVar("BIO_multibarrelfire", pInfo)
+		return CVar.GetCVar('BIO_multibarrelfire', pInfo)
 			.GetInt() == BIO_CV_MBF_PRIM;
 	}
 
 	static int BerserkSwitch(PlayerInfo pInfo)
 	{
-		return CVar.GetCVar("BIO_berserkswitch", pInfo).GetInt();
+		return CVar.GetCVar('BIO_berserkswitch', pInfo).GetInt();
 	}
 }
 

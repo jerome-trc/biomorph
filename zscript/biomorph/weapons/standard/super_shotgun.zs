@@ -9,11 +9,11 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		Obituary "$OB_MPSSHOTGUN";
 		Tag "$TAG_SUPERSHOTGUN";
 
-		Inventory.Icon "SGN2A0";
+		Inventory.Icon 'SGN2A0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_SUPERSHOTGUN";
 
 		Weapon.AmmoGive 8;
-		Weapon.AmmoType1 "Shell";
+		Weapon.AmmoType1 'Shell';
 		Weapon.AmmoUse1 1;
 		Weapon.SelectionOrder 400;
 		Weapon.SlotNumber 3;
@@ -23,9 +23,9 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireCount 7;
-		BIO_Weapon.FireType "BIO_ShotPellet";
+		BIO_Weapon.FireType 'BIO_ShotPellet';
 		BIO_Weapon.MagazineSize 2;
-		BIO_Weapon.MagazineType "BIO_Magazine_SuperShotgun";
+		BIO_Weapon.MagazineType 'BIO_Magazine_SuperShotgun';
 		BIO_Weapon.Spread 12.0, 7.5;
 
 		BIO_SuperShotgun.FireTimes 3, 7;
@@ -47,18 +47,18 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		TNT1 A 0
 		{
 			if (BIO_CVar.MultiBarrelPrimary(Player))
-				return ResolveState("Fire.Double");
+				return ResolveState('Fire.Double');
 			else
-				return ResolveState("Fire.Single");
+				return ResolveState('Fire.Single');
 		}
 	AltFire:
 		TNT1 A 0
 		{
 			invoker.bAltFire = false;
 			if (BIO_CVar.MultiBarrelPrimary(Player))
-				return ResolveState("Fire.Single");
+				return ResolveState('Fire.Single');
 			else
-				return ResolveState("Fire.Double");
+				return ResolveState('Fire.Double');
 		}
 	Fire.Single:
 		TNT1 A 0 A_AutoReload;
@@ -84,7 +84,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		}
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		SHT2 B 7 A_SetTics(invoker.ReloadTime1);
 		SHT2 C 7
 		{

@@ -12,7 +12,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		Obituary "$OB_MPFIST";
 		Tag "$BIO_WEAP_TAG_FIST";
 
-		Inventory.Icon "PUNGA0";
+		Inventory.Icon 'PUNGA0';
 		
 		Weapon.SelectionOrder 3700;
 		Weapon.SlotNumber 1;
@@ -22,7 +22,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 			BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE,
 			BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.DamageRange 2, 20;
-		BIO_Weapon.FireType "BIO_MeleeHit";
+		BIO_Weapon.FireType 'BIO_MeleeHit';
 
 		BIO_Fist.FireTimes 4, 4, 5, 4, 5;
 		BIO_Fist.MeleeRange DEFMELEERANGE;
@@ -98,7 +98,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout(fireTypeTag:
-			GetDefaultByType("BIO_MeleeHit").CountBasedTag(FireCount1)));
+			GetDefaultByType('BIO_MeleeHit').CountBasedTag(FireCount1)));
 		stats.Push(GenericFireTimeReadout(TrueFireTime(), "$BIO_WEAPSTAT_ATKTIME"));
 	}
 
@@ -113,7 +113,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 
 		int dmg = Random[Punch](invoker.MinDamage1, invoker.MaxDamage1);
 
-		if (FindInventory("PowerStrength")) dmg *= 10;
+		if (FindInventory('PowerStrength')) dmg *= 10;
 		
 		float range = invoker.CalcMeleeRange();
 		double ang = Angle + Random2[Punch]() * (5.625 / 256);

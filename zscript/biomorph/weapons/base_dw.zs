@@ -61,22 +61,22 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	Fire:
 		TNT1 A 1
 		{
-			return ResolveState("Ready");
+			return ResolveState('Ready');
 		}
 	// AltFire state is required for the weapon to function but isn't used directly.
 	// Do not redefine.
 	AltFire:
 		TNT1 A 1
 		{
-			return ResolveState("Ready");
+			return ResolveState('Ready');
 		}
 	// Normally Select can be left as is in weapons based on this one.
 	// Redefine only if you want to significantly change selection animation
 	Select:
 		TNT1 A 0
 		{
-			A_Overlay(PSP_RIGHTGUN, "Select.Right");
-			A_Overlay(PSP_LEFTGUN, "Select.Left");
+			A_Overlay(PSP_RIGHTGUN, 'Select.Right');
+			A_Overlay(PSP_LEFTGUN, 'Select.Left');
 		}
 		TNT1 A 1 A_Raise(invoker.RaiseSpeed);
 		Wait;
@@ -85,8 +85,8 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	Deselect:
 		TNT1 A 0
 		{
-			A_Overlay(PSP_RIGHTGUN, "Deselect.Right");
-			A_Overlay(PSP_LEFTGUN, "Deselect.Left");
+			A_Overlay(PSP_RIGHTGUN, 'Deselect.Right');
+			A_Overlay(PSP_LEFTGUN, 'Deselect.Left');
 		}
 		TNT1 A 1 A_Lower(invoker.LowerSpeed);
 		Wait;
@@ -96,25 +96,25 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	override void PostBeginPlay()
 	{
 		super.PostBeginPlay();
-		s_Ready = FindState("Ready");
-		s_ReadyRight = FindState("Ready.Right");
-		s_ReadyLeft = FindState("Ready.Left");
-		s_FireRight = FindState("Fire.Right");
-		s_FireLeft = FindState("Fire.Left");
-		s_HoldRight = FindState("Hold.Right");
-		s_HoldLeft = FindState("Hold.Left");
-		s_FlashRight = FindState("Flash.Right");
-		s_FlashLeft = FindState("Flash.Left");
-		s_ReloadRight = FindState("Reload.Right");
-		s_ReloadLeft = FindState("Reload.Left");
-		s_ReloadWaitRight = FindState("ReloadWait.Right");
-		s_ReloadWaitLeft = FindState("ReloadWait.Left");
+		s_Ready = FindState('Ready');
+		s_ReadyRight = FindState('Ready.Right');
+		s_ReadyLeft = FindState('Ready.Left');
+		s_FireRight = FindState('Fire.Right');
+		s_FireLeft = FindState('Fire.Left');
+		s_HoldRight = FindState('Hold.Right');
+		s_HoldLeft = FindState('Hold.Left');
+		s_FlashRight = FindState('Flash.Right');
+		s_FlashLeft = FindState('Flash.Left');
+		s_ReloadRight = FindState('Reload.Right');
+		s_ReloadLeft = FindState('Reload.Left');
+		s_ReloadWaitRight = FindState('ReloadWait.Right');
+		s_ReloadWaitLeft = FindState('ReloadWait.Left');
 	}
 
 	// Returns true if ammo should be infinite.
 	action bool A_EDW_CheckInfiniteAmmo()
 	{
-		return (sv_infiniteammo || FindInventory("PowerInfiniteAmmo",true) );
+		return (sv_infiniteammo || FindInventory('PowerInfiniteAmmo', true));
 	}
 	
 	/*	This is meant to be called instead of A_WeaponReady() in the main
@@ -488,7 +488,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 
 	// Wraps A_FireBullets.
 	action void A_FireBullets_R(double spread_xy, double spread_z, int numBullets,
-		int bulletDmg, Class<Actor> puff_t = "BulletPuff", int flags = 1,
+		int bulletDmg, Class<Actor> puff_t = 'BulletPuff', int flags = 1,
 		double range = 0, Class<Actor> missile = null, double spawnHeight = 32,
 		double spawnOffs_xy = 0)
 	{
@@ -497,7 +497,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	}	
 
 	action void A_FireBullets_L(double spread_xy, double spread_z, int numBullets,
-		int bulletDmg, Class<Actor> puff_t = "BulletPuff", int flags = 1,
+		int bulletDmg, Class<Actor> puff_t = 'BulletPuff', int flags = 1,
 		double range = 0, Class<Actor> missile = null, double spawnHeight = 32,
 		double spawnOffs_xy = 0)
 	{
@@ -524,9 +524,9 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 
 	// Wraps A_CustomPunch.
 	action void A_CustomPunch_R(int damage, bool noRandom = false,
-		int flags = CPF_USEAMMO, Class<Actor> puff_t = "BulletPuff",
+		int flags = CPF_USEAMMO, Class<Actor> puff_t = 'BulletPuff',
 		double range = 0, double lifesteal = 0, int lifestealMax = 0,
-		Class<BasicArmorBonus> armorBonus_t = "ArmorBonus", sound meleeSound = 0,
+		Class<BasicArmorBonus> armorBonus_t = 'ArmorBonus', sound meleeSound = 0,
 		sound MissSound = "")
 	{
 		invoker.bAltFire = false;
@@ -534,9 +534,9 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	}
 
 	action void A_CustomPunch_L(int damage, bool noRandom = false,
-		int flags = CPF_USEAMMO, Class<Actor> puff_t = "BulletPuff",
+		int flags = CPF_USEAMMO, Class<Actor> puff_t = 'BulletPuff',
 		double range = 0, double lifesteal = 0, int lifestealMax = 0,
-		Class<BasicArmorBonus> armorBonus_t = "ArmorBonus", sound meleeSound = 0,
+		Class<BasicArmorBonus> armorBonus_t = 'ArmorBonus', sound meleeSound = 0,
 		sound MissSound = "")
 	{
 		invoker.bAltFire = true;
@@ -546,10 +546,10 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	// Wraps A_RailAttack.
 	action void A_RailAttack_R(int damage, int spawnOffs_xy = 0,
 		bool useAmmo = true, Color color1 = 0, Color color2 = 0, int flags = 0,
-		double maxDiff = 0, Class<Actor> puff_t = "BulletPuff",
+		double maxDiff = 0, Class<Actor> puff_t = 'BulletPuff',
 		double spread_xy = 0, double spread_z = 0, double range = 0,
 		int duration = 0, double sparsity = 1.0, double driftSpeed = 1.0,
-		Class<Actor> spawn_t = "none", double spawnOffs_z = 0,
+		Class<Actor> spawn_t = 'none', double spawnOffs_z = 0,
 		int spiralOffs = 270, int limit = 0)
 	{
 		invoker.bAltFire = false;
@@ -560,10 +560,10 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 
 	action void A_RailAttack_L(int damage, int spawnOffs_xy = 0,
 		bool useAmmo = true, Color color1 = 0, Color color2 = 0, int flags = 0,
-		double maxDiff = 0, Class<Actor> puff_t = "BulletPuff",
+		double maxDiff = 0, Class<Actor> puff_t = 'BulletPuff',
 		double spread_xy = 0, double spread_z = 0, double range = 0,
 		int duration = 0, double sparsity = 1.0, double driftSpeed = 1.0,
-		Class<Actor> spawn_t = "none", double spawnOffs_z = 0,
+		Class<Actor> spawn_t = 'none', double spawnOffs_z = 0,
 		int spiralOffs = 270, int limit = 0)
 	{
 		invoker.bAltFire = true;

@@ -32,7 +32,7 @@ mixin class BIO_ProjectileCommon
 		+THRUGHOST
 
 		Damage -1;
-		Species "Player";
+		Species 'Player';
 	}
 }
 
@@ -113,7 +113,7 @@ class BIO_Projectile : Actor abstract
 			A_Explode(invoker.SplashDamage, invoker.SplashRadius,
 				nails: invoker.Shrapnel,
 				nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
-				puffType: "BIO_Shrapnel");
+				puffType: 'BIO_Shrapnel');
 		}
 		else
 		{
@@ -166,7 +166,7 @@ class BIO_FastProjectile : FastProjectile abstract
 			A_Explode(invoker.SplashDamage, invoker.SplashRadius,
 				nails: invoker.Shrapnel,
 				nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
-				puffType: "BIO_Shrapnel");
+				puffType: 'BIO_Shrapnel');
 		}
 		else
 		{
@@ -201,7 +201,7 @@ class BIO_Bullet : BIO_FastProjectile
 	Default
 	{
 		Alpha 1.0;
-		Decal "Bulletchip";
+		Decal 'BulletChip';
 		Height 1;
 		Radius 1;
 		Speed 400;
@@ -223,7 +223,7 @@ class BIO_Bullet : BIO_FastProjectile
 
 	override void OnProjectileDeath()
 	{
-		A_SpawnItemEx("BulletPuff", flags: SXF_NOCHECKPOSITION);
+		A_SpawnItemEx('BulletPuff', flags: SXF_NOCHECKPOSITION);
 	}
 }
 
@@ -313,7 +313,7 @@ class BIO_PlasmaBall : BIO_Projectile
 		Height 8;
 		Obituary "$OB_MPPLASMARIFLE";
 		Radius 13;
-		RenderStyle "Add";
+		RenderStyle 'Add';
 		SeeSound "weapons/plasmaf";
 		Speed 25;
 		Tag "$BIO_PROJ_TAG_PLASMABALL";
@@ -351,7 +351,7 @@ class BIO_BFGBall : BIO_Projectile
 		Height 8;
 		Obituary "$OB_MPBFG_BOOM";
 		Radius 13;
-		RenderStyle "Add";
+		RenderStyle 'Add';
 		Speed 25;
 		Tag "$BIO_PROJ_TAG_BFGBALL";
 

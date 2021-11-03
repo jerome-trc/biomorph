@@ -8,11 +8,11 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		Tag "$TAG_PLASMARIFLE";
 		Obituary "$OB_MPPLASMARIFLE";
 
-		Inventory.Icon "PLASA0";
+		Inventory.Icon 'PLASA0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_PLASMARIFLE";
 
 		Weapon.AmmoGive 50;
-		Weapon.AmmoType "Cell";
+		Weapon.AmmoType 'Cell';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 100;
 		Weapon.SlotNumber 6;
@@ -20,9 +20,9 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 40;
-		BIO_Weapon.FireType "BIO_PlasmaBall";
+		BIO_Weapon.FireType 'BIO_PlasmaBall';
 		BIO_Weapon.MagazineSize 50;
-		BIO_Weapon.MagazineType "BIO_Magazine_PlasmaRifle";
+		BIO_Weapon.MagazineType 'BIO_Magazine_PlasmaRifle';
 		BIO_Weapon.Spread 0.2, 0.2;
 
 		BIO_PlasmaRifle.FireTimes 3, 20;
@@ -46,7 +46,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		{
 			A_SetTics(invoker.FireTime1);
 			A_BIO_Fire();
-			Player.SetSafeFlash(invoker, ResolveState("Flash"), Random(0, 1));
+			Player.SetSafeFlash(invoker, ResolveState('Flash'), Random(0, 1));
 		}
 		PLSG B 20
 		{
@@ -55,7 +55,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		}
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		PLSG A 1 A_WeaponReady(WRF_NOFIRE);
 		PLSG A 1 Offset(0, 32 + 2);
 		PLSG A 1 Offset(0, 32 + 4);

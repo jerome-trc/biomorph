@@ -40,12 +40,12 @@ class BIO_Berserk : Berserk replaces Berserk
 
 		if (bsks == BIO_CV_BSKS_MELEE ||
 			(bsks == BIO_CV_BSKS_ONLYFIRST &&
-			!bioPlayer.FindInventory("PowerStrength", true)))
+			!bioPlayer.FindInventory('PowerStrength', true)))
 		{
-			bioPlayer.A_SelectWeapon("BIO_Fist");
+			bioPlayer.A_SelectWeapon('BIO_Fist');
 		}
 
-		bioPlayer.GiveInventory("BIO_PowerStrength", 1);
+		bioPlayer.GiveInventory('BIO_PowerStrength', 1);
 		bioPlayer.OnPowerupPickup(self);
 	}
 }
@@ -61,7 +61,7 @@ class BIO_BlurSphere : BlurSphere replaces BlurSphere
 {
 	Default
 	{
-		Powerup.Type "BIO_PowerInvisibility";
+		Powerup.Type 'BIO_PowerInvisibility';
 	}
 
 	override void DoPickupSpecial(Actor toucher)
@@ -84,7 +84,7 @@ class BIO_Infrared : Infrared replaces Infrared
 {
 	Default
 	{
-		Powerup.Type "BIO_PowerLightAmp";
+		Powerup.Type 'BIO_PowerLightAmp';
 	}
 
 	override void DoPickupSpecial(Actor toucher)
@@ -107,7 +107,7 @@ class BIO_Invulnerability : InvulnerabilitySphere replaces InvulnerabilitySphere
 {
 	Default
 	{
-		Powerup.Type "BIO_PowerInvulnerable";
+		Powerup.Type 'BIO_PowerInvulnerable';
 	}
 
 	override void DoPickupSpecial(Actor toucher)
@@ -130,7 +130,7 @@ class BIO_RadSuit : RadSuit replaces RadSuit
 {
 	Default
 	{
-		Powerup.Type "BIO_PowerIronFeet";
+		Powerup.Type 'BIO_PowerIronFeet';
 	}
 
 	override void DoPickupSpecial(Actor toucher)
@@ -190,7 +190,7 @@ class BIO_Megasphere : Megasphere replaces Megasphere
 		
 		if (bioPlayer.EquippedArmor != null && bioPlayer.EquippedArmor.Reparable())
 		{
-			let armor = BasicArmor(bioPlayer.FindInventory("BasicArmor"));
+			let armor = BasicArmor(bioPlayer.FindInventory('BasicArmor'));
 			armor.Amount = armor.MaxAmount;
 			PrintPickupMessage(toucher.CheckLocalView(), String.Format(
 				StringTable.Localize("$BIO_MEGASPHERE_ARMORREPAIR"),

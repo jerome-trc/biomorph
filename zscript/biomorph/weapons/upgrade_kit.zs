@@ -73,7 +73,7 @@ class BIO_WeaponUpgradeKitSpawner : Actor
 		{
 			for (uint i = 0; i < 40; i++)
 				A_Wander();
-			Actor.Spawn("BIO_WeaponUpgradeKit", Pos);
+			Actor.Spawn('BIO_WeaponUpgradeKit', Pos);
 		}
 		Stop;
 	}

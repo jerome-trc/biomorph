@@ -14,12 +14,12 @@ class BIO_StatusBar : BaseStatusBar
 		super.Init();
 		SetSize(32, 320, 200);
 
-		Font fnt = "BIGFONT";
+		Font fnt = 'BIGFONT';
 		Font_HUD = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft, 1, 1);
-		fnt = "INDEXFONT_DOOM";
+		fnt = 'INDEXFONT_DOOM';
 		Font_Index = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft);
-		Font_Amount = HUDFont.Create("INDEXFONT");
-		Font_Small = HUDFont.Create("SMALLFONT");
+		Font_Amount = HUDFont.Create('INDEXFONT');
+		Font_Small = HUDFont.Create('SMALLFONT');
 		InvBarState = InventoryBarState.Create();
 	}
 
@@ -34,8 +34,8 @@ class BIO_StatusBar : BaseStatusBar
 	{
 		Vector2 iconbox = (40, 20);
 
-		let berserk = CPlayer.MO.FindInventory("PowerStrength");
-		DrawImage(berserk ? "PSTRA0" : "MEDIA0", (20, -2));
+		let berserk = CPlayer.MO.FindInventory('PowerStrength');
+		DrawImage(berserk ? 'PSTRA0' : 'MEDIA0', (20, -2));
 		DrawString(Font_HUD,
 			String.Format("%s / %s",
 				FormatNumber(CPlayer.Health, 3, 5),
@@ -64,7 +64,7 @@ class BIO_StatusBar : BaseStatusBar
 
 		let hwc = bioPlayer.HeldWeaponCount();
 
-		DrawImage("PISTA0", (-24, invY + 12));
+		DrawImage('PISTA0', (-24, invY + 12));
 		DrawString(Font_Small,
 			String.Format("%d / %d", hwc, bioPlayer.MaxWeaponsHeld),
 			(-44, invY), DI_TEXT_ALIGN_RIGHT,
@@ -74,7 +74,7 @@ class BIO_StatusBar : BaseStatusBar
 
 		let hec = bioPlayer.HeldEquipmentCount();
 		
-		DrawImage("ARM1A0", (-24, invY));
+		DrawImage('ARM1A0', (-24, invY));
 		DrawString(Font_Small,
 			String.Format("%d / %d", hec, bioPlayer.MaxEquipmentHeld),
 			(-44, invY - 12), DI_TEXT_ALIGN_RIGHT,
@@ -92,7 +92,7 @@ class BIO_StatusBar : BaseStatusBar
 		double roww = 0;
 		for (let i = CPlayer.MO.Inv; i != null; i = i.Inv)
 		{
-			if (i is "Key" && i.Icon.IsValid())
+			if (i is 'Key' && i.Icon.IsValid())
 			{
 				DrawTexture(i.Icon, keypos, DI_SCREEN_RIGHT_TOP | DI_ITEM_LEFT_TOP);
 				Vector2 size = TexMan.GetScaledSize(i.Icon);
@@ -111,7 +111,7 @@ class BIO_StatusBar : BaseStatusBar
 
 	private void DrawArmorDetails()
 	{
-		let armor = CPlayer.MO.FindInventory("BasicArmor");
+		let armor = CPlayer.MO.FindInventory('BasicArmor');
 		if (armor == null || armor.Amount <= 0) return;
 
 		DrawInventoryIcon(armor, (20, -22));

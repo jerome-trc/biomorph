@@ -17,20 +17,20 @@ class BIO_Player : DoomPlayer
 
 	Default
 	{
-		Species "Player";
+		Species 'Player';
 
 		Player.DisplayName "$BIO_PLAYER_DISPLAYNAME";
 	
-		Player.StartItem "BIO_WeaponDrop";
-		Player.StartItem "BIO_UnequipArmor";
+		Player.StartItem 'BIO_WeaponDrop';
+		Player.StartItem 'BIO_UnequipArmor';
 
-		Player.StartItem "Clip", 50;
-		Player.StartItem "Shell", 0;
-		Player.StartItem "RocketAmmo", 0;
-		Player.StartItem "Cell", 0;
+		Player.StartItem 'Clip', 50;
+		Player.StartItem 'Shell', 0;
+		Player.StartItem 'RocketAmmo', 0;
+		Player.StartItem 'Cell', 0;
 
-		Player.StartItem "BIO_Pistol";
-		Player.StartItem "BIO_Fist";
+		Player.StartItem 'BIO_Pistol';
+		Player.StartItem 'BIO_Fist';
 
 		BIO_Player.MaxWeaponsHeld 6;
 		BIO_Player.MaxEquipmentHeld 3;
@@ -47,10 +47,9 @@ class BIO_Player : DoomPlayer
 
 		if (EquippedArmor != null)
 		{
-			if (CountInv("BasicArmor") < 1)
+			if (CountInv('BasicArmor') < 1)
 			{
 				UnequipArmor(true);
-				Console.Printf("Breaking armor at %d", CountInv("BasicArmor"));
 			}
 			// TODO: Armor break sound
 		}
@@ -67,7 +66,7 @@ class BIO_Player : DoomPlayer
 		uint ret = 0;
 
 		for (Inventory i = Inv; i != null; i = i.Inv)
-			if (i is "BIO_Weapon" && !(i is "BIO_Fist")) ret++; 
+			if (i is 'BIO_Weapon' && !(i is 'BIO_Fist')) ret++; 
 
 		return ret;
 	}
@@ -77,7 +76,7 @@ class BIO_Player : DoomPlayer
 		uint ret = 0;
 
 		for (Inventory i = Inv; i != null; i = i.Inv)
-			if (i is "BIO_Equipment") ret += i.Amount;
+			if (i is 'BIO_Equipment') ret += i.Amount;
 		
 		return ret;
 	}
@@ -100,7 +99,7 @@ class BIO_Player : DoomPlayer
 
 		equippable.OnEquip();
 
-		if (equippable is "BIO_Armor")
+		if (equippable is 'BIO_Armor')
 		{
 			EquippedArmor = BIO_Armor(equippable);
 			EquippedArmor.Equipped = true;
@@ -117,8 +116,8 @@ class BIO_Player : DoomPlayer
 		EquippedArmor.OnUnequip(broken);
 		EquippedArmor.Equipped = false;
 		EquippedArmor = null;
-		TakeInventory("BasicArmor", BIO_Armor.INFINITE_ARMOR);
-		FindInventory("BasicArmor").MaxAmount = 1;
+		TakeInventory('BasicArmor', BIO_Armor.INFINITE_ARMOR);
+		FindInventory('BasicArmor').MaxAmount = 1;
 	}
 
 	// Used to apply armor's affixes to BasicArmor, as well as
@@ -220,17 +219,17 @@ class BIO_Player : DoomPlayer
 
 	void PushFunctor(Class<BIO_PlayerFunctor> func_t, uint count = 1)
 	{
-		if (func_t is "BIO_TransitionFunctor")
+		if (func_t is 'BIO_TransitionFunctor')
 			PushTransitionFunctor((Class<BIO_TransitionFunctor>)(func_t), count);
-		else if (func_t is "BIO_DamageTakenFunctor")
+		else if (func_t is 'BIO_DamageTakenFunctor')
 			PushDamageTakenFunctor((Class<BIO_DamageTakenFunctor>)(func_t), count);
-		else if (func_t is "BIO_ItemPickupFunctor")
+		else if (func_t is 'BIO_ItemPickupFunctor')
 			PushItemPickupFunctor((Class<BIO_ItemPickupFunctor>)(func_t), count);
-		else if (func_t is "BIO_PowerupFunctor")
+		else if (func_t is 'BIO_PowerupFunctor')
 			PushPowerupFunctor((Class<BIO_PowerupFunctor>)(func_t), count);
-		else if (func_t is "BIO_WeaponFunctor")
+		else if (func_t is 'BIO_WeaponFunctor')
 			PushWeaponFunctor((Class<BIO_WeaponFunctor>)(func_t), count);
-		else if (func_t is "BIO_EquipmentFunctor")
+		else if (func_t is 'BIO_EquipmentFunctor')
 			PushEquipmentFunctor((Class<BIO_EquipmentFunctor>)(func_t), count);
 		else
 		{
@@ -338,17 +337,17 @@ class BIO_Player : DoomPlayer
 
 	void PopFunctor(Class<BIO_PlayerFunctor> func_t, uint count = 1)
 	{
-		if (func_t is "BIO_TransitionFunctor")
+		if (func_t is 'BIO_TransitionFunctor')
 			PopTransitionFunctor((Class<BIO_TransitionFunctor>)(func_t), count);
-		else if (func_t is "BIO_DamageTakenFunctor")
+		else if (func_t is 'BIO_DamageTakenFunctor')
 			PopDamageTakenFunctor((Class<BIO_DamageTakenFunctor>)(func_t), count);
-		else if (func_t is "BIO_ItemPickupFunctor")
+		else if (func_t is 'BIO_ItemPickupFunctor')
 			PopItemPickupFunctor((Class<BIO_ItemPickupFunctor>)(func_t), count);
-		else if (func_t is "BIO_PowerupFunctor")
+		else if (func_t is 'BIO_PowerupFunctor')
 			PopPowerupFunctor((Class<BIO_PowerupFunctor>)(func_t), count);
-		else if (func_t is "BIO_WeaponFunctor")
+		else if (func_t is 'BIO_WeaponFunctor')
 			PopWeaponFunctor((Class<BIO_WeaponFunctor>)(func_t), count);
-		else if (func_t is "BIO_EquipmentFunctor")
+		else if (func_t is 'BIO_EquipmentFunctor')
 			PopEquipmentFunctor((Class<BIO_EquipmentFunctor>)(func_t), count);
 		else
 		{

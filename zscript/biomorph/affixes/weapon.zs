@@ -145,7 +145,7 @@ class BIO_WAFX_EnemyHealthDamage : BIO_WeaponAffix
 
 	override void Apply(BIO_Weapon weap) const
 	{
-		uint e = weap.ProjDamageFunctors.Push(new("BIO_ProjDmgFunc_EnemyHealthDamage"));
+		uint e = weap.ProjDamageFunctors.Push(new('BIO_ProjDmgFunc_EnemyHealthDamage'));
 		let func = BIO_ProjDmgFunc_EnemyHealthDamage(weap.ProjDamageFunctors[e]);
 		func.Factor = Factor;
 	}
@@ -322,14 +322,14 @@ class BIO_WAFX_Plasma : BIO_WeaponAffix
 	private bool PrimaryCompatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableTo("BIO_PlasmaBall", false) &&
+			weap.FireTypeMutableTo('BIO_PlasmaBall', false) &&
 			(weap.AffixMask1 & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
 	}
 
 	private bool SecondaryCompatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableTo("BIO_PlasmaBall", true) &&
+			weap.FireTypeMutableTo('BIO_PlasmaBall', true) &&
 			(weap.AffixMask1 & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
 	}
 
@@ -337,14 +337,14 @@ class BIO_WAFX_Plasma : BIO_WeaponAffix
 	{
 		if (PrimaryCompatible(weap))
 		{
-			weap.FireType1 = "BIO_PlasmaBall";
+			weap.FireType1 = 'BIO_PlasmaBall';
 			weap.MinDamage1 *= 0.5;
 			weap.MaxDamage1 *= 2.0;
 		}
 		
 		if (SecondaryCompatible(weap))
 		{
-			weap.FireType2 = "BIO_PlasmaBall";
+			weap.FireType2 = 'BIO_PlasmaBall';
 			weap.MinDamage2 *= 0.5;
 			weap.MaxDamage2 *= 2.0;
 		}
@@ -369,7 +369,7 @@ class BIO_WAFX_Slug : BIO_WeaponAffix
 	private bool PrimaryCompatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableFrom("BIO_ShotPellet", false) &&
+			weap.FireTypeMutableFrom('BIO_ShotPellet', false) &&
 			!(weap.AffixMask1 & BIO_WAM_SPREAD) &&
 			!(weap.AffixMask1 & BIO_WAM_DAMAGE);
 	}
@@ -377,7 +377,7 @@ class BIO_WAFX_Slug : BIO_WeaponAffix
 	private bool SecondaryCompatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableFrom("BIO_ShotPellet", true) &&
+			weap.FireTypeMutableFrom('BIO_ShotPellet', true) &&
 			!(weap.AffixMask2 & BIO_WAM_SPREAD) &&
 			!(weap.AffixMask2 & BIO_WAM_DAMAGE);
 	}
@@ -401,7 +401,7 @@ class BIO_WAFX_Slug : BIO_WeaponAffix
 			else
 			{
 				int pc1 = val.ToInt();
-				weap.FireType1 = "BIO_Slug";
+				weap.FireType1 = 'BIO_Slug';
 				weap.FireCount1 /= pc1;
 				weap.MinDamage1 *= pc1;
 				weap.MaxDamage1 *= pc1;
@@ -425,7 +425,7 @@ class BIO_WAFX_Slug : BIO_WeaponAffix
 			else
 			{
 				int pc2 = val.ToInt();
-				weap.FireType2 = "BIO_Slug";
+				weap.FireType2 = 'BIO_Slug';
 				weap.FireCount2 /= pc2;
 				weap.MinDamage2 *= pc2;
 				weap.MaxDamage2 *= pc2;
@@ -448,17 +448,17 @@ class BIO_WAFX_MiniMissile : BIO_WeaponAffix
 	override bool Compatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableTo("BIO_MiniMissile", false) ||
-			weap.FireTypeMutableTo("BIO_MiniMissile", true);
+			weap.FireTypeMutableTo('BIO_MiniMissile', false) ||
+			weap.FireTypeMutableTo('BIO_MiniMissile', true);
 	}
 
 	override void Apply(BIO_Weapon weap) const
 	{
-		if (weap.FireTypeMutableTo("BIO_MiniMissile", false))
-			weap.FireType1 = "BIO_MiniMissile";
+		if (weap.FireTypeMutableTo('BIO_MiniMissile', false))
+			weap.FireType1 = 'BIO_MiniMissile';
 		
-		if (weap.FireTypeMutableTo("BIO_MiniMissile", true))
-			weap.FireType2 = "BIO_MiniMissile";
+		if (weap.FireTypeMutableTo('BIO_MiniMissile', true))
+			weap.FireType2 = 'BIO_MiniMissile';
 	}
 
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const

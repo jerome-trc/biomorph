@@ -8,11 +8,11 @@ class BIO_AssaultHandgun : BIO_Weapon
 		Obituary "$OB_MPPISTOL";
 		Tag "$BIO_WEAP_TAG_ASSAULTHANDGUN";
 
-		Inventory.Icon "ASHGX0";
+		Inventory.Icon 'ASHGX0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_ASSAULTHANDGUN";
 
 		Weapon.AmmoGive 18;
-		Weapon.AmmoType "Clip";
+		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1700;
 		Weapon.SlotNumber 2;
@@ -22,9 +22,9 @@ class BIO_AssaultHandgun : BIO_Weapon
 		BIO_Weapon.Flags BIO_WF_PISTOL;
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.DamageRange 6, 16;
-		BIO_Weapon.FireType "BIO_Bullet";
+		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 18;
-		BIO_Weapon.MagazineType "BIO_Magazine_AssaultHandgun";
+		BIO_Weapon.MagazineType 'BIO_Magazine_AssaultHandgun';
 		BIO_Weapon.Spread 3.6, 1.4;
 		BIO_Weapon.SwitchSpeeds 9, 9;
 
@@ -89,7 +89,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		ASHG A 1 A_ReFire;
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		ASHG A 1 A_WeaponReady(WRF_NOFIRE);
 		ASHG A 1 Offset(0, 32 + 2);
 		ASHG A 1 Offset(0, 32 + 4);

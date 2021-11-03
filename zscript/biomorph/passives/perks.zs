@@ -4,12 +4,12 @@ class BIO_Perk_PowerupDurationMinor : BIO_Passive
 {
 	override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor("BIO_Functor_PowerupDuration");
+		bioPlayer.PushFunctor('BIO_Functor_PowerupDuration');
 	}
 
 	override void Remove(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PopFunctor("BIO_Functor_PowerupDuration");
+		bioPlayer.PopFunctor('BIO_Functor_PowerupDuration');
 	}
 }
 
@@ -17,12 +17,12 @@ class BIO_Perk_PowerupDurationMajor : BIO_Passive
 {
 	override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor("BIO_Functor_PowerupDuration", 5);
+		bioPlayer.PushFunctor('BIO_Functor_PowerupDuration', 5);
 	}
 
 	override void Remove(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PopFunctor("BIO_Functor_PowerupDuration", 5);
+		bioPlayer.PopFunctor('BIO_Functor_PowerupDuration', 5);
 	}
 }
 
@@ -41,12 +41,12 @@ class BIO_Perk_Allmap : BIO_Passive
 {
 	override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor("BIO_Functor_Allmap");
+		bioPlayer.PushFunctor('BIO_Functor_Allmap');
 	}
 
 	override void Remove(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PopFunctor("BIO_Functor_Allmap");
+		bioPlayer.PopFunctor('BIO_Functor_Allmap');
 	}
 }
 
@@ -55,7 +55,7 @@ class BIO_Functor_Allmap : BIO_TransitionFunctor
 	override void WorldLoaded(BIO_Player bioPlayer, bool saveGame, bool reopen) const
 	{
 		if (saveGame || reopen) return;
-		bioPlayer.GiveInventory("Allmap", 1);
+		bioPlayer.GiveInventory('Allmap', 1);
 	}
 }
 
@@ -65,12 +65,12 @@ class BIO_Perk_ScannerAllmap : BIO_Passive
 {
 	override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor("BIO_Functor_ScannerAllmap");
+		bioPlayer.PushFunctor('BIO_Functor_ScannerAllmap');
 	}
 
 	override void Remove(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PopFunctor("BIO_Functor_Scanner");
+		bioPlayer.PopFunctor('BIO_Functor_Scanner');
 	}
 }
 
@@ -78,7 +78,7 @@ class BIO_Functor_ScannerAllmap : BIO_ItemPickupFunctor
 {
 	override void OnMapPickup(BIO_Player bioPlayer, Allmap map) const
 	{
-		bioPlayer.GiveInventory("BIO_PowerScanner", 1);
+		bioPlayer.GiveInventory('BIO_PowerScanner', 1);
 	}
 }
 
@@ -88,12 +88,12 @@ class BIO_Perk_Scanner : BIO_Passive
 {
 	override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor("BIO_Functor_Scanner");
+		bioPlayer.PushFunctor('BIO_Functor_Scanner');
 	}
 
 	override void Remove(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PopFunctor("BIO_Functor_Scanner");
+		bioPlayer.PopFunctor('BIO_Functor_Scanner');
 	}
 }
 
@@ -102,6 +102,6 @@ class BIO_Functor_Scanner : BIO_TransitionFunctor
 	override void WorldLoaded(BIO_Player bioPlayer, bool saveGame, bool reopen) const
 	{
 		if (saveGame || reopen) return;
-		bioPlayer.GiveInventory("BIO_PowerScanner", 1);
+		bioPlayer.GiveInventory('BIO_PowerScanner', 1);
 	}
 }

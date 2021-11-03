@@ -9,11 +9,11 @@ class BIO_SalvoLauncher : BIO_Weapon
 
 		Tag "$BIO_WEAP_TAG_SALVOLAUNCHER";
 		
-		Inventory.Icon "SALVX0";
+		Inventory.Icon 'SALVX0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_SALVOLAUNCHER";
 
 		Weapon.AmmoGive 20;
-		Weapon.AmmoType "RocketAmmo";
+		Weapon.AmmoType 'RocketAmmo';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1600;
 		Weapon.SlotNumber 5;
@@ -23,8 +23,8 @@ class BIO_SalvoLauncher : BIO_Weapon
 			BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_EXPERIMENTAL;
 		BIO_Weapon.DamageRange 30, 180;
-		BIO_Weapon.FireType "BIO_Rocket";
-		BIO_Weapon.MagazineType "RocketAmmo";
+		BIO_Weapon.FireType 'BIO_Rocket';
+		BIO_Weapon.MagazineType 'RocketAmmo';
 		BIO_Weapon.Spread 0.2, 0.2;
 
 		BIO_SalvoLauncher.FireTimes 2, 2, 2, 10;
@@ -42,7 +42,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		SALV A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		#### # 0 A_JumpIf(invoker.MagazineEmpty(), "Ready");
+		#### # 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
 		SALV A 2 Offset(0, 32 + 3) A_SetTics(invoker.FireTime1);
 		SALV B 2 Offset(0, 32 + 6)
 		{
@@ -53,7 +53,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		SALV D 1 Offset(0, 32 + 12);
 		SALV C 1 Offset(0, 32 + 9);
 		SALV B 2 Offset(0, 32 + 6) A_SetTics(invoker.FireTime3);
-		#### # 0 A_JumpIf(invoker.MagazineEmpty(), "Ready");
+		#### # 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
 		SALV A 2 Offset(0, 32 + 3) A_SetTics(invoker.FireTime1);
 		SALV B 2 Offset(0, 32 + 6)
 		{
@@ -64,7 +64,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		SALV D 1 Offset(0, 32 + 12);
 		SALV C 1 Offset(0, 32 + 9);
 		SALV B 2 Offset(0, 32 + 6) A_SetTics(invoker.FireTime3);
-		#### # 0 A_JumpIf(invoker.MagazineEmpty(), "Ready");
+		#### # 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
 		SALV A 2 Offset(0, 32 + 3) A_SetTics(invoker.FireTime1);
 		SALV B 2 Offset(0, 32 + 6)
 		{
@@ -79,7 +79,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		#### # 0 A_ReFire;
 		Goto Ready;
 	AltFire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Ready");
+		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
 		SALV B 3 Offset(0, 32 + 6)
 		{
 			A_SetTics(invoker.FireTime1 + 1);
@@ -92,7 +92,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		SALV B 3 Offset(0, 32 + 6) A_SetTics(invoker.FireTime2 + 1);
 		SALV A 3 Offset(0, 32 + 3) A_SetTics(invoker.FireTime1 + 1);
 		// For some reason, NOAUTOFIRE blocks holding down AltFire.
-		TNT1 A 0 A_JumpIf(Player.Cmd.Buttons & BT_ALTATTACK, "AltFire");
+		TNT1 A 0 A_JumpIf(Player.Cmd.Buttons & BT_ALTATTACK, 'AltFire');
 		Goto Ready;
 	Spawn:
 		SALV X 0;

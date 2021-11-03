@@ -9,12 +9,12 @@ class BIO_Megaton : BIO_IncursionShotgun
 	{
 		Tag "$BIO_WEAP_TAG_MEGATON";
 
-		Weapon.AmmoType2 "Clip"; // Only for the status bar display
+		Weapon.AmmoType2 'Clip'; // Only for the status bar display
 
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_MEGATON";
 
 		BIO_Weapon.DamageRange 8, 18;
-		BIO_Weapon.MagazineType "BIO_Magazine_Megaton";
+		BIO_Weapon.MagazineType 'BIO_Magazine_Megaton';
 		BIO_Weapon.Rarity BIO_RARITY_UNIQUE;
 		BIO_Weapon.Spread 3.8, 1.9;
 	}
@@ -35,7 +35,7 @@ class BIO_Megaton : BIO_IncursionShotgun
 			invoker.ClipFed = !invoker.ClipFed;
 			if (invoker.ClipFed)
 			{
-				invoker.AmmoType1 = "Clip";
+				invoker.AmmoType1 = 'Clip';
 				invoker.ReloadFactor1 = 10;
 			}
 			else

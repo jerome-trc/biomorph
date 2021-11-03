@@ -109,7 +109,7 @@ class BIO_CellPack : CellPack
 class BIO_Backpack : BackpackItem replaces Backpack
 {
 	static const Class<Ammo> DOOM_AMMO_TYPES[] =
-		{ "Clip", "Shell", "RocketAmmo", "Cell" };
+		{ 'Clip', 'Shell', 'RocketAmmo', 'Cell' };
 
 	Default
 	{

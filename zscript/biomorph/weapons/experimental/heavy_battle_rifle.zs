@@ -13,7 +13,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_HBR";
 
 		Weapon.AmmoGive 60;
-		Weapon.AmmoType "Clip";
+		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1700;
 		Weapon.SlotNumber 4;
@@ -21,9 +21,9 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_EXPERIMENTAL;
 		BIO_Weapon.DamageRange 25, 75;
-		BIO_Weapon.FireType "BIO_Bullet";
+		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 60;
-		BIO_Weapon.MagazineType "BIO_Magazine_HBR";
+		BIO_Weapon.MagazineType 'BIO_Magazine_HBR';
 		BIO_Weapon.Spread 0.5, 0.5;
 
 		BIO_HeavyBattleRifle.FireTimes 4, 5, 8;
@@ -42,7 +42,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		HVBR A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Ready");
+		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
 		HVBR A 1 Offset(0, 32 + 3) Bright
 		{
 			A_BIO_Fire();
@@ -60,7 +60,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		HVBR F 5 Bright A_Light(1);
 		Goto LightDone;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		HVBR A 1 A_WeaponReady(WRF_NOFIRE);
 		HVBR A 1 Offset(0, 32 + 2);
 		HVBR A 1 Offset(0, 32 + 4);

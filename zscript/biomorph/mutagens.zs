@@ -50,7 +50,7 @@ class BIO_Mutagen : Inventory abstract
 	{
 		// If the DoomRL Arsenal Monster Pack is loaded, use
 		// of certain mutagens increase its danger level
-		string mpt_tn = "RLMonsterpackThingo";
+		name mpt_tn = 'RLMonsterpackThingo';
 		Class<Actor> mpt_t = mpt_tn;
 
 		if (mpt_t != null)
@@ -59,7 +59,7 @@ class BIO_Mutagen : Inventory abstract
 				Console.Printf(Biomorph.LOGPFX_DEBUG ..
 					"Increasing DRLA danger level by %d.", danger);
 
-			string rldl_tn = "RLDangerLevel";
+			name rldl_tn = 'RLDangerLevel';
 			A_GiveInventory(rldl_tn, danger, AAPTR_PLAYER1);
 		}
 	}
@@ -70,7 +70,7 @@ class BIO_MutagenReset : BIO_Mutagen
 	Default
 	{
 		Tag "$BIO_MUTA_RESET_TAG";
-		Inventory.Icon "MUREA0";
+		Inventory.Icon 'MUREA0';
 		Inventory.PickupMessage "$BIO_MUTA_RESET_PICKUP";
 
 		BIO_Mutagen.DropWeight 4;
@@ -108,7 +108,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 	Default
 	{
 		Tag "$BIO_MUTA_ADD_TAG";
-		Inventory.Icon "MUADA0";
+		Inventory.Icon 'MUADA0';
 		Inventory.PickupMessage "$BIO_MUTA_ADD_PICKUP";
 		BIO_Mutagen.DropWeight 2;
 	}
@@ -151,7 +151,7 @@ class BIO_MutagenRandom : BIO_Mutagen
 	Default
 	{
 		Tag "$BIO_MUTA_RANDOM_TAG";
-		Inventory.Icon "MURAA0";
+		Inventory.Icon 'MURAA0';
 		Inventory.PickupMessage "$BIO_MUTA_RANDOM_PICKUP";
 		BIO_Mutagen.DropWeight 4;
 	}
@@ -181,7 +181,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 	Default
 	{
 		Tag "$BIO_MUTA_REROLL_TAG";
-		Inventory.Icon "MURRA0";
+		Inventory.Icon 'MURRA0';
 		Inventory.PickupMessage "$BIO_MUTA_REROLL_PICKUP";
 		BIO_Mutagen.DropWeight 2;
 	}
@@ -226,7 +226,7 @@ class BIO_MutagenRemove : BIO_Mutagen
 	Default
 	{
 		Tag "$BIO_MUTA_REMOVE_TAG";
-		Inventory.Icon "MURMA0";
+		Inventory.Icon 'MURMA0';
 		Inventory.PickupMessage "$BIO_MUTA_REMOVE_PICKUP";
 		BIO_Mutagen.DropWeight 3;
 	}
@@ -264,7 +264,7 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 	Default
 	{
 		Tag "$BIO_MUTA_CORRUPT_TAG";
-		Inventory.Icon "MUCOA0";
+		Inventory.Icon 'MUCOA0';
 		Inventory.PickupMessage "$BIO_MUTA_CORRUPT_PICKUP";
 		BIO_Mutagen.DropWeight 1;
 	}

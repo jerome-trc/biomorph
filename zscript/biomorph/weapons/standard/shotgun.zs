@@ -10,11 +10,11 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		Obituary "$OB_MPSHOTGUN";
 		Tag "$TAG_SHOTGUN";
 
-		Inventory.Icon "SHOTA0";
+		Inventory.Icon 'SHOTA0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_SHOTGUN";
 
 		Weapon.AmmoGive 8;
-		Weapon.AmmoType "Shell";
+		Weapon.AmmoType 'Shell';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1300;
 		Weapon.SlotNumber 3;
@@ -24,9 +24,9 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireCount 7;
-		BIO_Weapon.FireType "BIO_ShotPellet";
+		BIO_Weapon.FireType 'BIO_ShotPellet';
 		BIO_Weapon.MagazineSize 1;
-		BIO_Weapon.MagazineType "BIO_Magazine_Shotgun";
+		BIO_Weapon.MagazineType 'BIO_Magazine_Shotgun';
 		BIO_Weapon.Spread 4.0, 2.0;
 
 		BIO_Shotgun.FireTimes 3, 4, 3;
@@ -57,7 +57,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		SHTG A 3 Bright A_SetTics(invoker.FireTime3);
 		Goto Ready;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), "Ready");
+		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		SHTG BC 5 A_SetTics(invoker.ReloadTime1);
 		SHTG D 4
 		{

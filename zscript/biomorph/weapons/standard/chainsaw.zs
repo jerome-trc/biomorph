@@ -11,7 +11,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		Obituary "$OB_MPCHAINSAW";
 		Tag "$TAG_CHAINSAW";
 	
-		Inventory.Icon "CSAWA0";
+		Inventory.Icon 'CSAWA0';
 		Inventory.PickupMessage "$BIO_WEAP_PICKUP_CHAINSAW";
 		
 		Weapon.Kickback 0;
@@ -25,7 +25,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 			BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE,
 			BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.DamageRange 2, 20;
-		BIO_Weapon.FireType "BIO_MeleeHit";
+		BIO_Weapon.FireType 'BIO_MeleeHit';
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		
 		BIO_Chainsaw.FireTimes 4;
@@ -91,7 +91,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout(fireTypeTag:
-			GetDefaultByType("BIO_MeleeHit").CountBasedTag(FireCount1)));
+			GetDefaultByType('BIO_MeleeHit').CountBasedTag(FireCount1)));
 		stats.Push(GenericFireTimeReadout(TrueFireTime(), "$BIO_WEAPSTAT_ATKTIME"));
 	}
 
