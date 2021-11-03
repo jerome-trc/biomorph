@@ -113,7 +113,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 
 		int dmg = Random[Punch](invoker.MinDamage1, invoker.MaxDamage1);
 
-		if (FindInventory('PowerStrength')) dmg *= 10;
+		if (FindInventory('PowerStrength', true)) dmg *= 10;
 		
 		float range = invoker.CalcMeleeRange();
 		double ang = Angle + Random2[Punch]() * (5.625 / 256);
