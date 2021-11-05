@@ -27,11 +27,7 @@ class BIO_StatusBar : BaseStatusBar
 	{
 		super.Draw(state, ticFrac);
 		BeginHUD();
-		DrawFullscreenHUD();
-	}
 
-	protected void DrawFullscreenHUD()
-	{
 		Vector2 iconbox = (40, 20);
 
 		let berserk = CPlayer.MO.FindInventory('PowerStrength');
@@ -50,7 +46,32 @@ class BIO_StatusBar : BaseStatusBar
 				(-3, 1), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 		}
 		else
-			DrawFullscreenKeys();
+		{
+			// Draw the keys. This does not use a special draw function like 
+			// SBARINFO because the specifics will be different for each mod 
+			// so it's easier to copy or reimplement the following piece of code
+			// instead of trying to write a complicated all-encompassing solution.
+			Vector2 keypos = (-10, 2);
+			int rowc = 0;
+			double roww = 0;
+			for (let i = CPlayer.MO.Inv; i != null; i = i.Inv)
+			{
+				if (i is 'Key' && i.Icon.IsValid())
+				{
+					DrawTexture(i.Icon, keypos, DI_SCREEN_RIGHT_TOP | DI_ITEM_LEFT_TOP);
+					Vector2 size = TexMan.GetScaledSize(i.Icon);
+					keypos.Y += size.Y + 2;
+					roww = max(roww, size.X);
+					if (++rowc == 3)
+					{
+						keypos.Y = 2;
+						keypos.X -= roww + 2;
+						roww = 0;
+						rowc = 0;
+					}
+				}
+			}
+		}
 		
 		if (isInventoryBarVisible())
 			DrawInventoryBar(InvBarState, (0, 0), 7, DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
@@ -79,34 +100,6 @@ class BIO_StatusBar : BaseStatusBar
 			String.Format("%d / %d", hec, bioPlayer.MaxEquipmentHeld),
 			(-44, invY - 12), DI_TEXT_ALIGN_RIGHT,
 			hec < bioPlayer.MaxEquipmentHeld ? Font.CR_WHITE : Font.CR_YELLOW);
-	}
-	
-	protected virtual void DrawFullscreenKeys()
-	{
-		// Draw the keys. This does not use a special draw function like SBARINFO
-		// because the specifics will be different for each mod so it's easier to
-		// copy or reimplement the following piece of code instead of trying to 
-		// write a complicated all-encompassing solution.
-		Vector2 keypos = (-10, 2);
-		int rowc = 0;
-		double roww = 0;
-		for (let i = CPlayer.MO.Inv; i != null; i = i.Inv)
-		{
-			if (i is 'Key' && i.Icon.IsValid())
-			{
-				DrawTexture(i.Icon, keypos, DI_SCREEN_RIGHT_TOP | DI_ITEM_LEFT_TOP);
-				Vector2 size = TexMan.GetScaledSize(i.Icon);
-				keypos.Y += size.Y + 2;
-				roww = max(roww, size.X);
-				if (++rowc == 3)
-				{
-					keypos.Y = 2;
-					keypos.X -= roww + 2;
-					roww = 0;
-					rowc = 0;
-				}
-			}
-		}
 	}
 
 	private void DrawArmorDetails()
