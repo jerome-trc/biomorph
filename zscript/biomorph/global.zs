@@ -410,17 +410,29 @@ class BIO_GlobalData : Thinker
 
 					Class<BIO_Weapon> input_t = (Class<BIO_Weapon>)
 						(BIO_Utils.TryGetJsonClassName(upgrade.get("input")));
-					if (input_t == null)
+					if (input_t == null || input_t == 'BIO_Weapon')
 					{
 						Console.Printf(errpfx .. "invalid input class given.");
 						continue;
 					}
 
+					if (input_t == 'BIO_Fist')
+					{
+						Console.Printf(errpfx .. "`BIO_Fist` cannot be an upgrade input.");
+						continue;
+					}
+
 					Class<BIO_Weapon> output_t = (Class<BIO_Weapon>)
 						(BIO_Utils.TryGetJsonClassName(upgrade.get("output")));
-					if (output_t == null)
+					if (output_t == null || output_t == 'BIO_Weapon')
 					{
 						Console.Printf(errpfx .. "invalid output class given.");
+						continue;
+					}
+
+					if (output_t == "BIO_Fist")
+					{
+						Console.Printf(errpfx .. "`BIO_Fist` cannot be an upgrade output.");
 						continue;
 					}
 
@@ -475,10 +487,19 @@ class BIO_GlobalData : Thinker
 				Class<BIO_Weapon> weap_t = (Class<BIO_Weapon>)
 					(BIO_Utils.TryGetJsonClassName(arr.get(i)));
 
-				if (weap_t == null)
+				if (weap_t == null || weap_t == 'BIO_Weapon')
 				{
 					Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
-						"lump %d, loot object, %s weapon %d.", lump, arrName, i);
+						"lump %d, loot object, %s weapon %d is an invalid class.",
+						lump, arrName, i);
+					continue;
+				}
+
+				if (weap_t == 'BIO_Fist')
+				{
+					Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+						"lump %d, loot object, %s weapon includes illegal class `BIO_Fist`.",
+						lump, arrName, i);
 					continue;
 				}
 
