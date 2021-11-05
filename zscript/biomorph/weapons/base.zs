@@ -824,7 +824,8 @@ class BIO_Weapon : DoomWeapon abstract
 	action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
 	action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
 
-	action bool A_BIO_Fire(int fireFactor = 1, float spreadFactor = 1.0)
+	action bool A_BIO_Fire(int fireFactor = 1, float spreadFactor = 1.0,
+		float angle = 0.0, float pitch = 0.0)
 	{
 		if (!invoker.DepleteAmmo(invoker.bAltFire, true, invoker.AmmoUse1 * fireFactor))
 			return false;
@@ -832,9 +833,9 @@ class BIO_Weapon : DoomWeapon abstract
 		for (int i = 0; i < (invoker.FireCount1 * fireFactor); i++)
 		{
 			Actor proj = A_FireProjectile(invoker.FireType1,
-				angle: FRandom(-invoker.HSpread1, invoker.HSpread1) * spreadFactor,
+				angle: angle + FRandom(-invoker.HSpread1, invoker.HSpread1) * spreadFactor,
 				useAmmo: false,
-				pitch: FRandom(-invoker.VSpread1, invoker.VSpread1) * spreadFactor);
+				pitch: pitch + FRandom(-invoker.VSpread1, invoker.VSpread1) * spreadFactor);
 			
 			if (proj == null) continue;
 			invoker.OnProjectileFired(proj);
@@ -844,7 +845,8 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
-	action bool A_BIO_FireSecondary(int fireFactor = 1, float spreadFactor = 1.0)
+	action bool A_BIO_FireSecondary(int fireFactor = 1, float spreadFactor = 1.0,
+		float angle = 0.0, float pitch = 0.0)
 	{
 		if (!invoker.DepleteAmmo(invoker.bAltFire, true, invoker.AmmoUse2 * fireFactor))
 			return false;
@@ -852,9 +854,9 @@ class BIO_Weapon : DoomWeapon abstract
 		for (int i = 0; i < (invoker.FireCount2 * fireFactor); i++)
 		{
 			Actor proj = A_FireProjectile(invoker.FireType2,
-				angle: FRandom(-invoker.HSpread2, invoker.HSpread2) * spreadFactor,
+				angle: angle + FRandom(-invoker.HSpread2, invoker.HSpread2) * spreadFactor,
 				useAmmo: false,
-				pitch: FRandom(-invoker.VSpread2, invoker.VSpread2) * spreadFactor);
+				pitch: pitch + FRandom(-invoker.VSpread2, invoker.VSpread2) * spreadFactor);
 			
 			if (proj == null) continue;
 			int dmg = Random(invoker.MinDamage2, invoker.MaxDamage2);
