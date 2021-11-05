@@ -68,9 +68,6 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		FireTime = fireTimes[0];
 	}
 
-	override void GetReloadTimes(in out Array<int> _, bool _) const {}
-	override void SetReloadTimes(Array<int> _, bool _) {}
-
 	override void ResetStats()
 	{
 		super.ResetStats();

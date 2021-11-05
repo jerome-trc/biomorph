@@ -71,9 +71,6 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		FireTime5 = fireTimes[4];
 	}
 
-	override void GetReloadTimes(in out Array<int> _, bool _) const {}
-	override void SetReloadTimes(Array<int> _, bool _) {}
-
 	override void ResetStats()
 	{
 		super.ResetStats();

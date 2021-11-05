@@ -85,11 +85,6 @@ class BIO_Autocannon : BIO_Weapon
 		Loop;
 	}
 
-	override void GetFireTimes(in out Array<int> fireTimes, bool _) const {}
-	override void SetFireTimes(Array<int> fireTimes, bool _) {}
-	override void GetReloadTimes(in out Array<int> reloadTimes, bool _) const {}
-	override void SetReloadTimes(Array<int> reloadTimes, bool _) {}
-
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout());

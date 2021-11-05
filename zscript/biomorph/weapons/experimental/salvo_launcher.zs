@@ -123,9 +123,6 @@ class BIO_SalvoLauncher : BIO_Weapon
 		FireTime4 = fireTimes[3];
 	}
 
-	override void GetReloadTimes(in out Array<int> _, bool _) const {}
-	override void SetReloadTimes(Array<int> _, bool _) {}
-
 	override void ResetStats()
 	{
 		super.ResetStats();

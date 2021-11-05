@@ -352,16 +352,16 @@ class BIO_Weapon : DoomWeapon abstract
 	virtual void OnFastProjectileFired(BIO_FastProjectile proj) const {}
 
 	// Only for getting mutable fire times; ignore any fixed state frame times.
-	abstract void GetFireTimes(in out Array<int> fireTimes,
-		bool secondary = false) const;
-	protected abstract void SetFireTimes(Array<int> fireTimes,
-		bool secondary = false);
+	virtual void GetFireTimes(in out Array<int> fireTimes,
+		bool secondary = false) const {}
+	protected virtual void SetFireTimes(Array<int> fireTimes,
+		bool secondary = false) {}
 
 	// Only for getting mutable reload times; ignore any fixed state frame times.
-	abstract void GetReloadTimes(in out Array<int> reloadTimes,
-		bool secondary = false) const;
-	protected abstract void SetReloadTimes(Array<int> reloadTimes,
-		bool secondary = false);
+	virtual void GetReloadTimes(in out Array<int> reloadTimes,
+		bool secondary = false) const {}
+	protected virtual void SetReloadTimes(Array<int> reloadTimes,
+		bool secondary = false) {}
 
 	// Ensure that overrides include fixed state frame times.
 	abstract int TrueFireTime() const;
