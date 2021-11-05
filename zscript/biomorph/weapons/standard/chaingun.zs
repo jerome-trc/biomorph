@@ -43,7 +43,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		Stop;
 	Fire:
 		CHGG A 0 A_AutoReload;
-		CHGG AB 4 Bright
+		CHGG AB 4
 		{
 			A_BIO_Fire();
 			Player.SetSafeFlash(invoker, ResolveState('Flash'),
