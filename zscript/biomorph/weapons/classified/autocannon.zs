@@ -10,8 +10,9 @@ class BIO_Autocannon : BIO_Weapon
 		Weapon.AmmoGive 100;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder 1600;
+		Weapon.SelectionOrder SELORDER_CHAINGUN - 40;
 		Weapon.SlotNumber 4;
+		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 		
 		BIO_Weapon.AffixMasks
 			BIO_WAM_FIRETIME | BIO_WAM_RELOADTIME,

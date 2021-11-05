@@ -15,8 +15,9 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType1 'Shell';
 		Weapon.AmmoUse1 1;
-		Weapon.SelectionOrder 400;
+		Weapon.SelectionOrder SELORDER_SSG;
 		Weapon.SlotNumber 3;
+		Weapon.SlotPriority SLOTPRIO_STANDARD;
 		Weapon.UpSound "weapons/gunswap";
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;

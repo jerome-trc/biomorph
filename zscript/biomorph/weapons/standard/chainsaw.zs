@@ -16,9 +16,9 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		
 		Weapon.Kickback 0;
 		Weapon.ReadySound "weapons/sawidle";
-		Weapon.SelectionOrder 2200;
+		Weapon.SelectionOrder SELORDER_CHAINSAW;
 		Weapon.SlotNumber 1;
-		Weapon.SlotPriority 0.0;
+		Weapon.SlotPriority SLOTPRIO_MIN;
 		Weapon.UpSound "weapons/sawup";
 
 		BIO_Weapon.AffixMasks

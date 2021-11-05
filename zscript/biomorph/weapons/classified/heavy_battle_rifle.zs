@@ -15,8 +15,9 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		Weapon.AmmoGive 60;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder 1700;
+		Weapon.SelectionOrder SELORDER_CHAINGUN - 40;
 		Weapon.SlotNumber 4;
+		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;

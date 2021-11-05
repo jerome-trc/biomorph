@@ -14,8 +14,9 @@ class BIO_HandCannon : BIO_Weapon
 		Weapon.AmmoGive 15;
 		Weapon.AmmoType 'Clip';
 		Weapon.Ammouse 1;
-		Weapon.SelectionOrder 1800;
+		Weapon.SelectionOrder SELORDER_PISTOL - 40;
 		Weapon.SlotNumber 2;
+		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 		Weapon.UpSound "weapons/gunswap0";
 		
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;

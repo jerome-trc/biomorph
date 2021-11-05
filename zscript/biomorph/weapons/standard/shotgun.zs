@@ -16,8 +16,9 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType 'Shell';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder 1300;
+		Weapon.SelectionOrder SELORDER_SHOTGUN;
 		Weapon.SlotNumber 3;
+		Weapon.SlotPriority SLOTPRIO_STANDARD;
 		Weapon.UpSound "weapons/gunswap";
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;

@@ -14,7 +14,9 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		Inventory.Icon 'BFUGA0';
 		Inventory.PickupMessage "$BIO_WEAP_PKUP_BFG90000";
 
+		Weapon.SelectionOrder SELORDER_BFG;
 		Weapon.SlotNumber 7;
+		Weapon.SlotPriority SLOTPRIO_STANDARD;
 		Weapon.AmmoUse 40;
 		Weapon.AmmoGive 80;
 		Weapon.AmmoType 'Cell';

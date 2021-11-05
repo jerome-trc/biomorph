@@ -9,9 +9,11 @@ class BIO_Megaton : BIO_IncursionShotgun
 	{
 		Tag "$BIO_WEAP_TAG_MEGATON";
 
-		Weapon.AmmoType2 'Clip'; // Only for the status bar display
-
 		Inventory.PickupMessage "$BIO_WEAP_PKUP_MEGATON";
+
+		Weapon.AmmoType2 'Clip'; // Only for the status bar display
+		Weapon.SelectionOrder SELORDER_SSG - 90;
+		Weapon.SlotPriority SLOTPRIO_CLASSIFIED + 0.1;
 
 		BIO_Weapon.DamageRange 8, 18;
 		BIO_Weapon.MagazineType 'BIO_Magazine_Megaton';

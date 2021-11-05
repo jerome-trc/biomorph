@@ -15,8 +15,9 @@ class BIO_IncursionShotgun : BIO_Weapon
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType 'Shell';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder 1600;
+		Weapon.SelectionOrder SELORDER_SSG - 40;
 		Weapon.SlotNumber 3;
+		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;

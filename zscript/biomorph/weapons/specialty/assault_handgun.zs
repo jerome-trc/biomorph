@@ -14,8 +14,9 @@ class BIO_AssaultHandgun : BIO_Weapon
 		Weapon.AmmoGive 18;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder 1700;
+		Weapon.SelectionOrder SELORDER_PISTOL - 20;
 		Weapon.SlotNumber 2;
+		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
 		Weapon.UpSound "weapons/gunswap0";
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;

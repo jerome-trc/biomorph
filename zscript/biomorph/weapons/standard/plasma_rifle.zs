@@ -14,8 +14,9 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		Weapon.AmmoGive 50;
 		Weapon.AmmoType 'Cell';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder 100;
+		Weapon.SelectionOrder SELORDER_PLASMARIFLE;
 		Weapon.SlotNumber 6;
+		Weapon.SlotPriority SLOTPRIO_STANDARD;
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;

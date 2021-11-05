@@ -15,8 +15,9 @@ class BIO_SalvoLauncher : BIO_Weapon
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType 'RocketAmmo';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder 1600;
+		Weapon.SelectionOrder SELORDER_RLAUNCHER + 40;
 		Weapon.SlotNumber 5;
+		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 
 		BIO_Weapon.AffixMasks
 			BIO_WAM_MAGSIZE | BIO_WAM_RELOADTIME,

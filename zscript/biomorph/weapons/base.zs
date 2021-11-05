@@ -64,6 +64,29 @@ class BIO_Weapon : DoomWeapon abstract
 
 	const MAX_AFFIXES = 6;
 
+	// SelectionOrder is for when ammo runs out; lower number, higher priority
+
+	const SELORDER_PLASMARIFLE = 100;
+	const SELORDER_SSG = 400;
+	const SELORDER_CHAINGUN = 700;
+	const SELORDER_SHOTGUN = 1300;
+	const SELORDER_PISTOL = 1900;
+	const SELORDER_CHAINSAW = 2200;
+	const SELORDER_RLAUNCHER = 2500;
+	const SELORDER_BFG = 2800;
+	const SELORDER_FIST = 3700;
+
+	// SlotPriority is for manual selection; higher number, higher priority
+
+	const SLOTPRIO_MAX = 1.0;	
+	const SLOTPRIO_CLASSIFIED = 0.8;
+	const SLOTPRIO_SPECIALTY = 0.6;
+	const SLOTPRIO_STANDARD = 0.4;
+	const SLOTPRIO_SURPLUS = 0.2;
+	const SLOTPRIO_MIN = 0.0;
+
+	// (RAT: Who designed those two properties to be so counter-intuitive)
+
 	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
 	BIO_WeaponAffixMask AffixMask1, AffixMask2;
 	uint8 MiscAffixMask;

@@ -14,9 +14,9 @@ class BIO_Fist : BIO_Weapon replaces Fist
 
 		Inventory.Icon 'PUNGA0';
 		
-		Weapon.SelectionOrder 3700;
+		Weapon.SelectionOrder SELORDER_FIST;
 		Weapon.SlotNumber 1;
-		Weapon.SlotPriority 63.0;
+		Weapon.SlotPriority 1.0;
 
 		BIO_Weapon.AffixMasks
 			BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE,
