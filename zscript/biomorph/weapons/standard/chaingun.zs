@@ -9,7 +9,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		Tag "$TAG_CHAINGUN";
 
 		Inventory.Icon 'MGUNA0';
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_CHAINGUN";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_CHAINGUN";
 
 		Weapon.AmmoGive 40;
 		Weapon.AmmoType 'Clip';

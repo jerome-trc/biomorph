@@ -10,7 +10,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		Tag "$TAG_PISTOL";
 
 		Inventory.Icon 'PISTA0';
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_PISTOL";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_PISTOL";
 
 		Weapon.AmmoGive 15;
 		Weapon.AmmoType 'Clip';

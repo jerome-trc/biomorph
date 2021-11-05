@@ -10,7 +10,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		Tag "$TAG_SUPERSHOTGUN";
 
 		Inventory.Icon 'SGN2A0';
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_SUPERSHOTGUN";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_SUPERSHOTGUN";
 
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType1 'Shell';

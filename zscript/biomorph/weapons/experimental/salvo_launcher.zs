@@ -10,7 +10,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		Tag "$BIO_WEAP_TAG_SALVOLAUNCHER";
 		
 		Inventory.Icon 'SALVX0';
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_SALVOLAUNCHER";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_SALVOLAUNCHER";
 
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType 'RocketAmmo';

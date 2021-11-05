@@ -49,7 +49,7 @@ class BIO_StandardArmor : BIO_Armor
 	{
 		Tag "$BIO_ARMOR_TAG_STD";
 		Inventory.Icon 'ARM1A0';
-		Inventory.PickupMessage "$BIO_PICKUP_TEMPLATE_ARMORDEFAULT";
+		Inventory.PickupMessage "$BIO_PKUP_TEMPLATE_ARMORDEFAULT";
 		BIO_Equipment.Grade BIO_GRADE_STANDARD;
 		BIO_Armor.StatClass "BIO_StandardArmorStats";
 	}
@@ -79,7 +79,7 @@ class BIO_SpecialtyArmor : BIO_Armor
 	{
 		Tag "$BIO_ARMOR_TAG_SPEC";
 		Inventory.Icon "ARM2A0";
-		Inventory.PickupMessage "$BIO_PICKUP_TEMPLATE_ARMORDEFAULT";
+		Inventory.PickupMessage "$BIO_PKUP_TEMPLATE_ARMORDEFAULT";
 		BIO_Equipment.Grade BIO_GRADE_SPECIALTY;
 		BIO_Armor.StatClass 'BIO_SpecialtyArmorStats';
 	}
@@ -109,7 +109,7 @@ class BIO_ExperimentalArmor : BIO_Armor
 	{
 		Tag "$BIO_ARMOR_TAG_EXP";
 		Inventory.Icon 'ARM3A0';
-		Inventory.PickupMessage "$BIO_PICKUP_TEMPLATE_ARMORDEFAULT";
+		Inventory.PickupMessage "$BIO_PKUP_TEMPLATE_ARMORDEFAULT";
 		BIO_Equipment.Grade BIO_GRADE_EXPERIMENTAL;
 		BIO_Armor.StatClass 'BIO_ExperimentalArmorStats';
 	}

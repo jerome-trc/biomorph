@@ -45,36 +45,36 @@
 
 	BIO_WEAP_TAG_FIST = "Fist";
 
-	BIO_WEAP_PICKUP_BFG90000 = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_CHAINGUN = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_CHAINSAW = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_PISTOL = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_PLASMARIFLE = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_ROCKETLAUNCHER = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_SHOTGUN = "Grabbed a %s.";
-	BIO_WEAP_PICKUP_SUPERSHOTGUN = "Grabbed a %s.";
+	BIO_WEAP_PKUP_BFG90000 = "Grabbed a %s.";
+	BIO_WEAP_PKUP_CHAINGUN = "Grabbed a %s.";
+	BIO_WEAP_PKUP_CHAINSAW = "Grabbed a %s.";
+	BIO_WEAP_PKUP_PISTOL = "Grabbed a %s.";
+	BIO_WEAP_PKUP_PLASMARIFLE = "Grabbed a %s.";
+	BIO_WEAP_PKUP_ROCKETLAUNCHER = "Grabbed a %s.";
+	BIO_WEAP_PKUP_SHOTGUN = "Grabbed a %s.";
+	BIO_WEAP_PKUP_SUPERSHOTGUN = "Grabbed a %s.";
 
 	BIO_WEAP_TAG_ASSAULTHANDGUN = "Assault Handgun";
-	BIO_WEAP_PICKUP_ASSAULTHANDGUN = "Obtained an %s.";
+	BIO_WEAP_PKUP_ASSAULTHANDGUN = "Obtained an %s.";
 	
 	BIO_WEAP_TAG_AUTOCANNON = "Autocannon";
-	BIO_WEAP_PICKUP_AUTOCANNON = "Procured an %s.";
+	BIO_WEAP_PKUP_AUTOCANNON = "Procured an %s.";
 
 	BIO_WEAP_TAG_HANDCANNON = "Hand Cannon";
-	BIO_WEAP_PICKUP_HANDCANNON = "Procured a %s.";
+	BIO_WEAP_PKUP_HANDCANNON = "Procured a %s.";
 
 	BIO_WEAP_TAG_HBR = "Heavy Battle Rifle";
-	BIO_WEAP_PICKUP_HBR = "Procured a %s.";
+	BIO_WEAP_PKUP_HBR = "Procured a %s.";
 
 	BIO_WEAP_TAG_INCURSIONSHOTGUN = "Incursion Shotgun";
-	BIO_WEAP_PICKUP_INCURSIONSHOTGUN = "Procured an %s.";
+	BIO_WEAP_PKUP_INCURSIONSHOTGUN = "Procured an %s.";
 	BIO_WEAPSTAT_INCURSIONSHOTGUN_QUAD = "\cnAlt-fire\cj shoots 4 barrels";
 
 	BIO_WEAP_TAG_SALVOLAUNCHER = "Salvo Launcher";
-	BIO_WEAP_PICKUP_SALVOLAUNCHER = "Procured a %s.";
+	BIO_WEAP_PKUP_SALVOLAUNCHER = "Procured a %s.";
 	
 	BIO_WEAP_TAG_MEGATON = "\c[Orange]Megaton\c[White] Incursion Shotgun";
-	BIO_WEAP_PICKUP_MEGATON = "Acquired Megaton.";
+	BIO_WEAP_PKUP_MEGATON = "Acquired Megaton.";
 	BIO_WEAPSTAT_MEGATON_DETAIL = "\c[Orange]Can load shells or bullets";
 	BIO_WEAPSTAT_MEGATON_HOWTO = "\cnZoom\c[Orange] switches ammo type";
 
@@ -163,7 +163,7 @@
 	BIO_ARMOR_TAG_EXP = "Experimental Armour";
 	BIO_ARMORBONUS_TAG = "Armour Shard";
 
-	BIO_PICKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
+	BIO_PKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
 	BIO_ARMORBONUS_PICKUP = "Repaired your %s using an armour shard.";
 
 	BIO_EQUIP_DEFAULT = "Equipped %s.";
@@ -218,22 +218,22 @@
 
 // Ammo ========================================================================
 
-	BIO_AMMO_PICKUP_CLIP = "Picked up a bullet magazine.";
-	BIO_AMMO_PICKUP_CLIPBOX = "Picked up a bullet box.";
-	BIO_AMMO_PICKUP_SHELL = "Picked up a handful of shotshells.";
-	BIO_AMMO_PICKUP_SHELLBOX = "Picked up a box of shotshells.";
-	BIO_AMMO_PICKUP_ROCKETAMMO = "Picked up a rocket.";
-	BIO_AMMO_PICKUP_ROCKETBOX = "Picked up a rocket box.";
-	BIO_AMMO_PICKUP_CELL = "Picked up an energy cell.";
-	BIO_AMMO_PICKUP_CELLPACK = "Picked up an energy cell pack.";
+	BIO_AMMO_PKUP_CLIP = "Picked up a bullet magazine.";
+	BIO_AMMO_PKUP_CLIPBOX = "Picked up a bullet box.";
+	BIO_AMMO_PKUP_SHELL = "Picked up a handful of shotshells.";
+	BIO_AMMO_PKUP_SHELLBOX = "Picked up a box of shotshells.";
+	BIO_AMMO_PKUP_ROCKETAMMO = "Picked up a rocket.";
+	BIO_AMMO_PKUP_ROCKETBOX = "Picked up a rocket box.";
+	BIO_AMMO_PKUP_CELL = "Picked up an energy cell.";
+	BIO_AMMO_PKUP_CELLPACK = "Picked up an energy cell pack.";
 
 	BIO_BACKPACK_PICKUP = "Obtained a backpack full of ammo.";
 
 // Health ======================================================================
 	
-	BIO_HEALTH_PICKUP_BONUS = "Drank a health bonus.";
-	BIO_HEALTH_PICKUP_STIMPACK = "Picked up a stimpack.";
-	BIO_HEALTH_PICKUP_MEDIKIT = "Picked up a first-aid kit.";
+	BIO_HEALTH_PKUP_BONUS = "Drank a health bonus.";
+	BIO_HEALTH_PKUP_STIMPACK = "Picked up a stimpack.";
+	BIO_HEALTH_PKUP_MEDIKIT = "Picked up a first-aid kit.";
 
 // Powerups ====================================================================
 
@@ -297,7 +297,7 @@
 
 	BIO_PER_BARREL = "per barrel";
 
-	BIO_PICKUP_STANDARD = "Grabbed";
-	BIO_PICKUP_SPECIALTY = "Obtained";
-	BIO_PICKUP_EXPERIMENTAL = "Procured";
-	BIO_PICKUP_CLASSIFIED = "Acquired";
+	BIO_PKUP_STANDARD = "Grabbed";
+	BIO_PKUP_SPECIALTY = "Obtained";
+	BIO_PKUP_EXPERIMENTAL = "Procured";
+	BIO_PKUP_CLASSIFIED = "Acquired";

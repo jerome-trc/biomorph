@@ -10,7 +10,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		Tag "$TAG_ROCKETLAUNCHER";
 		
 		Inventory.Icon 'LAUNA0';
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_ROCKETLAUNCHER";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_ROCKETLAUNCHER";
 
 		Weapon.AmmoGive 2;
 		Weapon.AmmoType 'RocketAmmo';

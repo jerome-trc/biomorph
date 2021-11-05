@@ -9,7 +9,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		Tag "$BIO_WEAP_TAG_ASSAULTHANDGUN";
 
 		Inventory.Icon 'ASHGX0';
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_ASSAULTHANDGUN";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_ASSAULTHANDGUN";
 
 		Weapon.AmmoGive 18;
 		Weapon.AmmoType 'Clip';

@@ -11,7 +11,7 @@ class BIO_Megaton : BIO_IncursionShotgun
 
 		Weapon.AmmoType2 'Clip'; // Only for the status bar display
 
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_MEGATON";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_MEGATON";
 
 		BIO_Weapon.DamageRange 8, 18;
 		BIO_Weapon.MagazineType 'BIO_Magazine_Megaton';

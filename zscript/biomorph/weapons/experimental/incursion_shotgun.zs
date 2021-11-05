@@ -10,7 +10,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		Tag "$BIO_WEAP_TAG_INCURSIONSHOTGUN";
 
 		Inventory.Icon 'INCUX0';
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_INCURSIONSHOTGUN";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_INCURSIONSHOTGUN";
 
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType 'Shell';

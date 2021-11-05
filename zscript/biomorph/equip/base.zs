@@ -100,17 +100,17 @@ class BIO_Equipment : Inventory abstract
 		switch (Grade)
 		{
 		case BIO_GRADE_STANDARD:
-			prefix = StringTable.Localize("$BIO_PICKUP_STANDARD");
+			prefix = StringTable.Localize("$BIO_PKUP_STANDARD");
 			break;
 		default:
 		case BIO_GRADE_SPECIALTY:
-			prefix = StringTable.Localize("$BIO_PICKUP_SPECIALTY");
+			prefix = StringTable.Localize("$BIO_PKUP_SPECIALTY");
 			break;
 		case BIO_GRADE_EXPERIMENTAL:
-			prefix = StringTable.Localize("$BIO_PICKUP_EXPERIMENTAL");
+			prefix = StringTable.Localize("$BIO_PKUP_EXPERIMENTAL");
 			break;
 		case BIO_GRADE_CLASSIFIED:
-			prefix = StringTable.Localize("$BIO_PICKUP_CLASSIFIED");
+			prefix = StringTable.Localize("$BIO_PKUP_CLASSIFIED");
 			break;
 		}
 

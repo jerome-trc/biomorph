@@ -11,7 +11,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		Tag "$TAG_SHOTGUN";
 
 		Inventory.Icon 'SHOTA0';
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_SHOTGUN";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_SHOTGUN";
 
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType 'Shell';

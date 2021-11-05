@@ -10,7 +10,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	{
 		Tag "$BIO_WEAP_TAG_HBR";
 
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_HBR";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_HBR";
 
 		Weapon.AmmoGive 60;
 		Weapon.AmmoType 'Clip';

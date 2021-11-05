@@ -28,7 +28,7 @@ class BIO_Clip : Clip
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PICKUP_CLIP";
+		Inventory.PickupMessage "$BIO_AMMO_PKUP_CLIP";
 	}
 }
 
@@ -38,7 +38,7 @@ class BIO_Shell : Shell
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PICKUP_SHELL";
+		Inventory.PickupMessage "$BIO_AMMO_PKUP_SHELL";
 	}
 }
 
@@ -48,7 +48,7 @@ class BIO_RocketAmmo : RocketAmmo
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PICKUP_ROCKETAMMO";
+		Inventory.PickupMessage "$BIO_AMMO_PKUP_ROCKETAMMO";
 	}
 }
 
@@ -58,7 +58,7 @@ class BIO_Cell : Cell
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PICKUP_CELL";
+		Inventory.PickupMessage "$BIO_AMMO_PKUP_CELL";
 	}
 }
 
@@ -70,7 +70,7 @@ class BIO_ClipBox : ClipBox
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PICKUP_CLIPBOX";
+		Inventory.PickupMessage "$BIO_AMMO_PKUP_CLIPBOX";
 	}
 }
 
@@ -80,7 +80,7 @@ class BIO_ShellBox : ShellBox
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PICKUP_SHELLBOX";
+		Inventory.PickupMessage "$BIO_AMMO_PKUP_SHELLBOX";
 	}
 }
 
@@ -90,7 +90,7 @@ class BIO_RocketBox : RocketBox
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PICKUP_ROCKETBOX";
+		Inventory.PickupMessage "$BIO_AMMO_PKUP_ROCKETBOX";
 	}
 }
 
@@ -100,7 +100,7 @@ class BIO_CellPack : CellPack
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PICKUP_CELLPACK";
+		Inventory.PickupMessage "$BIO_AMMO_PKUP_CELLPACK";
 	}
 }
 

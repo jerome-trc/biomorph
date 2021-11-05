@@ -9,7 +9,7 @@ class BIO_HandCannon : BIO_Weapon
 		Tag "$BIO_WEAP_TAG_HANDCANNON";
 
 		Inventory.Icon 'HCANX0';
-		Inventory.PickupMessage "$BIO_WEAP_PICKUP_HANDCANNON";
+		Inventory.PickupMessage "$BIO_WEAP_PKUP_HANDCANNON";
 
 		Weapon.AmmoGive 15;
 		Weapon.AmmoType 'Clip';
