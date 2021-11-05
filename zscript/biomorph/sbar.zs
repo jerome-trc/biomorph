@@ -210,6 +210,11 @@ class BIO_StatusBar : BaseStatusBar
 		// Leave room for automap timers
 		int weapInfoY = 18;
 
+		DrawInventoryIcon(weap, (WEAPINFO_X, weapInfoY),
+			DI_SCREEN_RIGHT_TOP | DI_ITEM_RIGHT_TOP);
+
+		weapInfoY += 32;
+
 		DrawString(Font_Small, weap.GetTag(), (WEAPINFO_X, weapInfoY),
 			DI_TEXT_ALIGN_RIGHT, BIO_Utils.RarityFontColor(weap.Rarity));
 
