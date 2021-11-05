@@ -106,9 +106,6 @@ class BIO_Equipment : Inventory abstract
 		case BIO_GRADE_SPECIALTY:
 			prefix = StringTable.Localize("$BIO_PKUP_SPECIALTY");
 			break;
-		case BIO_GRADE_EXPERIMENTAL:
-			prefix = StringTable.Localize("$BIO_PKUP_EXPERIMENTAL");
-			break;
 		case BIO_GRADE_CLASSIFIED:
 			prefix = StringTable.Localize("$BIO_PKUP_CLASSIFIED");
 			break;
@@ -193,7 +190,7 @@ class BIO_Armor : BIO_Equipment abstract
 		{
 		case BIO_GRADE_STANDARD: c = 1; break;
 		case BIO_GRADE_SPECIALTY: c = 2; break;
-		case BIO_GRADE_EXPERIMENTAL: c = 3; break;
+		case BIO_GRADE_CLASSIFIED: c = 3; break;
 		default: return;
 		}
 

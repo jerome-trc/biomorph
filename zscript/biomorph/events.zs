@@ -357,14 +357,14 @@ class BIO_EventHandler : EventHandler
 
 	private bool ReplaceArmor(WorldEvent event) const
 	{
-		if (event.Thing.GetClass() == "GreenArmor")
-			FinalizeSpawn("BIO_StandardArmor", event.Thing);
-		else if (event.Thing.GetClass() == "BlueArmor")
+		if (event.Thing.GetClass() == 'GreenArmor')
+			FinalizeSpawn('BIO_StandardArmor', event.Thing);
+		else if (event.Thing.GetClass() == 'BlueArmor')
 		{
-			if (Random(1, 6))
-				FinalizeSpawn("BIO_ExperimentalArmor", event.Thing);
+			if (Random(1, 6) == 1)
+				FinalizeSpawn('BIO_ClassifiedArmor', event.Thing);
 			else
-				FinalizeSpawn("BIO_SpecialtyArmor", event.Thing);
+				FinalizeSpawn('BIO_SpecialtyArmor', event.Thing);
 		}
 		else
 			return false;
@@ -374,24 +374,24 @@ class BIO_EventHandler : EventHandler
 
 	private bool ReplaceShotgun(WorldEvent event) const
 	{
-		if (event.Thing.GetClass() != "BIO_Shotgun") return false;
+		if (event.Thing.GetClass() != 'BIO_Shotgun') return false;
 
 		// If a Shotgun has been dropped (as opposed to hand-placed on the map),
 		// almost always replace it with an ammo pickup
 		if (Level.MapTime > 0 && Random(0, 15) != 0)
-			FinalizeSpawn("BIO_Shell", event.Thing);
+			FinalizeSpawn('BIO_Shell', event.Thing);
 
 		return true;
 	}
 
 	private bool ReplaceChaingun(WorldEvent event) const
 	{
-		if (event.Thing.GetClass() != "BIO_Chaingun") return false;
+		if (event.Thing.GetClass() != 'BIO_Chaingun') return false;
 
 		// If a Chaingun has been dropped (as opposed to hand-placed on the map),
 		// almost always replace it with an ammo pickup
 		if (Level.MapTime > 0 && Random(0, 15) != 0)
-			FinalizeSpawn("BIO_Clip", event.Thing);
+			FinalizeSpawn('BIO_Clip', event.Thing);
 
 		return true;
 	}
@@ -428,7 +428,7 @@ class BIO_EventHandler : EventHandler
 
 		// There's no way to know if a Lost Soul was a Pain Elemental spawn,
 		// so just forbid Lost Souls from giving anything to prevent farming
-		if (event.Thing is "LostSoul") return;
+		if (event.Thing is 'LostSoul') return;
 
 		/*	Every monster has a "value" that determines the XP it gives the party,
 			and the chance that it drops a mutagen. This value is derived from its

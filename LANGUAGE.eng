@@ -23,8 +23,11 @@
 	BIO_GRADE_STANDARD = "Standard";
 	BIO_GRADE_ADVANCED = "Advanced";
 	BIO_GRADE_SPECIALTY = "Specialty";
-	BIO_GRADE_EXPERIMENTAL = "Experimental";
 	BIO_GRADE_CLASSIFIED = "Classified";
+
+	BIO_PKUP_STANDARD = "Grabbed";
+	BIO_PKUP_SPECIALTY = "Obtained";
+	BIO_PKUP_CLASSIFIED = "Procured";
 
 	BIO_RARITY_COMMON = "Common";
 	BIO_RARITY_MUTATED = "Mutated";
@@ -160,7 +163,7 @@
 
 	BIO_ARMOR_TAG_STD = "Standard Armour";
 	BIO_ARMOR_TAG_SPEC = "Specialty Armour";
-	BIO_ARMOR_TAG_EXP = "Experimental Armour";
+	BIO_ARMOR_TAG_CLSF = "Classified Armour";
 	BIO_ARMORBONUS_TAG = "Armour Shard";
 
 	BIO_PKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
@@ -273,7 +276,7 @@
 
 	BIO_QUITMSG_CRIT = "\cjCritical strike affixes can only roll on pistols.";
 	BIO_QUITMSG_GRADES = "\cjAll gear fits into one of three grades: "
-		"Standard, \c[Spec]Specialty\cj, and \c[Exp]Experimental\cj.";
+		"Standard, \c[Spec]Specialty\cj, and \c[Clsf]Classified\cj.";
 	BIO_QUITMSG_LIFESTEAL = "\cjLifesteal affixes can only roll on melee weapons.";
 	BIO_QUITMSG_MULTIBARREL = "\cjMulti-barrelled weapons like the Super Shotgun "
 		"always allow firing only one barrel (try your \cnalt-fire\cj button).";
@@ -296,8 +299,3 @@
 	BIO_REMOVED_FROM = "removed from";
 
 	BIO_PER_BARREL = "per barrel";
-
-	BIO_PKUP_STANDARD = "Grabbed";
-	BIO_PKUP_SPECIALTY = "Obtained";
-	BIO_PKUP_EXPERIMENTAL = "Procured";
-	BIO_PKUP_CLASSIFIED = "Acquired";

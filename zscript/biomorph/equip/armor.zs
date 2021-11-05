@@ -103,15 +103,15 @@ class BIO_SpecialtyArmorStats : BIO_ArmorStats
 	}
 }
 
-class BIO_ExperimentalArmor : BIO_Armor
+class BIO_ClassifiedArmor : BIO_Armor
 {
 	Default
 	{
-		Tag "$BIO_ARMOR_TAG_EXP";
+		Tag "$BIO_ARMOR_TAG_CLSF";
 		Inventory.Icon 'ARM3A0';
 		Inventory.PickupMessage "$BIO_PKUP_TEMPLATE_ARMORDEFAULT";
-		BIO_Equipment.Grade BIO_GRADE_EXPERIMENTAL;
-		BIO_Armor.StatClass 'BIO_ExperimentalArmorStats';
+		BIO_Equipment.Grade BIO_GRADE_CLASSIFIED;
+		BIO_Armor.StatClass 'BIO_ClassifiedArmorStats';
 	}
 
 	States
@@ -123,7 +123,7 @@ class BIO_ExperimentalArmor : BIO_Armor
 	}
 }
 
-class BIO_ExperimentalArmorStats : BIO_ArmorStats
+class BIO_ClassifiedArmorStats : BIO_ArmorStats
 {
 	Default
 	{

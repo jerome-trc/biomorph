@@ -103,8 +103,6 @@ class BIO_Utils abstract
 			return StringTable.Localize("$BIO_GRADE_STANDARD");
 		case BIO_GRADE_SPECIALTY:
 			return StringTable.Localize("$BIO_GRADE_SPECIALTY");
-		case BIO_GRADE_EXPERIMENTAL:
-			return StringTable.Localize("$BIO_GRADE_EXPERIMENTAL");
 		case BIO_GRADE_CLASSIFIED:
 			return StringTable.Localize("$BIO_GRADE_CLASSIFIED");
 		case BIO_GRADE_NONE:
@@ -135,7 +133,6 @@ class BIO_Utils abstract
 		{
 		case BIO_GRADE_SURPLUS: return "\c[Surp]";
 		case BIO_GRADE_SPECIALTY: return "\c[Spec]";
-		case BIO_GRADE_EXPERIMENTAL: return "\c[Exp]";
 		case BIO_GRADE_CLASSIFIED: return "\c[Clsf]";
 		default: return "\c[White]";
 		}

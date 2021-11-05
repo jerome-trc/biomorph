@@ -7,8 +7,7 @@ enum BIO_Grade : uint8
 	BIO_GRADE_SURPLUS, // Unused placeholder
 	BIO_GRADE_STANDARD,
 	BIO_GRADE_SPECIALTY,
-	BIO_GRADE_EXPERIMENTAL,
-	BIO_GRADE_CLASSIFIED // Unused placeholder
+	BIO_GRADE_CLASSIFIED
 }
 
 // Used to differentiate between a gear item with no affixes, a gear item
@@ -62,7 +61,7 @@ mixin class BIO_Gear
 			switch (Grade)
 			{
 			case BIO_GRADE_SPECIALTY: danger += 10; break;
-			case BIO_GRADE_EXPERIMENTAL: danger += 20; break;
+			case BIO_GRADE_CLASSIFIED: danger += 20; break;
 			default: break;
 			}
 

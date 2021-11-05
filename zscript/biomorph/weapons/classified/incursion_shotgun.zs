@@ -19,7 +19,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		Weapon.SlotNumber 3;
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
-		BIO_Weapon.Grade BIO_GRADE_EXPERIMENTAL;
+		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.DamageRange 7, 17;
 		BIO_Weapon.FireCount 9;
 		BIO_Weapon.FireType 'BIO_ShotPellet';

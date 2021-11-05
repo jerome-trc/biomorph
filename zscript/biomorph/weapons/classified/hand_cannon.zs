@@ -20,7 +20,7 @@ class BIO_HandCannon : BIO_Weapon
 		
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Flags BIO_WF_PISTOL;
-		BIO_Weapon.Grade BIO_GRADE_EXPERIMENTAL;
+		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.DamageRange 50, 70;
 		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 7;

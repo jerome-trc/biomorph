@@ -26,7 +26,7 @@ Salvo Launcher sprites are courtesy of ZDoom forum user LossForWords, alongside 
 
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
-Experimental Armour sprites are courtesy of id Software LLC, and edited by Realm667 user Ghastly_dragon.
+Classified Armour sprites are courtesy of id Software LLC, and edited by Realm667 user Ghastly_dragon.
 
 Weapon Upgrade Kit sprites are courtesy of Rogue Entertainment, and edited by Realm667 user Dreadopp.
 

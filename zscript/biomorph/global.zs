@@ -3,7 +3,6 @@ enum BIO_PartyMaxWeaponGrade : uint8
 	BIO_PWMG_SURPLUS,
 	BIO_PMWG_STANDARD,
 	BIO_PMWG_SPECIALTY,
-	BIO_PMWG_EXPERIMENTAL,
 	BIO_PMWG_CLASSIFIED
 }
 
@@ -44,7 +43,7 @@ class BIO_GlobalData : Thinker
 
 	private Array<BIO_WeaponUpgrade> WeaponUpgrades;
 
-	// 0 is Standard, 1 is Specialty, 2 is Experimental
+	// 0 is Standard, 1 is Specialty, 2 is Classified
 	private Array<WeightedRandomTable>
 		WRTA_MeleeWeapons, WRTA_Pistols, WRTA_Shotguns, WRTA_Autoguns,
 		WRTA_Launchers, WRTA_EnergyWeapons, WRTA_SuperWeapons;
@@ -145,7 +144,7 @@ class BIO_GlobalData : Thinker
 			i = 0; break;
 		case BIO_PMWG_SPECIALTY:
 			i = 1; break;
-		case BIO_PMWG_EXPERIMENTAL:
+		case BIO_PMWG_CLASSIFIED:
 			i = 2; break;
 		}
 
@@ -196,9 +195,6 @@ class BIO_GlobalData : Thinker
 			break;
 		case BIO_GRADE_SPECIALTY:
 			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_SPECIALTY);
-			break;
-		case BIO_GRADE_EXPERIMENTAL:
-			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_EXPERIMENTAL);
 			break;
 		case BIO_GRADE_CLASSIFIED:
 			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_CLASSIFIED);
@@ -512,7 +508,7 @@ class BIO_GlobalData : Thinker
 					g = 0; break;
 				case BIO_GRADE_SPECIALTY:
 					g = 1; break;
-				case BIO_GRADE_EXPERIMENTAL:
+				case BIO_GRADE_CLASSIFIED:
 					g = 2; break;
 				default:
 					Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
