@@ -945,11 +945,8 @@ class BIO_Weapon : DoomWeapon abstract
 		magAmmo.Amount -= magAmmo.Amount;
 	}
 
-	protected action void A_BIO_AlertMonsters()
+	protected action void A_BIO_AlertMonsters(double maxDist = 0.0, int flags = 0)
 	{
-		double maxDist = 0;
-		int flags = 0;
-
 		for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
 			invoker.ImplicitAffixes[i].PreAlertMonsters(invoker, maxDist, flags);
 
