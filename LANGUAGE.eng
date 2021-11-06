@@ -93,6 +93,7 @@
 
 	BIO_WUK_UIHELP_0 = "Use %s and %s to choose weapon to upgrade to.";
 	BIO_WUK_UIHELP_1 = "Press %s to confirm or %s to cancel.";
+	BIO_WUK_UIKITCOST = "Requires \cj%d\c- \ckupgrade kits\c-.";
 
 // Fired things (puff/projectile tags) =========================================
 

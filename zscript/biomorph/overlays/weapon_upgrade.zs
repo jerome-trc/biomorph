@@ -75,7 +75,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 		// Upgrade kit cost for current selection
 
 		string cost = String.Format(
-			"Requires \cj%d\c- \ckupgrade kits\c-.",
+			StringTable.Localize("$BIO_WUK_UIKITCOST"),
 			Choices[SelectedWeapon].KitCost);
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
