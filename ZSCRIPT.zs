@@ -45,6 +45,7 @@ class Biomorph abstract
 
 #include "zscript/biomorph/weapons/base.zs"
 #include "zscript/biomorph/weapons/base_dw.zs"
+#include "zscript/biomorph/weapons/base_melee.zs"
 #include "zscript/biomorph/weapons/fist.zs"
 #include "zscript/biomorph/weapons/upgrade_kit.zs"
 

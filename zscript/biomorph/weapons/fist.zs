@@ -1,7 +1,5 @@
-class BIO_Fist : BIO_Weapon replaces Fist
+class BIO_Fist : BIO_MeleeWeapon replaces Fist
 {
-	mixin BIO_MeleeWeapon;
-
 	int FireTime1, FireTime2, FireTime3, FireTime4, FireTime5;
 	property FireTimes: FireTime1, FireTime2, FireTime3, FireTime4, FireTime5;
 
@@ -23,8 +21,6 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		BIO_Weapon.FireType 'BIO_MeleeHit';
 
 		BIO_Fist.FireTimes 4, 4, 5, 4, 5;
-		BIO_Fist.MeleeRange DEFMELEERANGE;
-		BIO_Fist.LifeSteal 0.0;
 	}
 
 	States
@@ -78,15 +74,6 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		FireTime3 = Default.FireTime3;
 		FireTime4 = Default.FireTime4;
 		FireTime5 = Default.FireTime5;
-
-		MeleeRange = Default.MeleeRange;
-		LifeSteal = Default.LifeSteal;
-	}
-
-	override void UpdateDictionary()
-	{
-		Dict = Dictionary.Create();
-		UpdateMeleeDictionary();
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -109,14 +96,13 @@ class BIO_Fist : BIO_Weapon replaces Fist
 
 		if (FindInventory('PowerStrength', true)) dmg *= 10;
 		
-		float range = invoker.CalcMeleeRange();
 		double ang = Angle + Random2[Punch]() * (5.625 / 256);
-		double pitch = AimLineAttack(ang, range, null, 0.0, ALF_CHECK3D);
+		double pitch = AimLineAttack(ang, invoker.MeleeRange1, null, 0.0, ALF_CHECK3D);
 
 		Actor puff = null;
 		int actualDmg = -1;
 
-		[puff, actualDmg] = LineAttack(ang, range, pitch, dmg,
+		[puff, actualDmg] = LineAttack(ang, invoker.MeleeRange1, pitch, dmg,
 			'Melee', invoker.FireType1, LAF_ISMELEEATTACK, t);
 
 		// Turn to face target

@@ -180,8 +180,6 @@ class BIO_Weapon : DoomWeapon abstract
 
 	const DICTKEY_PELLETCOUNT_1 = "PelletCount1";
 	const DICTKEY_PELLETCOUNT_2 = "PelletCount2";
-	const DICTKEY_MELEERANGE = "MeleeRange";
-	const DICTKEY_LIFESTEAL = "LifeSteal";
 	
 	Array<string> StatReadout, AffixReadout;
 
@@ -1335,43 +1333,5 @@ class BIO_Weapon : DoomWeapon abstract
 
 		return String.Format(StringTable.Localize("$BIO_WEAPSTAT_RELOADTIME"),
 			crEsc, float(totalReloadTime) / 35.0);
-	}
-}
-
-mixin class BIO_MeleeWeapon
-{
-	float MeleeRange, LifeSteal;
-	property MeleeRange: MeleeRange;
-	property LifeSteal: LifeSteal;
-
-	private void UpdateMeleeDictionary()
-	{
-		Dict.Insert(DICTKEY_MELEERANGE, String.Format("%f", MeleeRange));
-		Dict.Insert(DICTKEY_LIFESTEAL, String.Format("%f", LifeSteal));
-	}
-
-	float CalcMeleeRange()
-	{
-		float ret = MeleeRange;
-		
-		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-			ImplicitAffixes[i].ModifyMeleeRange(self, ret);
-		for (uint i = 0; i < Affixes.Size(); i++)
-			Affixes[i].ModifyMeleeRange(self, ret);
-
-		return ret;
-	}
-
-	void ApplyLifeSteal(int dmg)
-	{
-		let fDmg = float(dmg);
-		float lsp = LifeSteal;
-
-		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-			ImplicitAffixes[i].ModifyLifesteal(self, lsp);
-		for (uint i = 0; i < Affixes.Size(); i++)
-			Affixes[i].ModifyLifesteal(self, lsp);
-
-		Owner.GiveBody(int(fDmg * Min(lsp, 1.0)), Owner.GetMaxHealth(true) + 100);
 	}
 }

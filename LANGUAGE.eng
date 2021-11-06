@@ -210,8 +210,12 @@
 	BIO_AFFIX_TOSTR_PROJSEEK = "Projectiles home in on targets";
 	BIO_AFFIX_TOSTR_FORCEPAIN = "Always causes monsters to flinch";
 
-	BIO_AFFIX_TOSTR_MELEERANGE = "%s%s%.1f\cj range";
-	BIO_AFFIX_TOSTR_LIFESTEAL = "%d%% of damage dealt gained as health";
+	BIO_AFFIX_TOSTR_MELEERANGE1 = "%s%s%.1f\cj range (primary)";
+	BIO_AFFIX_TOSTR_MELEERANGE2 = "%s%s%.1f\cj range (secondary)";
+
+	BIO_AFFIX_TOSTR_LIFESTEAL1 = "%d%% of primary damage dealt gained as health";
+	BIO_AFFIX_TOSTR_LIFESTEAL2 = "%d%% of secondary damage dealt gained as health";
+
 	BIO_AFFIX_TOSTR_SWITCHSPEED_RAISE = "%s%d%% %s\cj raise speed";
 	BIO_AFFIX_TOSTR_SWITCHSPEED_LOWER = "%s%d%% %s\cj lower speed";
 	BIO_AFFIX_TOSTR_SWITCHSPEED = "%s%.1f%% %s\cj switch speed";

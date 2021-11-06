@@ -766,45 +766,75 @@ class BIO_WAFX_ForcePain : BIO_WeaponAffix
 
 class BIO_WAFX_MeleeRange : BIO_WeaponAffix
 {
-	float Modifier;
+	float Modifier1, Modifier2;
 
 	override void Init(BIO_Weapon weap)
 	{
-		weap.UpdateDictionary();
-
-		bool valid = false;
-		string val = "";
-		[val, valid] = weap.TryGetDictValue(BIO_Weapon.DICTKEY_MELEERANGE);
-
-		if (!valid)
+		if (weap is 'BIO_MeleeWeapon')
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"%s is a melee weapon with no %s dictionary value.",
-				weap.GetClassName(), BIO_Weapon.DICTKEY_MELEERANGE);
+			let mWeap = BIO_MeleeWeapon(weap);
+
+			Modifier1 = FRandom(mWeap.MeleeRange1 * 0.25, mWeap.MeleeRange1 * 0.5);
+			Modifier2 = FRandom(mWeap.MeleeRange2 * 0.25, mWeap.MeleeRange2 * 0.5);
 		}
-		else
+		else if (weap is 'BIO_DualMeleeWeapon')
 		{
-			let f = float(val.ToDouble());
-			Modifier = FRandom(f * 0.25, f * 0.5);
+			let mWeap = BIO_DualMeleeWeapon(weap);
+
+			Modifier1 = FRandom(mWeap.MeleeRange1 * 0.25, mWeap.MeleeRange1 * 0.5);
+			Modifier2 = FRandom(mWeap.MeleeRange2 * 0.25, mWeap.MeleeRange2 * 0.5);
 		}
 	}
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return weap.bMeleeWeapon && !(weap.AffixMask1 & BIO_WAM_MELEERANGE);
+		return
+			(weap is 'BIO_MeleeWeapon' || weap is 'BIO_DualMeleeWeapon') &&
+			!(
+				(weap.AffixMask1 & BIO_WAM_MELEERANGE) &&
+				(weap.AffixMask2 & BIO_WAM_MELEERANGE)
+			);
 	}
 
-	override void ModifyMeleeRange(BIO_Weapon weap, in out float range) const
+	override void Apply(BIO_Weapon weap) const
 	{
-		range += Modifier;
+		if (weap is 'BIO_MeleeWeapon')
+		{
+			let mWeap = BIO_MeleeWeapon(weap);
+
+			if (!(weap.AffixMask1 & BIO_WAM_MELEERANGE))
+				mWeap.MeleeRange1 += Modifier1;
+			if (!(weap.AffixMask2 & BIO_WAM_MELEERANGE))
+				mWeap.MeleeRange2 += Modifier2;
+		}
+		else if (weap is 'BIO_DualMeleeWeapon')
+		{
+			let mWeap = BIO_DualMeleeWeapon(weap);
+
+			if (!(weap.AffixMask1 & BIO_WAM_MELEERANGE))
+				mWeap.MeleeRange1 += Modifier1;
+			if (!(weap.AffixMask2 & BIO_WAM_MELEERANGE))
+				mWeap.MeleeRange2 += Modifier2;
+		}
 	}
 
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
-		strings.Push(String.Format(
-			StringTable.Localize("$BIO_AFFIX_TOSTR_MELEERANGE"),
-			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
-			Modifier >= 0 ? "+" : "", Modifier));
+		if (!(weap.AffixMask1 & BIO_WAM_MELEERANGE))
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_MELEERANGE1"),
+				Modifier1 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Modifier1 >= 0 ? "+" : "", Modifier1));
+		}
+		
+		if (!(weap.AffixMask2 & BIO_WAM_MELEERANGE))
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_MELEERANGE2"),
+				Modifier2 >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				Modifier2 >= 0 ? "+" : "", Modifier2));
+		}
 	}
 }
 
@@ -816,19 +846,51 @@ class BIO_WAFX_LifeSteal : BIO_WeaponAffix
 
 	override bool Compatible(BIO_Weapon weap) const
 	{
-		return weap.bMeleeWeapon && !(weap.AffixMask1 & BIO_WAM_LIFESTEAL);
+		return
+			(weap is 'BIO_MeleeWeapon' || weap is 'BIO_DualMeleeWeapon') &&
+			!(
+				(weap.AffixMask1 & BIO_WAM_LIFESTEAL) &&
+				(weap.AffixMask2 & BIO_WAM_LIFESTEAL)
+			);
 	}
 
-	override void ModifyLifesteal(BIO_Weapon weap, in out float lifeSteal) const
+	override void Apply(BIO_Weapon weap) const
 	{
-		lifeSteal += AddPercent;
+		if (weap is 'BIO_MeleeWeapon')
+		{
+			let mWeap = BIO_MeleeWeapon(weap);
+
+			if (!(weap.AffixMask1 & BIO_WAM_LIFESTEAL))
+				mWeap.LifeSteal1 += AddPercent;
+			if (!(weap.AffixMask2 & BIO_WAM_LIFESTEAL))
+				mWeap.LifeSteal2 += AddPercent;
+		}
+		else if (weap is 'BIO_DualMeleeWeapon')
+		{
+			let mWeap = BIO_DualMeleeWeapon(weap);
+
+			if (!(weap.AffixMask1 & BIO_WAM_LIFESTEAL))
+				mWeap.LifeSteal1 += AddPercent;
+			if (!(weap.AffixMask2 & BIO_WAM_LIFESTEAL))
+				mWeap.LifeSteal2 += AddPercent;
+		}
 	}
 
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
-		strings.Push(CRESC_POSITIVE .. String.Format(
-			StringTable.Localize("$BIO_AFFIX_TOSTR_LIFESTEAL"),
-			int(AddPercent * 100.0)));
+		if (!(weap.AffixMask1 & BIO_WAM_MELEERANGE))
+		{
+			strings.Push(CRESC_POSITIVE .. String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_LIFESTEAL1"),
+				int(AddPercent * 100.0)));
+		}
+		
+		if (!(weap.AffixMask2 & BIO_WAM_MELEERANGE))
+		{
+			strings.Push(CRESC_POSITIVE .. String.Format(
+				StringTable.Localize("$BIO_AFFIX_TOSTR_LIFESTEAL2"),
+				int(AddPercent * 100.0)));
+		}
 	}
 }
 

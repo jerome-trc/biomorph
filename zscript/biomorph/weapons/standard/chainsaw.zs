@@ -1,7 +1,5 @@
-class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
+class BIO_Chainsaw : BIO_MeleeWeapon replaces Chainsaw
 {
-	mixin BIO_MeleeWeapon;
-
 	int FireTime; property FireTimes: FireTime;
 
 	Default
@@ -26,9 +24,8 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		BIO_Weapon.FireType 'BIO_MeleeHit';
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		
+		BIO_MeleeWeapon.MeleeRange SAWRANGE;
 		BIO_Chainsaw.FireTimes 4;
-		BIO_Chainsaw.MeleeRange SAWRANGE;
-		BIO_Chainsaw.LifeSteal 0.0;
 	}
 
 	States
@@ -69,17 +66,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 	override void ResetStats()
 	{
 		super.ResetStats();
-
 		FireTime = Default.FireTime;
-
-		MeleeRange = Default.MeleeRange;
-		LifeSteal = Default.LifeSteal;
-	}
-
-	override void UpdateDictionary()
-	{
-		Dict = Dictionary.Create();
-		UpdateMeleeDictionary();
 	}
 
 	override void StatsToString(in out Array<string> stats) const
@@ -93,17 +80,15 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 
 	action void A_BIO_Saw(int flags = 0)
 	{
-		if (Player == null) return;
 		FTranslatedLineTarget t;
 
-		float range = invoker.CalcMeleeRange();
 		double ang = Angle + 2.8125 * (Random2[Saw]() / 255.0);
-		double slope = AimLineAttack(ang, range, t) *
+		double slope = AimLineAttack(ang, invoker.MeleeRange1, t) *
 			(Random2[Saw]() / 255.0);
 
-		Actor puff;
-		int actualDmg;
-		[puff, actualDmg] = LineAttack(ang, range, slope, 
+		Actor puff = null;
+		int actualDmg = 0;
+		[puff, actualDmg] = LineAttack(ang, invoker.MeleeRange1, slope, 
 			Random[Saw](invoker.MinDamage1, invoker.MaxDamage1),
 			'Melee', invoker.FireType1, 0, t);
 
