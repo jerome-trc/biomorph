@@ -73,21 +73,50 @@ class BIO_EventHandler : EventHandler
 		if (ConEvent_PerkMenu(event)) return;
 
 		// Debugging events
+		if (ConEvent_Help(event)) return;
 		if (ConEvent_PassiveDiag(event)) return;
 		if (ConEvent_WeapDiag(event)) return;
 		if (ConEvent_XPInfo(event)) return;
 		if (ConEvent_WeapAfxCompat(event)) return;
 	}
 
+	private ui bool ConEvent_Help(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_help"))
+			return false;
+		
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Illegal attempt by a script to invoke `bio_help`.");
+			return true;
+		}
+
+		Console.Printf(
+			"\c[Gold]Console events:\c-\n"
+			"bio_help_\n" ..
+			"bio_weapdiag_\n" ..
+			"bio_pasvdiag_\n" ..
+			"bio_xpinfo_\n" ..
+			"event bio_wafxcompat:Classname\n" ..
+			"\c[Gold]Network events:\c-\n" ..
+			"event bio_addpasv:Classname\n" ..
+			"event bio_rmpasv:Classname\n" ..
+			"event bio_addwafx:Classname\n" ..
+			"event bio_rmwafx:Classname");
+
+		return true;
+	}
+
 	private ui bool ConEvent_PassiveDiag(ConsoleEvent event) const
 	{
-		if (!(event.Name ~== "bio_passivediag" || event.Name ~== "bio_pasvdiag"))
+		if (!(event.Name ~== "bio_pasvdiag"))
 			return false;
 		
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"This event can only be invoked manually.");
+				"`bio_pasvdiag`");
 			return true;
 		}
 
@@ -117,10 +146,10 @@ class BIO_EventHandler : EventHandler
 
 		if (GameState != GS_LEVEL) return true;
 		if (Players[ConsolePlayer].Health <= 0) return true;
-		if (!(Players[ConsolePlayer].MO is "BIO_Player")) return true;
-		if (Menu.GetCurrentMenu() is "BIO_PerkMenu") return true;
+		if (!(Players[ConsolePlayer].MO is 'BIO_Player')) return true;
+		if (Menu.GetCurrentMenu() is 'BIO_PerkMenu') return true;
 
-		Menu.SetMenu("BIO_PerkMenu");
+		Menu.SetMenu('BIO_PerkMenu');
 		return true;
 	}
 
@@ -130,7 +159,7 @@ class BIO_EventHandler : EventHandler
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"This event can only be invoked manually.");
+				"Illegal attempt by a script to invoke `bio_weapdiag`.");
 			return true;
 		}
 
@@ -160,11 +189,11 @@ class BIO_EventHandler : EventHandler
 		else
 			ft2 = "null";
 
-		output = output .. "Primary stats:\n";
+		output = output .. "\c[Gold]Primary stats:\c-\n";
 		output.AppendFormat("Fire data: %d x %s\n", weap.FireCount1, ft1);
 		output.AppendFormat("Damage: [%d, %d]\n", weap.MinDamage1, weap.MaxDamage1);
 
-		output = output .. "Secondary stats:\n";
+		output = output .. "\c[Gold]Secondary stats:\c-\n";
 		output.AppendFormat("Fire data: %d x %s\n", weap.FireCount2, ft2);
 		output.AppendFormat("Damage: [%d, %d]\n", weap.MinDamage2, weap.MaxDamage2);
 
@@ -172,7 +201,7 @@ class BIO_EventHandler : EventHandler
 		weap.GetFireTimes(fireTimes);
 		if (fireTimes.Size() > 0)
 		{
-			output = output .. "Fire times:\n";
+			output = output .. "\c[Gold]Fire times:\c-\n";
 			for (uint i = 0; i < fireTimes.Size(); i++)
 				output = output .. "\t" .. fireTimes[i] .. "\n";
 		}
@@ -181,7 +210,7 @@ class BIO_EventHandler : EventHandler
 		weap.GetReloadTimes(reloadTimes);
 		if (reloadTimes.Size() > 0)
 		{
-			output = output .. "Reload times:\n";
+			output = output .. "\c[Gold]Reload times:\c-\n";
 			for (uint i = 0; i < reloadTimes.Size(); i++)
 				output = output .. "\t" .. reloadTimes[i] .. "\n";
 		}
@@ -205,6 +234,27 @@ class BIO_EventHandler : EventHandler
 				output.AppendFormat("\t%s\n", weap.Affixes[i].GetClassName());
 		}
 
+		if (weap.ProjTravelFunctors.Size() > 0)
+		{
+			output = output .. "Projectile travel functors:\n";
+			for (uint i = 0; i < weap.ProjTravelFunctors.Size(); i++)
+				output.AppendFormat("\t%s\n", weap.ProjTravelFunctors[i].GetClassName());
+		}
+
+		if (weap.ProjDamageFunctors.Size() > 0)
+		{
+			output = output .. "Projectile damage functors:\n";
+			for (uint i = 0; i < weap.ProjDamageFunctors.Size(); i++)
+				output.AppendFormat("\t%s\n", weap.ProjDamageFunctors[i].GetClassName());
+		}
+
+		if (weap.ProjDeathFunctors.Size() > 0)
+		{
+			output = output .. "Projectile death functors:\n";
+			for (uint i = 0; i < weap.ProjDeathFunctors.Size(); i++)
+				output.AppendFormat("\t%s\n", weap.ProjDeathFunctors[i].GetClassName());
+		}
+
 		Console.Printf(output);
 		return true;
 	}
@@ -214,13 +264,13 @@ class BIO_EventHandler : EventHandler
 		Array<string> nameParts;
 		event.Name.Split(nameParts, ":");
 
-		if (!nameParts[0] || !(nameParts[0] ~== "bio_weapafxcompat"))
+		if (!nameParts[0] || !(nameParts[0] ~== "bio_wafxcompat"))
 			return false;
 
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"This event can only be invoked manually.");
+				"Illegal attempt by a script to invoke `bio_wafxcompat`.");
 			return true;
 		}
 
@@ -267,7 +317,7 @@ class BIO_EventHandler : EventHandler
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"This event can only be invoked manually.");
+				"Illegal attempt by a script to invoke `bio_xp`.");
 			return true;
 		}
 
@@ -319,14 +369,14 @@ class BIO_EventHandler : EventHandler
 
 	private bool ReplaceSmallAmmo(WorldEvent event) const
 	{
-		if (event.Thing.GetClass() == "Clip")
-			FinalizeSpawn("BIO_Clip", event.Thing);
-		else if (event.Thing.GetClass() == "Shell")
-			FinalizeSpawn("BIO_Shell", event.Thing);
-		else if (event.Thing.GetClass() == "RocketAmmo")
-			FinalizeSpawn("BIO_RocketAmmo", event.Thing);
-		else if (event.Thing.GetClass() == "Cell")
-			FinalizeSpawn("BIO_Cell", event.Thing);
+		if (event.Thing.GetClass() == 'Clip')
+			FinalizeSpawn('BIO_Clip', event.Thing);
+		else if (event.Thing.GetClass() == 'Shell')
+			FinalizeSpawn('BIO_Shell', event.Thing);
+		else if (event.Thing.GetClass() == 'RocketAmmo')
+			FinalizeSpawn('BIO_RocketAmmo', event.Thing);
+		else if (event.Thing.GetClass() == 'Cell')
+			FinalizeSpawn('BIO_Cell', event.Thing);
 		else
 			return false;
 
@@ -337,19 +387,19 @@ class BIO_EventHandler : EventHandler
 	{
 		Class<Actor> choice = null;
 
-		if (event.Thing.GetClass() == "ClipBox")
-			choice = "BIO_ClipBox";
-		else if (event.Thing.GetClass() == "ShellBox")
-			choice = "BIO_ShellBox";
-		else if (event.Thing.GetClass() == "RocketBox")
-			choice = "BIO_RocketBox";
-		else if (event.Thing.GetClass() == "CellPack")
-			choice = "BIO_CellPack";
+		if (event.Thing.GetClass() == 'ClipBox')
+			choice = 'BIO_ClipBox';
+		else if (event.Thing.GetClass() == 'ShellBox')
+			choice = 'BIO_ShellBox';
+		else if (event.Thing.GetClass() == 'RocketBox')
+			choice = 'BIO_RocketBox';
+		else if (event.Thing.GetClass() == 'CellPack')
+			choice = 'BIO_CellPack';
 		else
 			return false;
 
 		if (Random(0, 8) == 0)
-			Actor.Spawn("BIO_WeaponUpgradeKitSpawner", event.Thing.Pos);
+			Actor.Spawn('BIO_WeaponUpgradeKitSpawner', event.Thing.Pos);
 
 		FinalizeSpawn(choice, event.Thing);
 		return true;
@@ -595,7 +645,7 @@ class BIO_EventHandler : EventHandler
 			return true;
 		}
 
-		if (event.Args[0] > bioPlayer.CountInv("BIO_WeaponUpgradeKit"))
+		if (event.Args[0] > bioPlayer.CountInv('BIO_WeaponUpgradeKit'))
 		{
 			bioPlayer.A_Print("$BIO_WUK_FAIL_INSUFFICIENT", 4.0);
 			return true;
@@ -606,7 +656,7 @@ class BIO_EventHandler : EventHandler
 		bioPlayer.A_SelectWeapon(outputChoice);
 		bioPlayer.TakeInventory(bioPlayer.Player.ReadyWeapon.GetClass(), 1);
 		bioPlayer.A_StartSound("misc/weapupgrade", CHAN_ITEM);
-		bioPlayer.TakeInventory("BIO_WeaponUpgradeKit", event.Args[0]);
+		bioPlayer.TakeInventory('BIO_WeaponUpgradeKit', event.Args[0]);
 		WeaponUpgradeOverlay.Destroy();
 		return true;
 	}

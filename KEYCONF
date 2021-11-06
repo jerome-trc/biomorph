@@ -8,3 +8,12 @@ defaultbind V "use BIO_UnequipArmor"
 
 addmenukey "$BIO_KB_PERKMENU" "event bio_perkmenu"
 defaultbind P "event bio_perkmenu"
+
+// Debug console event aliases
+
+alias bio_help_ "event bio_help"
+
+alias bio_weapdiag_ "event bio_weapdiag"
+alias bio_pasvdiag_ "event bio_pasvdiag"
+alias bio_xp_ "event bio_xp"
+alias bio_xpinfo_ "event bio_xp"
