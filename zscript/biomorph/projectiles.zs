@@ -10,8 +10,6 @@ enum BIO_ProjectileMetaFlags : uint
 
 mixin class BIO_ProjectileCommon
 {
-	protected bool Dead;
-
 	meta string PluralTag; property PluralTag: PluralTag;
 	meta BIO_ProjectileMetaFlags MetaFlags; property MetaFlags: MetaFlags;
 
