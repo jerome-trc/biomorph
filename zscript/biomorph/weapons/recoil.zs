@@ -130,6 +130,17 @@ class BIO_VolleyGunRecoil : BIO_RecoilThinker
 	};
 }
 
+class BIO_ShotgunPumpRecoil : BIO_RecoilThinker
+{
+	mixin BIO_RecoilThinkerCommon;
+
+	const TIME_TO_LIVE = 6;
+
+	static const float[] PITCH_VALUES = {
+		0.05, 0.23, 0.08, -0.06, -0.28, -0.02
+	};
+}
+
 /*
 First try at a purely-procedural implementation, kept as an artifact.
 
