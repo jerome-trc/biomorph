@@ -98,6 +98,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_SetTics(invoker.ReloadTime4);
 			A_LoadMag();
 			A_StartSound("weapons/incursionreload", CHAN_7);
+			A_PresetRecoil('BIO_ShotgunPumpRecoil');
 		}
 		INCU A 3 Offset(0, 32 + 3) A_SetTics(invoker.ReloadTime5);
 		Goto Ready;

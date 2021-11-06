@@ -65,6 +65,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		{
 			A_SetTics(invoker.ReloadTime2);
 			A_LoadMag();
+			A_PresetRecoil('BIO_ShotgunPumpRecoil');
 		}
 		SHTG CB 5 A_SetTics(invoker.ReloadTime3);
 		SHTG A 3 A_SetTics(invoker.ReloadTime4);
