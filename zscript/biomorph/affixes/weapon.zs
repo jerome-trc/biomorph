@@ -597,6 +597,7 @@ class BIO_WAFX_Spread : BIO_WeaponAffix
 	override bool Compatible(BIO_Weapon weap) const
 	{
 		return
+			weap.HasAnySpread() &&
 			!((weap.AffixMask1 & BIO_WAM_SPREAD) == BIO_WAM_SPREAD) ||
 			!((weap.AffixMask2 & BIO_WAM_SPREAD) == BIO_WAM_SPREAD);
 	}

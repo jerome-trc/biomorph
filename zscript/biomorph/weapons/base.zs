@@ -506,6 +506,11 @@ class BIO_Weapon : DoomWeapon abstract
 
 	bool DealsAnyDamage() const { return (MaxDamage1 + MaxDamage2) > 0; }
 
+	bool HasAnySpread() const
+	{
+		return HSpread1 > 0.0 || VSpread1 > 0.0 || HSpread2 > 0.0 || VSpread2 > 0.0;
+	}
+
 	bool FireTypeMutableFrom(Class<Actor> curFT, bool secondary = false) const
 	{
 		if (bMeleeWeapon) return false;
