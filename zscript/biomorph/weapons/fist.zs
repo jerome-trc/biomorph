@@ -81,6 +81,10 @@ class BIO_Fist : BIO_MeleeWeapon replaces Fist
 		stats.Push(GenericFireDataReadout(fireTypeTag:
 			GetDefaultByType('BIO_MeleeHit').CountBasedTag(FireCount1)));
 		stats.Push(GenericFireTimeReadout(TrueFireTime(), "$BIO_WEAPSTAT_ATKTIME"));
+		stats.Push(
+			String.Format(
+				StringTable.Localize("$BIO_WEAPSTAT_BERSERKMULTI"),
+				900));
 	}
 
 	override int TrueFireTime() const

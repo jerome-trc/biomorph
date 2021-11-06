@@ -45,6 +45,7 @@
 	BIO_WEAPSTAT_POSTFIREDELAY = "\c[MidGrey]Post-fire delay: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
 	BIO_WEAPSTAT_SPREAD = "\c[MidGrey]Spread angles: %s%.2f\c[MidGrey] horizontal, %s%.2f\c[MidGrey] \c[MidGrey]vertical";
 	BIO_WEAPSTAT_FORCERADIUSDMG = "\cjIgnores splash damage immunity";
+	BIO_WEAPSTAT_BERSERKMULTI = "\cj%d%% more damage from berserk";
 
 	BIO_WEAP_TAG_FIST = "Fist";
 
