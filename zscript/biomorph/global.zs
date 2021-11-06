@@ -301,7 +301,7 @@ class BIO_GlobalData : Thinker
 				continue;
 			}
 
-			let perks = BIO_Utils.TryGetJsonArray(obj.get("perks"));
+			let perks = BIO_Utils.TryGetJsonArray(obj.get("perks"), true);
 			if (perks != null)
 			{
 				for (uint i = 0; i < perks.size(); i++)
