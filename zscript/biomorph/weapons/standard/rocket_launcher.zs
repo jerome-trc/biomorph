@@ -53,6 +53,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire();
+			A_PresetRecoil('BIO_RocketLauncherRecoil');
 		}
 		MISG B 0 A_ReFire;
 		Goto Ready;

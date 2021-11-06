@@ -54,6 +54,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 			A_BIO_Fire();
 			A_GunFlash();
 			A_StartSound("weapons/pistol", CHAN_WEAPON);
+			A_PresetRecoil('BIO_HandgunRecoil');
 		}
 		PISG C 4 A_SetTics(invoker.FireTime3);
 		PISG B 5
@@ -76,7 +77,10 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		PISG A 1 Offset(0, 32 + 18);
 		// TODO: Reload sounds
 		PISG A 30 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
-		PISG A 1 Offset(0, 32 + 18) A_LoadMag;
+		PISG A 1 Offset(0, 32 + 18)
+		{
+			A_LoadMag();
+		}
 		PISG A 1 Offset(0, 32 + 16);
 		PISG A 1 Offset(0, 32 + 14);
 		PISG A 1 Offset(0, 32 + 12);

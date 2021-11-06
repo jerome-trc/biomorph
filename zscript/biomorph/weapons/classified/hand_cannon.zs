@@ -52,6 +52,7 @@ class BIO_HandCannon : BIO_Weapon
 		{
 			A_BIO_Fire();
 			A_GunFlash();
+			A_PresetRecoil('BIO_HandCannonRecoil');
 		}
 		HCAN G 1;
 		HCAN D 3 A_SetTics(invoker.FireTime1);

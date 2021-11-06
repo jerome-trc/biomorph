@@ -46,6 +46,7 @@ class BIO_Autocannon : BIO_Weapon
 			if (!invoker.SufficientAmmo()) return ResolveState('WindDown');
 			A_GunFlash('Flash.I');
 			A_BIO_Fire();
+			A_PresetRecoil(Random(0, 1) ? 'BIO_AutogunRecoil' : 'BIO_RapidFireRecoil');
 			A_StartSound("weapons/autocannon", CHAN_WEAPON);
 			return state(null);
 		}
@@ -55,6 +56,7 @@ class BIO_Autocannon : BIO_Weapon
 			if (!invoker.SufficientAmmo()) return ResolveState('WindDown');
 			A_GunFlash('Flash.K');
 			A_BIO_Fire();
+			A_PresetRecoil(Random(0, 1) ? 'BIO_AutogunRecoil' : 'BIO_RapidFireRecoil');
 			A_StartSound("weapons/autocannon", CHAN_7);
 			return state(null);
 		}

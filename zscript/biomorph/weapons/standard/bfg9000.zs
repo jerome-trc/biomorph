@@ -65,6 +65,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		{
 			A_SetTics(invoker.FireTime3);
 			A_BIO_Fire();
+			A_PresetRecoil('BIO_BFGRecoil');
 		}
 		BFGG B 20
 		{
