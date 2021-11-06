@@ -984,6 +984,11 @@ class BIO_Weapon : DoomWeapon abstract
 			Sin(invoker.Pitch) * zVelMult, CVF_RELATIVE);
 	}
 
+	protected action void A_PresetRecoil(Class<BIO_RecoilThinker> recoil_t)
+	{
+		BIO_RecoilThinker.Create(recoil_t, BIO_Weapon(invoker));
+	}
+
 	protected action void A_LightRecoil()
 	{
 		A_Recoil(0.1);

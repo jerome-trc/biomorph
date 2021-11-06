@@ -51,6 +51,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_BIO_Fire();
 			A_GunFlash();
 			A_StartSound("weapons/incursion", CHAN_WEAPON);
+			A_PresetRecoil('BIO_ShotgunRecoil');
 		}
 		INCU C 4 Bright A_SetTics(invoker.FireTime2);
 		INCU D 2 A_SetTics(invoker.FireTime3);
@@ -76,6 +77,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_StartSound("weapons/incursion", CHAN_6);
 			A_StartSound("weapons/incursion", CHAN_7);
 			A_Kickback(2.5, 2.5);
+			A_PresetRecoil('BIO_VolleyGunRecoil');
 		}
 		INCU C 4 Bright A_SetTics(invoker.FireTime2);
 		INCU D 2 A_SetTics(invoker.FireTime3);

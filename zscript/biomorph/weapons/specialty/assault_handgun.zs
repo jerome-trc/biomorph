@@ -50,6 +50,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		ASHG D 1 Bright
 		{
 			A_BIO_Fire();
+			A_PresetRecoil('BIO_AutogunRecoil');
 			A_GunFlash();
 			A_StartSound("weapons/assaulthandgun", CHAN_WEAPON);
 		}
@@ -59,6 +60,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		ASHG E 1 Bright
 		{
 			A_BIO_Fire();
+			A_PresetRecoil('BIO_AutogunRecoil');
 			A_GunFlash();
 			A_StartSound("weapons/assaulthandgun", CHAN_WEAPON);
 		}
@@ -68,6 +70,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		ASHG D 1 Bright
 		{
 			A_BIO_Fire();
+			A_PresetRecoil('BIO_AutogunRecoil');
 			A_GunFlash();
 			A_StartSound("weapons/assaulthandgun", CHAN_WEAPON);
 		}
@@ -82,6 +85,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 			A_SetTics(invoker.FireTime1 + 1);
 			invoker.bAltFire = false;
 			A_BIO_Fire(spreadFactor: 0.5);
+			A_PresetRecoil('BIO_HandgunRecoil');
 			A_GunFlash();
 			A_StartSound("weapons/assaulthandgun", CHAN_WEAPON);
 		}

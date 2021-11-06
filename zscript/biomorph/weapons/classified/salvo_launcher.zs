@@ -47,6 +47,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire();
+			A_PresetRecoil('BIO_ShotgunRecoil');
 		}
 		SALV C 1 Offset(0, 32 + 9);
 		SALV D 1 Offset(0, 32 + 12);
@@ -58,6 +59,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire();
+			A_PresetRecoil('BIO_ShotgunRecoil');
 		}
 		SALV C 1 Offset(0, 32 + 9);
 		SALV D 1 Offset(0, 32 + 12);
@@ -69,6 +71,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire();
+			A_PresetRecoil('BIO_ShotgunRecoil');
 		}
 		SALV C 1 Offset(0, 32 + 9);
 		SALV D 1 Offset(0, 32 + 12);
@@ -84,6 +87,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 			A_SetTics(invoker.FireTime1 + 1);
 			invoker.bAltFire = false;
 			A_BIO_Fire();
+			A_PresetRecoil('BIO_ShotgunRecoil');
 		}
 		SALV C 3 Offset(0, 32 + 9) A_SetTics(invoker.FireTime2 + 1);
 		SALV D 3 Offset(0, 32 + 12) A_SetTics(invoker.FireTime3 + 1);
