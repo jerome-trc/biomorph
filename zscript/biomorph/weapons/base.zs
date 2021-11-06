@@ -1329,6 +1329,12 @@ mixin class BIO_MeleeWeapon
 	property MeleeRange: MeleeRange;
 	property LifeSteal: LifeSteal;
 
+	private void UpdateMeleeDictionary()
+	{
+		Dict.Insert(DICTKEY_MELEERANGE, String.Format("%f", MeleeRange));
+		Dict.Insert(DICTKEY_LIFESTEAL, String.Format("%f", LifeSteal));
+	}
+
 	float CalcMeleeRange()
 	{
 		float ret = MeleeRange;
