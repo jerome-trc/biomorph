@@ -19,9 +19,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		Weapon.SlotNumber 5;
 		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 
-		BIO_Weapon.AffixMasks
-			BIO_WAM_MAGSIZE | BIO_WAM_RELOADTIME,
-			BIO_WAM_ALL, BIO_WAM_NONE;
+		BIO_Weapon.AffixMasks BIO_WAM_MAGAZINELESS, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.DamageRange 30, 180;
 		BIO_Weapon.FireType 'BIO_Rocket';

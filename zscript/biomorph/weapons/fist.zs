@@ -18,9 +18,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		Weapon.SlotNumber 1;
 		Weapon.SlotPriority 1.0;
 
-		BIO_Weapon.AffixMasks
-			BIO_WAM_RELOADTIME | BIO_WAM_MAGSIZE,
-			BIO_WAM_ALL, BIO_WAM_NONE;
+		BIO_Weapon.AffixMasks BIO_WAM_MAGAZINELESS, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.DamageRange 2, 20;
 		BIO_Weapon.FireType 'BIO_MeleeHit';
 
