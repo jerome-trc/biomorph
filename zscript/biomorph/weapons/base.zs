@@ -970,21 +970,21 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		A_Recoil(0.1);
 		A_SetPitch(Pitch - 0.65);
-		A_Quake(1, 1, 0, 10);
+		A_Quake(1, 1, 0, 10, "");
 	}
 
 	protected action void A_MediumRecoil()
 	{
 		A_Recoil(0.15);
 		A_SetPitch(Pitch - 1.5);	
-		A_Quake(2, 2, 0, 20);
+		A_Quake(2, 2, 0, 20, "");
 	}
 
 	protected action void A_HeavyRecoil()
 	{
 		A_Recoil(0.4);
 		A_SetPitch(Pitch - 3.0);	
-		A_Quake(3, 3, 0, 20);
+		A_Quake(3, 3, 0, 20, "");
 	}
 
 	// Call from the weapon's Spawn state, after two frames of the weapon's 
