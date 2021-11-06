@@ -189,10 +189,13 @@ class BIO_Weapon : DoomWeapon abstract
 		+DONTGIB
 		+NOBLOCKMONST
 		+THRUACTORS
+		+USESPECIAL
 		+WEAPON.ALT_AMMO_OPTIONAL
 		+WEAPON.AMMO_OPTIONAL
 		+WEAPON.NOALERT
 
+		Activation
+			THINGSPEC_ThingActs | THINGSPEC_ThingTargets | THINGSPEC_Switch;
 		Height 8;
 		Radius 16;
 
@@ -358,6 +361,30 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		super.OnDrop(dropper);
 		HitGround = false;
+	}
+
+	override void Activate(Actor activator)
+	{
+		super.Activate(activator);
+		
+		let bioPlayer = BIO_Player(activator);
+		if (bioPlayer == null) return;
+
+		string output = GetTag() .. "\n\n";
+
+		for (uint i = 0; i < StatReadout.Size(); i++)
+			output.AppendFormat("%s\n", StatReadout[i]);
+
+		if (AffixReadout.Size() > 0)
+		{
+			output = output .. "\n";
+
+			for (uint i = 0; i < AffixReadout.Size(); i++)
+				output.AppendFormat("\cj%s\n", AffixReadout[i]);
+		}
+
+		output.DeleteLastCharacter();
+		bioPlayer.A_Print(output, 5.0);
 	}
 
 	// Virtuals/abstracts ======================================================
