@@ -35,15 +35,15 @@
 
 // Weapons (tags, pickup messages, obituaries, stat readouts) ==================
 
-	BIO_WEAPSTAT_FIREDATA = "\cjDamage: (%s%d\cj - %s%d\cj) x %s%d\cj %s%s\c-";
-	BIO_WEAPSTAT_FIRETIME = "\cjFire time: %s%.2f\cj seconds";
-	BIO_WEAPSTAT_FIRETIME_SEMIAUTO = "\cjFire time (\cksemi-auto\cj): %s%.2f\cj seconds";
-	BIO_WEAPSTAT_FIRETIME_BURST = "\cjFire time (\ckburst\cj): %s%.2f\cj seconds";
-	BIO_WEAPSTAT_FIRETIME_AUTO = "\cjFire time (\ckfull-auto\cj): %s%.2f\cj seconds";
-	BIO_WEAPSTAT_ATKTIME = "\cjAttack time: %s%.2f\cj seconds";
-	BIO_WEAPSTAT_RELOADTIME = "\cjReload time: %s%.2f\cj seconds";
-	BIO_WEAPSTAT_POSTFIREDELAY = "\cjPost-fire delay: %s%.2f\cj seconds";
-	BIO_WEAPSTAT_SPREAD = "\cjSpread angles: %s%.2f\cj horizontal, %s%.2f\cj vertical";
+	BIO_WEAPSTAT_FIREDATA = "\c[MidGrey]Damage: (%s%d\c[MidGrey] \cu-\c[MidGrey] %s%d\c[MidGrey]) \c[MidGrey]x\c[MidGrey] %s%d\c[MidGrey] %s%s\c-";
+	BIO_WEAPSTAT_FIRETIME = "\c[MidGrey]Fire time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_FIRETIME_SEMIAUTO = "\c[MidGrey]Fire time (\cksemi-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_FIRETIME_BURST = "\c[MidGrey]Fire time (\ckburst\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_FIRETIME_AUTO = "\c[MidGrey]Fire time (\ckfull-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_ATKTIME = "\c[MidGrey]Attack time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_RELOADTIME = "\c[MidGrey]Reload time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_POSTFIREDELAY = "\c[MidGrey]Post-fire delay: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_SPREAD = "\c[MidGrey]Spread angles: %s%.2f\c[MidGrey] horizontal, %s%.2f\c[MidGrey] \c[MidGrey]vertical";
 	BIO_WEAPSTAT_FORCERADIUSDMG = "\cjIgnores splash damage immunity";
 
 	BIO_WEAP_TAG_FIST = "Fist";

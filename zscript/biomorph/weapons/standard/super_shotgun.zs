@@ -169,7 +169,8 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 
 	override void StatsToString(in out Array<string> stats) const
 	{
-		stats.Push(GenericFireDataReadout() .. "\cj " .. StringTable.Localize("$BIO_PER_BARREL"));
+		stats.Push(GenericFireDataReadout() .. "\c[MidGrey] "
+			.. StringTable.Localize("$BIO_PER_BARREL"));
 		stats.Push(GenericSpreadReadout());
 		stats.Push(GenericFireTimeReadout(TrueFireTime()));
 		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));

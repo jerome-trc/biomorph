@@ -119,8 +119,8 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 	override void StatsToString(in out Array<string> stats) const
 	{
 		stats.Push(GenericFireDataReadout());
-		stats.Push(GenericFireTimeReadout(TrueFireTime()));
 		stats.Push(GenericSpreadReadout());
+		stats.Push(GenericFireTimeReadout(TrueFireTime()));
 		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
 	}
 
