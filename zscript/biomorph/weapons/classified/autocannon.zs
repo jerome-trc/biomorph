@@ -36,14 +36,14 @@ class BIO_Autocannon : BIO_Weapon
 		ACAN A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
+		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 	WindUp:
 		ACAN BCD 1;
 		ACAN EFGH 1;
 	Wound:
 		ACAN E 1 Bright
 		{
-			if (invoker.MagazineEmpty()) return ResolveState('WindDown');
+			if (!invoker.SufficientAmmo()) return ResolveState('WindDown');
 			A_GunFlash('Flash.I');
 			A_BIO_Fire();
 			A_StartSound("weapons/autocannon", CHAN_WEAPON);
@@ -52,7 +52,7 @@ class BIO_Autocannon : BIO_Weapon
 		ACAN F 1 Bright A_GunFlash('Flash.J');
 		ACAN G 1 Bright
 		{
-			if (invoker.MagazineEmpty()) return ResolveState('WindDown');
+			if (!invoker.SufficientAmmo()) return ResolveState('WindDown');
 			A_GunFlash('Flash.K');
 			A_BIO_Fire();
 			A_StartSound("weapons/autocannon", CHAN_7);

@@ -43,7 +43,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		SALV A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		#### # 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
+		#### # 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 		SALV A 2 Offset(0, 32 + 3) A_SetTics(invoker.FireTime1);
 		SALV B 2 Offset(0, 32 + 6)
 		{
@@ -54,7 +54,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		SALV D 1 Offset(0, 32 + 12);
 		SALV C 1 Offset(0, 32 + 9);
 		SALV B 2 Offset(0, 32 + 6) A_SetTics(invoker.FireTime3);
-		#### # 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
+		#### # 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 		SALV A 2 Offset(0, 32 + 3) A_SetTics(invoker.FireTime1);
 		SALV B 2 Offset(0, 32 + 6)
 		{
@@ -65,7 +65,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		SALV D 1 Offset(0, 32 + 12);
 		SALV C 1 Offset(0, 32 + 9);
 		SALV B 2 Offset(0, 32 + 6) A_SetTics(invoker.FireTime3);
-		#### # 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
+		#### # 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 		SALV A 2 Offset(0, 32 + 3) A_SetTics(invoker.FireTime1);
 		SALV B 2 Offset(0, 32 + 6)
 		{
@@ -80,7 +80,7 @@ class BIO_SalvoLauncher : BIO_Weapon
 		#### # 0 A_ReFire;
 		Goto Ready;
 	AltFire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
+		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 		SALV B 3 Offset(0, 32 + 6)
 		{
 			A_SetTics(invoker.FireTime1 + 1);

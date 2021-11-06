@@ -43,7 +43,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		HVBR A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready');
+		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 		HVBR A 1 Offset(0, 32 + 3) Bright
 		{
 			A_BIO_Fire();

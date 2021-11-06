@@ -50,7 +50,6 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		BFGG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		// TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), "Reload");
 		TNT1 A 0 A_AutoReload;
 		BFGG A 20
 		{

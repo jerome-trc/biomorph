@@ -445,6 +445,20 @@ class BIO_Weapon : DoomWeapon abstract
 			Magazine2.Amount >= MagazineSize2;
 	}
 
+	bool SufficientAmmo(bool secondary = false, int multi = 1) const
+	{
+		if (!secondary)
+		{
+			if (Magazine1.Amount < (AmmoUse1 * multi)) return false;
+			return true;
+		}
+		else
+		{
+			if (Magazine2.Amount < (AmmoUse2 * multi)) return false;
+			return true;
+		}
+	}
+
 	bool CanReload(bool secondary = false) const
 	{
 		let magAmmo = !secondary ? Magazine1 : Magazine2;
@@ -900,7 +914,7 @@ class BIO_Weapon : DoomWeapon abstract
 	protected action state A_AutoReload(bool secondary = false,	
 		bool single = false, int min = -1)
 	{
-		if (!invoker.MagazineEmpty(secondary))
+		if (invoker.SufficientAmmo(secondary))
 			return state(null);
 		
 		if (min == -1) min = 1;
