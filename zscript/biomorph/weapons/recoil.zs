@@ -2,11 +2,16 @@ class BIO_RecoilThinker : Thinker abstract
 {
 	protected BIO_Weapon Weapon;
 	protected int Lifetime;
+	protected float Scale;
 
-	static BIO_RecoilThinker Create(Class<BIO_RecoilThinker> type, BIO_Weapon weap)
+	static BIO_RecoilThinker Create(
+		Class<BIO_RecoilThinker> type, BIO_Weapon weap,
+		float scale = 1.0, bool invert = false)
 	{
 		let ret = BIO_RecoilThinker(new(type));
 		ret.Weapon = weap;
+		ret.Scale = scale;
+		if (invert) ret.Scale = -ret.Scale;
 		return ret;
 	}
 }
@@ -23,7 +28,7 @@ mixin class BIO_RecoilThinkerCommon
 			return;
 		}
 
-		Weapon.Owner.Pitch += PITCH_VALUES[Lifetime++];
+		Weapon.Owner.Pitch += (PITCH_VALUES[Lifetime++] * Scale);
 	}
 }
 
@@ -138,6 +143,17 @@ class BIO_ShotgunPumpRecoil : BIO_RecoilThinker
 
 	static const float[] PITCH_VALUES = {
 		0.05, 0.23, 0.08, -0.06, -0.28, -0.02
+	};
+}
+
+class BIO_HeavyReloadRecoil : BIO_RecoilThinker
+{
+	mixin BIO_RecoilThinkerCommon;
+
+	const TIME_TO_LIVE = 10;
+
+	static const float[] PITCH_VALUES = {
+		-0.85, -0.1, -0.05, 0.3, 0.25, 0.15, 0.1, 0.05, 0.02, 0.01
 	};
 }
 
