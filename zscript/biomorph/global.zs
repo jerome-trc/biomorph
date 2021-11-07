@@ -58,6 +58,8 @@ class BIO_GlobalData : Thinker
 
 	BIO_PerkGraph GetPerkGraph(PlayerInfo pInfo) const
 	{
+		if (!(pInfo.Cls is 'BIO_Player')) return null;
+
 		for (uint i = 0; i < PerkGraphs.Size(); i++)
 		{
 			if (PerkGraphs[i].Player != pInfo) continue;
