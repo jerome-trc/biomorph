@@ -70,8 +70,16 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		MISG A 1 Offset(0, 32 + 16);
 		MISG A 1 Offset(0, 32 + 18);
 		// TODO: Reload sounds
-		MISG A 45 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
-		MISG A 1 Offset(0, 32 + 18) A_LoadMag();
+		MISG A 45 Offset(0, 32 + 20)
+		{
+			A_SetTics(invoker.ReloadTime);
+			A_PresetRecoil('BIO_HeavyReloadRecoil');
+		}
+		MISG A 1 Offset(0, 32 + 18)
+		{
+			A_LoadMag();
+			A_PresetRecoil('BIO_HeavyReloadRecoil', invert: true);
+		}
 		MISG A 1 Offset(0, 32 + 16);
 		MISG A 1 Offset(0, 32 + 14);
 		MISG A 1 Offset(0, 32 + 12);
