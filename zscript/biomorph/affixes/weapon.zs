@@ -54,6 +54,11 @@ class BIO_WAFX_Damage : BIO_WeaponAffix
 				Modifier2 >= 0 ? "+" : "", Modifier2));
 		}
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_WEAPDMG");
+	}
 }
 
 class BIO_WAFX_DamagePercent : BIO_WeaponAffix
@@ -124,6 +129,11 @@ class BIO_WAFX_DamagePercent : BIO_WeaponAffix
 				Multi2 >= 0 ? "+" : "", int(Multi2 * 100)));
 		}
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_WEAPDMGPERCENT");
+	}
 }
 
 // n% of the hit enemy's health is given to the projectile's dealt damage.
@@ -159,6 +169,11 @@ class BIO_WAFX_EnemyHealthDamage : BIO_WeaponAffix
 				StringTable.Localize("$BIO_ADDED_TO") :
 				StringTable.Localize("$BIO_REMOVED_FROM")));
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_ENEMYHEALTHDAMAGE");
+	}
 }
 
 class BIO_ProjDmgFunc_EnemyHealthDamage : BIO_ProjDamageFunctor
@@ -178,6 +193,7 @@ class BIO_ProjDmgFunc_EnemyHealthDamage : BIO_ProjDamageFunctor
 	}
 }
 
+// Only compatible with pistol-type weapons, to give them an edge.
 class BIO_WAFX_Crit : BIO_WeaponAffix
 {
 	uint Chance;
@@ -208,6 +224,11 @@ class BIO_WAFX_Crit : BIO_WeaponAffix
 		strings.Push(String.Format(StringTable.Localize("$BIO_AFFIX_TOSTR_CRIT"),
 			Chance, DamageMulti > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 			DamageMulti > 0.0 ? "+" : "", int(DamageMulti * 100.0)));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_CRIT");
 	}
 }
 
@@ -243,6 +264,11 @@ class BIO_WAFX_SplashForDamage : BIO_WeaponAffix
 		strings.Push(CRESC_MIXED .. StringTable.Localize(
 			"$BIO_AFFIX_TOSTR_SPLASHFORDAMAGE"));
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_SPLASHFORDAMAGE");
+	}
 }
 
 class BIO_WAFX_ForwardDamage : BIO_WeaponAffix
@@ -273,6 +299,11 @@ class BIO_WAFX_ForwardDamage : BIO_WeaponAffix
 			StringTable.Localize("$BIO_AFFIX_TOSTR_FORWARDDAMAGE"),
 			Multi > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE, Multi * 100,
 			StringTable.Localize(Multi > 0.0 ? "$BIO_MORE" : "$BIO_LESS")));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_FORWARDDAMAGE");
 	}
 }
 
@@ -305,6 +336,11 @@ class BIO_WAFX_StrafeDamage : BIO_WeaponAffix
 			StringTable.Localize("$BIO_AFFIX_TOSTR_STRAFEDAMAGE"),
 			Multi > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE, Multi * 100,
 			StringTable.Localize(Multi > 0.0 ? "$BIO_MORE" : "$BIO_LESS")));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_STRAFEDAMAGE");
 	}
 }
 
@@ -353,6 +389,11 @@ class BIO_WAFX_Plasma : BIO_WeaponAffix
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
 		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_PLASMA"));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_PLASMA");
 	}
 }
 
@@ -439,6 +480,11 @@ class BIO_WAFX_Slug : BIO_WeaponAffix
 	{
 		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_SLUG"));
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_SLUG");
+	}
 }
 
 class BIO_WAFX_MiniMissile : BIO_WeaponAffix
@@ -464,6 +510,11 @@ class BIO_WAFX_MiniMissile : BIO_WeaponAffix
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
 		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_MINIMISSILE"));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_MINIMISSILE");
 	}
 }
 
@@ -541,6 +592,11 @@ class BIO_WAFX_FireCount : BIO_WeaponAffix
 				Modifier2 >= 0 ? "+" : "", Modifier2, weap.GetFireTypeTag(true)));
 		}
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_FIRECOUNT");
+	}
 }
 
 class BIO_WAFX_FireRate : BIO_WeaponAffix
@@ -579,6 +635,11 @@ class BIO_WAFX_FireRate : BIO_WeaponAffix
 			StringTable.Localize("$BIO_AFFIX_TOSTR_FIRERATE"),
 			Modifier >= 0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
 			Modifier >= 0 ? "+" : "", float(Modifier) / 35.0));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_FIRERATE");
 	}
 }
 
@@ -642,6 +703,11 @@ class BIO_WAFX_Spread : BIO_WeaponAffix
 		output.DeleteLastCharacter();
 		strings.Push(output);
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_SPREAD");
+	}
 }
 
 class BIO_WAFX_Kickback : BIO_WeaponAffix
@@ -670,6 +736,11 @@ class BIO_WAFX_Kickback : BIO_WeaponAffix
 			Modifier > 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 			(float(Modifier) / float(weap.Kickback)) * 100.0,
 			StringTable.Localize(Modifier > 0 ? "$BIO_MORE" : "$BIO_LESS")));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_KICKBACK");
 	}
 }
 
@@ -710,6 +781,11 @@ class BIO_WAFX_ReloadSpeed : BIO_WeaponAffix
 			Modifier >= 0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
 			Modifier >= 0 ? "+" : "", float(Modifier) / 35.0));
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_RELOADSPEED");
+	}
 }
 
 class BIO_WAFX_ProjSeek : BIO_WeaponAffix
@@ -734,6 +810,11 @@ class BIO_WAFX_ProjSeek : BIO_WeaponAffix
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
 		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_PROJSEEK"));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_PROJSEEK");
 	}
 }
 
@@ -762,6 +843,11 @@ class BIO_WAFX_ForcePain : BIO_WeaponAffix
 	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
 		strings.Push(StringTable.Localize("$BIO_AFFIX_TOSTR_FORCEPAIN"));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_FORCEPAIN");
 	}
 }
 
@@ -837,6 +923,11 @@ class BIO_WAFX_MeleeRange : BIO_WeaponAffix
 				Modifier2 >= 0 ? "+" : "", Modifier2));
 		}
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_MELEERANGE");
+	}
 }
 
 class BIO_WAFX_LifeSteal : BIO_WeaponAffix
@@ -893,6 +984,11 @@ class BIO_WAFX_LifeSteal : BIO_WeaponAffix
 				int(AddPercent * 100.0)));
 		}
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_LIFESTEAL");
+	}
 }
 
 class BIO_WAFX_SwitchSpeed : BIO_WeaponAffix
@@ -938,5 +1034,10 @@ class BIO_WAFX_SwitchSpeed : BIO_WeaponAffix
 				(float(Modifier) / float(weap.RaiseSpeed)) * 100.0,
 				StringTable.Localize(Modifier > 0 ? "$BIO_FASTER" : "$BIO_SLOWER")));
 		}
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_SWITCHSPEED");
 	}
 }
