@@ -145,12 +145,4 @@ class BIO_HandCannon : BIO_Weapon
 	}
 }
 
-class BIO_MAG_HandCannon : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 7;
-	}
-}
+class BIO_MAG_HandCannon : Ammo { mixin BIO_Magazine; }

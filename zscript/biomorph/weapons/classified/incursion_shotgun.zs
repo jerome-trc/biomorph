@@ -191,12 +191,4 @@ class BIO_IncursionShotgun : BIO_Weapon
 	}
 }
 
-class BIO_MAG_IncursionShotgun : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 4;
-	}
-}
+class BIO_MAG_IncursionShotgun : Ammo { mixin BIO_Magazine; }

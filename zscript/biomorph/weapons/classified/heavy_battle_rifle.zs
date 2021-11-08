@@ -143,12 +143,4 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	}
 }
 
-class BIO_MAG_HBR : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 60;
-	}
-}
+class BIO_MAG_HBR : Ammo { mixin BIO_Magazine; }

@@ -160,12 +160,4 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 	}
 }
 
-class BIO_MAG_Shotgun : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 1;
-	}
-}
+class BIO_MAG_Shotgun : Ammo { mixin BIO_Magazine; }

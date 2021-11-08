@@ -129,12 +129,4 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
-class BIO_MAG_Chaingun : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 40;
-	}
-}
+class BIO_MAG_Chaingun : Ammo { mixin BIO_Magazine; }

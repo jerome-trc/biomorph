@@ -143,12 +143,4 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
-class BIO_MAG_RocketLauncher : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 1;
-	}
-}
+class BIO_MAG_RocketLauncher : Ammo { mixin BIO_Magazine; }

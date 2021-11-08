@@ -182,12 +182,4 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 	override int TrueReloadTime() const { return ReloadTime1 + ReloadTime2 + ReloadTime3; }
 }
 
-class BIO_MAG_SuperShotgun : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 2;
-	}
-}
+class BIO_MAG_SuperShotgun : Ammo { mixin BIO_Magazine; }
