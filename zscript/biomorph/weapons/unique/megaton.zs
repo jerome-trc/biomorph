@@ -19,6 +19,7 @@ class BIO_Megaton : BIO_IncursionShotgun
 		BIO_Weapon.MagazineType 'BIO_Magazine_Megaton';
 		BIO_Weapon.Rarity BIO_RARITY_UNIQUE;
 		BIO_Weapon.Spread 3.8, 1.9;
+		BIO_Weapon.UniqueBase 'BIO_IncursionShotgun';
 	}
 	
 	States

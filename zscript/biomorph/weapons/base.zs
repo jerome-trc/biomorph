@@ -88,6 +88,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// (RAT: Who designed those two properties to be so counter-intuitive)
 
+	meta Class<BIO_Weapon> UniqueBase; property UniqueBase: UniqueBase;
+
 	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
 	BIO_WeaponAffixMask AffixMask1, AffixMask2;
 	uint8 MiscAffixMask;
@@ -219,6 +221,7 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_Weapon.ReloadFactors 1, 1;
 		BIO_Weapon.Spreads 0.0, 0.0, 0.0, 0.0;
 		BIO_Weapon.SwitchSpeeds 6, 6;
+		BIO_Weapon.UniqueBase '';
 	}
 
 	States
