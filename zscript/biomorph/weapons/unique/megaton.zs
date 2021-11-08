@@ -16,7 +16,7 @@ class BIO_Megaton : BIO_IncursionShotgun
 		Weapon.SlotPriority SLOTPRIO_CLASSIFIED + 0.1;
 
 		BIO_Weapon.DamageRange 8, 18;
-		BIO_Weapon.MagazineType 'BIO_Magazine_Megaton';
+		BIO_Weapon.MagazineType 'BIO_MAG_Megaton';
 		BIO_Weapon.Rarity BIO_RARITY_UNIQUE;
 		BIO_Weapon.Spread 3.8, 1.9;
 		BIO_Weapon.UniqueBase 'BIO_IncursionShotgun';
@@ -61,7 +61,7 @@ class BIO_Megaton : BIO_IncursionShotgun
 	}
 }
 
-class BIO_Magazine_Megaton : Ammo
+class BIO_MAG_Megaton : Ammo
 {
 	mixin BIO_Magazine;
 

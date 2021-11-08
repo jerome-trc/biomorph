@@ -26,7 +26,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 15;
-		BIO_Weapon.MagazineType 'BIO_Magazine_Pistol';
+		BIO_Weapon.MagazineType 'BIO_MAG_Pistol';
 		BIO_Weapon.Spread 4.0, 2.0;
 		BIO_Weapon.SwitchSpeeds 8, 8;
 
@@ -163,7 +163,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 	}
 }
 
-class BIO_Magazine_Pistol : Ammo
+class BIO_MAG_Pistol : Ammo
 {
 	mixin BIO_Magazine;
 

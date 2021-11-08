@@ -26,7 +26,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		BIO_Weapon.FireCount 7;
 		BIO_Weapon.FireType 'BIO_ShotPellet';
 		BIO_Weapon.MagazineSize 2;
-		BIO_Weapon.MagazineType 'BIO_Magazine_SuperShotgun';
+		BIO_Weapon.MagazineType 'BIO_MAG_SuperShotgun';
 		BIO_Weapon.Spread 12.0, 7.5;
 
 		BIO_SuperShotgun.FireTimes 3, 7;
@@ -182,7 +182,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 	override int TrueReloadTime() const { return ReloadTime1 + ReloadTime2 + ReloadTime3; }
 }
 
-class BIO_Magazine_SuperShotgun : Ammo
+class BIO_MAG_SuperShotgun : Ammo
 {
 	mixin BIO_Magazine;
 

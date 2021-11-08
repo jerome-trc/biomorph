@@ -23,7 +23,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		BIO_Weapon.DamageRange 5, 40;
 		BIO_Weapon.FireType 'BIO_PlasmaBall';
 		BIO_Weapon.MagazineSize 50;
-		BIO_Weapon.MagazineType 'BIO_Magazine_PlasmaRifle';
+		BIO_Weapon.MagazineType 'BIO_MAG_PlasmaRifle';
 		BIO_Weapon.Spread 0.2, 0.2;
 
 		BIO_PlasmaRifle.FireTimes 3, 20;
@@ -163,7 +163,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
-class BIO_Magazine_PlasmaRifle : Ammo
+class BIO_MAG_PlasmaRifle : Ammo
 {
 	mixin BIO_Magazine;
 

@@ -24,7 +24,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		BIO_Weapon.DamageRange 20, 160;
 		BIO_Weapon.FireType 'BIO_Rocket';
 		BIO_Weapon.MagazineSize 1;
-		BIO_Weapon.MagazineType 'BIO_Magazine_RocketLauncher';
+		BIO_Weapon.MagazineType 'BIO_MAG_RocketLauncher';
 		BIO_Weapon.Spread 0.2, 0.2;
 		
 		BIO_RocketLauncher.FireTimes 8, 12;
@@ -142,7 +142,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
-class BIO_Magazine_RocketLauncher : Ammo
+class BIO_MAG_RocketLauncher : Ammo
 {
 	mixin BIO_Magazine;
 
