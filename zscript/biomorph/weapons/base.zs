@@ -303,7 +303,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 		BIO_GlobalData.Get().OnWeaponAcquired(Grade);
 
-		// Get a pointer to primary ammo (which is either AmmoType1 or MagazineType1):
+		// Get a pointer to primary ammo (which is either AmmoType1 or
+		// MagazineType1). If it isn't found, generate and attach it
 		if (Magazine1 == null && AmmoType1 != null)
 		{
 			Magazine1 =
@@ -314,6 +315,7 @@ class BIO_Weapon : DoomWeapon abstract
 			if (Magazine1 == null)
 			{
 				Magazine1 = Ammo(Actor.Spawn(MagazineType1));
+				Magazine1.Amount = Max(Default.MagazineSize1, 0);
 				Magazine1.AttachToOwner(newOwner);
 			}
 		}
@@ -329,6 +331,7 @@ class BIO_Weapon : DoomWeapon abstract
 			if (Magazine2 == null)
 			{
 				Magazine2 = Ammo(Actor.Spawn(MagazineType2));
+				Magazine2.Amount = Max(Default.MagazineSize2, 0);
 				Magazine2.AttachToOwner(newOwner);
 			}
 		}

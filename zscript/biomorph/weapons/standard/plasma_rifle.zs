@@ -163,12 +163,4 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
-class BIO_MAG_PlasmaRifle : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 50;
-	}
-}
+class BIO_MAG_PlasmaRifle : Ammo { mixin BIO_Magazine; }

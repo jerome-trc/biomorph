@@ -163,12 +163,4 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 	}
 }
 
-class BIO_MAG_Pistol : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 15;
-	}
-}
+class BIO_MAG_Pistol : Ammo { mixin BIO_Magazine; }

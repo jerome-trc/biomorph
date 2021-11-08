@@ -186,12 +186,4 @@ class BIO_AssaultHandgun : BIO_Weapon
 	}
 }
 
-class BIO_MAG_AssaultHandgun : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 18;
-	}
-}
+class BIO_MAG_AssaultHandgun : Ammo { mixin BIO_Magazine; }

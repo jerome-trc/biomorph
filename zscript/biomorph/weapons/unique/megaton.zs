@@ -61,12 +61,4 @@ class BIO_Megaton : BIO_IncursionShotgun
 	}
 }
 
-class BIO_MAG_Megaton : Ammo
-{
-	mixin BIO_Magazine;
-
-	Default
-	{
-		Inventory.Amount 4;
-	}
-}
+class BIO_MAG_Megaton : Ammo { mixin BIO_Magazine; }
