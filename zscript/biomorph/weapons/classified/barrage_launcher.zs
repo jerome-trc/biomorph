@@ -5,6 +5,8 @@ class BIO_BarrageLauncher : BIO_Weapon
 
 	Default
 	{
+		+WEAPON.BFG
+		+WEAPON.EXPLOSIVE
 		+WEAPON.NOAUTOFIRE
 
 		Tag "$BIO_WEAP_TAG_BARRAGELAUNCHER";

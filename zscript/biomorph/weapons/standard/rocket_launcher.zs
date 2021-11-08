@@ -5,6 +5,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 
 	Default
 	{
+		+WEAPON.EXPLOSIVE
 		+WEAPON.NOAUTOFIRE
 
 		Tag "$TAG_ROCKETLAUNCHER";
