@@ -6,6 +6,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 
 	Default
 	{
+		+WEAPON.BFG
 		+WEAPON.NOAUTOFIRE;
 
 		Height 20;
