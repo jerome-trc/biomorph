@@ -335,6 +335,8 @@ class BIO_Weapon : DoomWeapon abstract
 				Magazine2.AttachToOwner(newOwner);
 			}
 		}
+
+		if (MagazineType1 == MagazineType2) Magazine2 = Magazine1;
 	}
 
 	// The player can't pick up a weapon if they're full on them,
