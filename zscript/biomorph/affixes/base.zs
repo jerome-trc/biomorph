@@ -4,6 +4,9 @@ class BIO_Affix play abstract
 	const CRESC_NEGATIVE = "\cg"; // Red
 	const CRESC_NEUTRAL = "\cc"; // Grey
 	const CRESC_MIXED = "\cf"; // Gold
+
+	// Output should be fully localized.
+	abstract string GetTag() const;
 }
 
 class BIO_WeaponAffix : BIO_Affix abstract

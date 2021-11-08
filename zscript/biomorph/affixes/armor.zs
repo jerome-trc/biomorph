@@ -26,6 +26,11 @@ class BIO_ArmorAffix_SaveAmount : BIO_EquipmentAffix
 			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 			Modifier >= 0 ? "+" : "", Modifier));
 	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_ARMORSAVEAMOUNT");
+	}
 }
 
 class BIO_ArmorAffix_SavePercent : BIO_EquipmentAffix
@@ -58,5 +63,10 @@ class BIO_ArmorAffix_SavePercent : BIO_EquipmentAffix
 			StringTable.Localize("$BIO_AFFIX_TOSTR_ARMORSAVEPERCENT"),
 			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 			Modifier >= 0 ? "+" : "", Modifier));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_AFFIX_TAG_ARMORSAVEPERCENT");
 	}
 }
