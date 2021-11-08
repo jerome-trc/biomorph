@@ -183,81 +183,81 @@
 
 	BIO_AFFIXESUNKNOWN = "Affixes unknown";
 
-	BIO_AFFIX_TAG_WEAPDMG = "High-Power";
-	BIO_AFFIX_TOSTR_WEAPDMG1 = "Primary damage: %s%s%d";
-	BIO_AFFIX_TOSTR_WEAPDMG2 = "Secondary damage: %s%s%d";
-	BIO_AFFIX_TOSTR_WEAPDMG = "Damage: %s%s%d primary, %s%s%d secondary";
+	BIO_WAFX_TAG_WEAPDMG = "High-Power";
+	BIO_WAFX_TOSTR_WEAPDMG1 = "Primary damage: %s%s%d";
+	BIO_WAFX_TOSTR_WEAPDMG2 = "Secondary damage: %s%s%d";
+	BIO_WAFX_TOSTR_WEAPDMG = "Damage: %s%s%d primary, %s%s%d secondary";
 	
-	BIO_AFFIX_TAG_WEAPDMGPERCENT = "Assault Variant";
-	BIO_AFFIX_TOSTR_WEAPDMGPERCENT1 = "Primary damage: %s%s%%%d";
-	BIO_AFFIX_TOSTR_WEAPDMGPERCENT2 = "Secondary damage: %s%s%%%d";
-	BIO_AFFIX_TOSTR_WEAPDMGPERCENT = "Damage: %s%s%%%d primary, %s%s%%%d secondary";
+	BIO_WAFX_TAG_WEAPDMGPERCENT = "Assault Variant";
+	BIO_WAFX_TOSTR_WEAPDMGPERCENT1 = "Primary damage: %s%s%%%d";
+	BIO_WAFX_TOSTR_WEAPDMGPERCENT2 = "Secondary damage: %s%s%%%d";
+	BIO_WAFX_TOSTR_WEAPDMGPERCENT = "Damage: %s%s%%%d primary, %s%s%%%d secondary";
 	
-	BIO_AFFIX_TAG_ENEMYHEALTHDAMAGE = "Viral Payload";
-	BIO_AFFIX_TOSTR_ENEMYHEALTHDAMAGE = "%s%.1f%% of enemy's health %s damage";
+	BIO_WAFX_TAG_ENEMYHEALTHDAMAGE = "Viral Payload";
+	BIO_WAFX_TOSTR_ENEMYHEALTHDAMAGE = "%s%.1f%% of enemy's health %s damage";
 	
-	BIO_AFFIX_TAG_CRIT = "Express Rounds";
-	BIO_AFFIX_TOSTR_CRIT = "%d%% chance of %s%s%.0f%% damage";
+	BIO_WAFX_TAG_CRIT = "Express Rounds";
+	BIO_WAFX_TOSTR_CRIT = "%d%% chance of %s%s%.0f%% damage";
 	
-	BIO_AFFIX_TAG_SPLASHFORDAMAGE = "Shaped Charge";
-	BIO_AFFIX_TOSTR_SPLASHFORDAMAGE = "All splash damage converted into direct hit damage";
+	BIO_WAFX_TAG_SPLASHFORDAMAGE = "Shaped Charge";
+	BIO_WAFX_TOSTR_SPLASHFORDAMAGE = "All splash damage converted into direct hit damage";
 	
-	BIO_AFFIX_TAG_FORWARDDAMAGE = "Vanguard";
-	BIO_AFFIX_TOSTR_FORWARDDAMAGE = "%s%.1f%% %s damage when moving forward";
+	BIO_WAFX_TAG_FORWARDDAMAGE = "Vanguard";
+	BIO_WAFX_TOSTR_FORWARDDAMAGE = "%s%.1f%% %s damage when moving forward";
 	
-	BIO_AFFIX_TAG_STRAFEDAMAGE = "Flanking";
-	BIO_AFFIX_TOSTR_STRAFEDAMAGE = "%s%.1f%% %s damage when strafing";
+	BIO_WAFX_TAG_STRAFEDAMAGE = "Flanking";
+	BIO_WAFX_TOSTR_STRAFEDAMAGE = "%s%.1f%% %s damage when strafing";
 
-	BIO_AFFIX_TAG_PLASMA = "Plasmatic";
-	BIO_AFFIX_TOSTR_PLASMA = "Fires balls of plasma with a wide damage range";
+	BIO_WAFX_TAG_PLASMA = "Plasmatic";
+	BIO_WAFX_TOSTR_PLASMA = "Fires balls of plasma with a wide damage range";
 	
-	BIO_AFFIX_TAG_SLUG = "Slug Retrofit";
-	BIO_AFFIX_TOSTR_SLUG = "Fires highly-accurate solid slugs";
+	BIO_WAFX_TAG_SLUG = "Slug Retrofit";
+	BIO_WAFX_TOSTR_SLUG = "Fires highly-accurate solid slugs";
 	
-	BIO_AFFIX_TAG_MINIMISSILE = "Gyrojet";
-	BIO_AFFIX_TOSTR_MINIMISSILE = "Fires fast mini-missiles";
+	BIO_WAFX_TAG_MINIMISSILE = "Gyrojet";
+	BIO_WAFX_TOSTR_MINIMISSILE = "Fires fast mini-missiles";
 	
-	BIO_AFFIX_TAG_FIRECOUNT = "Area Denial";
-	BIO_AFFIX_TOSTR_FIRECOUNT1 = "Primary fires %s%s%d %s";
-	BIO_AFFIX_TOSTR_FIRECOUNT2 = "Secondary fires %s%s%d %s";
-	BIO_AFFIX_TOSTR_FIRECOUNT = "Primary fires %s%s%d %s; secondary fires %s%s%d %s";
+	BIO_WAFX_TAG_FIRECOUNT = "Area Denial";
+	BIO_WAFX_TOSTR_FIRECOUNT1 = "Primary fires %s%s%d %s";
+	BIO_WAFX_TOSTR_FIRECOUNT2 = "Secondary fires %s%s%d %s";
+	BIO_WAFX_TOSTR_FIRECOUNT = "Primary fires %s%s%d %s; secondary fires %s%s%d %s";
 	
-	BIO_AFFIX_TAG_FIRERATE = "Rapid Refire";
-	BIO_AFFIX_TOSTR_FIRERATE = "Fire rate: %s%s%.2f seconds";
+	BIO_WAFX_TAG_FIRERATE = "Rapid Refire";
+	BIO_WAFX_TOSTR_FIRERATE = "Fire rate: %s%s%.2f seconds";
 
-	BIO_AFFIX_TAG_SPREAD = "Accurised";
-	BIO_AFFIX_TOSTR_SPREAD = "Spread: ";
+	BIO_WAFX_TAG_SPREAD = "Accurised";
+	BIO_WAFX_TOSTR_SPREAD = "Spread: ";
 
-	BIO_AFFIX_TAG_KICKBACK = "Stopping";
-	BIO_AFFIX_TOSTR_KICKBACK = "%s%.1f%% %s\cj knockback";
+	BIO_WAFX_TAG_KICKBACK = "Stopping";
+	BIO_WAFX_TOSTR_KICKBACK = "%s%.1f%% %s\cj knockback";
 	
-	BIO_AFFIX_TAG_RELOADSPEED = "Ergonomic";
-	BIO_AFFIX_TOSTR_RELOADSPEED = "Reload time: %s%s%.2f seconds";
+	BIO_WAFX_TAG_RELOADSPEED = "Ergonomic";
+	BIO_WAFX_TOSTR_RELOADSPEED = "Reload time: %s%s%.2f seconds";
 	
-	BIO_AFFIX_TAG_PROJSEEK = "Infrared Homing";
-	BIO_AFFIX_TOSTR_PROJSEEK = "Projectiles home in on targets";
+	BIO_WAFX_TAG_PROJSEEK = "Infrared Homing";
+	BIO_WAFX_TOSTR_PROJSEEK = "Projectiles home in on targets";
 
-	BIO_AFFIX_TAG_FORCEPAIN = "Neurotoxic Payload";
-	BIO_AFFIX_TOSTR_FORCEPAIN = "Always causes monsters to flinch";
+	BIO_WAFX_TAG_FORCEPAIN = "Neurotoxic Payload";
+	BIO_WAFX_TOSTR_FORCEPAIN = "Always causes monsters to flinch";
 
-	BIO_AFFIX_TAG_MELEERANGE = "Outreach";
-	BIO_AFFIX_TOSTR_MELEERANGE1 = "%s%s%.1f\cj range (primary)";
-	BIO_AFFIX_TOSTR_MELEERANGE2 = "%s%s%.1f\cj range (secondary)";
+	BIO_WAFX_TAG_MELEERANGE = "Outreach";
+	BIO_WAFX_TOSTR_MELEERANGE1 = "%s%s%.1f\cj range (primary)";
+	BIO_WAFX_TOSTR_MELEERANGE2 = "%s%s%.1f\cj range (secondary)";
 
-	BIO_AFFIX_TAG_LIFESTEAL = "Parasitic";
-	BIO_AFFIX_TOSTR_LIFESTEAL1 = "%d%% of primary damage dealt gained as health";
-	BIO_AFFIX_TOSTR_LIFESTEAL2 = "%d%% of secondary damage dealt gained as health";
+	BIO_WAFX_TAG_LIFESTEAL = "Parasitic";
+	BIO_WAFX_TOSTR_LIFESTEAL1 = "%d%% of primary damage dealt gained as health";
+	BIO_WAFX_TOSTR_LIFESTEAL2 = "%d%% of secondary damage dealt gained as health";
 
-	BIO_AFFIX_TAG_SWITCHSPEED = "Speedsling";
-	BIO_AFFIX_TOSTR_SWITCHSPEED_RAISE = "%s%d%% %s\cj raise speed";
-	BIO_AFFIX_TOSTR_SWITCHSPEED_LOWER = "%s%d%% %s\cj lower speed";
-	BIO_AFFIX_TOSTR_SWITCHSPEED = "%s%.1f%% %s\cj switch speed";
+	BIO_WAFX_TAG_SWITCHSPEED = "Speedsling";
+	BIO_WAFX_TOSTR_SWITCHSPEED_RAISE = "%s%d%% %s\cj raise speed";
+	BIO_WAFX_TOSTR_SWITCHSPEED_LOWER = "%s%d%% %s\cj lower speed";
+	BIO_WAFX_TOSTR_SWITCHSPEED = "%s%.1f%% %s\cj switch speed";
 
-	BIO_AFFIX_TAG_ARMORSAVEAMOUNT = "Reinforced";
-	BIO_AFFIX_TOSTR_ARMORSAVEAMOUNT = "Durability: %s%s%d";
+	BIO_EAFX_TAG_SAVEAMOUNT = "Reinforced";
+	BIO_EAFX_TOSTR_SAVEAMOUNT = "Durability: %s%s%d";
 
-	BIO_AFFIX_TAG_ARMORSAVEPERCENT = "Ablative";
-	BIO_AFFIX_TOSTR_ARMORSAVEPERCENT = "Damage absorption: %s%s%d%%";
+	BIO_EAFX_TAG_SAVEPERCENT = "Ablative";
+	BIO_EAFX_TOSTR_SAVEPERCENT = "Damage absorption: %s%s%d%%";
 
 // Ammo ========================================================================
 
