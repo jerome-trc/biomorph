@@ -74,8 +74,8 @@
 	BIO_WEAP_PKUP_INCURSIONSHOTGUN = "Procured an %s.";
 	BIO_WEAPSTAT_INCURSIONSHOTGUN_QUAD = "\cnAlt-fire\cj shoots 4 barrels";
 
-	BIO_WEAP_TAG_SALVOLAUNCHER = "Salvo Launcher";
-	BIO_WEAP_PKUP_SALVOLAUNCHER = "Procured a %s.";
+	BIO_WEAP_TAG_BARRAGELAUNCHER = "Barrage Launcher";
+	BIO_WEAP_PKUP_BARRAGELAUNCHER = "Procured a %s.";
 	
 	BIO_WEAP_TAG_MEGATON = "\c[Orange]Megaton\c[White] Incursion Shotgun";
 	BIO_WEAP_PKUP_MEGATON = "Acquired Megaton.";

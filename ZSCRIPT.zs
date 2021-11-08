@@ -65,6 +65,6 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/classified/hand_cannon.zs"
 #include "zscript/biomorph/weapons/classified/heavy_battle_rifle.zs"
 #include "zscript/biomorph/weapons/classified/incursion_shotgun.zs"
-#include "zscript/biomorph/weapons/classified/salvo_launcher.zs"
+#include "zscript/biomorph/weapons/classified/barrage_launcher.zs"
 
 #include "zscript/biomorph/weapons/unique/megaton.zs"

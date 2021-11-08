@@ -32,7 +32,7 @@
 		],
 		"launchers": [
 			"BIO_RocketLauncher",
-			"BIO_SalvoLauncher"
+			"BIO_BarrageLauncher"
 		],
 		"energy": [
 			"BIO_PlasmaRifle"
