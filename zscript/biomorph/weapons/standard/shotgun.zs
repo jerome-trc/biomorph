@@ -27,7 +27,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		BIO_Weapon.FireCount 7;
 		BIO_Weapon.FireType 'BIO_ShotPellet';
 		BIO_Weapon.MagazineSize 1;
-		BIO_Weapon.MagazineType 'BIO_Magazine_Shotgun';
+		BIO_Weapon.MagazineType 'BIO_MAG_Shotgun';
 		BIO_Weapon.Spread 4.0, 2.0;
 
 		BIO_Shotgun.FireTimes 3, 4, 3;
@@ -160,7 +160,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 	}
 }
 
-class BIO_Magazine_Shotgun : Ammo
+class BIO_MAG_Shotgun : Ammo
 {
 	mixin BIO_Magazine;
 

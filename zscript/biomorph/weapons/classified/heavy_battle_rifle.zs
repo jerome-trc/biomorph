@@ -24,7 +24,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		BIO_Weapon.DamageRange 25, 75;
 		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 60;
-		BIO_Weapon.MagazineType 'BIO_Magazine_HBR';
+		BIO_Weapon.MagazineType 'BIO_MAG_HBR';
 		BIO_Weapon.Spread 0.5, 0.5;
 
 		BIO_HeavyBattleRifle.FireTimes 4, 5, 8;
@@ -143,7 +143,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	}
 }
 
-class BIO_Magazine_HBR : Ammo
+class BIO_MAG_HBR : Ammo
 {
 	mixin BIO_Magazine;
 

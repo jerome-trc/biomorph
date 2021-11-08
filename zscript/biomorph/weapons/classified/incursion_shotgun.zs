@@ -25,7 +25,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		BIO_Weapon.FireCount 9;
 		BIO_Weapon.FireType 'BIO_ShotPellet';
 		BIO_Weapon.MagazineSize 4;
-		BIO_Weapon.MagazineType 'BIO_Magazine_IncursionShotgun';
+		BIO_Weapon.MagazineType 'BIO_MAG_IncursionShotgun';
 		BIO_Weapon.Spread 4.0, 2.0;
 		
 		BIO_IncursionShotgun.FireTimes 3, 4, 2, 2, 2;
@@ -191,7 +191,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 	}
 }
 
-class BIO_Magazine_IncursionShotgun : Ammo
+class BIO_MAG_IncursionShotgun : Ammo
 {
 	mixin BIO_Magazine;
 

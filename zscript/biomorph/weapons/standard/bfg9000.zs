@@ -30,7 +30,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		BIO_Weapon.FireCounts 1, 40;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 80;
-		BIO_Weapon.MagazineType 'BIO_Magazine_BFG9000';
+		BIO_Weapon.MagazineType 'BIO_MAG_BFG9000';
 		BIO_Weapon.Spread 0.2, 0.2;
 		BIO_Weapon.SwitchSpeeds 5, 5;
 
@@ -185,7 +185,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 	}
 }
 
-class BIO_Magazine_BFG9000 : Ammo
+class BIO_MAG_BFG9000 : Ammo
 {
 	mixin BIO_Magazine;
 

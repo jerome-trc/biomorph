@@ -25,7 +25,7 @@ class BIO_HandCannon : BIO_Weapon
 		BIO_Weapon.DamageRange 50, 70;
 		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 7;
-		BIO_Weapon.MagazineType 'BIO_Magazine_HandCannon';
+		BIO_Weapon.MagazineType 'BIO_MAG_HandCannon';
 		BIO_Weapon.Spread 1.0, 1.0;
 		BIO_Weapon.SwitchSpeeds 8, 8;
 
@@ -145,7 +145,7 @@ class BIO_HandCannon : BIO_Weapon
 	}
 }
 
-class BIO_Magazine_HandCannon : Ammo
+class BIO_MAG_HandCannon : Ammo
 {
 	mixin BIO_Magazine;
 

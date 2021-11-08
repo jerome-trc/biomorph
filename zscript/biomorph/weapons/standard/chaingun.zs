@@ -24,7 +24,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 40;
-		BIO_Weapon.MagazineType 'BIO_Magazine_Chaingun';
+		BIO_Weapon.MagazineType 'BIO_MAG_Chaingun';
 		BIO_Weapon.Spread 4.0, 2.0;
 		
 		BIO_Chaingun.FireTimes 4;
@@ -129,7 +129,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
-class BIO_Magazine_Chaingun : Ammo
+class BIO_MAG_Chaingun : Ammo
 {
 	mixin BIO_Magazine;
 

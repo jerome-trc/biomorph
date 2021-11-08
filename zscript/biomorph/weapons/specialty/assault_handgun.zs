@@ -25,7 +25,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		BIO_Weapon.DamageRange 6, 16;
 		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineSize 18;
-		BIO_Weapon.MagazineType 'BIO_Magazine_AssaultHandgun';
+		BIO_Weapon.MagazineType 'BIO_MAG_AssaultHandgun';
 		BIO_Weapon.Spread 3.6, 1.4;
 		BIO_Weapon.SwitchSpeeds 9, 9;
 
@@ -186,7 +186,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 	}
 }
 
-class BIO_Magazine_AssaultHandgun : Ammo
+class BIO_MAG_AssaultHandgun : Ammo
 {
 	mixin BIO_Magazine;
 
