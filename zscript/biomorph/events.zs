@@ -452,10 +452,8 @@ class BIO_EventHandler : EventHandler
 	{
 		if (event.Thing == null || !event.Thing.bIsMonster) return;
 
-		for (Inventory i = event.Thing.Inv; i != null; i = i.Inv)
+		if (event.Thing.FindInventory(LDToken))
 		{
-			if (!(i is LDToken)) continue;
-			
 			bool success = false;
 			Actor spawned = null;
 
@@ -472,8 +470,6 @@ class BIO_EventHandler : EventHandler
 				weap.RandomizeAffixes();
 				weap.SetState(weap.FindState("Spawn"));
 			}
-			
-			break;
 		}
 
 		// There's no way to know if a Lost Soul was a Pain Elemental spawn,
