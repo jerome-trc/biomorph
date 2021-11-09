@@ -329,7 +329,8 @@ class BIO_PlasmaBall : BIO_Projectile
 		#### # 3 Bright A_Travel;
 		Loop;
 	Death:
-		PLSE ABCDE 4 Bright A_ProjectileDeath;
+		TNT1 A 0 A_ProjectileDeath;
+		PLSE ABCDE 4 Bright;
 		Stop;
 	}
 }
