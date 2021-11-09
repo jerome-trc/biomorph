@@ -411,11 +411,17 @@ class BIO_Weapon : DoomWeapon abstract
 	// Only for getting mutable fire times; ignore any fixed state frame times.
 	virtual void GetFireTimes(in out Array<int> fireTimes,
 		bool secondary = false) const {}
+	// If this isn't overriden, it is assumed that all are 1.
+	virtual void GetFireTimeMinimums(in out Array<int> minimums,
+		bool secondary = false) const {}
 	protected virtual void SetFireTimes(Array<int> fireTimes,
 		bool secondary = false) {}
 
 	// Only for getting mutable reload times; ignore any fixed state frame times.
 	virtual void GetReloadTimes(in out Array<int> reloadTimes,
+		bool secondary = false) const {}
+	// If this isn't overriden, it is assumed that all are 1.
+	virtual void GetReloadTimeMinimums(in out Array<int> minimums,
 		bool secondary = false) const {}
 	protected virtual void SetReloadTimes(Array<int> reloadTimes,
 		bool secondary = false) {}
@@ -424,9 +430,9 @@ class BIO_Weapon : DoomWeapon abstract
 	abstract int TrueFireTime() const;
 	virtual int TrueReloadTime() const { return 0; }
 
-	// Getters =================================================================
-
 	protected abstract void StatsToString(in out Array<string> stats) const;
+
+	// Getters =================================================================
 
 	string GetFireTypeTag(bool secondary = false) const
 	{
@@ -635,29 +641,43 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	// No fire state can have a tic time below 1. Fire rate-affecting affixes need
-	// to know in advance if they can even have any effect, given this caveat.
-	int ReducibleFireTime() const
+	// Fire states can't have all of their tic times reduced to 0. Fire rate-affecting
+	// affixes must know in advance if they can even have any effect, given this caveat.
+	int ReducibleFireTime(bool secondary = false) const
 	{
 		int ret = 0;
-		Array<int> fireTimes;
-		GetFireTimes(fireTimes);
+		Array<int> fireTimes; Array<int> minimums;
+		GetFireTimes(fireTimes, secondary);
+		GetFireTimeMinimums(minimums, secondary);
+
+		if (minimums.Size() < 1)
+		{
+			for (uint i = 0; i < fireTimes.Size(); i++)
+				minimums.Push(1);
+		}
 		
 		for (uint i = 0; i < fireTimes.Size(); i++)
-			ret += Max(fireTimes[i] - 1, 0);
+			ret += Max(fireTimes[i] - minimums[i], 0);
 
 		return ret;
 	}
 
 	// See the above.
-	int ReducibleReloadTime() const
+	int ReducibleReloadTime(bool secondary = false) const
 	{
 		int ret = 0;
-		Array<int> reloadTimes;
-		GetReloadTimes(reloadTimes);
+		Array<int> reloadTimes; Array<int> minimums;
+		GetReloadTimes(reloadTimes, secondary);
+		GetReloadTimeMinimums(minimums, secondary);
 
+		if (minimums.Size() < 1)
+		{
+			for (uint i = 0; i < reloadTimes.Size(); i++)
+				minimums.Push(1);
+		}
+		
 		for (uint i = 0; i < reloadTimes.Size(); i++)
-			ret += Max(reloadTimes[i] - 1, 0);
+			ret += Max(reloadTimes[i] - minimums[i], 0);
 
 		return ret;
 	}
