@@ -921,9 +921,10 @@ class BIO_Weapon : DoomWeapon abstract
 	action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
 
 	action bool A_BIO_Fire(int fireFactor = 1, float spreadFactor = 1.0,
-		float angle = 0.0, float pitch = 0.0)
+		float angle = 0.0, float pitch = 0.0, bool useAmmo = true)
 	{
-		if (!invoker.DepleteAmmo(invoker.bAltFire, true, invoker.AmmoUse1 * fireFactor))
+		if (useAmmo && !invoker.DepleteAmmo(
+			invoker.bAltFire, true, invoker.AmmoUse1 * fireFactor))
 			return false;
 		
 		for (int i = 0; i < (invoker.FireCount1 * fireFactor); i++)
@@ -942,9 +943,10 @@ class BIO_Weapon : DoomWeapon abstract
 	}
 
 	action bool A_BIO_FireSecondary(int fireFactor = 1, float spreadFactor = 1.0,
-		float angle = 0.0, float pitch = 0.0)
+		float angle = 0.0, float pitch = 0.0, bool useAmmo = true)
 	{
-		if (!invoker.DepleteAmmo(invoker.bAltFire, true, invoker.AmmoUse2 * fireFactor))
+		if (useAmmo && !invoker.DepleteAmmo(
+			invoker.bAltFire, true, invoker.AmmoUse2 * fireFactor))
 			return false;
 		
 		for (int i = 0; i < (invoker.FireCount2 * fireFactor); i++)
@@ -955,14 +957,6 @@ class BIO_Weapon : DoomWeapon abstract
 				pitch: pitch + FRandom(-invoker.VSpread2, invoker.VSpread2) * spreadFactor);
 			
 			if (proj == null) continue;
-			int dmg = Random(invoker.MinDamage2, invoker.MaxDamage2);
-
-			for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
-				invoker.ImplicitAffixes[i].ModifyDamage(invoker, dmg);
-			for (uint i = 0; i < invoker.Affixes.Size(); i++)
-				invoker.Affixes[i].ModifyDamage(invoker, dmg);
-
-			proj.SetDamage(dmg);
 			invoker.OnProjectileFired(proj);
 		}
 
@@ -976,7 +970,7 @@ class BIO_Weapon : DoomWeapon abstract
 		if (invoker.SufficientAmmo(secondary))
 			return state(null);
 		
-		if (min == -1) min = 1;
+		if (min == -1) min = !secondary ? invoker.AmmoUse1 : invoker.AmmoUse2;
 		
 		if ((!secondary ? invoker.Magazine1 : invoker.Magazine2).Amount >= min)
 			return state(null);
@@ -1013,7 +1007,7 @@ class BIO_Weapon : DoomWeapon abstract
 		let reserveAmmo = invoker.Owner.FindInventory(
 			!secondary ? invoker.AmmoType1 : invoker.AmmoType2);
 		let factor = !secondary ? invoker.ReloadFactor1 : invoker.ReloadFactor2;
-		// reserveAmmo.MaxAmount intentionally not factored into this
+		// `reserveAmmo.MaxAmount` intentionally not factored into this
 		reserveAmmo.Amount += magAmmo.Amount * factor;
 		magAmmo.Amount -= magAmmo.Amount;
 	}
