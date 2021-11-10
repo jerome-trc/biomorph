@@ -346,7 +346,7 @@ class BIO_WAFX_StrafeDamage : BIO_WeaponAffix
 	}
 }
 
-// Fire type ===================================================================
+// New fire type ===============================================================
 
 class BIO_WAFX_Plasma : BIO_WeaponAffix
 {
@@ -517,6 +517,146 @@ class BIO_WAFX_MiniMissile : BIO_WeaponAffix
 	override string GetTag() const
 	{
 		return StringTable.Localize("$BIO_WAFX_TAG_MINIMISSILE");
+	}
+}
+
+// Modify fired thing ==========================================================
+
+class BIO_WAFX_ForcePain : BIO_WeaponAffix
+{
+	override void Init(BIO_Weapon weap) {}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		if (weap.bMeleeWeapon)
+			return false;
+		else
+			return (weap.AffixMask1 & BIO_WAM_ONPROJFIRED) != BIO_WAM_ONPROJFIRED;
+	}
+
+	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.bForcePain = true;
+	}
+
+	override void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const
+	{
+		proj.bForcePain = true;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_TOSTR_FORCEPAIN"));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_TAG_FORCEPAIN");
+	}
+}
+
+class BIO_WAFX_ProjGravity : BIO_WeaponAffix
+{
+	float Multi;
+
+	override void Init(BIO_Weapon weap)
+	{
+		Multi = FRandom(0.5, 1.0);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return weap.FiresTrueProjectile(false) || weap.FiresTrueProjectile(true);
+	}
+
+	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.bNoGravity = false;
+	}
+
+	override void ModifyDamage(BIO_Weapon weap, in out int dmg) const
+	{
+		dmg += (dmg * Multi);
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(StringTable.Localize("$BIO_WAFX_TOSTR_PROJGRAVITY"),
+			Multi >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+			Multi >= 0 ? "+" : "", int(Multi * 100.0)));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_TAG_PROJGRAVITY");
+	}
+}
+
+class BIO_WAFX_ProjBounce : BIO_WeaponAffix
+{
+	override void Init(BIO_Weapon weap) {}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return weap.FiresTrueProjectile(false) || weap.FiresTrueProjectile(true);
+	}
+
+	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.bBounceOnWalls = true;
+		proj.bBounceOnFloors = true;
+		proj.bBounceOnCeilings = true;
+		proj.bAllowBounceOnActors = true;
+		proj.bBounceAutoOff = true;
+	}
+
+	override void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const
+	{
+		proj.bBounceOnWalls = true;
+		proj.bBounceOnFloors = true;
+		proj.bBounceOnCeilings = true;
+		proj.bAllowBounceOnActors = true;
+		proj.bBounceAutoOff = true;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_TOSTR_PROJBOUNCE"));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_TAG_PROJBOUNCE");
+	}
+}
+
+class BIO_WAFX_ProjSeek : BIO_WeaponAffix
+{
+	override void Init(BIO_Weapon weap) {}
+
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		if (!(weap.AffixMask1 == BIO_WAM_ALL) && weap.FiresTrueProjectile(false))
+			return true;
+		else if (!(weap.AffixMask2 == BIO_WAM_ALL) && weap.FiresTrueProjectile(true))
+			return true;
+		else
+			return false;
+	}
+
+	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.Seek = true;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_TOSTR_PROJSEEK"));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_TAG_PROJSEEK");
 	}
 }
 
@@ -787,69 +927,6 @@ class BIO_WAFX_ReloadSpeed : BIO_WeaponAffix
 	override string GetTag() const
 	{
 		return StringTable.Localize("$BIO_WAFX_TAG_RELOADSPEED");
-	}
-}
-
-class BIO_WAFX_ProjSeek : BIO_WeaponAffix
-{
-	override void Init(BIO_Weapon weap) {}
-
-	override bool Compatible(BIO_Weapon weap) const
-	{
-		if (!(weap.AffixMask1 == BIO_WAM_ALL) && weap.FiresTrueProjectile(false))
-			return true;
-		else if (!(weap.AffixMask2 == BIO_WAM_ALL) && weap.FiresTrueProjectile(true))
-			return true;
-		else
-			return false;
-	}
-
-	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
-	{
-		proj.Seek = true;
-	}
-
-	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
-	{
-		strings.Push(StringTable.Localize("$BIO_WAFX_TOSTR_PROJSEEK"));
-	}
-
-	override string GetTag() const
-	{
-		return StringTable.Localize("$BIO_WAFX_TAG_PROJSEEK");
-	}
-}
-
-class BIO_WAFX_ForcePain : BIO_WeaponAffix
-{
-	override void Init(BIO_Weapon weap) {}
-
-	override bool Compatible(BIO_Weapon weap) const
-	{
-		if (weap.bMeleeWeapon)
-			return false;
-		else
-			return (weap.AffixMask1 & BIO_WAM_ONPROJFIRED) != BIO_WAM_ONPROJFIRED;
-	}
-
-	override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
-	{
-		proj.bForcePain = true;
-	}
-
-	override void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const
-	{
-		proj.bForcePain = true;
-	}
-
-	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
-	{
-		strings.Push(StringTable.Localize("$BIO_WAFX_TOSTR_FORCEPAIN"));
-	}
-
-	override string GetTag() const
-	{
-		return StringTable.Localize("$BIO_WAFX_TAG_FORCEPAIN");
 	}
 }
 

@@ -222,7 +222,19 @@
 	
 	BIO_WAFX_TAG_MINIMISSILE = "Gyrojet";
 	BIO_WAFX_TOSTR_MINIMISSILE = "Fires fast mini-missiles";
+
+	BIO_WAFX_TAG_FORCEPAIN = "Neurotoxic Payload";
+	BIO_WAFX_TOSTR_FORCEPAIN = "Always causes monsters to flinch";
+
+	BIO_WAFX_TAG_PROJGRAVITY = "Dense Payload";
+	BIO_WAFX_TOSTR_PROJGRAVITY = "Projectiles are affected by gravity, but deal %s%s%d%% damage";
 	
+	BIO_WAFX_TAG_PROJBOUNCE = "Rebound";
+	BIO_WAFX_TOSTR_PROJBOUNCE = "Projectiles bounce";
+
+	BIO_WAFX_TAG_PROJSEEK = "Infrared Homing";
+	BIO_WAFX_TOSTR_PROJSEEK = "Projectiles home in on targets";
+
 	BIO_WAFX_TAG_FIRECOUNT = "Area Denial";
 	BIO_WAFX_TOSTR_FIRECOUNT1 = "Primary fires %s%s%d %s";
 	BIO_WAFX_TOSTR_FIRECOUNT2 = "Secondary fires %s%s%d %s";
@@ -239,12 +251,6 @@
 	
 	BIO_WAFX_TAG_RELOADSPEED = "Ergonomic";
 	BIO_WAFX_TOSTR_RELOADSPEED = "Reload time: %s%s%.2f seconds";
-	
-	BIO_WAFX_TAG_PROJSEEK = "Infrared Homing";
-	BIO_WAFX_TOSTR_PROJSEEK = "Projectiles home in on targets";
-
-	BIO_WAFX_TAG_FORCEPAIN = "Neurotoxic Payload";
-	BIO_WAFX_TOSTR_FORCEPAIN = "Always causes monsters to flinch";
 
 	BIO_WAFX_TAG_MELEERANGE = "Outreach";
 	BIO_WAFX_TOSTR_MELEERANGE1 = "%s%s%.1f\cj range (primary)";

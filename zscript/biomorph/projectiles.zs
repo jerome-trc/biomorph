@@ -30,6 +30,7 @@ mixin class BIO_ProjectileCommon
 		+THRUGHOST
 
 		Damage -1;
+		Gravity 0.3;
 		Species 'Player';
 	}
 }
