@@ -380,6 +380,33 @@ class BIO_BFGBall : BIO_Projectile
 	}
 }
 
+class BIO_PlasmaGlobule : BIO_PlasmaBall
+{
+	Default
+	{
+		Tag "$BIO_PROJ_TAG_PLASMAGLOBULE";
+		Scale 0.4;
+
+		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_PLASMAGLOBULES";
+		BIO_Projectile.Splash 48, 48;
+	}
+
+	States
+	{
+	Spawn:
+		GLOB A 3 Bright
+		{
+			A_Travel();
+			A_SpawnItemEx('BIO_PlasmaGlobuleTrail');
+		}
+		Loop;
+	Death:
+		TNT1 A 0 A_ProjectileDeath;
+		GLOB BCDE 4 Bright;
+		Stop;
+	}
+}
+
 // Projectile-adjacent actors ==================================================
 
 class BIO_MeleeHit : BulletPuff
@@ -421,5 +448,26 @@ class BIO_BFGExtra : BFGExtra
 	Default
 	{
 		Tag "$BIO_PROJEXTRA_TAG_BFGRAY";
+	}
+}
+
+class BIO_PlasmaGlobuleTrail : Actor
+{
+	Default
+	{
+		+NOINTERACTION
+
+		Alpha 0.6;
+		RenderStyle 'Add';
+		Scale 0.4;
+	}
+
+	States
+	{
+	Spawn:
+		GLOT A 6 Bright;
+		GLOT B 4 Bright;
+		GLOT C 2 Bright;
+		Stop;
 	}
 }

@@ -1,3 +1,44 @@
+// Plasma Globule
+
+pointlight BIO_PlasmaGlob_A
+{
+    color 1.0 0.1 0.0
+    size 56
+}
+
+flickerlight BIO_PlasmaGlob_B
+{
+    color 0.6 0.2 0.2
+    size 48
+    secondarySize 32
+    chance 0.3
+}
+
+flickerlight BIO_PlasmaGlob_C
+{
+    color 0.4 0.1 0.1
+    size 24
+    secondarySize 16
+    chance 0.3
+}
+
+flickerlight BIO_PlasmaGlob_D
+{
+    color 0.9 0.2 0.2
+    size 18
+    secondarySize 12
+    chance 0.4
+}
+
+Object BIO_PlasmaGlobule
+{
+    frame GLOBA { light BIO_PlasmaGlob_A }
+    frame GLOBB { light BIO_PlasmaGlob_A }
+    frame GLOBC { light BIO_PlasmaGlob_B }
+    frame GLOBD { light BIO_PlasmaGlob_C }
+    frame GLOBE { light BIO_PlasmaGlob_D }
+}
+
 // Armor bonus
 
 pointlight BIO_ArmorBonus_A

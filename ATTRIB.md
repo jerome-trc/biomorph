@@ -6,6 +6,8 @@ Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https:
 
 The [ZJSON library](https://github.com/RicardoLuis0/ZJSON) is courtesy of [RicardoLuis0](https://github.com/RicardoLuis0) and used under the MIT license.
 
+The GLDEFS for the Plasma Globule were devised by Realm667 user Robot J.
+
 The GLDEFS for the Armor Bonus were devised by Realm667 user Infirnex.
 
 The GLDEFS for the Weapon Upgrade Kit were devised by Realm667 user Dreadopp.
@@ -15,6 +17,8 @@ The GLDEFS for the Weapon Upgrade Kit were devised by Realm667 user Dreadopp.
 The Shotgun pickup sprite is an edit by RatCircus of the original version by id Software LLC.
 
 Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as well as id Software LLC.
+
+Plasma Cannon sprites (as well as those of the Plasma Globule) are courtesy of id Software LLC and Midway Games Inc., and were edited by Realm667 user Robot J.
 
 Autocannon and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
@@ -49,6 +53,8 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "weapondropped.wav" (GUNDROP0)
 
 Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
+
+PLSCIDLE and PLSCRAIS are courtesy of id Software LLC and Midway Software Inc.
 
 "m60-1.wav" (HVBRFIRE) and "deagle.wav" (HANDCANN) are courtesy of ZDoom forum user Joblez_I. 
 
