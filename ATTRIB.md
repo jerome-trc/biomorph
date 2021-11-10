@@ -48,7 +48,7 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "vssdraw.wav" (GUNMECH0)
 - "weapondropped.wav" (GUNDROP0)
 
-Realm667 user cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
+Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 
 "m60-1.wav" (HVBRFIRE) and "deagle.wav" (HANDCANN) are courtesy of ZDoom forum user Joblez_I. 
 
