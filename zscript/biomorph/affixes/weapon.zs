@@ -215,7 +215,7 @@ class BIO_WAFX_Crit : BIO_WeaponAffix
 		if (Random(0, 100) < Chance)
 		{
 			dmg += (dmg * DamageMulti);
-			weap.Owner.A_StartSound("weapons/crit", CHAN_AUTO);
+			weap.Owner.A_StartSound("bio/weap/crit", CHAN_AUTO);
 		}
 	}
 

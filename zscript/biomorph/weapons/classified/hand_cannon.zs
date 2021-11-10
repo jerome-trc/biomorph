@@ -17,7 +17,7 @@ class BIO_HandCannon : BIO_Weapon
 		Weapon.SelectionOrder SELORDER_PISTOL - 40;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
-		Weapon.UpSound "weapons/gunswap0";
+		Weapon.UpSound "bio/weap/gunswap_0";
 		
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Flags BIO_WF_PISTOL;
@@ -46,7 +46,7 @@ class BIO_HandCannon : BIO_Weapon
 		Stop;
 	Fire:
 		TNT1 A 0 A_AutoReload;
-		#### # 0 A_StartSound("weapons/handcannon", CHAN_WEAPON);
+		#### # 0 A_StartSound("bio/weap/handcannon/fire", CHAN_WEAPON);
 		HCAN E 1 Bright;
 		HCAN F 1 Bright
 		{

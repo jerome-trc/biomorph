@@ -1,37 +1,38 @@
-weapons/gundrop0 GUNDROP0
+// Items (pickup, usage) =======================================================
 
-$RANDOM weapons/gunswap
+bio/item/weapupgrade/use WEAPUPGR
+
+bio/item/armorshard/pkup AMRSHRD
+
+// Weapons (fire, raise, lower, idle) ==========================================
+
+// Generic sounds of assembly parts rattling
+bio/weap/gunmech_0 GUNMECH0
+bio/weap/gunmech_1 GUNMECH1
+
+bio/weap/gundrop_0 GUNDROP0
+
+bio/weap/gunswap_0 GUNSWAP0
+bio/weap/gunswap_1 GUNSWAP1
+
+$RANDOM bio/weap/gunswap
 {
-	weapons/gunswap0
-	weapons/gunswap1
+	bio/weap/gunswap_0
+	bio/weap/gunswap_1
 }
 
-weapons/gunswap0 GUNSWAP0
-weapons/gunswap1 GUNSWAP1
+bio/weap/crit CRITDAMG
 
-// Generic sounds of assembly parts moving
-weapons/gunmech0 GUNMECH0
-weapons/gunmech1 GUNMECH1
+bio/weap/assaulthandgun/fire ASHGFIRE
+bio/weap/plascannon/idle PLSCIDLE
+bio/weap/plascannon/raise PLSCRAIS
+bio/weap/autocannon/fire ACANFIRE
+bio/weap/handcannon/fire HANDCANN
+bio/weap/hbr/fire HVBRFIRE
+bio/weap/incursion/fire INCUFIRE
+bio/weap/incursion/reload INCURELO
 
-weapons/crit CRITDAMG
+// User interface ==============================================================
 
-weapons/assaulthandgun ASHGFIRE
-
-weapons/plasmacannonidle PLSCIDLE
-weapons/plasmacannonraise PLSCRAIS
-
-weapons/autocannon ACANFIRE
-
-weapons/handcannon HANDCANN
-
-weapons/hbr HVBRFIRE
-
-weapons/incursion INCUFIRE
-weapons/incursionreload INCURELO
-
-pickup/armorshard AMRSHRD
-
-misc/weapupgrade WEAPUPGR
-
-ui/beep0 USRINPT0
-ui/beep1 USRINPT1 // Same as above, but pitched down
+bio/ui/beep USRINPT0
+bio/ui/cancel USRINPT1 // Same as above, but pitched down

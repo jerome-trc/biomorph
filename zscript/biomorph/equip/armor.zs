@@ -11,7 +11,7 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 
 		Inventory.MaxAmount 0;
 		Inventory.PickupMessage "";
-		Inventory.PickupSound "pickup/armorshard";
+		Inventory.PickupSound "bio/item/armorshard/pkup";
 	}
 
 	States

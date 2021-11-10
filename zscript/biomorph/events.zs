@@ -651,7 +651,7 @@ class BIO_EventHandler : EventHandler
 		bioPlayer.GiveInventory(outputChoice, 1);
 		bioPlayer.A_SelectWeapon(outputChoice);
 		bioPlayer.TakeInventory(bioPlayer.Player.ReadyWeapon.GetClass(), 1);
-		bioPlayer.A_StartSound("misc/weapupgrade", CHAN_ITEM);
+		bioPlayer.A_StartSound("bio/item/weapupgrade/use", CHAN_ITEM);
 		bioPlayer.TakeInventory('BIO_WeaponUpgradeKit', event.Args[0]);
 		WeaponUpgradeOverlay.Destroy();
 		return true;

@@ -17,7 +17,7 @@ class BIO_PlasmaCannon : BIO_Weapon
 		Weapon.SelectionOrder SELORDER_PLASMARIFLE - 20;
 		Weapon.SlotNumber 6;
 		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
-		Weapon.UpSound "weapons/plasmacannonraise";
+		Weapon.UpSound "bio/weap/plascannon/raise";
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
@@ -37,7 +37,7 @@ class BIO_PlasmaCannon : BIO_Weapon
 		PLSC A 1
 		{
 			A_WeaponReady(WRF_ALLOWRELOAD);
-			A_StartSound("weapons/plasmacannonidle", CHAN_7, CHANF_DEFAULT, 0.6, 0.2);
+			A_StartSound("bio/weap/plascannon/idle", CHAN_7, CHANF_DEFAULT, 0.6, 0.2);
 		}
 		PLSC B 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		PLSC C 1 A_WeaponReady(WRF_ALLOWRELOAD);

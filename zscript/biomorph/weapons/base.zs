@@ -1095,7 +1095,7 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		if (Abs(Vel.Z) <= 0.01 && !invoker.HitGround)
 		{
-			A_StartSound("weapons/gundrop0");
+			A_StartSound("bio/weap/gundrop_0");
 			A_ScaleVelocity(0.5);
 			bSpecial = true;
 			bThruActors = false;
