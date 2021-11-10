@@ -17,6 +17,9 @@ weapons/crit CRITDAMG
 
 weapons/assaulthandgun ASHGFIRE
 
+weapons/plasmacannonidle PLSCIDLE
+weapons/plasmacannonraise PLSCRAIS
+
 weapons/autocannon ACANFIRE
 
 weapons/handcannon HANDCANN

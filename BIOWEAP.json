@@ -9,6 +9,11 @@
 			"input": "BIO_AssaultHandgun",
 			"output": "BIO_HandCannon",
 			"cost": 7
+		},
+		{
+			"input": "BIO_PlasmaRifle",
+			"output": "BIO_PlasmaCannon",
+			"cost": 3
 		}
 	],
 	"loot": {
@@ -35,7 +40,8 @@
 			"BIO_BarrageLauncher"
 		],
 		"energy": [
-			"BIO_PlasmaRifle"
+			"BIO_PlasmaRifle",
+			"BIO_PlasmaCannon"
 		],
 		"super": [
 			"BIO_BFG9000"

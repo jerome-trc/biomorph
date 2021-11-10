@@ -60,6 +60,9 @@
 
 	BIO_WEAP_TAG_ASSAULTHANDGUN = "Assault Handgun";
 	BIO_WEAP_PKUP_ASSAULTHANDGUN = "Obtained an %s.";
+
+	BIO_WEAP_TAG_PLASMACANNON = "Plasma Cannon";
+	BIO_WEAP_PKUP_PLASMACANNON = "Obtained a %s.";
 	
 	BIO_WEAP_TAG_AUTOCANNON = "Autocannon";
 	BIO_WEAP_PKUP_AUTOCANNON = "Procured an %s.";
@@ -127,6 +130,9 @@
 
 	BIO_PROJEXTRA_TAG_BFGRAY = "ray";
 	BIO_PROJEXTRA_TAG_BFGRAYS = "rays";
+
+	BIO_PROJ_TAG_PLASMAGLOBULE = "plasma globule";
+	BIO_PROJ_TAG_PLASMAGLOBULES = "plasma globules";
 
 // Mutagens (tags, pickup messages, usage strings) =============================
 
