@@ -37,6 +37,8 @@ class BIO_MeleeWeapon : BIO_Weapon abstract
 
 	Default
 	{
+		+WEAPON.MELEEWEAPON
+
 		BIO_MeleeWeapon.MeleeRanges DEFMELEERANGE, DEFMELEERANGE;
 		BIO_MeleeWeapon.LifeSteals 0.0, 0.0;
 	}
@@ -48,6 +50,8 @@ class BIO_DualMeleeWeapon : BIO_DualWieldWeapon abstract
 
 	Default
 	{
+		+WEAPON.MELEEWEAPON
+
 		BIO_DualMeleeWeapon.MeleeRanges DEFMELEERANGE, DEFMELEERANGE;
 		BIO_DualMeleeWeapon.LifeSteals 0.0, 0.0;
 	}

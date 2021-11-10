@@ -4,8 +4,6 @@ class BIO_Chainsaw : BIO_MeleeWeapon replaces Chainsaw
 
 	Default
 	{
-		+WEAPON.MELEEWEAPON
-
 		Obituary "$OB_MPCHAINSAW";
 		Tag "$TAG_CHAINSAW";
 	
