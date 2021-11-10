@@ -271,6 +271,7 @@ class BIO_WAFX_SplashForDamage : BIO_WeaponAffix
 	}
 }
 
+// More damage added to the projectile if the wielder is moving forward.
 class BIO_WAFX_ForwardDamage : BIO_WeaponAffix
 {
 	float Multi;
@@ -307,6 +308,7 @@ class BIO_WAFX_ForwardDamage : BIO_WeaponAffix
 	}
 }
 
+// More damage added to the projectile if the wielder is strafing.
 class BIO_WAFX_StrafeDamage : BIO_WeaponAffix
 {
 	float Multi;

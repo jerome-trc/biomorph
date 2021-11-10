@@ -16,6 +16,7 @@ class Biomorph abstract
 
 #include "zscript/biomorph/ammo.zs"
 #include "zscript/biomorph/cvars.zs"
+#include "zscript/biomorph/debug.zs"
 #include "zscript/biomorph/events.zs"
 #include "zscript/biomorph/gear.zs"
 #include "zscript/biomorph/global.zs"
