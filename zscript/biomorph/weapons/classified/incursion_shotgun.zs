@@ -50,7 +50,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_SetTics(invoker.FireTime1);
 			A_BIO_Fire();
 			A_GunFlash();
-			A_StartSound("weapons/incursion", CHAN_WEAPON);
+			A_StartSound("bio/weap/incursion/fire", CHAN_WEAPON);
 			A_PresetRecoil('BIO_ShotgunRecoil');
 		}
 		INCU C 4 Bright A_SetTics(invoker.FireTime2);
@@ -72,10 +72,10 @@ class BIO_IncursionShotgun : BIO_Weapon
 				spreadFactor: 4.0);
 			A_GunFlash();
 			// TODO: Mix a fatter sound for quad-shot
-			A_StartSound("weapons/incursion", CHAN_WEAPON);
-			A_StartSound("weapons/incursion", CHAN_BODY);
-			A_StartSound("weapons/incursion", CHAN_6);
-			A_StartSound("weapons/incursion", CHAN_7);
+			A_StartSound("bio/weap/incursion/fire", CHAN_WEAPON);
+			A_StartSound("bio/weap/incursion/fire", CHAN_BODY);
+			A_StartSound("bio/weap/incursion/fire", CHAN_6);
+			A_StartSound("bio/weap/incursion/fire", CHAN_7);
 			A_Kickback(2.5, 2.5);
 			A_PresetRecoil('BIO_VolleyGunRecoil');
 		}
@@ -97,7 +97,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		{
 			A_SetTics(invoker.ReloadTime4);
 			A_LoadMag();
-			A_StartSound("weapons/incursionreload", CHAN_7);
+			A_StartSound("bio/weap/incursion/reload", CHAN_7);
 			A_PresetRecoil('BIO_ShotgunPumpRecoil');
 		}
 		INCU A 3 Offset(0, 32 + 3) A_SetTics(invoker.ReloadTime5);

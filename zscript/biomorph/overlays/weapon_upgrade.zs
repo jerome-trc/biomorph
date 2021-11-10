@@ -30,13 +30,13 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 	override void OnKeyPressed_Left()
 	{
 		SelectedWeapon = Max(SelectedWeapon - 1, 0);
-		S_StartSound("ui/beep0", CHAN_AUTO);
+		S_StartSound("bio/ui/beep", CHAN_AUTO);
 	}
 	
 	override void OnKeyPressed_Right()
 	{
 		SelectedWeapon = Min(SelectedWeapon + 1, Choices.Size() - 1);
-		S_StartSound("ui/beep0", CHAN_AUTO);
+		S_StartSound("bio/ui/beep", CHAN_AUTO);
 	}
 
 	override void OnKeyPressed_Confirm()
@@ -51,7 +51,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 	{
 		EventHandler.SendNetworkEvent(
 			BIO_EventHandler.EVENT_WEAPUPGRADE .. ":_");
-		S_StartSound("ui/beep1", CHAN_AUTO);
+		S_StartSound("bio/ui/cancel", CHAN_AUTO);
 	}
 
 	const X_OFFS = VIRTUAL_WIDTH * 0.1;

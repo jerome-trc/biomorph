@@ -18,7 +18,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		Weapon.SelectionOrder SELORDER_PISTOL;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority SLOTPRIO_STANDARD;
-		Weapon.UpSound "weapons/gunswap0";
+		Weapon.UpSound "bio/weap/gunswap_0";
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Flags BIO_WF_PISTOL;

@@ -17,7 +17,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		Weapon.SelectionOrder SELORDER_PISTOL - 20;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
-		Weapon.UpSound "weapons/gunswap0";
+		Weapon.UpSound "bio/weap/gunswap_0";
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Flags BIO_WF_PISTOL;
@@ -52,7 +52,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 			A_BIO_Fire();
 			A_PresetRecoil('BIO_AutogunRecoil');
 			A_GunFlash();
-			A_StartSound("weapons/assaulthandgun", CHAN_WEAPON);
+			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
 		ASHG C 1;
 		ASHG B 1;
@@ -62,7 +62,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 			A_BIO_Fire();
 			A_PresetRecoil('BIO_AutogunRecoil');
 			A_GunFlash();
-			A_StartSound("weapons/assaulthandgun", CHAN_WEAPON);
+			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
 		ASHG C 2 A_SetTics(invoker.FireTime2);
 		ASHG C 1;
@@ -72,7 +72,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 			A_BIO_Fire();
 			A_PresetRecoil('BIO_AutogunRecoil');
 			A_GunFlash();
-			A_StartSound("weapons/assaulthandgun", CHAN_WEAPON);
+			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
 		ASHG C 1;
 		ASHG B 1;
@@ -87,7 +87,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 			A_BIO_Fire(spreadFactor: 0.5);
 			A_PresetRecoil('BIO_HandgunRecoil');
 			A_GunFlash();
-			A_StartSound("weapons/assaulthandgun", CHAN_WEAPON);
+			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
 		ASHG C 3 A_SetTics(invoker.FireTime2 + 1);
 		ASHG B 3 A_SetTics(invoker.FireTime2 + 1);
