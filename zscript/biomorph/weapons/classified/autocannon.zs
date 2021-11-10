@@ -47,7 +47,7 @@ class BIO_Autocannon : BIO_Weapon
 			A_GunFlash('Flash.I');
 			A_BIO_Fire();
 			A_PresetRecoil(Random(0, 1) ? 'BIO_AutogunRecoil' : 'BIO_RapidFireRecoil');
-			A_StartSound("bioweap/autocannon/fire", CHAN_WEAPON);
+			A_StartSound("bio/weap/autocannon/fire", CHAN_WEAPON);
 			return state(null);
 		}
 		ACAN F 1 Bright A_GunFlash('Flash.J');
@@ -57,7 +57,7 @@ class BIO_Autocannon : BIO_Weapon
 			A_GunFlash('Flash.K');
 			A_BIO_Fire();
 			A_PresetRecoil(Random(0, 1) ? 'BIO_AutogunRecoil' : 'BIO_RapidFireRecoil');
-			A_StartSound("bioweap/autocannon/fire", CHAN_7);
+			A_StartSound("bio/weap/autocannon/fire", CHAN_7);
 			return state(null);
 		}
 		ACAN H 1 Bright A_GunFlash('Flash.L');
