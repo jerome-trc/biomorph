@@ -5,8 +5,6 @@ class BIO_Fist : BIO_MeleeWeapon replaces Fist
 
 	Default
 	{
-		+WEAPON.MELEEWEAPON
-
 		Obituary "$OB_MPFIST";
 		Tag "$BIO_WEAP_TAG_FIST";
 
