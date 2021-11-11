@@ -61,6 +61,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/standard/super_shotgun.zs"
 
 #include "zscript/biomorph/weapons/specialty/assault_handgun.zs"
+#include "zscript/biomorph/weapons/specialty/auto_shotgun.zs"
 #include "zscript/biomorph/weapons/specialty/plasma_cannon.zs"
 
 #include "zscript/biomorph/weapons/classified/autocannon.zs"

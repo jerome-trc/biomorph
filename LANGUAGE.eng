@@ -61,6 +61,9 @@
 	BIO_WEAP_TAG_ASSAULTHANDGUN = "Assault Handgun";
 	BIO_WEAP_PKUP_ASSAULTHANDGUN = "Obtained an %s.";
 
+	BIO_WEAP_TAG_AUTOSHOTGUN = "Auto Shotgun";
+	BIO_WEAP_PKUP_AUTOSHOTGUN = "Obtained an %s.";
+
 	BIO_WEAP_TAG_PLASMACANNON = "Plasma Cannon";
 	BIO_WEAP_PKUP_PLASMACANNON = "Obtained a %s.";
 	
