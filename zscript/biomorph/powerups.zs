@@ -171,6 +171,11 @@ class BIO_PowerScanner : PowerScanner
 	}
 }
 
+class BIO_PowerInfiniteAmmo : PowerInfiniteAmmo
+{
+	mixin BIO_Powerup;
+}
+
 class BIO_Megasphere : Megasphere replaces Megasphere
 {
 	States

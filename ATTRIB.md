@@ -50,6 +50,7 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "hankland.wav" (DSOOF replacement)
 - "Lever_draw.wav" (GUNSWAP1)
 - "Magnum-3.wav" (ACANFIRE)
+- "red_charge.wav" (RAMPAGE, edited by RatCircus)
 - "Shotgun-1.wav" (INCUFIRE)
 - "Shotgun-sweetener1.wav (INCUFIRE)
 - "ShotgunSnatch.wav" (INCURELO)

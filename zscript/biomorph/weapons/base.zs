@@ -521,6 +521,14 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
+	// Is this weapon currently being raised, lowered, or neither?
+	bool Switching() const
+	{
+		return
+			InStateSequence(CurState, ResolveState('Deselect.Loop')) ||
+			InStateSequence(CurState, ResolveState('Select.Loop')); 
+	}
+
 	bool HasAffixOfType(Class<BIO_WeaponAffix> t, bool implicit = false) const
 	{
 		if (!implicit)
@@ -728,7 +736,7 @@ class BIO_Weapon : DoomWeapon abstract
 	override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
 	{
 		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
-			return false;
+			return true;
 
 		if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammoUse))
 			return false;

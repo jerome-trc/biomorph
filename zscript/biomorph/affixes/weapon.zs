@@ -1120,3 +1120,51 @@ class BIO_WAFX_SwitchSpeed : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_TAG_SWITCHSPEED");
 	}
 }
+
+class BIO_WAFX_InfiniteAmmoOnKill : BIO_WeaponAffix
+{
+	// % chance out of 100 and duration in seconds
+	int Chance, Duration;
+
+	override void Init(BIO_Weapon weap)
+	{
+		Chance = Random(3, 6);
+		Duration = Random(5, 10);
+	}
+
+	override bool Compatible(BIO_Weapon weap) const { return true; }
+
+	override void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const
+	{
+		if (!weap.Switching() && Random(0, 100) < Chance)
+		{
+			let giver = PowerupGiver(Actor.Spawn('PowerupGiver', weap.Owner.Pos));
+
+			if (giver != null)
+			{
+				weap.Owner.A_StartSound("bio/weap/rampage", CHAN_BODY);
+				giver.PowerupType = 'BIO_PowerInfiniteAmmo';
+				giver.EffectTics = GameTicRate * Duration;
+				giver.AttachToOwner(weap.Owner);
+				giver.Use(false);
+			}
+			else
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR ..
+					"Failed to grant an infinite ammo powerup after a kill.");
+			}
+		}
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_WAFX_TOSTR_INFINITEAMMOONKILL"),
+			Chance, Duration));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_TAG_INFINITEAMMOONKILL");	
+	}
+}
