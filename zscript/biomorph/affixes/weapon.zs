@@ -360,14 +360,14 @@ class BIO_WAFX_Plasma : BIO_WeaponAffix
 	private bool PrimaryCompatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableTo('BIO_PlasmaBall', false) &&
+			weap.FireTypeMutableTo('BIO_PlasmaBall', true, false) &&
 			(weap.AffixMask1 & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
 	}
 
 	private bool SecondaryCompatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableTo('BIO_PlasmaBall', true) &&
+			weap.FireTypeMutableTo('BIO_PlasmaBall', true, true) &&
 			(weap.AffixMask1 & BIO_WAM_DAMAGE) != BIO_WAM_DAMAGE;
 	}
 
@@ -412,7 +412,7 @@ class BIO_WAFX_Slug : BIO_WeaponAffix
 	private bool PrimaryCompatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableFrom('BIO_ShotPellet', false) &&
+			weap.FireTypeMutableFrom('BIO_ShotPellet', true, false) &&
 			!(weap.AffixMask1 & BIO_WAM_SPREAD) &&
 			!(weap.AffixMask1 & BIO_WAM_DAMAGE);
 	}
@@ -420,7 +420,7 @@ class BIO_WAFX_Slug : BIO_WeaponAffix
 	private bool SecondaryCompatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableFrom('BIO_ShotPellet', true) &&
+			weap.FireTypeMutableFrom('BIO_ShotPellet', true, true) &&
 			!(weap.AffixMask2 & BIO_WAM_SPREAD) &&
 			!(weap.AffixMask2 & BIO_WAM_DAMAGE);
 	}
@@ -496,16 +496,16 @@ class BIO_WAFX_MiniMissile : BIO_WeaponAffix
 	override bool Compatible(BIO_Weapon weap) const
 	{
 		return
-			weap.FireTypeMutableTo('BIO_MiniMissile', false) ||
-			weap.FireTypeMutableTo('BIO_MiniMissile', true);
+			weap.FireTypeMutableTo('BIO_MiniMissile', true, false) ||
+			weap.FireTypeMutableTo('BIO_MiniMissile', true, true);
 	}
 
 	override void Apply(BIO_Weapon weap) const
 	{
-		if (weap.FireTypeMutableTo('BIO_MiniMissile', false))
+		if (weap.FireTypeMutableTo('BIO_MiniMissile', true, false))
 			weap.FireType1 = 'BIO_MiniMissile';
 		
-		if (weap.FireTypeMutableTo('BIO_MiniMissile', true))
+		if (weap.FireTypeMutableTo('BIO_MiniMissile', true, true))
 			weap.FireType2 = 'BIO_MiniMissile';
 	}
 
