@@ -472,6 +472,10 @@ class BIO_EventHandler : EventHandler
 			}
 		}
 
+		let bioPlayer = BIO_Player(event.Thing.Target);
+		if (bioPlayer != null)
+			bioPlayer.OnKill(event.Thing, event.Inflictor);
+
 		// There's no way to know if a Lost Soul was a Pain Elemental spawn,
 		// so just forbid Lost Souls from giving anything to prevent farming
 		if (event.Thing is 'LostSoul') return;

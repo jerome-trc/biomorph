@@ -1,13 +1,7 @@
 class BIO_Player : DoomPlayer
 {	
 	Array<BIO_Passive> Passives;
-
-	Array<BIO_TransitionFunctor> TransitionFunctors;
-	Array<BIO_DamageTakenFunctor> DamageTakenFunctors;
-	Array<BIO_ItemPickupFunctor> ItemPickupFunctors;
-	Array<BIO_PowerupFunctor> PowerupFunctors;
-	Array<BIO_WeaponFunctor> WeaponFunctors;
-	Array<BIO_EquipmentFunctor> EquipmentFunctors;
+	Array<BIO_PlayerFunctor> Functors[FUNCTOR_ARRAY_LENGTH];
 
 	uint MaxWeaponsHeld, MaxEquipmentHeld;
 	property MaxWeaponsHeld: MaxWeaponsHeld;
@@ -42,8 +36,11 @@ class BIO_Player : DoomPlayer
 	{
 		int ret = super.TakeSpecialDamage(inflictor, source, damage, dmgType);
 
-		for (uint i = 0; i < DamageTakenFunctors.Size(); i++)
-			DamageTakenFunctors[i].OnDamageTaken(self, inflictor, source, damage, dmgType);
+		for (uint i = 0; i < Functors[FANDX_DAMAGETAKEN].Size(); i++)
+		{
+			BIO_DamageTakenFunctor(Functors[FANDX_DAMAGETAKEN][i]).OnDamageTaken(
+				self, inflictor, source, damage, dmgType);
+		}
 
 		if (EquippedArmor != null)
 		{
@@ -88,14 +85,32 @@ class BIO_Player : DoomPlayer
 
 	void WorldLoaded(bool isSaveGame, bool isReopen)
 	{
-		for (uint i = 0; i < TransitionFunctors.Size(); i++)
-			TransitionFunctors[i].WorldLoaded(self, isSaveGame, isReopen);
+		for (uint i = 0; i < Functors[FANDX_TRANSITION].Size(); i++)
+		{
+			BIO_TransitionFunctor(Functors[FANDX_TRANSITION][i])
+				.WorldLoaded(self, isSaveGame, isReopen);
+		}
+	}
+
+	void OnKill(Actor killed, Actor inflictor)
+	{
+		let bioWeapon = BIO_Weapon(Player.ReadyWeapon);
+		if (bioWeapon != null) bioWeapon.OnKill(killed, inflictor);
+
+		for (uint i = 0; i < Functors[FANDX_KILL].Size(); i++)
+		{
+			BIO_KillFunctor(Functors[FANDX_KILL][i])
+				.OnKill(self, inflictor, killed);
+		}
 	}
 
 	void Equip(BIO_Equipment equippable)
 	{
-		for (uint i = 0; i < EquipmentFunctors.Size(); i++)
-			EquipmentFunctors[i].OnEquip(self, equippable);
+		for (uint i = 0; i < Functors[FANDX_EQUIPMENT].Size(); i++)
+		{
+			BIO_EquipmentFunctor(Functors[FANDX_EQUIPMENT][i])
+				.OnEquip(self, equippable);
+		}
 
 		equippable.OnEquip();
 
@@ -110,8 +125,11 @@ class BIO_Player : DoomPlayer
 
 	void UnequipArmor(bool broken)
 	{
-		for (uint i = 0; i < EquipmentFunctors.Size(); i++)
-			EquipmentFunctors[i].OnUnequip(self, EquippedArmor, broken);
+		for (uint i = 0; i < Functors[FANDX_EQUIPMENT].Size(); i++)
+		{
+			BIO_EquipmentFunctor(Functors[FANDX_EQUIPMENT][i])
+				.OnUnequip(self, EquippedArmor, broken);
+		}
 
 		EquippedArmor.OnUnequip(broken);
 		EquippedArmor.Equipped = false;
@@ -124,55 +142,79 @@ class BIO_Player : DoomPlayer
 	// opening it up to modification by passives.
 	void PreArmorApply(BIO_ArmorStats armor)
 	{
-		for (uint i = 0; i < EquipmentFunctors.Size(); i++)
-			EquipmentFunctors[i].PreArmorApply(self, EquippedArmor, armor);
+		for (uint i = 0; i < Functors[FANDX_EQUIPMENT].Size(); i++)
+		{
+			BIO_EquipmentFunctor(Functors[FANDX_EQUIPMENT][i])
+				.PreArmorApply(self, EquippedArmor, armor);
+		}
 
 		EquippedArmor.PreArmorApply(self, armor);
 	}
 
 	void OnHealthPickup(Inventory item)
 	{
-		for (uint i = 0; i < ItemPickupFunctors.Size(); i++)
-			ItemPickupFunctors[i].OnHealthPickup(self, item);
+		for (uint i = 0; i < Functors[FANDX_ITEMPKUP].Size(); i++)
+		{
+			BIO_ItemPickupFunctor(Functors[FANDX_ITEMPKUP][i])
+				.OnHealthPickup(self, item);
+		}
 	}
 
 	void OnAmmoPickup(Inventory item)
 	{
-		for (uint i = 0; i < ItemPickupFunctors.Size(); i++)
-			ItemPickupFunctors[i].OnAmmoPickup(self, item);
+		for (uint i = 0; i < Functors[FANDX_ITEMPKUP].Size(); i++)
+		{
+			BIO_ItemPickupFunctor(Functors[FANDX_ITEMPKUP][i])
+				.OnAmmoPickup(self, item);
+		}
 	}
 
 	void OnBackpackPickup(BIO_Backpack bkpk)
 	{
-		for (uint i = 0; i < ItemPickupFunctors.Size(); i++)
-			ItemPickupFunctors[i].OnBackpackPickup(self, bkpk);
+		for (uint i = 0; i < Functors[FANDX_ITEMPKUP].Size(); i++)
+		{
+			BIO_ItemPickupFunctor(Functors[FANDX_ITEMPKUP][i])
+				.OnBackpackPickup(self, bkpk);
+		}
 	}
 
 	void OnPowerupPickup(Inventory item)
 	{
-		for (uint i = 0; i < ItemPickupFunctors.Size(); i++)
-			ItemPickupFunctors[i].OnPowerupPickup(self, item);
+		for (uint i = 0; i < Functors[FANDX_ITEMPKUP].Size(); i++)
+		{
+			BIO_ItemPickupFunctor(Functors[FANDX_ITEMPKUP][i])
+				.OnPowerupPickup(self, item);
+		}
 	}
 
 	void OnMapPickup(Allmap map)
 	{
-		for (uint i = 0; i < ItemPickupFunctors.Size(); i++)
-			ItemPickupFunctors[i].OnMapPickup(self, map);
+		for (uint i = 0; i < Functors[FANDX_ITEMPKUP].Size(); i++)
+		{
+			BIO_ItemPickupFunctor(Functors[FANDX_ITEMPKUP][i])
+				.OnMapPickup(self, map);
+		}
 	}
 
 	void OnPowerupAttach(Powerup power)
 	{
-		for (uint i = 0; i < PowerupFunctors.Size(); i++)
-			PowerupFunctors[i].OnPowerupAttach(self, power);
+		for (uint i = 0; i < Functors[FANDX_POWERUP].Size(); i++)
+		{
+			BIO_PowerupFunctor(Functors[FANDX_POWERUP][i])
+				.OnPowerupAttach(self, power);
+		}
 	}
 
 	void OnPowerupDetach(Powerup power)
 	{
-		for (uint i = 0; i < PowerupFunctors.Size(); i++)
-			PowerupFunctors[i].OnPowerupDetach(self, power);
+		for (uint i = 0; i < Functors[FANDX_POWERUP].Size(); i++)
+		{
+			BIO_PowerupFunctor(Functors[FANDX_POWERUP][i])
+				.OnPowerupDetach(self, power);
+		}
 	}
 
-	// Passive/functor boilerplate =============================================
+	// Passive/functor manipulation ============================================
 
 	void PushPassive(Class<BIO_Passive> pasv_t, uint count = 1)
 	{
@@ -217,293 +259,101 @@ class BIO_Player : DoomPlayer
 			count, pasv_t.GetClassName(), GetTag());
 	}
 
+	enum FunctorArrayIndex : uint
+	{
+		FANDX_DAMAGETAKEN,
+		FANDX_EQUIPMENT,
+		FANDX_ITEMPKUP,
+		FANDX_KILL,
+		FANDX_POWERUP,
+		FANDX_TRANSITION,
+		FANDX_WEAPON,
+		FUNCTOR_ARRAY_LENGTH
+	}
+
 	void PushFunctor(Class<BIO_PlayerFunctor> func_t, uint count = 1)
 	{
-		if (func_t is 'BIO_TransitionFunctor')
-			PushTransitionFunctor((Class<BIO_TransitionFunctor>)(func_t), count);
-		else if (func_t is 'BIO_DamageTakenFunctor')
-			PushDamageTakenFunctor((Class<BIO_DamageTakenFunctor>)(func_t), count);
-		else if (func_t is 'BIO_ItemPickupFunctor')
-			PushItemPickupFunctor((Class<BIO_ItemPickupFunctor>)(func_t), count);
-		else if (func_t is 'BIO_PowerupFunctor')
-			PushPowerupFunctor((Class<BIO_PowerupFunctor>)(func_t), count);
-		else if (func_t is 'BIO_WeaponFunctor')
-			PushWeaponFunctor((Class<BIO_WeaponFunctor>)(func_t), count);
+		uint ndx = uint.MAX;
+
+		if (func_t is 'BIO_DamageTakenFunctor')
+			ndx = FANDX_DAMAGETAKEN;
 		else if (func_t is 'BIO_EquipmentFunctor')
-			PushEquipmentFunctor((Class<BIO_EquipmentFunctor>)(func_t), count);
+			ndx = FANDX_EQUIPMENT;
+		else if (func_t is 'BIO_ItemPickupFunctor')
+			ndx = FANDX_ITEMPKUP;
+		else if (func_t is 'BIO_KillFunctor')
+			ndx = FANDX_KILL;
+		else if (func_t is 'BIO_PowerupFunctor')
+			ndx = FANDX_POWERUP;
+		else if (func_t is 'BIO_TransitionFunctor')
+			ndx = FANDX_TRANSITION;
+		else if (func_t is 'BIO_WeaponFunctor')
+			ndx = FANDX_WEAPON;
 		else
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..	
 				"Tried to push player pawn functor of invalid type %s onto player %s",
 				func_t.GetClassName(), GetTag());
+			return;
 		}
-	}
 
-	protected void PushTransitionFunctor(
-		Class<BIO_TransitionFunctor> func_t, uint count = 1)
-	{
-		for (uint i = 0; i < TransitionFunctors.Size(); i++)
+		for (uint i = 0; i < Functors[ndx].Size(); i++)
 		{
-			if (TransitionFunctors[i].GetClass() == func_t)
+			if (Functors[ndx][i].GetClass() == func_t)
 			{
-				TransitionFunctors[i].Count += count;
+				Functors[ndx][i].Count += count;
 				return;
 			}
 		}
 
-		uint e = TransitionFunctors.Push(BIO_TransitionFunctor(new(func_t)));
-		TransitionFunctors[e].Count = count;
-	}
-	
-	protected void PushDamageTakenFunctor(
-		Class<BIO_DamageTakenFunctor> func_t, uint count = 1)
-	{
-		for (uint i = 0; i < DamageTakenFunctors.Size(); i++)
-		{
-			if (DamageTakenFunctors[i].GetClass() == func_t)
-			{
-				DamageTakenFunctors[i].Count += count;
-				return;
-			}
-		}
-
-		uint e = DamageTakenFunctors.Push(BIO_DamageTakenFunctor(new(func_t)));
-		DamageTakenFunctors[e].Count = count;
-	}
-
-	protected void PushItemPickupFunctor(
-		Class<BIO_ItemPickupFunctor> func_t, uint count = 1)
-	{
-		for (uint i = 0; i < ItemPickupFunctors.Size(); i++)
-		{
-			if (ItemPickupFunctors[i].GetClass() == func_t)
-			{
-				ItemPickupFunctors[i].Count += count;
-				return;
-			}
-		}
-
-		uint e = ItemPickupFunctors.Push(BIO_ItemPickupFunctor(new(func_t)));
-		ItemPickupFunctors[e].Count = count;
-	}
-
-	protected void PushPowerupFunctor(
-		Class<BIO_PowerupFunctor> func_t, uint count = 1)
-	{
-		for (uint i = 0; i < PowerupFunctors.Size(); i++)
-		{
-			if (PowerupFunctors[i].GetClass() == func_t)
-			{
-				PowerupFunctors[i].Count += count;
-				return;
-			}
-		}
-
-		uint e = PowerupFunctors.Push(BIO_PowerupFunctor(new(func_t)));
-		PowerupFunctors[e].Count = count;
-	}
-
-	protected void PushWeaponFunctor(
-		Class<BIO_WeaponFunctor> func_t, uint count = 1)
-	{
-		for (uint i = 0; i < WeaponFunctors.Size(); i++)
-		{
-			if (WeaponFunctors[i].GetClass() == func_t)
-			{
-				WeaponFunctors[i].Count += count;
-				return;
-			}
-		}
-
-		uint e = WeaponFunctors.Push(BIO_WeaponFunctor(new(func_t)));
-		WeaponFunctors[e].Count = count;
-	}
-
-	protected void PushEquipmentFunctor(
-		Class<BIO_EquipmentFunctor> func_t, uint count = 1)
-	{
-		for (uint i = 0; i < EquipmentFunctors.Size(); i++)
-		{
-			if (EquipmentFunctors[i].GetClass() == func_t)
-			{
-				EquipmentFunctors[i].Count += count;
-				return;
-			}
-		}
-
-		uint e = EquipmentFunctors.Push(BIO_EquipmentFunctor(new(func_t)));
-		EquipmentFunctors[e].Count = count;
+		uint e = Functors[ndx].Push(BIO_PlayerFunctor(new(func_t)));
+		Functors[ndx][e].Count = count;
 	}
 
 	void PopFunctor(Class<BIO_PlayerFunctor> func_t, uint count = 1)
 	{
-		if (func_t is 'BIO_TransitionFunctor')
-			PopTransitionFunctor((Class<BIO_TransitionFunctor>)(func_t), count);
-		else if (func_t is 'BIO_DamageTakenFunctor')
-			PopDamageTakenFunctor((Class<BIO_DamageTakenFunctor>)(func_t), count);
-		else if (func_t is 'BIO_ItemPickupFunctor')
-			PopItemPickupFunctor((Class<BIO_ItemPickupFunctor>)(func_t), count);
-		else if (func_t is 'BIO_PowerupFunctor')
-			PopPowerupFunctor((Class<BIO_PowerupFunctor>)(func_t), count);
-		else if (func_t is 'BIO_WeaponFunctor')
-			PopWeaponFunctor((Class<BIO_WeaponFunctor>)(func_t), count);
+		uint ndx = uint.MAX;
+
+		if (func_t is 'BIO_DamageTakenFunctor')
+			ndx = FANDX_DAMAGETAKEN;
 		else if (func_t is 'BIO_EquipmentFunctor')
-			PopEquipmentFunctor((Class<BIO_EquipmentFunctor>)(func_t), count);
+			ndx = FANDX_EQUIPMENT;
+		else if (func_t is 'BIO_ItemPickupFunctor')
+			ndx = FANDX_ITEMPKUP;
+		else if (func_t is 'BIO_KillFunctor')
+			ndx = FANDX_KILL;
+		else if (func_t is 'BIO_PowerupFunctor')
+			ndx = FANDX_POWERUP;
+		else if (func_t is 'BIO_TransitionFunctor')
+			ndx = FANDX_TRANSITION;
+		else if (func_t is 'BIO_WeaponFunctor')
+			ndx = FANDX_WEAPON;
 		else
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..	
 				"Tried to pop player pawn functor of invalid type %s off player %s",
 				func_t.GetClassName(), GetTag());
-		}
-	}
-
-	void PopTransitionFunctor(Class<BIO_TransitionFunctor> func_t, uint count = 1)
-	{
-		bool all = count <= 0;
-
-		for (uint i = 0; i < TransitionFunctors.Size(); i++)
-		{
-			if (TransitionFunctors[i].GetClass() != func_t) continue;
-			
-			if (TransitionFunctors[i].Count < count)
-			{
-				Console.Printf(Biomorph.LOGPFX_WARN ..
-					"Tried to pop functor %s off player %s %d times, but can only do %d.",
-					func_t.GetClassName(), GetTag(), count, TransitionFunctors[i].Count);
-			}
-
-			TransitionFunctors[i].Count -= (all ? TransitionFunctors[i].Count : count);
-			if (TransitionFunctors[i].Count <= 0) TransitionFunctors.Delete(i);
 			return;
 		}
 
-		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"Attempted to pop %d times %s, but found none on player %s.",
-			count, func_t.GetClassName(), GetTag());
-	}
-
-	void PopDamageTakenFunctor(Class<BIO_DamageTakenFunctor> func_t, uint count = 1)
-	{
-		bool all = count <= 0;
-
-		for (uint i = 0; i < DamageTakenFunctors.Size(); i++)
 		{
-			if (DamageTakenFunctors[i].GetClass() != func_t) continue;
-			
-			if (DamageTakenFunctors[i].Count < count)
+			bool all = count <= 0;
+
+			for (uint i = 0; i < Functors[ndx].Size(); i++)
 			{
-				Console.Printf(Biomorph.LOGPFX_WARN ..
-					"Tried to pop functor %s off player %s %d times, but can only do %d.",
-					func_t.GetClassName(), GetTag(), count, DamageTakenFunctors[i].Count);
+				if (Functors[ndx][i].GetClass() != func_t) continue;
+				
+				if (Functors[ndx][i].Count < count)
+				{
+					Console.Printf(Biomorph.LOGPFX_WARN ..
+						"Tried to pop functor %s off player %s %d times, but can only do %d.",
+						func_t.GetClassName(), GetTag(), count, Functors[ndx][i].Count);
+				}
+
+				Functors[ndx][i].Count -= (all ? Functors[ndx][i].Count : count);
+				if (Functors[ndx][i].Count <= 0) Functors[ndx].Delete(i);
+				return;
 			}
-
-			DamageTakenFunctors[i].Count -= (all ? DamageTakenFunctors[i].Count : count);
-			if (DamageTakenFunctors[i].Count <= 0) DamageTakenFunctors.Delete(i);
-			return;
 		}
-
-		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"Attempted to pop %d times %s, but found none on player %s.",
-			count, func_t.GetClassName(), GetTag());
-	}
-
-	void PopItemPickupFunctor(Class<BIO_ItemPickupFunctor> func_t, uint count = 1)
-	{
-		bool all = count <= 0;
-
-		for (uint i = 0; i < ItemPickupFunctors.Size(); i++)
-		{
-			if (ItemPickupFunctors[i].GetClass() != func_t) continue;
-			
-			if (ItemPickupFunctors[i].Count < count)
-			{
-				Console.Printf(Biomorph.LOGPFX_WARN ..
-					"Tried to pop functor %s off player %s %d times, but can only do %d.",
-					func_t.GetClassName(), GetTag(), count, ItemPickupFunctors[i].Count);
-			}
-
-			ItemPickupFunctors[i].Count -= (all ? ItemPickupFunctors[i].Count : count);
-			if (ItemPickupFunctors[i].Count <= 0) ItemPickupFunctors.Delete(i);
-			return;
-		}
-
-		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"Attempted to pop %d times %s, but found none on player %s.",
-			count, func_t.GetClassName(), GetTag());
-	}
-
-	void PopPowerupFunctor(Class<BIO_PowerupFunctor> func_t, uint count = 1)
-	{
-		bool all = count <= 0;
-
-		for (uint i = 0; i < PowerupFunctors.Size(); i++)
-		{
-			if (PowerupFunctors[i].GetClass() != func_t) continue;
-			
-			if (PowerupFunctors[i].Count < count)
-			{
-				Console.Printf(Biomorph.LOGPFX_WARN ..
-					"Tried to pop functor %s off player %s %d times, but can only do %d.",
-					func_t.GetClassName(), GetTag(), count, PowerupFunctors[i].Count);
-			}
-
-			PowerupFunctors[i].Count -= (all ? PowerupFunctors[i].Count : count);
-			if (PowerupFunctors[i].Count <= 0) PowerupFunctors.Delete(i);
-			return;
-		}
-
-		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"Attempted to pop %d times %s, but found none on player %s.",
-			count, func_t.GetClassName(), GetTag());
-	}
-
-	void PopWeaponFunctor(Class<BIO_WeaponFunctor> func_t, uint count = 1)
-	{
-		bool all = count <= 0;
-
-		for (uint i = 0; i < WeaponFunctors.Size(); i++)
-		{
-			if (WeaponFunctors[i].GetClass() != func_t) continue;
-			
-			if (WeaponFunctors[i].Count < count)
-			{
-				Console.Printf(Biomorph.LOGPFX_WARN ..
-					"Tried to pop functor %s off player %s %d times, but can only do %d.",
-					func_t.GetClassName(), GetTag(), count, WeaponFunctors[i].Count);
-			}
-
-			WeaponFunctors[i].Count -= (all ? WeaponFunctors[i].Count : count);
-			if (WeaponFunctors[i].Count <= 0) WeaponFunctors.Delete(i);
-			return;
-		}
-
-		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"Attempted to pop %d times %s, but found none on player %s.",
-			count, func_t.GetClassName(), GetTag());
-	}
-
-	void PopEquipmentFunctor(Class<BIO_EquipmentFunctor> func_t, uint count = 1)
-	{
-		bool all = count <= 0;
-
-		for (uint i = 0; i < EquipmentFunctors.Size(); i++)
-		{
-			if (EquipmentFunctors[i].GetClass() != func_t) continue;
-			
-			if (EquipmentFunctors[i].Count < count)
-			{
-				Console.Printf(Biomorph.LOGPFX_WARN ..
-					"Tried to pop functor %s off player %s %d times, but can only do %d.",
-					func_t.GetClassName(), GetTag(), count, EquipmentFunctors[i].Count);
-			}
-
-			EquipmentFunctors[i].Count -= (all ? EquipmentFunctors[i].Count : count);
-			if (EquipmentFunctors[i].Count <= 0) EquipmentFunctors.Delete(i);
-			return;
-		}
-
-		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"Attempted to pop %d times %s, but found none on player %s.",
-			count, func_t.GetClassName(), GetTag());
 	}
 }
