@@ -23,3 +23,4 @@
 	- **Tip:** when using `A_SetTics()` in an action function or anonymous function, call it before making any other calls for best results.
 11. You will almost certainly want to override `StatsToString()`, since otherwise your weapon won't tell the player anything about itself. Useful functions for making this quick are `GenericFireDataReadout()`, `GenericSpreadReadout()`, `GenericFireTimeReadout()`, and `GenericReloadTimeReadout()`.
 12. Optionally add the flags `WEAPON.BFG` or `WEAPON.EXPLOSIVE` to signal to bots how to use your weapon.
+13. Remember that your weapon won't appear in loot drop tables (and can't be the input or output of upgrades) if your mod doesn't have a BIOWEAP lump. See [the relevant documentation for more information](/doc/lumps.md##BIOWEAP).
