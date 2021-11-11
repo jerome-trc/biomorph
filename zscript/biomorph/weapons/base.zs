@@ -552,43 +552,77 @@ class BIO_Weapon : DoomWeapon abstract
 		return HSpread1 > 0.0 || VSpread1 > 0.0 || HSpread2 > 0.0 || VSpread2 > 0.0;
 	}
 
-	bool FireTypeMutableFrom(Class<Actor> curFT, bool secondary = false) const
+	// Checks that the fire type hasn't already been changed, isn't masked against
+	// modification, and is currently set to a given class. If `subclass` is
+	// false, the check will only pass if the argument class exactly matches
+	// the fire type.
+	bool FireTypeMutableFrom(Class<Actor> curFT, bool subclass = false,
+		 bool secondary = false) const
 	{
 		if (bMeleeWeapon) return false;
 
 		if (!secondary)
 		{
+			bool sameType;
+
+			if (subClass)
+				sameType = FireType1 is curFT;
+			else
+				sameType = FireType1 != curFT;
+
 			return
 				FireTypeIsDefault(false) &&
-				!(AffixMask1 & BIO_WAM_FIRETYPE) &&
-				FireType1 == curFT;
+				!(AffixMask1 & BIO_WAM_FIRETYPE) && sameType;
 		}
 		else
 		{
+			bool sameType;
+
+			if (subClass)
+				sameType = FireType2 is curFT;
+			else
+				sameType = FireType2 != curFT;
+
 			return
 				FireTypeIsDefault(true) &&
-				!(AffixMask2 & BIO_WAM_FIRETYPE) &&
-				FireType2 == curFT;
+				!(AffixMask2 & BIO_WAM_FIRETYPE) && sameType;
 		}
 	}
 
-	bool FireTypeMutableTo(Class<Actor> newFT, bool secondary = false) const
+	// Checks that the fire type hasn't already been changed, isn't masked against
+	// modification, and is currently set to a given class. If `subclass` is
+	// false, the check will only fail if the argument class exactly matches
+	// the fire type.
+	bool FireTypeMutableTo(Class<Actor> newFT, bool subclass = false,
+		bool secondary = false) const
 	{
 		if (bMeleeWeapon) return false;
 
 		if (!secondary)
 		{
+			bool sameType;
+
+			if (subClass)
+				sameType = FireType1 is newFT;
+			else
+				sameType = FireType1 != newFT;
+
 			return
 				FireTypeIsDefault(false) &&
-				!(AffixMask1 & BIO_WAM_FIRETYPE) &&
-				FireType1 != newFT;
+				!(AffixMask1 & BIO_WAM_FIRETYPE) && !sameType;
 		}
 		else
 		{
+			bool sameType;
+
+			if (subClass)
+				sameType = FireType2 is newFT;
+			else
+				sameType = FireType2 != newFT;
+
 			return
 				FireTypeIsDefault(true) &&
-				!(AffixMask2 & BIO_WAM_FIRETYPE) &&
-				FireType2 != newFT;
+				!(AffixMask2 & BIO_WAM_FIRETYPE) && !sameType;
 		}
 	}
 
