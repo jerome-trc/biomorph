@@ -275,6 +275,10 @@
 	BIO_WAFX_TOSTR_SWITCHSPEED_LOWER = "%s%d%% %s\cj lower speed";
 	BIO_WAFX_TOSTR_SWITCHSPEED = "%s%.1f%% %s\cj switch speed";
 
+	BIO_WAFX_TAG_INFINITEAMMOONKILL = "Rampaging";
+	BIO_WAFX_TOSTR_INFINITEAMMOONKILL =
+		"\c[Green]%d%% chance of infinite ammo for %d seconds on kill";
+
 	BIO_EAFX_TAG_SAVEAMOUNT = "Reinforced";
 	BIO_EAFX_TOSTR_SAVEAMOUNT = "Durability: %s%s%d";
 

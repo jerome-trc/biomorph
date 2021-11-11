@@ -22,6 +22,7 @@ $RANDOM bio/weap/gunswap
 }
 
 bio/weap/crit CRITDAMG
+bio/weap/rampage RAMPAGE
 
 bio/weap/assaulthandgun/fire ASHGFIRE
 bio/weap/autoshotgun/fire AUSGFIRE
