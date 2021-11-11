@@ -949,6 +949,14 @@ class BIO_Weapon : DoomWeapon abstract
 		SetReloadTimes(reloadTimes);
 	}
 
+	void OnKill(Actor killed, Actor inflictor)
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].OnKill(self, killed, inflictor);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnKill(self, killed, inflictor);
+	}
+
 	// Actions =================================================================
 
 	action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }

@@ -26,6 +26,8 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	virtual void PreAlertMonsters(BIO_Weapon weap,
 		in out double maxDist, in out int flags) const {}
 
+	virtual void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const {}
+
 	// Output should be fully localized.
 	abstract void ToString(in out Array<string> strings, BIO_Weapon weap) const;
 }

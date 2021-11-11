@@ -16,37 +16,10 @@ class BIO_Passive play abstract
 
 class BIO_PlayerFunctor play abstract { uint Count; }
 
-class BIO_TransitionFunctor : BIO_PlayerFunctor abstract
-{
-	virtual void WorldLoaded(BIO_Player bioPlayer, bool saveGame, bool reopen) const {}
-	virtual void EnteredGame(BIO_Player bioPlayer, int playerNumber) const {}
-}
-
 class BIO_DamageTakenFunctor : BIO_PlayerFunctor abstract
 {
 	virtual void OnDamageTaken(BIO_Player bioPlayer, Actor inflictor,
 		Actor source, in out int damage, name dmgType) const {}
-}
-
-class BIO_ItemPickupFunctor : BIO_PlayerFunctor abstract
-{
-	virtual void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const {}
-	virtual void OnAmmoPickup(BIO_Player bioPlayer, Inventory item) const {}
-	virtual void OnBackpackPickup(BIO_Player bioPlayer, BIO_Backpack bkpk) const {}
-	virtual void OnPowerupPickup(BIO_Player bioPlayer, Inventory item) const {}
-	virtual void OnMapPickup(BIO_Player bioPlayer, Allmap map) const {}
-}
-
-class BIO_PowerupFunctor : BIO_PlayerFunctor abstract
-{
-	virtual void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const {}
-	virtual void OnPowerupDetach(BIO_Player bioPlayer, Powerup power) const {}
-}
-
-class BIO_WeaponFunctor : BIO_PlayerFunctor abstract
-{
-	virtual void PreFire(BIO_Player bioPlayer, Class<Actor> fireType, int fireCount,
-		int damage, float angle, float pitch) const {}
 }
 
 class BIO_EquipmentFunctor : BIO_PlayerFunctor abstract
@@ -62,4 +35,36 @@ class BIO_EquipmentFunctor : BIO_PlayerFunctor abstract
 	// For modifying armor stats (e.g. SaveAmount and SavePercent).
 	virtual void PreArmorApply(BIO_Player player, BIO_Armor armor,
 		BIO_ArmorStats stats) const {}
+}
+
+class BIO_ItemPickupFunctor : BIO_PlayerFunctor abstract
+{
+	virtual void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const {}
+	virtual void OnAmmoPickup(BIO_Player bioPlayer, Inventory item) const {}
+	virtual void OnBackpackPickup(BIO_Player bioPlayer, BIO_Backpack bkpk) const {}
+	virtual void OnPowerupPickup(BIO_Player bioPlayer, Inventory item) const {}
+	virtual void OnMapPickup(BIO_Player bioPlayer, Allmap map) const {}
+}
+
+class BIO_KillFunctor : BIO_PlayerFunctor abstract
+{
+	virtual void OnKill(BIO_Player bioPlayer, Actor inflictor, Actor killed) const {}
+}
+
+class BIO_PowerupFunctor : BIO_PlayerFunctor abstract
+{
+	virtual void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const {}
+	virtual void OnPowerupDetach(BIO_Player bioPlayer, Powerup power) const {}
+}
+
+class BIO_TransitionFunctor : BIO_PlayerFunctor abstract
+{
+	virtual void WorldLoaded(BIO_Player bioPlayer, bool saveGame, bool reopen) const {}
+	virtual void EnteredGame(BIO_Player bioPlayer, int playerNumber) const {}
+}
+
+class BIO_WeaponFunctor : BIO_PlayerFunctor abstract
+{
+	virtual void PreFire(BIO_Player bioPlayer, Class<Actor> fireType, int fireCount,
+		int damage, float angle, float pitch) const {}
 }
