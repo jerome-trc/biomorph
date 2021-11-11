@@ -11,6 +11,16 @@
 			"cost": 7
 		},
 		{
+			"input": "BIO_Shotgun",
+			"output": "BIO_AutoShotgun",
+			"cost": 3
+		},
+		{
+			"input": "BIO_AutoShotgun",
+			"output": "BIO_IncursionShotgun",
+			"cost": 7
+		},
+		{
 			"input": "BIO_PlasmaRifle",
 			"output": "BIO_PlasmaCannon",
 			"cost": 3
@@ -28,6 +38,7 @@
 		"shotguns": [
 			"BIO_Shotgun",
 			"BIO_SuperShotgun",
+			"BIO_AutoShotgun",
 			"BIO_IncursionShotgun"
 		],
 		"autoguns": [

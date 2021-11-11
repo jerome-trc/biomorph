@@ -29,7 +29,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		BIO_Weapon.Spread 3.6, 1.4;
 		BIO_Weapon.SwitchSpeeds 9, 9;
 
-		BIO_AssaultHandgun.FireTimes 2, 2;
+		BIO_AssaultHandgun.FireTimes 3, 7;
 		BIO_AssaultHandgun.ReloadTimes 30;
 	}
 

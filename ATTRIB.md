@@ -18,6 +18,8 @@ The Shotgun pickup sprite is an edit by RatCircus of the original version by id 
 
 Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as well as id Software LLC.
 
+Auto Shotgun sprites are courtesy of id Software LLC, Infinity Ward, Inc., and were edited by Realm667 user Captain Toenail. 
+
 Plasma Cannon sprites (as well as those of the Plasma Globule) are courtesy of id Software LLC and Midway Games Inc., and were edited by Realm667 user Robot J.
 
 Autocannon and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
@@ -51,6 +53,11 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "ShotgunSnatch.wav" (INCURELO)
 - "vssdraw.wav" (GUNMECH0)
 - "weapondropped.wav" (GUNDROP0)
+
+The following audio files are provided by ZDoom forum user Joblez_I, under no license:
+- "autoshotgun-1.wav" (AUSGFIRE)
+- "deagle.wav" (HANDCANN)
+- "m60-1.wav" (HVBRFIRE)
 
 Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 

@@ -24,6 +24,7 @@ $RANDOM bio/weap/gunswap
 bio/weap/crit CRITDAMG
 
 bio/weap/assaulthandgun/fire ASHGFIRE
+bio/weap/autoshotgun/fire AUSGFIRE
 bio/weap/plascannon/idle PLSCIDLE
 bio/weap/plascannon/raise PLSCRAIS
 bio/weap/autocannon/fire ACANFIRE
