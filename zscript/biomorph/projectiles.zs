@@ -136,7 +136,7 @@ class BIO_FastProjectile : FastProjectile abstract
 		BIO_FastProjectile.Shrapnel 0;
 	}
 
-	// Don't multiply damage by Random(1, 8).
+	// Don't multiply damage by `Random(1, 8)`.
 	override int DoSpecialDamage(Actor target, int dmg, name dmgType)
 	{
 		int ret = Damage;
@@ -378,6 +378,43 @@ class BIO_BFGBall : BIO_Projectile
 	override void OnProjectileDeath()
 	{
 		A_BFGSpray(numRays: BFGRays, defDamage: Random(MinRayDamage, MaxRayDamage));
+	}
+}
+
+// TODO: Needs extra fanciness. Definitely a `DeathSound`, maybe a `SeeSound`.
+class BIO_Nail : BIO_Projectile
+{
+	protected Actor Stickee;
+
+	Default
+	{
+		Tag "$BIO_PROJ_TAG_NAIL";
+
+		DeathSound "";
+		Height 8;
+		Radius 11;
+		Speed 60;
+
+		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_NAILS";
+		BIO_Projectile.Shrapnel 2;
+	}
+
+	States
+	{
+	Spawn:
+		NAIL A 3 A_Travel;
+		Loop;
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_ProjectileDeath;
+		TNT1 A 0 A_JumpIf(Tracer != null, 'Death.Stuck');
+	Death.Loop:
+		NAIL A 4 A_FadeTo(0.0, 0.01, true);
+		Loop;
+	XDeath:
+		TNT1 A 0;
+		TNT1 A 0 A_ProjectileDeath;
+		Stop;
 	}
 }
 

@@ -46,6 +46,7 @@
 	BIO_WEAPSTAT_SPREAD = "\c[MidGrey]Spread angles: %s%.2f\c[MidGrey] horizontal, %s%.2f\c[MidGrey] \c[MidGrey]vertical";
 	BIO_WEAPSTAT_FORCERADIUSDMG = "\cjIgnores splash damage immunity";
 	BIO_WEAPSTAT_BERSERKMULTI = "\cj%d%% more damage from berserk";
+	BIO_WEAPSTAT_NAILSHRAPNEL = "\cjNails break into two shards of shrapnel";
 
 	BIO_WEAP_TAG_FIST = "Fist";
 
@@ -63,6 +64,9 @@
 
 	BIO_WEAP_TAG_AUTOSHOTGUN = "Auto Shotgun";
 	BIO_WEAP_PKUP_AUTOSHOTGUN = "Obtained an %s.";
+
+	BIO_WEAP_TAG_NAILGUN = "Nailgun";
+	BIO_WEAP_PKUP_NAILGUN = "Obtained a %s.";
 
 	BIO_WEAP_TAG_PLASMACANNON = "Plasma Cannon";
 	BIO_WEAP_PKUP_PLASMACANNON = "Obtained a %s.";
@@ -130,6 +134,9 @@
 	
 	BIO_PROJ_TAG_BFGBALL = "ball";
 	BIO_PROJ_TAG_BFGBALLS = "balls";
+
+	BIO_PROJ_TAG_NAIL = "nail";
+	BIO_PROJ_TAG_NAILS = "nails";
 
 	BIO_PROJEXTRA_TAG_BFGRAY = "ray";
 	BIO_PROJEXTRA_TAG_BFGRAYS = "rays";
