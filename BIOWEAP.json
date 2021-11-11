@@ -21,6 +21,16 @@
 			"cost": 7
 		},
 		{
+			"input": "BIO_Chaingun",
+			"output": "BIO_Nailgun",
+			"cost": 3
+		},
+		{
+			"input": "BIO_Nailgun",
+			"output": "BIO_Autocannon",
+			"cost": 7
+		},
+		{
 			"input": "BIO_PlasmaRifle",
 			"output": "BIO_PlasmaCannon",
 			"cost": 3
@@ -43,6 +53,7 @@
 		],
 		"autoguns": [
 			"BIO_Chaingun",
+			"BIO_Nailgun",
 			"BIO_Autocannon",
 			"BIO_HeavyBattleRifle"
 		],
