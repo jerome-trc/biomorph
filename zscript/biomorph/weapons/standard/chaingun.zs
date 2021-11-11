@@ -20,9 +20,9 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		Weapon.UpSound "bio/weap/gunswap";
 
 		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
-		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.DamageRange 5, 15;
 		BIO_Weapon.FireType 'BIO_Bullet';
+		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 40;
 		BIO_Weapon.MagazineType 'BIO_MAG_Chaingun';
 		BIO_Weapon.Spread 4.0, 2.0;

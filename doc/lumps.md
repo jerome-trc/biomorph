@@ -15,7 +15,7 @@ This is a JSON lump for setting characteristics about weapons which aren't suite
 	- "`autoguns`"
 	- "`launchers`"
 	- "`energy`"
-	- "`super`"
+	- "`super`"  
 	Each of these arrays can contain strings corresponding to weapon class names; these classes will be added to the loot table of the weapon category to which the array corresponds, automatically sorted by the weapon's grade. For example, putting the name of a weapon class `MyWeapon` into an "`autoguns`" array will result in Chaingunner Zombies possibly dropping that weapon alongside its other possible weapon drops, but only if the players have collectively found or crafted at least weapon of the same grade as `MyWeapon`.
 
 ## `BIOPERK`
