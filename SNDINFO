@@ -36,6 +36,10 @@ bio/weap/hbr/fire HVBRFIRE
 bio/weap/incursion/fire INCUFIRE
 bio/weap/incursion/reload INCURELO
 
+// Armor (pickup, usage, special effects) ======================================
+
+bio/armor/classified/use CLSARMUS
+
 // User interface ==============================================================
 
 bio/ui/beep USRINPT0

@@ -76,7 +76,7 @@ class BIO_Equipment : Inventory abstract
 
 	override bool Use(bool pickup)
 	{
-		let bioPlayer = BIO_PLayer(Owner);
+		let bioPlayer = BIO_Player(Owner);
 
 		if (GetClass() is 'BIO_Armor' && bioPlayer.IsWearingArmor())
 		{
@@ -88,6 +88,7 @@ class BIO_Equipment : Inventory abstract
 
 		bioPlayer.A_Print(String.Format(
 			StringTable.Localize(EquipMessage), GetColoredTag()), 2.5);
+		bioPlayer.A_StartSound(self.UseSound, CHAN_ITEM);
 
 		return false;
 	}
