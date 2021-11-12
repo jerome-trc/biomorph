@@ -350,9 +350,14 @@ class BIO_Weapon : DoomWeapon abstract
 		if (bioPlayer == null) return false;
 
 		if (bioPlayer.IsFullOnWeapons()) return false;
-		if (bioPlayer.CountInv(GetClass()) >= MaxAmount) return false;
 
 		return true;
+	}
+
+	override bool HandlePickup(Inventory item)
+	{
+		if (item.GetClass() == self.GetClass()) return true;
+		return super.HandlePickup(item);
 	}
 
 	// For now, weapons cannot be cannibalised for ammunition.
