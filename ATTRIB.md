@@ -74,3 +74,5 @@ PLSCIDLE and PLSCRAIS are courtesy of id Software LLC and Midway Software Inc.
 ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) (USRINPT0, pitched down for USRINPUT1) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/) is licensed under Creative Commons Attributions 3.0 Unported.
 
 AMRSHRD (pickup sound for `BIO_ArmorBonus`) is courtesy of id Software LLC.
+
+CLSARMUS (on-equip sound for classified armour) is courtesy of id Software LCC and the Raven Software Corporation.

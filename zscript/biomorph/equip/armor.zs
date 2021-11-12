@@ -110,6 +110,7 @@ class BIO_ClassifiedArmor : BIO_Armor
 		Tag "$BIO_ARMOR_TAG_CLSF";
 		Inventory.Icon 'ARM3A0';
 		Inventory.PickupMessage "$BIO_PKUP_TEMPLATE_ARMORDEFAULT";
+		Inventory.UseSound "bio/armor/classified/use";
 		BIO_Equipment.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Armor.StatClass 'BIO_ClassifiedArmorStats';
 	}
