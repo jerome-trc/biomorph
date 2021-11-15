@@ -17,7 +17,6 @@ class Biomorph abstract
 #include "zscript/biomorph/ammo.zs"
 #include "zscript/biomorph/cvars.zs"
 #include "zscript/biomorph/debug.zs"
-#include "zscript/biomorph/events.zs"
 #include "zscript/biomorph/gear.zs"
 #include "zscript/biomorph/global.zs"
 #include "zscript/biomorph/health.zs"
@@ -35,6 +34,12 @@ class Biomorph abstract
 
 #include "zscript/biomorph/equip/base.zs"
 #include "zscript/biomorph/equip/armor.zs"
+
+#include "zscript/biomorph/event/core.zs"
+#include "zscript/biomorph/event/console.zs"
+#include "zscript/biomorph/event/death.zs"
+#include "zscript/biomorph/event/net.zs"
+#include "zscript/biomorph/event/spawn.zs"
 
 #include "zscript/biomorph/menus/perk.zs"
 
