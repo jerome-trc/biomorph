@@ -1,7 +1,8 @@
 class BIO_JsonElementOrError {
 }
 
-class BIO_JsonElement : BIO_JsonElementOrError {
+class BIO_JsonElement : BIO_JsonElementOrError abstract {
+	abstract string serialize();
 }
 
 class BIO_JsonNumber : BIO_JsonElement abstract {
@@ -19,6 +20,9 @@ class BIO_JsonInt : BIO_JsonNumber {
 		i=-i;
 		return self;
 	}
+	override string serialize(){
+		return ""..i;
+	}
 }
 
 class BIO_JsonDouble : BIO_JsonNumber {
@@ -32,6 +36,9 @@ class BIO_JsonDouble : BIO_JsonNumber {
 		d=-d;
 		return self;
 	}
+	override string serialize(){
+		return ""..d;
+	}
 }
 
 class BIO_JsonBool : BIO_JsonElement {
@@ -40,6 +47,9 @@ class BIO_JsonBool : BIO_JsonElement {
 		BIO_JsonBool bb=new("BIO_JsonBool");
 		bb.b=b;
 		return bb;
+	}
+	override string serialize(){
+		return b?"true":"false";
 	}
 }
 
@@ -50,11 +60,17 @@ class BIO_JsonString : BIO_JsonElement {
 		ss.s=s;
 		return ss;
 	}
+	override string serialize(){
+		return BIO_JSON.serialize_string(s);
+	}
 }
 
 class BIO_JsonNull : BIO_JsonElement {
 	static BIO_JsonNull make(){
 		return new("BIO_JsonNull");
+	}
+	override string serialize(){
+		return "null";
 	}
 }
 

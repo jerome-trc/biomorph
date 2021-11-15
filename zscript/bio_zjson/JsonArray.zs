@@ -57,4 +57,18 @@ class BIO_JsonArray : BIO_JsonElement { // pretty much just a wrapper for a dyna
 		arr.clear();
 	}
 	
+	override string serialize(){
+		String s;
+		bool first=true;
+		s.AppendCharacter(BIO_JSON.SQUARE_OPEN);
+		for(uint i=0;i<arr.size();i++){
+			if(!first){
+				s.AppendCharacter(BIO_JSON.COMMA);
+			}
+			s.AppendFormat("%s",arr[i].serialize());
+			first=false;
+		}
+		s.AppendCharacter(BIO_JSON.SQUARE_CLOSE);
+		return s;
+	}
 }
