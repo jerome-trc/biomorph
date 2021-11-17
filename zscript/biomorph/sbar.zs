@@ -2,7 +2,7 @@ class BIO_StatusBar : BaseStatusBar
 {
 	private CVar NotifyLineCount;
 
-	private HUDFont Font_HUD, Font_Index, Font_Amount, Font_Small;
+	HUDFont Font_HUD, Font_Index, Font_Amount, Font_Small;
 	private InventoryBarState InvBarState;
 
 	const WEAPINFO_X = -22; // Leave room for keys at top-right corner
@@ -266,5 +266,7 @@ class BIO_StatusBar : BaseStatusBar
 				Font.CR_WHITE);
 			weapInfoY += 8;
 		}
+
+		weap.DrawToHUD(self);
 	}
 }

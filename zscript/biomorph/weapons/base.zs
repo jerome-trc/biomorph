@@ -438,6 +438,9 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected abstract void StatsToString(in out Array<string> stats) const;
 
+	// Called after all other weapon details have been drawn.
+	virtual ui void DrawToHUD(BIO_StatusBar sbar) const {}
+
 	// Getters =================================================================
 
 	string GetFireTypeTag(bool secondary = false) const
