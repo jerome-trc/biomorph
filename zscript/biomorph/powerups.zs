@@ -76,6 +76,11 @@ class BIO_BlurSphere : BlurSphere replaces BlurSphere
 class BIO_PowerInvisibility : PowerInvisibility
 {
 	mixin BIO_Powerup;
+
+	Default
+	{
+		Inventory.Icon 'PINSA0';
+	}
 }
 
 // Light amplification goggles =================================================
@@ -99,6 +104,11 @@ class BIO_Infrared : Infrared replaces Infrared
 class BIO_PowerLightAmp : PowerLightAmp
 {
 	mixin BIO_Powerup;
+
+	Default
+	{
+		Inventory.Icon 'PVISA0';
+	}
 }
 
 // Invulnerability =============================================================
@@ -122,6 +132,11 @@ class BIO_Invulnerability : InvulnerabilitySphere replaces InvulnerabilitySphere
 class BIO_PowerInvulnerable : PowerInvulnerable
 {
 	mixin BIO_Powerup;
+
+	Default
+	{
+		Inventory.Icon 'PINVA0';
+	}
 }
 
 // Anti-radiation suit =========================================================
@@ -145,6 +160,11 @@ class BIO_RadSuit : RadSuit replaces RadSuit
 class BIO_PowerIronFeet : PowerIronFeet
 {
 	mixin BIO_Powerup;
+
+	Default
+	{
+		Inventory.Icon 'SUITX0';
+	}
 }
 
 // Miscellaneous ===============================================================
@@ -174,6 +194,12 @@ class BIO_PowerScanner : PowerScanner
 class BIO_PowerInfiniteAmmo : PowerInfiniteAmmo
 {
 	mixin BIO_Powerup;
+
+	Default
+	{
+		Inventory.Icon 'INAMA0';
+		Powerup.Duration 120;
+	}
 }
 
 class BIO_Megasphere : Megasphere replaces Megasphere
