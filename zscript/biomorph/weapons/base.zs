@@ -354,6 +354,7 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
+	// Prevents picking up a weapon if one weapon of that class is already held.
 	override bool HandlePickup(Inventory item)
 	{
 		if (item.GetClass() == self.GetClass()) return true;
