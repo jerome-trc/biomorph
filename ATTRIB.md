@@ -14,7 +14,10 @@ The GLDEFS for the Weapon Upgrade Kit were devised by Realm667 user Dreadopp.
 
 ## Graphics
 
-The Shotgun pickup sprite is an edit by RatCircus of the original version by id Software LLC.
+The following sprites are edits of the work of id Software LLC:
+- INAMA0.png
+- SHOTB0.png
+- SUITX0.png
 
 Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as well as id Software LLC.
 

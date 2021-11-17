@@ -1,5 +1,7 @@
 class BIO_StatusBar : BaseStatusBar
 {
+	private CVar NotifyLineCount;
+
 	private HUDFont Font_HUD, Font_Index, Font_Amount, Font_Small;
 	private InventoryBarState InvBarState;
 
@@ -21,6 +23,8 @@ class BIO_StatusBar : BaseStatusBar
 		Font_Amount = HUDFont.Create('INDEXFONT');
 		Font_Small = HUDFont.Create('SMALLFONT');
 		InvBarState = InventoryBarState.Create();
+
+		NotifyLineCount = CVar.GetCvar("con_notifylines");
 	}
 
 	override void Draw(int state, double ticFrac)
@@ -75,6 +79,22 @@ class BIO_StatusBar : BaseStatusBar
 		
 		if (isInventoryBarVisible())
 			DrawInventoryBar(InvBarState, (0, 0), 7, DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
+
+		{
+			int yPos = 0;
+			for (Inventory i = CPlayer.MO.Inv; i != null; i = i.Inv)
+			{
+				int yOffs = NotifyLineCount.GetInt() * 16;
+				let powup = Powerup(i);
+				if (powup == null) continue;
+				DrawInventoryIcon(powup, (20, yOffs + yPos));
+				yPos += 8;
+				int secs = powup.EffectTics / GameTicRate;
+				DrawString(Font_Small, FormatNumber(secs, 1, 2),
+					(19, yOffs + yPos), DI_TEXT_ALIGN_CENTER, Font.CR_WHITE);
+				yPos += 32;
+			}
+		}
 
 		int invY = -20;
 		DrawWeaponAndAmmoDetails(invY);
