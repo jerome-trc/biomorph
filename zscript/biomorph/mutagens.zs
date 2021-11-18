@@ -289,8 +289,13 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 		if (!CanUse(true)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
-		weap.ResetStats();
+		bool proceed = true, consumed = true;
+		[proceed, consumed] = weap.OnCorrupt();
+
+		if (!proceed) return consumed;
 		weap.BIOFlags |= BIO_WF_CORRUPTED;
+
+		weap.ResetStats();
 
 		switch (Random(0, 0))
 		{
@@ -303,6 +308,6 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 		}
 
 		RLMDangerLevel(25);
-		return true;
+		return consumed;
 	}
 }
