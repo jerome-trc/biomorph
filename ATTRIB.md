@@ -79,3 +79,8 @@ PLSCIDLE and PLSCRAIS are courtesy of id Software LLC and Midway Software Inc.
 AMRSHRD (pickup sound for `BIO_ArmorBonus`) is courtesy of id Software LLC.
 
 CLSARMUS (on-equip sound for classified armour) is courtesy of id Software LCC and the Raven Software Corporation.
+
+## Acknowledgements
+
+- Yholl, whose mods not only inspired this project deeply, but also acted as a wellspring for techniques to learn from.
+- Marrub, whose ZScript reference has continually been invaluable.
