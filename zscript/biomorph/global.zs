@@ -456,6 +456,16 @@ class BIO_GlobalData : Thinker
 					WeaponUpgrades[e].Input = input_t;
 					WeaponUpgrades[e].Output = output_t;
 					WeaponUpgrades[e].KitCost = kc;
+
+					let reversible = BIO_Utils.TryGetJsonBool(
+						upgrade.get("reversible"), errMsg: false);
+					if (reversible != null && reversible.b)
+					{
+						uint er = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
+						WeaponUpgrades[er].Input = output_t;
+						WeaponUpgrades[er].Output = input_t;
+						WeaponUpgrades[er].KitCost = kc;
+					}
 				}
 			}
 
