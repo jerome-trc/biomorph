@@ -261,6 +261,27 @@ class BIO_Utils abstract
 		newItem.AttachToOwner(holder);
 	}
 
+	static BIO_JsonBool TryGetJsonBool(BIO_JSonElement elem, bool errMsg = true)
+	{
+		if (elem == null)
+		{
+			if (errMsg)
+				Console.Printf(Biomorph.LOGPFX_ERR .. "Expected bool, got null.");
+			return null;
+		}
+
+		let ret = BIO_JsonBool(elem);
+		if (ret == null)
+		{
+			if (errMsg)
+				Console.Printf(Biomorph.LOGPFX_ERR ..
+					"Expected bool, got %s.", elem.GetClassName());
+			return null;
+		}
+
+		return ret;
+	}
+
 	static BIO_JsonObject TryGetJsonObject(BIO_JsonElement elem, bool suppressErrMsg = false)
 	{
 		if (elem == null)

@@ -7,7 +7,8 @@ This is a JSON lump for setting characteristics about weapons which aren't suite
 - An array with the key "`upgrades`". This array can contain objects, each of which must have three fields:
 	- "`input`", a string with the name of a weapon class. The player must have this weapon to perform the upgrade.
 	- "`output`", a string with the name of a different weapon class. The player receives this weapon if they perform the upgrade.
-	- "`cost`", a number (integral only) representing how many Weapon Upgrade Kits the player will need to consume in order to perform the upgrade. 
+	- "`cost`", a number (integral only) representing how many Weapon Upgrade Kits the player will need to consume in order to perform the upgrade.
+	- "`reversible`" (**optional**), a boolean. If this is present and set to `true`, an extra upgrade recipe will be generated which has the same upgrade kit cost but with the input and output weapon classes flipped.
 - An object with the key "`loot`". This object can contain arrays with the following keys:
 	- "`melee`"
 	- "`pistols`"
