@@ -436,6 +436,12 @@ class BIO_Weapon : DoomWeapon abstract
 	abstract int TrueFireTime() const;
 	virtual int TrueReloadTime() const { return 0; }
 
+	/*	The first return value indicates if the mutagen should reset the weapon's
+		stats, set the corrupted flag, and try for a generic corruption effect.
+		The second return value indicates if the mutagen should be consumed.
+	*/
+	virtual bool, bool OnCorrupt() { return true, true; }
+
 	protected abstract void StatsToString(in out Array<string> stats) const;
 
 	// Called after all other weapon details have been drawn.

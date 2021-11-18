@@ -7,7 +7,7 @@ class BIO_Keybind : Inventory abstract
 		Inventory.Icon 'TNT1A0';
 		Inventory.InterHubAmount 1;
 		Inventory.MaxAmount 1;
-		Inventory.Pickupmessage
+		Inventory.PickupMessage
 			"If you're seeing this message, things might break.";
 
 		-COUNTITEM
