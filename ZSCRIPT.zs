@@ -31,6 +31,7 @@ class Biomorph abstract
 #include "zscript/biomorph/affixes/base.zs"
 #include "zscript/biomorph/affixes/armor.zs"
 #include "zscript/biomorph/affixes/weapon.zs"
+#include "zscript/biomorph/affixes/weapon_new.zs"
 
 #include "zscript/biomorph/equip/base.zs"
 #include "zscript/biomorph/equip/armor.zs"
@@ -52,10 +53,13 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/base.zs"
 #include "zscript/biomorph/weapons/base_dw.zs"
 #include "zscript/biomorph/weapons/base_melee.zs"
-#include "zscript/biomorph/weapons/base_new.zs"
 #include "zscript/biomorph/weapons/fist.zs"
-#include "zscript/biomorph/weapons/recoil.zs"
 #include "zscript/biomorph/weapons/upgrade_kit.zs"
+
+#include "zscript/biomorph/weapons/detail/base.zs"
+#include "zscript/biomorph/weapons/detail/constants.zs"
+#include "zscript/biomorph/weapons/detail/pipeline.zs"
+#include "zscript/biomorph/weapons/detail/recoil.zs"
 
 #include "zscript/biomorph/weapons/standard/bfg9000.zs"
 #include "zscript/biomorph/weapons/standard/chaingun.zs"

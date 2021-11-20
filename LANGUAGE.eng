@@ -45,6 +45,10 @@
 	BIO_WEAP_FIREFUNC_MELEE = "Hits %d time(s)";
 	BIO_WEAP_FIREFUNC_FIST = "Throws a left hook";
 	BIO_WEAP_FIREFUNC_CHAINSAW = "Cuts continually";
+	BIO_WEAP_FIREFUNC_RAIL = "Fires %d rail %s, spawning %s on impact";
+	BIO_WEAP_FIREFUNC_RAIL_NOPUFF = "Fires %d rail shots, spawning %s on impact";
+	BIO_WEAP_FIREFUNC_RAIL_NOSPAWN = "Fires %d rail %s"
+	BIO_WEAP_FIREFUNC_RAIL_NOTHING = "Fires %d rail shots";
 	
 	BIO_WEAP_DMGFUNC_DEFAULT = "(%s%d\c[MidGrey] \cu-\c[MidGrey] %s%d\c[MidGrey])";
 	BIO_WEAP_DMGFUNC_1D3 = "(%s%d\c[MidGrey] x (1 - 3))";
