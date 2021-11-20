@@ -52,6 +52,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/base.zs"
 #include "zscript/biomorph/weapons/base_dw.zs"
 #include "zscript/biomorph/weapons/base_melee.zs"
+#include "zscript/biomorph/weapons/base_new.zs"
 #include "zscript/biomorph/weapons/fist.zs"
 #include "zscript/biomorph/weapons/recoil.zs"
 #include "zscript/biomorph/weapons/upgrade_kit.zs"
@@ -69,6 +70,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/specialty/auto_shotgun.zs"
 #include "zscript/biomorph/weapons/specialty/nailgun.zs"
 #include "zscript/biomorph/weapons/specialty/plasma_cannon.zs"
+#include "zscript/biomorph/weapons/specialty/precision_rifle.zs"
 
 #include "zscript/biomorph/weapons/classified/autocannon.zs"
 #include "zscript/biomorph/weapons/classified/hand_cannon.zs"

@@ -35,6 +35,21 @@
 
 // Weapons (tags, pickup messages, obituaries, stat readouts) ==================
 
+	BIO_WEAP_STAT_HEADER_DEFAULT = "Fire mode %d:";
+	BIO_WEAP_STAT_HEADER_0 = "Primary fire:";
+	BIO_WEAP_STAT_HEADER_1 = "Secondary fire:";
+	BIO_WEAP_STAT_HEADER_2 = "Tertiary fire:";
+	BIO_WEAP_STAT_HEADER_3 = "Quaternary fire:";
+
+	BIO_WEAP_FIREFUNC_DEFAULT = "Fires %d %s";
+	BIO_WEAP_FIREFUNC_MELEE = "Hits %d time(s)";
+	BIO_WEAP_FIREFUNC_FIST = "Throws a left hook";
+	BIO_WEAP_FIREFUNC_CHAINSAW = "Cuts continually";
+	
+	BIO_WEAP_DMGFUNC_DEFAULT = "(%s%d\c[MidGrey] \cu-\c[MidGrey] %s%d\c[MidGrey])";
+	BIO_WEAP_DMGFUNC_1D3 = "(%s%d\c[MidGrey] x (1 - 3))";
+	BIO_WEAP_DMGFUNC_1D8 = "(%d%d\c[MidGrey] x (1 - 8))";
+
 	BIO_WEAPSTAT_FIREDATA = "\c[MidGrey]Damage: (%s%d\c[MidGrey] \cu-\c[MidGrey] %s%d\c[MidGrey]) \c[MidGrey]x\c[MidGrey] %s%d\c[MidGrey] %s%s\c-";
 	BIO_WEAPSTAT_FIRETIME = "\c[MidGrey]Fire time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
 	BIO_WEAPSTAT_FIRETIME_SEMIAUTO = "\c[MidGrey]Fire time (\cksemi-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
