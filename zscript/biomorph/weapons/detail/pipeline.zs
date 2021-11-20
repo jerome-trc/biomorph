@@ -1,287 +1,17 @@
-enum BIO_WeaponPipelineMask : uint8
+enum BIO_WeaponPipelineMask : uint16
 {
 	BIO_WPM_NONE = 0,
 	BIO_WPM_FIREFUNCTOR = 1 << 0,
 	BIO_WPM_FIRETYPE = 1 << 1,
 	BIO_WPM_FIRECOUNT = 1 << 2,
-	BIO_WPM_DAMAGE = 1 << 3,
-	BIO_WPM_HSPREAD = 1 << 4,
-	BIO_WPM_VSPREAD = 1 << 5,
-	BIO_WPM_FIRETIME = 1 << 6,
-	BIO_WPM_RELOADTIME = 1 << 7,
-	BIO_WPM_ALL = uint8.MAX
-}
-
-class BIO_NewWeapon : DoomWeapon abstract
-{
-	mixin BIO_Gear;
-
-	const MAX_AFFIXES = 6;
-
-	// SelectionOrder is for when ammo runs out; lower number, higher priority
-
-	const SELORDER_PLASMARIFLE = 100;
-	const SELORDER_SSG = 400;
-	const SELORDER_CHAINGUN = 700;
-	const SELORDER_SHOTGUN = 1300;
-	const SELORDER_PISTOL = 1900;
-	const SELORDER_CHAINSAW = 2200;
-	const SELORDER_RLAUNCHER = 2500;
-	const SELORDER_BFG = 2800;
-	const SELORDER_FIST = 3700;
-
-	// SlotPriority is for manual selection; higher number, higher priority
-
-	const SLOTPRIO_MAX = 1.0;	
-	const SLOTPRIO_CLASSIFIED = 0.8;
-	const SLOTPRIO_SPECIALTY = 0.6;
-	const SLOTPRIO_STANDARD = 0.4;
-	const SLOTPRIO_SURPLUS = 0.2;
-	const SLOTPRIO_MIN = 0.0;
-
-	// (RAT: Who designed those two properties to be so counter-intuitive?)
-
-	meta Class<BIO_NewWeapon> UniqueBase; property UniqueBase: UniqueBase;
-	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
-	uint AffixMask; property AffixMask: AffixMask;
-	int RaiseSpeed, LowerSpeed;
-	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
-
-	private uint LastPipeline;
-	Array<BIO_WeaponPipeline> Pipelines;
-
-	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
-	Array<string> StatReadout, AffixReadout;
-
-	Default
-	{
-		-SPECIAL
-		+DONTGIB
-		+NOBLOCKMONST
-		+THRUACTORS
-		+USESPECIAL
-		+WEAPON.ALT_AMMO_OPTIONAL
-		+WEAPON.AMMO_OPTIONAL
-		+WEAPON.NOALERT
-
-		Activation
-			THINGSPEC_ThingActs | THINGSPEC_ThingTargets | THINGSPEC_Switch;
-		Height 8;
-		Radius 16;
-
-		Inventory.PickupMessage "";
-
-		Weapon.BobRangeX 0.5;
-        Weapon.BobRangeY 0.5;
-        Weapon.BobSpeed 1.2;
-        Weapon.BobStyle 'Alpha';
-
-		BIO_NewWeapon.AffixMask BIO_WAM_NONE;
-		BIO_NewWeapon.Flags BIO_WF_NONE;
-		BIO_NewWeapon.Grade BIO_GRADE_NONE;
-		BIO_NewWeapon.Rarity BIO_RARITY_COMMON;
-		BIO_NewWeapon.SwitchSpeeds 6, 6;
-		BIO_NewWeapon.UniqueBase '';
-	}
-
-	States
-	{
-	Select.Loop:
-		#### # 1 A_BIO_Raise;
-		Loop;
-	Deselect.Loop:
-		#### # 1 A_BIO_Lower;
-		Loop;
-	Spawn.Common:
-		#### # 4;
-		#### # 1 A_GroundHit;
-		Goto Spawn.Common + 1;
-	Spawn.Mutated:
-		#### # 4;
-		#### # 1
-		{
-			A_GroundHit();
-			A_SetTranslation('');
-		}
-		#### ##### 1 A_GroundHit;
-		#### # 1 Bright
-		{
-			A_GroundHit();
-			A_SetTranslation('BIO_Mutated');
-		}
-		#### ##### 1 Bright A_GroundHit;
-		Goto Spawn.Mutated + 1;
-	Spawn.Unique:
-		#### # 4;
-		#### # 1
-		{
-			A_GroundHit();
-			A_SetTranslation('');
-		}
-		#### ##### 1 A_GroundHit;
-		#### # 1 Bright
-		{
-			A_GroundHit();
-			A_SetTranslation('BIO_Unique');
-		}
-		#### ##### 1 Bright A_GroundHit;
-		Goto Spawn.Unique + 1;
-	}
-
-	// Parent overrides ========================================================
-
-	override void BeginPlay()
-	{
-		super.BeginPlay();
-		Construct();
-		SetTag(GetColoredTag());
-
-		if (Abs(Vel.Z) <= 0.01)
-		{
-			bSpecial = true;
-			bThruActors = false;
-			HitGround = true;
-		}
-	}
-
-	// The player can't pick up a weapon if they're full on them,
-	// or already have one of this class.
-	override bool CanPickup(Actor toucher)
-	{
-		// Fundamental checks (toucher isn't null, class restrictions)
-		if (!super.CanPickup(toucher)) return false;
-
-		let bioPlayer = BIO_Player(toucher);
-		if (bioPlayer == null) return false;
-
-		if (bioPlayer.IsFullOnWeapons()) return false;
-
-		return true;
-	}
-
-	// Prevents picking up a weapon if one weapon of that class is already held.
-	override bool HandlePickup(Inventory item)
-	{
-		if (item.GetClass() == self.GetClass()) return true;
-		return super.HandlePickup(item);
-	}
-
-	// For now, weapons cannot be cannibalised for ammunition.
-	override bool TryPickupRestricted(in out Actor toucher) { return false; }
-
-	override string PickupMessage()
-	{
-		string ret = String.Format(StringTable.Localize(PickupMsg), GetTag());
-		ret = ret .. " [\cn" .. SlotNumber .. "\c-]";
-		return ret;
-	}
-
-	override void OnDrop(Actor dropper)
-	{
-		super.OnDrop(dropper);
-		HitGround = false;
-	}
-
-	override void Activate(Actor activator)
-	{
-		super.Activate(activator);
-		
-		let bioPlayer = BIO_Player(activator);
-		if (bioPlayer == null) return;
-
-		string output = GetTag() .. "\n\n";
-
-		for (uint i = 0; i < StatReadout.Size(); i++)
-			output.AppendFormat("%s\n", StatReadout[i]);
-
-		if (AffixReadout.Size() > 0)
-		{
-			output = output .. "\n";
-
-			for (uint i = 0; i < AffixReadout.Size(); i++)
-				output.AppendFormat("\cj%s\n", AffixReadout[i]);
-		}
-
-		output.DeleteLastCharacter();
-		bioPlayer.A_Print(output, 5.0);
-	}
-
-	override string GetObituary(Actor victim, Actor inflictor, Name mod, bool playerAtk)
-	{
-		return Pipelines[LastPipeline].GetObituary();
-	}
-
-	// Virtuals and abstracts ==================================================
-
-	// Build this weapon's default firing pipelines.
-	abstract void Construct();
-
-	virtual void OnDeselect() {}
-	virtual void OnSelect() {}
-
-	/*	The first return value indicates if the mutagen should reset the weapon's
-		stats, set the corrupted flag, and try for a generic corruption effect.
-		The second return value indicates if the mutagen should be consumed.
-	*/
-	virtual bool, bool OnCorrupt() { return true, true; }
-
-	// Called after all other weapon details have been drawn.
-	virtual ui void DrawToHUD(BIO_StatusBar sbar) const {}
-
-	// Actions =================================================================
-
-	protected action bool A_BIO_Fire(uint pipeline = 0)
-	{
-		if (!invoker.Pipelines[pipeline].DepleteAmmo()) return false;
-
-		return true;
-	}
-
-	// Call from the weapon's Spawn state, after two frames of the weapon's 
-	// pickup sprite (each 0 tics long). Puts the weapon into a new loop with
-	// appropriate behaviour for its rarity (e.g., blinking cyan if mutated).
-	protected action state A_BIO_Spawn()
-	{
-		if (invoker.Rarity == BIO_RARITY_UNIQUE)
-			return ResolveState('Spawn.Unique');
-		else if (invoker.Affixes.Size() > 0)
-			return ResolveState('Spawn.Mutated');
-		else
-			return ResolveState('Spawn.Common');
-	}
-
-	// Call from the weapon's Deselect state, during one frame of the weapon's
-	// ready sprite (0 tics long). Runs a callback and puts the weapon in a 
-	// lowering loop.
-	protected action state A_BIO_Deselect()
-	{
-		invoker.OnDeselect();
-		return ResolveState('Deselect.Loop');
-	}
-
-	// Call from the weapon's Select state, during one frame of the weapon's
-	// ready sprite (0 tics long). Runs a callback and puts the weapon in a 
-	// raising loop.
-	protected action state A_BIO_Select()
-	{
-		invoker.OnSelect();
-		return ResolveState('Select.Loop');
-	}
-
-	protected action void A_GroundHit()
-	{
-		if (Abs(Vel.Z) <= 0.01 && !invoker.HitGround)
-		{
-			A_StartSound("bio/weap/gundrop_0");
-			A_ScaleVelocity(0.5);
-			bSpecial = true;
-			bThruActors = false;
-			invoker.HitGround = true;
-		}
-	}
-
-	action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
-	action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
+	BIO_WPM_DAMAGEFUNCTOR = 1 << 3,
+	BIO_WPM_DAMAGEVALS = 1 << 4,
+	BIO_WPM_HSPREAD = 1 << 5,
+	BIO_WPM_VSPREAD = 1 << 6,
+	BIO_WPM_FIRETIME = 1 << 7,
+	BIO_WPM_RELOADTIME = 1 << 8,
+	BIO_WPM_ALERT = 1 << 9,
+	BIO_WPM_ALL = uint16.MAX
 }
 
 class BIO_WeaponPipeline play
@@ -289,8 +19,6 @@ class BIO_WeaponPipeline play
 	// Acts like `Actor::Default`.
 	readOnly<BIO_WeaponPipeline> Prototype;
 	private BIO_WeaponPipelineMask Mask;
-
-	private string Obituary;
 
 	private Ammo Magazine;
 	private int AmmoUse, AmmoUseFactor, ReloadFactor;
@@ -301,20 +29,21 @@ class BIO_WeaponPipeline play
 	private BIO_DamageFunctor Damage;
 	private float HSpread, VSpread, Angle, Pitch;
 
+	int AlertFlags;
+	double MaxAlertDistance;
+
 	private Array<BIO_ProjTravelFunctor> ProjTravelFunctors;
 	private Array<BIO_ProjDamageFunctor> ProjDamageFunctors;
 	private Array<BIO_ProjDeathFunctor> ProjDeathFunctors;
 
-	void Invoke(BIO_Weapon weap, int fireFactor = 1, float spreadFactor = 1.0) const
+	private string Obituary;
+	private Array<string> ReadoutExtra;
+
+	void Invoke(BIO_NewWeapon weap, int fireFactor = 1, float spreadFactor = 1.0) const
 	{
 		for (uint i = 0; i < FireCount * fireFactor; i++)
 		{
 			int dmg = Damage.Invoke();
-
-			for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
-				weap.ImplicitAffixes[i].ModifyDamage(weap, dmg);
-			for (uint i = 0; i < weap.Affixes.Size(); i++)
-				weap.Affixes[i].ModifyDamage(weap, dmg);
 
 			Actor proj = FireFunctor.Invoke(weap, FireType, dmg,
 				Angle + (FRandom(-HSpread, HSpread) * spreadFactor),
@@ -331,18 +60,9 @@ class BIO_WeaponPipeline play
 				tProj.ProjDeathFunctors.Copy(ProjDeathFunctors);
 
 				for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
-				{
-					weap.ImplicitAffixes[i].ModifySplash(weap,
-						tProj.SplashDamage, tProj.SplashRadius, dmg);
 					weap.ImplicitAffixes[i].OnTrueProjectileFired(weap, tProj);
-				}
-
 				for (uint i = 0; i < weap.Affixes.Size(); i++)
-				{
-					weap.Affixes[i].ModifySplash(weap,
-						tProj.SplashDamage, tProj.SplashRadius, dmg);
 					weap.Affixes[i].OnTrueProjectileFired(weap, tProj);
-				}
 			}
 			else if (proj is 'BIO_FastProjectile')
 			{
@@ -351,20 +71,13 @@ class BIO_WeaponPipeline play
 				fProj.ProjDeathFunctors.Copy(ProjDeathFunctors);
 
 				for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
-				{
-					weap.ImplicitAffixes[i].ModifySplash(weap,
-						fProj.SplashDamage, fProj.SplashRadius, dmg);
 					weap.ImplicitAffixes[i].OnFastProjectileFired(weap, fProj);
-				}
-
 				for (uint i = 0; i < weap.Affixes.Size(); i++)
-				{
-					weap.Affixes[i].ModifySplash(weap,
-						fProj.SplashDamage, fProj.SplashRadius, dmg);
 					weap.Affixes[i].OnFastProjectileFired(weap, fProj);
-				}
 			}
 		}
+
+		weap.A_AlertMonsters(MaxAlertDistance, AlertFlags);
 	}
 
 	bool DepleteAmmo() const
@@ -395,10 +108,26 @@ class BIO_WeaponPipeline play
 		FireCount = fCount;
 	}
 
+	bool DamageFunctorMutable() const
+	{
+		return Mask & BIO_WPM_DAMAGEFUNCTOR;
+	}
+
 	void SetDamageFunctor(BIO_DamageFunctor dmgFunc)
 	{
-		if (mask & BIO_WPM_DAMAGE) return;
+		if (Mask & BIO_WPM_DAMAGEFUNCTOR) return;
 		Damage = dmgFunc;
+	}
+
+	BIO_DamageFunctor GetDamageFunctor() const
+	{
+		if (Mask & BIO_WPM_DAMAGEFUNCTOR) return null;
+		return Damage;
+	}
+
+	bool DamageMutable() const
+	{
+		return Mask & BIO_WPM_DAMAGEVALS;
 	}
 
 	void GetDamageValues(in out Array<int> damages) const
@@ -408,7 +137,7 @@ class BIO_WeaponPipeline play
 
 	void SetDamageValues(in out Array<int> damages)
 	{
-		if (mask & BIO_WPM_DAMAGE) return;
+		if (mask & BIO_WPM_DAMAGEVALS) return;
 		Damage.SetValues(damages);
 	}
 
@@ -420,28 +149,32 @@ class BIO_WeaponPipeline play
 			vSpread = vSpr;
 	}
 
+	double, int GetAlertStats() const
+	{
+		return MaxAlertDistance, AlertFlags;
+	}
+
+	void SetAlertStats(double maxDist, int flags)
+	{
+		if (Mask & BIO_WPM_ALERT) return;
+		MaxAlertDistance = maxDist;
+		AlertFlags = flags;
+	}
+
+	void PushReadoutString(string str)
+	{
+		ReadoutExtra.Push(str);
+	}
+
+	void SetObituary(string obit)
+	{
+		Obituary = obit;
+	}
+
 	void Restrict(BIO_WeaponPipelineMask msk)
 	{
 		Mask = msk;
 	}
-
-	// void Reset()
-	// {
-	// 	AmmoUse = Prototype.AmmoUse;
-	// 	FireType = Prototype.FireType;
-	// 	FireCount = Prototype.FireCount;
-	// 	Damage = BIO_DamageFunctor(new(Prototype.Damage.GetClass()));
-	// 	FireFunctor = BIO_FireFunctor(new(Prototype.FireFunctor.GetClass()));
-
-	// 	ProjTravelFunctors.Clear();
-	// 	ProjTravelFunctors.Copy(Prototype.ProjTravelFunctors);
-
-	// 	ProjDamageFunctors.Clear();
-	// 	ProjDamageFunctors.Copy(Prototype.ProjDamageFunctors);
-
-	// 	ProjDeathFunctors.Clear();
-	// 	ProjDeathFunctors.Copy(Prototype.ProjDeathFunctors);
-	// }
 
 	void ToString(in out Array<string> readout, uint ndx, bool alone) const
 	{
@@ -504,6 +237,9 @@ class BIO_WeaponPipeline play
 
 			readout.Push(vSpreadStr);
 		}
+
+		for (uint i = 0; i < ReadoutExtra.Size(); i++)
+			readout.Push(ReadoutExtra[i]);
 	}
 }
 
@@ -644,7 +380,7 @@ class BIO_DmgFunc_1D8 : BIO_DamageFunctor
 
 class BIO_FireFunctor play abstract
 {
-	abstract Actor Invoke(BIO_Weapon weap, Class<Actor> fireType,
+	abstract Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
 		int dmg, float angle, float pitch) const;
 
 	// Output is fully localized.
@@ -672,6 +408,28 @@ class BIO_FireFunctor play abstract
 			default: return StringTable.Localize(defs.PluralTag);
 			}
 		}
+		else if (fireType is 'BIO_RailPuff')
+		{
+			let defs = GetDefaultByType((Class<BIO_RailPuff>)(fireType));
+
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
+		else if (fireType is 'BIO_RailSpawn')
+		{
+			let defs = GetDefaultByType((Class<BIO_RailSpawn>)(fireType));
+
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
 		else
 			return StringTable.Localize(GetDefaultByType(fireType).GetTag());
 	}
@@ -684,7 +442,7 @@ class BIO_FireFunctor play abstract
 
 class BIO_FireFunc_Default : BIO_FireFunctor
 {
-	override Actor Invoke(BIO_Weapon weap, Class<Actor> fireType,
+	override Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
 		int dmg, float angle, float pitch) const
 	{
 		return weap.A_FireProjectile(fireType, angle, useAmmo: false, pitch);
@@ -699,11 +457,90 @@ class BIO_FireFunc_Default : BIO_FireFunctor
 	}
 }
 
+class BIO_FireFunc_Rail : BIO_FireFunctor
+{
+	int SpawnOffsXY, Flags;
+	color Color1, Color2;
+
+	override Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
+		int dmg, float angle, float pitch) const
+	{
+		Class<Actor> puff_t = null, spawnClass = null;
+
+		if (fireType is 'BIO_RailPuff')
+		{
+			puff_t = fireType;
+			spawnClass = GetDefaultByType((Class<BIO_RailPuff>)(fireType)).SpawnClass;
+		}
+		else if (fireType is 'BIO_RailSpawn')
+		{
+			spawnClass = fireType;
+			puff_t = GetDefaultByType((Class<BIO_RailSpawn>)(fireType)).PuffType;
+		}
+
+		weap.A_RailAttack(dmg,
+			spawnOfs_xy: SpawnOffsXY,
+			useAmmo: false,
+			color1: Color1,
+			color2: Color2,
+			flags: Flags,
+			puffType: puff_t,
+			spread_xy: angle,
+			spread_z: pitch,
+			spawnClass: spawnClass
+		);
+
+		return null;
+	}
+
+	override string ToString(readOnly<BIO_FireFunctor> def,
+		Class<Actor> fireType, int fireCount) const
+	{
+		Class<Actor> puff_t = null, spawnClass = null;
+
+		if (fireType is 'BIO_RailPuff')
+		{
+			puff_t = fireType;
+			spawnClass = GetDefaultByType((Class<BIO_RailPuff>)(fireType)).SpawnClass;
+		}
+		else if (fireType is 'BIO_RailSpawn')
+		{
+			spawnClass = fireType;
+			puff_t = GetDefaultByType((Class<BIO_RailSpawn>)(fireType)).PuffType;
+		}
+
+		if (puff_t != null && spawnClass != null)
+		{
+			return String.Format(
+				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL"), fireCount,
+				FireTypeTag(puff_t, fireCount), FireTypeTag(spawnClass, fireCount));
+		}
+		else if (puff_t == null)
+		{
+			return String.Format(
+				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOPUFF"),
+				fireCount, FireTypeTag(spawnClass, fireCount));
+		}
+		else if (spawnClass == null)
+		{
+			return String.Format(
+				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOSPAWN"),
+				fireCount, FireTypeTag(puff_t, fireCount));
+		}
+		else
+		{
+			return String.Format(
+				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOTHING"),
+				fireCount);
+		}
+	}
+}
+
 class BIO_FireFunc_Melee : BIO_FireFunctor abstract
 {
 	float Range, Lifesteal;
 
-	protected void ApplyLifeSteal(BIO_Weapon weap, int dmg)
+	protected void ApplyLifeSteal(BIO_NewWeapon weap, int dmg)
 	{
 		let lsp = Min(Lifesteal, 1.0);
 		let given = int(float(dmg) * lsp);
@@ -721,7 +558,7 @@ class BIO_FireFunc_Melee : BIO_FireFunctor abstract
 
 class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 {
-	override Actor Invoke(BIO_Weapon weap, Class<Actor> fireType,
+	override Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
 		int dmg, float angle, float pitch) const
 	{
 		FTranslatedLineTarget t;
@@ -757,7 +594,7 @@ class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 
 class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
 {
-	override Actor Invoke(BIO_Weapon weap, Class<Actor> fireType,
+	override Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
 		int dmg, float angle, float pitch) const
 	{
 		int flags = 0; // TODO: Sort this out
@@ -771,8 +608,6 @@ class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
 		int actualDmg = 0;
 		[puff, actualDmg] = weap.LineAttack(ang, Range, slope, dmg,
 			'Melee', fireType, 0, t);
-
-		weap.A_BIO_AlertMonsters();
 
 		if (!t.LineTarget)
 		{
@@ -862,6 +697,26 @@ class BIO_WeaponPipelineBuilder play
 	BIO_WeaponPipelineBuilder Ammo(Class<Ammo> ammo_t, Class<Ammo> magazine_t,
 		int ammoUse = 1, int ammoUseFactor = 1, int reloadFactor = 1)
 	{
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Alert(double maxDist, int flags)
+	{
+		Pipeline.SetAlertStats(maxDist, flags);
+		return self;
+	}
+
+	// Argument should be fully localized.
+	BIO_WeaponPipelineBuilder CustomReadout(string str)
+	{
+		Pipeline.PushReadoutString(str);
+		return self;
+	}
+
+	// Argument should be non-localized.
+	BIO_WeaponPipelineBuilder Obituary(string obit)
+	{
+		Pipeline.SetObituary(obit);
 		return self;
 	}
 

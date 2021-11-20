@@ -445,7 +445,43 @@ class BIO_PlasmaGlobule : BIO_PlasmaBall
 	}
 }
 
+// Rail attack-related =========================================================
+
+class BIO_RailPuff : Actor
+{
+	meta string PluralTag; property PluralTag: PluralTag;
+	meta Class<Actor> SpawnClass; property SpawnClass: SpawnClass;
+}
+
+class BIO_RailSpawn : Actor
+{
+	meta string PluralTag; property PluralTag: PluralTag;
+	meta Class<Actor> PuffType; property PuffType: PuffType;
+}
+
 // Projectile-adjacent actors ==================================================
+
+class BIO_NullPuff : BulletPuff
+{
+	Default
+	{
+		+BLOODLESSIMPACT
+		+NODAMAGETHRUST
+		+NOTELEPORT
+		+PAINLESS
+		+THRUACTORS
+
+		Decal '';
+	}
+
+	States
+	{
+	Spawn:
+	Melee:
+		TNT1 A 5;
+		Stop;
+	}
+}
 
 class BIO_MeleeHit : BulletPuff
 {
@@ -488,6 +524,8 @@ class BIO_BFGExtra : BFGExtra
 		Tag "$BIO_PROJEXTRA_TAG_BFGRAY";
 	}
 }
+
+// Visual effects ==============================================================
 
 class BIO_PlasmaGlobuleTrail : Actor
 {
