@@ -33,6 +33,8 @@ Hand Cannon sprites are courtesy of Realm667 user Mor'ladim, id Software, and Le
 
 Incursion Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
 
+Precision Rifle sprites are courtesy of xLightningStormL, Kinsie, Finalizer, id Software LLC, and TODM, with edits by Realm667 user Super Piter.
+
 Barrage Launcher sprites are courtesy of ZDoom forum user LossForWords, alongside zrrion the insect, id Software LLC, and Apogee Entertainment.
 
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
