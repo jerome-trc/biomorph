@@ -29,6 +29,7 @@ bio/weap/autoshotgun/fire AUSGFIRE
 bio/weap/nailgun/fire NLGNFIRE
 bio/weap/plascannon/idle PLSCIDLE
 bio/weap/plascannon/raise PLSCRAIS
+bio/weap/precrifle/fire PRECFIRE
 
 bio/weap/autocannon/fire ACANFIRE
 bio/weap/handcannon/fire HANDCANN

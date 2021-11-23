@@ -67,6 +67,7 @@ The following audio files are provided by ZDoom forum user Joblez_I, under no li
 - "deagle.wav" (HANDCANN)
 - "m14-1.wav" (NLGNFIRE)
 - "m60-1.wav" (HVBRFIRE)
+- "madsenm47-1.wav" (PRECFIRE)
 
 Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 
