@@ -90,6 +90,9 @@
 	BIO_WEAP_TAG_PLASMACANNON = "Plasma Cannon";
 	BIO_WEAP_PKUP_PLASMACANNON = "Obtained a %s.";
 	
+	BIO_WEAP_TAG_PRECISIONRIFLE = "Precision Rifle";
+	BIO_WEAP_PKUP_PRECISIONRIFLE = "Obtained a %s.";
+	
 	BIO_WEAP_TAG_AUTOCANNON = "Autocannon";
 	BIO_WEAP_PKUP_AUTOCANNON = "Procured an %s.";
 
