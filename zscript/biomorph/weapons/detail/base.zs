@@ -8,6 +8,33 @@ class BIO_NewWeapon : DoomWeapon abstract
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
 
+	meta Class<Ammo> MagazineType1, MagazineType2;
+	property MagazineType: MagazineType1;
+	property MagazineType1: MagazineType1;
+	property MagazineType2: MagazineType2;
+	property MagazineTypes: MagazineType1, MagazineType2;
+
+	// Reloading 1 round costs ReloadFactor rounds in reserve.
+	int ReloadFactor1, ReloadFactor2;
+	property ReloadFactor: ReloadFactor1;
+	property ReloadFactor1: ReloadFactor1;
+	property ReloadFactor2: ReloadFactor2;
+	property ReloadFactors: ReloadFactor1, ReloadFactor2;
+
+	int MagazineSize1, MagazineSize2;
+	property MagazineSize: MagazineSize1;
+	property MagazineSize1: MagazineSize1;
+	property MagazineSize2: MagazineSize2;
+	property MagazineSizes: MagazineSize1, MagazineSize2;
+
+	int MinAmmoReserve1, MinAmmoReserve2;
+	property MinAmmoReserve: MinAmmoReserve1;
+	property MinAmmoReserve1: MinAmmoReserve1;
+	property MinAmmoReserve2: MinAmmoReserve2;
+	property MinAmmoReserves: MinAmmoReserve1, MinAmmoReserve2;
+
+	protected Ammo Magazine1, Magazine2;
+
 	private uint LastPipeline;
 	Array<BIO_WeaponPipeline> Pipelines;
 
@@ -40,7 +67,9 @@ class BIO_NewWeapon : DoomWeapon abstract
 		BIO_NewWeapon.AffixMask BIO_WAM_NONE;
 		BIO_NewWeapon.Flags BIO_WF_NONE;
 		BIO_NewWeapon.Grade BIO_GRADE_NONE;
+		BIO_NewWeapon.MinAmmoReserves 1, 1;
 		BIO_NewWeapon.Rarity BIO_RARITY_COMMON;
+		BIO_NewWeapon.ReloadFactors 1, 1;
 		BIO_NewWeapon.SwitchSpeeds 6, 6;
 		BIO_NewWeapon.UniqueBase '';
 	}
@@ -94,7 +123,6 @@ class BIO_NewWeapon : DoomWeapon abstract
 	override void BeginPlay()
 	{
 		super.BeginPlay();
-		Construct();
 		SetTag(GetColoredTag());
 
 		if (Abs(Vel.Z) <= 0.01)
@@ -153,6 +181,41 @@ class BIO_NewWeapon : DoomWeapon abstract
 		BIO_GlobalData.Get().OnWeaponAcquired(Grade);
 
 		if (Pipelines.Size() < 1) Construct();
+		
+		// Get a pointer to primary ammo (which is either AmmoType1 or
+		// MagazineType1). If it isn't found, generate and attach it
+		if (Magazine1 == null && AmmoType1 != null)
+		{
+			Magazine1 =
+				MagazineType1 != null ?
+				Ammo(FindInventory(MagazineType1)) :
+				Ammo(FindInventory(AmmoType1));
+
+			if (Magazine1 == null)
+			{
+				Magazine1 = Ammo(Actor.Spawn(MagazineType1));
+				Magazine1.Amount = Max(Default.MagazineSize1, 0);
+				Magazine1.AttachToOwner(newOwner);
+			}
+		}
+
+		// Same for secondary:
+		if (Magazine2 == null && AmmoType2 != null)
+		{
+			Magazine2 =
+				MagazineType2 != null ?
+				Ammo(FindInventory(MagazineType2)) :
+				Ammo(FindInventory(AmmoType2));
+
+			if (Magazine2 == null)
+			{
+				Magazine2 = Ammo(Actor.Spawn(MagazineType2));
+				Magazine2.Amount = Max(Default.MagazineSize2, 0);
+				Magazine2.AttachToOwner(newOwner);
+			}
+		}
+
+		if (MagazineType1 == MagazineType2) Magazine2 = Magazine1;
 	}
 
 	override void OnDrop(Actor dropper)
@@ -187,6 +250,44 @@ class BIO_NewWeapon : DoomWeapon abstract
 		bioPlayer.A_Print(output, 5.0);
 	}
 
+	override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
+	{
+		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
+			return true;
+
+		if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammoUse))
+			return false;
+
+		if (!altFire)
+		{
+			if (Magazine1 != null)
+			{
+				if (ammoUse >= 0)
+					Magazine1.Amount -= ammoUse;
+				else
+					Magazine1.Amount -= AmmoUse1;
+			}
+
+			if (bPRIMARY_USES_BOTH && Magazine2 != null)
+				Magazine2.Amount -= AmmoUse2;
+		}
+		else
+		{
+			if (Magazine2 != null)
+				Magazine2.Amount -= AmmoUse2;
+			if (bALT_USES_BOTH && Magazine1 != null)
+				Magazine1.Amount -= AmmoUse1;
+		}
+
+		if (Magazine1 != null && Magazine1.Amount < 0)
+			Magazine1.Amount = 0;
+
+		if (Magazine2 != null && Magazine2.Amount < 0)
+			Magazine2.Amount = 0;
+		
+		return true;
+	}
+
 	override string GetObituary(Actor victim, Actor inflictor, Name mod, bool playerAtk)
 	{
 		return Pipelines[LastPipeline].GetObituary();
@@ -211,10 +312,38 @@ class BIO_NewWeapon : DoomWeapon abstract
 
 	// Actions =================================================================
 
-	protected action bool A_BIO_Fire(uint pipeline = 0)
+	protected action bool A_BIO_Fire(uint pipeline = 0, int fireFactor = 1,
+		float spreadFactor = 1.0)
 	{
-		if (!invoker.Pipelines[pipeline].DepleteAmmo()) return false;
+		invoker.LastPipeline = pipeline;
+
+		if (!invoker.DepleteAmmo(
+			invoker.Pipelines[pipeline].UsesSecondaryMagazine(),
+			true,
+			invoker.Pipelines[pipeline].GetAmmoUse() * fireFactor))
+			return false;
+
+		invoker.Pipelines[pipeline].Invoke(invoker, fireFactor, spreadFactor);
 		return true;
+	}
+
+	protected action state A_AutoReload(bool secondary = false,
+		bool single = false, int min = -1)
+	{
+		if (invoker.SufficientAmmo(secondary))
+			return state(null);
+		
+		if (min == -1) min = !secondary ? invoker.AmmoUse1 : invoker.AmmoUse2;
+		
+		if ((!secondary ? invoker.Magazine1 : invoker.Magazine2).Amount >= min)
+			return state(null);
+
+		let cv = BIO_CVar.AutoReload(Player);
+
+		if (cv == BIO_CV_AUTOREL_ALWAYS || (cv == BIO_CV_AUTOREL_SINGLE && single))
+			return ResolveState('Reload');
+		else
+			return ResolveState('Ready');
 	}
 
 	// Call from the weapon's Spawn state, after two frames of the weapon's 
@@ -260,10 +389,65 @@ class BIO_NewWeapon : DoomWeapon abstract
 		}
 	}
 
-	action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
-	action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
+	protected action void A_BIO_SetTics(uint ndx, uint pipeline = 0)
+	{
+		A_SetTics(invoker.Pipelines[pipeline].GetFireTime(ndx));
+	}
+
+	protected action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
+	protected action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
 
 	// Getters =================================================================
+
+	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
+
+	bool MagazineEmpty(bool secondary = false) const
+	{
+		return !secondary ? Magazine1.Amount <= 0 : Magazine2.Amount <= 0;
+	}
+
+	bool MagazineFull(bool secondary = false) const
+	{
+		return !secondary ?
+			Magazine1.Amount >= MagazineSize1 :
+			Magazine2.Amount >= MagazineSize2;
+	}
+
+	bool SufficientAmmo(bool secondary = false, int multi = 1) const
+	{
+		if (!secondary)
+		{
+			if (Magazine1.Amount < (AmmoUse1 * multi)) return false;
+			return true;
+		}
+		else
+		{
+			if (Magazine2.Amount < (AmmoUse2 * multi)) return false;
+			return true;
+		}
+	}
+
+	bool CanReload(bool secondary = false) const
+	{
+		let magAmmo = !secondary ? Magazine1 : Magazine2;
+		let reserveAmmo = Owner.FindInventory(
+			!secondary ? AmmoType1 : AmmoType2);
+		let minReserve = !secondary ? MinAmmoReserve1 : MinAmmoReserve2;
+		let factor = !secondary ? ReloadFactor1 : ReloadFactor2;
+		let magSize = !secondary ? MagazineSize1 : MagazineSize2;
+		
+		int minAmt = minReserve * factor;
+
+		// Insufficient reserves
+		if (reserveAmmo == null || reserveAmmo.Amount < minAmt)
+			return false;
+
+		// Magazine's already full
+		if (magAmmo.Amount >= magSize)
+			return false;
+
+		return true;
+	}
 
 	bool DamageMutable() const
 	{
@@ -272,5 +456,267 @@ class BIO_NewWeapon : DoomWeapon abstract
 				return true;
 
 		return false;
+	}
+
+	// Substitutes for attack actions ==========================================
+
+	// (The crime part, where we imitate several gzdoom.pk3 functions because
+	// their semantics cave in if called from outside the weapon's state machine.)
+
+	Actor BIO_FireProjectile(Class<Actor> proj_t, double angle = 0,
+		double spawnofs_xy = 0, double spawnheight = 0,
+		int flags = 0, double pitch = 0)
+	{
+		FTranslatedLineTarget t;
+
+		double ang = Owner.Angle - 90.0;
+		Vector2 ofs = AngleToVector(ang, spawnofs_xy);
+		double shootangle = Owner.Angle;
+
+		if (flags & FPF_AIMATANGLE) shootangle += angle;
+
+		// Temporarily adjusts the pitch
+		double playerPitch = Owner.Pitch;
+		Owner.Pitch += pitch;
+		let misl = Owner.SpawnPlayerMissile(proj_t, shootangle, ofs.X, ofs.Y,
+			spawnheight, t, false, (flags & FPF_NOAUTOAIM) != 0);
+		Owner.Pitch = playerPitch;
+
+		// Automatic handling of seeker missiles
+		if (misl != null)
+		{
+			if (flags & FPF_TRANSFERTRANSLATION)
+				misl.Translation = Translation;
+			if (t.LineTarget && !t.Unlinked && misl.bSeekerMissile)
+				misl.Tracer = t.LineTarget;
+
+			if (!(flags & FPF_AIMATANGLE))
+			{
+				// This original implementation is to aim straight ahead and then offset
+				// the angle from the resulting direction. 
+				misl.Angle += angle;
+				misl.VelFromAngle(misl.Vel.XY.Length());
+			}
+		}
+		return misl;
+	}
+
+	void BIO_FireBullets(double spread_xy, double spread_z, int numBullets,
+		int bulletDmg, Class<Actor> puff_t, int flags = 1, double range = 0.0,
+		Class<Actor> missile = null, double spawnHeight = 32.0, double spawnOfs_xy = 0.0)
+	{
+		int i;
+		double bangle, bslope = 0.0;
+		int laflags = (flags & FBF_NORANDOMPUFFZ)? LAF_NORANDOMPUFFZ : 0;
+		FTranslatedLineTarget t;
+
+		if (range == 0)	range = PLAYERMISSILERANGE;
+
+		if (!(flags & FBF_NOFLASH)) BIO_Player(Owner).PlayAttacking2();
+		if (!(flags & FBF_NOPITCH)) bslope = BulletSlope();
+
+		bangle = Angle;
+
+		Owner.A_StartSound(AttackSound, CHAN_WEAPON);
+
+		if ((numBullets == 1 && !Player.Refire) || numBullets == 0)
+		{
+			int damage = bulletDmg;
+
+			if (!(flags & FBF_NORANDOM))
+				damage *= random[cabullet](1, 3);
+
+			let puff = LineAttack(bangle, range, bslope, damage, 'Hitscan', puff_t, laflags, t);
+
+			if (missile != null)
+			{
+				bool temp = false;
+				double ang = Angle - 90;
+				Vector2 ofs = AngleToVector(ang, Spawnofs_xy);
+				Actor proj = SpawnPlayerMissile(missile, bangle, ofs.X, ofs.Y, Spawnheight);
+				if (proj)
+				{
+					if (!puff)
+					{
+						temp = true;
+						puff = LineAttack(bangle, range, bslope, 0, 'Hitscan', puff_t, laflags | LAF_NOINTERACT, t);
+					}
+					AimBulletMissile(proj, puff, flags, temp, false);
+					if (t.unlinked)
+					{
+						// Arbitary portals will make angle and pitch calculations unreliable.
+						// So use the angle and pitch we passed instead.
+						proj.Angle = bangle;
+						proj.Pitch = bslope;
+						proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
+					}
+				}
+			}
+		}
+		else 
+		{
+			if (numbullets < 0)
+				numbullets = 1;
+
+			for (i = 0; i < numbullets; i++)
+			{
+				double pangle = bangle;
+				double slope = bslope;
+
+				if (flags & FBF_EXPLICITANGLE)
+				{
+					pangle += spread_xy;
+					slope += spread_z;
+				}
+				else
+				{
+					pangle += spread_xy * Random2[cabullet]() / 255.;
+					slope += spread_z * Random2[cabullet]() / 255.;
+				}
+
+				int damage = bulletDmg;
+
+				if (!(flags & FBF_NORANDOM))
+					damage *= random[cabullet](1, 3);
+
+				let puff = LineAttack(pangle, range, slope, damage, 'Hitscan', puff_t, laflags, t);
+
+				if (missile != null)
+				{
+					bool temp = false;
+					double ang = Angle - 90;
+					Vector2 ofs = AngleToVector(ang, Spawnofs_xy);
+					Actor proj = SpawnPlayerMissile(missile, bangle, ofs.X, ofs.Y, Spawnheight);
+					if (proj)
+					{
+						if (!puff)
+						{
+							temp = true;
+							puff = LineAttack(bangle, range, bslope, 0, 'Hitscan', puff_t, laflags | LAF_NOINTERACT, t);
+						}
+						AimBulletMissile(proj, puff, flags, temp, false);
+						if (t.unlinked)
+						{
+							// Arbitary portals will make angle and pitch calculations unreliable.
+							// So use the angle and pitch we passed instead.
+							proj.Angle = bangle;
+							proj.Pitch = bslope;
+							proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	void BIO_RailAttack(int damage, int spawnOffs_xy = 0, color color1 = 0,
+		color color2 = 0, int flags = 0, double maxDiff = 0,
+		class<Actor> puff_t = 'BulletPuff', double spread_xy = 0,
+		double spread_z = 0, double range = 0, int duration = 0,
+		double sparsity = 1.0, double driftSpeed = 1.0,
+		class<Actor> spawnClass = 'None', double spawnOffs_z = 0,
+		int spiraloffset = 270, int limit = 0)
+	{
+		if (range == 0) range = 8192;
+		if (sparsity == 0) sparsity = 1.0;
+
+		if (!(flags & RGF_EXPLICITANGLE))
+		{
+			spread_xy = spread_xy * Random2[CRailgun]() / 255.0;
+			spread_z = spread_z * Random2[CRailgun]() / 255.0;
+		}
+
+		FRailParams p;
+		p.Damage = damage;
+		p.Offset_xy = spawnOffs_xy;
+		p.Offset_z = spawnOffs_z;
+		p.Color1 = color1;
+		p.Color2 = color2;
+		p.MaxDiff = maxDiff;
+		p.Flags = flags;
+		p.Puff = puff_t;
+		p.AngleOffset = spread_xy;
+		p.PitchOffset = spread_z;
+		p.Distance = range;
+		p.Duration = duration;
+		p.Sparsity = sparsity;
+		p.Drift = driftSpeed;
+		p.SpawnClass = spawnClass;
+		p.SpiralOffset = spiralOffset;
+		p.Limit = limit;
+		Owner.RailAttack(p);
+	}
+
+	void BIO_Saw(Class<Actor> puff_t, int dmg, float angle,
+		float range, float lifestealPercent)
+	{
+		int flags = 0; // TODO: Sort this out
+		FTranslatedLineTarget t;
+
+		double ang = angle + 2.8125 * (Random2[Saw]() / 255.0);
+		double slope = Owner.AimLineAttack(ang, range, t) *
+			(Random2[Saw]() / 255.0);
+
+		Actor puff = null;
+		int actualDmg = 0;
+		[puff, actualDmg] = Owner.LineAttack(ang, range, slope, dmg,
+			'Melee', puff_t, 0, t);
+
+		if (!t.LineTarget)
+		{
+			if ((flags & SF_RANDOMLIGHTMISS) && (Random[Saw]() > 64))
+				Player.ExtraLight = !Player.ExtraLight;
+			
+			Owner.A_StartSound("weapons/sawfull", CHAN_WEAPON);
+			return;
+		}
+
+		if (flags & SF_RANDOMLIGHTHIT)
+		{
+			int randVal = Random[Saw]();
+
+			if (randVal < 64)
+				Player.ExtraLight = 0;
+			else if (randVal < 160)
+				Player.ExtraLight = 1;
+			else
+				Player.ExtraLight = 2;
+		}
+
+		if (!t.LineTarget.bDontDrain)
+			ApplyLifeSteal(lifestealPercent, actualDmg);
+
+		Owner.A_StartSound("weapons/sawhit", CHAN_WEAPON);
+
+		// Turn to face target
+		if (!(flags & SF_NOTURN))
+		{
+			double angleDiff = DeltaAngle(Owner.Angle, t.angleFromSource);
+
+			if (angleDiff < 0.0)
+			{
+				if (angleDiff < -4.5)
+					Owner.Angle = t.angleFromSource + 90.0 / 21;
+				else
+					Owner.Angle -= 4.5;
+			}
+			else
+			{
+				if (angleDiff > 4.5)
+					Owner.Angle = t.angleFromSource - 90.0 / 21;
+				else
+					Owner.Angle += 4.5;
+			}
+		}
+	
+		if (!(flags & SF_NOPULLIN))
+			bJustAttacked = true;
+	}
+
+	void ApplyLifeSteal(float percent, int dmg) const
+	{
+		let lsp = Min(percent, 1.0);
+		let given = int(float(dmg) * lsp);
+		Owner.GiveBody(given, Owner.GetMaxHealth(true) + 100);
 	}
 }

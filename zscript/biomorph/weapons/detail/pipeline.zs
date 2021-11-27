@@ -9,9 +9,23 @@ enum BIO_WeaponPipelineMask : uint16
 	BIO_WPM_HSPREAD = 1 << 5,
 	BIO_WPM_VSPREAD = 1 << 6,
 	BIO_WPM_FIRETIME = 1 << 7,
-	BIO_WPM_RELOADTIME = 1 << 8,
-	BIO_WPM_ALERT = 1 << 9,
+	BIO_WPM_AMMOUSE = 1 << 8,
+	BIO_WPM_PROJTRAVELFUNCS = 1 << 12,
+	BIO_WPM_PROJDAMAGEFUNCS = 1 << 13,
+	BIO_WPM_PROJDEATHFUNCS = 1 << 14,
+	BIO_WPM_PROJFUNCTORS =
+		BIO_WPM_PROJTRAVELFUNCS |
+		BIO_WPM_PROJDAMAGEFUNCS |
+		BIO_WPM_PROJDEATHFUNCS,
+	BIO_WPM_ALERT = 1 << 15,
 	BIO_WPM_ALL = uint16.MAX
+}
+
+struct BIO_FireData
+{
+	Class<Actor> FireType;
+	int Damage;
+	float HSpread, VSpread, Angle, Pitch;
 }
 
 class BIO_WeaponPipeline play
@@ -20,8 +34,8 @@ class BIO_WeaponPipeline play
 	readOnly<BIO_WeaponPipeline> Prototype;
 	private BIO_WeaponPipelineMask Mask;
 
-	private Ammo Magazine;
-	private int AmmoUse, AmmoUseFactor, ReloadFactor;
+	private bool SecondaryMagazine;
+	private int AmmoUse;
 
 	private BIO_FireFunctor FireFunctor;
 	private Class<Actor> FireType;
@@ -29,28 +43,37 @@ class BIO_WeaponPipeline play
 	private BIO_DamageFunctor Damage;
 	private float HSpread, VSpread, Angle, Pitch;
 
-	int AlertFlags;
-	double MaxAlertDistance;
+	private int AlertFlags;
+	private double MaxAlertDistance;
 
 	private Array<BIO_ProjTravelFunctor> ProjTravelFunctors;
 	private Array<BIO_ProjDamageFunctor> ProjDamageFunctors;
 	private Array<BIO_ProjDeathFunctor> ProjDeathFunctors;
 
+	private Array<int> FireTimes, FireTimeMinimums;
+
+	private sound FireSound;
+	private double FireSoundVolume, FireSoundAttenuation;
+
 	private string Obituary;
 	private Array<string> ReadoutExtra;
 
-	void Invoke(BIO_NewWeapon weap, int fireFactor = 1, float spreadFactor = 1.0) const
+	void Invoke(BIO_NewWeapon weap, uint fireFactor = 1, float spreadFactor = 1.0)
 	{
 		for (uint i = 0; i < FireCount * fireFactor; i++)
 		{
-			int dmg = Damage.Invoke();
+			BIO_FireData fireData;
+			fireData.FireType = FireType;
+			fireData.Damage = Damage.Invoke();
+			fireData.HSpread = HSpread * spreadFactor;
+			fireData.VSpread = VSpread * spreadFactor;
+			fireData.Angle = Angle;
+			fireData.Pitch = Pitch;
 
-			Actor proj = FireFunctor.Invoke(weap, FireType, dmg,
-				Angle + (FRandom(-HSpread, HSpread) * spreadFactor),
-				Pitch + (FRandom(-VSpread, VSpread) * spreadFactor));
+			Actor proj = FireFunctor.Invoke(weap, fireData);
 
 			if (proj == null) continue;
-			proj.SetDamage(dmg);
+			proj.SetDamage(fireData.Damage);
 			
 			if (proj is 'BIO_Projectile')
 			{
@@ -77,12 +100,9 @@ class BIO_WeaponPipeline play
 			}
 		}
 
-		weap.A_AlertMonsters(MaxAlertDistance, AlertFlags);
-	}
-
-	bool DepleteAmmo() const
-	{
-		return true;
+		weap.Owner.A_AlertMonsters(MaxAlertDistance, AlertFlags);
+		weap.Owner.A_StartSound(FireSound, CHAN_WEAPON, CHANF_DEFAULT,
+			FireSoundVolume, FireSoundAttenuation);
 	}
 
 	string GetObituary() const
@@ -94,6 +114,7 @@ class BIO_WeaponPipeline play
 	{
 		if (Mask & BIO_WPM_FIREFUNCTOR) return;
 		FireFunctor = fireFunc;
+		FireFunctor.Init();
 	}
 
 	void SetFireType(Class<Actor> fType)
@@ -137,7 +158,7 @@ class BIO_WeaponPipeline play
 
 	void SetDamageValues(in out Array<int> damages)
 	{
-		if (mask & BIO_WPM_DAMAGEVALS) return;
+		if (Mask & BIO_WPM_DAMAGEVALS) return;
 		Damage.SetValues(damages);
 	}
 
@@ -159,6 +180,45 @@ class BIO_WeaponPipeline play
 		if (Mask & BIO_WPM_ALERT) return;
 		MaxAlertDistance = maxDist;
 		AlertFlags = flags;
+	}
+
+	int GetFireTime(uint ndx) const { return FireTimes[ndx]; }
+
+	void PushFireTimes(state fireState)
+	{
+		if (Mask & BIO_WPM_FIRETIME) return;
+
+		for (state s = fireState; s.InStateSequence(fireState); s = s.NextState)
+		{
+			if (s.Tics == 0) continue; // `TNT1 A 0` and the like
+			if (s.bSlow) continue; // States marked `Slow` are kept immutable
+			
+			uint j = FireTimes.Push(s.Tics);
+			// States marked `Fast` are allowed to have their tic time set to 0,
+			// effectively eliminating them from the state sequence
+			uint e = FireTimeMinimums.Push(s.bFast ? 0 : 1);
+		}
+	}
+
+	int GetAmmoUse() const { return AmmoUse; }
+	bool UsesSecondaryMagazine() const { return SecondaryMagazine; }
+
+	void SetAmmoUse(int use)
+	{
+		if (Mask & BIO_WPM_AMMOUSE) return;
+		AmmoUse = use;
+	}
+
+	void SetSound(sound fireSnd, double volume, double attenuation)
+	{
+		FireSound = fireSnd;
+		FireSoundVolume = volume;
+		FireSoundAttenuation = attenuation;
+	}
+
+	sound, double, double GetFireSoundData() const
+	{
+		return FireSound, FireSoundVolume, FireSoundAttenuation;
 	}
 
 	void PushReadoutString(string str)
@@ -240,6 +300,14 @@ class BIO_WeaponPipeline play
 
 		for (uint i = 0; i < ReadoutExtra.Size(); i++)
 			readout.Push(ReadoutExtra[i]);
+	}
+
+	static BIO_WeaponPipeline Create()
+	{
+		let ret = new('BIO_WeaponPipeline');
+		ret.FireCount = 1;
+		ret.AmmoUse = 1;
+		return ret;
 	}
 }
 
@@ -380,8 +448,9 @@ class BIO_DmgFunc_1D8 : BIO_DamageFunctor
 
 class BIO_FireFunctor play abstract
 {
-	abstract Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
-		int dmg, float angle, float pitch) const;
+	virtual void Init() {} // Use only for setting defaults.
+
+	abstract Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const;
 
 	// Output is fully localized.
 	protected static string FireTypeTag(Class<Actor> fireType, int count)
@@ -442,10 +511,38 @@ class BIO_FireFunctor play abstract
 
 class BIO_FireFunc_Default : BIO_FireFunctor
 {
-	override Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
-		int dmg, float angle, float pitch) const
+	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
 	{
-		return weap.A_FireProjectile(fireType, angle, useAmmo: false, pitch);
+		return weap.BIO_FireProjectile(fireData.FireType,
+			angle: fireData.Angle + FRandom(-fireData.HSpread, fireData.HSpread),
+			pitch: fireData.Pitch + FRandom(-fireData.VSpread, fireData.VSpread)
+		);
+	}
+
+	override string ToString(readOnly<BIO_FireFunctor> def,
+		Class<Actor> fireType, int fireCount) const
+	{
+		return String.Format(
+			StringTable.Localize("$BIO_WEAP_FIREFUNC_DEFAULT"),
+			fireCount, FireTypeTag(fireType, fireCount));
+	}
+}
+
+class BIO_FireFunc_Bullet : BIO_FireFunctor
+{
+	int NumBullets, Flags;
+
+	override void Init()
+	{
+		NumBullets = -1;
+		Flags = FBF_NORANDOM | FBF_NOFLASH;
+	}
+
+	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
+	{
+		weap.A_FireBullets(fireData.HSpread, fireData.VSpread,
+			NumBullets, fireData.Damage, fireData.FireType, Flags);
+		return null;
 	}
 
 	override string ToString(readOnly<BIO_FireFunctor> def,
@@ -459,35 +556,37 @@ class BIO_FireFunc_Default : BIO_FireFunctor
 
 class BIO_FireFunc_Rail : BIO_FireFunctor
 {
-	int SpawnOffsXY, Flags;
+	int Flags;
 	color Color1, Color2;
 
-	override Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
-		int dmg, float angle, float pitch) const
+	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
 	{
 		Class<Actor> puff_t = null, spawnClass = null;
 
-		if (fireType is 'BIO_RailPuff')
+		if (fireData.FireType is 'BIO_RailPuff')
 		{
-			puff_t = fireType;
-			spawnClass = GetDefaultByType((Class<BIO_RailPuff>)(fireType)).SpawnClass;
+			puff_t = fireData.FireType;
+			spawnClass = GetDefaultByType(
+				(Class<BIO_RailPuff>)(fireData.FireType)).SpawnClass;
 		}
-		else if (fireType is 'BIO_RailSpawn')
+		else if (fireData.FireType is 'BIO_RailSpawn')
 		{
-			spawnClass = fireType;
-			puff_t = GetDefaultByType((Class<BIO_RailSpawn>)(fireType)).PuffType;
+			spawnClass = fireData.FireType;
+			puff_t = GetDefaultByType(
+				(Class<BIO_RailSpawn>)(fireData.FireType)).PuffType;
 		}
 
-		weap.A_RailAttack(dmg,
-			spawnOfs_xy: SpawnOffsXY,
+		weap.A_RailAttack(fireData.Damage,
+			spawnOfs_xy: fireData.Angle,
 			useAmmo: false,
 			color1: Color1,
 			color2: Color2,
 			flags: Flags,
 			puffType: puff_t,
-			spread_xy: angle,
-			spread_z: pitch,
-			spawnClass: spawnClass
+			spread_xy: fireData.HSpread,
+			spread_z: fireData.VSpread,
+			spawnClass: spawnClass,
+			spawnOfs_z: fireData.Pitch
 		);
 
 		return null;
@@ -540,13 +639,6 @@ class BIO_FireFunc_Melee : BIO_FireFunctor abstract
 {
 	float Range, Lifesteal;
 
-	protected void ApplyLifeSteal(BIO_NewWeapon weap, int dmg)
-	{
-		let lsp = Min(Lifesteal, 1.0);
-		let given = int(float(dmg) * lsp);
-		weap.Owner.GiveBody(given, weap.Owner.GetMaxHealth(true) + 100);
-	}
-
 	override string ToString(readOnly<BIO_FireFunctor> def,
 		Class<Actor> fireType, int fireCount) const
 	{
@@ -558,28 +650,29 @@ class BIO_FireFunc_Melee : BIO_FireFunctor abstract
 
 class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 {
-	override Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
-		int dmg, float angle, float pitch) const
+	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
 	{
 		FTranslatedLineTarget t;
 
-		if (weap.Owner.FindInventory('PowerStrength', true)) dmg *= 10;
+		if (weap.Owner.FindInventory('PowerStrength', true))
+			fireData.Damage *= 10;
 		
-		double ang = Angle + Random2[Punch]() * (5.625 / 256);
+		double ang = weap.Owner.Angle + Random2[Punch]() * (5.625 / 256);
 		double ptch = weap.AimLineAttack(ang, Range, null, 0.0, ALF_CHECK3D);
 
 		Actor puff = null;
 		int actualDmg = -1;
 
-		[puff, actualDmg] = weap.LineAttack(ang, Range, ptch, dmg,
-			'Melee', fireType, LAF_ISMELEEATTACK, t);
+		[puff, actualDmg] = weap.LineAttack(ang, Range, ptch, fireData.Damage,
+			'Melee', fireData.FireType, LAF_ISMELEEATTACK, t);
 
 		// Turn to face target
 		if (t.LineTarget)
 		{
-			weap.A_StartSound("*fist", CHAN_WEAPON);
-			Angle = t.AngleFromSource;
-			if (!t.lineTarget.bDontDrain) ApplyLifeSteal(weap, actualDmg);
+			weap.Owner.A_StartSound("*fist", CHAN_WEAPON);
+			weap.Owner.Angle = t.AngleFromSource;
+			if (!t.lineTarget.bDontDrain)
+				weap.ApplyLifeSteal(Lifesteal, actualDmg);
 		}
 
 		return null;
@@ -594,69 +687,10 @@ class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 
 class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
 {
-	override Actor Invoke(BIO_NewWeapon weap, Class<Actor> fireType,
-		int dmg, float angle, float pitch) const
+	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
 	{
-		int flags = 0; // TODO: Sort this out
-		FTranslatedLineTarget t;
-
-		double ang = Angle + 2.8125 * (Random2[Saw]() / 255.0);
-		double slope = weap.AimLineAttack(ang, Range, t) *
-			(Random2[Saw]() / 255.0);
-
-		Actor puff = null;
-		int actualDmg = 0;
-		[puff, actualDmg] = weap.LineAttack(ang, Range, slope, dmg,
-			'Melee', fireType, 0, t);
-
-		if (!t.LineTarget)
-		{
-			if ((flags & SF_RANDOMLIGHTMISS) && (Random[Saw]() > 64))
-				weap.Player.ExtraLight = !weap.Player.ExtraLight;
-			
-			weap.A_StartSound("weapons/sawfull", CHAN_WEAPON);
-			return null;
-		}
-
-		if (flags & SF_RANDOMLIGHTHIT)
-		{
-			int randVal = Random[Saw]();
-
-			if (randVal < 64)
-				weap.Player.ExtraLight = 0;
-			else if (randVal < 160)
-				weap.Player.ExtraLight = 1;
-			else
-				weap.Player.ExtraLight = 2;
-		}
-
-		if (!t.LineTarget.bDontDrain) ApplyLifeSteal(weap, actualDmg);
-
-		weap.A_StartSound("weapons/sawhit", CHAN_WEAPON);
-			
-		// Turn to face target
-		if (!(flags & SF_NOTURN))
-		{
-			double angleDiff = weap.DeltaAngle(angle, t.angleFromSource);
-
-			if (angleDiff < 0.0)
-			{
-				if (angleDiff < -4.5)
-					angle = t.angleFromSource + 90.0 / 21;
-				else
-					angle -= 4.5;
-			}
-			else
-			{
-				if (angleDiff > 4.5)
-					angle = t.angleFromSource - 90.0 / 21;
-				else
-					angle += 4.5;
-			}
-		}
-	
-		if (!(flags & SF_NOPULLIN))
-			weap.bJustAttacked = true;
+		weap.BIO_Saw(fireData.FireType, fireData.Damage,
+			Range, fireData.Angle, Lifesteal);
 
 		return null;
 	}
@@ -675,7 +709,7 @@ class BIO_WeaponPipelineBuilder play
 	static BIO_WeaponPipelineBuilder Create()
 	{
 		let ret = new('BIO_WeaponPipelineBuilder');
-		ret.Pipeline = new('BIO_WeaponPipeline');
+		ret.Pipeline = BIO_WeaponPipeline.Create();
 		return ret;
 	}
 
@@ -694,15 +728,22 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Ammo(Class<Ammo> ammo_t, Class<Ammo> magazine_t,
-		int ammoUse = 1, int ammoUseFactor = 1, int reloadFactor = 1)
-	{
-		return self;
-	}
-
 	BIO_WeaponPipelineBuilder Alert(double maxDist, int flags)
 	{
 		Pipeline.SetAlertStats(maxDist, flags);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder FireTime(state fireState)
+	{
+		Pipeline.PushFireTimes(fireState);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder FireSound(sound fireSound, double volume = 1.0,
+		double attenuation = ATTN_NORM)
+	{
+		Pipeline.SetSound(fireSound, volume, attenuation);
 		return self;
 	}
 
