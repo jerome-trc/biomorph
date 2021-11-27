@@ -6,6 +6,41 @@ extend class BIO_EventHandler
 	// (Will be null if LegenDoom or its Lite version isn't loaded)
 	private Class<Inventory> LDToken;
 
+	static int GetMonsterValue(Actor mons)
+	{
+		int ret = LOOT_RNG_THRESHOLD * (float(mons.Default.Health) / 1000.0);
+	
+		// More pain resistance means more value
+		ret += ((256 - mons.Default.PainChance) / 4);
+
+		// How much faster is it than a ZombieMan?
+		ret += (Max(mons.Default.Speed - 8, 0) * 3);
+
+		if (mons.bBoss) ret *= 2;
+
+		if (mons.bNoRadiusDmg) ret *= 1.1;
+		if (mons.bNoPain) ret *= 1.1;
+		if (mons.bAlwaysFast) ret *= 1.1;
+		if (mons.bMissileMore) ret *= 1.1;
+		if (mons.bMissileEvenMore) ret *= 1.1;
+		if (mons.bQuickToRetaliate) ret *= 1.1;
+		if (mons.bNoFear) ret *= 1.02;
+		if (mons.bSeeInvisible) ret *= 1.02;
+
+		// Refusing to infight and being unable to draw infighting aggro
+		// are small difficulty increases
+		if (mons.bNoTarget) ret *= 1.05;
+		if (mons.bNoInfighting) ret *= 1.05;
+
+		// JUMPDOWN increases monster aggression and agility
+		if (mons.bJumpDown) ret *= 1.01;
+
+		// Slightly better value if the monster was gibbed
+		if (mons.Health < mons.GibHealth) ret += 15;
+
+		return ret;
+	}
+
 	override void WorldThingDied(WorldEvent event)
 	{
 		if (event.Thing == null || !event.Thing.bIsMonster) return;
@@ -46,37 +81,7 @@ extend class BIO_EventHandler
 			this chance can overflow such that a monster drops multiple
 		*/
 
-		// Killing a Baron guarantees one mutagen
-		int val = LOOT_RNG_THRESHOLD * (float(event.Thing.Default.Health) / 1000.0);
-
-		// More pain resistance means more value
-		val += ((256 - event.Thing.Default.PainChance) / 4);
-
-		// How much faster is it than a ZombieMan?
-		val += (Max(event.Thing.Default.Speed - 8, 0) * 3);
-
-		if (event.Thing.bBoss) val *= 2;
-
-		if (event.Thing.bNoRadiusDmg) val *= 1.1;
-		if (event.Thing.bNoPain) val *= 1.1;
-		if (event.Thing.bAlwaysFast) val *= 1.1;
-		if (event.Thing.bMissileMore) val *= 1.1;
-		if (event.Thing.bMissileEvenMore) val *= 1.1;
-		if (event.Thing.bQuickToRetaliate) val *= 1.1;
-		if (event.Thing.bNoFear) val *= 1.02;
-		if (event.Thing.bSeeInvisible) val *= 1.02;
-
-		// Refusing to infight and being unable to draw infighting aggro
-		// are small difficulty increases
-		if (event.Thing.bNoTarget) val *= 1.05;
-		if (event.Thing.bNoInfighting) val *= 1.05;
-
-		// JUMPDOWN increases monster aggression and agility
-		if (event.Thing.bJumpDown) val *= 1.01;
-
-		// Slightly better value if the monster was gibbed
-		if (event.Thing.Health < event.Thing.GibHealth) val += 15;
-
+		int val = GetMonsterValue(event.Thing);
 		Globals.AddPartyXP(val);
 
 		// If not even at threshold, maybe push it over
