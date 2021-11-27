@@ -12,6 +12,11 @@ class Biomorph abstract
 	const LOGPFX_DEBUG = "\cfBiomorph: \cn(DEBUG)\c- "; // Light blue
 }
 
+const CRESC_STATDEFAULT = "\c[White]";
+const CRESC_STATMODIFIED = "\c[Cyan]";
+const CRESC_STATBETTER = "\c[Green]";
+const CRESC_STATWORSE = "\c[Red]";
+
 #include "zscript/bio_zjson/Include.zs"
 
 #include "zscript/biomorph/ammo.zs"
@@ -58,6 +63,8 @@ class Biomorph abstract
 
 #include "zscript/biomorph/weapons/detail/base.zs"
 #include "zscript/biomorph/weapons/detail/constants.zs"
+#include "zscript/biomorph/weapons/detail/damage_func.zs"
+#include "zscript/biomorph/weapons/detail/fire_func.zs"
 #include "zscript/biomorph/weapons/detail/pipeline.zs"
 #include "zscript/biomorph/weapons/detail/recoil.zs"
 

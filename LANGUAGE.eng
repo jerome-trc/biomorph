@@ -35,37 +35,65 @@
 
 // Weapons (tags, pickup messages, obituaries, stat readouts) ==================
 
-	BIO_WEAP_STAT_HEADER_DEFAULT = "Fire mode %d:";
-	BIO_WEAP_STAT_HEADER_0 = "Primary fire:";
-	BIO_WEAP_STAT_HEADER_1 = "Secondary fire:";
-	BIO_WEAP_STAT_HEADER_2 = "Tertiary fire:";
-	BIO_WEAP_STAT_HEADER_3 = "Quaternary fire:";
+	BIO_WEAP_STAT_HEADER_DEFAULT = "\c[Gold]Fire mode %d:";
+	BIO_WEAP_STAT_HEADER_0 = "\c[Gold]Primary fire:";
+	BIO_WEAP_STAT_HEADER_1 = "\c[Gold]Secondary fire:";
+	BIO_WEAP_STAT_HEADER_2 = "\c[Gold]Tertiary fire:";
+	BIO_WEAP_STAT_HEADER_3 = "\c[Gold]Quaternary fire:";
 
-	BIO_WEAP_FIREFUNC_DEFAULT = "Fires %d %s";
-	BIO_WEAP_FIREFUNC_MELEE = "Hits %d time(s)";
-	BIO_WEAP_FIREFUNC_FIST = "Throws a left hook";
-	BIO_WEAP_FIREFUNC_CHAINSAW = "Cuts continually";
-	BIO_WEAP_FIREFUNC_RAIL = "Fires %d rail %s, spawning %s on impact";
-	BIO_WEAP_FIREFUNC_RAIL_NOPUFF = "Fires %d rail shots, spawning %s on impact";
-	BIO_WEAP_FIREFUNC_RAIL_NOSPAWN = "Fires %d rail %s"
-	BIO_WEAP_FIREFUNC_RAIL_NOTHING = "Fires %d rail shots";
+	BIO_WEAP_STAT_HSPREAD =
+		"\c[MidGrey]Horizontal spread: %s%.2f \c[MidGrey]degree(s)";
+	BIO_WEAP_STAT_VSPREAD =
+		"\c[MidGrey]Vertical spread: %s%2.f \c[MidGrey]degree(s)";
+
+	BIO_WEAP_FIREFUNC_DEFAULT =
+		"\c[MidGrey]Fires %s%d %s%s";
+	BIO_WEAP_FIREFUNC_MELEE =
+		"\c[MidGrey]Hits %s%d time(s)";
+	BIO_WEAP_FIREFUNC_FIST =
+		"\c[MidGrey]Throws a left hook";
+	BIO_WEAP_FIREFUNC_CHAINSAW =
+		"\c[MidGrey]Cuts continually";
+	BIO_WEAP_FIREFUNC_RAIL =
+		"\c[MidGrey]Fires %s%d \c[MidGrey]rail %s%s, spawning %s%s \c[MidGrey]on impact";
+	BIO_WEAP_FIREFUNC_RAIL_NOPUFF =
+		"\c[MidGrey]Fires %s%d \c[MidGrey]rail shots, spawning %s%s \c[MidGrey]on impact";
+	BIO_WEAP_FIREFUNC_RAIL_NOSPAWN =
+		"\c[MidGrey]Fires %s%d \c[MidGrey]rail %s%s"
+	BIO_WEAP_FIREFUNC_RAIL_NOTHING =
+		"\c[MidGrey]Fires %s%d \c[MidGrey]rail shots";
 	
-	BIO_WEAP_DMGFUNC_DEFAULT = "(%s%d\c[MidGrey] \cu-\c[MidGrey] %s%d\c[MidGrey])";
-	BIO_WEAP_DMGFUNC_1D3 = "(%s%d\c[MidGrey] x (1 - 3))";
-	BIO_WEAP_DMGFUNC_1D8 = "(%d%d\c[MidGrey] x (1 - 8))";
+	BIO_WEAP_DMGFUNC_DEFAULT =
+		"\c[MidGrey]Damage: %s%d\c[MidGrey] \cu-\c[MidGrey] %s%d";
+	BIO_WEAP_DMGFUNC_1D3 =
+		"\c[MidGrey]Damage: %s%d\c[MidGrey] x (1 - 3)";
+	BIO_WEAP_DMGFUNC_1D8 =
+		"\c[MidGrey]Damage: %d%d\c[MidGrey] x (1 - 8)";
 
-	BIO_WEAPSTAT_FIREDATA = "\c[MidGrey]Damage: (%s%d\c[MidGrey] \cu-\c[MidGrey] %s%d\c[MidGrey]) \c[MidGrey]x\c[MidGrey] %s%d\c[MidGrey] %s%s\c-";
-	BIO_WEAPSTAT_FIRETIME = "\c[MidGrey]Fire time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_FIRETIME_SEMIAUTO = "\c[MidGrey]Fire time (\cksemi-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_FIRETIME_BURST = "\c[MidGrey]Fire time (\ckburst\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_FIRETIME_AUTO = "\c[MidGrey]Fire time (\ckfull-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_ATKTIME = "\c[MidGrey]Attack time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_RELOADTIME = "\c[MidGrey]Reload time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_POSTFIREDELAY = "\c[MidGrey]Post-fire delay: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_SPREAD = "\c[MidGrey]Spread angles: %s%.2f\c[MidGrey] horizontal, %s%.2f\c[MidGrey] \c[MidGrey]vertical";
-	BIO_WEAPSTAT_FORCERADIUSDMG = "\cjIgnores splash damage immunity";
-	BIO_WEAPSTAT_BERSERKMULTI = "\cj%d%% more damage from berserk";
-	BIO_WEAPSTAT_NAILSHRAPNEL = "\cjNails break into two shards of shrapnel";
+	BIO_WEAPSTAT_FIREDATA =
+		"\c[MidGrey]Damage: (%s%d\c[MidGrey] \cu-\c[MidGrey] %s%d\c[MidGrey]) \c[MidGrey]x\c[MidGrey] %s%d\c[MidGrey] %s%s\c-";
+	BIO_WEAPSTAT_FIRETIME =
+		"\c[MidGrey]Fire time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_FIRETIME_SEMIAUTO =
+		"\c[MidGrey]Fire time (\cksemi-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_FIRETIME_BURST =
+		"\c[MidGrey]Fire time (\ckburst\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_FIRETIME_AUTO =
+		"\c[MidGrey]Fire time (\ckfull-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_ATKTIME =
+		"\c[MidGrey]Attack time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_RELOADTIME =
+		"\c[MidGrey]Reload time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_POSTFIREDELAY =
+		"\c[MidGrey]Post-fire delay: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+	BIO_WEAPSTAT_SPREAD =
+		"\c[MidGrey]Spread angles: %s%.2f\c[MidGrey] horizontal, %s%.2f\c[MidGrey] \c[MidGrey]vertical";
+	BIO_WEAPSTAT_FORCERADIUSDMG =
+		"\cjIgnores splash damage immunity";
+	BIO_WEAPSTAT_BERSERKMULTI =
+		"\cj%d%% more damage from berserk";
+	BIO_WEAPSTAT_NAILSHRAPNEL =
+		"\cjNails break into two shards of shrapnel";
 
 	BIO_WEAP_TAG_FIST = "Fist";
 

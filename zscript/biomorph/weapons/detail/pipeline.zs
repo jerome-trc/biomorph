@@ -30,12 +30,11 @@ struct BIO_FireData
 
 class BIO_WeaponPipeline play
 {
-	// Acts like `Actor::Default`.
-	readOnly<BIO_WeaponPipeline> Prototype;
+	readOnly<BIO_NewWeapon> WeapDefault;
+	uint Index;
 	private BIO_WeaponPipelineMask Mask;
 
 	private bool SecondaryMagazine;
-	private int AmmoUse;
 
 	private BIO_FireFunctor FireFunctor;
 	private Class<Actor> FireType;
@@ -110,6 +109,17 @@ class BIO_WeaponPipeline play
 		return StringTable.Localize(Obituary);
 	}
 
+	readOnly<BIO_FireFunctor> GetFireFunctorConst() const
+	{
+		return FireFunctor.AsConst();
+	}
+
+	BIO_FireFunctor GetFireFunctor()
+	{
+		if (Mask & BIO_WPM_FIREFUNCTOR) return null;
+		return FireFunctor;
+	}
+
 	void SetFireFunctor(BIO_FireFunctor fireFunc)
 	{
 		if (Mask & BIO_WPM_FIREFUNCTOR) return;
@@ -117,11 +127,15 @@ class BIO_WeaponPipeline play
 		FireFunctor.Init();
 	}
 
+	Class<Actor> GetFireType() const { return FireType; }
+
 	void SetFireType(Class<Actor> fType)
 	{
 		if (Mask & BIO_WPM_FIRETYPE) return;
 		FireType = fType;
 	}
+
+	int GetFireCount() const { return FireCount; }
 
 	void SetFireCount(int fCount)
 	{
@@ -140,7 +154,12 @@ class BIO_WeaponPipeline play
 		Damage = dmgFunc;
 	}
 
-	BIO_DamageFunctor GetDamageFunctor() const
+	readOnly<BIO_DamageFunctor> GetDamageFunctorConst() const
+	{
+		return Damage.AsConst();
+	}
+
+	BIO_DamageFunctor GetDamageFunctor()
 	{
 		if (Mask & BIO_WPM_DAMAGEFUNCTOR) return null;
 		return Damage;
@@ -200,14 +219,7 @@ class BIO_WeaponPipeline play
 		}
 	}
 
-	int GetAmmoUse() const { return AmmoUse; }
 	bool UsesSecondaryMagazine() const { return SecondaryMagazine; }
-
-	void SetAmmoUse(int use)
-	{
-		if (Mask & BIO_WPM_AMMOUSE) return;
-		AmmoUse = use;
-	}
 
 	void SetSound(sound fireSnd, double volume, double attenuation)
 	{
@@ -236,7 +248,7 @@ class BIO_WeaponPipeline play
 		Mask = msk;
 	}
 
-	void ToString(in out Array<string> readout, uint ndx, bool alone) const
+	void ToString(in out Array<string> readout, bool alone) const
 	{
 		// If this is the weapon's only pipeline, the header is unnecessary
 		// Otherwise tell the user which fire mode this is
@@ -244,7 +256,7 @@ class BIO_WeaponPipeline play
 		{
 			string header = "";
 			
-			switch (ndx)
+			switch (Index)
 			{
 			case 0:
 				header = StringTable.Localize("$BIO_WEAP_STAT_HEADER_0");
@@ -260,24 +272,30 @@ class BIO_WeaponPipeline play
 				break;
 			default:
 				header = String.Format(
-					StringTable.Localize("$BIO_WEAP_STAT_HEADER_DEFAULT"), ndx);
+					StringTable.Localize("$BIO_WEAP_STAT_HEADER_DEFAULT"), Index);
 				break;
 			}
 
 			readout.Push(header);
 		}
 
-		readout.Push(FireFunctor.ToString(
-			Prototype.FireFunctor.AsConst(), fireType, fireCount));
-		readout.Push(Damage.ToString(
-			Prototype.Damage.AsConst()));
+		readOnly<BIO_WeaponPipeline> defs;
 
-		// Don't report spread unless it's non-trivial (weapons with true
-		// projectiles are likely to have little to no spread)
+		{
+			Array<BIO_WeaponPipeline> ppls;
+			WeapDefault.Construct(ppls);
+			defs = ppls[Index].AsConst();
+		}
+
+		readout.Push(FireFunctor.ToString(AsConst(), defs));
+		readout.Push(Damage.ToString(defs.Damage));
+
+		// Don't report spread unless it's non-trivial (weapons with 
+		// true projectiles are likely to have little to no spread)
 		if (HSpread > 0.5)
 		{
 			string fontColor = BIO_Utils.StatFontColorF(
-				HSpread, Prototype.HSpread, invert: true);
+				HSpread, defs.HSpread, invert: true);
 
 			string hSpreadStr = String.Format(
 				StringTable.Localize("$BIO_WEAP_STAT_HSPREAD"),
@@ -289,7 +307,7 @@ class BIO_WeaponPipeline play
 		if (VSpread > 0.5)
 		{
 			string fontColor = BIO_Utils.StatFontColorF(
-				HSpread, Prototype.VSpread, invert: true);
+				VSpread, defs.VSpread, invert: true);
 
 			string vSpreadStr = String.Format(
 				StringTable.Localize("$BIO_WEAP_STAT_VSPREAD"),
@@ -302,414 +320,25 @@ class BIO_WeaponPipeline play
 			readout.Push(ReadoutExtra[i]);
 	}
 
-	static BIO_WeaponPipeline Create()
+	static BIO_WeaponPipeline Create(Class<BIO_NewWeapon> weap_t)
 	{
 		let ret = new('BIO_WeaponPipeline');
+		ret.WeapDefault = GetDefaultByType(weap_t);
 		ret.FireCount = 1;
-		ret.AmmoUse = 1;
 		return ret;
 	}
-}
 
-class BIO_DamageFunctor play abstract
-{
-	abstract int Invoke() const;
-	abstract void Reset(readOnly<BIO_DamageFunctor> def);
-
-	virtual void GetValues(in out Array<int> vals) const {}
-	virtual void SetValues(in out Array<int> vals) {}
-
-	// Output should be full localized.
-	abstract string ToString(readOnly<BIO_DamageFunctor> def) const;
-
-	readOnly<BIO_DamageFunctor> AsConst() const { return self; }
-}
-
-// Emits a random number between a minimum and a maximum.
-class BIO_DmgFunc_Default : BIO_DamageFunctor
-{
-	private int Minimum, Maximum;
-
-	override int Invoke() const { return Random(Minimum, Maximum); }
-
-	override void Reset(readOnly<BIO_DamageFunctor> def)
-	{
-		let myDef = BIO_DmgFunc_Default(def);
-		Minimum = myDef.Minimum;
-		Maximum = myDef.Maximum;
-	}
-
-	override void GetValues(in out Array<int> vals) const
-	{
-		vals.PushV(Minimum, Maximum);
-	}
-
-	override void SetValues(in out Array<int> vals)
-	{
-		Minimum = vals[0];
-		Maximum = vals[1];
-	}
-
-	void CustomSet(int minDmg, int maxDmg)
-	{
-		Minimum = minDmg;
-		Maximum = maxDmg;
-	}
-
-	override string ToString(readOnly<BIO_DamageFunctor> def) const
-	{
-		let myDefs = BIO_DmgFunc_Default(def);
-
-		string
-			minClr = BIO_Utils.StatFontColor(Maximum, myDefs.Maximum),
-			maxClr = BIO_Utils.StatFontColor(Minimum, myDefs.Minimum);
-
-		return String.Format(
-			StringTable.Localize("$BIO_WEAP_DMGFUNC_DEFAULT"),
-			minClr, Minimum, maxClr, Maximum);
-	}
-}
-
-// Imitates the vanilla behaviour of multiplying bullet puff damage by 1D3.
-class BIO_DmgFunc_1D3 : BIO_DamageFunctor
-{
-	private int Baseline;
-
-	override int Invoke() const
-	{
-		return Baseline * Random(1, 3);
-	}
-
-	override void Reset(readOnly<BIO_DamageFunctor> def)
-	{
-		let myDefs = BIO_DmgFunc_1D3(def);
-		Baseline = myDefs.Baseline;
-	}
-
-	override void GetValues(in out Array<int> vals) const
-	{
-		vals.PushV(Baseline);
-	}
-
-	override void SetValues(in out Array<int> vals)
-	{
-		Baseline = vals[0];
-	}
-
-	override string ToString(readOnly<BIO_DamageFunctor> def) const
-	{
-		let myDefs = BIO_DmgFunc_1D3(def);
-
-		string fontColor = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
-
-		return String.Format(
-			StringTable.Localize("$BIO_WEAP_DMGFUNC_1D3"),
-			fontColor, Baseline);
-	}
-}
-
-// Imitates the vanilla behaviour of multiplying projectile damage by 1D8.
-class BIO_DmgFunc_1D8 : BIO_DamageFunctor
-{
-	private int Baseline;
-
-	override int Invoke() const
-	{
-		return Baseline * Random(1, 8);
-	}
-
-	override void Reset(readOnly<BIO_DamageFunctor> def)
-	{
-		let myDefs = BIO_DmgFunc_1D8(def);
-		Baseline = myDefs.Baseline;
-	}
-
-	override void GetValues(in out Array<int> vals) const
-	{
-		vals.PushV(Baseline);
-	}
-
-	override void SetValues(in out Array<int> vals)
-	{
-		Baseline = vals[0];
-	}
-
-	override string ToString(readOnly<BIO_DamageFunctor> def) const
-	{
-		let myDefs = BIO_DmgFunc_1D8(def);
-
-		string fontColor = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
-
-		return String.Format(
-			StringTable.Localize("$BIO_WEAP_DMGFUNC_1D3"),
-			fontColor, Baseline);
-	}
-}
-
-class BIO_FireFunctor play abstract
-{
-	virtual void Init() {} // Use only for setting defaults.
-
-	abstract Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const;
-
-	// Output is fully localized.
-	protected static string FireTypeTag(Class<Actor> fireType, int count)
-	{
-		if (fireType is 'BIO_Projectile')
-		{
-			let defs = GetDefaultByType((Class<BIO_Projectile>)(fireType));
-
-			switch (count)
-			{
-			case -1:
-			case 1: return defs.GetTag();
-			default: return StringTable.Localize(defs.PluralTag);
-			}
-		}
-		else if (fireType is 'BIO_FastProjectile')
-		{
-			let defs = GetDefaultByType((Class<BIO_FastProjectile>)(fireType));
-		
-			switch (count)
-			{
-			case -1:
-			case 1: return defs.GetTag();
-			default: return StringTable.Localize(defs.PluralTag);
-			}
-		}
-		else if (fireType is 'BIO_RailPuff')
-		{
-			let defs = GetDefaultByType((Class<BIO_RailPuff>)(fireType));
-
-			switch (count)
-			{
-			case -1:
-			case 1: return defs.GetTag();
-			default: return StringTable.Localize(defs.PluralTag);
-			}
-		}
-		else if (fireType is 'BIO_RailSpawn')
-		{
-			let defs = GetDefaultByType((Class<BIO_RailSpawn>)(fireType));
-
-			switch (count)
-			{
-			case -1:
-			case 1: return defs.GetTag();
-			default: return StringTable.Localize(defs.PluralTag);
-			}
-		}
-		else
-			return StringTable.Localize(GetDefaultByType(fireType).GetTag());
-	}
-
-	abstract string ToString(readOnly<BIO_FireFunctor> def,
-		Class<Actor> fireType, int fireCount) const;
-
-	readOnly<BIO_FireFunctor> AsConst() const { return self; }
-}
-
-class BIO_FireFunc_Default : BIO_FireFunctor
-{
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
-	{
-		return weap.BIO_FireProjectile(fireData.FireType,
-			angle: fireData.Angle + FRandom(-fireData.HSpread, fireData.HSpread),
-			pitch: fireData.Pitch + FRandom(-fireData.VSpread, fireData.VSpread)
-		);
-	}
-
-	override string ToString(readOnly<BIO_FireFunctor> def,
-		Class<Actor> fireType, int fireCount) const
-	{
-		return String.Format(
-			StringTable.Localize("$BIO_WEAP_FIREFUNC_DEFAULT"),
-			fireCount, FireTypeTag(fireType, fireCount));
-	}
-}
-
-class BIO_FireFunc_Bullet : BIO_FireFunctor
-{
-	int NumBullets, Flags;
-
-	override void Init()
-	{
-		NumBullets = -1;
-		Flags = FBF_NORANDOM | FBF_NOFLASH;
-	}
-
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
-	{
-		weap.A_FireBullets(fireData.HSpread, fireData.VSpread,
-			NumBullets, fireData.Damage, fireData.FireType, Flags);
-		return null;
-	}
-
-	override string ToString(readOnly<BIO_FireFunctor> def,
-		Class<Actor> fireType, int fireCount) const
-	{
-		return String.Format(
-			StringTable.Localize("$BIO_WEAP_FIREFUNC_DEFAULT"),
-			fireCount, FireTypeTag(fireType, fireCount));
-	}
-}
-
-class BIO_FireFunc_Rail : BIO_FireFunctor
-{
-	int Flags;
-	color Color1, Color2;
-
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
-	{
-		Class<Actor> puff_t = null, spawnClass = null;
-
-		if (fireData.FireType is 'BIO_RailPuff')
-		{
-			puff_t = fireData.FireType;
-			spawnClass = GetDefaultByType(
-				(Class<BIO_RailPuff>)(fireData.FireType)).SpawnClass;
-		}
-		else if (fireData.FireType is 'BIO_RailSpawn')
-		{
-			spawnClass = fireData.FireType;
-			puff_t = GetDefaultByType(
-				(Class<BIO_RailSpawn>)(fireData.FireType)).PuffType;
-		}
-
-		weap.A_RailAttack(fireData.Damage,
-			spawnOfs_xy: fireData.Angle,
-			useAmmo: false,
-			color1: Color1,
-			color2: Color2,
-			flags: Flags,
-			puffType: puff_t,
-			spread_xy: fireData.HSpread,
-			spread_z: fireData.VSpread,
-			spawnClass: spawnClass,
-			spawnOfs_z: fireData.Pitch
-		);
-
-		return null;
-	}
-
-	override string ToString(readOnly<BIO_FireFunctor> def,
-		Class<Actor> fireType, int fireCount) const
-	{
-		Class<Actor> puff_t = null, spawnClass = null;
-
-		if (fireType is 'BIO_RailPuff')
-		{
-			puff_t = fireType;
-			spawnClass = GetDefaultByType((Class<BIO_RailPuff>)(fireType)).SpawnClass;
-		}
-		else if (fireType is 'BIO_RailSpawn')
-		{
-			spawnClass = fireType;
-			puff_t = GetDefaultByType((Class<BIO_RailSpawn>)(fireType)).PuffType;
-		}
-
-		if (puff_t != null && spawnClass != null)
-		{
-			return String.Format(
-				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL"), fireCount,
-				FireTypeTag(puff_t, fireCount), FireTypeTag(spawnClass, fireCount));
-		}
-		else if (puff_t == null)
-		{
-			return String.Format(
-				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOPUFF"),
-				fireCount, FireTypeTag(spawnClass, fireCount));
-		}
-		else if (spawnClass == null)
-		{
-			return String.Format(
-				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOSPAWN"),
-				fireCount, FireTypeTag(puff_t, fireCount));
-		}
-		else
-		{
-			return String.Format(
-				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOTHING"),
-				fireCount);
-		}
-	}
-}
-
-class BIO_FireFunc_Melee : BIO_FireFunctor abstract
-{
-	float Range, Lifesteal;
-
-	override string ToString(readOnly<BIO_FireFunctor> def,
-		Class<Actor> fireType, int fireCount) const
-	{
-		return String.Format(
-			StringTable.Localize("$BIO_WEAP_FIREFUNC_MELEE"),
-			fireCount);
-	}
-}
-
-class BIO_FireFunc_Fist : BIO_FireFunc_Melee
-{
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
-	{
-		FTranslatedLineTarget t;
-
-		if (weap.Owner.FindInventory('PowerStrength', true))
-			fireData.Damage *= 10;
-		
-		double ang = weap.Owner.Angle + Random2[Punch]() * (5.625 / 256);
-		double ptch = weap.AimLineAttack(ang, Range, null, 0.0, ALF_CHECK3D);
-
-		Actor puff = null;
-		int actualDmg = -1;
-
-		[puff, actualDmg] = weap.LineAttack(ang, Range, ptch, fireData.Damage,
-			'Melee', fireData.FireType, LAF_ISMELEEATTACK, t);
-
-		// Turn to face target
-		if (t.LineTarget)
-		{
-			weap.Owner.A_StartSound("*fist", CHAN_WEAPON);
-			weap.Owner.Angle = t.AngleFromSource;
-			if (!t.lineTarget.bDontDrain)
-				weap.ApplyLifeSteal(Lifesteal, actualDmg);
-		}
-
-		return null;
-	}
-
-	override string ToString(readOnly<BIO_FireFunctor> def,
-		Class<Actor> fireType, int fireCount) const
-	{
-		return StringTable.Localize("$BIO_WEAP_FIREFUNC_FIST");
-	}
-}
-
-class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
-{
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
-	{
-		weap.BIO_Saw(fireData.FireType, fireData.Damage,
-			Range, fireData.Angle, Lifesteal);
-
-		return null;
-	}
-
-	override string ToString(readOnly<BIO_FireFunctor> def,
-		Class<Actor> fireType, int fireCount) const
-	{
-		return StringTable.Localize("$BIO_WEAP_FIREFUNC_CHAINSAW");
-	}
+	readOnly<BIO_WeaponPipeline> AsConst() const { return self; }
 }
 
 class BIO_WeaponPipelineBuilder play
 {
 	private BIO_WeaponPipeline Pipeline;
 
-	static BIO_WeaponPipelineBuilder Create()
+	static BIO_WeaponPipelineBuilder Create(Class<BIO_NewWeapon> weap_t)
 	{
 		let ret = new('BIO_WeaponPipelineBuilder');
-		ret.Pipeline = BIO_WeaponPipeline.Create();
+		ret.Pipeline = BIO_WeaponPipeline.Create(weap_t);
 		return ret;
 	}
 
