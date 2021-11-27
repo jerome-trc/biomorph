@@ -162,7 +162,7 @@ class BIO_StatusBar : BaseStatusBar
 
 	private void DrawWeaponAndAmmoDetails(in out int invY)
 	{
-		BIO_Weapon weap = BIO_Weapon(CPlayer.ReadyWeapon);
+		BIO_NewWeapon weap = BIO_NewWeapon(CPlayer.ReadyWeapon);
 		if (weap == null) return;
 
 		Ammo mag1 = null, mag2 = null;

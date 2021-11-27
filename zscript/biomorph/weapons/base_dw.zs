@@ -468,8 +468,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	/*  To make sure the correct ammo is consumed for each attack,
 		we need to manually set invoker.bAltFire to false to consume
 		primary ammo, and to true to consume secondary ammo.
-		I made a bunch of simple wrappers for the generic attack
-		functions.
+		I made a bunch of simple wrappers for the generic attack functions.
 		If you need to use a custom attack function, you'll have to set
 		bAltFire manually. A_SetFireMode below can be used for that.
 	*/
@@ -480,8 +479,7 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 		invoker.bAltFire = secondary;
 	}
 	
-	/*
-		These are very simple wrappers that set bAltFire to false for 
+	/*  These are very simple wrappers that set bAltFire to false for 
 		right gun and true for left gun to make sure the correct ammo 
 		is consumed.
 	*/

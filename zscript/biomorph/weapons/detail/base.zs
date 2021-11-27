@@ -180,7 +180,7 @@ class BIO_NewWeapon : DoomWeapon abstract
 
 		BIO_GlobalData.Get().OnWeaponAcquired(Grade);
 
-		if (Pipelines.Size() < 1) Construct();
+		if (Pipelines.Size() < 1) Init();
 		
 		// Get a pointer to primary ammo (which is either AmmoType1 or
 		// MagazineType1). If it isn't found, generate and attach it
@@ -231,7 +231,7 @@ class BIO_NewWeapon : DoomWeapon abstract
 		let bioPlayer = BIO_Player(activator);
 		if (bioPlayer == null) return;
 
-		if (Pipelines.Size() < 1) Construct();
+		if (Pipelines.Size() < 1) Init();
 
 		string output = GetTag() .. "\n\n";
 
@@ -296,7 +296,7 @@ class BIO_NewWeapon : DoomWeapon abstract
 	// Virtuals and abstracts ==================================================
 
 	// Build this weapon's default firing pipelines.
-	abstract void Construct();
+	abstract void Construct(in out Array<BIO_WeaponPipeline> pipelines);
 
 	virtual void OnDeselect() {}
 	virtual void OnSelect() {}
@@ -317,14 +317,45 @@ class BIO_NewWeapon : DoomWeapon abstract
 	{
 		invoker.LastPipeline = pipeline;
 
-		if (!invoker.DepleteAmmo(
-			invoker.Pipelines[pipeline].UsesSecondaryMagazine(),
-			true,
-			invoker.Pipelines[pipeline].GetAmmoUse() * fireFactor))
+		bool secAmmo = invoker.Pipelines[pipeline].UsesSecondaryMagazine();
+
+		if (!invoker.DepleteAmmo(secAmmo, true,
+			!secAmmo ? invoker.AmmoUse1 : invoker.AmmoUse2 * fireFactor))
 			return false;
 
 		invoker.Pipelines[pipeline].Invoke(invoker, fireFactor, spreadFactor);
 		return true;
+	}
+
+	// If no argument is given, try to reload as much of the magazine as 
+	// possible. Otherwise, try to reload the given amount of rounds.
+	action void A_LoadMag(uint amt = 0, bool secondary = false)
+	{
+		Ammo magItem = null, reserveAmmo = null;
+		int factor = -1, magSize = -1, reserve = -1;
+		
+		if (!secondary)
+		{
+			magItem = invoker.Magazine1;
+			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType1));
+			magSize = invoker.MagazineSize1;
+			factor = invoker.ReloadFactor1;
+			reserve = reserveAmmo.Amount / factor;
+		}
+		else
+		{
+			magItem = invoker.Magazine2;
+			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType2));
+			magSize = invoker.MagazineSize2;
+			factor = invoker.ReloadFactor2;
+			reserve = reserveAmmo.Amount / factor;
+		}
+
+		let diff = Min(reserve, amt > 0 ? amt : magSize - magItem.Amount);
+		magItem.Amount += diff;
+
+		int subtract = diff * factor;
+		reserveAmmo.Amount -= subtract;
 	}
 
 	protected action state A_AutoReload(bool secondary = false,
@@ -346,9 +377,10 @@ class BIO_NewWeapon : DoomWeapon abstract
 			return ResolveState('Ready');
 	}
 
-	// Call from the weapon's Spawn state, after two frames of the weapon's 
-	// pickup sprite (each 0 tics long). Puts the weapon into a new loop with
-	// appropriate behaviour for its rarity (e.g., blinking cyan if mutated).
+	/*	Call from the weapon's Spawn state, after two frames of the weapon's 
+		pickup sprite (each 0 tics long). Puts the weapon into a new loop with
+		appropriate behaviour for its rarity (e.g., blinking cyan if mutated).
+	*/
 	protected action state A_BIO_Spawn()
 	{
 		if (invoker.Rarity == BIO_RARITY_UNIQUE)
@@ -359,18 +391,20 @@ class BIO_NewWeapon : DoomWeapon abstract
 			return ResolveState('Spawn.Common');
 	}
 
-	// Call from the weapon's Deselect state, during one frame of the weapon's
-	// ready sprite (0 tics long). Runs a callback and puts the weapon in a 
-	// lowering loop.
+	/*	Call from the weapon's Deselect state, during one frame of the weapon's
+		ready sprite (0 tics long). Runs a callback and puts the weapon in a 
+		lowering loop.
+	*/
 	protected action state A_BIO_Deselect()
 	{
 		invoker.OnDeselect();
 		return ResolveState('Deselect.Loop');
 	}
 
-	// Call from the weapon's Select state, during one frame of the weapon's
-	// ready sprite (0 tics long). Runs a callback and puts the weapon in a 
-	// raising loop.
+	/*	Call from the weapon's Select state, during one frame of the weapon's
+		ready sprite (0 tics long). Runs a callback and puts the weapon in a 
+		raising loop.
+	*/
 	protected action state A_BIO_Select()
 	{
 		invoker.OnSelect();
@@ -392,6 +426,12 @@ class BIO_NewWeapon : DoomWeapon abstract
 	protected action void A_BIO_SetTics(uint ndx, uint pipeline = 0)
 	{
 		A_SetTics(invoker.Pipelines[pipeline].GetFireTime(ndx));
+	}
+
+	protected action void A_PresetRecoil(Class<BIO_RecoilThinker> recoil_t,
+		float scale = 1.0, bool invert = false)
+	{
+		BIO_RecoilThinker.Create(recoil_t, BIO_Weapon(invoker), scale, invert);
 	}
 
 	protected action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
@@ -456,6 +496,43 @@ class BIO_NewWeapon : DoomWeapon abstract
 				return true;
 
 		return false;
+	}
+
+	// Modifying ===============================================================
+
+	void Init()
+	{
+		Construct(Pipelines);
+		// Inform pipelines of their indices
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			Pipelines[i].Index = i;
+
+		OnWeaponChange();
+	}
+
+	void OnWeaponChange()
+	{
+		StatReadout.Clear();
+
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			Pipelines[i].ToString(StatReadout, Pipelines.Size() == 1);
+
+		AffixReadout.Clear();
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].ToString(AffixReadout, self);
+
+		// Blank line between implicit and explicit affixes
+		if (ImplicitAffixes.Size() > 0)
+			AffixReadout.Push("");
+
+		if (BIOFlags & BIO_WF_AFFIXESHIDDEN)
+			AffixReadout.Push("\cg" .. StringTable.Localize("$BIO_AFFIXESUNKNOWN"));
+		else
+		{
+			for (uint i = 0; i < Affixes.Size(); i++)
+				Affixes[i].ToString(AffixReadout, self);
+		}
 	}
 
 	// Substitutes for attack actions ==========================================

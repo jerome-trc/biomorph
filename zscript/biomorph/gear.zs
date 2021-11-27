@@ -22,11 +22,6 @@ enum BIO_Rarity : uint8
 
 mixin class BIO_Gear
 {
-	const CRESC_STATDEFAULT = "\c[White]";
-	const CRESC_STATMODIFIED = "\c[Cyan]";
-	const CRESC_STATBETTER = "\c[Green]";
-	const CRESC_STATWORSE = "\c[Red]";
-
 	meta BIO_Grade Grade; property Grade: Grade;
 	BIO_Rarity Rarity; property Rarity: Rarity;
 

@@ -196,11 +196,6 @@ class BIO_Utils abstract
 		}
 	}
 
-	const CRESC_STATDEFAULT = "\c[White]";
-	const CRESC_STATMODIFIED = "\c[Cyan]";
-	const CRESC_STATBETTER = "\c[Green]";
-	const CRESC_STATWORSE = "\c[Red]";
-
 	// Return green if `stat1` is greater than `stat2`, red if it's less, and
 	// white if they're equal. `invert` reverses the check.
 	static string StatFontColor(int stat1, int stat2, bool invert = false)
