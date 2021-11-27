@@ -9,3 +9,5 @@ Biomorph is early in development; expect its features and graphical/audio presen
 A complete list of attributions and third-party licensing information can be found [here](/ATTRIB.md). Licensing information for this mod is [here](/LICENSE).
 
 This mod depends upon a minimum ZScript version of 2.4, but assume it is tested on the 64-bit Ubuntu build of the latest version of GZDoom with default compatibility flags.
+
+Also see the [repository for extra official addons and compatibility patches](https://github.com/TheRatCircus/biomorph-extras).
