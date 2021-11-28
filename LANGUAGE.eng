@@ -392,6 +392,8 @@
 	BIO_OPTVAL_MRM_AUTO = "Continue until interrupted";
 	BIO_OPTVAL_MRM_HOLD = "Hold \cnReload\cj to continue";
 
+	BIO_OPTLBL_QUAKE = "Screen Shake";
+
 	BIO_PERK_UIHELP_PAN = "\cjHold the \cnmouse wheel\cj and \cnmove the mouse\cj to pan";
 
 // Keybindings =================================================================
