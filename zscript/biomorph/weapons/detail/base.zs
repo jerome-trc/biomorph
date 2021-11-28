@@ -1,3 +1,9 @@
+class BIO_StateTimeGroup
+{
+	string Tag;
+	Array<int> Times, Minimums;
+}
+
 class BIO_NewWeapon : DoomWeapon abstract
 {
 	mixin BIO_Gear;
@@ -37,6 +43,7 @@ class BIO_NewWeapon : DoomWeapon abstract
 
 	private uint LastPipeline;
 	Array<BIO_WeaponPipeline> Pipelines;
+	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
 
 	Array<BIO_NewWeaponAffix> ImplicitAffixes, Affixes;
 	Array<string> StatReadout, AffixReadout;
@@ -295,8 +302,9 @@ class BIO_NewWeapon : DoomWeapon abstract
 
 	// Virtuals and abstracts ==================================================
 
-	// Build this weapon's default firing pipelines.
-	abstract void Construct(in out Array<BIO_WeaponPipeline> pipelines);
+	abstract void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const;
+	abstract void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const;
+	virtual void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const {}
 
 	virtual void OnDeselect() {}
 	virtual void OnSelect() {}
@@ -423,9 +431,16 @@ class BIO_NewWeapon : DoomWeapon abstract
 		}
 	}
 
-	protected action void A_BIO_SetTics(uint ndx, uint pipeline = 0)
+	protected action void A_SetFireTime(
+		uint ndx, uint grp = 0, int modifier = 0)
 	{
-		A_SetTics(invoker.Pipelines[pipeline].GetFireTime(ndx));
+		A_SetTics(modifier + invoker.FireTimeGroups[grp].Times[ndx]);
+	}
+
+	protected action void A_SetReloadTime(
+		uint ndx, uint grp = 0, int modifier = 0)
+	{
+		A_SetTics(modifier + invoker.ReloadTimeGroups[grp].Times[ndx]);
 	}
 
 	protected action void A_PresetRecoil(Class<BIO_RecoilThinker> recoil_t,
@@ -498,11 +513,27 @@ class BIO_NewWeapon : DoomWeapon abstract
 		return false;
 	}
 
+	bool DealsAnyDamage() const
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].DealsAnyDamage())
+				return true;
+
+		return false;
+	}
+
 	// Modifying ===============================================================
 
-	void Init()
+	private void Init()
 	{
-		Construct(Pipelines);
+		Pipelines.Clear();
+		FireTimeGroups.Clear();
+		ReloadTimeGroups.Clear();
+
+		InitPipelines(Pipelines);
+		InitFireTimes(FireTimeGroups);
+		InitReloadTimes(ReloadTimeGroups);
+
 		// Inform pipelines of their indices
 		for (uint i = 0; i < Pipelines.Size(); i++)
 			Pipelines[i].Index = i;
@@ -510,12 +541,70 @@ class BIO_NewWeapon : DoomWeapon abstract
 		OnWeaponChange();
 	}
 
+	private void Reset()
+	{
+		Pipelines.Clear();
+		FireTimeGroups.Clear();
+		ReloadTimeGroups.Clear();
+
+		InitPipelines(Pipelines);
+		InitFireTimes(FireTimeGroups);
+		InitReloadTimes(ReloadTimeGroups);
+
+		// Inform pipelines of their indices
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			Pipelines[i].Index = i;
+	}
+
 	void OnWeaponChange()
 	{
+		Array<BIO_WeaponPipeline> pplDefs;
+		Array<BIO_StateTimeGroup> fireTimeDefs, reloadTimeDefs;
+
+		self.Default.InitPipelines(pplDefs);
+		self.Default.InitFireTimes(fireTimeDefs);
+		self.Default.InitReloadTimes(reloadTimeDefs);
+
 		StatReadout.Clear();
 
 		for (uint i = 0; i < Pipelines.Size(); i++)
 			Pipelines[i].ToString(StatReadout, Pipelines.Size() == 1);
+
+		for (uint i = 0; i < FireTimeGroups.Size(); i++)
+		{
+			int total = BIO_Utils.IntArraySum(FireTimeGroups[i].Times),
+				totalDef = BIO_Utils.IntArraySum(fireTimeDefs[i].Times);
+
+			string str = String.Format(
+				StringTable.Localize("$BIO_WEAP_STAT_FIRETIME"),
+				BIO_Utils.StatFontColor(total, totalDef),
+				float(total) / float(TICRATE));
+
+			string grpTag = StringTable.Localize(FireTimeGroups[i].Tag);
+
+			if (grpTag.Length() > 1)
+				str.AppendFormat(" (\c[Yellow]%s\c[MidGrey])", grpTag);
+
+			StatReadout.Push(str);
+		}
+
+		for (uint i = 0; i < ReloadTimeGroups.Size(); i++)
+		{
+			int total = BIO_Utils.IntArraySum(ReloadTimeGroups[i].Times),
+				totalDef = BIO_Utils.IntArraySum(reloadTimeDefs[i].Times);
+
+			string str = String.Format(
+				StringTable.Localize("$BIO_WEAP_STAT_RELOADTIME"),
+				BIO_Utils.StatFontColor(total, totalDef),
+				float(total) / float(TICRATE));
+
+			string grpTag = StringTable.Localize(ReloadTimeGroups[i].Tag);
+
+			if (grpTag.Length() > 1)
+				str.AppendFormat(" (\c[Yellow]%s\c[MidGrey])", grpTag);
+
+			StatReadout.Push(str);
+		}
 
 		AffixReadout.Clear();
 
@@ -535,6 +624,81 @@ class BIO_NewWeapon : DoomWeapon abstract
 		}
 	}
 
+	protected static BIO_StateTimeGroup CreateStateTimeGroup(state st, string tag = "")
+	{
+		let ret = new('BIO_StateTimeGroup');
+		ret.Tag = tag;
+
+		for (state s = st; s.InStateSequence(st); s = s.NextState)
+		{
+			if (s.Tics == 0) continue; // `TNT1 A 0` and the like
+			if (s.bSlow) continue; 
+			
+			ret.Times.Push(s.Tics);
+			int min;
+
+			// States marked `Fast` are allowed to have their tic time set to 0,
+			// effectively eliminating them from the state sequence
+			if (s.bFast)
+				min = 0;
+			else if (s.bSlow) // States marked `Slow` are kept immutable
+				min = s.Tics;
+			else
+				min = 1;
+
+			ret.Minimums.Push(min);
+		}
+
+		return ret;
+	}
+
+/* 
+	// Does not alter stats, and does not apply the newly-added affixes.
+	// Returns `false` if there are no compatible affixes to add.
+	bool AddRandomAffix()
+	{
+		Array<BIO_NewWeaponAffix> eligibles;
+
+		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, self))
+			return false;
+
+		if (Rarity == BIO_RARITY_COMMON)
+		{
+			Rarity = BIO_RARITY_MUTATED;
+			SetTag(Default.GetTag());
+			SetTag(GetColoredTag());
+		}
+
+		uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
+		Affixes[e].Init(self);
+		return true;
+	}
+
+	// Affects explicit affixes only.
+	void RandomizeAffixes()
+	{
+		Reset();
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].Apply(self);
+
+		uint c = Random(2, MAX_AFFIXES);
+
+		for (uint i = 0; i < c; i++)
+		{
+			if (AddRandomAffix())
+				Affixes[Affixes.Size() - 1].Apply(self);
+		}
+	}
+ */
+
+	void ApplyLifeSteal(float percent, int dmg) const
+	{
+		let lsp = Min(percent, 1.0);
+		let given = int(float(dmg) * lsp);
+		Owner.GiveBody(given, Owner.GetMaxHealth(true) + 100);
+	}
+ 
 	// Substitutes for attack actions ==========================================
 
 	// (The crime part, where we imitate several gzdoom.pk3 functions because
@@ -788,12 +952,5 @@ class BIO_NewWeapon : DoomWeapon abstract
 	
 		if (!(flags & SF_NOPULLIN))
 			bJustAttacked = true;
-	}
-
-	void ApplyLifeSteal(float percent, int dmg) const
-	{
-		let lsp = Min(percent, 1.0);
-		let given = int(float(dmg) * lsp);
-		Owner.GiveBody(given, Owner.GetMaxHealth(true) + 100);
 	}
 }

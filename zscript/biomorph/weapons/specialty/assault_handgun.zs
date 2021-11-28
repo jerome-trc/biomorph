@@ -1,10 +1,8 @@
-class BIO_AssaultHandgun : BIO_Weapon
+class BIO_AssaultHandgun : BIO_NewWeapon
 {
-	int FireTime1, FireTime2; property FireTimes: FireTime1, FireTime2;
-	int ReloadTime; property ReloadTimes: ReloadTime;
-
 	Default
 	{
+		Decal 'BulletChip';
 		Obituary "$OB_MPPISTOL";
 		Tag "$BIO_WEAP_TAG_ASSAULTHANDGUN";
 
@@ -14,23 +12,35 @@ class BIO_AssaultHandgun : BIO_Weapon
 		Weapon.AmmoGive 18;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder SELORDER_PISTOL - 20;
+		Weapon.SelectionOrder SELORDER_PISTOL_SPEC;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
 		Weapon.UpSound "bio/weap/gunswap_0";
 
-		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
-		BIO_Weapon.Flags BIO_WF_PISTOL;
-		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
-		BIO_Weapon.DamageRange 6, 16;
-		BIO_Weapon.FireType 'BIO_Bullet';
-		BIO_Weapon.MagazineSize 18;
-		BIO_Weapon.MagazineType 'BIO_MAG_AssaultHandgun';
-		BIO_Weapon.Spread 3.6, 1.4;
-		BIO_Weapon.SwitchSpeeds 9, 9;
+		BIO_NewWeapon.Flags BIO_WF_PISTOL | BIO_WF_ONEHANDED;
+		BIO_NewWeapon.Grade BIO_GRADE_SPECIALTY;
+		BIO_NewWeapon.MagazineSize 18;
+		BIO_NewWeapon.MagazineType 'BIO_MAG_AssaultHandgun';
+		BIO_NewWeapon.SwitchSpeeds 9, 9;
+	}
 
-		BIO_AssaultHandgun.FireTimes 3, 7;
-		BIO_AssaultHandgun.ReloadTimes 30;
+	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
+	{
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+			.BasicProjectilePipeline('BIO_Bullet', 1, 6, 16, 3.6, 1.4)
+			.FireSound("bio/weap/assaulthandgun/fire")
+			.Build());
+	}
+
+	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
+	{
+		groups.Push(CreateStateTimeGroup(ResolveState('Fire'), "$BIO_BURST"));
+		groups.Push(CreateStateTimeGroup(ResolveState('AltFire'), "$BIO_SEMI_AUTO"));
+	}
+
+	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const
+	{
+		groups.Push(CreateStateTimeGroup(ResolveState('Reload')));
 	}
 
 	States
@@ -46,76 +56,81 @@ class BIO_AssaultHandgun : BIO_Weapon
 		Stop;
 	Fire:
 		TNT1 A 0 A_AutoReload;
-		ASHG B 2 A_SetTics(invoker.FireTime1);
+		ASHG B 2 Fast A_SetFireTime(0);
 		ASHG D 1 Bright
 		{
+			A_SetFireTime(1);
 			A_BIO_Fire();
 			A_PresetRecoil('BIO_AutogunRecoil');
 			A_GunFlash();
 			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
-		ASHG C 1;
-		ASHG B 1;
+		ASHG C 1 Fast A_SetFireTime(2);
+		ASHG B 1 Fast A_SetFireTime(3);
 		TNT1 A 0 A_AutoReload;
 		ASHG E 1 Bright
 		{
+			A_SetFireTime(4);
 			A_BIO_Fire();
 			A_PresetRecoil('BIO_AutogunRecoil');
 			A_GunFlash();
 			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
-		ASHG C 2 A_SetTics(invoker.FireTime2);
-		ASHG C 1;
+		ASHG C 2 Fast A_SetFireTime(5);
+		ASHG C 1 Fast A_SetFireTime(6);
 		TNT1 A 0 A_AutoReload;
 		ASHG D 1 Bright
 		{
+			A_SetFireTime(7);
 			A_BIO_Fire();
 			A_PresetRecoil('BIO_AutogunRecoil');
 			A_GunFlash();
 			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
-		ASHG C 1;
-		ASHG B 1;
+		ASHG C 1 Fast A_SetFireTime(8);
+		ASHG B 1 Fast A_SetFireTime(9);
 		ASHG B 0 A_ReFire;
 		Goto Ready;
 	AltFire:
-		ASHG B 3 A_SetTics(invoker.FireTime1 + 1);
+		ASHG B 3 Fast A_SetFireTime(0, 1);
 		ASHG D 3 Bright
 		{
-			A_SetTics(invoker.FireTime1 + 1);
+			A_SetFireTime(1, 1);
 			invoker.bAltFire = false;
 			A_BIO_Fire(spreadFactor: 0.5);
 			A_PresetRecoil('BIO_HandgunRecoil');
 			A_GunFlash();
 			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
-		ASHG C 3 A_SetTics(invoker.FireTime2 + 1);
-		ASHG B 3 A_SetTics(invoker.FireTime2 + 1);
-		ASHG A 1 A_ReFire;
+		ASHG C 3 Fast A_SetFireTime(2, 1);
+		ASHG B 3 Fast A_SetFireTime(3, 1);
+		ASHG A 1 Fast
+		{
+			A_SetFireTime(4, 1);
+			A_ReFire();
+		}
 		Goto Ready;
 	Reload:
+		// TODO: Reload sounds
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		ASHG A 1 A_WeaponReady(WRF_NOFIRE);
-		ASHG A 1 Offset(0, 32 + 2);
-		ASHG A 1 Offset(0, 32 + 4);
-		ASHG A 1 Offset(0, 32 + 6);
-		ASHG A 1 Offset(0, 32 + 8);
-		ASHG A 1 Offset(0, 32 + 10);
-		ASHG A 1 Offset(0, 32 + 12);
-		ASHG A 1 Offset(0, 32 + 14);
-		ASHG A 1 Offset(0, 32 + 16);
-		ASHG A 1 Offset(0, 32 + 18);
-		// TODO: Reload sounds
-		ASHG A 30 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
-		ASHG A 1 Offset(0, 32 + 18) A_LoadMag;
-		ASHG A 1 Offset(0, 32 + 16);
-		ASHG A 1 Offset(0, 32 + 14);
-		ASHG A 1 Offset(0, 32 + 12);
-		ASHG A 1 Offset(0, 32 + 10);
-		ASHG A 1 Offset(0, 32 + 8);
-		ASHG A 1 Offset(0, 32 + 6);
-		ASHG A 1 Offset(0, 32 + 4);
-		ASHG A 1 Offset(0, 32 + 2);
+		ASHG A 1 Fast Offset(0, 32 + 1) A_SetReloadTime(1);
+		ASHG A 1 Fast Offset(0, 32 + 3) A_SetReloadTime(2);
+		ASHG A 1 Fast Offset(0, 32 + 7) A_SetReloadTime(3);
+		ASHG A 1 Fast Offset(0, 32 + 15) A_SetReloadTime(4);
+		ASHG A 1 Offset(0, 32 + 30) A_SetReloadTime(5);
+		ASHG A 30 Offset(0, 32 + 30) A_SetReloadTime(6);
+		ASHG A 1 Offset(0, 32 + 15)
+		{
+			A_SetReloadTime(7);
+			A_LoadMag();
+		}
+		ASHG A 1 Fast Offset(0, 32 + 11) A_SetReloadTime(8);
+		ASHG A 1 Fast Offset(0, 32 + 7) A_SetReloadTime(9);
+		ASHG A 1 Fast Offset(0, 32 + 5) A_SetReloadTime(10);
+		ASHG A 1 Fast Offset(0, 32 + 3) A_SetReloadTime(11);
+		ASHG A 1 Fast Offset(0, 32 + 2) A_SetReloadTime(12);
+		ASHG A 1 Fast Offset(0, 32 + 1) A_SetReloadTime(13);
 		Goto Ready;
 	Flash:
 		TNT1 A 2 Bright A_Light(1);
@@ -125,64 +140,6 @@ class BIO_AssaultHandgun : BIO_Weapon
 		ASHG X 0;
 		ASHG X 0 A_BIO_Spawn;
 		Stop;
-	}
-
-	override void GetFireTimes(in out Array<int> fireTimes, bool _) const
-	{
-		fireTimes.PushV(FireTime1, FireTime2);
-	}
-
-	override void SetFireTimes(Array<int> fireTimes, bool _)
-	{
-		FireTime1 = fireTimes[0];
-		FireTime2 = fireTimes[1];
-	}
-
-	override void GetReloadTimes(in out Array<int> reloadTimes, bool _) const
-	{
-		reloadTimes.Push(ReloadTime);
-	}
-
-	override void SetReloadTimes(Array<int> reloadTimes, bool _)
-	{
-		ReloadTime = reloadTimes[0];
-	}
-
-	override void ResetStats()
-	{
-		super.ResetStats();
-
-		FireTime1 = Default.FireTime1;
-		FireTime2 = Default.FireTime2;
-
-		ReloadTime = Default.ReloadTime;
-	}
-
-	override void StatsToString(in out Array<string> stats) const
-	{
-		stats.Push(GenericFireDataReadout());
-		stats.Push(GenericSpreadReadout());
-
-		stats.Push(GenericFireTimeReadout(TotalBurstFireTime(),
-			"$BIO_WEAPSTAT_FIRETIME_BURST", Default.TotalBurstFireTime()));
-		stats.Push(GenericFireTimeReadout(TotalSemiAutoFireTime(),
-			"$BIO_WEAPSTAT_FIRETIME_SEMIAUTO", Default.TotalSemiAutoFireTime()));
-		
-		stats.Push(GenericReloadTimeReadout(ReloadTime + 19));
-	}
-
-	// Note: currently unused.
-	override int TrueFireTime() const { return TotalBurstFireTime(); }
-	override int TrueReloadTime() const { return ReloadTime + 19; }
-
-	protected int TotalBurstFireTime() const
-	{
-		return FireTime1 + 4 + FireTime2 + 4;
-	}
-
-	protected int TotalSemiAutoFireTime() const
-	{
-		return ((FireTime1 + 1) * 2) + ((FireTime2 + 1) * 2) + 1;
 	}
 }
 

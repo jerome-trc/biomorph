@@ -1,3 +1,21 @@
+enum BIO_WeaponFlags : uint16
+{
+	BIO_WF_NONE = 0,
+	// More frequently-changing state
+	BIO_WF_ZOOMED = 1 << 0,
+	// Less frequently-changing state
+	BIO_WF_CORRUPTED = 1 << 1,
+	BIO_WF_AFFIXESHIDDEN = 1 << 2, // Caused by corruption
+	BIO_WF_ONEHANDED = 1 << 3,
+	BIO_WF_PISTOL = 1 << 4,
+	BIO_WF_SHOTGUN = 1 << 5,
+	// The following 3 are applicable only to dual-wielded weapons
+	BIO_WF_NOAUTOPRIMARY = 1 << 13,
+	BIO_WF_NOAUTOSECONDARY = 1 << 14,
+	BIO_WF_AKIMBORELOAD = 1 << 15,
+	BIO_WF_ALL = uint16.MAX
+}
+
 extend class BIO_NewWeapon
 {
 	const MAX_AFFIXES = 6;

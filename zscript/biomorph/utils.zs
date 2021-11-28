@@ -93,6 +93,16 @@ class BIO_Utils abstract
 		return idx, min;
 	}
 
+	static int IntArraySum(Array<int> arr)
+	{
+		int ret = 0;
+
+		for (uint i = 0; i < arr.Size(); i++)
+			ret += arr[i];
+
+		return ret;
+	}
+
 	static string GradeToString(BIO_Grade grade)
 	{
 		switch (grade)
@@ -193,6 +203,20 @@ class BIO_Utils abstract
 		case Font.CR_FIRE: return "\cx";
 		case Font.CR_SAPPHIRE: return "\cy";
 		case Font.CR_TEAL: return "\cz";
+		}
+	}
+
+	// `fallback` gets passed to `StringTable.Localize()`.
+	static string RankString(uint rank, string fallback = "")
+	{
+		switch (rank)
+		{
+		case 0: return StringTable.Localize("$BIO_PRIMARY");
+		case 1: return StringTable.Localize("$BIO_SECONDARY");
+		case 2: return StringTable.Localize("$BIO_TERTIARY");
+		case 3: return StringTable.Localize("$BIO_QUATERNARY");
+		default:
+			return String.Format("%s%d", StringTable.Localize(fallback), rank);
 		}
 	}
 
