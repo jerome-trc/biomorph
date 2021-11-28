@@ -170,12 +170,43 @@ class BIO_WeaponPipeline play
 	void GetDamageValues(in out Array<int> damages) const
 	{
 		Damage.GetValues(damages);
+		FireFunctor.GetDamageValues(damages);
+		
+		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
+			ProjTravelFunctors[i].GetDamageValues(damages);
+		for (uint i = 0; i < ProjDamageFunctors.Size(); i++)
+			ProjDamageFunctors[i].GetDamageValues(damages);
+		for (uint i = 0; i < ProjDeathFunctors.Size(); i++)
+			ProjDeathFunctors[i].GetDamageValues(damages);
 	}
 
 	void SetDamageValues(in out Array<int> damages)
 	{
 		if (Mask & BIO_WPM_DAMAGEVALS) return;
+
 		Damage.SetValues(damages);
+		damages.Delete(0, Damage.ValueCount());
+
+		FireFunctor.SetDamageValues(damages);
+		damages.Delete(0, FireFunctor.DamageValueCount());
+
+		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
+		{
+			ProjTravelFunctors[i].SetDamageValues(damages);
+			damages.Delete(0, ProjTravelFunctors[i].DamageValueCount());
+		}
+
+		for (uint i = 0; i < ProjDamageFunctors.Size(); i++)
+		{
+			ProjDamageFunctors[i].SetDamageValues(damages);
+			damages.Delete(0, ProjDamageFunctors[i].DamageValueCount());
+		}
+
+		for (uint i = 0; i < ProjDeathFunctors.Size(); i++)
+		{
+			ProjDeathFunctors[i].SetDamageValues(damages);
+			damages.Delete(0, ProjDeathFunctors[i].DamageValueCount());
+		}
 	}
 
 	bool DealsAnyDamage() const
@@ -188,6 +219,24 @@ class BIO_WeaponPipeline play
 				return true;
 
 		return false;
+	}
+
+	void PushProjTravelFunctor(BIO_ProjTravelFunctor func)
+	{
+		if (Mask & BIO_WPM_PROJTRAVELFUNCS) return;
+		ProjTravelFunctors.Push(func);
+	}
+
+	void PushProjDamageFunctor(BIO_ProjDamageFunctor func)
+	{
+		if (Mask & BIO_WPM_PROJDAMAGEFUNCS) return;
+		ProjDamageFunctors.Push(func);
+	}
+
+	void PushProjDeathFunctor(BIO_ProjDeathFunctor func)
+	{
+		if (Mask & BIO_WPM_PROJDEATHFUNCS) return;
+		ProjDeathFunctors.Push(func);
 	}
 
 	void SetSpread(float hSpr, float vSpr)
@@ -278,8 +327,15 @@ class BIO_WeaponPipeline play
 			defs = ppls[Index].AsConst();
 		}
 
-		readout.Push(FireFunctor.ToString(AsConst(), defs));
+		FireFunctor.ToString(readout, AsConst(), defs);
 		readout.Push(Damage.ToString(defs.Damage));
+
+		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
+			ProjTravelFunctors[i].ToString(readout);
+		for (uint i = 0; i < ProjDamageFunctors.Size(); i++)
+			ProjDamageFunctors[i].ToString(readout);
+		for (uint i = 0; i < ProjDeathFunctors.Size(); i++)
+			ProjDeathFunctors[i].ToString(readout);
 
 		// Don't report spread unless it's non-trivial (weapons with 
 		// true projectiles are likely to have little to no spread)
@@ -339,6 +395,29 @@ class BIO_WeaponPipelineBuilder play
 		Pipeline.SetFireFunctor(new('BIO_FireFunc_Default'));
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(fireCount);
+
+		let dmgFunc = new('BIO_DmgFunc_Default');
+		dmgFunc.CustomSet(minDamage, maxDamage);
+		Pipeline.SetDamageFunctor(dmgFunc);
+
+		Pipeline.SetSpread(hSpread, vSpread);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder BFGPipeline(Class<Actor> fireType = 'BIO_BFGBall',
+		int fireCount = 1, int rayCount = 40, int minDamage = 100, int maxDamage = 800,
+		int minRayDmg = 49, int maxRayDmg = 87, float hSpread = 0.4, float vSpread = 0.4)
+	{
+		let fireFunc = new('BIO_FireFunc_Default');
+		Pipeline.SetFireFunctor(fireFunc);
+		Pipeline.SetFireType(fireType);
+		Pipeline.SetFireCount(fireCount);
+
+		let sprayFunctor = new('BIO_PDTF_BFGSpray');
+		sprayFunctor.RayCount = rayCount;
+		sprayFunctor.MinDamage = minRayDmg;
+		sprayFunctor.MaxDamage = maxRayDmg;
+		Pipeline.PushProjDeathFunctor(sprayFunctor);
 
 		let dmgFunc = new('BIO_DmgFunc_Default');
 		dmgFunc.CustomSet(minDamage, maxDamage);
