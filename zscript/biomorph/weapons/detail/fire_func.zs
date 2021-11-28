@@ -68,8 +68,7 @@ class BIO_FireFunc_Default : BIO_FireFunctor
 	{
 		return weap.BIO_FireProjectile(fireData.FireType,
 			angle: fireData.Angle + FRandom(-fireData.HSpread, fireData.HSpread),
-			pitch: fireData.Pitch + FRandom(-fireData.VSpread, fireData.VSpread)
-		);
+			pitch: fireData.Pitch + FRandom(-fireData.VSpread, fireData.VSpread));
 	}
 
 	override string ToString(
@@ -78,7 +77,6 @@ class BIO_FireFunc_Default : BIO_FireFunctor
 	{
 		int fc = ppl.GetFireCount();
 		Class<Actor> ft = ppl.GetFireType();
-		let myDefs = BIO_FireFunc_Default(pplDef.GetFireFunctorConst());
 
 		return String.Format(
 			StringTable.Localize("$BIO_WEAP_FIREFUNC_DEFAULT"),

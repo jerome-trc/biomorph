@@ -17,7 +17,11 @@ class BIO_NewWeaponAffix : BIO_Affix abstract
 {
 	abstract bool Compatible(BIO_NewWeapon weap) const;
 	virtual void Init(BIO_NewWeapon weap) {}
-	virtual void CustomInit(BIO_NewWeapon weap, Dictionary dict) {}
+	virtual void CustomInit(BIO_NewWeapon weap, Dictionary dict)
+	{
+		Console.Printf(Biomorph.LOGPFX_INFO ..
+			"This weapon has no custom initialiser.");
+	}
 	virtual void Apply(BIO_NewWeapon weap) const {}
 
 	virtual void ModifyDamage(BIO_NewWeapon weap, in out int damage) const {}

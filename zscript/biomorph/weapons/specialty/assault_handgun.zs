@@ -34,13 +34,13 @@ class BIO_AssaultHandgun : BIO_NewWeapon
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(CreateStateTimeGroup(ResolveState('Fire'), "$BIO_BURST"));
-		groups.Push(CreateStateTimeGroup(ResolveState('AltFire'), "$BIO_SEMI_AUTO"));
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire'), "$BIO_BURST"));
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('AltFire'), "$BIO_SEMI_AUTO"));
 	}
 
 	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(CreateStateTimeGroup(ResolveState('Reload')));
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Reload')));
 	}
 
 	States
