@@ -6,6 +6,13 @@ class BIO_DamageFunctor play abstract
 	virtual void GetValues(in out Array<int> vals) const {}
 	virtual void SetValues(in out Array<int> vals) {}
 
+	uint ValueCount() const
+	{
+		Array<int> vals;
+		GetValues(vals);
+		return vals.Size();
+	}
+
 	// Output should be full localized.
 	abstract string ToString(BIO_DamageFunctor def) const;
 

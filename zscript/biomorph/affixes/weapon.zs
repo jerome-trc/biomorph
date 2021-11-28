@@ -191,6 +191,13 @@ class BIO_ProjDmgFunc_EnemyHealthDamage : BIO_ProjDamageFunctor
 	{
 		damage += (target.Health * Factor);
 	}
+
+	override void ToString(in out Array<string> readout) const
+	{
+		readout.Push(String.Format(
+			StringTable.Localize("$BIO_PDMF_ENEMYHEALTHDMG"),
+			Factor * 100.0));
+	}
 }
 
 // Only compatible with pistol-type weapons, to give them an edge.

@@ -198,6 +198,12 @@
 	BIO_PROJ_TAG_PLASMAGLOBULE = "plasma globule";
 	BIO_PROJ_TAG_PLASMAGLOBULES = "plasma globules";
 
+	BIO_PDMF_ENEMYHEALTHDMG =
+		"%.1f%% of enemy health added to damage";
+
+	BIO_PDTF_BFGSPRAY =
+		"\c[MidGrey]%s%d \c[MidGrey]rays, %s%d \cu-\c[MidGrey] %s%d damage";
+
 // Mutagens (tags, pickup messages, usage strings) =============================
 
 	BIO_MUTA_FAIL_NULLWEAP = "This weapon isn't a part of you; it can't be mutated.";

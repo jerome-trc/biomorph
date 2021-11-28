@@ -1089,7 +1089,7 @@ class BIO_Weapon : DoomWeapon abstract
 	protected action void A_PresetRecoil(Class<BIO_RecoilThinker> recoil_t,
 		float scale = 1.0, bool invert = false)
 	{
-		BIO_RecoilThinker.Create(recoil_t, BIO_Weapon(invoker), scale, invert);
+		// BIO_RecoilThinker.Create(recoil_t, BIO_Weapon(invoker), scale, invert);
 	}
 
 	protected action void A_LightRecoil()

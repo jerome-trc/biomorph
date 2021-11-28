@@ -4,6 +4,16 @@ class BIO_FireFunctor play abstract
 
 	abstract Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const;
 
+	virtual void GetDamageValues(in out Array<int> vals) const {}
+	virtual void SetDamageValues(in out Array<int> vals) {}
+
+	uint DamageValueCount() const
+	{
+		Array<int> dmgVals;
+		GetDamageValues(dmgVals);
+		return dmgVals.Size();
+	}
+
 	// Output is fully localized.
 	protected static string FireTypeTag(Class<Actor> fireType, int count)
 	{
@@ -55,7 +65,8 @@ class BIO_FireFunctor play abstract
 			return StringTable.Localize(GetDefaultByType(fireType).GetTag());
 	}
 
-	abstract string ToString(
+	abstract void ToString(
+		in out Array<string> readout,
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const;
 
@@ -71,18 +82,19 @@ class BIO_FireFunc_Default : BIO_FireFunctor
 			pitch: fireData.Pitch + FRandom(-fireData.VSpread, fireData.VSpread));
 	}
 
-	override string ToString(
+	override void ToString(
+		in out Array<string> readout,
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
 		int fc = ppl.GetFireCount();
 		Class<Actor> ft = ppl.GetFireType();
 
-		return String.Format(
+		readout.Push(String.Format(
 			StringTable.Localize("$BIO_WEAP_FIREFUNC_DEFAULT"),
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
-			FireTypeTag(ft, fc));
+			FireTypeTag(ft, fc)));
 	}
 }
 
@@ -103,18 +115,19 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 		return null;
 	}
 
-	override string ToString(
+	override void ToString(
+		in out Array<string> readout,
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
 		int fc = ppl.GetFireCount();
 		Class<Actor> ft = ppl.GetFireType();
 
-		return String.Format(
+		readout.Push(String.Format(
 			StringTable.Localize("$BIO_WEAP_FIREFUNC_DEFAULT"),
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
-			FireTypeTag(ft, fc));
+			FireTypeTag(ft, fc)));
 	}
 }
 
@@ -156,7 +169,8 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		return null;
 	}
 
-	override string ToString(
+	override void ToString(
+		in out Array<string> readout,
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
@@ -177,9 +191,11 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 			defaultSpawn = spawnClass == pplDef.GetFireType();
 		}
 
+		string output = "";
+
 		if (puff_t != null && spawnClass != null)
 		{
-			return String.Format(
+			output = String.Format(
 				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL"),
 				BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 				defaultPuff ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
@@ -189,7 +205,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		}
 		else if (puff_t == null)
 		{
-			return String.Format(
+			output = String.Format(
 				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOPUFF"),
 				BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 				defaultSpawn ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
@@ -197,7 +213,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		}
 		else if (spawnClass == null)
 		{
-			return String.Format(
+			output = String.Format(
 				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOSPAWN"),
 				BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 				defaultPuff ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
@@ -205,10 +221,12 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		}
 		else
 		{
-			return String.Format(
+			output = String.Format(
 				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOTHING"),
 				BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc);
 		}
+
+		readout.Push(output);
 	}
 }
 
@@ -247,11 +265,12 @@ class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 		return null;
 	}
 
-	override string ToString(
+	override void ToString(
+		in out Array<string> readout,
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
-		return StringTable.Localize("$BIO_WEAP_FIREFUNC_FIST");
+		readout.Push(StringTable.Localize("$BIO_WEAP_FIREFUNC_FIST"));
 	}
 }
 
@@ -265,10 +284,11 @@ class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
 		return null;
 	}
 
-	override string ToString(
+	override void ToString(
+		in out Array<string> readout,
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
-		return StringTable.Localize("$BIO_WEAP_FIREFUNC_CHAINSAW");
+		readout.Push(StringTable.Localize("$BIO_WEAP_FIREFUNC_CHAINSAW"));
 	}
 }

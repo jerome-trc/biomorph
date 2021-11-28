@@ -13,7 +13,6 @@ mixin class BIO_ProjectileCommon
 	meta string PluralTag; property PluralTag: PluralTag;
 	meta BIO_ProjectileMetaFlags MetaFlags; property MetaFlags: MetaFlags;
 
-	int BFGRays; property BFGRays: BFGRays;
 	int SplashDamage, SplashRadius; property Splash: SplashDamage, SplashRadius;
 	int Shrapnel; property Shrapnel: Shrapnel;
 
@@ -54,7 +53,6 @@ class BIO_Projectile : Actor abstract
 		
 		BIO_Projectile.MetaFlags BIO_PMF_NONE;
 		BIO_Projectile.Acceleration 1.0;
-		BIO_Projectile.BFGRays 0;
 		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_ROUNDS";
 		BIO_Projectile.Splash 0, 0;
 		BIO_Projectile.Shrapnel 0;
@@ -130,7 +128,6 @@ class BIO_FastProjectile : FastProjectile abstract
 		Tag "$BIO_PROJ_TAG_ROUND";
 
 		BIO_FastProjectile.MetaFlags BIO_PMF_NONE;
-		BIO_FastProjectile.BFGRays 0;
 		BIO_FastProjectile.PluralTag "$BIO_PROJ_TAG_ROUNDS";
 		BIO_FastProjectile.Splash 0, 0;
 		BIO_FastProjectile.Shrapnel 0;
@@ -155,11 +152,11 @@ class BIO_FastProjectile : FastProjectile abstract
 	action void A_ProjectileDeath()
 	{
 		invoker.OnProjectileDeath();
-		
+
 		for (uint i = 0; i < invoker.ProjDeathFunctors.Size(); i++)
 			invoker.ProjDeathFunctors[i].InvokeFast(BIO_FastProjectile(self));
 
-		// TODO: Subtle sound if Shrapnel is >0
+		// TODO: Subtle sound if `Shrapnel` is >0
 		if (invoker.Shrapnel > 0)
 		{
 			A_Explode(invoker.SplashDamage, invoker.SplashRadius,
@@ -174,23 +171,59 @@ class BIO_FastProjectile : FastProjectile abstract
 	}
 }
 
-class BIO_ProjTravelFunctor abstract
+class BIO_ProjTravelFunctor play abstract
 {
 	abstract void Invoke(BIO_Projectile proj);
+
+	virtual void GetDamageValues(in out Array<int> damages) const {}
+	virtual void SetDamageValues(in out Array<int> damages) {}
+
+	uint DamageValueCount() const
+	{
+		Array<int> dmgVals;
+		GetDamageValues(dmgVals);
+		return dmgVals.Size();
+	}
+
+	abstract void ToString(in out Array<string> readout) const;
 }
 
-class BIO_ProjDamageFunctor abstract
+class BIO_ProjDamageFunctor play abstract
 {
 	virtual void InvokeTrue(BIO_Projectile proj,
 		Actor target, in out int damage, name dmgType) const {}
 	virtual void InvokeFast(BIO_FastProjectile proj,
 		Actor target, in out int damage, name dmgType) const {}
+
+	virtual void GetDamageValues(in out Array<int> damages) const {}
+	virtual void SetDamageValues(in out Array<int> damages) {}
+
+	uint DamageValueCount() const
+	{
+		Array<int> dmgVals;
+		GetDamageValues(dmgVals);
+		return dmgVals.Size();
+	}
+
+	abstract void ToString(in out Array<string> readout) const;
 }
 
-class BIO_ProjDeathFunctor abstract
+class BIO_ProjDeathFunctor play abstract
 {
 	virtual void InvokeTrue(BIO_Projectile proj) const {}
 	virtual void InvokeFast(BIO_FastProjectile proj) const {}
+
+	virtual void GetDamageValues(in out Array<int> damages) const {}
+	virtual void SetDamageValues(in out Array<int> damages) {}
+
+	uint DamageValueCount() const
+	{
+		Array<int> dmgVals;
+		GetDamageValues(dmgVals);
+		return dmgVals.Size();
+	}
+
+	abstract void ToString(in out Array<string> readout) const;
 }
 
 // Fast projectiles (used like puffs) ==========================================
@@ -338,9 +371,6 @@ class BIO_PlasmaBall : BIO_Projectile
 
 class BIO_BFGBall : BIO_Projectile
 {
-	int MinRayDamage, MaxRayDamage;
-	property RayDamageRange: MinRayDamage, MaxRayDamage;
-
 	Default
 	{
 		+RANDOMIZE
@@ -357,7 +387,6 @@ class BIO_BFGBall : BIO_Projectile
 
 		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_BFGBALLS";
 		BIO_Projectile.MetaFlags BIO_PMF_ENERGY;
-		BIO_BFGBall.RayDamageRange 15, 120;
 	}
 
 	States
@@ -374,10 +403,32 @@ class BIO_BFGBall : BIO_Projectile
 		BFE1 DEF 8 Bright;
 		Stop;
 	}
+}
 
-	override void OnProjectileDeath()
+class BIO_PDTF_BFGSpray : BIO_ProjDeathFunctor
+{
+	int RayCount, MinDamage, MaxDamage;
+
+	override void InvokeTrue(BIO_Projectile proj) const
 	{
-		A_BFGSpray(numRays: BFGRays, defDamage: Random(MinRayDamage, MaxRayDamage));
+		proj.A_BFGSpray(numRays: RayCount, defDamage: Random(MinDamage, MaxDamage));
+	}
+
+	override void InvokeFast(BIO_FastProjectile proj) const
+	{
+		proj.A_BFGSpray(numRays: RayCount, defDamage: Random(MinDamage, MaxDamage));
+	}
+
+	override void ToString(in out Array<string> readout) const
+	{
+		string
+			crEsc_rc = BIO_Utils.StatFontColor(RayCount, 40),
+			crEsc_min = BIO_Utils.StatFontColor(MinDamage, 49),
+			crEsc_max = BIO_Utils.StatFontColor(MaxDamage, 87);
+
+		readout.Push(String.Format(
+			StringTable.Localize("$BIO_PDTF_BFGSPRAY"),
+			crEsc_rc, RayCount, crEsc_min, MinDamage, crEsc_max, MaxDamage));
 	}
 }
 
