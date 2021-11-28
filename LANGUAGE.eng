@@ -45,6 +45,10 @@
 		"\c[MidGrey]Horizontal spread: %s%.2f \c[MidGrey]degree(s)";
 	BIO_WEAP_STAT_VSPREAD =
 		"\c[MidGrey]Vertical spread: %s%2.f \c[MidGrey]degree(s)";
+	BIO_WEAP_STAT_FIRETIME =
+		"\c[MidGrey]Fire time: %s%.2f \c[MidGrey]seconds";
+	BIO_WEAP_STAT_RELOADTIME =
+		"\c[MidGrey]Reload time: %s%.2f \c[MidGrey]seconds";
 
 	BIO_WEAP_FIREFUNC_DEFAULT =
 		"\c[MidGrey]Fires %s%d %s%s";
@@ -73,7 +77,7 @@
 	BIO_WEAPSTAT_FIREDATA =
 		"\c[MidGrey]Damage: (%s%d\c[MidGrey] \cu-\c[MidGrey] %s%d\c[MidGrey]) \c[MidGrey]x\c[MidGrey] %s%d\c[MidGrey] %s%s\c-";
 	BIO_WEAPSTAT_FIRETIME =
-		"\c[MidGrey]Fire time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
+		"\c[MidGrey]Fire time: %s%.2f \c[MidGrey]seconds";
 	BIO_WEAPSTAT_FIRETIME_SEMIAUTO =
 		"\c[MidGrey]Fire time (\cksemi-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
 	BIO_WEAPSTAT_FIRETIME_BURST =
@@ -414,4 +418,12 @@
 	BIO_ADDED_TO = "added to";
 	BIO_REMOVED_FROM = "removed from";
 
+	BIO_PRIMARY = "primary";
+	BIO_SECONDARY = "secondary";
+	BIO_TERIARY = "tertiary";
+	BIO_QUATERNARY = "quaternary";
+
+	BIO_FIRE_MODE = "fire mode";
+	BIO_BURST = "burst";
+	BIO_SEMI_AUTO = "semi-automatic";
 	BIO_PER_BARREL = "per barrel";

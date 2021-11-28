@@ -498,7 +498,7 @@ class BIO_GlobalData : Thinker
 				if (weap_t == null || weap_t == 'BIO_Weapon')
 				{
 					Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
-						"lump %d, loot object, %s weapon %d is an invalid class.",
+						" lump %d, loot object, %s weapon %d is an invalid class.",
 						lump, arrName, i);
 					continue;
 				}

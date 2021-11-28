@@ -8,11 +8,10 @@ enum BIO_WeaponPipelineMask : uint16
 	BIO_WPM_DAMAGEVALS = 1 << 4,
 	BIO_WPM_HSPREAD = 1 << 5,
 	BIO_WPM_VSPREAD = 1 << 6,
-	BIO_WPM_FIRETIME = 1 << 7,
-	BIO_WPM_AMMOUSE = 1 << 8,
-	BIO_WPM_PROJTRAVELFUNCS = 1 << 12,
-	BIO_WPM_PROJDAMAGEFUNCS = 1 << 13,
-	BIO_WPM_PROJDEATHFUNCS = 1 << 14,
+	BIO_WPM_AMMOUSE = 1 << 7,
+	BIO_WPM_PROJTRAVELFUNCS = 1 << 8,
+	BIO_WPM_PROJDAMAGEFUNCS = 1 << 9,
+	BIO_WPM_PROJDEATHFUNCS = 1 << 10,
 	BIO_WPM_PROJFUNCTORS =
 		BIO_WPM_PROJTRAVELFUNCS |
 		BIO_WPM_PROJDAMAGEFUNCS |
@@ -48,8 +47,6 @@ class BIO_WeaponPipeline play
 	private Array<BIO_ProjTravelFunctor> ProjTravelFunctors;
 	private Array<BIO_ProjDamageFunctor> ProjDamageFunctors;
 	private Array<BIO_ProjDeathFunctor> ProjDeathFunctors;
-
-	private Array<int> FireTimes, FireTimeMinimums;
 
 	private sound FireSound;
 	private double FireSoundVolume, FireSoundAttenuation;
@@ -181,6 +178,18 @@ class BIO_WeaponPipeline play
 		Damage.SetValues(damages);
 	}
 
+	bool DealsAnyDamage() const
+	{
+		Array<int> vals;
+		GetDamageValues(vals);
+		
+		for (uint i = 0; i < vals.Size(); i++)
+			if (vals[i] > 0)
+				return true;
+
+		return false;
+	}
+
 	void SetSpread(float hSpr, float vSpr)
 	{
 		if (!(Mask & BIO_WPM_HSPREAD))
@@ -199,24 +208,6 @@ class BIO_WeaponPipeline play
 		if (Mask & BIO_WPM_ALERT) return;
 		MaxAlertDistance = maxDist;
 		AlertFlags = flags;
-	}
-
-	int GetFireTime(uint ndx) const { return FireTimes[ndx]; }
-
-	void PushFireTimes(state fireState)
-	{
-		if (Mask & BIO_WPM_FIRETIME) return;
-
-		for (state s = fireState; s.InStateSequence(fireState); s = s.NextState)
-		{
-			if (s.Tics == 0) continue; // `TNT1 A 0` and the like
-			if (s.bSlow) continue; // States marked `Slow` are kept immutable
-			
-			uint j = FireTimes.Push(s.Tics);
-			// States marked `Fast` are allowed to have their tic time set to 0,
-			// effectively eliminating them from the state sequence
-			uint e = FireTimeMinimums.Push(s.bFast ? 0 : 1);
-		}
 	}
 
 	bool UsesSecondaryMagazine() const { return SecondaryMagazine; }
@@ -283,7 +274,7 @@ class BIO_WeaponPipeline play
 
 		{
 			Array<BIO_WeaponPipeline> ppls;
-			WeapDefault.Construct(ppls);
+			WeapDefault.InitPipelines(ppls);
 			defs = ppls[Index].AsConst();
 		}
 
@@ -360,12 +351,6 @@ class BIO_WeaponPipelineBuilder play
 	BIO_WeaponPipelineBuilder Alert(double maxDist, int flags)
 	{
 		Pipeline.SetAlertStats(maxDist, flags);
-		return self;
-	}
-
-	BIO_WeaponPipelineBuilder FireTime(state fireState)
-	{
-		Pipeline.PushFireTimes(fireState);
 		return self;
 	}
 
