@@ -49,7 +49,7 @@ class BIO_AutoShotgun : BIO_Weapon
 			A_BIO_Fire();
 			A_StartSound("bio/weap/autoshotgun/fire", CHAN_WEAPON);
 			A_GunFlash();
-			A_PresetRecoil('BIO_ShotgunRecoil', scale: 1.2);
+			A_PresetRecoil('BIO_Recoil_Shotgun', scale: 1.2);
 		}
 		AUSG C 2 Bright Offset(0, 32 + 6);
 		AUSG D 3 Offset(0, 32 + 12) A_SetTics(invoker.FireTime1);

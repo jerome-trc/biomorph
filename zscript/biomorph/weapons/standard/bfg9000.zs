@@ -67,7 +67,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		{
 			A_SetTics(invoker.FireTime3);
 			A_BIO_Fire();
-			A_PresetRecoil('BIO_BFGRecoil');
+			A_PresetRecoil('BIO_Recoil_BFG');
 		}
 		BFGG B 20
 		{
@@ -91,11 +91,11 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		BFGG A 50 Offset(0, 32 + 20)
 		{
 			A_SetTics(invoker.ReloadTime);
-			A_PresetRecoil('BIO_HeavyReloadRecoil');
+			A_PresetRecoil('BIO_Recoil_HeavyReload');
 		}
 		BFGG A 1 Offset(0, 32 + 18)
 		{
-			A_PresetRecoil('BIO_HeavyReloadRecoil', invert: true);
+			A_PresetRecoil('BIO_Recoil_HeavyReload', invert: true);
 			A_LoadMag();
 		}
 		BFGG A 1 Offset(0, 32 + 16);

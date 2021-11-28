@@ -48,7 +48,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 			A_SetTics(invoker.FireTime1);
 			A_BIO_Fire();
 			Player.SetSafeFlash(invoker, ResolveState('Flash'), Random(0, 1));
-			A_PresetRecoil('BIO_AutogunRecoil');
+			A_PresetRecoil('BIO_Recoil_Autogun');
 		}
 		PLSG B 20
 		{

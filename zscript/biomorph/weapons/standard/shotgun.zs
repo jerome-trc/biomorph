@@ -54,7 +54,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 			A_BIO_Fire();
 			A_GunFlash();
 			A_StartSound("weapons/shotgf", CHAN_WEAPON);
-			A_PresetRecoil('BIO_ShotgunRecoil');
+			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		SHTG A 3 Bright A_SetTics(invoker.FireTime3);
 		Goto Ready;
@@ -65,7 +65,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		{
 			A_SetTics(invoker.ReloadTime2);
 			A_LoadMag();
-			A_PresetRecoil('BIO_ShotgunPumpRecoil');
+			A_PresetRecoil('BIO_Recoil_ShotgunPump');
 		}
 		SHTG CB 5 A_SetTics(invoker.ReloadTime3);
 		SHTG A 3 A_SetTics(invoker.ReloadTime4);

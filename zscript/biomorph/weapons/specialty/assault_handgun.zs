@@ -61,7 +61,7 @@ class BIO_AssaultHandgun : BIO_NewWeapon
 		{
 			A_SetFireTime(1);
 			A_BIO_Fire();
-			A_PresetRecoil('BIO_AutogunRecoil');
+			A_PresetRecoil('BIO_Recoil_Autogun');
 			A_GunFlash();
 			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
@@ -72,7 +72,7 @@ class BIO_AssaultHandgun : BIO_NewWeapon
 		{
 			A_SetFireTime(4);
 			A_BIO_Fire();
-			A_PresetRecoil('BIO_AutogunRecoil');
+			A_PresetRecoil('BIO_Recoil_Autogun');
 			A_GunFlash();
 			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
@@ -83,7 +83,7 @@ class BIO_AssaultHandgun : BIO_NewWeapon
 		{
 			A_SetFireTime(7);
 			A_BIO_Fire();
-			A_PresetRecoil('BIO_AutogunRecoil');
+			A_PresetRecoil('BIO_Recoil_Autogun');
 			A_GunFlash();
 			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
@@ -98,9 +98,8 @@ class BIO_AssaultHandgun : BIO_NewWeapon
 			A_SetFireTime(1, 1);
 			invoker.bAltFire = false;
 			A_BIO_Fire(spreadFactor: 0.5);
-			A_PresetRecoil('BIO_HandgunRecoil');
+			A_PresetRecoil('BIO_Recoil_Handgun');
 			A_GunFlash();
-			A_StartSound("bio/weap/assaulthandgun/fire", CHAN_WEAPON);
 		}
 		ASHG C 3 Fast A_SetFireTime(2, 1);
 		ASHG B 3 Fast A_SetFireTime(3, 1);

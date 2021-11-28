@@ -51,7 +51,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_BIO_Fire();
 			A_GunFlash();
 			A_StartSound("bio/weap/incursion/fire", CHAN_WEAPON);
-			A_PresetRecoil('BIO_ShotgunRecoil');
+			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		INCU C 4 Bright A_SetTics(invoker.FireTime2);
 		INCU D 2 A_SetTics(invoker.FireTime3);
@@ -77,7 +77,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_StartSound("bio/weap/incursion/fire", CHAN_6);
 			A_StartSound("bio/weap/incursion/fire", CHAN_7);
 			A_Kickback(2.5, 2.5);
-			A_PresetRecoil('BIO_VolleyGunRecoil');
+			A_PresetRecoil('BIO_Recoil_VolleyGun');
 		}
 		INCU C 4 Bright A_SetTics(invoker.FireTime2);
 		INCU D 2 A_SetTics(invoker.FireTime3);
@@ -98,7 +98,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_SetTics(invoker.ReloadTime4);
 			A_LoadMag();
 			A_StartSound("bio/weap/incursion/reload", CHAN_7);
-			A_PresetRecoil('BIO_ShotgunPumpRecoil');
+			A_PresetRecoil('BIO_Recoil_ShotgunPump');
 		}
 		INCU A 3 Offset(0, 32 + 3) A_SetTics(invoker.ReloadTime5);
 		Goto Ready;

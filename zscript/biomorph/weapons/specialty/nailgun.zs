@@ -47,7 +47,7 @@ class BIO_Nailgun : BIO_Weapon
 		{
 			A_BIO_Fire();
 			A_GunFlash();
-			A_PresetRecoil('BIO_AutogunRecoil', scale: 1.2);
+			A_PresetRecoil('BIO_Recoil_Autogun', scale: 1.2);
 			A_StartSound("bio/weap/nailgun/fire", CHAN_WEAPON);
 		}
 		NLGN C 1 Offset(0, 32) A_SetTics(invoker.FireTime1);
