@@ -6,12 +6,13 @@ enum BIO_WeaponPipelineMask : uint16
 	BIO_WPM_FIRECOUNT = 1 << 2,
 	BIO_WPM_DAMAGEFUNCTOR = 1 << 3,
 	BIO_WPM_DAMAGEVALS = 1 << 4,
-	BIO_WPM_HSPREAD = 1 << 5,
-	BIO_WPM_VSPREAD = 1 << 6,
-	BIO_WPM_AMMOUSE = 1 << 7,
-	BIO_WPM_PROJTRAVELFUNCS = 1 << 8,
-	BIO_WPM_PROJDAMAGEFUNCS = 1 << 9,
-	BIO_WPM_PROJDEATHFUNCS = 1 << 10,
+	BIO_WPM_SPLASH = 1 << 5,
+	BIO_WPM_HSPREAD = 1 << 6,
+	BIO_WPM_VSPREAD = 1 << 7,
+	BIO_WPM_AMMOUSE = 1 << 8,
+	BIO_WPM_PROJTRAVELFUNCS = 1 << 9,
+	BIO_WPM_PROJDAMAGEFUNCS = 1 << 10,
+	BIO_WPM_PROJDEATHFUNCS = 1 << 11,
 	BIO_WPM_PROJFUNCTORS =
 		BIO_WPM_PROJTRAVELFUNCS |
 		BIO_WPM_PROJDAMAGEFUNCS |
@@ -29,7 +30,13 @@ struct BIO_FireData
 
 class BIO_WeaponPipeline play
 {
-	readOnly<BIO_NewWeapon> WeapDefault;
+	enum ToStringExtraIndex : uint
+	{
+		TOSTREX_FIREFUNC,
+		TOSTREX_COUNT
+	}
+
+	readOnly<BIO_Weapon> WeapDefault;
 	uint Index;
 	private BIO_WeaponPipelineMask Mask;
 
@@ -39,6 +46,7 @@ class BIO_WeaponPipeline play
 	private Class<Actor> FireType;
 	private int FireCount;
 	private BIO_DamageFunctor Damage;
+	private int SplashDamage, SplashRadius;
 	private float HSpread, VSpread, Angle, Pitch;
 
 	private int AlertFlags;
@@ -53,8 +61,9 @@ class BIO_WeaponPipeline play
 
 	private string Obituary;
 	private Array<string> ReadoutExtra;
+	private string[TOSTREX_COUNT] ToStringAppends, ToStringPrepends;
 
-	void Invoke(BIO_NewWeapon weap, uint fireFactor = 1, float spreadFactor = 1.0)
+	void Invoke(BIO_Weapon weap, uint fireFactor = 1, float spreadFactor = 1.0)
 	{
 		for (uint i = 0; i < FireCount * fireFactor; i++)
 		{
@@ -74,6 +83,8 @@ class BIO_WeaponPipeline play
 			if (proj is 'BIO_Projectile')
 			{
 				let tProj = BIO_Projectile(proj);
+				tProj.SplashDamage = SplashDamage;
+				tProj.SplashRadius = SplashRadius;
 				tProj.ProjDamageFunctors.Copy(ProjDamageFunctors);
 				tProj.ProjTravelFunctors.Copy(ProjTravelFunctors);
 				tProj.ProjDeathFunctors.Copy(ProjDeathFunctors);
@@ -86,6 +97,8 @@ class BIO_WeaponPipeline play
 			else if (proj is 'BIO_FastProjectile')
 			{
 				let fProj = BIO_FastProjectile(proj);
+				fProj.SplashDamage = SplashDamage;
+				fProj.SplashRadius = SplashRadius;
 				fProj.ProjDamageFunctors.Copy(ProjDamageFunctors);
 				fProj.ProjDeathFunctors.Copy(ProjDeathFunctors);
 
@@ -126,6 +139,59 @@ class BIO_WeaponPipeline play
 
 	Class<Actor> GetFireType() const { return FireType; }
 
+	bool FireTypeIsDefault() const
+	{
+		readOnly<BIO_WeaponPipeline> defs;
+
+		{
+			Array<BIO_WeaponPipeline> ppls;
+			WeapDefault.InitPipelines(ppls);
+			defs = ppls[Index].AsConst();
+		}
+
+		return FireType == defs.FireType;
+	}
+	
+	/*	Checks that the fire type hasn't already been changed, isn't masked 
+		against modification, and is currently set to a given class. If
+		`subclass` is false, the check will only pass if the argument class
+		exactly matches the fire type.
+	*/
+	bool FireTypeMutableFrom(Class<Actor> curFT, bool subClass = false) const
+	{
+		if (FireFunctor is 'BIO_FireFunc_Melee') return false;
+
+		bool sameType;
+
+		if (subClass)
+			sameType = FireType is curFT;
+		else
+			sameType = FireType != curFT;
+
+		return FireTypeIsDefault() && !(Mask & BIO_WPM_FIRETYPE) && sameType;
+	}
+
+	/* 	Checks that the fire type hasn't already been changed, isn't masked
+		against modification, and isn't currently set to a given class. If
+		`subclass` is false, the check will only fail if the argument class
+		exactly matches the fire type.
+	*/
+	bool FireTypeMutableTo(Class<Actor> newFT, bool subClass = false) const
+	{
+		if (FireFunctor is 'BIO_FireFunc_Melee') return false;
+
+		bool sameType;
+
+		if (subClass)
+			sameType = FireType is newFT;
+		else
+			sameType = FireType != newFT;
+
+		return FireTypeIsDefault() && !(Mask & BIO_WPM_FIRETYPE) && !sameType;
+	}
+
+	bool FiresTrueProjectile() const { return FireType is 'BIO_Projectile'; }
+
 	void SetFireType(Class<Actor> fType)
 	{
 		if (Mask & BIO_WPM_FIRETYPE) return;
@@ -142,7 +208,7 @@ class BIO_WeaponPipeline play
 
 	bool DamageFunctorMutable() const
 	{
-		return Mask & BIO_WPM_DAMAGEFUNCTOR;
+		return !(Mask & BIO_WPM_DAMAGEFUNCTOR);
 	}
 
 	void SetDamageFunctor(BIO_DamageFunctor dmgFunc)
@@ -164,7 +230,14 @@ class BIO_WeaponPipeline play
 
 	bool DamageMutable() const
 	{
-		return Mask & BIO_WPM_DAMAGEVALS;
+		return !(Mask & BIO_WPM_DAMAGEVALS);
+	}
+
+	bool ExportsDamageValues() const
+	{
+		Array<int> vals;
+		GetDamageValues(vals);
+		return vals.Size() > 0;
 	}
 
 	void GetDamageValues(in out Array<int> damages) const
@@ -239,6 +312,22 @@ class BIO_WeaponPipeline play
 		ProjDeathFunctors.Push(func);
 	}
 
+	bool Splashes() const { return SplashDamage > 0; }
+	int GetSplashDamage() const { return SplashDamage; }
+	int GetSplashRadius() const { return SplashRadius; }
+
+	void SetSplash(int damage, int radius)
+	{
+		if (Mask & BIO_WPM_SPLASH) return;
+		SplashDamage = damage;
+		SplashRadius = radius;
+	}
+
+	float, float GetSpread() const { return HSpread, VSpread; }
+	float GetHSpread() const { return HSpread; }
+	float GetVSpread() const { return VSpread; }
+	bool HasAnySpread() const { return HSpread > 0.0 || VSpread > 0.0; }
+
 	void SetSpread(float hSpr, float vSpr)
 	{
 		if (!(Mask & BIO_WPM_HSPREAD))
@@ -276,6 +365,32 @@ class BIO_WeaponPipeline play
 	void PushReadoutString(string str)
 	{
 		ReadoutExtra.Push(str);
+	}
+
+	void AppendStringTo(ToStringExtraIndex index, string str)
+	{
+		if (index > TOSTREX_COUNT)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..	
+				"Tried to illegally append a string to index: %d",
+				index);
+			return;
+		}
+
+		ToStringAppends[index] = str;
+	}
+
+	void PrependStringTo(ToStringExtraIndex index, string str)
+	{
+		if (index > TOSTREX_COUNT)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..	
+				"Tried to illegally prepend a string to index: %d",
+				index);
+			return;
+		}
+
+		ToStringPrepends[index] = str;
 	}
 
 	void SetObituary(string obit)
@@ -328,7 +443,18 @@ class BIO_WeaponPipeline play
 		}
 
 		FireFunctor.ToString(readout, AsConst(), defs);
+		readout[readout.Size() - 1].AppendFormat(ToStringAppends[TOSTREX_FIREFUNC]);
 		readout.Push(Damage.ToString(defs.Damage));
+
+		if (SplashDamage > 0)
+		{
+			readout.Push(String.Format(
+				StringTable.Localize("$BIO_WEAP_STAT_SPLASH"),
+				BIO_Utils.StatFontColor(SplashDamage, defs.SplashDamage),
+				SplashDamage,
+				BIO_Utils.StatFontColor(SplashRadius, defs.SplashRadius),
+				SplashRadius));
+		}
 
 		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
 			ProjTravelFunctors[i].ToString(readout);
@@ -367,7 +493,7 @@ class BIO_WeaponPipeline play
 			readout.Push(ReadoutExtra[i]);
 	}
 
-	static BIO_WeaponPipeline Create(Class<BIO_NewWeapon> weap_t)
+	static BIO_WeaponPipeline Create(Class<BIO_Weapon> weap_t)
 	{
 		let ret = new('BIO_WeaponPipeline');
 		ret.WeapDefault = GetDefaultByType(weap_t);
@@ -382,7 +508,7 @@ class BIO_WeaponPipelineBuilder play
 {
 	private BIO_WeaponPipeline Pipeline;
 
-	static BIO_WeaponPipelineBuilder Create(Class<BIO_NewWeapon> weap_t)
+	static BIO_WeaponPipelineBuilder Create(Class<BIO_Weapon> weap_t)
 	{
 		let ret = new('BIO_WeaponPipelineBuilder');
 		ret.Pipeline = BIO_WeaponPipeline.Create(weap_t);
@@ -401,6 +527,40 @@ class BIO_WeaponPipelineBuilder play
 		Pipeline.SetDamageFunctor(dmgFunc);
 
 		Pipeline.SetSpread(hSpread, vSpread);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder PunchPipeline(Class<Actor> fireType = 'BIO_MeleeHit',
+		int hitCount = 1, int minDamage = 2, int maxDamage = 20,
+		float range = DEFMELEERANGE)
+	{
+		let fireFunc = new('BIO_FireFunc_Fist');
+		Pipeline.SetFireFunctor(fireFunc);
+		fireFunc.Range = range;
+		Pipeline.SetFireType(fireType);
+		Pipeline.SetFireCount(hitCount);
+		
+		let dmgFunc = new('BIO_DmgFunc_Default');
+		dmgFunc.CustomSet(minDamage, maxDamage);
+		Pipeline.SetDamageFunctor(dmgFunc);
+
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder SawPipeline(Class<Actor> fireType = 'BIO_MeleeHit',
+		int hitCount = 1, int minDamage = 2, int maxDamage = 20,
+		float range = SAWRANGE)
+	{
+		let fireFunc = new('BIO_FireFunc_Chainsaw');
+		Pipeline.SetFireFunctor(fireFunc);
+		fireFunc.Range = range;
+		Pipeline.SetFireType(fireType);
+		Pipeline.SetFireCount(hitCount);
+		
+		let dmgFunc = new('BIO_DmgFunc_Default');
+		dmgFunc.CustomSet(minDamage, maxDamage);
+		Pipeline.SetDamageFunctor(dmgFunc);
+
 		return self;
 	}
 
@@ -427,6 +587,12 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
+	BIO_WeaponPipelineBuilder Splash(int damage, int radius)
+	{
+		Pipeline.SetSplash(damage, radius);
+		return self;
+	}
+
 	BIO_WeaponPipelineBuilder Alert(double maxDist, int flags)
 	{
 		Pipeline.SetAlertStats(maxDist, flags);
@@ -437,6 +603,13 @@ class BIO_WeaponPipelineBuilder play
 		double attenuation = ATTN_NORM)
 	{
 		Pipeline.SetSound(fireSound, volume, attenuation);
+		return self;
+	}
+
+	// Argument should be fully localized.
+	BIO_WeaponPipelineBuilder AppendToFireFunctorString(string str)
+	{
+		Pipeline.AppendStringTo(BIO_WeaponPipeline.TOSTREX_FIREFUNC, str);
 		return self;
 	}
 

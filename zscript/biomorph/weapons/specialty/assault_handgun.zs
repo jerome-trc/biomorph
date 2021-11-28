@@ -1,4 +1,4 @@
-class BIO_AssaultHandgun : BIO_NewWeapon
+class BIO_AssaultHandgun : BIO_Weapon
 {
 	Default
 	{
@@ -17,11 +17,11 @@ class BIO_AssaultHandgun : BIO_NewWeapon
 		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
 		Weapon.UpSound "bio/weap/gunswap_0";
 
-		BIO_NewWeapon.Flags BIO_WF_PISTOL | BIO_WF_ONEHANDED;
-		BIO_NewWeapon.Grade BIO_GRADE_SPECIALTY;
-		BIO_NewWeapon.MagazineSize 18;
-		BIO_NewWeapon.MagazineType 'BIO_MAG_AssaultHandgun';
-		BIO_NewWeapon.SwitchSpeeds 9, 9;
+		BIO_Weapon.Flags BIO_WF_PISTOL | BIO_WF_ONEHANDED;
+		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
+		BIO_Weapon.MagazineSize 18;
+		BIO_Weapon.MagazineType 'BIO_MAG_AssaultHandgun';
+		BIO_Weapon.SwitchSpeeds 9, 9;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

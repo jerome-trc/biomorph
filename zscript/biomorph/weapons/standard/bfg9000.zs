@@ -1,4 +1,4 @@
-class BIO_BFG9000 : BIO_NewWeapon replaces BFG9000
+class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 {
 	Default
 	{
@@ -19,10 +19,10 @@ class BIO_BFG9000 : BIO_NewWeapon replaces BFG9000
 		Weapon.SlotNumber 7;
 		Weapon.SlotPriority SLOTPRIO_STANDARD;
 		
-		BIO_NewWeapon.Grade BIO_GRADE_STANDARD;
-		BIO_NewWeapon.MagazineSize 80;
-		BIO_NewWeapon.MagazineType 'BIO_MAG_BFG9000';
-		BIO_NewWeapon.SwitchSpeeds 5, 5;
+		BIO_Weapon.Grade BIO_GRADE_STANDARD;
+		BIO_Weapon.MagazineSize 80;
+		BIO_Weapon.MagazineType 'BIO_MAG_BFG9000';
+		BIO_Weapon.SwitchSpeeds 5, 5;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

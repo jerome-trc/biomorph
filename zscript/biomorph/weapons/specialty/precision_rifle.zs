@@ -1,4 +1,4 @@
-class BIO_PrecisionRifle : BIO_NewWeapon
+class BIO_PrecisionRifle : BIO_Weapon
 {
 	Default
 	{
@@ -16,9 +16,9 @@ class BIO_PrecisionRifle : BIO_NewWeapon
 		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_NewWeapon.Grade BIO_GRADE_SPECIALTY;
-		BIO_NewWeapon.MagazineSize 20;
-		BIO_NewWeapon.MagazineType 'BIO_MAG_PrecisionRifle';
+		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
+		BIO_Weapon.MagazineSize 20;
+		BIO_Weapon.MagazineType 'BIO_MAG_PrecisionRifle';
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

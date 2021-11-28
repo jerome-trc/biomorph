@@ -1,4 +1,4 @@
-class BIO_Pistol : BIO_NewWeapon replaces Pistol
+class BIO_Pistol : BIO_Weapon replaces Pistol
 {
 	Default
 	{
@@ -12,22 +12,22 @@ class BIO_Pistol : BIO_NewWeapon replaces Pistol
 		Weapon.AmmoGive 15;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder SELORDER_PISTOL;
+		Weapon.SelectionOrder SELORDER_PISTOL_STD;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority SLOTPRIO_STANDARD;
 		Weapon.UpSound "bio/weap/gunswap_0";
 
-		BIO_NewWeapon.Flags BIO_WF_PISTOL | BIO_WF_ONEHANDED;
-		BIO_NewWeapon.Grade BIO_GRADE_STANDARD;
-		BIO_NewWeapon.MagazineSize 15;
-		BIO_NewWeapon.MagazineType 'BIO_MAG_Pistol';
-		BIO_NewWeapon.SwitchSpeeds 8, 8;
+		BIO_Weapon.Flags BIO_WF_PISTOL | BIO_WF_ONEHANDED;
+		BIO_Weapon.Grade BIO_GRADE_STANDARD;
+		BIO_Weapon.MagazineSize 15;
+		BIO_Weapon.MagazineType 'BIO_MAG_Pistol';
+		BIO_Weapon.SwitchSpeeds 8, 8;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
-			.BasicProjectilePipeline('BIO_Bullet', 1, 6, 16, 3.6, 1.4)
+			.BasicProjectilePipeline('BIO_Bullet', 1, 5, 15, 4.0, 2.0)
 			.FireSound("weapons/pistol")
 			.Build());
 	}

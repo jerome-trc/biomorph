@@ -10,18 +10,25 @@ class BIO_Autocannon : BIO_Weapon
 		Weapon.AmmoGive 100;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder SELORDER_CHAINGUN - 40;
+		Weapon.SelectionOrder SELORDER_CHAINGUN_CLSF;
 		Weapon.SlotNumber 4;
 		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 		
-		BIO_Weapon.AffixMasks
-			BIO_WAM_FIRETIME | BIO_WAM_MAGAZINELESS,
-			BIO_WAM_ALL, BIO_WAM_NONE;
+		BIO_Weapon.AffixMask BIO_WAM_FIRETIME | BIO_WAM_MAGAZINELESS;
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
-		BIO_Weapon.DamageRange 10, 30;
-		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.MagazineType 'Clip';
-		BIO_Weapon.Spread 3.5, 1.5;
+	}
+
+	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
+	{
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+			.BasicProjectilePipeline('BIO_Bullet', 1, 10, 30, 3.5, 1.5)
+			.Build());
+	}
+
+	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
+	{
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire')));
 	}
 
 	States
@@ -87,13 +94,4 @@ class BIO_Autocannon : BIO_Weapon
 		ACAN X 0 A_BIO_Spawn;
 		Loop;
 	}
-
-	override void StatsToString(in out Array<string> stats) const
-	{
-		stats.Push(GenericFireDataReadout());
-		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericFireTimeReadout(TrueFireTime()));
-	}
-	
-	override int TrueFireTime() const { return 2; }
 }

@@ -27,8 +27,7 @@ class BIO_All : Inventory
 			if (t is 'BIO_Weapon')
 			{
 				// Don't attempt to instantiate any abstract classes
-				if (t == 'BIO_Weapon' || t == 'BIO_DualWieldWeapon' ||
-					t == 'BIO_MeleeWeapon' || t == 'BIO_DualMeleeWeapon')
+				if (t == 'BIO_Weapon' || t == 'BIO_DualWieldWeapon')
 					continue;
 
 				if (t == 'BIO_Fist') continue;

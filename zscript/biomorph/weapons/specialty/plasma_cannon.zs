@@ -1,9 +1,5 @@
 class BIO_PlasmaCannon : BIO_Weapon
 {
-	int FireTime1, FireTime2, FireTime3, FireTime4, FireTime5;
-	property FireTimes: FireTime1, FireTime2, FireTime3, FireTime4, FireTime5;
-	int ReloadTime; property ReloadTimes: ReloadTime;
-
 	Default
 	{
 		Tag "$BIO_WEAP_TAG_PLASMACANNON";
@@ -14,21 +10,32 @@ class BIO_PlasmaCannon : BIO_Weapon
 		Weapon.AmmoGive 50;
 		Weapon.AmmoType 'Cell';
 		Weapon.AmmoUse 2;
-		Weapon.SelectionOrder SELORDER_PLASMARIFLE - 20;
+		Weapon.SelectionOrder SELORDER_PLASRIFLE_SPEC;
 		Weapon.SlotNumber 6;
 		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
 		Weapon.UpSound "bio/weap/plascannon/raise";
 
-		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
-		BIO_Weapon.DamageRange 10, 80;
-		BIO_Weapon.FireType 'BIO_PlasmaGlobule';
 		BIO_Weapon.MagazineSize 50;
 		BIO_Weapon.MagazineType 'BIO_MAG_PlasmaCannon';
-		BIO_Weapon.Spread 0.2, 0.2;
+	}
 
-		BIO_PlasmaCannon.FireTimes 1, 1, 1, 1, 1;
-		BIO_PlasmaCannon.ReloadTimes 40;
+	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
+	{
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+			.BasicProjectilePipeline('BIO_PlasmaGlobule', 1, 10, 80, 0.4, 0.4)
+			.Splash(48, 48)
+			.Build());
+	}
+
+	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
+	{
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire')));
+	}
+
+	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const
+	{
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Reload')));
 	}
 
 	States
@@ -57,92 +64,49 @@ class BIO_PlasmaCannon : BIO_Weapon
 		Stop;
 	Fire:
 		TNT1 A 0 A_AutoReload;
-		PLSC K 1 A_SetTics(invoker.FireTime1);
-		PLSC L 1 A_SetTics(invoker.FireTime2);
-		PLSC M 1 A_SetTics(invoker.FireTime3);
-		PLSC N 1 A_SetTics(invoker.FireTime4);
-		PLSC O 1;
-		PLSC P 1 A_BIO_Fire;
-		PLSC L 1 A_ReFire;
-		PLSC K 1 A_SetTics(invoker.FireTime5);
+		PLSC K 1 A_SetFireTime(0);
+		PLSC L 1 A_SetFireTime(1);
+		PLSC M 1 A_SetFireTime(2);
+		PLSC N 1 A_SetFireTime(3);
+		PLSC O 1 A_SetFireTime(4);
+		PLSC P 1
+		{
+			A_SetFireTime(5);
+			A_BIO_Fire();
+		}
+		PLSC L 1
+		{
+			A_SetFireTime(6);
+			A_ReFire();
+		}
+		PLSC K 1 A_SetFireTime(7);
 		Goto Ready;
 	Reload:
+		// TODO: Reload sounds
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		PLSC W 1 A_WeaponReady(WRF_NOFIRE);
-		PLSC W 1 Offset(0, 32 + 2);
-		PLSC W 1 Offset(0, 32 + 4);
-		PLSC W 1 Offset(0, 32 + 6);
-		PLSC W 1 Offset(0, 32 + 8);
-		PLSC W 1 Offset(0, 32 + 10);
-		PLSC W 1 Offset(0, 32 + 12);
-		PLSC W 1 Offset(0, 32 + 14);
-		PLSC W 1 Offset(0, 32 + 16);
-		PLSC W 1 Offset(0, 32 + 18);
-		// TODO: Reload sounds
-		PLSC W 40 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
-		PLSC W 1 Offset(0, 32 + 18) A_LoadMag;
-		PLSC W 1 Offset(0, 32 + 16);
-		PLSC W 1 Offset(0, 32 + 14);
-		PLSC W 1 Offset(0, 32 + 12);
-		PLSC W 1 Offset(0, 32 + 10);
-		PLSC W 1 Offset(0, 32 + 8);
-		PLSC W 1 Offset(0, 32 + 6);
-		PLSC W 1 Offset(0, 32 + 4);
-		PLSC W 1 Offset(0, 32 + 2);
+		PLSC W 1 Fast Offset(0, 32 + 1) A_SetReloadTime(1);
+		PLSC W 1 Fast Offset(0, 32 + 3) A_SetReloadTime(2);
+		PLSC W 1 Fast Offset(0, 32 + 7) A_SetReloadTime(3);
+		PLSC W 1 Fast Offset(0, 32 + 15) A_SetReloadTime(4);
+		PLSC W 1 Offset(0, 32 + 30) A_SetReloadTime(5);
+		PLSC W 40 Offset(0, 32 + 30) A_SetReloadTime(6);
+		PLSC W 1 Offset(0, 32 + 15)
+		{
+			A_SetReloadTime(7);
+			A_LoadMag();
+		}
+		PLSC W 1 Fast Offset(0, 32 + 11) A_SetReloadTime(8);
+		PLSC W 1 Fast Offset(0, 32 + 7) A_SetReloadTime(9);
+		PLSC W 1 Fast Offset(0, 32 + 5) A_SetReloadTime(10);
+		PLSC W 1 Fast Offset(0, 32 + 3) A_SetReloadTime(11);
+		PLSC W 1 Fast Offset(0, 32 + 2) A_SetReloadTime(12);
+		PLSC W 1 Fast Offset(0, 32 + 1) A_SetReloadTime(13);
 		Goto Ready;
 	Spawn:
 		PLSC X 0;
 		PLSC X 0 A_BIO_Spawn;
 		Stop;
-	}
-
-	override void GetFireTimes(in out Array<int> fireTimes, bool _) const
-	{
-		fireTimes.PushV(FireTime1, FireTime2, FireTime3, FireTime4, FireTime5);
-	}
-
-	override void GetFireTimeMinimums(in out Array<int> mins, bool _) const
-	{
-		mins.PushV(0, 0, 0, 0, 0);
-	}
-
-	override void SetFireTimes(Array<int> fireTimes, bool _)
-	{
-		FireTime1 = fireTimes[0];
-		FireTime2 = fireTimes[1];
-		FireTime3 = fireTimes[2];
-		FireTime4 = fireTimes[3];
-		FireTime5 = fireTimes[4];
-	}
-
-	override int TrueFireTime() const
-	{
-		return 3 + FireTime1 + FireTime2 + FireTime3 + FireTime4 + FireTime5;
-	}
-
-	override int TrueReloadTime() const
-	{
-		return ReloadTime + 19;
-	}
-
-	override void ResetStats()
-	{
-		super.ResetStats();
-
-		FireTime1 = Default.FireTime1;
-		FireTime2 = Default.FireTime2;
-		FireTime3 = Default.FireTime3;
-		FireTime4 = Default.FireTime4;
-		FireTime5 = Default.FireTime5;
-
-		ReloadTime = Default.ReloadTime;
-	}
-
-	override void StatsToString(in out Array<string> stats) const
-	{
-		stats.Push(GenericFireDataReadout());
-		stats.Push(GenericFireTimeReadout(TrueFireTime()));
-		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
 	}
 }
 

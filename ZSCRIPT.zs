@@ -36,7 +36,7 @@ const CRESC_STATWORSE = "\c[Red]";
 #include "zscript/biomorph/affixes/base.zs"
 #include "zscript/biomorph/affixes/armor.zs"
 #include "zscript/biomorph/affixes/weapon.zs"
-#include "zscript/biomorph/affixes/weapon_new.zs"
+// #include "zscript/biomorph/affixes/weapon_old.zs"
 
 #include "zscript/biomorph/equip/base.zs"
 #include "zscript/biomorph/equip/armor.zs"
@@ -55,12 +55,10 @@ const CRESC_STATWORSE = "\c[Red]";
 #include "zscript/biomorph/passives/base.zs"
 #include "zscript/biomorph/passives/perks.zs"
 
-#include "zscript/biomorph/weapons/base.zs"
-#include "zscript/biomorph/weapons/base_dw.zs"
-#include "zscript/biomorph/weapons/base_melee.zs"
 #include "zscript/biomorph/weapons/fist.zs"
 #include "zscript/biomorph/weapons/upgrade_kit.zs"
 
+#include "zscript/biomorph/weapons/detail/base_dw.zs"
 #include "zscript/biomorph/weapons/detail/base.zs"
 #include "zscript/biomorph/weapons/detail/constants.zs"
 #include "zscript/biomorph/weapons/detail/damage_func.zs"

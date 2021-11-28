@@ -1,6 +1,6 @@
 class BIO_RecoilThinker : Thinker abstract
 {
-	protected BIO_NewWeapon Weapon;
+	protected BIO_Weapon Weapon;
 	protected int Lifetime, TimeToLive;
 	protected float Scale;
 
@@ -8,7 +8,7 @@ class BIO_RecoilThinker : Thinker abstract
 	abstract float GetPitch(int lifeTic) const;
 
 	static BIO_RecoilThinker Create(
-		Class<BIO_RecoilThinker> type, BIO_NewWeapon weap,
+		Class<BIO_RecoilThinker> type, BIO_Weapon weap,
 		float scale = 1.0, bool invert = false)
 	{
 		let ret = BIO_RecoilThinker(new(type));

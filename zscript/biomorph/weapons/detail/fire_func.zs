@@ -2,7 +2,7 @@ class BIO_FireFunctor play abstract
 {
 	virtual void Init() {} // Use only for setting defaults.
 
-	abstract Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const;
+	abstract Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const;
 
 	virtual void GetDamageValues(in out Array<int> vals) const {}
 	virtual void SetDamageValues(in out Array<int> vals) {}
@@ -75,7 +75,7 @@ class BIO_FireFunctor play abstract
 
 class BIO_FireFunc_Default : BIO_FireFunctor
 {
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
+	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
 		return weap.BIO_FireProjectile(fireData.FireType,
 			angle: fireData.Angle + FRandom(-fireData.HSpread, fireData.HSpread),
@@ -108,7 +108,7 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 		Flags = FBF_NORANDOM | FBF_NOFLASH;
 	}
 
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
+	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
 		weap.A_FireBullets(fireData.HSpread, fireData.VSpread,
 			NumBullets, fireData.Damage, fireData.FireType, Flags);
@@ -136,7 +136,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 	int Flags;
 	color Color1, Color2;
 
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
+	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
 		Class<Actor> puff_t = null, spawnClass = null;
 
@@ -237,31 +237,9 @@ class BIO_FireFunc_Melee : BIO_FireFunctor abstract
 
 class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 {
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
+	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
-		FTranslatedLineTarget t;
-
-		if (weap.Owner.FindInventory('PowerStrength', true))
-			fireData.Damage *= 10;
-		
-		double ang = weap.Owner.Angle + Random2[Punch]() * (5.625 / 256);
-		double ptch = weap.AimLineAttack(ang, Range, null, 0.0, ALF_CHECK3D);
-
-		Actor puff = null;
-		int actualDmg = -1;
-
-		[puff, actualDmg] = weap.LineAttack(ang, Range, ptch, fireData.Damage,
-			'Melee', fireData.FireType, LAF_ISMELEEATTACK, t);
-
-		// Turn to face target
-		if (t.LineTarget)
-		{
-			weap.Owner.A_StartSound("*fist", CHAN_WEAPON);
-			weap.Owner.Angle = t.AngleFromSource;
-			if (!t.lineTarget.bDontDrain)
-				weap.ApplyLifeSteal(Lifesteal, actualDmg);
-		}
-
+		weap.BIO_Punch(fireData.FireType, fireData.Damage, Range, Lifesteal);
 		return null;
 	}
 
@@ -276,11 +254,9 @@ class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 
 class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
 {
-	override Actor Invoke(BIO_NewWeapon weap, in out BIO_FireData fireData) const
+	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
-		weap.BIO_Saw(fireData.FireType, fireData.Damage,
-			Range, fireData.Angle, Lifesteal);
-
+		weap.BIO_Saw(fireData.FireType, fireData.Damage, Range, Lifesteal);
 		return null;
 	}
 
