@@ -54,7 +54,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire();
-			A_PresetRecoil('BIO_RocketLauncherRecoil');
+			A_PresetRecoil('BIO_Recoil_RocketLauncher');
 		}
 		MISG B 0 A_ReFire;
 		Goto Ready;
@@ -74,12 +74,12 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		MISG A 45 Offset(0, 32 + 20)
 		{
 			A_SetTics(invoker.ReloadTime);
-			A_PresetRecoil('BIO_HeavyReloadRecoil');
+			A_PresetRecoil('BIO_Recoil_HeavyReload');
 		}
 		MISG A 1 Offset(0, 32 + 18)
 		{
 			A_LoadMag();
-			A_PresetRecoil('BIO_HeavyReloadRecoil', invert: true);
+			A_PresetRecoil('BIO_Recoil_HeavyReload', invert: true);
 		}
 		MISG A 1 Offset(0, 32 + 16);
 		MISG A 1 Offset(0, 32 + 14);

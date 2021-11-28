@@ -68,7 +68,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire(spreadFactor: 0.5);
-			A_PresetRecoil('BIO_ShotgunRecoil');
+			A_PresetRecoil('BIO_Recoil_Shotgun');
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			// TODO: Replace with a smaller sound
 			A_StartSound("weapons/sshotf", CHAN_WEAPON);
@@ -81,7 +81,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		{
 			A_SetTics(invoker.FireTime2);
 			A_BIO_Fire(fireFactor: 2);
-			A_PresetRecoil('BIO_SuperShotgunRecoil');
+			A_PresetRecoil('BIO_Recoil_SuperShotgun');
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			A_StartSound("weapons/sshotf", CHAN_WEAPON);
 		}

@@ -56,7 +56,7 @@ class BIO_PrecisionRifle : BIO_NewWeapon
 		{
 			A_SetFireTime(0);
 			A_GunFlash();
-			A_PresetRecoil('BIO_ShotgunRecoil');
+			A_PresetRecoil('BIO_Recoil_Shotgun');
 			A_BIO_Fire();
 		}
 		PREC C 2 A_SetFireTime(1);

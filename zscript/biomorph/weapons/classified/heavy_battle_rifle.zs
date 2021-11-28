@@ -49,7 +49,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 			A_BIO_Fire();
 			A_GunFlash();
 			A_StartSound("bio/weap/hbr/fire", CHAN_WEAPON);
-			A_PresetRecoil('BIO_ShotgunRecoil');
+			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		HVBR B 4 Offset(0, 32 + 6) Bright;
 		HVBR C 5 Offset(0, 32 + 9) Bright;
