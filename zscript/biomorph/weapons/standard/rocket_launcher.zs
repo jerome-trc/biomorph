@@ -13,7 +13,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		Weapon.AmmoGive 2;
 		Weapon.AmmoType 'RocketAmmo';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder SELORDER_RLAUNCHER_STD;
+		Weapon.SelectionOrder SELORDER_RLAUNCHER;
 		Weapon.SlotNumber 5;
 		Weapon.SlotPriority SLOTPRIO_STANDARD;
 

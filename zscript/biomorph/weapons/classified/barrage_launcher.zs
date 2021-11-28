@@ -30,6 +30,11 @@ class BIO_BarrageLauncher : BIO_Weapon
 			.Build());
 	}
 
+	override void InitImplicitAffixes(in out Array<BIO_WeaponAffix> affixes) const
+	{
+		affixes.Push(new('BIO_Wafx_ForceRadiusDmg'));
+	}
+
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
 		groups.Push(BIO_StateTimeGroup.FromState(
@@ -110,20 +115,5 @@ class BIO_BarrageLauncher : BIO_Weapon
 		BARR X 0;
 		BARR X 0 A_BIO_Spawn;
 		Loop;
-	}
-
-	void OnTrueProjectileFired(BIO_Projectile proj)
-	{
-		proj.bForceRadiusDmg = true;
-	}
-
-	void OnFastProjectileFired(BIO_FastProjectile proj)
-	{
-		proj.bForceRadiusDmg = true;
-	}
-
-	void StatsToString(in out Array<string> stats) const
-	{
-		stats.Push(StringTable.Localize("$BIO_WEAPSTAT_FORCERADIUSDMG"));
 	}
 }

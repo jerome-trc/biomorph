@@ -265,7 +265,7 @@
 	BIO_WAFX_TAG_CRIT = "Express Rounds";
 	BIO_WAFX_TOSTR_CRIT = "%d%% chance of %s%s%.0f%% damage";
 	
-	BIO_WAFX_TAG_SPLASHFORDAMAGE = "Shaped Charge";
+	BIO_WAFX_TAG_SPLASHFORDAMAGE = "Sabot";
 	BIO_WAFX_TOSTR_SPLASHFORDAMAGE = "All splash damage converted into direct hit damage";
 	
 	BIO_WAFX_TAG_FORWARDDAMAGE = "Vanguard";
@@ -285,6 +285,9 @@
 
 	BIO_WAFX_TAG_FORCEPAIN = "Neurotoxic Payload";
 	BIO_WAFX_TOSTR_FORCEPAIN = "Always causes monsters to flinch";
+
+	BIO_WAFX_TAG_FORCERADIUSDMG = "Shaped Charge";
+	BIO_WAFX_TOSTR_FORCERADIUSDMG = "Ignores splash damage immunity";
 
 	BIO_WAFX_TAG_PROJGRAVITY = "Dense Payload";
 	BIO_WAFX_TOSTR_PROJGRAVITY = "Projectiles are affected by gravity, but deal %s%s%d%% damage";

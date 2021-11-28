@@ -35,7 +35,6 @@ class BIO_GlobalData : Thinker
 	BIO_PerkGraph BasePerkGraph; // Generated on Thinker creation
 	private Array<BIO_PerkGraph> PerkGraphs; // One per player
 
-	private Array<Class<BIO_WeaponAffix> > AllWeaponAffixClasses;
 	private Array<BIO_WeaponAffix> WeaponAffixDefaults;
 
 	private Array<Class<BIO_EquipmentAffix> > AllEquipmentAffixClasses;
@@ -87,17 +86,15 @@ class BIO_GlobalData : Thinker
 	}
 
 	// Returns `false` if no affixes are compatible.
-	bool AllEligibleWeaponAffixes(Array<BIO_WeaponAffix> eligibles, BIO_Weapon weap) const
+	bool AllEligibleWeaponAffixes(in out Array<BIO_WeaponAffix> eligibles, BIO_Weapon weap) const
 	{
-		for (uint i = 0; i < AllWeaponAffixClasses.Size(); i++)
+		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
 		{
-			let wafx_t = AllWeaponAffixClasses[i];
+			if (!WeaponAffixDefaults[i].CanGenerate()) continue;
+			if (!WeaponAffixDefaults[i].Compatible(weap)) continue;
+			let wafx_t = WeaponAffixDefaults[i].GetClass();
 			if (weap.HasAffixOfType(wafx_t)) continue;
-
-			let wafx = BIO_WeaponAffix(new(wafx_t));
-			if (!wafx.Compatible(weap)) continue;
-
-			eligibles.Push(wafx);
+			eligibles.Push(BIO_WeaponAffix(new(wafx_t)));
 		}
 
 		return eligibles.Size() > 0;
@@ -238,7 +235,6 @@ class BIO_GlobalData : Thinker
 		{
 			if (AllClasses[i].GetParentClass() is 'BIO_WeaponAffix')
 			{
-				ret.AllWeaponAffixClasses.Push(AllClasses[i]);
 				let wafx = BIO_WeaponAffix(new(AllClasses[i]));
 				ret.WeaponAffixDefaults.Push(wafx);
 			}
