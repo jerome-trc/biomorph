@@ -28,18 +28,18 @@ class BIO_Pistol : BIO_NewWeapon replaces Pistol
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
 			.BasicProjectilePipeline('BIO_Bullet', 1, 6, 16, 3.6, 1.4)
-			.FireSound("bio/weap/assaulthandgun/fire")
+			.FireSound("weapons/pistol")
 			.Build());
 	}
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(CreateStateTimeGroup(ResolveState('Fire')));
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire')));
 	}
 
 	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(CreateStateTimeGroup(ResolveState('Reload')));
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Reload')));
 	}
 
 	States
@@ -85,12 +85,12 @@ class BIO_Pistol : BIO_NewWeapon replaces Pistol
 			A_SetReloadTime(7);
 			A_LoadMag();
 		}
-		PISG A 1 Fast Offset(0, 32 + 11);
-		PISG A 1 Fast Offset(0, 32 + 7);
-		PISG A 1 Fast Offset(0, 32 + 5);
-		PISG A 1 Fast Offset(0, 32 + 3);
-		PISG A 1 Fast Offset(0, 32 + 2);
-		PISG A 1 Fast Offset(0, 32 + 1);
+		PISG A 1 Fast Offset(0, 32 + 11) A_SetReloadTime(8);
+		PISG A 1 Fast Offset(0, 32 + 7) A_SetReloadTime(9);
+		PISG A 1 Fast Offset(0, 32 + 5) A_SetReloadTime(10);
+		PISG A 1 Fast Offset(0, 32 + 3) A_SetReloadTime(11);
+		PISG A 1 Fast Offset(0, 32 + 2) A_SetReloadTime(12);
+		PISG A 1 Fast Offset(0, 32 + 1) A_SetReloadTime(13);
 		Goto Ready;
 	Flash:
 		PISF A 7 Bright

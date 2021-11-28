@@ -1,5 +1,10 @@
+// See zscript/biomorph/cvars.zs for value enumerations where applicable.
+
 server noarchive bool BIO_debug = true;
+
+// =============================================================================
 
 user int BIO_multibarrelfire = 0;
 user int BIO_berserkswitch = 1;
 user int BIO_autoreload = 0;
+user int BIO_multireload = 0;

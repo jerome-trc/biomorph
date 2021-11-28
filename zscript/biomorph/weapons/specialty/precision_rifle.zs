@@ -31,12 +31,12 @@ class BIO_PrecisionRifle : BIO_NewWeapon
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(CreateStateTimeGroup(ResolveState('Fire')));
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire')));
 	}
 
 	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(CreateStateTimeGroup(ResolveState('Reload')));
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Reload')));
 	}
 
 	States

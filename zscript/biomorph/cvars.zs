@@ -3,9 +3,16 @@ class BIO_CVar abstract
 {
 	static bool Debug() { return CVar.GetCVar('BIO_debug').GetBool(); }
 
+	// User ====================================================================
+
 	static int AutoReload(PlayerInfo pInfo)
 	{
 		return CVar.GetCVar('BIO_autoreload', pInfo).GetInt();
+	}
+
+	static int BerserkSwitch(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar('BIO_berserkswitch', pInfo).GetInt();
 	}
 
 	static bool MultiBarrelPrimary(PlayerInfo pInfo)
@@ -14,9 +21,10 @@ class BIO_CVar abstract
 			.GetInt() == BIO_CV_MBF_PRIM;
 	}
 
-	static int BerserkSwitch(PlayerInfo pInfo)
+	static bool MultiReloadAuto(PlayerInfo pInfo)
 	{
-		return CVar.GetCVar('BIO_berserkswitch', pInfo).GetInt();
+		return CVar.GetCVar("BIO_multireload", pInfo)
+			.GetInt() == BIO_CV_MRM_AUTORELOAD;
 	}
 }
 
@@ -40,4 +48,10 @@ enum BIO_CVar_MultiBarrelFire : int
 {
 	BIO_CV_MBF_PRIM = 0,
 	BIO_CV_MBF_SEC = 1
+}
+
+enum BIO_CVar_MultiReload : int
+{
+	BIO_CV_MRM_AUTORELOAD = 0,
+	BIO_CV_MRM_HOLD = 1
 }

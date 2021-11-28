@@ -2,6 +2,57 @@ class BIO_StateTimeGroup
 {
 	string Tag;
 	Array<int> Times, Minimums;
+
+	private void Populate(state basis)
+	{
+		for (state s = basis; s.InStateSequence(basis); s = s.NextState)
+		{
+			if (s.Tics == 0) continue; // `TNT1 A 0` and the like
+			if (s.bSlow) continue; 
+			
+			Times.Push(s.Tics);
+			int min;
+
+			// States marked `Fast` are allowed to have their tic time set to 0,
+			// effectively eliminating them from the state sequence
+			if (s.bFast)
+				min = 0;
+			else if (s.bSlow) // States marked `Slow` are kept immutable
+				min = s.Tics;
+			else
+				min = 1;
+
+			Minimums.Push(min);
+		}
+	}
+
+	static BIO_StateTimeGroup FromState(state basis, string tag = "")
+	{
+		let ret = new('BIO_StateTimeGroup');
+		ret.Tag = Tag;
+		ret.Populate(basis);
+		return ret;
+	}
+
+	static BIO_StateTimeGroup From2States(state basis1, state basis2, string tag = "")
+	{
+		let ret = new('Bio_StateTimeGroup');
+		ret.Tag = Tag;
+		ret.Populate(basis1);
+		ret.Populate(basis2);
+		return ret;
+	}
+
+	static BIO_StateTimeGroup FromStates(Array<state> basisArr, string tag = "")
+	{
+		let ret = new('BIO_StateTimeGroup');
+		ret.Tag = Tag;
+
+		for (uint i = 0; i < basisArr.Size(); i++)
+			ret.Populate(basisArr[i]);
+
+		return ret;
+	}
 }
 
 class BIO_NewWeapon : DoomWeapon abstract
@@ -20,18 +71,18 @@ class BIO_NewWeapon : DoomWeapon abstract
 	property MagazineType2: MagazineType2;
 	property MagazineTypes: MagazineType1, MagazineType2;
 
+	int MagazineSize1, MagazineSize2;
+	property MagazineSize: MagazineSize1;
+	property MagazineSize1: MagazineSize1;
+	property MagazineSize2: MagazineSize2;
+	property MagazineSizes: MagazineSize1, MagazineSize2;
+
 	// Reloading 1 round costs ReloadFactor rounds in reserve.
 	int ReloadFactor1, ReloadFactor2;
 	property ReloadFactor: ReloadFactor1;
 	property ReloadFactor1: ReloadFactor1;
 	property ReloadFactor2: ReloadFactor2;
 	property ReloadFactors: ReloadFactor1, ReloadFactor2;
-
-	int MagazineSize1, MagazineSize2;
-	property MagazineSize: MagazineSize1;
-	property MagazineSize1: MagazineSize1;
-	property MagazineSize2: MagazineSize2;
-	property MagazineSizes: MagazineSize1, MagazineSize2;
 
 	int MinAmmoReserve1, MinAmmoReserve2;
 	property MinAmmoReserve: MinAmmoReserve1;
@@ -385,6 +436,28 @@ class BIO_NewWeapon : DoomWeapon abstract
 			return ResolveState('Ready');
 	}
 
+	protected action void A_EmptyMagazine(bool secondary = false)
+	{
+		Ammo magItem = null, reserveAmmo = null;
+		int factor = -1;
+
+		if (!secondary)
+		{
+			magItem = invoker.Magazine1;
+			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType1));
+			factor = invoker.ReloadFactor1;
+		}
+		else
+		{
+			magItem = invoker.Magazine2;
+			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType2));
+			factor = invoker.ReloadFactor2;
+		}
+
+		reserveAmmo.Amount += magItem.Amount * factor;
+		magItem.Amount -= magItem.Amount;
+	}
+
 	/*	Call from the weapon's Spawn state, after two frames of the weapon's 
 		pickup sprite (each 0 tics long). Puts the weapon into a new loop with
 		appropriate behaviour for its rarity (e.g., blinking cyan if mutated).
@@ -484,13 +557,26 @@ class BIO_NewWeapon : DoomWeapon abstract
 
 	bool CanReload(bool secondary = false) const
 	{
-		let magAmmo = !secondary ? Magazine1 : Magazine2;
-		let reserveAmmo = Owner.FindInventory(
-			!secondary ? AmmoType1 : AmmoType2);
-		let minReserve = !secondary ? MinAmmoReserve1 : MinAmmoReserve2;
-		let factor = !secondary ? ReloadFactor1 : ReloadFactor2;
-		let magSize = !secondary ? MagazineSize1 : MagazineSize2;
+		Ammo magItem = null, reserveAmmo = null;
+		int factor = -1, magSize = -1, minReserve = -1;
 		
+		if (!secondary)
+		{
+			magItem = Magazine1;
+			reserveAmmo = Ammo(Owner.FindInventory(AmmoType1));
+			magSize = MagazineSize1;
+			factor = ReloadFactor1;
+			minReserve = MinAmmoReserve1;
+		}
+		else
+		{
+			magItem = Magazine2;
+			reserveAmmo = Ammo(Owner.FindInventory(AmmoType2));
+			magSize = MagazineSize2;
+			factor = ReloadFactor2;
+			minReserve = MinAmmoReserve2;
+		}
+
 		int minAmt = minReserve * factor;
 
 		// Insufficient reserves
@@ -498,7 +584,7 @@ class BIO_NewWeapon : DoomWeapon abstract
 			return false;
 
 		// Magazine's already full
-		if (magAmmo.Amount >= magSize)
+		if (magItem.Amount >= magSize)
 			return false;
 
 		return true;
@@ -524,11 +610,16 @@ class BIO_NewWeapon : DoomWeapon abstract
 
 	// Modifying ===============================================================
 
-	private void Init()
+	private void Teardown()
 	{
 		Pipelines.Clear();
 		FireTimeGroups.Clear();
 		ReloadTimeGroups.Clear();
+	}
+
+	private void Init()
+	{
+		Teardown();
 
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
@@ -543,13 +634,36 @@ class BIO_NewWeapon : DoomWeapon abstract
 
 	private void Reset()
 	{
-		Pipelines.Clear();
-		FireTimeGroups.Clear();
-		ReloadTimeGroups.Clear();
+		Teardown();
 
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
+
+		bNoAutoFire = Default.bNoAutoFire;
+		bNoAlert = Default.bNoAlert;
+		bNoAutoAim = Default.bNoAutoAim;
+		bMeleeWeapon = Default.bMeleeWeapon;
+
+		AmmoUse1 = Default.AmmoUse1;
+		AmmoUse2 = Default.AmmoUse2;
+
+		BobRangeX = Default.BobRangeX;
+		BobRangeY = Default.BobRangeY;
+		BobSpeed = Default.BobSpeed;
+		BobStyle = Default.BobStyle;
+		KickBack = Default.KickBack;
+
+		BIOFlags = Default.BIOFlags;
+		
+		RaiseSpeed = Default.RaiseSpeed;
+		LowerSpeed = Default.LowerSpeed;
+		
+		ReloadFactor1 = Default.ReloadFactor1;
+		ReloadFactor2 = Default.ReloadFactor2;
+
+		MinAmmoReserve1 = Default.MinAmmoReserve1;
+		MinAmmoReserve2 = Default.MinAmmoReserve2;
 
 		// Inform pipelines of their indices
 		for (uint i = 0; i < Pipelines.Size(); i++)
@@ -624,34 +738,6 @@ class BIO_NewWeapon : DoomWeapon abstract
 		}
 	}
 
-	protected static BIO_StateTimeGroup CreateStateTimeGroup(state st, string tag = "")
-	{
-		let ret = new('BIO_StateTimeGroup');
-		ret.Tag = tag;
-
-		for (state s = st; s.InStateSequence(st); s = s.NextState)
-		{
-			if (s.Tics == 0) continue; // `TNT1 A 0` and the like
-			if (s.bSlow) continue; 
-			
-			ret.Times.Push(s.Tics);
-			int min;
-
-			// States marked `Fast` are allowed to have their tic time set to 0,
-			// effectively eliminating them from the state sequence
-			if (s.bFast)
-				min = 0;
-			else if (s.bSlow) // States marked `Slow` are kept immutable
-				min = s.Tics;
-			else
-				min = 1;
-
-			ret.Minimums.Push(min);
-		}
-
-		return ret;
-	}
-
 /* 
 	// Does not alter stats, and does not apply the newly-added affixes.
 	// Returns `false` if there are no compatible affixes to add.
@@ -692,13 +778,15 @@ class BIO_NewWeapon : DoomWeapon abstract
 	}
  */
 
+	// Utility =================================================================
+
 	void ApplyLifeSteal(float percent, int dmg) const
 	{
 		let lsp = Min(percent, 1.0);
 		let given = int(float(dmg) * lsp);
 		Owner.GiveBody(given, Owner.GetMaxHealth(true) + 100);
 	}
- 
+
 	// Substitutes for attack actions ==========================================
 
 	// (The crime part, where we imitate several gzdoom.pk3 functions because
