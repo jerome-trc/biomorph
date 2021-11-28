@@ -191,6 +191,8 @@ class BIO_WeaponPipeline play
 	}
 
 	bool FiresTrueProjectile() const { return FireType is 'BIO_Projectile'; }
+	bool FiresFastProjectile() const { return FireType is 'BIO_FastProjectile'; }
+	bool FiresProjectile() const { return FiresTrueProjectile() || FiresFastProjectile(); }
 
 	void SetFireType(Class<Actor> fType)
 	{

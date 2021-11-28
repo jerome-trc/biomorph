@@ -1,17 +1,4 @@
-enum BIO_WeaponAffixFlags : uint16
-{
-	BIO_WAF_NONE = 0,
-	BIO_WAF_FIREFUNC = 1 << 0,
-	BIO_WAF_FIRETYPE = 1 << 1,
-	BIO_WAF_FIRECOUNT = 1 << 2,
-	BIO_WAF_DAMAGE = 1 << 3,
-	BIO_WAF_ACCURACY = 1 << 4,
-	BIO_WAF_FIRETIME = 1 << 5,
-	BIO_WAF_RELOADTIME = 1 << 6,
-	BIO_WAF_MAGSIZE = 1 << 7,
-	BIO_WAF_ALERT = 1 << 8,
-	BIO_WAF_ALL = uint16.MAX
-}
+// Damage ======================================================================
 
 class BIO_WAfx_Damage : BIO_WeaponAffix
 {
@@ -157,5 +144,44 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 	override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_DAMAGE;
+	}
+}
+
+// Modify fired thing ==========================================================
+
+class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
+{
+	override bool Compatible(BIO_Weapon weap) const
+	{
+		return weap.FiresProjectile();
+	}
+
+	override void OnTrueProjectileFired(
+		BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.bForceRadiusDmg = true;
+	}
+
+	override void OnFastProjectileFired(
+		BIO_Weapon weap, BIO_FastProjectile proj) const
+	{
+		proj.bForceRadiusDmg = true;
+	}
+
+	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_TOSTR_FORCERADIUSDMG"));
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_TAG_FORCERADIUSDMG");
+	}
+
+	override bool CanGenerate() const { return false; }
+
+	override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_ONPROJFIRED;
 	}
 }

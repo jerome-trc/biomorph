@@ -66,24 +66,6 @@ class BIO_StateTimeGroup
 	}
 }
 
-/*	Dictate what stats can be affected by affixes. If a bit is set,
-	the affix should stop itself from altering that stat, or applying itself
-	to a weapon which it can't even affect.
-*/
-enum BIO_WeaponAffixMask : uint8
-{
-	BIO_WAM_NONE = 0,
-	BIO_WAM_BIOFLAGS = 1 << 0,
-	BIO_WAM_RAISESPEED = 1 << 1,
-	BIO_WAM_LOWERSPEED = 1 << 2,
-	BIO_WAM_KICKBACK = 1 << 3,
-	BIO_WAM_FIRETIME = 1 << 4,
-	BIO_WAM_MAGSIZE = 1 << 5,
-	BIO_WAM_RELOADTIME = 1 << 6,
-	BIO_WAM_MAGAZINELESS = BIO_WAM_MAGSIZE | BIO_WAM_RELOADTIME,
-	BIO_WAM_ALL = uint8.MAX
-}
-
 class BIO_Weapon : DoomWeapon abstract
 {
 	mixin BIO_Gear;
@@ -383,6 +365,7 @@ class BIO_Weapon : DoomWeapon abstract
 	// Virtuals and abstracts ==================================================
 
 	abstract void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const;
+	virtual void InitImplicitAffixes(in out Array<BIO_WeaponAffix> affixes) const {}
 	abstract void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const;
 	virtual void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const {}
 
@@ -661,6 +644,17 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
+	// Returns `true` if any of this weapon's pipelines
+	// fires a `BIO_Projectile` or `BIO_TrueProjectile`.
+	bool FiresProjectile() const
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].FiresProjectile())
+				return true;
+
+		return false;
+	}
+
 	bool DamageMutable() const
 	{
 		for (uint i = 0; i < Pipelines.Size(); i++)
@@ -717,6 +711,7 @@ class BIO_Weapon : DoomWeapon abstract
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
+		InitImplicitAffixes(ImplicitAffixes);
 
 		// Inform pipelines of their indices
 		for (uint i = 0; i < Pipelines.Size(); i++)
@@ -906,7 +901,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 		if (Default.Rarity == BIO_RARITY_UNIQUE)
 			Rarity = BIO_RARITY_UNIQUE;
-		else if (Affixes.Size() > 1)
+		else if (Affixes.Size() > 0)
 			Rarity = BIO_RARITY_MUTATED;
 		else
 			Rarity = BIO_RARITY_COMMON;

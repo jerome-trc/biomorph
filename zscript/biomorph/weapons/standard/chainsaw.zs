@@ -12,7 +12,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 		
 		Weapon.Kickback 0;
 		Weapon.ReadySound "weapons/sawidle";
-		Weapon.SelectionOrder SELORDER_CHAINSAW_STD;
+		Weapon.SelectionOrder SELORDER_CHAINSAW;
 		Weapon.SlotNumber 1;
 		Weapon.SlotPriority SLOTPRIO_MIN;
 		Weapon.UpSound "weapons/sawup";

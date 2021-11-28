@@ -11,7 +11,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		Weapon.AmmoGive 40;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder SELORDER_CHAINGUN_STD;
+		Weapon.SelectionOrder SELORDER_CHAINGUN;
 		Weapon.SlotNumber 4;
 		Weapon.SlotPriority SLOTPRIO_STANDARD;
 		Weapon.UpSound "bio/weap/gunswap";

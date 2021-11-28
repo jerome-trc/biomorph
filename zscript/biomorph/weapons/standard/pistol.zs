@@ -12,7 +12,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		Weapon.AmmoGive 15;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder SELORDER_PISTOL_STD;
+		Weapon.SelectionOrder SELORDER_PISTOL;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority SLOTPRIO_STANDARD;
 		Weapon.UpSound "bio/weap/gunswap_0";
