@@ -12,14 +12,26 @@ class BIO_Megaton : BIO_IncursionShotgun
 		Inventory.PickupMessage "$BIO_WEAP_PKUP_MEGATON";
 
 		Weapon.AmmoType2 'Clip'; // Only for the status bar display
-		Weapon.SelectionOrder SELORDER_SSG - 90;
-		Weapon.SlotPriority SLOTPRIO_CLASSIFIED + 0.1;
+		Weapon.SelectionOrder SELORDER_SSG_CLSF;
+		Weapon.SlotPriority SLOTPRIO_CLASSIFIED_UNIQUE;
 
-		BIO_Weapon.DamageRange 8, 18;
 		BIO_Weapon.MagazineType 'BIO_MAG_Megaton';
 		BIO_Weapon.Rarity BIO_RARITY_UNIQUE;
-		BIO_Weapon.Spread 3.8, 1.9;
 		BIO_Weapon.UniqueBase 'BIO_IncursionShotgun';
+	}
+
+	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
+	{
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+			.BasicProjectilePipeline('BIO_ShotPellet', 9, 8, 18, 3.8, 1.9)
+			.FireSound("bio/weap/incursion/fire")
+			.CustomReadout(StringTable.Localize(
+				"$BIO_WEAP_STAT_INCURSIONSHOTGUN_QUAD"))
+			.CustomReadout(StringTable.Localize(
+				"$BIO_WEAP_STAT_MEGATON_DETAIL"))
+			.CustomReadout(StringTable.Localize(
+				"$BIO_WEAP_STAT_MEGATON_HOWTO"))
+			.Build());
 	}
 	
 	States
@@ -28,12 +40,12 @@ class BIO_Megaton : BIO_IncursionShotgun
 		INCU A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Zoom:
-		INCU A 3 Offset(0, 32 + 3) A_SetTics(invoker.ReloadTime1);
-		INCU A 3 Offset(0, 32 + 6) A_SetTics(invoker.ReloadTime2);
-		INCU A 2 Offset(0, 32 + 9) A_SetTics(invoker.ReloadTime3);
+		INCU A 3 Offset(0, 32 + 3) A_SetReloadTime(0);
+		INCU A 3 Offset(0, 32 + 6) A_SetReloadTime(1);
+		INCU A 2 Offset(0, 32 + 9) A_SetReloadTime(2);
 		INCU A 3 Offset(0, 32 + 6)
 		{
-			A_SetTics(invoker.ReloadTime4);
+			A_SetReloadTime(3);
 			A_EmptyMagazine();
 			invoker.ClipFed = !invoker.ClipFed;
 			if (invoker.ClipFed)
@@ -49,15 +61,8 @@ class BIO_Megaton : BIO_IncursionShotgun
 			A_LoadMag();
 			A_StartSound("bio/weap/incursion/firereload", CHAN_7);
 		}
-		INCU A 3 Offset(0, 32 + 3) A_SetTics(invoker.ReloadTime5);
+		INCU A 3 Offset(0, 32 + 3) A_SetReloadTime(4);
 		Goto Ready;
-	}
-
-	override void StatsToString(in out Array<string> stats) const
-	{
-		super.StatsToString(stats);
-		stats.Push(StringTable.Localize("$BIO_WEAPSTAT_MEGATON_DETAIL"));
-		stats.Push(StringTable.Localize("$BIO_WEAPSTAT_MEGATON_HOWTO"));
 	}
 }
 

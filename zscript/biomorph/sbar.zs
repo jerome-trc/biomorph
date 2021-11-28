@@ -162,7 +162,7 @@ class BIO_StatusBar : BaseStatusBar
 
 	private void DrawWeaponAndAmmoDetails(in out int invY)
 	{
-		BIO_NewWeapon weap = BIO_NewWeapon(CPlayer.ReadyWeapon);
+		BIO_Weapon weap = BIO_Weapon(CPlayer.ReadyWeapon);
 		if (weap == null) return;
 
 		Ammo mag1 = null, mag2 = null;
@@ -256,8 +256,6 @@ class BIO_StatusBar : BaseStatusBar
 			
 			weapInfoY += 8;
 		}
-
-		weapInfoY += 8; // Blank line between stats and affixes
 
 		for (uint i = 0; i < weap.AffixReadout.Size(); i++)
 		{

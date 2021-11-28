@@ -56,7 +56,7 @@ class BIO_Mutagen : Inventory abstract
 	protected void RLMDangerLevel(uint danger) const
 	{
 		// If the DoomRL Arsenal Monster Pack is loaded, use
-		// of certain mutagens increase its danger level
+		// of certain mutagens increases its danger level
 		name mpt_tn = 'RLMonsterpackThingo';
 		Class<Actor> mpt_t = mpt_tn;
 
@@ -105,6 +105,7 @@ class BIO_MutagenReset : BIO_Mutagen
 		weap.ResetStats();
 		weap.ClearAffixes();
 		weap.ApplyImplicitAffixes();
+		weap.OnWeaponChange();
 		Owner.A_Print("$BIO_MUTA_RESET_USE");
 		return true;
 	}
@@ -147,6 +148,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 
 		weap.ResetStats();
 		weap.ApplyAllAffixes();
+		weap.OnWeaponChange();
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
 		RLMDangerLevel(5);
 		return true;
@@ -176,6 +178,7 @@ class BIO_MutagenRandom : BIO_Mutagen
 		if (!CanUse()) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 		weap.RandomizeAffixes();
+		weap.OnWeaponChange();
 		Owner.A_Print("$BIO_MUTA_RANDOM_USE");
 		RLMDangerLevel(5);
 		return true;
@@ -220,6 +223,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 			weap.Affixes[i].Init(weap);
 
 		weap.ApplyAllAffixes();
+		weap.OnWeaponChange();
 
 		Owner.A_Print("$BIO_MUTA_REROLL_USE");
 		RLMDangerLevel(1);
@@ -260,6 +264,7 @@ class BIO_MutagenRemove : BIO_Mutagen
 		weap.ResetStats();
 		weap.Affixes.Delete(Random(0, weap.Affixes.Size() - 1));
 		weap.ApplyAllAffixes();
+		weap.OnWeaponChange();
 
 		Owner.A_Print("$BIO_MUTA_REROLL_USE");
 		return true;
@@ -307,6 +312,7 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 			break;
 		}
 
+		weap.OnWeaponChange();
 		RLMDangerLevel(25);
 		return consumed;
 	}

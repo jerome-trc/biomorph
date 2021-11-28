@@ -13,7 +13,7 @@ enum BIO_WeaponFlags : uint16
 	BIO_WF_ALL = uint16.MAX
 }
 
-extend class BIO_NewWeapon
+extend class BIO_Weapon
 {
 	const MAX_AFFIXES = 6;
 

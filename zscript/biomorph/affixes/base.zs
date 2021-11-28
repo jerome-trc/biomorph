@@ -11,25 +11,26 @@ class BIO_Affix play abstract
 
 class BIO_WeaponAffix : BIO_Affix abstract
 {
-	abstract void Init(BIO_Weapon weap);
 	abstract bool Compatible(BIO_Weapon weap) const;
-
+	virtual void Init(BIO_Weapon weap) {}
+	virtual void CustomInit(BIO_Weapon weap, Dictionary dict)
+	{
+		Console.Printf(Biomorph.LOGPFX_INFO ..
+			"This weapon has no custom initialiser.");
+	}
 	virtual void Apply(BIO_Weapon weap) const {}
 
-	virtual void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const {}	
-	virtual void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const {}
+	virtual void ModifyDamage(BIO_Weapon weap, in out int damage) const {}
 
-	virtual void ModifyDamage(BIO_Weapon weap, in out int dmg) const {}
-	virtual void ModifySplash(BIO_Weapon weap, in out int dmg, in out int radius,
-		in out int baseDmg) const {}
+	virtual void OnTrueProjectileFired(BIO_Weapon weap,
+		BIO_Projectile proj) const {}	
+	virtual void OnFastProjectileFired(BIO_Weapon weap,
+		BIO_FastProjectile proj) const {}
+	virtual void OnKill(readOnly<BIO_Weapon> weap,
+		Actor killed, Actor inflictor) const {}
 
-	virtual void PreAlertMonsters(BIO_Weapon weap,
-		in out double maxDist, in out int flags) const {}
-
-	virtual void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const {}
-
-	// Output should be fully localized.
 	abstract void ToString(in out Array<string> strings, BIO_Weapon weap) const;
+	abstract BIO_WeaponAffixFlags GetFlags() const;
 }
 
 class BIO_EquipmentAffix : BIO_Affix abstract

@@ -110,44 +110,6 @@ extend class BIO_EventHandler
 		string output = Biomorph.LOGPFX_INFO;
 		output.AppendFormat("%s\n%s\n", weap.GetClassName(), weap.GetTag());
 
-		string ft1, ft2;
-
-		if (weap.FireType1 != null)
-			ft1 = weap.FireType1.GetClassName();
-		else
-			ft1 = "null";
-
-		if (weap.FireType2 != null)
-			ft2 = weap.FireType2.GetClassName();
-		else
-			ft2 = "null";
-
-		output = output .. "\c[Gold]Primary stats:\c-\n";
-		output.AppendFormat("Fire data: %d x %s\n", weap.FireCount1, ft1);
-		output.AppendFormat("Damage: [%d, %d]\n", weap.MinDamage1, weap.MaxDamage1);
-
-		output = output .. "\c[Gold]Secondary stats:\c-\n";
-		output.AppendFormat("Fire data: %d x %s\n", weap.FireCount2, ft2);
-		output.AppendFormat("Damage: [%d, %d]\n", weap.MinDamage2, weap.MaxDamage2);
-
-		Array<int> fireTimes;
-		weap.GetFireTimes(fireTimes);
-		if (fireTimes.Size() > 0)
-		{
-			output = output .. "\c[Gold]Fire times:\c-\n";
-			for (uint i = 0; i < fireTimes.Size(); i++)
-				output = output .. "\t" .. fireTimes[i] .. "\n";
-		}
-
-		Array<int> reloadTimes;
-		weap.GetReloadTimes(reloadTimes);
-		if (reloadTimes.Size() > 0)
-		{
-			output = output .. "\c[Gold]Reload times:\c-\n";
-			for (uint i = 0; i < reloadTimes.Size(); i++)
-				output = output .. "\t" .. reloadTimes[i] .. "\n";
-		}
-
 		output.AppendFormat("Switch speeds: %d lower, %d raise\n",
 			weap.LowerSpeed, weap.RaiseSpeed);
 
@@ -165,27 +127,6 @@ extend class BIO_EventHandler
 			output = output .. "Affixes:\n";
 			for (uint i = 0; i < weap.Affixes.Size(); i++)
 				output.AppendFormat("\t%s\n", weap.Affixes[i].GetClassName());
-		}
-
-		if (weap.ProjTravelFunctors.Size() > 0)
-		{
-			output = output .. "Projectile travel functors:\n";
-			for (uint i = 0; i < weap.ProjTravelFunctors.Size(); i++)
-				output.AppendFormat("\t%s\n", weap.ProjTravelFunctors[i].GetClassName());
-		}
-
-		if (weap.ProjDamageFunctors.Size() > 0)
-		{
-			output = output .. "Projectile damage functors:\n";
-			for (uint i = 0; i < weap.ProjDamageFunctors.Size(); i++)
-				output.AppendFormat("\t%s\n", weap.ProjDamageFunctors[i].GetClassName());
-		}
-
-		if (weap.ProjDeathFunctors.Size() > 0)
-		{
-			output = output .. "Projectile death functors:\n";
-			for (uint i = 0; i < weap.ProjDeathFunctors.Size(); i++)
-				output.AppendFormat("\t%s\n", weap.ProjDeathFunctors[i].GetClassName());
 		}
 
 		Console.Printf(output);

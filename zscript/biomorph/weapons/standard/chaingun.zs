@@ -1,8 +1,5 @@
 class BIO_Chaingun : BIO_Weapon replaces Chaingun
 {
-	int FireTime; property FireTimes: FireTime;
-	int ReloadTime; property ReloadTimes: ReloadTime;
-
 	Default
 	{
 		Obituary "$OB_MPCHAINGUN";
@@ -14,21 +11,32 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		Weapon.AmmoGive 40;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
-		Weapon.SelectionOrder SELORDER_CHAINGUN;
+		Weapon.SelectionOrder SELORDER_CHAINGUN_STD;
 		Weapon.SlotNumber 4;
 		Weapon.SlotPriority SLOTPRIO_STANDARD;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.AffixMasks BIO_WAM_NONE, BIO_WAM_ALL, BIO_WAM_NONE;
-		BIO_Weapon.DamageRange 5, 15;
-		BIO_Weapon.FireType 'BIO_Bullet';
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 40;
 		BIO_Weapon.MagazineType 'BIO_MAG_Chaingun';
-		BIO_Weapon.Spread 4.0, 2.0;
-		
-		BIO_Chaingun.FireTimes 4;
-		BIO_Chaingun.ReloadTimes 40;
+	}
+
+	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
+	{
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+			.BasicProjectilePipeline('BIO_Bullet', 1, 5, 15, 4.0, 2.0)
+			.FireSound("weapons/chngun")
+			.Build());
+	}
+
+	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
+	{
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire')));
+	}
+
+	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const
+	{
+		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Reload')));
 	}
 
 	States
@@ -44,44 +52,51 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		Stop;
 	Fire:
 		CHGG A 0 A_AutoReload;
-		CHGG AB 4
+		CHGG A 4
 		{
-			A_BIO_Fire();
-			Player.SetSafeFlash(invoker, ResolveState('Flash'),
-				ResolveState('Fire') + 1 == Player.GetPSprite(PSP_WEAPON).CurState ? 0 : 1);
-			A_StartSound("weapons/chngun", CHAN_WEAPON);
-			A_PresetRecoil('BIO_Recoil_Autogun');
+			A_SetFireTime(0);
+			A_ChaingunFire();
+		}
+		CHGG B 4
+		{
+			A_SetFireTime(1);
+			A_ChaingunFire();
 		}
 		CHGG B 0 A_ReFire;
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		CHGG A 1 A_WeaponReady(WRF_NOFIRE);
-		CHGG A 1 Offset(0, 32 + 2);
-		CHGG A 1 Offset(0, 32 + 4);
-		CHGG A 1 Offset(0, 32 + 6);
-		CHGG A 1 Offset(0, 32 + 8);
-		CHGG A 1 Offset(0, 32 + 10);
-		CHGG A 1 Offset(0, 32 + 12);
-		CHGG A 1 Offset(0, 32 + 14);
-		CHGG A 1 Offset(0, 32 + 16);
-		CHGG A 1 Offset(0, 32 + 18);
-		// TODO: Reload sounds
-		CHGG A 40 Offset(0, 32 + 20) A_SetTics(invoker.ReloadTime);
-		CHGG A 1 Offset(0, 32 + 18) A_LoadMag;
-		CHGG A 1 Offset(0, 32 + 16);
-		CHGG A 1 Offset(0, 32 + 14);
-		CHGG A 1 Offset(0, 32 + 12);
-		CHGG A 1 Offset(0, 32 + 10);
-		CHGG A 1 Offset(0, 32 + 8);
-		CHGG A 1 Offset(0, 32 + 6);
-		CHGG A 1 Offset(0, 32 + 4);
-		CHGG A 1 Offset(0, 32 + 2);
+		CHGG A 1 Fast Offset(0, 32 + 1) A_SetReloadTime(1);
+		CHGG A 1 Fast Offset(0, 32 + 3) A_SetReloadTime(2);
+		CHGG A 1 Fast Offset(0, 32 + 7) A_SetReloadTime(3);
+		CHGG A 1 Fast Offset(0, 32 + 15) A_SetReloadTime(4);
+		CHGG A 1 Offset(0, 32 + 30) A_SetReloadTime(5);
+		CHGG A 40 Offset(0, 32 + 30) A_SetReloadTime(6);
+		CHGG A 1 Offset(0, 32 + 15)
+		{
+			A_SetReloadTime(7);
+			A_LoadMag();
+		}
+		CHGG A 1 Fast Offset(0, 32 + 11) A_SetReloadTime(8);
+		CHGG A 1 Fast Offset(0, 32 + 7) A_SetReloadTime(9);
+		CHGG A 1 Fast Offset(0, 32 + 5) A_SetReloadTime(10);
+		CHGG A 1 Fast Offset(0, 32 + 3) A_SetReloadTime(11);
+		CHGG A 1 Fast Offset(0, 32 + 2) A_SetReloadTime(12);
+		CHGG A 1 Fast Offset(0, 32 + 1) A_SetReloadTime(13);
 		Goto Ready;
 	Flash:
-		CHGF A 5 Bright A_Light(1);
+		CHGF A 5 Bright
+		{
+			A_SetFireTime(0, modifier: 1);
+			A_Light(1);
+		}
 		Goto LightDone;
-		CHGF B 5 Bright A_Light(2);
+		CHGF B 5 Bright
+		{
+			A_SetFireTime(1, modifier: 1);
+			A_Light(2);
+		}
 		Goto LightDone;
 	Spawn:
 		MGUN A 0;
@@ -89,44 +104,14 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		Stop;
 	}
 
-	override void GetFireTimes(in out Array<int> fireTimes, bool _) const
+	protected action void A_ChaingunFire()
 	{
-		fireTimes.Push(FireTime);
+		A_BIO_Fire();
+		Player.SetSafeFlash(invoker, ResolveState('Flash'),
+			ResolveState('Fire') + 1 ==
+			Player.GetPSprite(PSP_WEAPON).CurState ? 0 : 1);
+		A_PresetRecoil('BIO_Recoil_Autogun');
 	}
-
-	override void SetFireTimes(Array<int> fireTimes, bool _)
-	{
-		FireTime = fireTimes[0];
-	}
-
-	override void GetReloadTimes(in out Array<int> reloadTimes, bool _) const
-	{
-		reloadTimes.Push(ReloadTime);
-	}
-
-	override void SetReloadTimes(Array<int> reloadTimes, bool _)
-	{
-		ReloadTime = reloadTimes[0];
-	}
-
-	override void ResetStats()
-	{
-		super.ResetStats();
-
-		FireTime = Default.FireTime;
-		ReloadTime = Default.ReloadTime;
-	}
-
-	override void StatsToString(in out Array<string> stats) const
-	{
-		stats.Push(GenericFireDataReadout());
-		stats.Push(GenericSpreadReadout());
-		stats.Push(GenericFireTimeReadout(TrueFireTime()));
-		stats.Push(GenericReloadTimeReadout(TrueReloadTime()));
-	}
-
-	override int TrueFireTime() const { return FireTime; }
-	override int TrueReloadTime() const { return ReloadTime + 19; }
 }
 
 class BIO_MAG_Chaingun : Ammo { mixin BIO_Magazine; }

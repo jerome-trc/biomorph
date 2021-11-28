@@ -265,8 +265,7 @@ extend class BIO_EventHandler
 		uint e = weap.Affixes.Push(BIO_WeaponAffix(new(wafx_t)));
 		weap.Affixes[e].Init(weap);
 		weap.Affixes[e].Apply(weap);
-		weap.RewriteAffixReadout();
-		weap.RewriteStatReadout();
+		weap.OnWeaponChange();
 		Console.Printf(Biomorph.LOGPFX_INFO ..
 			"Applied %s to your current weapon.", wafx_t.GetClassName());
 		return true;

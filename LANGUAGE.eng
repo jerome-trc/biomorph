@@ -41,14 +41,20 @@
 	BIO_WEAP_STAT_HEADER_2 = "\c[Gold]Tertiary fire:";
 	BIO_WEAP_STAT_HEADER_3 = "\c[Gold]Quaternary fire:";
 
+	BIO_WEAP_STAT_SPLASH =
+		"\c[MidGrey]Splash: %s%d \c[MidGrey]damage, %s%d \c[MidGrey]radius";
 	BIO_WEAP_STAT_HSPREAD =
 		"\c[MidGrey]Horizontal spread: %s%.2f \c[MidGrey]degree(s)";
 	BIO_WEAP_STAT_VSPREAD =
 		"\c[MidGrey]Vertical spread: %s%2.f \c[MidGrey]degree(s)";
 	BIO_WEAP_STAT_FIRETIME =
 		"\c[MidGrey]Fire time: %s%.2f \c[MidGrey]seconds";
+	BIO_WEAP_STAT_ATTACKTIME =
+		"\c[MidGrey]Attack time: %s%.2f \c[MidGrey]seconds";
 	BIO_WEAP_STAT_RELOADTIME =
 		"\c[MidGrey]Reload time: %s%.2f \c[MidGrey]seconds";
+	BIO_WEAP_STAT_BERSERKMULTI =
+		"\cj%d%% more damage from berserk";
 
 	BIO_WEAP_FIREFUNC_DEFAULT =
 		"\c[MidGrey]Fires %s%d %s%s";
@@ -74,29 +80,9 @@
 	BIO_WEAP_DMGFUNC_1D8 =
 		"\c[MidGrey]Damage: %d%d\c[MidGrey] x (1 - 8)";
 
-	BIO_WEAPSTAT_FIREDATA =
-		"\c[MidGrey]Damage: (%s%d\c[MidGrey] \cu-\c[MidGrey] %s%d\c[MidGrey]) \c[MidGrey]x\c[MidGrey] %s%d\c[MidGrey] %s%s\c-";
-	BIO_WEAPSTAT_FIRETIME =
-		"\c[MidGrey]Fire time: %s%.2f \c[MidGrey]seconds";
-	BIO_WEAPSTAT_FIRETIME_SEMIAUTO =
-		"\c[MidGrey]Fire time (\cksemi-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_FIRETIME_BURST =
-		"\c[MidGrey]Fire time (\ckburst\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_FIRETIME_AUTO =
-		"\c[MidGrey]Fire time (\ckfull-auto\c[MidGrey]): %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_ATKTIME =
-		"\c[MidGrey]Attack time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_RELOADTIME =
-		"\c[MidGrey]Reload time: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_POSTFIREDELAY =
-		"\c[MidGrey]Post-fire delay: %s%.2f\c[MidGrey] \c[MidGrey]seconds";
-	BIO_WEAPSTAT_SPREAD =
-		"\c[MidGrey]Spread angles: %s%.2f\c[MidGrey] horizontal, %s%.2f\c[MidGrey] \c[MidGrey]vertical";
-	BIO_WEAPSTAT_FORCERADIUSDMG =
+	BIO_WEAP_STAT_FORCERADIUSDMG =
 		"\cjIgnores splash damage immunity";
-	BIO_WEAPSTAT_BERSERKMULTI =
-		"\cj%d%% more damage from berserk";
-	BIO_WEAPSTAT_NAILSHRAPNEL =
+	BIO_WEAP_STAT_NAILSHRAPNEL =
 		"\cjNails break into two shards of shrapnel";
 
 	BIO_WEAP_TAG_FIST = "Fist";
@@ -136,15 +122,15 @@
 
 	BIO_WEAP_TAG_INCURSIONSHOTGUN = "Incursion Shotgun";
 	BIO_WEAP_PKUP_INCURSIONSHOTGUN = "Procured an %s.";
-	BIO_WEAPSTAT_INCURSIONSHOTGUN_QUAD = "\cnAlt-fire\cj shoots 4 barrels";
+	BIO_WEAP_STAT_INCURSIONSHOTGUN_QUAD = "\cnAlt-fire\cj shoots 4 barrels";
 
 	BIO_WEAP_TAG_BARRAGELAUNCHER = "Barrage Launcher";
 	BIO_WEAP_PKUP_BARRAGELAUNCHER = "Procured a %s.";
 	
 	BIO_WEAP_TAG_MEGATON = "\c[Orange]Megaton\c[White] Incursion Shotgun";
 	BIO_WEAP_PKUP_MEGATON = "Acquired Megaton.";
-	BIO_WEAPSTAT_MEGATON_DETAIL = "\c[Orange]Can load shells or bullets";
-	BIO_WEAPSTAT_MEGATON_HOWTO = "\cnZoom\c[Orange] switches ammo type";
+	BIO_WEAP_STAT_MEGATON_DETAIL = "\c[Orange]Can load shells or bullets";
+	BIO_WEAP_STAT_MEGATON_HOWTO = "\cnZoom\c[Orange] switches ammo type";
 
 // Weapon upgrade kit (tag, pickup message, UI messaging) ======================
 
@@ -259,15 +245,19 @@
 
 	BIO_AFFIXESUNKNOWN = "Affixes unknown";
 
-	BIO_WAFX_TAG_WEAPDMG = "High-Power";
 	BIO_WAFX_TOSTR_WEAPDMG1 = "Primary damage: %s%s%d";
 	BIO_WAFX_TOSTR_WEAPDMG2 = "Secondary damage: %s%s%d";
 	BIO_WAFX_TOSTR_WEAPDMG = "Damage: %s%s%d primary, %s%s%d secondary";
 	
-	BIO_WAFX_TAG_WEAPDMGPERCENT = "Assault Variant";
 	BIO_WAFX_TOSTR_WEAPDMGPERCENT1 = "Primary damage: %s%s%%%d";
 	BIO_WAFX_TOSTR_WEAPDMGPERCENT2 = "Secondary damage: %s%s%%%d";
 	BIO_WAFX_TOSTR_WEAPDMGPERCENT = "Damage: %s%s%%%d primary, %s%s%%%d secondary";
+
+	BIO_WAFX_TAG_DAMAGE = "High-Power";
+	BIO_WAFX_TOSTR_DAMAGE = "%s damage: %s%s%d";
+
+	BIO_WAFX_TAG_DMGMULTI = "Assault Variant";
+	BIO_WAFX_TOSTR_DMGMULTI = "%s damage: %s%s%.1f%%";
 	
 	BIO_WAFX_TAG_ENEMYHEALTHDAMAGE = "Viral Payload";
 	BIO_WAFX_TOSTR_ENEMYHEALTHDAMAGE = "%s%.1f%% of enemy's health %s damage";
@@ -435,6 +425,8 @@
 	BIO_TERIARY = "tertiary";
 	BIO_QUATERNARY = "quaternary";
 
+	BIO_FIRE = "fire";
+	BIO_COOLDOWN = "cooldown";
 	BIO_FIRE_MODE = "fire mode";
 	BIO_BURST = "burst";
 	BIO_SEMI_AUTO = "semi-automatic";

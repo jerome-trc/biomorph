@@ -3,6 +3,16 @@ class BIO_StateTimeGroup
 	string Tag;
 	Array<int> Times, Minimums;
 
+	int PossibleReduction() const
+	{
+		int ret = 0;
+
+		for (uint i = 0; i < Times.Size(); i++)
+			ret += Max(Times[i] - Minimums[i], 0);
+
+		return ret;
+	}
+
 	private void Populate(state basis)
 	{
 		for (state s = basis; s.InStateSequence(basis); s = s.NextState)
@@ -13,11 +23,12 @@ class BIO_StateTimeGroup
 			Times.Push(s.Tics);
 			int min;
 
-			// States marked `Fast` are allowed to have their tic time set to 0,
-			// effectively eliminating them from the state sequence
+			// States marked `Fast` are allowed to have their tic time set  
+			// to 0, effectively eliminating them from the state sequence
 			if (s.bFast)
 				min = 0;
-			else if (s.bSlow) // States marked `Slow` are kept immutable
+			// States marked `Slow` are kept immutable
+			else if (s.bSlow)
 				min = s.Tics;
 			else
 				min = 1;
@@ -55,13 +66,31 @@ class BIO_StateTimeGroup
 	}
 }
 
-class BIO_NewWeapon : DoomWeapon abstract
+/*	Dictate what stats can be affected by affixes. If a bit is set,
+	the affix should stop itself from altering that stat, or applying itself
+	to a weapon which it can't even affect.
+*/
+enum BIO_WeaponAffixMask : uint8
+{
+	BIO_WAM_NONE = 0,
+	BIO_WAM_BIOFLAGS = 1 << 0,
+	BIO_WAM_RAISESPEED = 1 << 1,
+	BIO_WAM_LOWERSPEED = 1 << 2,
+	BIO_WAM_KICKBACK = 1 << 3,
+	BIO_WAM_FIRETIME = 1 << 4,
+	BIO_WAM_MAGSIZE = 1 << 5,
+	BIO_WAM_RELOADTIME = 1 << 6,
+	BIO_WAM_MAGAZINELESS = BIO_WAM_MAGSIZE | BIO_WAM_RELOADTIME,
+	BIO_WAM_ALL = uint8.MAX
+}
+
+class BIO_Weapon : DoomWeapon abstract
 {
 	mixin BIO_Gear;
 
-	meta Class<BIO_NewWeapon> UniqueBase; property UniqueBase: UniqueBase;
+	meta Class<BIO_Weapon> UniqueBase; property UniqueBase: UniqueBase;
 	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
-	uint AffixMask; property AffixMask: AffixMask;
+	BIO_WeaponAffixMask AffixMask; property AffixMask: AffixMask;
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
 
@@ -96,7 +125,7 @@ class BIO_NewWeapon : DoomWeapon abstract
 	Array<BIO_WeaponPipeline> Pipelines;
 	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
 
-	Array<BIO_NewWeaponAffix> ImplicitAffixes, Affixes;
+	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
 	Array<string> StatReadout, AffixReadout;
 
 	Default
@@ -122,14 +151,14 @@ class BIO_NewWeapon : DoomWeapon abstract
         Weapon.BobSpeed 1.2;
         Weapon.BobStyle 'Alpha';
 
-		BIO_NewWeapon.AffixMask BIO_WAM_NONE;
-		BIO_NewWeapon.Flags BIO_WF_NONE;
-		BIO_NewWeapon.Grade BIO_GRADE_NONE;
-		BIO_NewWeapon.MinAmmoReserves 1, 1;
-		BIO_NewWeapon.Rarity BIO_RARITY_COMMON;
-		BIO_NewWeapon.ReloadFactors 1, 1;
-		BIO_NewWeapon.SwitchSpeeds 6, 6;
-		BIO_NewWeapon.UniqueBase '';
+		BIO_Weapon.AffixMask BIO_WAM_NONE;
+		BIO_Weapon.Flags BIO_WF_NONE;
+		BIO_Weapon.Grade BIO_GRADE_NONE;
+		BIO_Weapon.MinAmmoReserves 1, 1;
+		BIO_Weapon.Rarity BIO_RARITY_COMMON;
+		BIO_Weapon.ReloadFactors 1, 1;
+		BIO_Weapon.SwitchSpeeds 6, 6;
+		BIO_Weapon.UniqueBase '';
 	}
 
 	States
@@ -519,13 +548,31 @@ class BIO_NewWeapon : DoomWeapon abstract
 	protected action void A_PresetRecoil(Class<BIO_RecoilThinker> recoil_t,
 		float scale = 1.0, bool invert = false)
 	{
-		BIO_RecoilThinker.Create(recoil_t, BIO_NewWeapon(invoker), scale, invert);
+		BIO_RecoilThinker.Create(recoil_t, BIO_Weapon(invoker), scale, invert);
+	}
+
+	protected action void A_Pushback(float xVelMult, float zVelMult)
+	{
+		// Don't apply any if the wielding player isn't on the ground
+		if (invoker.Owner.Pos.Z > invoker.Owner.FloorZ) return;
+
+		A_ChangeVelocity(
+			Cos(invoker.Pitch) * -xVelMult, 0.0,
+			Sin(invoker.Pitch) * zVelMult, CVF_RELATIVE);
 	}
 
 	protected action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
 	protected action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
 
 	// Getters =================================================================
+
+	// Is this weapon currently being raised, lowered, or neither?
+	bool Switching() const
+	{
+		return
+			InStateSequence(CurState, ResolveState('Deselect.Loop')) ||
+			InStateSequence(CurState, ResolveState('Select.Loop')); 
+	}
 
 	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
 
@@ -590,6 +637,30 @@ class BIO_NewWeapon : DoomWeapon abstract
 		return true;
 	}
 
+	bool NoImplicitAffixes() const { return ImplicitAffixes.Size() < 1; }
+	bool NoExplicitAffixes() const { return Affixes.Size() < 1; }
+	bool NoAffixes() const { return NoImplicitAffixes() && NoExplicitAffixes(); }
+
+	bool HasAffixOfType(Class<BIO_WeaponAffix> t, bool implicit = false) const
+	{
+		if (!implicit)
+		{
+			for (uint i = 0; i < Affixes.Size(); i++)
+				if (Affixes[i].GetClass() == t)
+					return true;
+
+			return false;
+		}
+		else
+		{
+			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+				if (ImplicitAffixes[i].GetClass() == t)
+					return true;
+
+			return false;
+		}
+	}
+
 	bool DamageMutable() const
 	{
 		for (uint i = 0; i < Pipelines.Size(); i++)
@@ -608,19 +679,41 @@ class BIO_NewWeapon : DoomWeapon abstract
 		return false;
 	}
 
-	// Modifying ===============================================================
-
-	private void Teardown()
+	bool HasAnySpread() const
 	{
-		Pipelines.Clear();
-		FireTimeGroups.Clear();
-		ReloadTimeGroups.Clear();
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].HasAnySpread())
+				return true;
+
+		return false;
 	}
+
+	// Fire states can't have all of their tic times reduced to 0.
+	// Fire rate-affecting affixes must know in advance if
+	// they can even have any effect, given this caveat.
+	bool AnyReducibleFireTimes() const
+	{
+		for (uint i = 0; i < FireTimeGroups.Size(); i++)
+			if (FireTimeGroups[i].PossibleReduction() > 1)
+				return true;
+
+		return false;
+	}
+
+	// See above.
+	bool AnyReducibleReloadTimes() const
+	{
+		for (uint i = 0; i < ReloadTimeGroups.Size(); i++)
+			if (ReloadTimeGroups[i].PossibleReduction() > 1)
+				return true;
+
+		return false;
+	}
+
+	// Modifying ===============================================================
 
 	private void Init()
 	{
-		Teardown();
-
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
@@ -632,9 +725,11 @@ class BIO_NewWeapon : DoomWeapon abstract
 		OnWeaponChange();
 	}
 
-	private void Reset()
+	void ResetStats()
 	{
-		Teardown();
+		Pipelines.Clear();
+		FireTimeGroups.Clear();
+		ReloadTimeGroups.Clear();
 
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
@@ -670,6 +765,136 @@ class BIO_NewWeapon : DoomWeapon abstract
 			Pipelines[i].Index = i;
 	}
 
+	void ApplyImplicitAffixes()
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].Apply(self);
+	}
+
+	void ApplyExplicitAffixes()
+	{
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].Apply(self);
+	}
+
+	void ApplyAllAffixes()
+	{
+		ApplyImplicitAffixes();
+		ApplyExplicitAffixes();
+	}
+
+	// Does not alter stats, and does not apply the newly-added affixes.
+	// Returns `false` if there are no compatible affixes to add.
+	bool AddRandomAffix()
+	{
+		Array<BIO_WeaponAffix> eligibles;
+
+		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, self))
+			return false;
+
+		if (Rarity == BIO_RARITY_COMMON)
+		{
+			Rarity = BIO_RARITY_MUTATED;
+			SetTag(Default.GetTag());
+			SetTag(GetColoredTag());
+		}
+
+		uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
+		Affixes[e].Init(self);
+		return true;
+	}
+
+	// Affects explicit affixes only.
+	void RandomizeAffixes()
+	{
+		ResetStats();
+		ApplyImplicitAffixes();
+
+		uint c = Random(2, MAX_AFFIXES);
+
+		for (uint i = 0; i < c; i++)
+		{
+			if (AddRandomAffix())
+				Affixes[Affixes.Size() - 1].Apply(self);
+		}
+	}
+
+	void ClearAffixes(bool implicitsToo = false)
+	{
+		if (implicitsToo) ImplicitAffixes.Clear();
+		Affixes.Clear();
+	}
+
+	void ModifyFireTime(uint grp, int modifier)
+	{
+		if (grp >= FireTimeGroups.Size())
+		{
+			Console.Printf(
+				"Illegal fire time group index of %d given to %s.",
+				grp, GetClassName());
+			return;
+		}
+
+		if (modifier == 0)
+		{
+			Console.Printf(
+				"Illegal fire time modifier of 0 given to %s.",
+				GetClassName());
+			return;
+		}
+
+		uint e = Abs(modifier);
+
+		for (uint i = 0; i < e; i++)
+		{
+			uint idx = 0, minOrMax = 0;
+
+			if (modifier > 0)
+				[idx, minOrMax] = BIO_Utils.IntArrayMin(FireTimeGroups[grp].Times);
+			else
+				[idx, minOrMax] = BIO_Utils.IntArrayMax(FireTimeGroups[grp].Times);
+
+			FireTimeGroups[grp].Times[idx] = modifier > 0 ?
+				FireTimeGroups[grp].Times[idx] + 1 :
+				FireTimeGroups[grp].Times[idx] - 1;
+		}
+	}
+
+	void ModifyReloadTime(uint grp, int modifier)
+	{
+		if (grp >= ReloadTimeGroups.Size())
+		{
+			Console.Printf(
+				"Illegal reload time group index of %d given to %s.",
+				grp, GetClassName());
+			return;
+		}
+
+		if (modifier == 0)
+		{
+			Console.Printf(
+				"Illegal reload time modifier of 0 given to %s.",
+				GetClassName());
+			return;
+		}
+
+		uint e = Abs(modifier);
+
+		for (uint i = 0; i < e; i++)
+		{
+			uint idx = 0, minOrMax = 0;
+
+			if (modifier > 0)
+				[idx, minOrMax] = BIO_Utils.IntArrayMin(ReloadTimeGroups[grp].Times);
+			else
+				[idx, minOrMax] = BIO_Utils.IntArrayMax(ReloadTimeGroups[grp].Times);
+
+			ReloadTimeGroups[grp].Times[idx] = modifier > 0 ?
+				ReloadTimeGroups[grp].Times[idx] + 1 :
+				ReloadTimeGroups[grp].Times[idx] - 1;
+		}
+	}
+
 	void OnWeaponChange()
 	{
 		Array<BIO_WeaponPipeline> pplDefs;
@@ -678,6 +903,16 @@ class BIO_NewWeapon : DoomWeapon abstract
 		self.Default.InitPipelines(pplDefs);
 		self.Default.InitFireTimes(fireTimeDefs);
 		self.Default.InitReloadTimes(reloadTimeDefs);
+
+		if (Default.Rarity == BIO_RARITY_UNIQUE)
+			Rarity = BIO_RARITY_UNIQUE;
+		else if (Affixes.Size() > 1)
+			Rarity = BIO_RARITY_MUTATED;
+		else
+			Rarity = BIO_RARITY_COMMON;
+
+		SetTag(Default.GetTag());
+		SetTag(GetColoredTag());
 
 		StatReadout.Clear();
 
@@ -689,8 +924,11 @@ class BIO_NewWeapon : DoomWeapon abstract
 			int total = BIO_Utils.IntArraySum(FireTimeGroups[i].Times),
 				totalDef = BIO_Utils.IntArraySum(fireTimeDefs[i].Times);
 
-			string str = String.Format(
-				StringTable.Localize("$BIO_WEAP_STAT_FIRETIME"),
+			string template = !bMeleeWeapon ?
+				StringTable.Localize("$BIO_WEAP_STAT_FIRETIME") :
+				StringTable.Localize("$BIO_WEAP_STAT_ATTACKTIME");
+
+			string str = String.Format(template,
 				BIO_Utils.StatFontColor(total, totalDef),
 				float(total) / float(TICRATE));
 
@@ -725,9 +963,8 @@ class BIO_NewWeapon : DoomWeapon abstract
 		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			ImplicitAffixes[i].ToString(AffixReadout, self);
 
-		// Blank line between implicit and explicit affixes
-		if (ImplicitAffixes.Size() > 0)
-			AffixReadout.Push("");
+		// Blank line between stats/implicit affixes and explicit affixes
+		AffixReadout.Push("");
 
 		if (BIOFlags & BIO_WF_AFFIXESHIDDEN)
 			AffixReadout.Push("\cg" .. StringTable.Localize("$BIO_AFFIXESUNKNOWN"));
@@ -738,46 +975,6 @@ class BIO_NewWeapon : DoomWeapon abstract
 		}
 	}
 
-/* 
-	// Does not alter stats, and does not apply the newly-added affixes.
-	// Returns `false` if there are no compatible affixes to add.
-	bool AddRandomAffix()
-	{
-		Array<BIO_NewWeaponAffix> eligibles;
-
-		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, self))
-			return false;
-
-		if (Rarity == BIO_RARITY_COMMON)
-		{
-			Rarity = BIO_RARITY_MUTATED;
-			SetTag(Default.GetTag());
-			SetTag(GetColoredTag());
-		}
-
-		uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
-		Affixes[e].Init(self);
-		return true;
-	}
-
-	// Affects explicit affixes only.
-	void RandomizeAffixes()
-	{
-		Reset();
-
-		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-			ImplicitAffixes[i].Apply(self);
-
-		uint c = Random(2, MAX_AFFIXES);
-
-		for (uint i = 0; i < c; i++)
-		{
-			if (AddRandomAffix())
-				Affixes[Affixes.Size() - 1].Apply(self);
-		}
-	}
- */
-
 	// Utility =================================================================
 
 	void ApplyLifeSteal(float percent, int dmg) const
@@ -785,6 +982,14 @@ class BIO_NewWeapon : DoomWeapon abstract
 		let lsp = Min(percent, 1.0);
 		let given = int(float(dmg) * lsp);
 		Owner.GiveBody(given, Owner.GetMaxHealth(true) + 100);
+	}
+
+	void OnKill(Actor killed, Actor inflictor) const
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].OnKill(self, killed, inflictor);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnKill(self, killed, inflictor);
 	}
 
 	// Substitutes for attack actions ==========================================
@@ -976,13 +1181,37 @@ class BIO_NewWeapon : DoomWeapon abstract
 		Owner.RailAttack(p);
 	}
 
-	void BIO_Saw(Class<Actor> puff_t, int dmg, float angle,
-		float range, float lifestealPercent)
+	void BIO_Punch(Class<Actor> puff_t, int dmg, float range, float lifestealPercent)
+	{
+		FTranslatedLineTarget t;
+
+		if (FindInventory('PowerStrength', true)) dmg *= 10;
+		
+		double ang = Owner.Angle + Random2[Punch]() * (5.625 / 256);
+		double pitch = Owner.AimLineAttack(ang, range, null, 0.0, ALF_CHECK3D);
+
+		Actor puff = null;
+		int actualDmg = -1;
+
+		[puff, actualDmg] = Owner.LineAttack(ang, range, pitch, dmg,
+			'Melee', puff_t, LAF_ISMELEEATTACK, t);
+
+		// Turn to face target
+		if (t.LineTarget)
+		{
+			Owner.A_StartSound("*fist", CHAN_WEAPON);
+			Owner.Angle = t.AngleFromSource;
+			if (!t.LineTarget.bDontDrain)
+				ApplyLifeSteal(lifestealPercent, actualDmg);
+		}
+	}
+
+	void BIO_Saw(Class<Actor> puff_t, int dmg, float range, float lifestealPercent)
 	{
 		int flags = 0; // TODO: Sort this out
 		FTranslatedLineTarget t;
 
-		double ang = angle + 2.8125 * (Random2[Saw]() / 255.0);
+		double ang = Owner.Angle + 2.8125 * (Random2[Saw]() / 255.0);
 		double slope = Owner.AimLineAttack(ang, range, t) *
 			(Random2[Saw]() / 255.0);
 
@@ -1040,5 +1269,15 @@ class BIO_NewWeapon : DoomWeapon abstract
 	
 		if (!(flags & SF_NOPULLIN))
 			bJustAttacked = true;
+	}
+}
+
+mixin class BIO_Magazine
+{
+	Default
+	{
+		+INVENTORY.IGNORESKILL
+		Inventory.Icon '';
+		Inventory.MaxAmount 10000;
 	}
 }
