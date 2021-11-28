@@ -13,6 +13,7 @@ OptionMenu "BIO_Options"
 	Option "$BIO_OPTLBL_BERSERKSWITCH", "BIO_berserkswitch", "BIO_BerserkSwitch"
 	Option "$BIO_OPTLBL_MULTIBARRELFIRE", "BIO_multibarrelfire", "BIO_MultiBarrelFire"
 	Option "$BIO_OPTLBL_MULTIRELOADMODE", "BIO_multireload", "BIO_MultiReloadMode"
+	Option "$BIO_OPTLBL_QUAKE", "BIO_quake", "OnOff"
 }
 
 OptionValue "BIO_AutoReload"
