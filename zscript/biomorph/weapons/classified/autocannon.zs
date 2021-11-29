@@ -23,12 +23,18 @@ class BIO_Autocannon : BIO_Weapon
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
 			.BasicProjectilePipeline('BIO_Bullet', 1, 10, 30, 3.5, 1.5)
+			.FireSound("bio/weap/autocannon/fire")
 			.Build());
 	}
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire')));
+		groups.Push(BIO_StateTimeGroup.FromState(
+			ResolveState('WindUp'), "$BIO_WINDUP"));
+		groups.Push(BIO_StateTimeGroup.FromState(
+			ResolveState('Wound'), "$BIO_PER_2_ROUNDS"));
+		groups.Push(BIO_StateTimeGroup.FromState(
+			ResolveState('WindDown'), "$BIO_WINDDOWN"));
 	}
 
 	States
@@ -54,7 +60,7 @@ class BIO_Autocannon : BIO_Weapon
 			A_GunFlash('Flash.I');
 			A_BIO_Fire();
 			A_PresetRecoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
-			A_StartSound("bio/weap/autocannon/fire", CHAN_WEAPON);
+			A_FireSound(CHAN_WEAPON);
 			return state(null);
 		}
 		ACAN F 1 Bright A_GunFlash('Flash.J');
@@ -64,7 +70,7 @@ class BIO_Autocannon : BIO_Weapon
 			A_GunFlash('Flash.K');
 			A_BIO_Fire();
 			A_PresetRecoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
-			A_StartSound("bio/weap/autocannon/fire", CHAN_7);
+			A_FireSound(CHAN_7);
 			return state(null);
 		}
 		ACAN H 1 Bright A_GunFlash('Flash.L');

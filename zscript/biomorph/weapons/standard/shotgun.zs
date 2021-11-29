@@ -59,6 +59,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 			A_SetFireTime(1);
 			A_BIO_Fire();
 			A_GunFlash();
+			A_FireSound();
 			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		SHTG A 3 Bright A_SetFireTime(2);

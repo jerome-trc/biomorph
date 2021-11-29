@@ -28,6 +28,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 			.BasicProjectilePipeline('BIO_ShotPellet', 7, 5, 15, 12.0, 7.5)
 			.AppendToFireFunctorString(" \c[Yellow]" ..
 				StringTable.Localize("$BIO_PER_BARREL"))
+			.FireSound("weapons/sshotf")
 			.Build());
 	}
 
@@ -79,7 +80,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 			A_PresetRecoil('BIO_Recoil_Shotgun');
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			// TODO: Replace with a smaller sound
-			A_StartSound("weapons/sshotf", CHAN_WEAPON);
+			A_FireSound();
 		}
 		Goto Ready;
 	Fire.Double:
@@ -91,7 +92,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 			A_BIO_Fire(fireFactor: 2);
 			A_PresetRecoil('BIO_Recoil_SuperShotgun');
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
-			A_StartSound("weapons/sshotf", CHAN_WEAPON);
+			A_FireSound();
 		}
 		Goto Ready;
 	Reload:

@@ -57,6 +57,7 @@ class BIO_Nailgun : BIO_Weapon
 			A_BIO_Fire();
 			A_GunFlash();
 			A_PresetRecoil('BIO_Recoil_Autogun', scale: 1.2);
+			A_FireSound(invoker.Magazine1.Amount % 2 == 0 ? CHAN_WEAPON : CHAN_6);
 		}
 		NLGN C 1 Offset(0, 32) A_SetFireTime(1);
 		NLGN D 1 A_SetFireTime(2);

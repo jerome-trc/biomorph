@@ -15,10 +15,17 @@ class BIO_StateTimeGroup
 
 	private void Populate(state basis)
 	{
+		Array<state> done;
+
 		for (state s = basis; s.InStateSequence(basis); s = s.NextState)
 		{
-			if (s.Tics == 0) continue; // `TNT1 A 0` and the like
-			if (s.bSlow) continue; 
+			if (done.Find(s) != done.Size())
+				return; // Infinite loop protection
+
+			if (s.Tics == 0)
+				continue; // `TNT1 A 0` and the like
+
+			done.Push(s);
 			
 			Times.Push(s.Tics);
 			int min;
@@ -398,6 +405,14 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
+	protected action void A_FireSound(int channel = CHAN_WEAPON, uint pipeline = 0)
+	{
+		sound snd;
+		double vol, atten;
+		[snd, vol, atten] = invoker.Pipelines[pipeline].GetFireSoundData();
+		A_StartSound(snd, channel, CHANF_DEFAULT, vol, atten);
+	}
+
 	// If no argument is given, try to reload as much of the magazine as 
 	// possible. Otherwise, try to reload the given amount of rounds.
 	action void A_LoadMag(uint amt = 0, bool secondary = false)
@@ -519,7 +534,7 @@ class BIO_Weapon : DoomWeapon abstract
 	protected action void A_SetFireTime(
 		uint ndx, uint grp = 0, int modifier = 0)
 	{
-		A_SetTics(modifier + invoker.FireTimeGroups[grp].Times[ndx]);
+		A_SetTics(Max(modifier + invoker.FireTimeGroups[grp].Times[ndx], 0));
 	}
 
 	protected action void A_SetReloadTime(
@@ -682,6 +697,11 @@ class BIO_Weapon : DoomWeapon abstract
 		return false;
 	}
 
+	int GetFireTime(uint ndx, uint grp = 0) const
+	{
+		return FireTimeGroups[grp].Times[ndx];
+	}
+
 	// Fire states can't have all of their tic times reduced to 0.
 	// Fire rate-affecting affixes must know in advance if
 	// they can even have any effect, given this caveat.
@@ -702,6 +722,11 @@ class BIO_Weapon : DoomWeapon abstract
 				return true;
 
 		return false;
+	}
+
+	sound GetFireSound(uint pipeline = 0) const
+	{
+		return Pipelines[pipeline].GetFireSoundData();
 	}
 
 	// Modifying ===============================================================
@@ -912,7 +937,12 @@ class BIO_Weapon : DoomWeapon abstract
 		StatReadout.Clear();
 
 		for (uint i = 0; i < Pipelines.Size(); i++)
+		{
 			Pipelines[i].ToString(StatReadout, Pipelines.Size() == 1);
+			StatReadout.Push("");
+		}
+
+		// Incidental blank line between pipeline readouts and fire time readouts
 
 		for (uint i = 0; i < FireTimeGroups.Size(); i++)
 		{
@@ -934,6 +964,9 @@ class BIO_Weapon : DoomWeapon abstract
 
 			StatReadout.Push(str);
 		}
+
+		// Blank line between fire times and reload times
+		if (ReloadTimeGroups.Size() > 0) StatReadout.Push("");
 
 		for (uint i = 0; i < ReloadTimeGroups.Size(); i++)
 		{

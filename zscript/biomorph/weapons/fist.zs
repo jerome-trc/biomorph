@@ -22,6 +22,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 			.PunchPipeline('BIO_MeleeHit', 1, 2, 20)
 			.CustomReadout(String.Format(
 				StringTable.Localize("$BIO_WEAP_STAT_BERSERKMULTI"), 900))
+			.Alert(-1.0, 0)
 			.Build());
 	}
 

@@ -58,6 +58,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_SetFireTime(0);
 			A_BIO_Fire();
 			A_GunFlash();
+			A_FireSound();
 			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		INCU C 4 Bright A_SetFireTime(1);
@@ -79,8 +80,8 @@ class BIO_IncursionShotgun : BIO_Weapon
 				spreadFactor: 4.0);
 			A_GunFlash();
 			// TODO: Mix a fatter sound for quad-shot
-			A_StartSound("bio/weap/incursion/fire", CHAN_WEAPON);
-			A_StartSound("bio/weap/incursion/fire", CHAN_BODY);
+			A_FireSound(CHAN_WEAPON);
+			A_FireSound(CHAN_BODY);
 			A_Pushback(2.5, 2.5);
 			A_PresetRecoil('BIO_Recoil_VolleyGun');
 		}
