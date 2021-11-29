@@ -54,7 +54,7 @@ class BIO_Equipment : Inventory abstract
 		SetTag(GetColoredTag());
 	}
 
-	override bool CanPickup(Actor toucher)
+	final override bool CanPickup(Actor toucher)
 	{
 		// Fundamental checks (toucher isn't null, class restrictions)
 		if (!super.CanPickup(toucher)) return false;
@@ -67,14 +67,14 @@ class BIO_Equipment : Inventory abstract
 		return true;
 	}
 
-	override void AttachToOwner(Actor newOwner)
+	final override void AttachToOwner(Actor newOwner)
 	{
 		if (!PreviouslyPickedUp) RLMDangerLevel();
 		PreviouslyPickedUp = true;
 		super.AttachToOwner(newOwner);
 	}
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		let bioPlayer = BIO_Player(Owner);
 
@@ -182,7 +182,7 @@ class BIO_Armor : BIO_Equipment abstract
 	}
 
 	// Generate a set of affixes for this armour.
-	override void BeginPlay()
+	final override void BeginPlay()
 	{
 		super.BeginPlay();
 
@@ -223,7 +223,7 @@ class BIO_Armor : BIO_Equipment abstract
 // provides the actual damage mitigation to the player.
 class BIO_ArmorStats : BasicArmorPickup abstract
 {
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		let bioPlayer = BIO_Player(Owner);
 		if (bioPlayer == null) return false;

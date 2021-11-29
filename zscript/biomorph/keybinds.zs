@@ -29,7 +29,7 @@ class BIO_WeaponDrop : BIO_Keybind
 {
 	private bool Primed;
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		let bioPlayer = BIO_Player(Owner);
 		if (bioPlayer == null) return false;
@@ -61,7 +61,7 @@ class BIO_UnequipArmor : BIO_Keybind
 {
 	private bool Primed;
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		let bioPlayer = BIO_Player(Owner);
 		if (bioPlayer == null) return false;

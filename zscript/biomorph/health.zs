@@ -6,7 +6,7 @@
 
 class BIO_HealthBonus : HealthBonus replaces HealthBonus
 {
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 
@@ -19,7 +19,7 @@ class BIO_HealthBonus : HealthBonus replaces HealthBonus
 
 class BIO_Stimpack : Stimpack replaces Stimpack
 {
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 
@@ -35,7 +35,7 @@ class BIO_Stimpack : Stimpack replaces Stimpack
 
 class BIO_Medikit : Medikit replaces Medikit
 {
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 

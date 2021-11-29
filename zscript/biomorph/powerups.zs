@@ -1,6 +1,6 @@
 mixin class BIO_Powerup
 {
-	override void AttachToOwner(Actor other)
+	final override void AttachToOwner(Actor other)
 	{
 		super.AttachToOwner(other);
 		let bioPlayer = BIO_Player(other);
@@ -8,7 +8,7 @@ mixin class BIO_Powerup
 		bioPlayer.OnPowerupAttach(self);
 	}
 
-	override void DetachFromOwner()
+	final override void DetachFromOwner()
 	{
 		super.DetachFromOwner();
 		let bioPlayer = BIO_Player(Owner);
@@ -28,7 +28,7 @@ class BIO_Berserk : Berserk replaces Berserk
 		Stop;
 	}
 
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 		HealThing(100, 0);
@@ -64,7 +64,7 @@ class BIO_BlurSphere : BlurSphere replaces BlurSphere
 		Powerup.Type 'BIO_PowerInvisibility';
 	}
 
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 		let bioPlayer = BIO_Player(toucher);
@@ -92,7 +92,7 @@ class BIO_Infrared : Infrared replaces Infrared
 		Powerup.Type 'BIO_PowerLightAmp';
 	}
 
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 		let bioPlayer = BIO_Player(toucher);
@@ -120,7 +120,7 @@ class BIO_Invulnerability : InvulnerabilitySphere replaces InvulnerabilitySphere
 		Powerup.Type 'BIO_PowerInvulnerable';
 	}
 
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 		let bioPlayer = BIO_Player(toucher);
@@ -148,7 +148,7 @@ class BIO_RadSuit : RadSuit replaces RadSuit
 		Powerup.Type 'BIO_PowerIronFeet';
 	}
 
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 		let bioPlayer = BIO_Player(toucher);
@@ -171,7 +171,7 @@ class BIO_PowerIronFeet : PowerIronFeet
 
 class BIO_Allmap : Allmap replaces Allmap
 {
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 
@@ -211,7 +211,7 @@ class BIO_Megasphere : Megasphere replaces Megasphere
 		Stop;
 	}
 
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 		toucher.GiveBody(-200);

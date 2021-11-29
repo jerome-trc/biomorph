@@ -10,7 +10,7 @@ class BIO_All : Inventory
 		Inventory.PickupMessage "";
 	}
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		let bioPlayer = BIO_Player(Owner);
 		if (bioPlayer == null) return false;

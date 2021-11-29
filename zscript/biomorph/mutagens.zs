@@ -91,7 +91,7 @@ class BIO_MutagenReset : BIO_Mutagen
 		Loop;
 	}
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		if (!CanUse()) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
@@ -129,7 +129,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 		Loop;
 	}
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		if (!CanUse()) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
@@ -173,7 +173,7 @@ class BIO_MutagenRandom : BIO_Mutagen
 		Loop;
 	}
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		if (!CanUse()) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
@@ -204,7 +204,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 		Loop;
 	}
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		if (!CanUse(true)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
@@ -250,7 +250,7 @@ class BIO_MutagenRemove : BIO_Mutagen
 		Loop;
 	}
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		if (!CanUse()) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
@@ -289,7 +289,7 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 		Loop;
 	}
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		if (!CanUse(true)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
