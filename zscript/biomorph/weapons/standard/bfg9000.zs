@@ -35,12 +35,12 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire')));
+		groups.Push(StateTimeGroupFrom('Fire'));
 	}
 
 	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Reload')));
+		groups.Push(StateTimeGroupFrom('Reload'));
 	}
 
 	States

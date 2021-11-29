@@ -30,7 +30,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire')));
+		groups.Push(StateTimeGroupFrom('Fire'));
 	}
 
 	States

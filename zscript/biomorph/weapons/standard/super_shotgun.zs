@@ -34,12 +34,12 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire.Single')));
+		groups.Push(StateTimeGroupFrom('Fire.Single'));
 	}
 
 	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Reload')));
+		groups.Push(StateTimeGroupFrom('Reload'));
 	}
 
 	States

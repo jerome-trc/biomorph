@@ -29,12 +29,9 @@ class BIO_Autocannon : BIO_Weapon
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(
-			ResolveState('WindUp'), "$BIO_WINDUP"));
-		groups.Push(BIO_StateTimeGroup.FromState(
-			ResolveState('Wound'), "$BIO_PER_2_ROUNDS"));
-		groups.Push(BIO_StateTimeGroup.FromState(
-			ResolveState('WindDown'), "$BIO_WINDDOWN"));
+		groups.Push(StateTimeGroupFromRange('WindUp', 'Wound', "$BIO_WINDUP"));
+		groups.Push(StateTimeGroupFrom('Wound', "$BIO_PER_2_ROUNDS"));
+		groups.Push(StateTimeGroupFrom('WindDown', "$BIO_WINDDOWN"));
 	}
 
 	States

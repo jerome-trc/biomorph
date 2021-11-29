@@ -43,7 +43,7 @@ class BIO_WeaponPipeline play
 	uint Index;
 	private BIO_WeaponPipelineMask Mask;
 
-	private bool SecondaryMagazine;
+	private bool SecondaryAmmo;
 
 	private BIO_FireFunctor FireFunctor;
 	private Class<Actor> FireType;
@@ -348,6 +348,10 @@ class BIO_WeaponPipeline play
 			Pitch = ptch;
 	}
 
+	bool UsesSecondaryAmmo() const { return SecondaryAmmo; }
+	void SetToPrimaryAmmo() { SecondaryAmmo = false; }
+	void SetToSecondaryAmmo() { SecondaryAmmo = true; }
+
 	double, int GetAlertStats() const
 	{
 		return MaxAlertDistance, AlertFlags;
@@ -359,8 +363,6 @@ class BIO_WeaponPipeline play
 		MaxAlertDistance = maxDist;
 		AlertFlags = flags;
 	}
-
-	bool UsesSecondaryMagazine() const { return SecondaryMagazine; }
 
 	void SetSound(sound fireSnd, double volume, double attenuation)
 	{
@@ -653,6 +655,12 @@ class BIO_WeaponPipelineBuilder play
 	BIO_WeaponPipelineBuilder Splash(int damage, int radius)
 	{
 		Pipeline.SetSplash(damage, radius);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder UseSecondaryAmmo()
+	{
+		Pipeline.SetToSecondaryAmmo();
 		return self;
 	}
 
