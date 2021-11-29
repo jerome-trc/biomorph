@@ -29,15 +29,13 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(
-			ResolveState('Fire'), "$BIO_FIRE"));
-		groups.Push(BIO_StateTimeGroup.FromState(
-			ResolveState('Cooldown'), "$BIO_COOLDOWN"));
+		groups.Push(StateTimeGroupFromRange('Fire', 'Cooldown', "$BIO_FIRE"));
+		groups.Push(StateTimeGroupFrom('Cooldown', "$BIO_COOLDOWN"));
 	}
 
 	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Reload')));
+		groups.Push(StateTimeGroupFrom('Reload'));
 	}
 
 	States

@@ -28,7 +28,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(BIO_StateTimeGroup.FromState(ResolveState('Fire')));
+		groups.Push(StateTimeGroupFrom('Fire'));
 	}
 
 	States

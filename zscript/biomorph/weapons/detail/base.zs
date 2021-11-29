@@ -26,7 +26,6 @@ class BIO_StateTimeGroup
 				continue; // `TNT1 A 0` and the like
 
 			done.Push(s);
-			
 			Times.Push(s.Tics);
 			int min;
 
@@ -44,7 +43,35 @@ class BIO_StateTimeGroup
 		}
 	}
 
-	static BIO_StateTimeGroup FromState(state basis, string tag = "")
+	private void RangePopulate(state from, state to)
+	{
+		for (state s = from; s.InStateSequence(from); s = s.NextState)
+		{
+			if (s.DistanceTo(to) <= 0)
+				return;
+
+			if (s.Tics == 0)
+				continue; // `TNT1 A 0` and the like
+
+			Times.Push(s.Tics);
+			int min;
+
+			// States marked `Fast` are allowed to have their tic time set  
+			// to 0, effectively eliminating them from the state sequence
+			if (s.bFast)
+				min = 0;
+			// States marked `Slow` are kept immutable
+			else if (s.bSlow)
+				min = s.Tics;
+			else
+				min = 1;
+
+			Minimums.Push(min);
+		}
+	}
+
+	static BIO_StateTimeGroup FromState(
+		state basis, string tag = "")
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
@@ -52,16 +79,8 @@ class BIO_StateTimeGroup
 		return ret;
 	}
 
-	static BIO_StateTimeGroup From2States(state basis1, state basis2, string tag = "")
-	{
-		let ret = new('Bio_StateTimeGroup');
-		ret.Tag = Tag;
-		ret.Populate(basis1);
-		ret.Populate(basis2);
-		return ret;
-	}
-
-	static BIO_StateTimeGroup FromStates(Array<state> basisArr, string tag = "")
+	static BIO_StateTimeGroup FromStates(
+		Array<state> basisArr, string tag = "")
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
@@ -69,6 +88,15 @@ class BIO_StateTimeGroup
 		for (uint i = 0; i < basisArr.Size(); i++)
 			ret.Populate(basisArr[i]);
 
+		return ret;
+	}
+
+	static BIO_StateTimeGroup FromStateRange(
+		state from, state to, string tag = "")
+	{
+		let ret = new('BIO_StateTimeGroup');
+		ret.Tag = Tag;
+		ret.RangePopulate(from, to);
 		return ret;
 	}
 }
@@ -395,7 +423,7 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		invoker.LastPipeline = pipeline;
 
-		bool secAmmo = invoker.Pipelines[pipeline].UsesSecondaryMagazine();
+		bool secAmmo = invoker.Pipelines[pipeline].UsesSecondaryAmmo();
 
 		if (!invoker.DepleteAmmo(secAmmo, true,
 			!secAmmo ? invoker.AmmoUse1 : invoker.AmmoUse2 * fireFactor))
@@ -1018,6 +1046,62 @@ class BIO_Weapon : DoomWeapon abstract
 			ImplicitAffixes[i].OnKill(self, killed, inflictor);
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].OnKill(self, killed, inflictor);
+	}
+
+	protected BIO_StateTimeGroup StateTimeGroupFrom(
+		statelabel lbl, string tag = "") const
+	{
+		state s = FindState(lbl);
+		if (s == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"`StateTimeGroupFrom()` Failed to find state %s.", lbl);
+			return null;
+		}
+
+		return BIO_StateTimeGroup.FromState(s, tag);
+	}
+
+	protected BIO_StateTimeGroup StateTimeGroupFromRange(
+		statelabel from, statelabel to, string tag = "") const
+	{
+		state f = FindState(from);
+		if (f == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"`StateTimeGroupFromRange()` Failed to find state %s.", from);
+			return null;
+		}
+
+		state t = FindState(to);
+		if (t == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"`StateTimeGroupFromRange()` Failed to find state %s.", to);
+			return null;
+		}
+
+		return BIO_StateTimeGroup.FromStateRange(f, t, tag);
+	}
+
+	protected BIO_StateTimeGroup StateTimeGroupFromArray(
+		in out Array<statelabel> labels, string tag = "") const
+	{
+		Array<state> arr;
+
+		for (uint i = 0; i < labels.Size(); i++)
+		{
+			state s = FindState(labels[i]);
+			if (s == null)
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR ..
+				"`StateTimeGroupFromArray()` Failed to find state %s.", labels[i]);
+			}
+			else
+				arr.Push(s);
+		}
+
+		return BIO_StateTimeGroup.FromStates(arr, tag);
 	}
 
 	// Substitutes for attack actions ==========================================

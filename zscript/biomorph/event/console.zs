@@ -109,11 +109,48 @@ extend class BIO_EventHandler
 
 		string output = Biomorph.LOGPFX_INFO;
 		output.AppendFormat("%s\n%s\n", weap.GetClassName(), weap.GetTag());
+		output.AppendFormat("\c[Yellow]Pipelines:\n\c-");
+
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			let ppl = weap.Pipelines[i];
+			output.AppendFormat("\tRestriction mask: %d\n", ppl.GetRestrictions());
+			output.AppendFormat("\tUses secondary ammo: %s\n",
+				ppl.UsesSecondaryAmmo() ? "yes" : "no");
+			output.AppendFormat("\tFiring functor: %s\n",
+				ppl.GetFireFunctorConst().GetClassName());
+			output.AppendFormat("\tFired type: %s\n",
+				ppl.GetFireType().GetClassName());
+			output.AppendFormat("\tDamage functor: %s\n",
+				ppl.GetDamageFunctorConst().GetClassName());
+
+			output = output .. "\n";
+		}
+
+		for (uint i = 0; i < weap.FireTimeGroups.Size(); i++)
+		{
+			let ftg = weap.FireTimeGroups[i];
+			string tag = ftg.Tag.Length() > 0 ? ftg.Tag : "num. " .. i;
+			output.AppendFormat("Fire time group: %s\n", tag);
+
+			for (uint j = 0; j < ftg.Times.Size(); j++)
+				output.AppendFormat("\t%d, min. %d\n", ftg.Times[j], ftg.Minimums[j]);
+		}
+
+		for (uint i = 0; i < weap.ReloadTimeGroups.Size(); i++)
+		{
+			let rtg = weap.ReloadTimeGroups[i];
+			string tag = rtg.Tag.Length() > 0 ? rtg.Tag : "num. " .. i;
+			output.AppendFormat("Reload time group: %s\n", tag);
+
+			for (uint j = 0; j < rtg.Times.Size(); j++)
+				output.AppendFormat("\t%d, min. %d\n", rtg.Times[j], rtg.Minimums[j]);
+		}
 
 		output.AppendFormat("Switch speeds: %d lower, %d raise\n",
 			weap.LowerSpeed, weap.RaiseSpeed);
 
-		output.AppendFormat("Kickback: %d", weap.Kickback);
+		output.AppendFormat("Kickback: %d\n", weap.Kickback);
 
 		if (weap.ImplicitAffixes.Size() > 0)
 		{
