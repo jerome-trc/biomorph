@@ -61,6 +61,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 			A_SetFireTime(1);
 			A_BIO_Fire();
 			A_GunFlash();
+			A_FireSound();
 			A_PresetRecoil('BIO_Recoil_Handgun');
 		}
 		PISG C 4 A_SetFireTime(2);

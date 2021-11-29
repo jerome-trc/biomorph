@@ -57,6 +57,7 @@ class BIO_AutoShotgun : BIO_Weapon
 			A_SetFireTime(0);
 			A_BIO_Fire();
 			A_GunFlash();
+			A_FireSound();
 			A_PresetRecoil('BIO_Recoil_Shotgun', scale: 1.2);
 		}
 		AUSG C 2 Bright Offset(0, 32 + 6) A_SetFireTime(1);

@@ -26,6 +26,7 @@ class BIO_HandCannon : BIO_Weapon
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
 			.BasicProjectilePipeline('BIO_Bullet', 1, 50, 70, 1.0, 1.0)
+			.FireSound("bio/weap/handcannon/fire")
 			.Build());
 	}
 
@@ -45,15 +46,18 @@ class BIO_HandCannon : BIO_Weapon
 		HCAN A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
 	Deselect:
-		HCAN A 1 A_BIO_Deselect;
+		HCAN A 0 A_BIO_Deselect;
 		Stop;
 	Select:
-		HCAN A 1 A_BIO_Select;
+		HCAN A 0 A_BIO_Select;
 		Stop;
 	Fire:
 		TNT1 A 0 A_AutoReload;
-		#### # 0 A_StartSound("bio/weap/handcannon/fire", CHAN_WEAPON);
-		HCAN E 1 Bright A_SetFireTime(0);
+		HCAN E 1 Bright
+		{
+			A_SetFireTime(0);
+			A_FireSound();
+		}
 		HCAN F 1 Bright
 		{
 			A_SetFireTime(1);

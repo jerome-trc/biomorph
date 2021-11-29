@@ -29,6 +29,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
 			.BFGPipeline()
+			.FireSound("weapons/bfgf")
 			.Build());
 	}
 
@@ -58,7 +59,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		BFGG A 20
 		{
 			A_SetFireTime(0);
-			A_BFGSound();
+			A_FireSound();
 		}
 		BFGG B 10
 		{

@@ -9,10 +9,12 @@ enum BIO_WeaponPipelineMask : uint16
 	BIO_WPM_SPLASH = 1 << 5,
 	BIO_WPM_HSPREAD = 1 << 6,
 	BIO_WPM_VSPREAD = 1 << 7,
-	BIO_WPM_AMMOUSE = 1 << 8,
-	BIO_WPM_PROJTRAVELFUNCS = 1 << 9,
-	BIO_WPM_PROJDAMAGEFUNCS = 1 << 10,
-	BIO_WPM_PROJDEATHFUNCS = 1 << 11,
+	BIO_WPM_ANGLE = 1 << 8,
+	BIO_WPM_PITCH = 1 << 9,
+	BIO_WPM_AMMOUSE = 1 << 10,
+	BIO_WPM_PROJTRAVELFUNCS = 1 << 11,
+	BIO_WPM_PROJDAMAGEFUNCS = 1 << 12,
+	BIO_WPM_PROJDEATHFUNCS = 1 << 13,
 	BIO_WPM_PROJFUNCTORS =
 		BIO_WPM_PROJTRAVELFUNCS |
 		BIO_WPM_PROJDAMAGEFUNCS |
@@ -23,6 +25,7 @@ enum BIO_WeaponPipelineMask : uint16
 
 struct BIO_FireData
 {
+	uint Number;
 	Class<Actor> FireType;
 	int Damage;
 	float HSpread, VSpread, Angle, Pitch;
@@ -68,6 +71,7 @@ class BIO_WeaponPipeline play
 		for (uint i = 0; i < FireCount * fireFactor; i++)
 		{
 			BIO_FireData fireData;
+			fireData.Number = i;
 			fireData.FireType = FireType;
 			fireData.Damage = Damage.Invoke();
 			fireData.HSpread = HSpread * spreadFactor;
@@ -110,8 +114,6 @@ class BIO_WeaponPipeline play
 		}
 
 		weap.Owner.A_AlertMonsters(MaxAlertDistance, AlertFlags);
-		weap.Owner.A_StartSound(FireSound, CHAN_WEAPON, CHANF_DEFAULT,
-			FireSoundVolume, FireSoundAttenuation);
 	}
 
 	string GetObituary() const
@@ -338,6 +340,14 @@ class BIO_WeaponPipeline play
 			vSpread = vSpr;
 	}
 
+	void SetAngleAndPitch(float ang, float ptch)
+	{
+		if (!(Mask & BIO_WPM_ANGLE))
+			Angle = ang;
+		if (!(Mask & BIO_WPM_PITCH))
+			Pitch = ptch;
+	}
+
 	double, int GetAlertStats() const
 	{
 		return MaxAlertDistance, AlertFlags;
@@ -400,10 +410,9 @@ class BIO_WeaponPipeline play
 		Obituary = obit;
 	}
 
-	void Restrict(BIO_WeaponPipelineMask msk)
-	{
-		Mask = msk;
-	}
+	BIO_WeaponPipelineMask GetRestrictions() const { return Mask; }
+	void SetRestrictions(BIO_WeaponPipelineMask msk) { Mask = msk; }
+	void AddRestriction(BIO_WeaponPipelineMask msk) { Mask |= msk; }
 
 	void ToString(in out Array<string> readout, bool alone) const
 	{
@@ -589,13 +598,65 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
+	BIO_WeaponPipelineBuilder FireFunctor(BIO_FireFunctor func)
+	{
+		Pipeline.SetFireFunctor(func);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder FireType(Class<Actor> fireType)
+	{
+		Pipeline.SetFireType(fireType);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder FireCount(int fireCount)
+	{
+		Pipeline.SetFireCount(fireCount);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder DamageFunctor(BIO_DamageFunctor func)
+	{
+		Pipeline.SetDamageFunctor(func);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder BasicDamage(int minDmg, int maxDmg)
+	{
+		let dmgFunc = new('BIO_DmgFunc_Default');
+		dmgFunc.CustomSet(minDmg, maxDmg);
+		Pipeline.SetDamageFunctor(dmgFunc);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder SingleDamage(int dmg)
+	{
+		let dmgFunc = new('BIO_DmgFunc_Single');
+		dmgFunc.CustomSet(dmg);
+		Pipeline.SetDamageFunctor(dmgFunc);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Spread(float horiz, float vert)
+	{
+		Pipeline.SetSpread(horiz, vert);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder AngleAndPitch(float angle, float pitch)
+	{
+		Pipeline.SetAngleAndPitch(angle, pitch);
+		return self;
+	}
+
 	BIO_WeaponPipelineBuilder Splash(int damage, int radius)
 	{
 		Pipeline.SetSplash(damage, radius);
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Alert(double maxDist, int flags)
+	BIO_WeaponPipelineBuilder Alert(double maxDist, int flags = 0)
 	{
 		Pipeline.SetAlertStats(maxDist, flags);
 		return self;
@@ -629,9 +690,15 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Restrictions(BIO_WeaponPipelineMask mask)
+	BIO_WeaponPipelineBuilder AddRestriction(BIO_WeaponPipelineMask mask)
 	{
-		Pipeline.Restrict(mask);
+		Pipeline.AddRestriction(mask);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder SetRestrictions(BIO_WeaponPipelineMask mask)
+	{
+		Pipeline.SetRestrictions(mask);
 		return self;
 	}
 

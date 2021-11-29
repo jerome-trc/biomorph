@@ -1,7 +1,6 @@
 class BIO_DamageFunctor play abstract
 {
 	abstract int Invoke() const;
-	abstract void Reset(readOnly<BIO_DamageFunctor> def);
 
 	virtual void GetValues(in out Array<int> vals) const {}
 	virtual void SetValues(in out Array<int> vals) {}
@@ -26,13 +25,6 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 
 	override int Invoke() const { return Random(Minimum, Maximum); }
 
-	override void Reset(readOnly<BIO_DamageFunctor> def)
-	{
-		let myDef = BIO_DmgFunc_Default(def);
-		Minimum = myDef.Minimum;
-		Maximum = myDef.Maximum;
-	}
-
 	override void GetValues(in out Array<int> vals) const
 	{
 		vals.PushV(Minimum, Maximum);
@@ -53,14 +45,21 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 	override string ToString(BIO_DamageFunctor def) const
 	{
 		let myDefs = BIO_DmgFunc_Default(def);
+		string crEsc_min = "", crEsc_max = "";
 
-		string
-			minClr = BIO_Utils.StatFontColor(Maximum, myDefs.Maximum),
-			maxClr = BIO_Utils.StatFontColor(Minimum, myDefs.Minimum);
+		if (myDefs != null)
+		{
+			crEsc_min = BIO_Utils.StatFontColor(Minimum, myDefs.Minimum);
+			crEsc_max = BIO_Utils.StatFontColor(Maximum, myDefs.Maximum);
+		}
+		else
+		{
+			crEsc_min = crEsc_max = CRESC_STATMODIFIED;
+		}
 
 		return String.Format(
 			StringTable.Localize("$BIO_WEAP_DMGFUNC_DEFAULT"),
-			minClr, Minimum, maxClr, Maximum);
+			crEsc_min, Minimum, crEsc_max, Maximum);
 	}
 }
 
@@ -74,12 +73,6 @@ class BIO_DmgFunc_1D3 : BIO_DamageFunctor
 		return Baseline * Random(1, 3);
 	}
 
-	override void Reset(readOnly<BIO_DamageFunctor> def)
-	{
-		let myDefs = BIO_DmgFunc_1D3(def);
-		Baseline = myDefs.Baseline;
-	}
-
 	override void GetValues(in out Array<int> vals) const
 	{
 		vals.PushV(Baseline);
@@ -93,12 +86,16 @@ class BIO_DmgFunc_1D3 : BIO_DamageFunctor
 	override string ToString(BIO_DamageFunctor def) const
 	{
 		let myDefs = BIO_DmgFunc_1D3(def);
-
-		string fontColor = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
+		string crEsc = "";
+		
+		if (myDefs != null)
+			crEsc = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
+		else
+			crEsc = CRESC_STATMODIFIED;
 
 		return String.Format(
 			StringTable.Localize("$BIO_WEAP_DMGFUNC_1D3"),
-			fontColor, Baseline);
+			crEsc, Baseline);
 	}
 }
 
@@ -112,12 +109,6 @@ class BIO_DmgFunc_1D8 : BIO_DamageFunctor
 		return Baseline * Random(1, 8);
 	}
 
-	override void Reset(readOnly<BIO_DamageFunctor> def)
-	{
-		let myDefs = BIO_DmgFunc_1D8(def);
-		Baseline = myDefs.Baseline;
-	}
-
 	override void GetValues(in out Array<int> vals) const
 	{
 		vals.PushV(Baseline);
@@ -131,11 +122,49 @@ class BIO_DmgFunc_1D8 : BIO_DamageFunctor
 	override string ToString(BIO_DamageFunctor def) const
 	{
 		let myDefs = BIO_DmgFunc_1D8(def);
-
-		string fontColor = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
+		string crEsc = "";
+		
+		if (myDefs != null)
+			crEsc = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
+		else
+			crEsc = CRESC_STATMODIFIED;
 
 		return String.Format(
-			StringTable.Localize("$BIO_WEAP_DMGFUNC_1D3"),
-			fontColor, Baseline);
+			StringTable.Localize("$BIO_WEAP_DMGFUNC_1D8"),
+			crEsc, Baseline);
+	}
+}
+
+class BIO_DmgFunc_Single : BIO_DamageFunctor
+{
+	private int Value;
+
+	override int Invoke() const { return Value; }
+
+	override void GetValues(in out Array<int> vals) const
+	{
+		vals.PushV(Value);
+	}
+
+	override void SetValues(in out Array<int> vals)
+	{
+		Value = vals[0];
+	}
+
+	void CustomSet(int val) { Value = val; }
+
+	override string ToString(BIO_DamageFunctor def) const
+	{
+		let myDefs = BIO_DmgFunc_Single(def);
+		string crEsc = "";
+
+		if (myDefs != null)
+			crEsc = BIO_Utils.StatFontColor(Value, myDefs.Value);
+		else
+			crEsc = CRESC_STATMODIFIED;
+
+		return String.Format(
+			StringTable.Localize("$BIO_WEAP_DMGFUNC_SINGLE"),
+			crEsc, Value);
 	}
 }

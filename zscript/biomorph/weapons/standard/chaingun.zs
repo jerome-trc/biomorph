@@ -110,6 +110,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		Player.SetSafeFlash(invoker, ResolveState('Flash'),
 			ResolveState('Fire') + 1 ==
 			Player.GetPSprite(PSP_WEAPON).CurState ? 0 : 1);
+		A_FireSound();
 		A_PresetRecoil('BIO_Recoil_Autogun');
 	}
 }
