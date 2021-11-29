@@ -1,6 +1,6 @@
 extend class BIO_EventHandler
 {
-	override void ConsoleProcess(ConsoleEvent event)
+	final override void ConsoleProcess(ConsoleEvent event)
 	{
 		// Normal gameplay events
 		if (ConEvent_PerkMenu(event)) return;

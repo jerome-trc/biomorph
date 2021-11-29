@@ -1,6 +1,6 @@
 extend class BIO_EventHandler
 {
-	override void WorldThingSpawned(WorldEvent event)
+	final override void WorldThingSpawned(WorldEvent event)
 	{
 		if (event.Thing == null || event.Thing.bMissile || event.Thing.bIsMonster)
 			return;

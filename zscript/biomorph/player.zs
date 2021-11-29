@@ -32,7 +32,7 @@ class BIO_Player : DoomPlayer
 
 	// Parent overrides ========================================================
 
-	override int TakeSpecialDamage(Actor inflictor, Actor source, int damage, name dmgType)
+	final override int TakeSpecialDamage(Actor inflictor, Actor source, int damage, name dmgType)
 	{
 		int ret = super.TakeSpecialDamage(inflictor, source, damage, dmgType);
 

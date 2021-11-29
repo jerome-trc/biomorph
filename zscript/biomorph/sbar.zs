@@ -8,7 +8,7 @@ class BIO_StatusBar : BaseStatusBar
 	const WEAPINFO_X = -22; // Leave room for keys at top-right corner
 	const ARMORINFO_X = 4;
 
-	override void Init()
+	final override void Init()
 	{
 		if (BIO_CVar.Debug())
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Initialising status bar...");
@@ -27,7 +27,7 @@ class BIO_StatusBar : BaseStatusBar
 		NotifyLineCount = CVar.GetCvar("con_notifylines");
 	}
 
-	override void Draw(int state, double ticFrac)
+	final override void Draw(int state, double ticFrac)
 	{
 		super.Draw(state, ticFrac);
 		BeginHUD();

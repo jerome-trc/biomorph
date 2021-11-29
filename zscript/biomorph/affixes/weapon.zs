@@ -5,12 +5,12 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 	// One per pipeline; if pipeline is incompatible, value will be 0
 	Array<int> Modifiers;
 
-	override bool Compatible(BIO_Weapon weap) const
+	final override bool Compatible(BIO_Weapon weap) const
 	{
 		return weap.DamageMutable();
 	}
 
-	override void Init(BIO_Weapon weap)
+	final override void Init(BIO_Weapon weap)
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -33,7 +33,7 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 		}
 	}
 
-	override void Apply(BIO_Weapon weap) const
+	final override void Apply(BIO_Weapon weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -49,7 +49,7 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 		}
 	}
 
-	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
 		for (uint i = 0; i < Modifiers.Size(); i++)
 		{
@@ -63,12 +63,12 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 		}
 	}
 
-	override string GetTag() const
+	final override string GetTag() const
 	{
 		return StringTable.Localize("$BIO_WAFX_TAG_DAMAGE");
 	}
 
-	override BIO_WeaponAffixFlags GetFlags() const
+	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_DAMAGE;
 	}
@@ -79,12 +79,12 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 	// One per pipeline; if pipeline is incompatible, value will be 0.0
 	Array<float> Modifiers;
 
-	override bool Compatible(BIO_Weapon weap) const
+	final override bool Compatible(BIO_Weapon weap) const
 	{
 		return weap.DamageMutable() && weap.DealsAnyDamage();
 	}
 
-	override void Init(BIO_Weapon weap)
+	final override void Init(BIO_Weapon weap)
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -106,7 +106,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 		}
 	}
 
-	override void Apply(BIO_Weapon weap) const
+	final override void Apply(BIO_Weapon weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -122,7 +122,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 		}
 	}
 
-	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -136,12 +136,12 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 		}
 	}
 
-	override string GetTag() const
+	final override string GetTag() const
 	{
 		return StringTable.Localize("$BIO_WAFX_TAG_DMGMULTI");
 	}
 
-	override BIO_WeaponAffixFlags GetFlags() const
+	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_DAMAGE;
 	}
@@ -151,36 +151,36 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 
 class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 {
-	override bool Compatible(BIO_Weapon weap) const
+	final override bool Compatible(BIO_Weapon weap) const
 	{
 		return weap.FiresProjectile();
 	}
 
-	override void OnTrueProjectileFired(
+	final override void OnTrueProjectileFired(
 		BIO_Weapon weap, BIO_Projectile proj) const
 	{
 		proj.bForceRadiusDmg = true;
 	}
 
-	override void OnFastProjectileFired(
+	final override void OnFastProjectileFired(
 		BIO_Weapon weap, BIO_FastProjectile proj) const
 	{
 		proj.bForceRadiusDmg = true;
 	}
 
-	override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
 		strings.Push(StringTable.Localize("$BIO_WAFX_TOSTR_FORCERADIUSDMG"));
 	}
 
-	override string GetTag() const
+	final override string GetTag() const
 	{
 		return StringTable.Localize("$BIO_WAFX_TAG_FORCERADIUSDMG");
 	}
 
-	override bool CanGenerate() const { return false; }
+	final override bool CanGenerate() const { return false; }
 
-	override BIO_WeaponAffixFlags GetFlags() const
+	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_ONPROJFIRED;
 	}

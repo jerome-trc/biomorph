@@ -6,7 +6,7 @@
 
 mixin class BIO_Ammo
 {
-	override void DoPickupSpecial(Actor toucher)
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 
@@ -124,7 +124,7 @@ class BIO_Backpack : BackpackItem replaces Backpack
 		Stop;
 	}
 
-	override Inventory CreateCopy(Actor other)
+	final override Inventory CreateCopy(Actor other)
 	{
 		let bioPlayer = BIO_Player(other);
 		

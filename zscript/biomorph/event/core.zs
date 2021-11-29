@@ -4,7 +4,7 @@ class BIO_EventHandler : EventHandler
 {
 	private BIO_GlobalData Globals;
 
-	override void OnRegister()
+	final override void OnRegister()
 	{
 		if (BIO_CVar.Debug())
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Registering event handler...");
@@ -16,7 +16,7 @@ class BIO_EventHandler : EventHandler
 		LDToken = ldtoken_tn;
 	}
 
-	override void OnUnregister()
+	final override void OnUnregister()
 	{
 		if (BIO_CVar.Debug())
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Unregistering event handler...");
@@ -24,7 +24,7 @@ class BIO_EventHandler : EventHandler
 		super.OnUnregister();
 	}
 
-	override void NewGame()
+	final override void NewGame()
 	{
 		if (BIO_CVar.Debug())
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Handling NewGame event...");
@@ -32,7 +32,7 @@ class BIO_EventHandler : EventHandler
 		super.NewGame();
 	}
 
-	override void WorldLoaded(WorldEvent event)
+	final override void WorldLoaded(WorldEvent event)
 	{
 		if (BIO_CVar.Debug())
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Handling WorldLoaded event...");
@@ -46,7 +46,7 @@ class BIO_EventHandler : EventHandler
 		}
 	}
 
-	override void PlayerEntered(PlayerEvent event)
+	final override void PlayerEntered(PlayerEvent event)
 	{
 		if (BIO_CVar.Debug())
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
@@ -56,7 +56,7 @@ class BIO_EventHandler : EventHandler
 		Globals.GetPerkGraph(Players[event.PlayerNumber]);
 	}
 
-	override void PlayerSpawned(PlayerEvent event)
+	final override void PlayerSpawned(PlayerEvent event)
 	{
 		if (BIO_CVar.Debug())
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
@@ -65,7 +65,7 @@ class BIO_EventHandler : EventHandler
 		super.PlayerSpawned(event);
 	}
 
-	override bool InputProcess(InputEvent event)
+	final override bool InputProcess(InputEvent event)
 	{
 		if (WeaponUpgradeOverlay != null && WeaponUpgradeOverlay.Input(event))
 			return true;
@@ -73,7 +73,7 @@ class BIO_EventHandler : EventHandler
 		return false; // Don't absorb this input
 	}
 
-	override void RenderOverlay(RenderEvent event)
+	final override void RenderOverlay(RenderEvent event)
 	{
 		if (WeaponUpgradeOverlay != null) WeaponUpgradeOverlay.Draw(event);
 	}

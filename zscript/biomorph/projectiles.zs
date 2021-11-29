@@ -72,7 +72,7 @@ class BIO_Projectile : Actor abstract
 	}
 
 	// Don't multiply damage by Random(1, 8).
-	override int DoSpecialDamage(Actor target, int dmg, name dmgType)
+	final override int DoSpecialDamage(Actor target, int dmg, name dmgType)
 	{
 		int ret = Damage;
 
@@ -134,7 +134,7 @@ class BIO_FastProjectile : FastProjectile abstract
 	}
 
 	// Don't multiply damage by `Random(1, 8)`.
-	override int DoSpecialDamage(Actor target, int dmg, name dmgType)
+	final override int DoSpecialDamage(Actor target, int dmg, name dmgType)
 	{
 		int ret = Damage;
 
@@ -409,17 +409,17 @@ class BIO_PDTF_BFGSpray : BIO_ProjDeathFunctor
 {
 	int RayCount, MinDamage, MaxDamage;
 
-	override void InvokeTrue(BIO_Projectile proj) const
+	final override void InvokeTrue(BIO_Projectile proj) const
 	{
 		proj.A_BFGSpray(numRays: RayCount, defDamage: Random(MinDamage, MaxDamage));
 	}
 
-	override void InvokeFast(BIO_FastProjectile proj) const
+	final override void InvokeFast(BIO_FastProjectile proj) const
 	{
 		proj.A_BFGSpray(numRays: RayCount, defDamage: Random(MinDamage, MaxDamage));
 	}
 
-	override void ToString(in out Array<string> readout) const
+	final override void ToString(in out Array<string> readout) const
 	{
 		string
 			crEsc_rc = BIO_Utils.StatFontColor(RayCount, 40),
@@ -561,7 +561,7 @@ class BIO_Shrapnel : BulletPuff
 		+THRUGHOST
 	}
 
-	override void PostBeginPlay()
+	final override void PostBeginPlay()
 	{
 		super.PostBeginPlay();
 		if (Deathmatch) bMTHRUSPECIES = false;

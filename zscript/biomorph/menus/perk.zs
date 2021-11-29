@@ -12,7 +12,7 @@ class BIO_PerkMenu : GenericMenu
 	private Vector2 ViewPosition; // Where on the whole graph is the user looking?
 	private Vector2 LMP; // Last mouse position, used for panning
 
-	override void Init(Menu parent)
+	final override void Init(Menu parent)
 	{
 		super.Init(parent);
 
@@ -31,12 +31,12 @@ class BIO_PerkMenu : GenericMenu
 		PerkGraph = globals.GetPerkGraph(Players[ConsolePlayer]);
 	}
 
-	override bool MenuEvent(int mKey, bool fromController)
+	final override bool MenuEvent(int mKey, bool fromController)
 	{
 		return super.MenuEvent(mKey, fromController);
 	}
 
-	override bool MouseEvent(int type, int mX, int mY)
+	final override bool MouseEvent(int type, int mX, int mY)
 	{
 		if (type == MOUSE_Move && Pan)
 		{
@@ -48,7 +48,7 @@ class BIO_PerkMenu : GenericMenu
 		return true;
 	}
 
-	override bool OnUIEvent(UIEvent event)
+	final override bool OnUIEvent(UIEvent event)
 	{
 		int y = event.MouseY;
 		bool res = false;
@@ -108,12 +108,12 @@ class BIO_PerkMenu : GenericMenu
 		return false;
 	}
 
-	override bool OnInputEvent(InputEvent event)
+	final override bool OnInputEvent(InputEvent event)
 	{
 		return super.OnInputEvent(event);
 	}
 
-	override void Drawer()
+	final override void Drawer()
 	{
 		super.Drawer(); // Draw the back button
 
@@ -140,7 +140,7 @@ class BIO_PerkMenu : GenericMenu
 		}
 	}
 
-	override void Ticker()
+	final override void Ticker()
 	{
 		if ((GameState != GS_LEVEL) || (Players[ConsolePlayer].Health <= 0))
 		{

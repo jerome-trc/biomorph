@@ -1,6 +1,6 @@
 extend class BIO_EventHandler
 {
-	override void NetworkProcess(ConsoleEvent event)
+	final override void NetworkProcess(ConsoleEvent event)
 	{
 		// Normal gameplay events
 

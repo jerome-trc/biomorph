@@ -41,7 +41,7 @@ extend class BIO_EventHandler
 		return ret;
 	}
 
-	override void WorldThingDied(WorldEvent event)
+	final override void WorldThingDied(WorldEvent event)
 	{
 		if (event.Thing == null || !event.Thing.bIsMonster) return;
 

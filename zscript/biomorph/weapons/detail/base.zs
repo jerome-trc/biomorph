@@ -253,14 +253,14 @@ class BIO_Weapon : DoomWeapon abstract
 	}
 
 	// Prevents picking up a weapon if one weapon of that class is already held.
-	override bool HandlePickup(Inventory item)
+	final override bool HandlePickup(Inventory item)
 	{
 		if (item.GetClass() == self.GetClass()) return true;
 		return super.HandlePickup(item);
 	}
 
 	// For now, weapons cannot be cannibalised for ammunition.
-	override bool TryPickupRestricted(in out Actor toucher) { return false; }
+	final override bool TryPickupRestricted(in out Actor toucher) { return false; }
 
 	override string PickupMessage()
 	{
@@ -269,7 +269,7 @@ class BIO_Weapon : DoomWeapon abstract
 		return ret;
 	}
 
-	override void AttachToOwner(Actor newOwner)
+	final override void AttachToOwner(Actor newOwner)
 	{
 		if (!PreviouslyPickedUp) RLMDangerLevel();
 		PreviouslyPickedUp = true;
@@ -322,13 +322,13 @@ class BIO_Weapon : DoomWeapon abstract
 		if (MagazineType1 == MagazineType2) Magazine2 = Magazine1;
 	}
 
-	override void OnDrop(Actor dropper)
+	final override void OnDrop(Actor dropper)
 	{
 		super.OnDrop(dropper);
 		HitGround = false;
 	}
 
-	override void Activate(Actor activator)
+	final override void Activate(Actor activator)
 	{
 		super.Activate(activator);
 		
@@ -354,7 +354,7 @@ class BIO_Weapon : DoomWeapon abstract
 		bioPlayer.A_Print(output, 5.0);
 	}
 
-	override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
+	final override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
 	{
 		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
 			return true;
@@ -392,7 +392,7 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
-	override string GetObituary(Actor victim, Actor inflictor, Name mod, bool playerAtk)
+	final override string GetObituary(Actor victim, Actor inflictor, Name mod, bool playerAtk)
 	{
 		return Pipelines[LastPipeline].GetObituary();
 	}

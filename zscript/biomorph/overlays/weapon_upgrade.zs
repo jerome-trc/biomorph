@@ -27,19 +27,19 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 		return ret;
 	}
 
-	override void OnKeyPressed_Left()
+	final override void OnKeyPressed_Left()
 	{
 		SelectedWeapon = Max(SelectedWeapon - 1, 0);
 		S_StartSound("bio/ui/beep", CHAN_AUTO);
 	}
 	
-	override void OnKeyPressed_Right()
+	final override void OnKeyPressed_Right()
 	{
 		SelectedWeapon = Min(SelectedWeapon + 1, Choices.Size() - 1);
 		S_StartSound("bio/ui/beep", CHAN_AUTO);
 	}
 
-	override void OnKeyPressed_Confirm()
+	final override void OnKeyPressed_Confirm()
 	{
 		EventHandler.SendNetworkEvent(
 			BIO_EventHandler.EVENT_WEAPUPGRADE .. ":" .. 
@@ -47,7 +47,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 			Choices[SelectedWeapon].KitCost);
 	}
 
-	override void OnKeyPressed_Cancel()
+	final override void OnKeyPressed_Cancel()
 	{
 		EventHandler.SendNetworkEvent(
 			BIO_EventHandler.EVENT_WEAPUPGRADE .. ":_");
@@ -57,7 +57,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 	const X_OFFS = VIRTUAL_WIDTH * 0.1;
 	const WEAPICONHEIGHT = VIRTUAL_HEIGHT * 0.725;
 
-	override void Draw(RenderEvent event) const
+	final override void Draw(RenderEvent event) const
 	{
 		int realTic = double(GameTic) + event.FracTic;
 		double selectedAlpha = 1.0 + (Sin((realTic << 16 / 4) * 0.75));

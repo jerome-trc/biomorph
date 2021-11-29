@@ -23,13 +23,13 @@ class BIO_WeaponUpgradeKit : Inventory
 		Loop;
 	}
 
-	override bool CanPickup(Actor toucher)
+	final override bool CanPickup(Actor toucher)
 	{
 		if (!super.CanPickup(toucher)) return false;
 		return BIO_Player(toucher) != null;
 	}
 
-	override bool Use(bool pickup)
+	final override bool Use(bool pickup)
 	{
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 		if (weap == null)
