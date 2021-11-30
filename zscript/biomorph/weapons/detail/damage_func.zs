@@ -21,7 +21,7 @@ class BIO_DamageFunctor play abstract
 // Emits a random number between a minimum and a maximum.
 class BIO_DmgFunc_Default : BIO_DamageFunctor
 {
-	private int Minimum, Maximum;
+	protected int Minimum, Maximum;
 
 	override int Invoke() const { return Random(Minimum, Maximum); }
 
@@ -65,7 +65,7 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 
 class BIO_DmgFunc_1DX : BIO_DamageFunctor
 {
-	private int Baseline, MaxFactor;
+	protected int Baseline, MaxFactor;
 
 	override int Invoke() const
 	{
@@ -106,7 +106,7 @@ class BIO_DmgFunc_1DX : BIO_DamageFunctor
 
 class BIO_DmgFunc_Single : BIO_DamageFunctor
 {
-	private int Value;
+	protected int Value;
 
 	override int Invoke() const { return Value; }
 
