@@ -137,13 +137,23 @@ class BIO_Recoil_ShotgunPump : BIO_RecoilThinker
 	final override float GetPitch(int lifeTic) const { return PITCH_VALUES[lifeTic]; }
 }
 
+class BIO_Recoil_Reload : BIO_RecoilThinker
+{
+	static const float[] PITCH_VALUES = {
+		-0.45, -0.1, -0.08, -0.05, 0.1, 0.05, 0.02, 0.01
+	};
+
+	final override void Init() { TimeToLive = PITCH_VALUES.Size(); }
+	final override float GetPitch(int lifeTic) const { return PITCH_VALUES[lifeTic]; }
+}
+
 class BIO_Recoil_HeavyReload : BIO_RecoilThinker
 {
 	static const float[] PITCH_VALUES = {
 		-0.85, -0.1, -0.05, 0.3, 0.25, 0.15, 0.1, 0.05, 0.02, 0.01
 	};
 
-	final override void Init() { TimeToLive = 10; }
+	final override void Init() { TimeToLive = PITCH_VALUES.Size(); }
 	final override float GetPitch(int lifeTic) const { return PITCH_VALUES[lifeTic]; }
 }
 

@@ -25,7 +25,7 @@ enum BIO_WeaponPipelineMask : uint16
 
 struct BIO_FireData
 {
-	uint Number;
+	uint Number, Count;
 	Class<Actor> FireType;
 	int Damage;
 	float HSpread, VSpread, Angle, Pitch;
@@ -60,7 +60,6 @@ class BIO_WeaponPipeline play
 	private Array<BIO_ProjDeathFunctor> ProjDeathFunctors;
 
 	private sound FireSound;
-	private double FireSoundVolume, FireSoundAttenuation;
 
 	private string Obituary;
 	private Array<string> ReadoutExtra;
@@ -72,6 +71,7 @@ class BIO_WeaponPipeline play
 		{
 			BIO_FireData fireData;
 			fireData.Number = i;
+			fireData.Count = uint(FireCount);
 			fireData.FireType = FireType;
 			fireData.Damage = Damage.Invoke();
 			fireData.HSpread = HSpread * spreadFactor;
@@ -364,17 +364,8 @@ class BIO_WeaponPipeline play
 		AlertFlags = flags;
 	}
 
-	void SetSound(sound fireSnd, double volume, double attenuation)
-	{
-		FireSound = fireSnd;
-		FireSoundVolume = volume;
-		FireSoundAttenuation = attenuation;
-	}
-
-	sound, double, double GetFireSoundData() const
-	{
-		return FireSound, FireSoundVolume, FireSoundAttenuation;
-	}
+	void SetSound(sound fireSnd) { FireSound = fireSnd; }
+	sound GetFireSound() const { return FireSound; }
 
 	void PushReadoutString(string str)
 	{
@@ -670,10 +661,9 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder FireSound(sound fireSound, double volume = 1.0,
-		double attenuation = ATTN_NORM)
+	BIO_WeaponPipelineBuilder FireSound(sound fireSound)
 	{
-		Pipeline.SetSound(fireSound, volume, attenuation);
+		Pipeline.SetSound(fireSound);
 		return self;
 	}
 

@@ -63,14 +63,19 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 	}
 }
 
-// Imitates the vanilla behaviour of multiplying bullet puff damage by 1D3.
-class BIO_DmgFunc_1D3 : BIO_DamageFunctor
+class BIO_DmgFunc_1DX : BIO_DamageFunctor
 {
-	private int Baseline;
+	private int Baseline, MaxFactor;
 
 	override int Invoke() const
 	{
-		return Baseline * Random(1, 3);
+		return Baseline * Random(1, MaxFactor);
+	}
+
+	void CustomSet(int base, int maxFac)
+	{
+		Baseline = base;
+		MaxFactor = maxFac;
 	}
 
 	override void GetValues(in out Array<int> vals) const
@@ -85,7 +90,7 @@ class BIO_DmgFunc_1D3 : BIO_DamageFunctor
 
 	override string ToString(BIO_DamageFunctor def) const
 	{
-		let myDefs = BIO_DmgFunc_1D3(def);
+		let myDefs = BIO_DmgFunc_1DX(def);
 		string crEsc = "";
 		
 		if (myDefs != null)
@@ -94,44 +99,8 @@ class BIO_DmgFunc_1D3 : BIO_DamageFunctor
 			crEsc = CRESC_STATMODIFIED;
 
 		return String.Format(
-			StringTable.Localize("$BIO_WEAP_DMGFUNC_1D3"),
-			crEsc, Baseline);
-	}
-}
-
-// Imitates the vanilla behaviour of multiplying projectile damage by 1D8.
-class BIO_DmgFunc_1D8 : BIO_DamageFunctor
-{
-	private int Baseline;
-
-	override int Invoke() const
-	{
-		return Baseline * Random(1, 8);
-	}
-
-	override void GetValues(in out Array<int> vals) const
-	{
-		vals.PushV(Baseline);
-	}
-
-	override void SetValues(in out Array<int> vals)
-	{
-		Baseline = vals[0];
-	}
-
-	override string ToString(BIO_DamageFunctor def) const
-	{
-		let myDefs = BIO_DmgFunc_1D8(def);
-		string crEsc = "";
-		
-		if (myDefs != null)
-			crEsc = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
-		else
-			crEsc = CRESC_STATMODIFIED;
-
-		return String.Format(
-			StringTable.Localize("$BIO_WEAP_DMGFUNC_1D8"),
-			crEsc, Baseline);
+			StringTable.Localize("$BIO_WEAP_DMGFUNC_1DX"),
+			crEsc, Baseline, MaxFactor);
 	}
 }
 

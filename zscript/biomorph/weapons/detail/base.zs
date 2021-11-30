@@ -141,6 +141,7 @@ class BIO_Weapon : DoomWeapon abstract
 	private uint LastPipeline;
 	Array<BIO_WeaponPipeline> Pipelines;
 	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
+	Dictionary Userdata;
 
 	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
 	Array<string> StatReadout, AffixReadout;
@@ -274,9 +275,8 @@ class BIO_Weapon : DoomWeapon abstract
 		if (!PreviouslyPickedUp) RLMDangerLevel();
 		PreviouslyPickedUp = true;
 
-		// Weapon::AttachToOwner() calls AddAmmo() for both types, which we
-		// don't want. This next bit is silly, but beats re-implementing
-		// that function (and having to watch if it changes upstream)
+		// `Weapon::AttachToOwner()` calls `AddAmmo()` for both types, and we
+		// want both of the items given to have an amount of 0
 		AmmoGive1 = AmmoGive2 = 0;
 		super.AttachToOwner(newOwner);
 		AmmoGive1 = Default.AmmoGive1;
@@ -285,38 +285,36 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_GlobalData.Get().OnWeaponAcquired(Grade);
 
 		if (Pipelines.Size() < 1) Init();
-		
-		// Get a pointer to primary ammo (which is either AmmoType1 or
-		// MagazineType1). If it isn't found, generate and attach it
+
+		// Get a pointer to primary ammo (which is either `AmmoType1` or
+		// `MagazineType1`). If it isn't found, generate and attach it
 		if (Magazine1 == null && AmmoType1 != null)
 		{
-			Magazine1 =
-				MagazineType1 != null ?
-				Ammo(FindInventory(MagazineType1)) :
-				Ammo(FindInventory(AmmoType1));
+			Magazine1 = MagazineType1 != null ?
+				Ammo(newOwner.FindInventory(MagazineType1)) :
+				Ammo(newOwner.FindInventory(AmmoType1));
 
 			if (Magazine1 == null)
 			{
 				Magazine1 = Ammo(Actor.Spawn(MagazineType1));
-				Magazine1.Amount = Max(Default.MagazineSize1, 0);
 				Magazine1.AttachToOwner(newOwner);
 			}
+			Magazine1.Amount = Max(Default.MagazineSize1, 0);
 		}
 
 		// Same for secondary:
 		if (Magazine2 == null && AmmoType2 != null)
 		{
-			Magazine2 =
-				MagazineType2 != null ?
-				Ammo(FindInventory(MagazineType2)) :
-				Ammo(FindInventory(AmmoType2));
+			Magazine2 = MagazineType2 != null ?
+				Ammo(newOwner.FindInventory(MagazineType2)) :
+				Ammo(newOwner.FindInventory(AmmoType2));
 
 			if (Magazine2 == null)
 			{
 				Magazine2 = Ammo(Actor.Spawn(MagazineType2));
-				Magazine2.Amount = Max(Default.MagazineSize2, 0);
 				Magazine2.AttachToOwner(newOwner);
 			}
+			Magazine2.Amount = Max(Default.MagazineSize2, 0);
 		}
 
 		if (MagazineType1 == MagazineType2) Magazine2 = Magazine1;
@@ -433,12 +431,12 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
-	protected action void A_FireSound(int channel = CHAN_WEAPON, uint pipeline = 0)
+	protected action void A_FireSound(int channel = CHAN_WEAPON,
+		int flags = CHANF_DEFAULT, double volume = 1.0,
+		double attenuation = ATTN_NORM, uint pipeline = 0)
 	{
-		sound snd;
-		double vol, atten;
-		[snd, vol, atten] = invoker.Pipelines[pipeline].GetFireSoundData();
-		A_StartSound(snd, channel, CHANF_DEFAULT, vol, atten);
+		A_StartSound(invoker.Pipelines[pipeline].GetFireSound(),
+			channel, CHANF_DEFAULT, volume, attenuation);
 	}
 
 	// If no argument is given, try to reload as much of the magazine as 
@@ -674,17 +672,34 @@ class BIO_Weapon : DoomWeapon abstract
 			for (uint i = 0; i < Affixes.Size(); i++)
 				if (Affixes[i].GetClass() == t)
 					return true;
-
-			return false;
 		}
 		else
 		{
 			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 				if (ImplicitAffixes[i].GetClass() == t)
 					return true;
-
-			return false;
 		}
+
+		return false;
+	}
+
+	BIO_WeaponAffix GetAffixByType(
+		Class<BIO_WeaponAffix> t, bool implicit = false) const
+	{
+		if (!implicit)
+		{
+			for (uint i = 0; i < Affixes.Size(); i++)
+				if (Affixes[i].GetClass() == t)
+					return Affixes[i];
+		}
+		else
+		{
+			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+				if (ImplicitAffixes[i].GetClass() == t)
+					return ImplicitAffixes[i];
+		}
+
+		return null;
 	}
 
 	// Returns `true` if any of this weapon's pipelines
@@ -750,11 +765,6 @@ class BIO_Weapon : DoomWeapon abstract
 				return true;
 
 		return false;
-	}
-
-	sound GetFireSound(uint pipeline = 0) const
-	{
-		return Pipelines[pipeline].GetFireSoundData();
 	}
 
 	// Modifying ===============================================================
@@ -1110,13 +1120,13 @@ class BIO_Weapon : DoomWeapon abstract
 	// their semantics cave in if called from outside the weapon's state machine.)
 
 	Actor BIO_FireProjectile(Class<Actor> proj_t, double angle = 0,
-		double spawnofs_xy = 0, double spawnheight = 0,
+		double spawnOfs_xy = 0, double spawnHeight = 0,
 		int flags = 0, double pitch = 0)
 	{
 		FTranslatedLineTarget t;
 
 		double ang = Owner.Angle - 90.0;
-		Vector2 ofs = AngleToVector(ang, spawnofs_xy);
+		Vector2 ofs = AngleToVector(ang, spawnOfs_xy);
 		double shootangle = Owner.Angle;
 
 		if (flags & FPF_AIMATANGLE) shootangle += angle;
@@ -1125,7 +1135,7 @@ class BIO_Weapon : DoomWeapon abstract
 		double playerPitch = Owner.Pitch;
 		Owner.Pitch += pitch;
 		let misl = Owner.SpawnPlayerMissile(proj_t, shootangle, ofs.X, ofs.Y,
-			spawnheight, t, false, (flags & FPF_NOAUTOAIM) != 0);
+			spawnHeight, t, false, (flags & FPF_NOAUTOAIM) != 0);
 		Owner.Pitch = playerPitch;
 
 		// Automatic handling of seeker missiles
@@ -1151,49 +1161,48 @@ class BIO_Weapon : DoomWeapon abstract
 		int bulletDmg, Class<Actor> puff_t, int flags = 1, double range = 0.0,
 		Class<Actor> missile = null, double spawnHeight = 32.0, double spawnOfs_xy = 0.0)
 	{
-		int i;
-		double bangle, bslope = 0.0;
-		int laflags = (flags & FBF_NORANDOMPUFFZ)? LAF_NORANDOMPUFFZ : 0;
+		int i = 0;
+		double bAngle = 0.0, bSlope = 0.0;
+		int laFlags = (flags & FBF_NORANDOMPUFFZ) ? LAF_NORANDOMPUFFZ : 0;
 		FTranslatedLineTarget t;
 
-		if (range == 0)	range = PLAYERMISSILERANGE;
+		if (range ~== 0.0) range = PLAYERMISSILERANGE;
 
 		if (!(flags & FBF_NOFLASH)) BIO_Player(Owner).PlayAttacking2();
-		if (!(flags & FBF_NOPITCH)) bslope = BulletSlope();
+		if (!(flags & FBF_NOPITCH)) bSlope = Owner.BulletSlope();
 
-		bangle = Angle;
+		bAngle = Owner.Angle;
 
-		Owner.A_StartSound(AttackSound, CHAN_WEAPON);
-
-		if ((numBullets == 1 && !Player.Refire) || numBullets == 0)
+		if ((numBullets == 1 && !Owner.Player.Refire) || numBullets == 0)
 		{
 			int damage = bulletDmg;
 
 			if (!(flags & FBF_NORANDOM))
-				damage *= random[cabullet](1, 3);
+				damage *= random[CABullet](1, 3);
 
-			let puff = LineAttack(bangle, range, bslope, damage, 'Hitscan', puff_t, laflags, t);
+			let puff = Owner.LineAttack(
+				bAngle, range, bSlope, damage, 'Hitscan', puff_t, laFlags, t);
 
 			if (missile != null)
 			{
 				bool temp = false;
-				double ang = Angle - 90;
-				Vector2 ofs = AngleToVector(ang, Spawnofs_xy);
-				Actor proj = SpawnPlayerMissile(missile, bangle, ofs.X, ofs.Y, Spawnheight);
+				double ang = Owner.Angle - 90;
+				Vector2 ofs = Owner.AngleToVector(ang, spawnOfs_xy);
+				Actor proj = Owner.SpawnPlayerMissile(missile, bAngle, ofs.X, ofs.Y, spawnHeight);
 				if (proj)
 				{
 					if (!puff)
 					{
 						temp = true;
-						puff = LineAttack(bangle, range, bslope, 0, 'Hitscan', puff_t, laflags | LAF_NOINTERACT, t);
+						puff = Owner.LineAttack(bAngle, range, bSlope, 0, 'Hitscan', puff_t, laFlags | LAF_NOINTERACT, t);
 					}
-					AimBulletMissile(proj, puff, flags, temp, false);
-					if (t.unlinked)
+					Owner.AimBulletMissile(proj, puff, flags, temp, false);
+					if (t.Unlinked)
 					{
 						// Arbitary portals will make angle and pitch calculations unreliable.
 						// So use the angle and pitch we passed instead.
-						proj.Angle = bangle;
-						proj.Pitch = bslope;
+						proj.Angle = bAngle;
+						proj.Pitch = bSlope;
 						proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
 					}
 				}
@@ -1201,54 +1210,56 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 		else 
 		{
-			if (numbullets < 0)
-				numbullets = 1;
+			if (numBullets < 0)
+				numBullets = 1;
 
-			for (i = 0; i < numbullets; i++)
+			for (i = 0; i < numBullets; i++)
 			{
-				double pangle = bangle;
-				double slope = bslope;
+				double pAngle = bAngle;
+				double slope = bSlope;
 
 				if (flags & FBF_EXPLICITANGLE)
 				{
-					pangle += spread_xy;
+					pAngle += spread_xy;
 					slope += spread_z;
 				}
 				else
 				{
-					pangle += spread_xy * Random2[cabullet]() / 255.;
+					pAngle += spread_xy * Random2[cabullet]() / 255.;
 					slope += spread_z * Random2[cabullet]() / 255.;
 				}
 
 				int damage = bulletDmg;
 
 				if (!(flags & FBF_NORANDOM))
-					damage *= random[cabullet](1, 3);
+					damage *= Random[CABullet](1, 3);
 
-				let puff = LineAttack(pangle, range, slope, damage, 'Hitscan', puff_t, laflags, t);
+				let puff = Owner.LineAttack(
+					pAngle, range, slope, damage, 'Hitscan', puff_t, laflags, t);
 
-				if (missile != null)
+				if (missile == null) continue;
+
+				bool temp = false;
+				double ang = Owner.Angle - 90;
+				Vector2 ofs = Owner.AngleToVector(ang, spawnOfs_xy);
+				Actor proj = Owner.SpawnPlayerMissile(missile, bAngle, ofs.X, ofs.Y, spawnHeight);
+				if (proj)
 				{
-					bool temp = false;
-					double ang = Angle - 90;
-					Vector2 ofs = AngleToVector(ang, Spawnofs_xy);
-					Actor proj = SpawnPlayerMissile(missile, bangle, ofs.X, ofs.Y, Spawnheight);
-					if (proj)
+					if (!puff)
 					{
-						if (!puff)
-						{
-							temp = true;
-							puff = LineAttack(bangle, range, bslope, 0, 'Hitscan', puff_t, laflags | LAF_NOINTERACT, t);
-						}
-						AimBulletMissile(proj, puff, flags, temp, false);
-						if (t.unlinked)
-						{
-							// Arbitary portals will make angle and pitch calculations unreliable.
-							// So use the angle and pitch we passed instead.
-							proj.Angle = bangle;
-							proj.Pitch = bslope;
-							proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
-						}
+						temp = true;
+						puff = Owner.LineAttack(
+							bAngle, range, bSlope, 0, 'Hitscan', puff_t,
+							laflags | LAF_NOINTERACT, t);
+					}
+					Owner.AimBulletMissile(proj, puff, flags, temp, false);
+					if (t.Unlinked)
+					{
+						// Arbitary portals will make angle and pitch calculations unreliable.
+						// So use the angle and pitch we passed instead.
+						proj.Angle = bAngle;
+						proj.Pitch = bSlope;
+						proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
 					}
 				}
 			}
