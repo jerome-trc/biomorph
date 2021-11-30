@@ -29,7 +29,6 @@ const CRESC_STATWORSE = "\c[Red]";
 #include "zscript/biomorph/mutagens.zs"
 #include "zscript/biomorph/player.zs"
 #include "zscript/biomorph/powerups.zs"
-#include "zscript/biomorph/projectiles.zs"
 #include "zscript/biomorph/sbar.zs"
 
 #include "zscript/biomorph/util/misc.zs"
@@ -52,6 +51,10 @@ const CRESC_STATWORSE = "\c[Red]";
 #include "zscript/biomorph/event/death.zs"
 #include "zscript/biomorph/event/net.zs"
 #include "zscript/biomorph/event/spawn.zs"
+
+#include "zscript/biomorph/firetypes/detail.zs"
+#include "zscript/biomorph/firetypes/projectiles.zs"
+#include "zscript/biomorph/firetypes/puffs.zs"
 
 #include "zscript/biomorph/menus/perk.zs"
 

@@ -481,6 +481,9 @@ class BIO_Weapon : DoomWeapon abstract
 		if ((!secondary ? invoker.Magazine1 : invoker.Magazine2).Amount >= min)
 			return state(null);
 
+		if (!invoker.CanReload())
+			return ResolveState('Ready');
+
 		let cv = BIO_CVar.AutoReload(Player);
 
 		if (cv == BIO_CV_AUTOREL_ALWAYS || (cv == BIO_CV_AUTOREL_SINGLE && single))
@@ -1157,8 +1160,10 @@ class BIO_Weapon : DoomWeapon abstract
 		return misl;
 	}
 
-	void BIO_FireBullets(double spread_xy, double spread_z, int numBullets,
-		int bulletDmg, Class<Actor> puff_t, int flags = 1, double range = 0.0,
+	// `bulletDmg` is filled with whatever actual damage the
+	//  bullet dealt if it hit something (0 if it hit nothing).
+	Actor BIO_FireBullet(double spread_xy, double spread_z, int numBullets,
+		in out int bulletDmg, Class<Actor> puff_t, int flags = 1, double range = 0.0,
 		Class<Actor> missile = null, double spawnHeight = 32.0, double spawnOfs_xy = 0.0)
 	{
 		int i = 0;
@@ -1180,89 +1185,95 @@ class BIO_Weapon : DoomWeapon abstract
 			if (!(flags & FBF_NORANDOM))
 				damage *= random[CABullet](1, 3);
 
-			let puff = Owner.LineAttack(
+			Actor puff = null; int realDmg = -1;
+			[puff, realDmg] = Owner.LineAttack(
 				bAngle, range, bSlope, damage, 'Hitscan', puff_t, laFlags, t);
+			bulletDmg = realDmg;
 
 			if (missile != null)
 			{
 				bool temp = false;
 				double ang = Owner.Angle - 90;
 				Vector2 ofs = Owner.AngleToVector(ang, spawnOfs_xy);
-				Actor proj = Owner.SpawnPlayerMissile(missile, bAngle, ofs.X, ofs.Y, spawnHeight);
+				Actor proj = Owner.SpawnPlayerMissile(missile, bAngle,
+					ofs.X, ofs.Y, spawnHeight);
+
 				if (proj)
 				{
 					if (!puff)
 					{
 						temp = true;
-						puff = Owner.LineAttack(bAngle, range, bSlope, 0, 'Hitscan', puff_t, laFlags | LAF_NOINTERACT, t);
+						puff = Owner.LineAttack(bAngle, range, bSlope, 0,
+							'Hitscan', puff_t, laFlags | LAF_NOINTERACT, t);
 					}
 					Owner.AimBulletMissile(proj, puff, flags, temp, false);
 					if (t.Unlinked)
 					{
-						// Arbitary portals will make angle and pitch calculations unreliable.
-						// So use the angle and pitch we passed instead.
+						// Arbitary portals will make angle and pitch calculations 
+						// unreliable. So use the angle and pitch we passed instead.
 						proj.Angle = bAngle;
 						proj.Pitch = bSlope;
 						proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
 					}
 				}
 			}
+
+			return puff;
 		}
 		else 
 		{
-			if (numBullets < 0)
-				numBullets = 1;
+			double pAngle = bAngle;
+			double slope = bSlope;
 
-			for (i = 0; i < numBullets; i++)
+			if (flags & FBF_EXPLICITANGLE)
 			{
-				double pAngle = bAngle;
-				double slope = bSlope;
+				pAngle += spread_xy;
+				slope += spread_z;
+			}
+			else
+			{
+				pAngle += spread_xy * Random2[cabullet]() / 255.;
+				slope += spread_z * Random2[cabullet]() / 255.;
+			}
 
-				if (flags & FBF_EXPLICITANGLE)
+			int damage = bulletDmg;
+
+			if (!(flags & FBF_NORANDOM))
+				damage *= Random[CABullet](1, 3);
+
+			Actor puff = null; int realDmg = -1;
+			[puff, realDmg] = Owner.LineAttack(pAngle, range, 
+				slope, damage, 'Hitscan', puff_t, laflags, t);
+			bulletDmg = realDmg;
+
+			if (missile == null) return puff;
+
+			bool temp = false;
+			double ang = Owner.Angle - 90;
+			Vector2 ofs = Owner.AngleToVector(ang, spawnOfs_xy);
+			Actor proj = Owner.SpawnPlayerMissile(missile, bAngle, ofs.X, ofs.Y, spawnHeight);
+			
+			if (proj)
+			{
+				if (!puff)
 				{
-					pAngle += spread_xy;
-					slope += spread_z;
+					temp = true;
+					puff = Owner.LineAttack(
+						bAngle, range, bSlope, 0, 'Hitscan', puff_t,
+						laFlags | LAF_NOINTERACT, t);
 				}
-				else
+				Owner.AimBulletMissile(proj, puff, flags, temp, false);
+				if (t.Unlinked)
 				{
-					pAngle += spread_xy * Random2[cabullet]() / 255.;
-					slope += spread_z * Random2[cabullet]() / 255.;
-				}
-
-				int damage = bulletDmg;
-
-				if (!(flags & FBF_NORANDOM))
-					damage *= Random[CABullet](1, 3);
-
-				let puff = Owner.LineAttack(
-					pAngle, range, slope, damage, 'Hitscan', puff_t, laflags, t);
-
-				if (missile == null) continue;
-
-				bool temp = false;
-				double ang = Owner.Angle - 90;
-				Vector2 ofs = Owner.AngleToVector(ang, spawnOfs_xy);
-				Actor proj = Owner.SpawnPlayerMissile(missile, bAngle, ofs.X, ofs.Y, spawnHeight);
-				if (proj)
-				{
-					if (!puff)
-					{
-						temp = true;
-						puff = Owner.LineAttack(
-							bAngle, range, bSlope, 0, 'Hitscan', puff_t,
-							laflags | LAF_NOINTERACT, t);
-					}
-					Owner.AimBulletMissile(proj, puff, flags, temp, false);
-					if (t.Unlinked)
-					{
-						// Arbitary portals will make angle and pitch calculations unreliable.
-						// So use the angle and pitch we passed instead.
-						proj.Angle = bAngle;
-						proj.Pitch = bSlope;
-						proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
-					}
+					// Arbitary portals will make angle and pitch calculations 
+					// unreliable. So use the angle and pitch we passed instead.
+					proj.Angle = bAngle;
+					proj.Pitch = bSlope;
+					proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
 				}
 			}
+
+			return puff;
 		}
 	}
 

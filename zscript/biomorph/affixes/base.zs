@@ -42,6 +42,9 @@ class BIO_WeaponAffix : BIO_Affix abstract
 		BIO_Projectile proj) const {}	
 	virtual void OnFastProjectileFired(BIO_Weapon weap,
 		BIO_FastProjectile proj) const {}
+	virtual void OnPuffFired(BIO_Weapon weap,
+		BIO_Puff puff) const {}
+
 	virtual void OnKill(readOnly<BIO_Weapon> weap,
 		Actor killed, Actor inflictor) const {}
 

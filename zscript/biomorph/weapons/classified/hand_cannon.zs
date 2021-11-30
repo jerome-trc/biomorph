@@ -2,6 +2,7 @@ class BIO_HandCannon : BIO_Weapon
 {
 	Default
 	{
+		Decal 'BulletChip';
 		Tag "$BIO_WEAP_TAG_HANDCANNON";
 
 		Inventory.Icon 'HCANX0';
@@ -25,7 +26,7 @@ class BIO_HandCannon : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
-			.BasicProjectilePipeline('BIO_Bullet', 1, 50, 70, 1.0, 1.0)
+			.BasicBulletPipeline('BIO_Bullet', 1, 50, 70, 1.0, 1.0)
 			.FireSound("bio/weap/handcannon/fire")
 			.Build());
 	}

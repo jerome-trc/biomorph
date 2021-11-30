@@ -2,6 +2,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 {
 	Default
 	{
+		Decal 'BulletChip';
 		Tag "$BIO_WEAP_TAG_INCURSIONSHOTGUN";
 
 		Inventory.Icon 'INCUX0';
@@ -23,7 +24,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
-			.BasicProjectilePipeline('BIO_ShotPellet', 9, 7, 17, 4.0, 2.0)
+			.BasicBulletPipeline('BIO_ShotPellet', 9, 7, 17, 4.0, 2.0)
 			.FireSound("bio/weap/incursion/fire")
 			.CustomReadout(StringTable.Localize(
 				"$BIO_WEAP_STAT_INCURSIONSHOTGUN_QUAD"))

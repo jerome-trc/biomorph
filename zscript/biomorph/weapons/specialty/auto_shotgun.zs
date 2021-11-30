@@ -2,6 +2,7 @@ class BIO_AutoShotgun : BIO_Weapon
 {
 	Default
 	{
+		Decal 'BulletChip';
 		Tag "$BIO_WEAP_TAG_AUTOSHOTGUN";
 
 		Inventory.Icon 'AUSGX0';
@@ -24,7 +25,7 @@ class BIO_AutoShotgun : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
-			.BasicProjectilePipeline('BIO_ShotPellet', 8, 6, 16, 3.8, 1.9)
+			.BasicBulletPipeline('BIO_ShotPellet', 8, 6, 16, 3.8, 1.9)
 			.FireSound("bio/weap/autoshotgun/fire")
 			.Build());
 	}
