@@ -36,7 +36,7 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	}
 	virtual void Apply(BIO_Weapon weap) const {}
 
-	virtual void ModifyDamage(BIO_Weapon weap, in out int damage) const {}
+	virtual void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const {}
 
 	virtual void OnTrueProjectileFired(BIO_Weapon weap,
 		BIO_Projectile proj) const {}	
