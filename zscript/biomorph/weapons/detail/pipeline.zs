@@ -79,6 +79,11 @@ class BIO_WeaponPipeline play
 			fireData.Angle = Angle;
 			fireData.Pitch = Pitch;
 
+			for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
+				weap.ImplicitAffixes[i].BeforeFire(weap, fireData);
+			for (uint i = 0; i < weap.Affixes.Size(); i++)
+				weap.Affixes[i].BeforeFire(weap, fireData);
+
 			Actor proj = FireFunctor.Invoke(weap, fireData);
 
 			if (proj == null) continue;
