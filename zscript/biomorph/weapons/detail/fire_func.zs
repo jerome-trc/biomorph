@@ -84,7 +84,7 @@ class BIO_FireFunctor play abstract
 	readOnly<BIO_FireFunctor> AsConst() const { return self; }
 }
 
-class BIO_FireFunc_Default : BIO_FireFunctor
+class BIO_FireFunc_Projectile : BIO_FireFunctor
 {
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
@@ -102,29 +102,36 @@ class BIO_FireFunc_Default : BIO_FireFunctor
 		Class<Actor> ft = ppl.GetFireType();
 
 		readout.Push(String.Format(
-			StringTable.Localize("$BIO_WEAP_FIREFUNC_DEFAULT"),
+			StringTable.Localize("$BIO_WEAP_FireFunc_Projectile"),
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			FireTypeTag(ft, fc)));
 	}
 }
 
+const BULLET_ALWAYS_SPREAD = -1;
+const BULLET_ALWAYS_ACCURATE = 0;
+const BULLET_FIRST_ACCURATE = 1;
+
 class BIO_FireFunc_Bullet : BIO_FireFunctor
 {
-	int NumBullets, Flags;
+	private int AccuracyType, Flags;
 
 	override void Init()
 	{
-		NumBullets = -1;
+		AccuracyType = -1;
 		Flags = FBF_NORANDOM | FBF_NOFLASH;
 	}
 
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
-		weap.BIO_FireBullets(fireData.HSpread, fireData.VSpread,
-			NumBullets, fireData.Damage, fireData.FireType, Flags);
-		return null;
+		return weap.BIO_FireBullet(fireData.HSpread, fireData.VSpread,
+			AccuracyType, fireData.Damage, fireData.FireType, Flags);
 	}
+
+	void AlwaysSpread() { AccuracyType = BULLET_ALWAYS_SPREAD; }
+	void AlwaysAccurate() { AccuracyType = BULLET_ALWAYS_ACCURATE; }
+	void FirstAccurate() { AccuracyType = BULLET_FIRST_ACCURATE; }
 
 	override void ToString(
 		in out Array<string> readout,
@@ -135,7 +142,7 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 		Class<Actor> ft = ppl.GetFireType();
 
 		readout.Push(String.Format(
-			StringTable.Localize("$BIO_WEAP_FIREFUNC_DEFAULT"),
+			StringTable.Localize("$BIO_WEAP_FireFunc_Projectile"),
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			FireTypeTag(ft, fc)));

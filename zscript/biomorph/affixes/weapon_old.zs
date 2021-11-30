@@ -149,14 +149,14 @@ class BIO_WAFX_EnemyHealthDamage : BIO_WeaponAffix
 	final override bool Compatible(BIO_Weapon weap) const
 	{
 		return
-			!(weap.AffixMask1 & BIO_WAM_PROJDAMAGEFUNCTORS) ||
-			!(weap.AffixMask2 & BIO_WAM_PROJDAMAGEFUNCTORS);
+			!(weap.AffixMask1 & BIO_WAM_HitDamageFunctors) ||
+			!(weap.AffixMask2 & BIO_WAM_HitDamageFunctors);
 	}
 
 	final override void Apply(BIO_Weapon weap) const
 	{
-		uint e = weap.ProjDamageFunctors.Push(new('BIO_ProjDmgFunc_EnemyHealthDamage'));
-		let func = BIO_ProjDmgFunc_EnemyHealthDamage(weap.ProjDamageFunctors[e]);
+		uint e = weap.HitDamageFunctors.Push(new('BIO_ProjDmgFunc_EnemyHealthDamage'));
+		let func = BIO_ProjDmgFunc_EnemyHealthDamage(weap.HitDamageFunctors[e]);
 		func.Factor = Factor;
 	}
 
@@ -176,7 +176,7 @@ class BIO_WAFX_EnemyHealthDamage : BIO_WeaponAffix
 	}
 }
 
-class BIO_ProjDmgFunc_EnemyHealthDamage : BIO_ProjDamageFunctor
+class BIO_ProjDmgFunc_EnemyHealthDamage : BIO_HitDamageFunctor
 {
 	float Factor;
 
@@ -195,7 +195,7 @@ class BIO_ProjDmgFunc_EnemyHealthDamage : BIO_ProjDamageFunctor
 	final override void ToString(in out Array<string> readout) const
 	{
 		readout.Push(String.Format(
-			StringTable.Localize("$BIO_PDMF_ENEMYHEALTHDMG"),
+			StringTable.Localize("$BIO_HDF_ENEMYHEALTHDMG"),
 			Factor * 100.0));
 	}
 }

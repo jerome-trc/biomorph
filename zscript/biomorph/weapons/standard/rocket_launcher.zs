@@ -5,6 +5,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 		+WEAPON.EXPLOSIVE
 		+WEAPON.NOAUTOFIRE
 
+		Decal 'BulletChip';
 		Tag "$TAG_ROCKETLAUNCHER";
 		
 		Inventory.Icon 'LAUNA0';

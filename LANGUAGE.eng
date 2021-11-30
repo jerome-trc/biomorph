@@ -56,7 +56,7 @@
 	BIO_WEAP_STAT_BERSERKMULTI =
 		"\cj%d%% more damage from berserk";
 
-	BIO_WEAP_FIREFUNC_DEFAULT =
+	BIO_WEAP_FIREFUNC_PROJECTILE =
 		"\c[MidGrey]Fires %s%d %s%s";
 	BIO_WEAP_FIREFUNC_MELEE =
 		"\c[MidGrey]Hits %s%d time(s)";
@@ -146,20 +146,20 @@
 // Fired things (puff/projectile tags) =========================================
 
 	// Generic tags used as defaults
-	BIO_PROJ_TAG_ROUND = "round";
-	BIO_PROJ_TAG_ROUNDS = "rounds";
+	BIO_FIRETYPE_TAG_ROUND = "round";
+	BIO_FIRETYPE_TAG_ROUNDS = "rounds";
 
-	BIO_MELEE_HIT = "hit";
-	BIO_MELEE_HITS = "hits";
+	BIO_PUFF_TAG_MELEEHIT = "hit";
+	BIO_PUFF_TAG_MELEEHITS = "hits";
 
-	BIO_PROJ_TAG_BULLET = "bullet";
-	BIO_PROJ_TAG_BULLETS = "bullets";
+	BIO_PUFF_TAG_BULLET = "bullet";
+	BIO_PUFF_TAG_BULLETS = "bullets";
 
-	BIO_PROJ_TAG_SHOTPELLET = "pellet";
-	BIO_PROJ_TAG_SHOTPELLETS = "pellets";
+	BIO_PUFF_TAG_SHOTPELLET = "pellet";
+	BIO_PUFF_TAG_SHOTPELLETS = "pellets";
 
-	BIO_PROJ_TAG_SLUG = "slugs";
-	BIO_PROJ_TAG_SLUGS = "slugs";
+	BIO_PUFF_TAG_SLUG = "slugs";
+	BIO_PUFF_TAG_SLUGS = "slugs";
 
 	BIO_PROJ_TAG_ROCKET = "rocket";
 	BIO_PROJ_TAG_ROCKETS = "rockets";
@@ -185,10 +185,10 @@
 	BIO_PROJ_TAG_PLASMAGLOBULE = "plasma globule";
 	BIO_PROJ_TAG_PLASMAGLOBULES = "plasma globules";
 
-	BIO_PDMF_ENEMYHEALTHDMG =
+	BIO_HDF_ENEMYHEALTHDMG =
 		"%.1f%% of enemy health added to damage";
 
-	BIO_PDTF_BFGSPRAY =
+	BIO_FTDF_BFGSPRAY =
 		"\c[MidGrey]%s%d \c[MidGrey]rays, %s%d \cu-\c[MidGrey] %s%d damage";
 
 // Mutagens (tags, pickup messages, usage strings) =============================

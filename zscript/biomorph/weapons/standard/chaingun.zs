@@ -2,6 +2,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 {
 	Default
 	{
+		Decal 'BulletChip';
 		Obituary "$OB_MPCHAINGUN";
 		Tag "$TAG_CHAINGUN";
 
@@ -24,7 +25,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
-			.BasicProjectilePipeline('BIO_Bullet', 1, 5, 15, 4.0, 2.0)
+			.BasicBulletPipeline('BIO_Bullet', 1, 5, 15, 4.0, 2.0)
 			.FireSound("weapons/chngun")
 			.Build());
 	}

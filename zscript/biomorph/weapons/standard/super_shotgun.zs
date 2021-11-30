@@ -2,6 +2,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 {
 	Default
 	{
+		Decal 'BulletChip';
 		Obituary "$OB_MPSSHOTGUN";
 		Tag "$TAG_SUPERSHOTGUN";
 
@@ -25,7 +26,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
-			.BasicProjectilePipeline('BIO_ShotPellet', 7, 5, 15, 12.0, 7.5)
+			.BasicBulletPipeline('BIO_ShotPellet', 7, 5, 15, 12.0, 7.5)
 			.AppendToFireFunctorString(" \c[Yellow]" ..
 				StringTable.Localize("$BIO_PER_BARREL"))
 			.FireSound("weapons/sshotf")
