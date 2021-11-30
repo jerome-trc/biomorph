@@ -24,12 +24,8 @@ class BIO_All : Inventory
 		{
 			let t = (Class<Inventory>)(AllActorClasses[i]);
 
-			if (t is 'BIO_Weapon')
+			if (t is 'BIO_Weapon' && !t.IsAbstract())
 			{
-				// Don't attempt to instantiate any abstract classes
-				if (t == 'BIO_Weapon' || t == 'BIO_DualWieldWeapon')
-					continue;
-
 				if (t == 'BIO_Fist') continue;
 				if (bioPlayer.FindInventory(t)) continue;
 
