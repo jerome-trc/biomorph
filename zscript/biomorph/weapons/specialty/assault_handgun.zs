@@ -21,7 +21,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.MagazineSize 18;
 		BIO_Weapon.MagazineType 'BIO_MAG_AssaultHandgun';
-		BIO_Weapon.SwitchSpeeds 9, 9;
+		BIO_Weapon.SwitchSpeeds 18, 18;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

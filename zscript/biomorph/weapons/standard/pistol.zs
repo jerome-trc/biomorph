@@ -21,7 +21,7 @@ class BIO_Pistol : BIO_Weapon replaces Pistol
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 15;
 		BIO_Weapon.MagazineType 'BIO_MAG_Pistol';
-		BIO_Weapon.SwitchSpeeds 8, 8;
+		BIO_Weapon.SwitchSpeeds 14, 14;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
