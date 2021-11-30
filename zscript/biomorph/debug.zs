@@ -31,11 +31,11 @@ class BIO_All : Inventory
 
 				bioPlayer.GiveInventory(t, 1);
 			}
-			else if (t is 'BIO_Mutagen' && t != 'BIO_Mutagen')
+			else if (t is 'BIO_Mutagen' && !t.IsAbstract())
 			{
 				bioPlayer.GiveInventory(t, GetDefaultByType(t).MaxAmount);
 			}
-			else if (t is 'Ammo')
+			else if (t is 'Ammo' && !t.IsAbstract())
 			{
 				let defs = GetDefaultByType(t);
 				if (defs.bIgnoreSkill) continue; // Skip magazines
