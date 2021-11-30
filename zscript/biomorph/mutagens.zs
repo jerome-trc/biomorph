@@ -12,6 +12,7 @@ class BIO_Mutagen : Inventory abstract
 	const DROPWT_CORR = 1;
 
 	meta uint DropWeight; property DropWeight: DropWeight;
+	meta bool WorksOnUniques; property WorksOnUniques: WorksOnUniques;
 
 	Default
     {
@@ -26,10 +27,11 @@ class BIO_Mutagen : Inventory abstract
         Inventory.MaxAmount 9999;
 
 		BIO_Mutagen.DropWeight 0;
+		BIO_Mutagen.WorksOnUniques false;
     }
 
-	// Also prints failure messaging.
-	protected bool CanUse(bool worksOnUniques = false) const
+	// Provides preliminary checks, and prints failure messaging.
+	override bool Use(bool pickup)
 	{
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 		if (weap == null)
@@ -44,7 +46,7 @@ class BIO_Mutagen : Inventory abstract
 			return false;
 		}
 
-		if (!worksOnUniques && weap.Rarity == BIO_RARITY_UNIQUE)
+		if (!WorksOnUniques && weap.Rarity == BIO_RARITY_UNIQUE)
 		{
 			Owner.A_Print("$BIO_MUTA_FAIL_UNIQUE", 4.0);
 			return false;
@@ -72,14 +74,13 @@ class BIO_Mutagen : Inventory abstract
 	}
 }
 
-class BIO_MutagenReset : BIO_Mutagen
+class BIO_Muta_Reset : BIO_Mutagen
 {
 	Default
 	{
 		Tag "$BIO_MUTA_RESET_TAG";
 		Inventory.Icon 'MUREA0';
 		Inventory.PickupMessage "$BIO_MUTA_RESET_PICKUP";
-
 		BIO_Mutagen.DropWeight DROPWT_RESET;
 	}
 
@@ -93,7 +94,7 @@ class BIO_MutagenReset : BIO_Mutagen
 
 	final override bool Use(bool pickup)
 	{
-		if (!CanUse()) return false;
+		if (!super.Use(pickup)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
 		if (weap.Affixes.Size() < 1)
@@ -111,7 +112,7 @@ class BIO_MutagenReset : BIO_Mutagen
 	}
 }
 
-class BIO_MutagenAdd : BIO_Mutagen
+class BIO_Muta_Add : BIO_Mutagen
 {
 	Default
 	{
@@ -131,7 +132,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 
 	final override bool Use(bool pickup)
 	{
-		if (!CanUse()) return false;
+		if (!super.Use(pickup)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
 		if (weap.Affixes.Size() > BIO_Weapon.MAX_AFFIXES)
@@ -155,7 +156,7 @@ class BIO_MutagenAdd : BIO_Mutagen
 	}
 }
 
-class BIO_MutagenRandom : BIO_Mutagen
+class BIO_Muta_Random : BIO_Mutagen
 {
 	Default
 	{
@@ -175,7 +176,7 @@ class BIO_MutagenRandom : BIO_Mutagen
 
 	final override bool Use(bool pickup)
 	{
-		if (!CanUse()) return false;
+		if (!super.Use(pickup)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 		weap.RandomizeAffixes();
 		weap.OnWeaponChange();
@@ -186,7 +187,7 @@ class BIO_MutagenRandom : BIO_Mutagen
 }
 
 // For affixes which are initialized with random values, recompute these values.
-class BIO_MutagenReroll : BIO_Mutagen
+class BIO_Muta_Reroll : BIO_Mutagen
 {
 	Default
 	{
@@ -194,6 +195,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 		Inventory.Icon 'MURRA0';
 		Inventory.PickupMessage "$BIO_MUTA_REROLL_PICKUP";
 		BIO_Mutagen.DropWeight DROPWT_REROLL;
+		BIO_Mutagen.WorksOnUniques true;
 	}
 
 	States
@@ -206,7 +208,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 
 	final override bool Use(bool pickup)
 	{
-		if (!CanUse(true)) return false;
+		if (!super.Use(pickup)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
 		if (weap.NoAffixes())
@@ -232,7 +234,7 @@ class BIO_MutagenReroll : BIO_Mutagen
 }
 
 // Remove one affix at random from a weapon.
-class BIO_MutagenRemove : BIO_Mutagen
+class BIO_Muta_Remove : BIO_Mutagen
 {
 	Default
 	{
@@ -252,7 +254,7 @@ class BIO_MutagenRemove : BIO_Mutagen
 
 	final override bool Use(bool pickup)
 	{
-		if (!CanUse()) return false;
+		if (!super.Use(pickup)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
 		if (weap.Affixes.Size() < 1)
@@ -271,7 +273,7 @@ class BIO_MutagenRemove : BIO_Mutagen
 	}
 }
 
-class BIO_MutagenCorrupting : BIO_Mutagen
+class BIO_Muta_Corrupting : BIO_Mutagen
 {
 	Default
 	{
@@ -279,6 +281,7 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 		Inventory.Icon 'MUCOA0';
 		Inventory.PickupMessage "$BIO_MUTA_CORRUPT_PICKUP";
 		BIO_Mutagen.DropWeight DROPWT_CORR;
+		BIO_Mutagen.WorksOnUniques true;
 	}
 
 	States
@@ -291,7 +294,7 @@ class BIO_MutagenCorrupting : BIO_Mutagen
 
 	final override bool Use(bool pickup)
 	{
-		if (!CanUse(true)) return false;
+		if (!super.Use(pickup)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
 		bool proceed = true, consumed = true;
