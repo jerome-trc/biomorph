@@ -512,6 +512,17 @@ class BIO_RailSpawn : Actor
 
 // Projectile-adjacent actors ==================================================
 
+class BIO_Puff : BulletPuff
+{
+	meta string PluralTag; property PluralTag: PluralTag;
+
+	Default
+	{
+		Tag "$BIO_PROJ_TAG_ROUND";
+		BIO_Puff.PluralTag "$BIO_PROJ_TAG_ROUNDS";
+	}
+}
+
 class BIO_NullPuff : BulletPuff
 {
 	Default

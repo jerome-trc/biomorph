@@ -173,7 +173,8 @@ class BIO_StatusBar : BaseStatusBar
 		if (ammoItem1 != null)
 		{
 			DrawInventoryIcon(ammoItem1, (-14, -4));
-			if (mag1 != ammoItem1)
+
+			if (mag1 != ammoItem1) // Weapon with disparate magazine
 			{
 				DrawString(Font_HUD,
 					String.Format("%s / %s / %s",
@@ -182,7 +183,13 @@ class BIO_StatusBar : BaseStatusBar
 						FormatNumber(ammoItem1.MaxAmount, 3, 6)),
 					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 			}
-			else
+			else if (ammoItem1.bIgnoreSkill) // No reserve ammo; only magazine
+			{
+				DrawString(Font_HUD, String.Format(
+					"%s", FormatNumber(ammoItem1.Amount, 3, 6)),
+					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+			}
+			else // Magazine with reserve ammo
 			{
 				DrawString(Font_HUD,
 					String.Format("%s / %s",
@@ -194,9 +201,10 @@ class BIO_StatusBar : BaseStatusBar
 			invY -= 20;
 		}
 		
-		if (ammoItem2 != null)
+		if (ammoItem2 != null) // Weapon with disparate magazine
 		{
 			DrawInventoryIcon(ammoItem2, (-14, -24));
+
 			if (mag2 != ammoItem2)
 			{
 				DrawString(Font_HUD,
@@ -206,7 +214,13 @@ class BIO_StatusBar : BaseStatusBar
 						FormatNumber(ammoItem2.MaxAmount, 3, 6)),
 					(-30, -36), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 			}
-			else
+			else if (ammoItem2.bIgnoreSkill) // No reserve ammo; only magazine
+			{
+				DrawString(Font_HUD, String.Format(
+					"%s", FormatNumber(ammoItem2.Amount, 3, 6)),
+					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+			}
+			else // Magazine with reserve ammo
 			{
 				DrawString(Font_HUD,
 					String.Format("%s / %s",

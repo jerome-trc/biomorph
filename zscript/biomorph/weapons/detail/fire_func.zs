@@ -61,6 +61,17 @@ class BIO_FireFunctor play abstract
 			default: return StringTable.Localize(defs.PluralTag);
 			}
 		}
+		else if (fireType is 'BIO_Puff')
+		{
+			let defs = GetDefaultByType((Class<BIO_Puff>)(fireType));
+
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
 		else
 			return StringTable.Localize(GetDefaultByType(fireType).GetTag());
 	}
@@ -110,7 +121,7 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
-		weap.A_FireBullets(fireData.HSpread, fireData.VSpread,
+		weap.BIO_FireBullets(fireData.HSpread, fireData.VSpread,
 			NumBullets, fireData.Damage, fireData.FireType, Flags);
 		return null;
 	}
