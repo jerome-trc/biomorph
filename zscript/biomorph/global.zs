@@ -235,11 +235,13 @@ class BIO_GlobalData : Thinker
 		{
 			if (AllClasses[i].GetParentClass() is 'BIO_WeaponAffix')
 			{
+				if (AllClasses[i].IsAbstract()) continue;
 				let wafx = BIO_WeaponAffix(new(AllClasses[i]));
 				ret.WeaponAffixDefaults.Push(wafx);
 			}
 			else if (AllClasses[i].GetParentClass() is 'BIO_EquipmentAffix')
 			{
+				if (AllClasses[i].IsAbstract()) continue;
 				ret.AllEquipmentAffixClasses.Push(AllClasses[i]);
 				let eafx = BIO_EquipmentAffix(new(AllClasses[i]));
 				ret.EquipmentAffixDefaults.Push(eafx);
