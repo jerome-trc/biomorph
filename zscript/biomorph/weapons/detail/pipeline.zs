@@ -596,6 +596,14 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
+	BIO_WeaponPipelineBuilder Projectile(Class<Actor> fireType, int fireCount)
+	{
+		Pipeline.SetFireFunctor(new('BIO_FireFunc_Default'));
+		Pipeline.SetFireType(fireType);
+		Pipeline.SetFireCount(fireCount);
+		return self;
+	}
+
 	BIO_WeaponPipelineBuilder FireFunctor(BIO_FireFunctor func)
 	{
 		Pipeline.SetFireFunctor(func);
@@ -624,6 +632,22 @@ class BIO_WeaponPipelineBuilder play
 	{
 		let dmgFunc = new('BIO_DmgFunc_Default');
 		dmgFunc.CustomSet(minDmg, maxDmg);
+		Pipeline.SetDamageFunctor(dmgFunc);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder X1D3Damage(int baseline)
+	{
+		let dmgFunc = new('BIO_DmgFunc_1DX');
+		dmgFunc.CustomSet(baseline, 3);
+		Pipeline.SetDamageFunctor(dmgFunc);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder X1D8Damage(int baseline)
+	{
+		let dmgFunc = new('BIO_DmgFunc_1Dx');
+		dmgFunc.CustomSet(baseline, 8);
 		Pipeline.SetDamageFunctor(dmgFunc);
 		return self;
 	}
