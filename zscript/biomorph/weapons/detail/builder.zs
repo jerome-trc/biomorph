@@ -20,6 +20,12 @@ class BIO_WeaponPipelineBuilder play
 				"`BasicProjectilePipeline()`. (%s)",
 				fireType.GetClassName(), WeaponType.GetClassName());
 
+		CheckFireFunctorRestricted();
+		CheckFireTypeRestricted();
+		CheckFireCountRestricted();
+		CheckDamageFunctorRestricted();
+		CheckSpreadRestricted();
+
 		Pipeline.SetFireFunctor(new('BIO_FireFunc_Projectile'));
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(fireCount);
@@ -36,6 +42,12 @@ class BIO_WeaponPipelineBuilder play
 		int fireCount, int minDamage, int maxDamage, float hSpread, float vSpread,
 		int accuracyType = BULLET_ALWAYS_SPREAD)
 	{
+		CheckFireFunctorRestricted();
+		CheckFireTypeRestricted();
+		CheckFireCountRestricted();
+		CheckDamageFunctorRestricted();
+		CheckSpreadRestricted();
+
 		let fireFunc = new('BIO_FireFunc_Bullet');
 		fireFunc.AlwaysSpread();
 
@@ -55,6 +67,11 @@ class BIO_WeaponPipelineBuilder play
 		int hitCount = 1, int minDamage = 2, int maxDamage = 20,
 		float range = DEFMELEERANGE)
 	{
+		CheckFireFunctorRestricted();
+		CheckFireTypeRestricted();
+		CheckFireCountRestricted();
+		CheckDamageFunctorRestricted();
+
 		let fireFunc = new('BIO_FireFunc_Fist');
 		Pipeline.SetFireFunctor(fireFunc);
 		fireFunc.Range = range;
@@ -72,6 +89,11 @@ class BIO_WeaponPipelineBuilder play
 		int hitCount = 1, int minDamage = 2, int maxDamage = 20,
 		float range = SAWRANGE)
 	{
+		CheckFireFunctorRestricted();
+		CheckFireTypeRestricted();
+		CheckFireCountRestricted();
+		CheckDamageFunctorRestricted();
+
 		let fireFunc = new('BIO_FireFunc_Chainsaw');
 		Pipeline.SetFireFunctor(fireFunc);
 		fireFunc.Range = range;
@@ -89,6 +111,12 @@ class BIO_WeaponPipelineBuilder play
 		int fireCount = 1, int rayCount = 40, int minDamage = 100, int maxDamage = 800,
 		int minRayDmg = 49, int maxRayDmg = 87, float hSpread = 0.4, float vSpread = 0.4)
 	{
+		CheckFireFunctorRestricted();
+		CheckFireTypeRestricted();
+		CheckFireCountRestricted();
+		CheckDamageFunctorRestricted();
+		CheckSpreadRestricted();
+
 		let fireFunc = new('BIO_FireFunc_Projectile');
 		Pipeline.SetFireFunctor(fireFunc);
 		Pipeline.SetFireType(fireType);
@@ -110,6 +138,10 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder Projectile(Class<Actor> fireType, int fireCount)
 	{
+		CheckFireFunctorRestricted();
+		CheckFireTypeRestricted();
+		CheckFireCountRestricted();
+
 		Pipeline.SetFireFunctor(new('BIO_FireFunc_Projectile'));
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(fireCount);
@@ -120,6 +152,10 @@ class BIO_WeaponPipelineBuilder play
 		int fireCount = 1,
 		int accuracyType = BULLET_ALWAYS_SPREAD)
 	{
+		CheckFireFunctorRestricted();
+		CheckFireTypeRestricted();
+		CheckFireCountRestricted();
+
 		let fireFunc = new('BIO_FireFunc_Bullet');
 
 		Pipeline.SetFireFunctor(fireFunc);
@@ -149,30 +185,35 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder FireFunctor(BIO_FireFunctor func)
 	{
+		CheckFireFunctorRestricted();
 		Pipeline.SetFireFunctor(func);
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder FireType(Class<Actor> fireType)
 	{
+		CheckFireTypeRestricted();
 		Pipeline.SetFireType(fireType);
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder FireCount(int fireCount)
 	{
+		CheckFireCountRestricted();
 		Pipeline.SetFireCount(fireCount);
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder DamageFunctor(BIO_DamageFunctor func)
 	{
+		CheckDamageFunctorRestricted();
 		Pipeline.SetDamageFunctor(func);
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder BasicDamage(int minDmg, int maxDmg)
 	{
+		CheckDamageFunctorRestricted();
 		let dmgFunc = new('BIO_DmgFunc_Default');
 		dmgFunc.CustomSet(minDmg, maxDmg);
 		Pipeline.SetDamageFunctor(dmgFunc);
@@ -181,6 +222,7 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder X1D3Damage(int baseline)
 	{
+		CheckDamageFunctorRestricted();
 		let dmgFunc = new('BIO_DmgFunc_1DX');
 		dmgFunc.CustomSet(baseline, 3);
 		Pipeline.SetDamageFunctor(dmgFunc);
@@ -189,6 +231,7 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder X1D8Damage(int baseline)
 	{
+		CheckDamageFunctorRestricted();
 		let dmgFunc = new('BIO_DmgFunc_1Dx');
 		dmgFunc.CustomSet(baseline, 8);
 		Pipeline.SetDamageFunctor(dmgFunc);
@@ -197,6 +240,7 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder SingleDamage(int dmg)
 	{
+		CheckDamageFunctorRestricted();
 		let dmgFunc = new('BIO_DmgFunc_Single');
 		dmgFunc.CustomSet(dmg);
 		Pipeline.SetDamageFunctor(dmgFunc);
@@ -205,6 +249,7 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder Spread(float horiz, float vert)
 	{
+		CheckSpreadRestricted();
 		Pipeline.SetSpread(horiz, vert);
 		return self;
 	}
@@ -217,6 +262,7 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder Splash(int damage, int radius)
 	{
+		CheckSplashRestricted();
 		Pipeline.SetSplash(damage, radius);
 		return self;
 	}
@@ -275,5 +321,68 @@ class BIO_WeaponPipelineBuilder play
 	BIO_WeaponPipeline Build() const
 	{
 		return Pipeline;
+	}
+
+	// Sanity checks and warnings ==============================================
+
+	private void CheckFireFunctorRestricted() const
+	{
+		if (Pipeline.HasRestriction(BIO_WPM_FIREFUNCTOR))
+		{
+			Console.Printf(Biomorph.LOGPFX_WARN ..
+				"Failed to modify fire functor of `%s` due to a restriction.",
+				WeaponType.GetClassName());
+		}
+	}
+
+	private void CheckFireTypeRestricted() const
+	{
+		if (Pipeline.HasRestriction(BIO_WPM_FIRETYPE))
+		{
+			Console.Printf(Biomorph.LOGPFX_WARN ..
+				"Failed to modify fire type of `%s` due to a restriction.",
+				WeaponType.GetClassName());
+		}
+	}
+
+	private void CheckFireCountRestricted() const
+	{
+		if (Pipeline.HasRestriction(BIO_WPM_FIRECOUNT))
+		{
+			Console.Printf(Biomorph.LOGPFX_WARN ..
+				"Failed to modify fire count of `%s` due to a restriction.",
+				WeaponType.GetClassName());
+		}
+	}
+
+	private void CheckDamageFunctorRestricted() const
+	{
+		if (Pipeline.HasRestriction(BIO_WPM_DAMAGEFUNCTOR))
+		{
+			Console.Printf(Biomorph.LOGPFX_WARN ..
+				"Failed to modify damage functor of `%s` due to a restriction.",
+				WeaponType.GetClassName());
+		}
+	}
+
+	private void CheckSpreadRestricted() const
+	{
+		if (Pipeline.HasRestriction(BIO_WPM_HSPREAD) ||
+			Pipeline.HasRestriction(BIO_WPM_VSPREAD))
+		{
+			Console.Printf(Biomorph.LOGPFX_WARN ..
+				"Failed to modify spread of `%s` due to a restriction.",
+				WeaponType.GetClassName());
+		}
+	}
+
+	private void CheckSplashRestricted() const
+	{
+		if (Pipeline.HasRestriction(BIO_WPM_SPLASH))
+		{
+			Console.Printf(Biomorph.LOGPFX_WARN ..
+				"Failed to modify splash data of `%s` due to a restriction.",
+				WeaponType.GetClassName());
+		}
 	}
 }

@@ -1064,7 +1064,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Utility =================================================================
 
-	protected void ApplyLifeSteal(float percent, int dmg) const
+	void ApplyLifeSteal(float percent, int dmg) const
 	{
 		let lsp = Min(percent, 1.0);
 		let given = int(float(dmg) * lsp);
