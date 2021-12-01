@@ -3,6 +3,8 @@ class BIO_StateTimeGroup
 	string Tag;
 	Array<int> Times, Minimums;
 
+	// Used for checking if fire/reload time affixes are compatible,
+	// and the allowances on the reductions they impart.
 	int PossibleReduction() const
 	{
 		int ret = 0;
@@ -70,6 +72,9 @@ class BIO_StateTimeGroup
 		}
 	}
 
+	// Add the tic times from all states in a contiguous sequence from `basis`
+	// to this group. Beware that this will skip labels, and treats
+	// `Goto MyState; MyState:` as contiguous. `tag` should be a string ID.
 	static BIO_StateTimeGroup FromState(
 		state basis, string tag = "")
 	{
@@ -79,6 +84,7 @@ class BIO_StateTimeGroup
 		return ret;
 	}
 
+	// `tag` should be a string ID.
 	static BIO_StateTimeGroup FromStates(
 		Array<state> basisArr, string tag = "")
 	{
@@ -91,6 +97,8 @@ class BIO_StateTimeGroup
 		return ret;
 	}
 
+	// Does the same thing as `FromState()`, but stops adding times 
+	// upon arriving at `to`. `tag` should be a string ID.
 	static BIO_StateTimeGroup FromStateRange(
 		state from, state to, string tag = "")
 	{
@@ -123,13 +131,15 @@ class BIO_Weapon : DoomWeapon abstract
 	property MagazineSize2: MagazineSize2;
 	property MagazineSizes: MagazineSize1, MagazineSize2;
 
-	// Reloading 1 round costs ReloadFactor rounds in reserve.
+	// Reloading 1 round costs `ReloadFactor` rounds in reserve.
 	int ReloadFactor1, ReloadFactor2;
 	property ReloadFactor: ReloadFactor1;
 	property ReloadFactor1: ReloadFactor1;
 	property ReloadFactor2: ReloadFactor2;
 	property ReloadFactors: ReloadFactor1, ReloadFactor2;
 
+	// Reloading is only possible if `MinAmmoReserve * ReloadFactor` rounds
+	// are held in reserve. Has no effect on magazineless weapons.
 	int MinAmmoReserve1, MinAmmoReserve2;
 	property MinAmmoReserve: MinAmmoReserve1;
 	property MinAmmoReserve1: MinAmmoReserve1;
@@ -141,7 +151,7 @@ class BIO_Weapon : DoomWeapon abstract
 	private uint LastPipeline;
 	Array<BIO_WeaponPipeline> Pipelines;
 	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
-	Dictionary Userdata;
+	Dictionary Userdata; // Your derived weapon must instantiate this itself.
 
 	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
 	Array<string> StatReadout, AffixReadout;
@@ -230,6 +240,7 @@ class BIO_Weapon : DoomWeapon abstract
 		super.BeginPlay();
 		SetTag(GetColoredTag());
 
+		// So that pre-placed weapons don't make a cacophony at level start
 		if (Abs(Vel.Z) <= 0.01)
 		{
 			bSpecial = true;
@@ -402,6 +413,7 @@ class BIO_Weapon : DoomWeapon abstract
 	abstract void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const;
 	virtual void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const {}
 
+	// Each is called once before starting its respective loop.
 	virtual void OnDeselect() {}
 	virtual void OnSelect() {}
 
@@ -416,6 +428,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Actions =================================================================
 
+	// `fireFactor` multiplies fired count and ammo usage.
 	protected action bool A_BIO_Fire(uint pipeline = 0, int fireFactor = 1,
 		float spreadFactor = 1.0)
 	{
@@ -470,6 +483,7 @@ class BIO_Weapon : DoomWeapon abstract
 		reserveAmmo.Amount -= subtract;
 	}
 
+	// To be placed at the very start of `Fire` and `AltFire`.
 	protected action state A_AutoReload(bool secondary = false,
 		bool single = false, int min = -1)
 	{
@@ -492,6 +506,8 @@ class BIO_Weapon : DoomWeapon abstract
 			return ResolveState('Ready');
 	}
 
+	// Clear the magazine and return rounds in it to the reserve, with
+	// consideration given to the relevant reload factor.
 	protected action void A_EmptyMagazine(bool secondary = false)
 	{
 		Ammo magItem = null, reserveAmmo = null;
@@ -578,6 +594,7 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_RecoilThinker.Create(recoil_t, BIO_Weapon(invoker), scale, invert);
 	}
 
+	// Shunt the wielder in a direction.
 	protected action void A_Pushback(float xVelMult, float zVelMult)
 	{
 		// Don't apply any if the wielding player isn't on the ground
@@ -956,6 +973,7 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
+	// Recomputes rarity, recolors the tag, and rewrites readouts.
 	void OnWeaponChange()
 	{
 		Array<BIO_WeaponPipeline> pplDefs;
@@ -1046,7 +1064,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Utility =================================================================
 
-	void ApplyLifeSteal(float percent, int dmg) const
+	protected void ApplyLifeSteal(float percent, int dmg) const
 	{
 		let lsp = Min(percent, 1.0);
 		let given = int(float(dmg) * lsp);
@@ -1061,6 +1079,7 @@ class BIO_Weapon : DoomWeapon abstract
 			Affixes[i].OnKill(self, killed, inflictor);
 	}
 
+	// Shortcut for `BIO_StateTimeGroup::FromState()`.
 	protected BIO_StateTimeGroup StateTimeGroupFrom(
 		statelabel lbl, string tag = "") const
 	{
@@ -1075,6 +1094,7 @@ class BIO_Weapon : DoomWeapon abstract
 		return BIO_StateTimeGroup.FromState(s, tag);
 	}
 
+	// Shortcut for `BIO_StateTimeGroup::FromRange()`.
 	protected BIO_StateTimeGroup StateTimeGroupFromRange(
 		statelabel from, statelabel to, string tag = "") const
 	{
@@ -1097,6 +1117,7 @@ class BIO_Weapon : DoomWeapon abstract
 		return BIO_StateTimeGroup.FromStateRange(f, t, tag);
 	}
 
+	// Shortcut for `BIO_StateTimeGroup::FromArray()`.
 	protected BIO_StateTimeGroup StateTimeGroupFromArray(
 		in out Array<statelabel> labels, string tag = "") const
 	{

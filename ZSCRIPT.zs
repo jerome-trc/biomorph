@@ -69,6 +69,7 @@ const CRESC_STATWORSE = "\c[Red]";
 
 #include "zscript/biomorph/weapons/detail/base_dw.zs"
 #include "zscript/biomorph/weapons/detail/base.zs"
+#include "zscript/biomorph/weapons/detail/builder.zs"
 #include "zscript/biomorph/weapons/detail/constants.zs"
 #include "zscript/biomorph/weapons/detail/damage_func.zs"
 #include "zscript/biomorph/weapons/detail/fire_func.zs"
