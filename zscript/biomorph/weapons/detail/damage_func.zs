@@ -63,6 +63,8 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 	}
 }
 
+// For imitating the vanilla behaviour of multiplying puff  
+// damage by 1D3, or of multiplying projectile damage by 1D8.
 class BIO_DmgFunc_1DX : BIO_DamageFunctor
 {
 	protected int Baseline, MaxFactor;
