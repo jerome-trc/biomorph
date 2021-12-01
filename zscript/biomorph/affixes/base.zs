@@ -18,10 +18,13 @@ enum BIO_WeaponAffixFlags : uint16
 	BIO_WAF_DAMAGE = 1 << 3,
 	BIO_WAF_ACCURACY = 1 << 4,
 	BIO_WAF_ONPROJFIRED = 1 << 5,
-	BIO_WAF_FIRETIME = 1 << 6,
-	BIO_WAF_RELOADTIME = 1 << 7,
-	BIO_WAF_MAGSIZE = 1 << 8,
-	BIO_WAF_ALERT = 1 << 9,
+	BIO_WAF_PROJSPEED = 1 << 6,
+	BIO_WAF_PROJACCEL = 1 << 7,
+	BIO_WAF_FIRETIME = 1 << 8,
+	BIO_WAF_RELOADTIME = 1 << 9,
+	BIO_WAF_MAGSIZE = 1 << 10,
+	BIO_WAF_MAGAZINE = 1 << 11, // Adds or removes rounds
+	BIO_WAF_ALERT = 1 << 12,
 	BIO_WAF_ALL = uint16.MAX
 }
 
@@ -32,9 +35,11 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	virtual void CustomInit(BIO_Weapon weap, Dictionary dict)
 	{
 		Console.Printf(Biomorph.LOGPFX_INFO ..
-			"This weapon has no custom initialiser.");
+			"Weapon affix %s has no custom initialiser.", GetClassName());
 	}
 	virtual void Apply(BIO_Weapon weap) const {}
+
+	virtual void OnTick(BIO_Weapon weap) {}
 
 	virtual void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const {}
 

@@ -135,7 +135,7 @@ class BIO_Muta_Add : BIO_Mutagen
 		if (!super.Use(pickup)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 
-		if (weap.Affixes.Size() > BIO_Weapon.MAX_AFFIXES)
+		if (weap.FullOnAffixes())
 		{
 			Owner.A_Print("$BIO_MUTA_FAIL_MAXAFFIXES", 4.0);
 			return false;

@@ -76,17 +76,36 @@ class BIO_GlobalData : Thinker
 	{
 		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
 		{
-			if (WeaponAffixDefaults[i].GetClass() == afx_t)
-				return WeaponAffixDefaults[i].Compatible(weap);
+			if (WeaponAffixDefaults[i].GetClass() != afx_t) continue;
+			if (weap.HasAffixOfType(WeaponAffixDefaults[i].GetClass())) continue;
+			return WeaponAffixDefaults[i].Compatible(weap);
 		}
 
 		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"Illegal type passed to WeaponAffixCompatible: %s", afx_t.GetClassName());
+			"Illegal type passed to `WeaponAffixCompatible()`: %s",
+			afx_t.GetClassName());
+		return false;
+	}
+
+	bool WeaponAffixEligible(Class<BIO_WeaponAffix> afx_t, BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
+		{
+			if (WeaponAffixDefaults[i].GetClass() != afx_t) continue;
+			if (!WeaponAffixDefaults[i].CanGenerate()) continue;
+			if (weap.HasAffixOfType(WeaponAffixDefaults[i].GetClass())) continue;
+			return WeaponAffixDefaults[i].Compatible(weap);
+		}
+
+		Console.Printf(Biomorph.LOGPFX_ERR ..
+			"Illegal type passed to `WeaponAffixEligible()`: %s",
+			afx_t.GetClassName());
 		return false;
 	}
 
 	// Returns `false` if no affixes are compatible.
-	bool AllEligibleWeaponAffixes(in out Array<BIO_WeaponAffix> eligibles, BIO_Weapon weap) const
+	bool AllEligibleWeaponAffixes(
+		in out Array<BIO_WeaponAffix> eligibles, BIO_Weapon weap) const
 	{
 		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
 		{
@@ -100,7 +119,26 @@ class BIO_GlobalData : Thinker
 		return eligibles.Size() > 0;
 	}
 
-	bool AllEligibleEquipmentAffixes(Array<BIO_EquipmentAffix> eligibles, BIO_Equipment equip) const
+	// Returns `false` if no affixes are compatible.
+	bool EligibleWeaponAffixesByFlag(in out Array<BIO_WeaponAffix> eligibles,
+		BIO_Weapon weap, BIO_WeaponAffixFlags flag) const
+	{
+		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
+		{
+			if (!WeaponAffixDefaults[i].CanGenerate()) continue;
+			if (!WeaponAffixDefaults[i].Compatible(weap)) continue;
+			if (!(WeaponAffixDefaults[i].GetFlags() & flag)) continue;
+			let wafx_t = WeaponAffixDefaults[i].GetClass();
+			if (weap.HasAffixOfType(wafx_t)) continue;
+			eligibles.Push(BIO_WeaponAffix(new(wafx_t)));
+		}
+
+		return eligibles.Size() > 0;
+	}
+
+	// Returns `false` if no affixes are compatible.
+	bool AllEligibleEquipmentAffixes(
+		Array<BIO_EquipmentAffix> eligibles, BIO_Equipment equip) const
 	{
 		for (uint i = 0; i < AllEquipmentAffixClasses.Size(); i++)
 		{
