@@ -21,7 +21,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
-		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_Bullet', 1, 25, 75, 0.6, 0.6)
 			.FireSound("bio/weap/hbr/fire")
 			.Build());

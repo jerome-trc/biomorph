@@ -27,7 +27,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
-		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BFGPipeline()
 			.FireSound("weapons/bfgf")
 			.Build());

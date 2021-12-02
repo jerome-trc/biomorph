@@ -22,7 +22,7 @@ class BIO_Megaton : BIO_IncursionShotgun
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
-		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_ShotPellet', 9, 8, 18, 3.8, 1.9)
 			.FireSound("bio/weap/incursion/fire")
 			.CustomReadout(StringTable.Localize(

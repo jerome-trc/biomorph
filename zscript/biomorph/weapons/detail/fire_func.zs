@@ -102,7 +102,7 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 		Class<Actor> ft = ppl.GetFireType();
 
 		readout.Push(String.Format(
-			StringTable.Localize("$BIO_WEAP_FireFunc_Projectile"),
+			StringTable.Localize("$BIO_WEAP_FIREFUNC_PROJECTILE"),
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			FireTypeTag(ft, fc)));

@@ -802,18 +802,23 @@ class BIO_Weapon : DoomWeapon abstract
 		return false;
 	}
 
+	readOnly<BIO_Weapon> AsConst() const { return self; }
+
 	// Modifying ===============================================================
 
-	private void Init()
+	protected void Init()
 	{
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
 		InitImplicitAffixes(ImplicitAffixes);
 
-		// Inform pipelines of their indices
+		Array<BIO_WeaponPipeline> pplDefs;
+		InitPipelines(pplDefs);
+
+		// Inform pipelines of their defaults
 		for (uint i = 0; i < Pipelines.Size(); i++)
-			Pipelines[i].Index = i;
+			Pipelines[i].Defaults = pplDefs[i].AsConst();
 
 		OnWeaponChange();
 	}
@@ -853,9 +858,12 @@ class BIO_Weapon : DoomWeapon abstract
 		MinAmmoReserve1 = Default.MinAmmoReserve1;
 		MinAmmoReserve2 = Default.MinAmmoReserve2;
 
-		// Inform pipelines of their indices
+		Array<BIO_WeaponPipeline> pplDefs;
+		InitPipelines(pplDefs);
+
+		// Inform pipelines of their defaults
 		for (uint i = 0; i < Pipelines.Size(); i++)
-			Pipelines[i].Index = i;
+			Pipelines[i].Defaults = pplDefs[i].AsConst();
 	}
 
 	void ApplyImplicitAffixes()
@@ -984,12 +992,10 @@ class BIO_Weapon : DoomWeapon abstract
 	// Recomputes rarity, recolors the tag, and rewrites readouts.
 	void OnWeaponChange()
 	{
-		Array<BIO_WeaponPipeline> pplDefs;
 		Array<BIO_StateTimeGroup> fireTimeDefs, reloadTimeDefs;
 
-		self.Default.InitPipelines(pplDefs);
-		self.Default.InitFireTimes(fireTimeDefs);
-		self.Default.InitReloadTimes(reloadTimeDefs);
+		InitFireTimes(fireTimeDefs);
+		InitReloadTimes(reloadTimeDefs);
 
 		if (Default.Rarity == BIO_RARITY_UNIQUE)
 			Rarity = BIO_RARITY_UNIQUE;
@@ -1005,7 +1011,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 		for (uint i = 0; i < Pipelines.Size(); i++)
 		{
-			Pipelines[i].ToString(StatReadout, Pipelines.Size() == 1);
+			Pipelines[i].ToString(StatReadout, i, Pipelines.Size() == 1);
 			StatReadout.Push("");
 		}
 
@@ -1086,6 +1092,8 @@ class BIO_Weapon : DoomWeapon abstract
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].OnKill(self, killed, inflictor);
 	}
+
+	// Weapon-making helpers ===================================================
 
 	// Shortcut for `BIO_StateTimeGroup::FromState()`.
 	protected BIO_StateTimeGroup StateTimeGroupFrom(

@@ -22,7 +22,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
-		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicProjectilePipeline('BIO_PlasmaBall', 1, 5, 40, 0.4, 0.4)
 			.Build());
 	}

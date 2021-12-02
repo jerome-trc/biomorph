@@ -39,8 +39,8 @@ class BIO_WeaponPipeline play
 		TOSTREX_COUNT
 	}
 
-	readOnly<BIO_Weapon> WeapDefault;
-	uint Index;
+	readOnly<BIO_WeaponPipeline> Defaults;
+
 	private BIO_WeaponPipelineMask Mask;
 
 	private bool SecondaryAmmo;
@@ -167,15 +167,7 @@ class BIO_WeaponPipeline play
 
 	bool FireTypeIsDefault() const
 	{
-		readOnly<BIO_WeaponPipeline> defs;
-
-		{
-			Array<BIO_WeaponPipeline> ppls;
-			WeapDefault.InitPipelines(ppls);
-			defs = ppls[Index].AsConst();
-		}
-
-		return FireType == defs.FireType;
+		return FireType == Defaults.FireType;
 	}
 	
 	/*	Checks that the fire type hasn't already been changed, isn't masked 
@@ -432,7 +424,7 @@ class BIO_WeaponPipeline play
 	void SetRestrictions(BIO_WeaponPipelineMask msk) { Mask = msk; }
 	void AddRestriction(BIO_WeaponPipelineMask msk) { Mask |= msk; }
 
-	void ToString(in out Array<string> readout, bool alone) const
+	void ToString(in out Array<string> readout, uint index, bool alone) const
 	{
 		// If this is the weapon's only pipeline, the header is unnecessary
 		// Otherwise tell the user which fire mode this is
@@ -440,7 +432,7 @@ class BIO_WeaponPipeline play
 		{
 			string header = "";
 			
-			switch (Index)
+			switch (index)
 			{
 			case 0:
 				header = StringTable.Localize("$BIO_WEAP_STAT_HEADER_0");
@@ -456,32 +448,24 @@ class BIO_WeaponPipeline play
 				break;
 			default:
 				header = String.Format(
-					StringTable.Localize("$BIO_WEAP_STAT_HEADER_DEFAULT"), Index);
+					StringTable.Localize("$BIO_WEAP_STAT_HEADER_DEFAULT"), index);
 				break;
 			}
 
 			readout.Push(header);
 		}
 
-		readOnly<BIO_WeaponPipeline> defs;
-
-		{
-			Array<BIO_WeaponPipeline> ppls;
-			WeapDefault.InitPipelines(ppls);
-			defs = ppls[Index].AsConst();
-		}
-
-		FireFunctor.ToString(readout, AsConst(), defs);
+		FireFunctor.ToString(readout, AsConst(), Defaults);
 		readout[readout.Size() - 1].AppendFormat(ToStringAppends[TOSTREX_FIREFUNC]);
-		readout.Push(Damage.ToString(defs.Damage));
+		readout.Push(Damage.ToString(Defaults.Damage));
 
 		if (SplashDamage > 0)
 		{
 			readout.Push(String.Format(
 				StringTable.Localize("$BIO_WEAP_STAT_SPLASH"),
-				BIO_Utils.StatFontColor(SplashDamage, defs.SplashDamage),
+				BIO_Utils.StatFontColor(SplashDamage, Defaults.SplashDamage),
 				SplashDamage,
-				BIO_Utils.StatFontColor(SplashRadius, defs.SplashRadius),
+				BIO_Utils.StatFontColor(SplashRadius, Defaults.SplashRadius),
 				SplashRadius));
 		}
 
@@ -497,7 +481,7 @@ class BIO_WeaponPipeline play
 		if (HSpread > 0.5)
 		{
 			string fontColor = BIO_Utils.StatFontColorF(
-				HSpread, defs.HSpread, invert: true);
+				HSpread, Defaults.HSpread, invert: true);
 
 			string hSpreadStr = String.Format(
 				StringTable.Localize("$BIO_WEAP_STAT_HSPREAD"),
@@ -509,7 +493,7 @@ class BIO_WeaponPipeline play
 		if (VSpread > 0.5)
 		{
 			string fontColor = BIO_Utils.StatFontColorF(
-				VSpread, defs.VSpread, invert: true);
+				VSpread, Defaults.VSpread, invert: true);
 
 			string vSpreadStr = String.Format(
 				StringTable.Localize("$BIO_WEAP_STAT_VSPREAD"),
@@ -522,11 +506,9 @@ class BIO_WeaponPipeline play
 			readout.Push(ReadoutExtra[i]);
 	}
 
-	static BIO_WeaponPipeline Create(Class<BIO_Weapon> weap_t)
+	static BIO_WeaponPipeline Create()
 	{
 		let ret = new('BIO_WeaponPipeline');
-		ret.WeapDefault = GetDefaultByType(weap_t);
-		ret.FireCount = 1;
 		return ret;
 	}
 

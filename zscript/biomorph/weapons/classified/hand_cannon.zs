@@ -25,7 +25,7 @@ class BIO_HandCannon : BIO_Weapon
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
-		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_Bullet', 1, 50, 70, 1.0, 1.0)
 			.FireSound("bio/weap/handcannon/fire")
 			.Build());

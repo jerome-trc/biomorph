@@ -23,7 +23,7 @@ class BIO_PrecisionRifle : BIO_Weapon
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
-		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_Bullet', 1, 55, 75, 0.6, 0.6)
 			.FireSound("bio/weap/precrifle/fire")
 			.Build());
