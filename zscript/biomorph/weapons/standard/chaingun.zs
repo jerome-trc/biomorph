@@ -24,7 +24,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
-		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_Bullet', 1, 5, 15, 4.0, 2.0)
 			.FireSound("weapons/chngun")
 			.Build());

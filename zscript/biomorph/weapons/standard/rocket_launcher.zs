@@ -25,7 +25,7 @@ class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
-		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicProjectilePipeline('BIO_Rocket', 1, 20, 160, 0.4, 0.4)
 			.Splash(128, 128)
 			.Build());

@@ -23,7 +23,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
-		pipelines.Push(BIO_WeaponPipelineBuilder.Create(GetClass())
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.SawPipeline('BIO_MeleeHit', 1, 2, 20)
 			.Build());
 	}

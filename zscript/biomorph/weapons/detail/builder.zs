@@ -3,11 +3,10 @@ class BIO_WeaponPipelineBuilder play
 	private Class<BIO_Weapon> WeaponType;
 	private BIO_WeaponPipeline Pipeline;
 
-	static BIO_WeaponPipelineBuilder Create(Class<BIO_Weapon> weap_t)
+	static BIO_WeaponPipelineBuilder Create()
 	{
 		let ret = new('BIO_WeaponPipelineBuilder');
-		ret.WeaponType = weap_t;
-		ret.Pipeline = BIO_WeaponPipeline.Create(weap_t);
+		ret.Pipeline = BIO_WeaponPipeline.Create();
 		return ret;
 	}
 
