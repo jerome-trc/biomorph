@@ -158,7 +158,7 @@
 	BIO_PUFF_TAG_SHOTPELLET = "pellet";
 	BIO_PUFF_TAG_SHOTPELLETS = "pellets";
 
-	BIO_PUFF_TAG_SLUG = "slugs";
+	BIO_PUFF_TAG_SLUG = "slug";
 	BIO_PUFF_TAG_SLUGS = "slugs";
 
 	BIO_PROJ_TAG_ROCKET = "rocket";
