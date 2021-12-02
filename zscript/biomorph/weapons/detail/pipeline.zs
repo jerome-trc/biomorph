@@ -455,9 +455,14 @@ class BIO_WeaponPipeline play
 			readout.Push(header);
 		}
 
-		FireFunctor.ToString(readout, AsConst(), Defaults);
-		readout[readout.Size() - 1].AppendFormat(ToStringAppends[TOSTREX_FIREFUNC]);
-		readout.Push(Damage.ToString(Defaults.Damage));
+		if (FireFunctor != null)
+		{
+			FireFunctor.ToString(readout, AsConst(), Defaults);
+			readout[readout.Size() - 1].AppendFormat(ToStringAppends[TOSTREX_FIREFUNC]);
+		}
+
+		if (Damage != null)
+			readout.Push(Damage.ToString(Defaults.Damage));
 
 		if (SplashDamage > 0)
 		{
