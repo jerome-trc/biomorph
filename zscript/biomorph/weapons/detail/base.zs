@@ -408,7 +408,17 @@ class BIO_Weapon : DoomWeapon abstract
 
 	final override string GetObituary(Actor victim, Actor inflictor, name mod, bool playerAtk)
 	{
-		return Pipelines[LastPipeline].GetObituary();
+		string ret = "";
+		
+		if (Pipelines.Size() > LastPipeline)
+			ret = Pipelines[LastPipeline].GetObituary();
+		
+		// Pipeline has no obituary; fall back to the weapon's
+		if (ret.Length() < 1) ret = Obituary;
+		// Weapon has no obituary; fall back to something generic
+		if (ret.Length() < 1) ret = "$BIO_OB_GENERIC"; 
+
+		return ret;
 	}
 
 	override void Tick()
