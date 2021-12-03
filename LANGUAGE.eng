@@ -83,6 +83,8 @@
 	BIO_WEAP_STAT_NAILSHRAPNEL =
 		"\cjNails break into two shards of shrapnel";
 
+	BIO_OB_GENERIC = "%k killed %o.";
+
 	BIO_WEAP_TAG_FIST = "Fist";
 
 	BIO_WEAP_PKUP_BFG90000 = "Grabbed a %s.";
