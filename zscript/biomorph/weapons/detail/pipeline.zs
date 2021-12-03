@@ -483,7 +483,7 @@ class BIO_WeaponPipeline play
 
 		// Don't report spread unless it's non-trivial (weapons with 
 		// true projectiles are likely to have little to no spread)
-		if (HSpread > 0.5)
+		if (HSpread > 0.48)
 		{
 			string fontColor = BIO_Utils.StatFontColorF(
 				HSpread, Defaults.HSpread, invert: true);
@@ -495,7 +495,7 @@ class BIO_WeaponPipeline play
 			readout.Push(hSpreadStr);
 		}
 
-		if (VSpread > 0.5)
+		if (VSpread > 0.48)
 		{
 			string fontColor = BIO_Utils.StatFontColorF(
 				VSpread, Defaults.VSpread, invert: true);
