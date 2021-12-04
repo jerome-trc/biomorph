@@ -1,3 +1,4 @@
+// Acts as a more specialised alternative to `give all`.
 class BIO_All : Inventory
 {
 	Default
@@ -45,5 +46,52 @@ class BIO_All : Inventory
 
 		bioPlayer.MaxWeaponsHeld = mwh;
 		return true;
+	}
+}
+
+// For stress-testing the memory footprint of weapon data structures.
+class BIO_WeaponFountain : Actor
+{
+	private Array<Class<BIO_Weapon> > WeaponTypes;
+
+	Default
+	{
+		-SOLID
+		+DONTGIB
+		+NEVERRESPAWN
+		+NOBLOOD
+		+NOTELEPORT
+		+SHOOTABLE
+	
+		Health 10;
+		Scale 0.75;
+		Tag "Weapon Fountain!";
+	}
+
+	States
+	{
+	Spawn:
+		SUPB A 2
+		{
+			Actor weap = null; bool spawned = false;
+			[spawned, weap] = A_SpawnItemEx(
+				WeaponTypes[Random(0, WeaponTypes.Size() - 1)],
+				xVel: FRandom(-3.0, 3.0), FRandom(-3.0, 3.0), FRandom(18.0, 24.0),
+				FRandom(0.0, 360.0), SXF_NOCHECKPOSITION);
+			if (spawned) BIO_Weapon(weap).RandomizeAffixes();
+		}
+		Loop;
+	}
+
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+
+		for (uint i = 0; i < AllActorClasses.Size(); i++)
+		{
+			Class<Actor> t = (Class<BIO_Weapon>)(AllActorClasses[i]);
+			if (t != null && !t.IsAbstract())
+				WeaponTypes.Push(t);
+		}
 	}
 }
