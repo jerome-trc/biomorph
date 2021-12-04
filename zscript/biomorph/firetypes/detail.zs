@@ -82,7 +82,7 @@ class BIO_Projectile : Actor abstract
 			return super.SpecialMissileHit(victim);
 	}
 
-	// Don't multiply damage by Random(1, 8).
+	// Don't multiply damage by `Random(1, 8)`.
 	final override int DoSpecialDamage(Actor target, int dmg, name dmgType)
 	{
 		int ret = Damage;
@@ -104,7 +104,7 @@ class BIO_Projectile : Actor abstract
 		if (invoker.Seek) A_SeekerMissile(4.0, 4.0, SMF_LOOK);
 	}
 
-	// Invoked before A_ProjectileDeath() does anything else.
+	// Invoked before `A_ProjectileDeath()` does anything else.
 	// Note that you never need to call `super.OnProjectileDeath()`.
 	virtual void OnProjectileDeath() {}
 

@@ -43,6 +43,8 @@ Classified Armour sprites are courtesy of id Software LLC, and edited by Realm66
 
 Weapon Upgrade Kit sprites are courtesy of Rogue Entertainment, and edited by Realm667 user Dreadopp.
 
+The Supply Box sprite is courtesy of id Software LLC, and edited by Realm667 user Dreadopp. 
+
 Any graphical asset which is not mentioned here is custom-made by RatCircus.
 
 ## Audio
