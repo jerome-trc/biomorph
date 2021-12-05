@@ -60,11 +60,11 @@ class BIO_Projectile : Actor abstract
 	{
 		Projectile;
 
-		Tag "$BIO_FIRETYPE_TAG_ROUND";
+		Tag "$BIO_ROUND_TAG";
 		
 		BIO_Projectile.MetaFlags BIO_FTMF_NONE;
 		BIO_Projectile.Acceleration 1.0;
-		BIO_Projectile.PluralTag "$BIO_FIRETYPE_TAG_ROUNDS";
+		BIO_Projectile.PluralTag "$BIO_ROUND_TAGS";
 		BIO_Projectile.Splash 0, 0;
 		BIO_Projectile.Shrapnel 0;
 		BIO_Projectile.Seek false;
@@ -137,10 +137,10 @@ class BIO_FastProjectile : FastProjectile abstract
 
 	Default
 	{
-		Tag "$BIO_FIRETYPE_TAG_ROUND";
+		Tag "$BIO_ROUND_TAG";
 
 		BIO_FastProjectile.MetaFlags BIO_FTMF_NONE;
-		BIO_FastProjectile.PluralTag "$BIO_FIRETYPE_TAG_ROUNDS";
+		BIO_FastProjectile.PluralTag "$BIO_ROUND_TAGS";
 		BIO_FastProjectile.Splash 0, 0;
 		BIO_FastProjectile.Shrapnel 0;
 	}
@@ -193,8 +193,8 @@ class BIO_Puff : BulletPuff abstract
 		+THRUSPECIES
 		+THRUGHOST
 
-		Tag "$BIO_FIRETYPE_TAG_ROUND";
-		BIO_Puff.PluralTag "$BIO_FIRETYPE_TAG_ROUNDS";
+		Tag "$BIO_ROUND_TAG";
+		BIO_Puff.PluralTag "$BIO_ROUND_TAGS";
 		BIO_Puff.MetaFlags BIO_FTMF_NONE;
 	}
 

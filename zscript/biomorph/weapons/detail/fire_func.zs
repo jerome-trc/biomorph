@@ -102,7 +102,7 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 		Class<Actor> ft = ppl.GetFireType();
 
 		readout.Push(String.Format(
-			StringTable.Localize("$BIO_WEAP_FIREFUNC_PROJECTILE"),
+			StringTable.Localize("$BIO_FIREFUNC_PROJECTILE"),
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			FireTypeTag(ft, fc)));
@@ -142,7 +142,7 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 		Class<Actor> ft = ppl.GetFireType();
 
 		readout.Push(String.Format(
-			StringTable.Localize("$BIO_WEAP_FireFunc_Projectile"),
+			StringTable.Localize("$BIO_FIREFUNC_Projectile"),
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			FireTypeTag(ft, fc)));
@@ -214,7 +214,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		if (puff_t != null && spawnClass != null)
 		{
 			output = String.Format(
-				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL"),
+				StringTable.Localize("$BIO_FIREFUNC_RAIL"),
 				BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 				defaultPuff ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
 				FireTypeTag(puff_t, fc),
@@ -224,7 +224,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		else if (puff_t == null)
 		{
 			output = String.Format(
-				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOPUFF"),
+				StringTable.Localize("$BIO_FIREFUNC_RAIL_NOPUFF"),
 				BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 				defaultSpawn ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
 				FireTypeTag(spawnClass, fc));
@@ -232,7 +232,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		else if (spawnClass == null)
 		{
 			output = String.Format(
-				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOSPAWN"),
+				StringTable.Localize("$BIO_FIREFUNC_RAIL_NOSPAWN"),
 				BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 				defaultPuff ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
 				FireTypeTag(puff_t, fc));
@@ -240,7 +240,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		else
 		{
 			output = String.Format(
-				StringTable.Localize("$BIO_WEAP_FIREFUNC_RAIL_NOTHING"),
+				StringTable.Localize("$BIO_FIREFUNC_RAIL_NOTHING"),
 				BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc);
 		}
 
@@ -266,7 +266,7 @@ class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
-		readout.Push(StringTable.Localize("$BIO_WEAP_FIREFUNC_FIST"));
+		readout.Push(StringTable.Localize("$BIO_FIREFUNC_FIST"));
 	}
 }
 
@@ -283,6 +283,6 @@ class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
-		readout.Push(StringTable.Localize("$BIO_WEAP_FIREFUNC_CHAINSAW"));
+		readout.Push(StringTable.Localize("$BIO_FIREFUNC_CHAINSAW"));
 	}
 }

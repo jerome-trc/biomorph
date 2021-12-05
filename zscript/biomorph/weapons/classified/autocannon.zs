@@ -3,10 +3,10 @@ class BIO_Autocannon : BIO_Weapon
 	Default
 	{
 		Decal 'BulletChip';
-		Tag "$BIO_WEAP_TAG_AUTOCANNON";
+		Tag "$BIO_AUTOCANNON_TAG";
 
 		Inventory.Icon 'ACANX0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_AUTOCANNON";
+		Inventory.PickupMessage "$BIO_AUTOCANNON_PKUP";
 
 		Weapon.AmmoGive 100;
 		Weapon.AmmoType 'Clip';

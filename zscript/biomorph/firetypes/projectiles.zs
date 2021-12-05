@@ -9,10 +9,10 @@ class BIO_BulletProj : BIO_FastProjectile
 		Height 1;
 		Radius 1;
 		Speed 400;
-		Tag "$BIO_PUFF_TAG_BULLET";
+		Tag "$BIO_BULLET_TAG";
 
 		BIO_FastProjectile.MetaFlags BIO_FTMF_BALLISTIC;
-		BIO_FastProjectile.PluralTag "$BIO_PUFF_TAG_BULLETS";
+		BIO_FastProjectile.PluralTag "$BIO_BULLETS_TAG";
 	}
 
 	States
@@ -48,9 +48,9 @@ class BIO_Rocket : BIO_Projectile
 		Radius 11;
 		SeeSound "weapons/rocklf";
 		Speed 20;
-		Tag "$BIO_PROJ_TAG_ROCKET";
+		Tag "$BIO_ROCKET_TAG";
 
-		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_ROCKETS";
+		BIO_Projectile.PluralTag "$BIO_ROCKETS_TAG";
 		BIO_Projectile.Splash 128, 128;
 	}
 
@@ -75,14 +75,14 @@ class BIO_MiniMissile : BIO_Rocket
 {
 	Default
 	{
-		Tag "$BIO_PROJ_TAG_MINIMISSILE";
+		Tag "$BIO_MINIMISSILE_TAG";
 
 		Height 2;
 		Radius 3;
 		Scale 0.3;
 		Speed 50;
 
-		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_MINIMISSILES";
+		BIO_Projectile.PluralTag "$BIO_MINIMISSILES_TAG";
 		BIO_Projectile.Splash 32, 32;
 	}
 }
@@ -102,9 +102,9 @@ class BIO_PlasmaBall : BIO_Projectile
 		RenderStyle 'Add';
 		SeeSound "weapons/plasmaf";
 		Speed 25;
-		Tag "$BIO_PROJ_TAG_PLASMABALL";
+		Tag "$BIO_PLASMABALL_TAG";
 
-		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_PLASMABALLS";
+		BIO_Projectile.PluralTag "$BIO_PLASMABALLS_TAG";
 		BIO_Projectile.MetaFlags BIO_FTMF_ENERGY;
 	}
 
@@ -137,9 +137,9 @@ class BIO_BFGBall : BIO_Projectile
 		Radius 13;
 		RenderStyle 'Add';
 		Speed 25;
-		Tag "$BIO_PROJ_TAG_BFGBALL";
+		Tag "$BIO_BFGBALL_TAG";
 
-		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_BFGBALLS";
+		BIO_Projectile.PluralTag "$BIO_BFGBALLS_TAG";
 		BIO_Projectile.MetaFlags BIO_FTMF_ENERGY;
 	}
 
@@ -198,14 +198,14 @@ class BIO_Nail : BIO_Projectile
 
 	Default
 	{
-		Tag "$BIO_PROJ_TAG_NAIL";
+		Tag "$BIO_NAIL_TAG";
 
 		DeathSound "";
 		Height 8;
 		Radius 11;
 		Speed 60;
 
-		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_NAILS";
+		BIO_Projectile.PluralTag "$BIO_NAILS_TAG";
 		BIO_Projectile.Shrapnel 2;
 	}
 
@@ -232,10 +232,10 @@ class BIO_PlasmaGlobule : BIO_PlasmaBall
 {
 	Default
 	{
-		Tag "$BIO_PROJ_TAG_PLASMAGLOBULE";
+		Tag "$BIO_PLASMAGLOBULE_TAG";
 		Scale 0.4;
 
-		BIO_Projectile.PluralTag "$BIO_PROJ_TAG_PLASMAGLOBULES";
+		BIO_Projectile.PluralTag "$BIO_PLASMAGLOBULES_TAG";
 		BIO_Projectile.Splash 48, 48;
 	}
 

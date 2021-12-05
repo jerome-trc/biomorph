@@ -3,10 +3,10 @@ class BIO_PrecisionRifle : BIO_Weapon
 	Default
 	{
 		Decal 'BulletChip';
-		Tag "$BIO_WEAP_TAG_PRECISIONRIFLE";
+		Tag "$BIO_PRECISIONRIFLE_TAG";
 
 		Inventory.Icon 'PRECX0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_PRECISIONRIFLE";
+		Inventory.PickupMessage "$BIO_PRECISIONRIFLE_PKUP";
 
 		Weapon.AmmoGive 40;
 		Weapon.AmmoType 'Clip';

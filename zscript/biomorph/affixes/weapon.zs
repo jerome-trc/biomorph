@@ -56,7 +56,7 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 			if (Modifiers[i] == 0) continue;
 
 			strings.Push(String.Format(
-				StringTable.Localize("$BIO_WAFX_TOSTR_DAMAGE"),
+				StringTable.Localize("$BIO_WAFX_DAMAGE_TOSTR"),
 				BIO_Utils.RankString(i, "$BIO_FIRE_MODE"),
 				BIO_Utils.StatFontColor(Modifiers[i], 0),
 				Modifiers[i] >= 0 ? "+" : "", Modifiers[i]));
@@ -65,7 +65,7 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 
 	final override string GetTag() const
 	{
-		return StringTable.Localize("$BIO_WAFX_TAG_DAMAGE");
+		return StringTable.Localize("$BIO_WAFX_DAMAGE_TAG");
 	}
 
 	final override BIO_WeaponAffixFlags GetFlags() const
@@ -129,7 +129,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 			if (Modifiers[i] ~== 0.0) continue;
 
 			strings.Push(String.Format(
-				StringTable.Localize("$BIO_WAFX_TOSTR_DMGMULTI"),
+				StringTable.Localize("$BIO_WAFX_DMGMULTI_TOSTR"),
 				BIO_Utils.RankString(i, "$BIO_FIRE_MODE"),
 				BIO_Utils.StatFontColorF(Modifiers[i], 0.0),
 				Modifiers[i] >= 0 ? "+" : "", Modifiers[i] * 100.0));
@@ -138,7 +138,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 
 	final override string GetTag() const
 	{
-		return StringTable.Localize("$BIO_WAFX_TAG_DMGMULTI");
+		return StringTable.Localize("$BIO_WAFX_DMGMULTI_TAG");
 	}
 
 	final override BIO_WeaponAffixFlags GetFlags() const
@@ -170,12 +170,12 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 
 	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
 	{
-		strings.Push(StringTable.Localize("$BIO_WAFX_TOSTR_FORCERADIUSDMG"));
+		strings.Push(StringTable.Localize("$BIO_WAFX_FORCERADIUSDMG_TOSTR"));
 	}
 
 	final override string GetTag() const
 	{
-		return StringTable.Localize("$BIO_WAFX_TAG_FORCERADIUSDMG");
+		return StringTable.Localize("$BIO_WAFX_FORCERADIUSDMG_TAG");
 	}
 
 	final override bool CanGenerate() const { return false; }

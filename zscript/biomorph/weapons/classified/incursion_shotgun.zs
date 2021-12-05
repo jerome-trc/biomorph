@@ -3,10 +3,10 @@ class BIO_IncursionShotgun : BIO_Weapon
 	Default
 	{
 		Decal 'BulletChip';
-		Tag "$BIO_WEAP_TAG_INCURSIONSHOTGUN";
+		Tag "$BIO_INCURSIONSHOTGUN_TAG";
 
 		Inventory.Icon 'INCUX0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_INCURSIONSHOTGUN";
+		Inventory.PickupMessage "$BIO_INCURSIONSHOTGUN_PKUP";
 
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType 'Shell';
@@ -27,7 +27,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			.BasicBulletPipeline('BIO_ShotPellet', 9, 7, 17, 4.0, 2.0)
 			.FireSound("bio/weap/incursion/fire")
 			.CustomReadout(StringTable.Localize(
-				"$BIO_WEAP_STAT_INCURSIONSHOTGUN_QUAD"))
+				"$BIO_INCURSIONSHOTGUN_QUAD"))
 			.Build());
 	}
 

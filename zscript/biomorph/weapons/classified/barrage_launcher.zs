@@ -7,10 +7,10 @@ class BIO_BarrageLauncher : BIO_Weapon
 		+WEAPON.NOAUTOFIRE
 
 		Decal 'BulletChip';
-		Tag "$BIO_WEAP_TAG_BARRAGELAUNCHER";
+		Tag "$BIO_BARRAGELAUNCHER_TAG";
 		
 		Inventory.Icon 'BARRX0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_BARRAGELAUNCHER";
+		Inventory.PickupMessage "$BIO_BARRAGELAUNCHER_PKUP";
 
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType 'RocketAmmo';

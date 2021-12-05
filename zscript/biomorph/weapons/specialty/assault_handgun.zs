@@ -4,10 +4,10 @@ class BIO_AssaultHandgun : BIO_Weapon
 	{
 		Decal 'BulletChip';
 		Obituary "$OB_MPPISTOL";
-		Tag "$BIO_WEAP_TAG_ASSAULTHANDGUN";
+		Tag "$BIO_ASSAULTHANDGUN_TAG";
 
 		Inventory.Icon 'ASHGX0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_ASSAULTHANDGUN";
+		Inventory.PickupMessage "$BIO_ASSAULTHANDGUN_PKUP";
 
 		Weapon.AmmoGive 18;
 		Weapon.AmmoType 'Clip';

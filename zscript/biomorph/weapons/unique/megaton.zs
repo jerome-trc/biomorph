@@ -7,9 +7,9 @@ class BIO_Megaton : BIO_IncursionShotgun
 
 	Default
 	{
-		Tag "$BIO_WEAP_TAG_MEGATON";
+		Tag "$BIO_MEGATON_TAG";
 
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_MEGATON";
+		Inventory.PickupMessage "$BIO_MEGATON_PKUP";
 
 		Weapon.AmmoType2 'Clip'; // Only for the status bar display
 		Weapon.SelectionOrder SELORDER_SSG_CLSF;
@@ -26,11 +26,11 @@ class BIO_Megaton : BIO_IncursionShotgun
 			.BasicBulletPipeline('BIO_ShotPellet', 9, 8, 18, 3.8, 1.9)
 			.FireSound("bio/weap/incursion/fire")
 			.CustomReadout(StringTable.Localize(
-				"$BIO_WEAP_STAT_INCURSIONSHOTGUN_QUAD"))
+				"$BIO_INCURSIONSHOTGUN_QUAD"))
 			.CustomReadout(StringTable.Localize(
-				"$BIO_WEAP_STAT_MEGATON_DETAIL"))
+				"$BIO_MEGATON_DETAIL"))
 			.CustomReadout(StringTable.Localize(
-				"$BIO_WEAP_STAT_MEGATON_HOWTO"))
+				"$BIO_MEGATON_HOWTO"))
 			.Build());
 	}
 	

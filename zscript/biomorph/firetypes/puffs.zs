@@ -2,8 +2,8 @@ class BIO_Bullet : BIO_Puff
 {
 	Default
 	{
-		Tag "$BIO_PUFF_TAG_BULLET";
-		BIO_Puff.PluralTag "$BIO_PUFF_TAG_BULLETS";
+		Tag "$BIO_BULLET_TAG";
+		BIO_Puff.PluralTag "$BIO_BULLETS_TAG";
 		BIO_Puff.MetaFlags BIO_FTMF_BALLISTIC;
 	}
 }
@@ -12,8 +12,8 @@ class BIO_ShotPellet : BIO_Bullet
 {
 	Default
 	{
-		Tag "$BIO_PUFF_TAG_SHOTPELLET";
-		BIO_Puff.PluralTag "$BIO_PUFF_TAG_SHOTPELLETS";
+		Tag "$BIO_SHOTPELLET_TAG";
+		BIO_Puff.PluralTag "$BIO_SHOTPELLETS_TAG";
 	}
 }
 
@@ -21,8 +21,8 @@ class BIO_Slug : BIO_Bullet
 {
 	Default
 	{
-		Tag "$BIO_PUFF_TAG_SLUG";
-		BIO_Puff.PluralTag "$BIO_PUFF_TAG_SLUGS";
+		Tag "$BIO_SLUG_TAG";
+		BIO_Puff.PluralTag "$BIO_SLUGS_TAG";
 	}
 }
 
@@ -30,8 +30,8 @@ class BIO_MeleeHit : BIO_Bullet
 {
 	Default
 	{
-		Tag "$BIO_PUFF_TAG_MELEEHIT";
-		BIO_Puff.PluralTag "$BIO_PUFF_TAG_MELEEHITS";
+		Tag "$BIO_MELEEHIT_TAG";
+		BIO_Puff.PluralTag "$BIO_MELEEHITS_TAG";
 	}
 }
 

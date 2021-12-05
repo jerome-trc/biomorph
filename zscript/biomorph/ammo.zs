@@ -28,7 +28,7 @@ class BIO_Clip : Clip
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PKUP_CLIP";
+		Inventory.PickupMessage "$BIO_CLIP_PKUP";
 	}
 }
 
@@ -38,7 +38,7 @@ class BIO_Shell : Shell
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PKUP_SHELL";
+		Inventory.PickupMessage "$BIO_SHELL_PKUP";
 	}
 }
 
@@ -48,7 +48,7 @@ class BIO_RocketAmmo : RocketAmmo
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PKUP_ROCKETAMMO";
+		Inventory.PickupMessage "$BIO_ROCKETAMMO_PKUP";
 	}
 }
 
@@ -58,7 +58,7 @@ class BIO_Cell : Cell
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PKUP_CELL";
+		Inventory.PickupMessage "$BIO_CELL_PKUP";
 	}
 }
 
@@ -70,7 +70,7 @@ class BIO_ClipBox : ClipBox
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PKUP_CLIPBOX";
+		Inventory.PickupMessage "$BIO_CLIPBOX_PKUP";
 	}
 }
 
@@ -80,7 +80,7 @@ class BIO_ShellBox : ShellBox
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PKUP_SHELLBOX";
+		Inventory.PickupMessage "$BIO_SHELLBOX_PKUP";
 	}
 }
 
@@ -90,7 +90,7 @@ class BIO_RocketBox : RocketBox
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PKUP_ROCKETBOX";
+		Inventory.PickupMessage "$BIO_ROCKETBOX_PKUP";
 	}
 }
 
@@ -100,7 +100,7 @@ class BIO_CellPack : CellPack
 
 	Default
 	{
-		Inventory.PickupMessage "$BIO_AMMO_PKUP_CELLPACK";
+		Inventory.PickupMessage "$BIO_CELLPACK_PKUP";
 	}
 }
 
@@ -114,7 +114,7 @@ class BIO_Backpack : BackpackItem replaces Backpack
 	Default
 	{
 		Height 26;
-		Inventory.PickupMessage "$BIO_BACKPACK_PICKUP";
+		Inventory.PickupMessage "$BIO_BACKPACK_PKUP";
 	}
 
 	States

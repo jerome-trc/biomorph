@@ -1033,8 +1033,8 @@ class BIO_Weapon : DoomWeapon abstract
 				totalDef = BIO_Utils.IntArraySum(fireTimeDefs[i].Times);
 
 			string template = !bMeleeWeapon ?
-				StringTable.Localize("$BIO_WEAP_STAT_FIRETIME") :
-				StringTable.Localize("$BIO_WEAP_STAT_ATTACKTIME");
+				StringTable.Localize("$BIO_WEAPTOSTR_FIRETIME") :
+				StringTable.Localize("$BIO_WEAPTOSTR_ATTACKTIME");
 
 			string str = String.Format(template,
 				BIO_Utils.StatFontColor(total, totalDef),
@@ -1057,7 +1057,7 @@ class BIO_Weapon : DoomWeapon abstract
 				totalDef = BIO_Utils.IntArraySum(reloadTimeDefs[i].Times);
 
 			string str = String.Format(
-				StringTable.Localize("$BIO_WEAP_STAT_RELOADTIME"),
+				StringTable.Localize("$BIO_WEAPTOSTR_RELOADTIME"),
 				BIO_Utils.StatFontColor(total, totalDef),
 				float(total) / float(TICRATE));
 
