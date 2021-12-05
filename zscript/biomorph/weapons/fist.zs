@@ -5,7 +5,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		+WEAPON.MELEEWEAPON
 
 		Obituary "$OB_MPFIST";
-		Tag "$BIO_WEAP_TAG_FIST";
+		Tag "$BIO_FIST_TAG";
 
 		Inventory.Icon 'PUNGA0';
 		
@@ -21,7 +21,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.PunchPipeline('BIO_MeleeHit', 1, 2, 20)
 			.CustomReadout(String.Format(
-				StringTable.Localize("$BIO_WEAP_STAT_BERSERKMULTI"), 900))
+				StringTable.Localize("$BIO_WEAPTOSTR_BERSERKMULTI"), 900))
 			.Alert(-1.0, 0)
 			.Build());
 	}

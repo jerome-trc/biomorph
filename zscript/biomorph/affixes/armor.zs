@@ -22,14 +22,14 @@ class BIO_ArmorAffix_SaveAmount : BIO_EquipmentAffix
 	final override void ToString(in out Array<string> strings, BIO_Equipment equip) const
 	{
 		strings.Push(String.Format(
-			StringTable.Localize("$BIO_EAFX_TOSTR_SAVEAMOUNT"),
+			StringTable.Localize("$BIO_EAFX_SAVEAMOUNT_TOSTR"),
 			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 			Modifier >= 0 ? "+" : "", Modifier));
 	}
 
 	final override string GetTag() const
 	{
-		return StringTable.Localize("$BIO_EAFX_TAG_SAVEAMOUNT");
+		return StringTable.Localize("$BIO_EAFX_SAVEAMOUNT_TAG");
 	}
 }
 
@@ -60,13 +60,13 @@ class BIO_ArmorAffix_SavePercent : BIO_EquipmentAffix
 	final override void ToString(in out Array<string> strings, BIO_Equipment equip) const
 	{
 		strings.Push(String.Format(
-			StringTable.Localize("$BIO_EAFX_TOSTR_SAVEPERCENT"),
+			StringTable.Localize("$BIO_EAFX_SAVEPERCENT_TOSTR"),
 			Modifier >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
 			Modifier >= 0 ? "+" : "", Modifier));
 	}
 
 	final override string GetTag() const
 	{
-		return StringTable.Localize("$BIO_EAFX_TAG_SAVEPERCENT");
+		return StringTable.Localize("$BIO_EAFX_SAVEPERCENT_TAG");
 	}
 }

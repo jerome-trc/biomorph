@@ -3,10 +3,10 @@ class BIO_AutoShotgun : BIO_Weapon
 	Default
 	{
 		Decal 'BulletChip';
-		Tag "$BIO_WEAP_TAG_AUTOSHOTGUN";
+		Tag "$BIO_AUTOSHOTGUN_TAG";
 
 		Inventory.Icon 'AUSGX0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_AUTOSHOTGUN";
+		Inventory.PickupMessage "$BIO_AUTOSHOTGUN_PKUP";
 
 		Weapon.AmmoGive 15;
 		Weapon.AmmoType 'Shell';

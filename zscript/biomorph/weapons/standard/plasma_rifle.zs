@@ -6,7 +6,7 @@ class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
 		Obituary "$OB_MPPLASMARIFLE";
 
 		Inventory.Icon 'PLASA0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_PLASMARIFLE";
+		Inventory.PickupMessage "$BIO_PLASMARIFLE_PKUP";
 
 		Weapon.AmmoGive 50;
 		Weapon.AmmoType 'Cell';

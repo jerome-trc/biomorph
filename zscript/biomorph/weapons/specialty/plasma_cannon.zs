@@ -3,10 +3,10 @@ class BIO_PlasmaCannon : BIO_Weapon
 	Default
 	{
 		Decal 'BulletChip';
-		Tag "$BIO_WEAP_TAG_PLASMACANNON";
+		Tag "$BIO_PLASMACANNON_TAG";
 
 		Inventory.Icon 'PLSCX0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_PLASMACANNON";
+		Inventory.PickupMessage "$BIO_PLASMACANNON_PKUP";
 
 		Weapon.AmmoGive 50;
 		Weapon.AmmoType 'Cell';

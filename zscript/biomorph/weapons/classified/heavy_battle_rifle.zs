@@ -3,9 +3,9 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	Default
 	{
 		Decal 'BulletChip';
-		Tag "$BIO_WEAP_TAG_HBR";
+		Tag "$BIO_HBR_TAG";
 
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_HBR";
+		Inventory.PickupMessage "$BIO_HBR_PKUP";
 
 		Weapon.AmmoGive 60;
 		Weapon.AmmoType 'Clip';

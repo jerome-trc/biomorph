@@ -58,7 +58,7 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 		}
 
 		return String.Format(
-			StringTable.Localize("$BIO_WEAP_DMGFUNC_DEFAULT"),
+			StringTable.Localize("$BIO_DMGFUNC_DEFAULT"),
 			crEsc_min, Minimum, crEsc_max, Maximum);
 	}
 }
@@ -101,7 +101,7 @@ class BIO_DmgFunc_1DX : BIO_DamageFunctor
 			crEsc = CRESC_STATMODIFIED;
 
 		return String.Format(
-			StringTable.Localize("$BIO_WEAP_DMGFUNC_1DX"),
+			StringTable.Localize("$BIO_DMGFUNC_1DX"),
 			crEsc, Baseline, MaxFactor);
 	}
 }
@@ -135,7 +135,7 @@ class BIO_DmgFunc_Single : BIO_DamageFunctor
 			crEsc = CRESC_STATMODIFIED;
 
 		return String.Format(
-			StringTable.Localize("$BIO_WEAP_DMGFUNC_SINGLE"),
+			StringTable.Localize("$BIO_DMGFUNC_SINGLE"),
 			crEsc, Value);
 	}
 }

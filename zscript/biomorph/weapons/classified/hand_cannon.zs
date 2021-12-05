@@ -3,10 +3,10 @@ class BIO_HandCannon : BIO_Weapon
 	Default
 	{
 		Decal 'BulletChip';
-		Tag "$BIO_WEAP_TAG_HANDCANNON";
+		Tag "$BIO_HANDCANNON_TAG";
 
 		Inventory.Icon 'HCANX0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_HANDCANNON";
+		Inventory.PickupMessage "$BIO_HANDCANNON_PKUP";
 
 		Weapon.AmmoGive 15;
 		Weapon.AmmoType 'Clip';

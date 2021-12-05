@@ -3,10 +3,10 @@ class BIO_Nailgun : BIO_Weapon
 	Default
 	{
 		Decal 'BulletChip';
-		Tag "$BIO_WEAP_TAG_NAILGUN";
+		Tag "$BIO_NAILGUN_TAG";
 
 		Inventory.Icon 'NLGNX0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_NAILGUN";
+		Inventory.PickupMessage "$BIO_NAILGUN_PKUP";
 
 		Weapon.AmmoGive 100;
 		Weapon.AmmoType 'Clip';

@@ -9,7 +9,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		Tag "$TAG_BFG9000";
 
 		Inventory.Icon 'BFUGA0';
-		Inventory.PickupMessage "$BIO_WEAP_PKUP_BFG90000";
+		Inventory.PickupMessage "$BIO_BFG_PKUP90000";
 
 		Weapon.AmmoGive 80;
 		Weapon.AmmoType 'Cell';

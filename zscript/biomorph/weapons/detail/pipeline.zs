@@ -435,20 +435,20 @@ class BIO_WeaponPipeline play
 			switch (index)
 			{
 			case 0:
-				header = StringTable.Localize("$BIO_WEAP_STAT_HEADER_0");
+				header = StringTable.Localize("$BIO_WEAPTOSTR_HEADER_0");
 				break;
 			case 1:
-				header = StringTable.Localize("$BIO_WEAP_STAT_HEADER_1");
+				header = StringTable.Localize("$BIO_WEAPTOSTR_HEADER_1");
 				break;
 			case 2:
-				header = StringTable.Localize("$BIO_WEAP_STAT_HEADER_2");
+				header = StringTable.Localize("$BIO_WEAPTOSTR_HEADER_2");
 				break;
 			case 3:
-				header = StringTable.Localize("$BIO_WEAP_STAT_HEADER_3");
+				header = StringTable.Localize("$BIO_WEAPTOSTR_HEADER_3");
 				break;
 			default:
 				header = String.Format(
-					StringTable.Localize("$BIO_WEAP_STAT_HEADER_DEFAULT"), index);
+					StringTable.Localize("$BIO_WEAPTOSTR_HEADER_DEFAULT"), index);
 				break;
 			}
 
@@ -467,7 +467,7 @@ class BIO_WeaponPipeline play
 		if (SplashDamage > 0)
 		{
 			readout.Push(String.Format(
-				StringTable.Localize("$BIO_WEAP_STAT_SPLASH"),
+				StringTable.Localize("$BIO_WEAPTOSTR_SPLASH"),
 				BIO_Utils.StatFontColor(SplashDamage, Defaults.SplashDamage),
 				SplashDamage,
 				BIO_Utils.StatFontColor(SplashRadius, Defaults.SplashRadius),
@@ -489,7 +489,7 @@ class BIO_WeaponPipeline play
 				HSpread, Defaults.HSpread, invert: true);
 
 			string hSpreadStr = String.Format(
-				StringTable.Localize("$BIO_WEAP_STAT_HSPREAD"),
+				StringTable.Localize("$BIO_WEAPTOSTR_HSPREAD"),
 				fontColor, HSpread);
 
 			readout.Push(hSpreadStr);
@@ -501,7 +501,7 @@ class BIO_WeaponPipeline play
 				VSpread, Defaults.VSpread, invert: true);
 
 			string vSpreadStr = String.Format(
-				StringTable.Localize("$BIO_WEAP_STAT_VSPREAD"),
+				StringTable.Localize("$BIO_WEAPTOSTR_VSPREAD"),
 				fontColor, VSpread);
 
 			readout.Push(vSpreadStr);
