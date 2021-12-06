@@ -24,16 +24,9 @@ mixin class BIO_Gear
 {
 	meta BIO_Grade Grade; property Grade: Grade;
 	BIO_Rarity Rarity; property Rarity: Rarity;
+	meta string UniqueSuffix; property UniqueSuffix: UniqueSuffix;
 
 	protected bool HitGround, PreviouslyPickedUp;
-
-	// GetTag() only comes with color escape codes after BeginPlay(); use this
-	// when derefencing defaults. Always comes with a '\c-' at the end.
-	string GetColoredTag() const
-	{
-		return String.Format("%s%s\c-",
-			BIO_Utils.RarityColorEscapeCode(Rarity), GetTag());
-	}
 
 	void RLMDangerLevel() const
 	{

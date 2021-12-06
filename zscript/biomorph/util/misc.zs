@@ -7,6 +7,12 @@ class BIO_Utils abstract
 		TRANSLUCENCY_FUZZ = 2
 	}
 
+	// Only effective on single words.
+	static string Capitalize(string input)
+	{
+		return input.Left(1).MakeUpper() .. mut.Mid(1);
+	}
+
 	// The first return value is the first element in the array to be the max.
 	// The second is the actual max.
 	static uint, int IntArrayMax(Array<int> arr)
@@ -68,6 +74,19 @@ class BIO_Utils abstract
 		case BIO_GRADE_NONE:
 		default:
 			return StringTable.Localize("$BIO_NONE");
+		}
+	}
+
+	static string PickupVerb(BIO_Grade grade)
+	{
+		switch (grade)
+		{
+		default:
+			return StringTable.Localize("$BIO_PKUP_STANDARD");
+		case BIO_GRADE_SPECIALTY:
+			return StringTable.Localize("$BIO_PKUP_SPECIALTY");
+		case BIO_GRADE_CLASSIFIED:
+			return StringTable.Localize("$BIO_PKUP_CLASSIFIED");
 		}
 	}
 

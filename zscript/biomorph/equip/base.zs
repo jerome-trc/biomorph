@@ -51,7 +51,7 @@ class BIO_Equipment : Inventory abstract
 	override void BeginPlay()
 	{
 		super.BeginPlay();
-		SetTag(GetColoredTag());
+		SetTag(FullTag());
 	}
 
 	final override bool CanPickup(Actor toucher)
@@ -87,7 +87,7 @@ class BIO_Equipment : Inventory abstract
 		bioPlayer.Equip(self);
 
 		bioPlayer.A_Print(String.Format(
-			StringTable.Localize(EquipMessage), GetColoredTag()), 2.5);
+			StringTable.Localize(EquipMessage), FullTag()), 2.5);
 		bioPlayer.A_StartSound(self.UseSound, CHAN_ITEM);
 
 		return false;
@@ -147,6 +147,32 @@ class BIO_Equipment : Inventory abstract
 	}
 
 	// Getters =================================================================
+
+	// `GetTag()` only comes with color escape codes after `BeginPlay()`; use this
+	// when derefencing defaults. Always comes with a '\c-' at the end.
+	string FullTag() const
+	{
+		string crEsc_g = BIO_Utils.GradeColorEscapeCode(Grade);
+
+		if (Rarity == BIO_RARITY_MUTATED)
+		{
+			string crEsc_r = BIO_Utils.RarityColorEscapeCode(Rarity);
+
+			return String.Format("%s%s \c[White](%s%s\c[White])\c-",
+				crEsc_g, Default.GetTag(), crEsc_r,
+				StringTable.Localize("$BIO_MUTATED_CHARACTER"));
+		}
+		else if (Rarity == BIO_RARITY_UNIQUE)
+		{
+			string crEsc_r = BIO_Utils.RarityColorEscapeCode(Rarity);
+			string suffix = UniqueSuffix.Length() > 0 ? " " .. UniqueSuffix : "";
+
+			return String.Format("%s%s%s%s\c-", crEsc_r,
+				Default.GetTag(), crEsc_g, suffix);
+		}
+		else
+			return String.Format("%s%s\c-", crEsc_g, Default.GetTag());
+	}
 
 	bool HasAffixOfType(Class<BIO_EquipmentAffix> t, bool implicit = false) const
 	{
