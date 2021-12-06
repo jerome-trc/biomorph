@@ -1,3 +1,12 @@
+enum BIO_FireFunctorType : uint8
+{
+	BIO_FFT_NONE = 0,
+	BIO_FFT_PUFF = 1 << 0,
+	BIO_FFT_PROJECTILE = 1 << 1,
+	BIO_FFT_RAIL = 1 << 2,
+	BIO_FFT_ALL = uint8.MAX
+}
+
 class BIO_FireFunctor play abstract
 {
 	virtual void Init() {} // Use only for setting defaults.
@@ -81,6 +90,10 @@ class BIO_FireFunctor play abstract
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const;
 
+	// If a category of fire type can be handled by this functor, include its
+	// bit. Used by affixes to determine if a new fire type may be compatible.
+	abstract BIO_FireFunctorType GetType() const;
+
 	readOnly<BIO_FireFunctor> AsConst() const { return self; }
 }
 
@@ -106,6 +119,11 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			FireTypeTag(ft, fc)));
+	}
+
+	override BIO_FireFunctorType GetType() const
+	{
+		return BIO_FFT_PROJECTILE;
 	}
 }
 
@@ -146,6 +164,11 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			FireTypeTag(ft, fc)));
+	}
+
+	override BIO_FireFunctorType GetType() const
+	{
+		return BIO_FFT_PUFF;
 	}
 }
 
@@ -246,6 +269,11 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 
 		readout.Push(output);
 	}
+
+	override BIO_FireFunctorType GetType() const
+	{
+		return BIO_FFT_RAIL;
+	}
 }
 
 class BIO_FireFunc_Melee : BIO_FireFunctor abstract
@@ -268,6 +296,11 @@ class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 	{
 		readout.Push(StringTable.Localize("$BIO_FIREFUNC_FIST"));
 	}
+
+	override BIO_FireFunctorType GetType() const
+	{
+		return BIO_FFT_PUFF;
+	}
 }
 
 class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
@@ -284,5 +317,10 @@ class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
 		readout.Push(StringTable.Localize("$BIO_FIREFUNC_CHAINSAW"));
+	}
+
+	override BIO_FireFunctorType GetType() const
+	{
+		return BIO_FFT_PUFF;
 	}
 }
