@@ -748,50 +748,6 @@ class BIO_WAFX_FireCount : BIO_WeaponAffix
 	}
 }
 
-class BIO_WAFX_FireRate : BIO_WeaponAffix
-{
-	int Modifier;
-
-	final override void Init(BIO_Weapon weap)
-	{
-		int rft = weap.ReducibleFireTime();
-
-		if (rft == 1)
-			Modifier = -1;
-		else if (rft > 1)
-			Modifier = -Random(1, rft);
-		else
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Illegally initialized %s against reducible fire time of %d.",
-				GetClassName(), rft);
-	}
-
-	final override bool Compatible(BIO_Weapon weap) const
-	{
-		return
-			!(weap.AffixMask1 & BIO_WAM_FIRETIME) &&
-			weap.ReducibleFireTime() > 0;
-	}
-
-	final override void Apply(BIO_Weapon weap)
-	{
-		weap.ModifyFireTime(Modifier);
-	}
-
-	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
-	{
-		strings.Push(String.Format(
-			StringTable.Localize("$BIO_WAFX_FIRERATE_TOSTR"),
-			Modifier >= 0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
-			Modifier >= 0 ? "+" : "", float(Modifier) / 35.0));
-	}
-
-	final override string GetTag() const
-	{
-		return StringTable.Localize("$BIO_WAFX_FIRERATE_TAG");
-	}
-}
-
 class BIO_WAFX_Spread : BIO_WeaponAffix
 {
 	float HSpread1, VSpread1, HSpread2, VSpread2;
@@ -890,50 +846,6 @@ class BIO_WAFX_Kickback : BIO_WeaponAffix
 	final override string GetTag() const
 	{
 		return StringTable.Localize("$BIO_WAFX_KICKBACK_TAG");
-	}
-}
-
-class BIO_WAFX_ReloadSpeed : BIO_WeaponAffix
-{
-	int Modifier;
-
-	final override void Init(BIO_Weapon weap)
-	{
-		int rrt = weap.ReducibleReloadTime();
-
-		if (rrt == 1)
-			Modifier = -1;
-		else if (rrt > 1)
-			Modifier = -Random(1, rrt);
-		else
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Illegally initialized %s against reducible reload time of %d.",
-				GetClassName(), rrt);
-	}
-
-	final override bool Compatible(BIO_Weapon weap) const
-	{
-		return
-			!(weap.AffixMask1 & BIO_WAM_RELOADTIME) &&
-			weap.ReducibleReloadTime() > 0;
-	}
-
-	final override void Apply(BIO_Weapon weap)
-	{
-		weap.ModifyReloadTime(Modifier);
-	}
-
-	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
-	{
-		strings.Push(String.Format(
-			StringTable.Localize("$BIO_WAFX_RELOADSPEED_TOSTR"),
-			Modifier >= 0 ? CRESC_NEGATIVE : CRESC_POSITIVE,
-			Modifier >= 0 ? "+" : "", float(Modifier) / 35.0));
-	}
-
-	final override string GetTag() const
-	{
-		return StringTable.Localize("$BIO_WAFX_RELOADSPEED_TAG");
 	}
 }
 
