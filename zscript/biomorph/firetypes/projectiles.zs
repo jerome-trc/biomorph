@@ -13,6 +13,7 @@ class BIO_BulletProj : BIO_FastProjectile
 
 		BIO_FastProjectile.MetaFlags BIO_FTMF_BALLISTIC;
 		BIO_FastProjectile.PluralTag "$BIO_BULLETS_TAG";
+		BIO_FastProjectile.PuffCounterpart 'BIO_Bullet';
 	}
 
 	States
@@ -28,6 +29,26 @@ class BIO_BulletProj : BIO_FastProjectile
 	override void OnProjectileDeath()
 	{
 		A_SpawnItemEx('BulletPuff', flags: SXF_NOCHECKPOSITION);
+	}
+}
+
+class BIO_ShotPelletProj : BIO_BulletProj
+{
+	Default
+	{
+		Tag "$BIO_SHOTPELLET_TAG";
+		BIO_FastProjectile.PluralTag "$BIO_SHOTPELLETS_TAG";
+		BIO_FastProjectile.PuffCounterpart 'BIO_ShotPellet';
+	}
+}
+
+class BIO_SlugProj : BIO_BulletProj
+{
+	Default
+	{
+		Tag "$BIO_SLUG_TAG";
+		BIO_FastProjectile.PluralTag "$BIO_SLUGS_TAG";
+		BIO_FastProjectile.PuffCounterpart 'BIO_Slug';
 	}
 }
 
