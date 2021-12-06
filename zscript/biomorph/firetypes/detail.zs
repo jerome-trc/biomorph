@@ -94,6 +94,8 @@ class BIO_Projectile : Actor abstract
 		return ret;
 	}
 
+	virtual void ToString(in out Array<string> weapReadout) {}
+
 	action void A_Travel()
 	{
 		for (uint i = 0; i < invoker.ProjTravelFunctors.Size(); i++)
@@ -135,6 +137,9 @@ class BIO_FastProjectile : FastProjectile abstract
 	mixin BIO_FireTypeCommon;
 	mixin BIO_ProjectileCommon;
 
+	meta Class<BIO_Puff> PuffCounterpart;
+	property PuffCounterpart: PuffCounterpart;
+
 	Default
 	{
 		Tag "$BIO_ROUND_TAG";
@@ -156,6 +161,8 @@ class BIO_FastProjectile : FastProjectile abstract
 
 		return ret;
 	}
+
+	virtual void ToString(in out Array<string> weapReadout) {}
 
 	// Invoked before the A_ProjectileDeath does anything else.
 	// Note that you never need to call `super.OnProjectileDeath()`.
@@ -187,6 +194,9 @@ class BIO_Puff : BulletPuff abstract
 {
 	mixin BIO_FireTypeCommon;
 
+	meta Class<BIO_FastProjectile> ProjCounterpart;
+	property ProjCounterpart: ProjCounterpart;
+
 	Default
 	{
 		+BLOODSPLATTER
@@ -206,6 +216,8 @@ class BIO_Puff : BulletPuff abstract
 		Stop;
 	}
 
+	virtual void ToString(in out Array<string> weapReadout) {}
+
 	// Note that you never need to call `super.OnPuffDeath()`.
 	virtual void OnPuffDeath() {}
 }
@@ -219,6 +231,8 @@ class BIO_RailSpawn : Actor abstract
 {
 	meta string PluralTag; property PluralTag: PluralTag;
 	meta Class<Actor> PuffType; property PuffType: PuffType;
+
+	virtual void ToString(in out Array<string> weapReadout) {}
 }
 
 // Functor base types ==========================================================

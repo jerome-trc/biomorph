@@ -5,6 +5,7 @@ class BIO_Bullet : BIO_Puff
 		Tag "$BIO_BULLET_TAG";
 		BIO_Puff.PluralTag "$BIO_BULLETS_TAG";
 		BIO_Puff.MetaFlags BIO_FTMF_BALLISTIC;
+		BIO_Puff.ProjCounterpart 'BIO_BulletProj';
 	}
 }
 
@@ -14,6 +15,7 @@ class BIO_ShotPellet : BIO_Bullet
 	{
 		Tag "$BIO_SHOTPELLET_TAG";
 		BIO_Puff.PluralTag "$BIO_SHOTPELLETS_TAG";
+		BIO_Puff.ProjCounterpart 'BIO_ShotPelletProj';
 	}
 }
 
@@ -23,6 +25,7 @@ class BIO_Slug : BIO_Bullet
 	{
 		Tag "$BIO_SLUG_TAG";
 		BIO_Puff.PluralTag "$BIO_SLUGS_TAG";
+		BIO_Puff.ProjCounterpart 'BIO_SlugProj';
 	}
 }
 

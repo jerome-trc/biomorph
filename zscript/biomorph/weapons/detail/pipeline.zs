@@ -459,6 +459,14 @@ class BIO_WeaponPipeline play
 		{
 			FireFunctor.ToString(readout, AsConst(), Defaults);
 			readout[readout.Size() - 1].AppendFormat(ToStringAppends[TOSTREX_FIREFUNC]);
+			if (FireType is 'BIO_Projectile')
+				GetDefaultByType((Class<BIO_Projectile>)(FireType)).ToString(readout);
+			else if (FireType is 'BIO_FastProjectile')
+				GetDefaultByType((Class<BIO_FastProjectile>)(FireType)).ToString(readout);
+			else if (FireType is 'BIO_Puff')
+				GetDefaultByType((Class<BIO_Puff>)(FireType)).ToString(readout);
+			else if (FireType is 'BIO_RailSpawn')
+				GetDefaultByType((Class<BIO_RailSpawn>)(FireType)).ToString(readout);
 		}
 
 		if (Damage != null)
