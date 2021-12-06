@@ -72,7 +72,8 @@ class BIO_GlobalData : Thinker
 		return PerkGraphs[e];
 	}
 
-	bool WeaponAffixCompatible(Class<BIO_WeaponAffix> afx_t, BIO_Weapon weap) const
+	bool WeaponAffixCompatible(
+		Class<BIO_WeaponAffix> afx_t, readOnly<BIO_Weapon> weap) const
 	{
 		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
 		{
@@ -87,7 +88,8 @@ class BIO_GlobalData : Thinker
 		return false;
 	}
 
-	bool WeaponAffixEligible(Class<BIO_WeaponAffix> afx_t, BIO_Weapon weap) const
+	bool WeaponAffixEligible(
+		Class<BIO_WeaponAffix> afx_t, readOnly<BIO_Weapon> weap) const
 	{
 		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
 		{
@@ -105,7 +107,7 @@ class BIO_GlobalData : Thinker
 
 	// Returns `false` if no affixes are compatible.
 	bool AllEligibleWeaponAffixes(
-		in out Array<BIO_WeaponAffix> eligibles, BIO_Weapon weap) const
+		in out Array<BIO_WeaponAffix> eligibles, readOnly<BIO_Weapon> weap) const
 	{
 		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
 		{
@@ -121,7 +123,7 @@ class BIO_GlobalData : Thinker
 
 	// Returns `false` if no affixes are compatible.
 	bool EligibleWeaponAffixesByFlag(in out Array<BIO_WeaponAffix> eligibles,
-		BIO_Weapon weap, BIO_WeaponAffixFlags flag) const
+		readOnly<BIO_Weapon> weap, BIO_WeaponAffixFlags flag) const
 	{
 		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
 		{

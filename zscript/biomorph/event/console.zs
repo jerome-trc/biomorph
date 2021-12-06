@@ -208,7 +208,7 @@ extend class BIO_EventHandler
 			return true;
 		}
 
-		bool compat = BIO_WeaponAffix(new(afx_t)).Compatible(weap);
+		bool compat = BIO_WeaponAffix(new(afx_t)).Compatible(weap.AsConst());
 		string output;
 		
 		if (compat)

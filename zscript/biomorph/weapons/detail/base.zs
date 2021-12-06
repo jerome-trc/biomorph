@@ -900,11 +900,11 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		Array<BIO_WeaponAffix> eligibles;
 
-		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, self))
+		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, AsConst()))
 			return false;
 
 		uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
-		Affixes[e].Init(self);
+		Affixes[e].Init(AsConst());
 		return true;
 	}
 
@@ -1072,7 +1072,7 @@ class BIO_Weapon : DoomWeapon abstract
 		AffixReadout.Clear();
 
 		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-			ImplicitAffixes[i].ToString(AffixReadout, self);
+			ImplicitAffixes[i].ToString(AffixReadout, AsConst());
 
 		// Blank line between stats/implicit affixes and explicit affixes
 		AffixReadout.Push("");
@@ -1082,7 +1082,7 @@ class BIO_Weapon : DoomWeapon abstract
 		else
 		{
 			for (uint i = 0; i < Affixes.Size(); i++)
-				Affixes[i].ToString(AffixReadout, self);
+				Affixes[i].ToString(AffixReadout, AsConst());
 		}
 	}
 

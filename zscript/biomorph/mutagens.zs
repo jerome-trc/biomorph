@@ -222,7 +222,7 @@ class BIO_Muta_Reroll : BIO_Mutagen
 		weap.ResetStats();
 		
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
-			weap.Affixes[i].Init(weap);
+			weap.Affixes[i].Init(weap.AsConst());
 
 		weap.ApplyAllAffixes();
 		weap.OnWeaponChange();

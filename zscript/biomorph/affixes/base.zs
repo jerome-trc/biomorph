@@ -30,9 +30,9 @@ enum BIO_WeaponAffixFlags : uint16
 
 class BIO_WeaponAffix : BIO_Affix abstract
 {
-	abstract bool Compatible(BIO_Weapon weap) const;
-	virtual void Init(BIO_Weapon weap) {}
-	virtual void CustomInit(BIO_Weapon weap, Dictionary dict)
+	abstract bool Compatible(readOnly<BIO_Weapon> weap) const;
+	virtual void Init(readOnly<BIO_Weapon> weap) {}
+	virtual void CustomInit(readOnly<BIO_Weapon> weap, Dictionary dict)
 	{
 		Console.Printf(Biomorph.LOGPFX_INFO ..
 			"Weapon affix %s has no custom initialiser.", GetClassName());
@@ -55,7 +55,8 @@ class BIO_WeaponAffix : BIO_Affix abstract
 
 	virtual bool CanGenerate() const { return true; }
 
-	abstract void ToString(in out Array<string> strings, BIO_Weapon weap) const;
+	abstract void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const;
 	abstract BIO_WeaponAffixFlags GetFlags() const;
 }
 
