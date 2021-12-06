@@ -78,7 +78,13 @@ class BIO_WeaponFountain : Actor
 				WeaponTypes[Random(0, WeaponTypes.Size() - 1)],
 				xVel: FRandom(-3.0, 3.0), FRandom(-3.0, 3.0), FRandom(18.0, 24.0),
 				FRandom(0.0, 360.0), SXF_NOCHECKPOSITION);
-			if (spawned) BIO_Weapon(weap).RandomizeAffixes();
+
+			if (spawned && Random(1, 4) == 1)
+			{
+				let bioWeap = BIO_Weapon(weap);
+				bioWeap.RandomizeAffixes();
+				bioWeap.OnWeaponChange();
+			}
 		}
 		Loop;
 	}
