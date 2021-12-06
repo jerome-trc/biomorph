@@ -65,7 +65,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 
 		// The tag of the selected output weapon
 
-		string tag = GetDefaultByType(Choices[SelectedWeapon].Output).GetColoredTag();
+		string tag = GetDefaultByType(Choices[SelectedWeapon].Output).FullTag();
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
 			VIRTUAL_WIDTH_X2 * 0.5 - (SmallFont.StringWidth(tag) / 2),

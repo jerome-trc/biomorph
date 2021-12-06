@@ -127,8 +127,8 @@
 	BIO_BARRAGELAUNCHER_TAG = "Barrage Launcher";
 	BIO_BARRAGELAUNCHER_PKUP = "Procured a %s.";
 	
-	BIO_MEGATON_TAG = "\c[Orange]Megaton\c[White] Incursion Shotgun";
-	BIO_MEGATON_PKUP = "Acquired Megaton.";
+	BIO_MEGATON_TAG = "Megaton";
+	BIO_MEGATON_PKUP = "Procured %s, a unique %s.";
 	BIO_MEGATON_DETAIL = "\c[Orange]Can load shells or bullets";
 	BIO_MEGATON_HOWTO = "\cnZoom\c[Orange] switches ammo type";
 
@@ -415,6 +415,8 @@
 
 	BIO_NONE = "None";
 	BIO_NOTHING = "nothing";
+	BIO_MUTATED = "mutated";
+	BIO_MUTATED_CHARACTER = "M";
 	BIO_CORRUPTED = "Corrupted";
 	BIO_MAXIMUM = "maximum";
 	BIO_EMPTY = "empty";

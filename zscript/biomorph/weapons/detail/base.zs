@@ -114,6 +114,7 @@ class BIO_Weapon : DoomWeapon abstract
 	mixin BIO_Gear;
 
 	meta Class<BIO_Weapon> UniqueBase; property UniqueBase: UniqueBase;
+
 	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
 	BIO_WeaponAffixMask AffixMask; property AffixMask: AffixMask;
 
@@ -243,7 +244,7 @@ class BIO_Weapon : DoomWeapon abstract
 	override void BeginPlay()
 	{
 		super.BeginPlay();
-		SetTag(GetColoredTag());
+		SetTag(FullTag());
 
 		// So that pre-placed weapons don't make a cacophony at level start
 		if (Abs(Vel.Z) <= 0.01)
@@ -281,7 +282,25 @@ class BIO_Weapon : DoomWeapon abstract
 
 	override string PickupMessage()
 	{
-		string ret = String.Format(StringTable.Localize(PickupMsg), GetTag());
+		string ret = "";
+
+		if (Rarity == BIO_RARITY_UNIQUE)
+		{
+			string suffix = "";
+
+			if (UniqueSuffix.Length() > 0)
+				suffix = StringTable.Localize(UniqueSuffix);
+			else if (UniqueBase != null)
+				suffix = GetDefaultByType(UniqueBase).FullTag();
+			else
+				suffix = StringTable.Localize("$BIO_WEAPON");
+
+			ret = String.Format(StringTable.Localize(PickupMsg),
+				"\c[Orange]" .. Default.GetTag() .. "\c-", suffix);
+		}
+		else
+			ret = String.Format(StringTable.Localize(PickupMsg), GetTag());
+
 		ret = ret .. " [\cn" .. SlotNumber .. "\c-]";
 		return ret;
 	}
@@ -633,6 +652,37 @@ class BIO_Weapon : DoomWeapon abstract
 	protected action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
 
 	// Getters =================================================================
+
+	// `GetTag()` only comes with color escape codes after `BeginPlay()`; use this
+	// when derefencing defaults. Always comes with a '\c-' at the end.
+	string FullTag() const
+	{
+		string crEsc_g = BIO_Utils.GradeColorEscapeCode(Grade);
+
+		if (Rarity == BIO_RARITY_MUTATED)
+		{
+			string crEsc_r = BIO_Utils.RarityColorEscapeCode(Rarity);
+
+			return String.Format("%s%s \c[White](%s%s\c[White])\c-",
+				crEsc_g, Default.GetTag(), crEsc_r,
+				StringTable.Localize("$BIO_MUTATED_CHARACTER"));
+		}
+		else if (Rarity == BIO_RARITY_UNIQUE)
+		{
+			string crEsc_r = BIO_Utils.RarityColorEscapeCode(Rarity);
+			string suffix = "";
+			
+			if (UniqueSuffix.Length() > 0)
+				suffix = " " .. UniqueSuffix;
+			else if (UniqueBase != null)
+				suffix = " " .. GetDefaultByType(UniqueBase).GetTag();
+
+			return String.Format("%s%s%s%s\c-", crEsc_r,
+				Default.GetTag(), crEsc_g, suffix);
+		}
+		else
+			return String.Format("%s%s\c-", crEsc_g, Default.GetTag());
+	}
 
 	// Is this weapon currently being raised, lowered, or neither?
 	bool Switching() const
@@ -1022,8 +1072,7 @@ class BIO_Weapon : DoomWeapon abstract
 		else
 			Rarity = BIO_RARITY_COMMON;
 
-		SetTag(Default.GetTag());
-		SetTag(GetColoredTag());
+		SetTag(FullTag());
 
 		StatReadout.Clear();
 
