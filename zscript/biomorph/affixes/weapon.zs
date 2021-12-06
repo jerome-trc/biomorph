@@ -5,12 +5,12 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 	// One per pipeline; if pipeline is incompatible, value will be 0
 	Array<int> Modifiers;
 
-	final override bool Compatible(BIO_Weapon weap) const
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
 		return weap.DamageMutable();
 	}
 
-	final override void Init(BIO_Weapon weap)
+	final override void Init(readOnly<BIO_Weapon> weap)
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -49,7 +49,7 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 		}
 	}
 
-	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	final override void ToString(in out Array<string> strings, readOnly<BIO_Weapon> weap) const
 	{
 		for (uint i = 0; i < Modifiers.Size(); i++)
 		{
@@ -79,12 +79,12 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 	// One per pipeline; if pipeline is incompatible, value will be 0.0
 	Array<float> Modifiers;
 
-	final override bool Compatible(BIO_Weapon weap) const
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
 		return weap.DamageMutable() && weap.DealsAnyDamage();
 	}
 
-	final override void Init(BIO_Weapon weap)
+	final override void Init(readOnly<BIO_Weapon> weap)
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -122,7 +122,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 		}
 	}
 
-	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	final override void ToString(in out Array<string> strings, readOnly<BIO_Weapon> weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -151,7 +151,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 
 class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 {
-	final override bool Compatible(BIO_Weapon weap) const
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
 		return weap.FiresProjectile();
 	}
@@ -168,7 +168,7 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 		proj.bForceRadiusDmg = true;
 	}
 
-	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
+	final override void ToString(in out Array<string> strings, readOnly<BIO_Weapon> weap) const
 	{
 		strings.Push(StringTable.Localize("$BIO_WAFX_FORCERADIUSDMG_TOSTR"));
 	}
