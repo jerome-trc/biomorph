@@ -790,11 +790,14 @@ class BIO_Weapon : DoomWeapon abstract
 		return FireTimeGroups[grp].Times[ndx];
 	}
 
-	// Fire states can't have all of their tic times reduced to 0.
-	// Fire rate-affecting affixes must know in advance if
-	// they can even have any effect, given this caveat.
-	bool AnyReducibleFireTimes() const
+	bool FireTimesMutable() const
 	{
+		if (AffixMask & BIO_WAM_FIRETIME) return false;
+		if (FireTimeGroups.Size() < 1) return false;
+
+		// State sequences can't have all of their tic times reduced to 0.
+		// Fire rate-affecting affixes must know in advance if
+		// they can even have any effect, given this caveat.
 		for (uint i = 0; i < FireTimeGroups.Size(); i++)
 			if (FireTimeGroups[i].PossibleReduction() > 1)
 				return true;
@@ -802,9 +805,14 @@ class BIO_Weapon : DoomWeapon abstract
 		return false;
 	}
 
-	// See above.
-	bool AnyReducibleReloadTimes() const
+	bool ReloadTimesMutable() const
 	{
+		if (AffixMask & BIO_WAM_FIRETIME) return false;
+		if (ReloadTimeGroups.Size() < 1) return false;
+
+		// State sequences can't have all of their tic times reduced to 0.
+		// Reload speed-affecting affixes must know in advance if
+		// they can even have any effect, given this caveat.
 		for (uint i = 0; i < ReloadTimeGroups.Size(); i++)
 			if (ReloadTimeGroups[i].PossibleReduction() > 1)
 				return true;
@@ -1037,7 +1045,7 @@ class BIO_Weapon : DoomWeapon abstract
 				StringTable.Localize("$BIO_WEAPTOSTR_ATTACKTIME");
 
 			string str = String.Format(template,
-				BIO_Utils.StatFontColor(total, totalDef),
+				BIO_Utils.StatFontColor(total, totalDef, true),
 				float(total) / float(TICRATE));
 
 			string grpTag = StringTable.Localize(FireTimeGroups[i].Tag);
@@ -1058,7 +1066,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 			string str = String.Format(
 				StringTable.Localize("$BIO_WEAPTOSTR_RELOADTIME"),
-				BIO_Utils.StatFontColor(total, totalDef),
+				BIO_Utils.StatFontColor(total, totalDef, true),
 				float(total) / float(TICRATE));
 
 			string grpTag = StringTable.Localize(ReloadTimeGroups[i].Tag);

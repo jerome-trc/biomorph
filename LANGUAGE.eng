@@ -306,8 +306,8 @@
 	BIO_WAFX_FIRECOUNT2_TOSTR = "Secondary fires %s%s%d %s";
 	BIO_WAFX_FIRECOUNT_TOSTR = "Primary fires %s%s%d %s; secondary fires %s%s%d %s";
 	
-	BIO_WAFX_FIRERATE_TAG = "Rapid Refire";
-	BIO_WAFX_FIRERATE_TOSTR = "Fire rate: %s%s%.2f seconds";
+	BIO_WAFX_FIRETIME_TAG = "Rapid Refire";
+	BIO_WAFX_FIRETIME_TOSTR = "Fire time%s: %s%s%.2f seconds";
 
 	BIO_WAFX_SPREAD_TAG = "Accurised";
 	BIO_WAFX_SPREAD_TOSTR = "Spread: ";
@@ -315,8 +315,8 @@
 	BIO_WAFX_KICKBACK_TAG = "Stopping";
 	BIO_WAFX_KICKBACK_TOSTR = "%s%.1f%% %s\cj knockback";
 	
-	BIO_WAFX_RELOADSPEED_TAG = "Ergonomic";
-	BIO_WAFX_RELOADSPEED_TOSTR = "Reload time: %s%s%.2f seconds";
+	BIO_WAFX_RELOADTIME_TAG = "Ergonomic";
+	BIO_WAFX_RELOADTIME_TOSTR = "Reload time%s: %s%s%.2f seconds";
 
 	BIO_WAFX_MELEERANGE_TAG = "Outreach";
 	BIO_WAFX_MELEERANGE1_TOSTR = "%s%s%.1f\cj range (primary)";
