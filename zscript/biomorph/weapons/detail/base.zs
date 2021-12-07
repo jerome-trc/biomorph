@@ -798,11 +798,20 @@ class BIO_Weapon : DoomWeapon abstract
 	}
 
 	// Returns `true` if any of this weapon's pipelines
-	// fires a `BIO_Projectile` or `BIO_TrueProjectile`.
+	// fires a `BIO_Projectile` or `BIO_FastProjectile`.
 	bool FiresProjectile() const
 	{
 		for (uint i = 0; i < Pipelines.Size(); i++)
 			if (Pipelines[i].FiresProjectile())
+				return true;
+
+		return false;
+	}
+
+	bool FiresTrueProjectile() const
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].FiresTrueProjectile())
 				return true;
 
 		return false;
@@ -969,6 +978,7 @@ class BIO_Weapon : DoomWeapon abstract
 	// Affects explicit affixes only.
 	void RandomizeAffixes()
 	{
+		ClearAffixes();
 		ResetStats();
 		ApplyImplicitAffixes();
 

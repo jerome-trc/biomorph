@@ -147,6 +147,330 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 	}
 }
 
+// Only compatible with pistol-type weapons, to give them an edge.
+class BIO_WAfx_Crit : BIO_WeaponAffix
+{
+	uint Chance;
+	float DamageMulti; // Percentage of rolled damage added to outgoing damage
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		Chance = Random(15, 30);
+		DamageMulti = FRandom(1.0, 2.0);
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.BIOFlags & BIO_WF_PISTOL;
+	}
+
+	final override void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const
+	{
+		if (Random(0, 100) < Chance)
+		{
+			fireData.Damage += (fireData.Damage * DamageMulti);
+			weap.Owner.A_StartSound("bio/weap/crit", CHAN_AUTO);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(String.Format(StringTable.Localize("$BIO_WAFX_CRIT_TOSTR"),
+			Chance, DamageMulti > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+			DamageMulti > 0.0 ? "+" : "", int(DamageMulti * 100.0)));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_CRIT_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE | BIO_WAF_CRIT;
+	}
+}
+
+// Damage gets added if the wielder is moving forward.
+class BIO_WAfx_ForwardDamage : BIO_WeaponAffix
+{
+	float Multi;
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		Multi = FRandom(0.25, 0.75);
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.DealsAnyDamage();
+	}
+
+	final override void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const
+	{
+		if (weap.Owner.Player.Cmd.Buttons & BT_FORWARD)
+		{
+			fireData.Damage += (fireData.Damage * Multi);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_WAFX_FORWARDDAMAGE_TOSTR"),
+			Multi > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE, Multi * 100,
+			StringTable.Localize(Multi > 0.0 ? "$BIO_MORE" : "$BIO_LESS")));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_FORWARDDAMAGE_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE;
+	}
+}
+
+// Damage gets added if the wielder is strafing.
+class BIO_WAfx_StrafeDamage : BIO_WeaponAffix
+{
+	float Multi;
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		Multi = FRandom(0.25, 0.75);
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.DealsAnyDamage();
+	}
+
+	final override void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const
+	{
+		if (weap.Owner.Player.Cmd.Buttons & BT_MOVELEFT ||
+			weap.Owner.Player.Cmd.Buttons & BT_MOVERIGHT)
+		{
+			fireData.Damage += (fireData.Damage * Multi);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_WAFX_STRAFEDAMAGE_TOSTR"),
+			Multi > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE, Multi * 100,
+			StringTable.Localize(Multi > 0.0 ? "$BIO_MORE" : "$BIO_LESS")));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_STRAFEDAMAGE_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE;
+	}
+}
+
+// New fire type ===============================================================
+
+class BIO_WAfx_Plasma : BIO_WeaponAffix
+{
+	final override void Init(readOnly<BIO_Weapon> weap) {}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_PlasmaBall'))
+				return false;
+			if (!weap.Pipelines[i].CanFireProjectiles() &&
+				!weap.Pipelines[i].FireFunctorMutable())
+				return false;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_PlasmaBall'))
+				continue;
+
+			bool cfp = weap.Pipelines[i].CanFireProjectiles();
+			
+			if (!cfp)
+			{
+				if (!weap.Pipelines[i].FireFunctorMutable())
+					continue;
+				else
+					weap.Pipelines[i].SetFireFunctor(new('BIO_FireFunc_Projectile'));
+			}
+
+			weap.Pipelines[i].SetFireType('BIO_PlasmaBall');
+			weap.Pipelines[i].MultiplyAllDamage(1.25);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_PLASMA_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_PLASMA_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_FIRETYPE | BIO_WAF_DAMAGE;
+	}
+}
+
+class BIO_WAfx_Slug : BIO_WeaponAffix
+{
+	final override void Init(readOnly<BIO_Weapon> weap) {}
+
+	// Weapon must be firing shot pellets for this affix to be applicable.
+	
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FireTypeMutableFrom('BIO_ShotPellet'))
+				return false;
+			if (!weap.Pipelines[i].DamageMutable() ||
+				!weap.Pipelines[i].SpreadMutable())
+				return false;
+			if (!weap.Pipelines[i].CanFirePuffs() &&
+				!weap.Pipelines[i].FireFunctorMutable())
+				return false;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FireTypeMutableFrom('BIO_ShotPellet'))
+				continue;
+
+			bool cfp = weap.Pipelines[i].CanFirePuffs();
+			
+			if (!cfp)
+			{
+				if (!weap.Pipelines[i].FireFunctorMutable())
+					continue;
+				else
+					weap.Pipelines[i].SetFireFunctor(new('BIO_FireFunc_Bullet'));
+			}
+
+			weap.Pipelines[i].SetFireType('BIO_Slug');
+			int fc = weap.Pipelines[i].GetFireCount();
+			weap.Pipelines[i].SetFireCount(fc / fc);
+			weap.Pipelines[i].MultiplyAllDamage(float(fc));
+			weap.Pipelines[i].SetSpread(0.5, 0.5);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_SLUG_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_SLUG_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_FIRETYPE | BIO_WAF_FIRECOUNT | BIO_WAF_DAMAGE;
+	}
+}
+
+class BIO_WAfx_MiniMissile : BIO_WeaponAffix
+{
+	final override void Init(readOnly<BIO_Weapon> weap) {}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_MiniMissile'))
+				return false;
+			if (!weap.Pipelines[i].SplashMutable())
+				return false;
+			if (!weap.Pipelines[i].CanFireProjectiles() &&
+				!weap.Pipelines[i].FireFunctorMutable())
+				return false;
+			
+			return true;
+		}
+
+		return false;
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_MiniMissile') ||
+				!weap.Pipelines[i].SplashMutable())
+				continue;
+
+			bool cfp = weap.Pipelines[i].CanFireProjectiles();
+			
+			if (!cfp)
+			{
+				if (!weap.Pipelines[i].FireFunctorMutable())
+					continue;
+				else
+					weap.Pipelines[i].SetFireFunctor(new('BIO_FireFunc_Projectile'));
+			}
+
+			weap.Pipelines[i].SetFireType('BIO_MiniMissile');
+			let defs = GetDefaultByType('BIO_MiniMissile');
+			weap.Pipelines[i].SetSplash(
+				defs.SplashDamage, defs.SplashRadius);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_MINIMISSILE_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_MINIMISSILE_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_FIRETYPE;
+	}
+}
+
 // Modify fired thing ==========================================================
 
 class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
@@ -179,6 +503,124 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 	}
 
 	final override bool CanGenerate() const { return false; }
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_ONPROJFIRED;
+	}
+}
+
+class BIO_WAfx_ProjSeek : BIO_WeaponAffix
+{
+	final override void Init(readOnly<BIO_Weapon> weap) {}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.FiresTrueProjectile();
+	}
+
+	final override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.SeekAngle = 4;
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_PROJSEEK_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_PROJSEEK_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_ONPROJFIRED;
+	}
+}
+
+class BIO_WAfx_ProjGravity : BIO_WeaponAffix
+{
+	float Multi;
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		Multi = FRandom(0.5, 1.0);
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.FiresTrueProjectile();
+	}
+
+	final override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.bNoGravity = false;
+	}
+
+	final override void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const
+	{
+		fireData.Damage += (fireData.Damage * Multi);
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(String.Format(StringTable.Localize("$BIO_WAFX_PROJGRAVITY_TOSTR"),
+			Multi >= 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+			Multi >= 0 ? "+" : "", int(Multi * 100.0)));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_PROJGRAVITY_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_ONPROJFIRED;
+	}
+}
+
+class BIO_WAfx_ProjBounce : BIO_WeaponAffix
+{
+	final override void Init(readOnly<BIO_Weapon> weap) {}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.FiresTrueProjectile();
+	}
+
+	final override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.bBounceOnWalls = true;
+		proj.bBounceOnFloors = true;
+		proj.bBounceOnCeilings = true;
+		proj.bAllowBounceOnActors = true;
+		proj.bBounceAutoOff = true;
+	}
+
+	final override void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const
+	{
+		proj.bBounceOnWalls = true;
+		proj.bBounceOnFloors = true;
+		proj.bBounceOnCeilings = true;
+		proj.bAllowBounceOnActors = true;
+		proj.bBounceAutoOff = true;
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_PROJBOUNCE_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_PROJBOUNCE_TAG");
+	}
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -313,3 +755,100 @@ class BIO_WAfx_ReloadTime : BIO_WeaponAffix
 // Melee-only ==================================================================
 
 // Miscellaneous ===============================================================
+
+class BIO_WAfx_SwitchSpeed : BIO_WeaponAffix
+{
+	int Modifier;
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		Modifier = Random(5, 9);
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return
+			!(weap.AffixMask & BIO_WAM_LOWERSPEED) ||
+			!(weap.AffixMask & BIO_WAM_RAISESPEED);
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		if (!(weap.AffixMask & BIO_WAM_LOWERSPEED))
+			weap.LowerSpeed += Modifier;
+		if (!(weap.AffixMask & BIO_WAM_RAISESPEED))
+			weap.RaiseSpeed += Modifier;
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		if (!(weap.AffixMask & BIO_WAM_LOWERSPEED))
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_WAFX_SWITCHSPEED_TOSTR_LOWER"),
+				Modifier > 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				(float(Modifier) / float(weap.LowerSpeed)) * 100.0,
+				StringTable.Localize(Modifier > 0 ? "$BIO_FASTER" : "$BIO_SLOWER")));	
+		}
+
+		if (!(weap.AffixMask & BIO_WAM_RAISESPEED))
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_WAFX_SWITCHSPEED_TOSTR_RAISE"),
+				Modifier > 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+				(float(Modifier) / float(weap.RaiseSpeed)) * 100.0,
+				StringTable.Localize(Modifier > 0 ? "$BIO_FASTER" : "$BIO_SLOWER")));
+		}
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_SWITCHSPEED_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_SWITCHSPEED;
+	}
+}
+
+class BIO_WAfx_Kickback : BIO_WeaponAffix
+{
+	int Modifier;
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		Modifier = Random(200, 400);
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return !(weap.AffixMask & BIO_WAM_KICKBACK);
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		weap.Kickback += Modifier;
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_WAFX_KICKBACK_TOSTR"),
+			Modifier > 0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+			(float(Modifier) / float(weap.Kickback)) * 100.0,
+			StringTable.Localize(Modifier > 0 ? "$BIO_MORE" : "$BIO_LESS")));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_KICKBACK_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_KICKBACK;
+	}
+}
