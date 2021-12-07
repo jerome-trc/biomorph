@@ -61,6 +61,7 @@ class BIO_Projectile : Actor abstract
 		Projectile;
 
 		Tag "$BIO_ROUND_TAG";
+		BounceCount 4;
 		
 		BIO_Projectile.MetaFlags BIO_FTMF_NONE;
 		BIO_Projectile.Acceleration 1.0;
