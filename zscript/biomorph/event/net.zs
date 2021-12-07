@@ -344,6 +344,7 @@ extend class BIO_EventHandler
 
 		weap.ResetStats();
 		weap.ApplyAllAffixes();
+		weap.OnWeaponChange();
 
 		Console.Printf(Biomorph.LOGPFX_INFO ..
 			"Removed %s from your current weapon.", wafx_t.GetClassName());
