@@ -50,7 +50,7 @@ class BIO_Projectile : Actor abstract
 	mixin BIO_ProjectileCommon;
 
 	float Acceleration; property Acceleration: Acceleration;
-	bool Seek; property Seek: Seek;
+	int SeekAngle; property SeekAngle: SeekAngle;
 
 	// Set by the firing weapon to point to that 
 	// weapon's own counterpart of this arrays.
@@ -67,7 +67,7 @@ class BIO_Projectile : Actor abstract
 		BIO_Projectile.PluralTag "$BIO_ROUND_TAGS";
 		BIO_Projectile.Splash 0, 0;
 		BIO_Projectile.Shrapnel 0;
-		BIO_Projectile.Seek false;
+		BIO_Projectile.SeekAngle 0;
 	}
 
 	// Overriden so projectiles live long enough to receive their data from the
@@ -102,8 +102,8 @@ class BIO_Projectile : Actor abstract
 			invoker.ProjTravelFunctors[i].Invoke(BIO_Projectile(self));
 
 		A_ScaleVelocity(invoker.Acceleration);
-
-		if (invoker.Seek) A_SeekerMissile(4.0, 4.0, SMF_LOOK);
+		if (invoker.SeekAngle > 0)
+			A_SeekerMissile(invoker.SeekAngle, invoker.SeekAngle * 1.6, SMF_LOOK);
 	}
 
 	// Invoked before `A_ProjectileDeath()` does anything else.

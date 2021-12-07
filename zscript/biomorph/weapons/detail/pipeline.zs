@@ -150,6 +150,26 @@ class BIO_WeaponPipeline play
 		return FireFunctor.AsConst();
 	}
 
+	bool CanFireProjectiles() const
+	{
+		return FireFunctor != null && (FireFunctor.GetType() & BIO_FFT_PROJECTILE);
+	}
+
+	bool CanFirePuffs() const
+	{
+		return FireFunctor != null && (FireFunctor.GetType() & BIO_FFT_PUFF);
+	}
+
+	bool CanFireRails() const
+	{
+		return FireFunctor != null && (FireFunctor.GetType() & BIO_FFT_RAIL);
+	}
+
+	bool FireFunctorMutable() const
+	{
+		return !(Mask & BIO_WPM_FIREFUNCTOR);
+	}
+
 	BIO_FireFunctor GetFireFunctor()
 	{
 		if (Mask & BIO_WPM_FIREFUNCTOR) return null;
@@ -184,7 +204,7 @@ class BIO_WeaponPipeline play
 		if (subClass)
 			sameType = FireType is curFT;
 		else
-			sameType = FireType != curFT;
+			sameType = FireType == curFT;
 
 		return FireTypeIsDefault() && !(Mask & BIO_WPM_FIRETYPE) && sameType;
 	}
@@ -203,7 +223,7 @@ class BIO_WeaponPipeline play
 		if (subClass)
 			sameType = FireType is newFT;
 		else
-			sameType = FireType != newFT;
+			sameType = FireType == newFT;
 
 		return FireTypeIsDefault() && !(Mask & BIO_WPM_FIRETYPE) && !sameType;
 	}
@@ -250,7 +270,7 @@ class BIO_WeaponPipeline play
 
 	bool DamageMutable() const
 	{
-		return !(Mask & BIO_WPM_DAMAGEVALS);
+		return !(Mask & BIO_WPM_DAMAGEVALS) && ExportsDamageValues();
 	}
 
 	bool ExportsDamageValues() const
@@ -302,6 +322,19 @@ class BIO_WeaponPipeline play
 		}
 	}
 
+	void MultiplyAllDamage(float multi)
+	{
+		if (Mask & BIO_WPM_DAMAGEVALS) return;
+
+		Array<int> vals;
+		GetDamageValues(vals);
+
+		for (uint i = 0; i < vals.Size(); i++)
+			vals[i] *= multi;
+
+		SetDamageValues(vals);
+	}
+
 	bool DealsAnyDamage() const
 	{
 		Array<int> vals;
@@ -336,6 +369,8 @@ class BIO_WeaponPipeline play
 	int GetSplashDamage() const { return SplashDamage; }
 	int GetSplashRadius() const { return SplashRadius; }
 
+	bool SplashMutable() const { return Mask & BIO_WPM_SPLASH; }
+
 	void SetSplash(int damage, int radius)
 	{
 		if (Mask & BIO_WPM_SPLASH) return;
@@ -347,6 +382,11 @@ class BIO_WeaponPipeline play
 	float GetHSpread() const { return HSpread; }
 	float GetVSpread() const { return VSpread; }
 	bool HasAnySpread() const { return HSpread > 0.0 || VSpread > 0.0; }
+
+	bool SpreadMutable() const
+	{
+		return !(Mask & BIO_WPM_HSPREAD) || !(Mask & BIO_WPM_VSPREAD);
+	}
 
 	void SetSpread(float hSpr, float vSpr)
 	{

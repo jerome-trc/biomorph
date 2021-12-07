@@ -10,7 +10,7 @@ class BIO_Utils abstract
 	// Only effective on single words.
 	static string Capitalize(string input)
 	{
-		return input.Left(1).MakeUpper() .. mut.Mid(1);
+		return input.Left(1).MakeUpper() .. input.Mid(1);
 	}
 
 	// The first return value is the first element in the array to be the max.

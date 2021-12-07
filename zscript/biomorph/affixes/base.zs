@@ -25,6 +25,9 @@ enum BIO_WeaponAffixFlags : uint16
 	BIO_WAF_MAGSIZE = 1 << 10,
 	BIO_WAF_MAGAZINE = 1 << 11, // Adds or removes rounds
 	BIO_WAF_ALERT = 1 << 12,
+	BIO_WAF_SWITCHSPEED = 1 << 13,
+	BIO_WAF_KICKBACK = 1 << 14,
+	BIO_WAF_CRIT = 1 << 15,
 	BIO_WAF_ALL = uint16.MAX
 }
 
