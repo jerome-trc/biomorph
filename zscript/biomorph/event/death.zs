@@ -61,6 +61,7 @@ extend class BIO_EventHandler
 			{
 				let weap = BIO_Weapon(spawned);
 				weap.RandomizeAffixes();
+				weap.OnWeaponChange();
 				weap.SetState(weap.FindState("Spawn"));
 			}
 		}
