@@ -673,7 +673,7 @@ class BIO_Weapon : DoomWeapon abstract
 			string suffix = "";
 			
 			if (UniqueSuffix.Length() > 0)
-				suffix = " " .. UniqueSuffix;
+				suffix = " " .. StringTable.Localize(UniqueSuffix);
 			else if (UniqueBase != null)
 				suffix = " " .. GetDefaultByType(UniqueBase).GetTag();
 
