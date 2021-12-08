@@ -186,17 +186,20 @@ class BIO_FTDF_BFGSpray : BIO_FTDeathFunctor
 
 	final override void InvokeTrue(BIO_Projectile proj) const
 	{
-		proj.A_BFGSpray(numRays: RayCount, defDamage: Random(MinDamage, MaxDamage));
+		proj.A_BFGSpray(numRays: RayCount,
+			defDamage: Random(MinDamage, MaxDamage) * proj.DamageMultiply);
 	}
 
 	final override void InvokeFast(BIO_FastProjectile proj) const
 	{
-		proj.A_BFGSpray(numRays: RayCount, defDamage: Random(MinDamage, MaxDamage));
+		proj.A_BFGSpray(numRays: RayCount,
+			defDamage: Random(MinDamage, MaxDamage) * proj.DamageMultiply);
 	}
 
 	final override void InvokePuff(BIO_Puff puff) const
 	{
-		puff.A_BFGSpray(numRays: RayCount, defDamage: Random(MinDamage, MaxDamage));
+		puff.A_BFGSpray(numRays: RayCount,
+			defDamage: Random(MinDamage, MaxDamage) * puff.DamageMultiply);
 	}
 
 	final override void ToString(in out Array<string> readout) const

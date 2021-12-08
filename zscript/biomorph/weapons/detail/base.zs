@@ -1274,10 +1274,13 @@ class BIO_Weapon : DoomWeapon abstract
 		return misl;
 	}
 
-	// `bulletDmg` is filled with whatever actual damage the
-	//  bullet dealt if it hit something (0 if it hit nothing).
+	/* 	This always returns a puff; if one of `puff_t` doesn't get spawned, a fake
+		stand-in will be spawned in its place. This fake puff lasts 2 tics, has
+		the hit thing in its `Target` field, the real damage dealt in its `Damage` field,
+		and `puff_t`'s default damage type.
+	*/ 
 	Actor BIO_FireBullet(double spread_xy, double spread_z, int numBullets,
-		in out int bulletDmg, Class<Actor> puff_t, int flags = 1, double range = 0.0,
+		int bulletDmg, Class<Actor> puff_t, int flags = 1, double range = 0.0,
 		Class<Actor> missile = null, double spawnHeight = 32.0, double spawnOfs_xy = 0.0)
 	{
 		int i = 0;
@@ -1300,9 +1303,19 @@ class BIO_Weapon : DoomWeapon abstract
 				damage *= random[CABullet](1, 3);
 
 			Actor puff = null; int realDmg = -1;
-			[puff, realDmg] = Owner.LineAttack(
-				bAngle, range, bSlope, damage, 'Hitscan', puff_t, laFlags, t);
-			bulletDmg = realDmg;
+			[puff, realDmg] = Owner.LineAttack(bAngle, range,
+				bSlope, damage, 'Hitscan', puff_t, laFlags, t);
+			
+			if (puff == null)
+			{
+				FLineTraceData ltd;
+				LineTrace(bAngle, range, bSlope, TRF_NONE, data: ltd);
+				puff = Actor.Spawn('BIO_FakePuff', ltd.HitLocation);
+				puff.DamageType = GetDefaultByType(puff_t).DamageType;
+				puff.Target = t.LineTarget;
+			}
+
+			puff.SetDamage(realDmg);
 
 			if (missile != null)
 			{
@@ -1334,7 +1347,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 			return puff;
 		}
-		else 
+		else // `numBullets` -1; all bullets spread
 		{
 			double pAngle = bAngle;
 			double slope = bSlope;
@@ -1358,8 +1371,17 @@ class BIO_Weapon : DoomWeapon abstract
 			Actor puff = null; int realDmg = -1;
 			[puff, realDmg] = Owner.LineAttack(pAngle, range, 
 				slope, damage, 'Hitscan', puff_t, laflags, t);
-			bulletDmg = realDmg;
 
+			if (puff == null)
+			{
+				FLineTraceData ltd;
+				LineTrace(pAngle, range, slope, TRF_NONE, data: ltd);
+				puff = Actor.Spawn('BIO_FakePuff', ltd.HitLocation);
+				puff.DamageType = GetDefaultByType(puff_t).DamageType;
+				puff.Target = t.LineTarget;
+			}
+
+			puff.SetDamage(realDmg);
 			if (missile == null) return puff;
 
 			bool temp = false;
