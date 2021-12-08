@@ -261,8 +261,7 @@ class BIO_HitDamageFunctor play abstract
 		Actor target, in out int damage, name dmgType) const {}
 	virtual void InvokeFast(BIO_FastProjectile proj,
 		Actor target, in out int damage, name dmgType) const {}
-	virtual void InvokePuff(BIO_Puff puff,
-		Actor target, int damage, name dmgType) const {}
+	virtual void InvokePuff(BIO_Puff puff) const {}
 
 	virtual void GetDamageValues(in out Array<int> damages) const {}
 	virtual void SetDamageValues(in out Array<int> damages) {}

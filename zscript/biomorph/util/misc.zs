@@ -132,3 +132,28 @@ class BIO_Utils abstract
 			return arr[0], arr[1];
 	}
 }
+
+const LAF_NONE = 0;
+const TRF_NONE = 0;
+
+class BIO_FakePuff : BIO_Puff
+{
+	Default
+	{
+		+NOCLIP
+		+NOGRAVITY
+		+NOINTERACTION
+		+NOTIMEFREEZE
+		+NOTONAUTOMAP
+		
+		Height 6.0;
+		Radius 6.0;
+	}
+
+    States
+    {
+    Spawn:
+	    TNT1 AA 1;
+        Stop;
+    }
+}

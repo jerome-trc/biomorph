@@ -88,7 +88,7 @@ class BIO_WeaponPipeline play
 
 			if (output == null) continue;
 
-			if (output is 'BIO_Puff')
+			if (output is 'BIO_Puff') // Might be of `FireType`, might be `FakePuff`
 			{
 				let puff = BIO_Puff(output);
 
@@ -97,12 +97,8 @@ class BIO_WeaponPipeline play
 				for (uint i = 0; i < weap.Affixes.Size(); i++)
 					weap.Affixes[i].OnPuffFired(weap, puff);
 
-				// Assume here that the fire functor has changed fire 
-				// data's `Damage` field to contain the dealt damage
-
-				for (uint i = 0; i < FTDeathFunctors.Size(); i++)
-					HitDamageFunctors[i].InvokePuff(puff,
-						puff.Target, fireData.Damage, puff.DamageType);
+				for (uint i = 0; i < HitDamageFunctors.Size(); i++)
+					HitDamageFunctors[i].InvokePuff(puff);
 				for (uint i = 0; i < FTDeathFunctors.Size(); i++)
 					FTDeathFunctors[i].InvokePuff(puff);
 			}
@@ -184,11 +180,7 @@ class BIO_WeaponPipeline play
 	}
 
 	Class<Actor> GetFireType() const { return FireType; }
-
-	bool FireTypeIsDefault() const
-	{
-		return FireType == Defaults.FireType;
-	}
+	bool FireTypeIsDefault() const { return FireType == Defaults.FireType; }
 	
 	/*	Checks that the fire type hasn't already been changed, isn't masked 
 		against modification, and is currently set to a given class. If
