@@ -277,6 +277,9 @@
 	BIO_WAFX_STRAFEDAMAGE_TAG = "Flanking";
 	BIO_WAFX_STRAFEDAMAGE_TOSTR = "%s%.1f%% %s damage when strafing";
 
+	BIO_WAFX_DEMONSLAYER_TAG = "Demonslayer";
+	BIO_WAFX_DEMONSLAYER_TOSTR = "\c[Green]400% damage to Legendary enemies";
+
 	BIO_WAFX_PLASMA_TAG = "Plasmatic";
 	BIO_WAFX_PLASMA_TOSTR = "Fires balls of plasma with a wide damage range";
 	

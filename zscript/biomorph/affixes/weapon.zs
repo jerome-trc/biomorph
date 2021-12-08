@@ -279,6 +279,90 @@ class BIO_WAfx_StrafeDamage : BIO_WeaponAffix
 	}
 }
 
+// LegenDoom(Lite) exclusive. 400% damage to Legendary enemies.
+class BIO_WAfx_DemonSlayer : BIO_WeaponAffix
+{
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.DealsAnyDamage();
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			weap.Pipelines[i].PushHitDamageFunctor(new('BIO_HDF_DemonSlayer'));
+		}
+	}
+
+	final override void ToString(in out Array<string> strings, readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_DEMONSLAYER_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_DEMONSLAYER_TAG");
+	}
+
+	final override bool CanGenerate() const
+	{
+		name ldToken_tn = 'LDLegendaryMonsterToken';
+		Class<Inventory> ldToken_t = ldToken_tn;
+		return ldToken_t != null;
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE;
+	}
+}
+
+class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
+{
+	final override void InvokeTrue(BIO_Projectile proj,
+		Actor target, in out int damage, name dmgType) const
+	{
+		if (target == null) return;
+		
+		if (BIO_Utils.TryFindInv(target, "LDLegendaryMonsterToken"))
+		{
+			damage *= 4;
+			proj.DamageType = 'DemonSlayer';
+			proj.DamageMultiply = 4.0;
+		}
+	}
+
+	final override void InvokeFast(BIO_FastProjectile proj,
+		Actor target, in out int damage, name dmgType) const
+	{
+		if (target == null) return;
+
+		if (BIO_Utils.TryFindInv(target, "LDLegendaryMonsterToken"))
+		{
+			damage *= 4;
+			proj.DamageType = 'DemonSlayer';
+			proj.DamageMultiply = 4.0;
+		}
+	}
+
+	final override void InvokePuff(BIO_Puff puff) const
+	{
+		if (puff.Target == null) return;
+
+		if (BIO_Utils.TryFindInv(puff.Target, "LDLegendaryMonsterToken"))
+		{
+			puff.Target.DamageMObj(puff, null, puff.Damage * 3, 'DemonSlayer');
+			puff.DamageMultiply = 4.0;
+		}
+	}
+	
+	override void ToString(in out Array<string> readout) const
+	{
+		// Nothing needed here; the affix to-string tells all
+	}
+}
+
 // New fire type ===============================================================
 
 class BIO_WAfx_Plasma : BIO_WeaponAffix
