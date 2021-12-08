@@ -12,7 +12,7 @@ class BIO_BulletProj : BIO_FastProjectile
 		Tag "$BIO_BULLET_TAG";
 
 		BIO_FastProjectile.MetaFlags BIO_FTMF_BALLISTIC;
-		BIO_FastProjectile.PluralTag "$BIO_BULLETS_TAG";
+		BIO_FastProjectile.PluralTag "$BIO_BULLET_TAG_PLURAL";
 		BIO_FastProjectile.PuffCounterpart 'BIO_Bullet';
 	}
 
@@ -37,7 +37,7 @@ class BIO_ShotPelletProj : BIO_BulletProj
 	Default
 	{
 		Tag "$BIO_SHOTPELLET_TAG";
-		BIO_FastProjectile.PluralTag "$BIO_SHOTPELLETS_TAG";
+		BIO_FastProjectile.PluralTag "$BIO_SHOTPELLET_TAG_PLURAL";
 		BIO_FastProjectile.PuffCounterpart 'BIO_ShotPellet';
 	}
 }
@@ -47,7 +47,7 @@ class BIO_SlugProj : BIO_BulletProj
 	Default
 	{
 		Tag "$BIO_SLUG_TAG";
-		BIO_FastProjectile.PluralTag "$BIO_SLUGS_TAG";
+		BIO_FastProjectile.PluralTag "$BIO_SLUG_TAG_PLURAL";
 		BIO_FastProjectile.PuffCounterpart 'BIO_Slug';
 	}
 }
@@ -71,7 +71,7 @@ class BIO_Rocket : BIO_Projectile
 		Speed 20;
 		Tag "$BIO_ROCKET_TAG";
 
-		BIO_Projectile.PluralTag "$BIO_ROCKETS_TAG";
+		BIO_Projectile.PluralTag "$BIO_ROCKET_TAG_PLURAL";
 		BIO_Projectile.Splash 128, 128;
 	}
 
@@ -103,7 +103,7 @@ class BIO_MiniMissile : BIO_Rocket
 		Scale 0.3;
 		Speed 50;
 
-		BIO_Projectile.PluralTag "$BIO_MINIMISSILES_TAG";
+		BIO_Projectile.PluralTag "$BIO_MINIMISSILE_TAG_PLURAL";
 		BIO_Projectile.Splash 32, 32;
 	}
 }
@@ -125,7 +125,7 @@ class BIO_PlasmaBall : BIO_Projectile
 		Speed 25;
 		Tag "$BIO_PLASMABALL_TAG";
 
-		BIO_Projectile.PluralTag "$BIO_PLASMABALLS_TAG";
+		BIO_Projectile.PluralTag "$BIO_PLASMABALL_TAG_PLURAL";
 		BIO_Projectile.MetaFlags BIO_FTMF_ENERGY;
 	}
 
@@ -160,7 +160,7 @@ class BIO_BFGBall : BIO_Projectile
 		Speed 25;
 		Tag "$BIO_BFGBALL_TAG";
 
-		BIO_Projectile.PluralTag "$BIO_BFGBALLS_TAG";
+		BIO_Projectile.PluralTag "$BIO_BFGBALL_TAG_PLURAL";
 		BIO_Projectile.MetaFlags BIO_FTMF_ENERGY;
 	}
 
@@ -229,7 +229,7 @@ class BIO_Nail : BIO_Projectile
 		Radius 11;
 		Speed 60;
 
-		BIO_Projectile.PluralTag "$BIO_NAILS_TAG";
+		BIO_Projectile.PluralTag "$BIO_NAIL_TAG_PLURAL";
 		BIO_Projectile.Shrapnel 2;
 	}
 
@@ -259,7 +259,7 @@ class BIO_PlasmaGlobule : BIO_PlasmaBall
 		Tag "$BIO_PLASMAGLOBULE_TAG";
 		Scale 0.4;
 
-		BIO_Projectile.PluralTag "$BIO_PLASMAGLOBULES_TAG";
+		BIO_Projectile.PluralTag "$BIO_PLASMAGLOBULE_TAG_PLURAL";
 		BIO_Projectile.Splash 48, 48;
 	}
 

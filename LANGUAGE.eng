@@ -152,40 +152,40 @@
 	BIO_ROUND_TAGS = "rounds";
 
 	BIO_MELEEHIT_TAG = "hit";
-	BIO_MELEEHITS_TAG = "hits";
+	BIO_MELEEHIT_TAG_PLURAL = "hits";
 
 	BIO_BULLET_TAG = "bullet";
-	BIO_BULLETS_TAG = "bullets";
+	BIO_BULLET_TAG_PLURAL = "bullets";
 
 	BIO_SHOTPELLET_TAG = "pellet";
-	BIO_SHOTPELLETS_TAG = "pellets";
+	BIO_SHOTPELLET_TAG_PLURAL = "pellets";
 
 	BIO_SLUG_TAG = "slug";
-	BIO_SLUGS_TAG = "slugs";
+	BIO_SLUG_TAG_PLURAL = "slugs";
 
 	BIO_ROCKET_TAG = "rocket";
-	BIO_ROCKETS_TAG = "rockets";
+	BIO_ROCKET_TAG_PLURAL = "rockets";
 
 	BIO_GRENADE_TAG = "grenade";
-	BIO_GRENADES_TAG = "grenades";
+	BIO_GRENADE_TAG_PLURAL = "grenades";
 
 	BIO_MINIMISSILE_TAG = "mini-missile";
-	BIO_MINIMISSILES_TAG = "mini-missiles";
+	BIO_MINIMISSILE_TAG_PLURAL = "mini-missiles";
 	
 	BIO_PLASMABALL_TAG = "plasma ball";
-	BIO_PLASMABALLS_TAG = "plasma balls";
+	BIO_PLASMABALL_TAG_PLURAL = "plasma balls";
 	
 	BIO_BFGBALL_TAG = "ball";
-	BIO_BFGBALLS_TAG = "balls";
+	BIO_BFGBALL_TAG_PLURAL = "balls";
 
 	BIO_NAIL_TAG = "nail";
-	BIO_NAILS_TAG = "nails";
+	BIO_NAIL_TAG_PLURAL = "nails";
 
 	BIO_PROJEXTRA_TAG_BFGRAY = "ray";
 	BIO_PROJEXTRA_TAG_BFGRAYS = "rays";
 
 	BIO_PLASMAGLOBULE_TAG = "plasma globule";
-	BIO_PLASMAGLOBULES_TAG = "plasma globules";
+	BIO_PLASMAGLOBULE_TAG_PLURAL = "plasma globules";
 
 	BIO_HDF_ENEMYHEALTHDMG =
 		"%.1f%% of enemy health added to damage";
