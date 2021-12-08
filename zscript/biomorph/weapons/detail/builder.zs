@@ -280,7 +280,7 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder FireSound(sound fireSound)
 	{
-		Pipeline.SetSound(fireSound);
+		Pipeline.SetFireSound(fireSound);
 		return self;
 	}
 
