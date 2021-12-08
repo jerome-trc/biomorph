@@ -367,8 +367,6 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 
 class BIO_WAfx_Plasma : BIO_WeaponAffix
 {
-	final override void Init(readOnly<BIO_Weapon> weap) {}
-
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
@@ -493,8 +491,6 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 
 class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 {
-	final override void Init(readOnly<BIO_Weapon> weap) {}
-
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
@@ -670,8 +666,6 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 
 class BIO_WAfx_ProjBounce : BIO_WeaponAffix
 {
-	final override void Init(readOnly<BIO_Weapon> weap) {}
-
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
 		return weap.FiresTrueProjectile();
