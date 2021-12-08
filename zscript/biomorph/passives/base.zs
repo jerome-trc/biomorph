@@ -12,7 +12,7 @@ class BIO_Passive play abstract
 }
 
 // Functor invocations never consider `Count`. The callbacks have the
-// responsibility to read it and use or discard as appropriate.
+// responsibility to read and use or ignore it as they see fit.
 
 class BIO_PlayerFunctor play abstract { uint Count; }
 
