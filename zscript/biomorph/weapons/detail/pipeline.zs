@@ -412,7 +412,7 @@ class BIO_WeaponPipeline play
 		AlertFlags = flags;
 	}
 
-	void SetSound(sound fireSnd) { FireSound = fireSnd; }
+	void SetFireSound(sound fireSnd) { FireSound = fireSnd; }
 	sound GetFireSound() const { return FireSound; }
 
 	void PushReadoutString(string str)
