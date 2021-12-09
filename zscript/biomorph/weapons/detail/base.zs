@@ -368,6 +368,7 @@ class BIO_Weapon : DoomWeapon abstract
 		
 		let bioPlayer = BIO_Player(activator);
 		if (bioPlayer == null) return;
+		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 0.2);
 
 		if (Pipelines.Size() < 1) Init();
 
@@ -384,7 +385,7 @@ class BIO_Weapon : DoomWeapon abstract
 				output.AppendFormat("\cj%s\n", AffixReadout[i]);
 		}
 
-		output.DeleteLastCharacter();
+		output.DeleteLastCharacter(); // Trim off trailing newline
 		bioPlayer.A_Print(output, 5.0);
 	}
 
