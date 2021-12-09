@@ -29,9 +29,8 @@ class BIO_WeaponPipelineBuilder play
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(fireCount);
 
-		let dmgFunc = new('BIO_DmgFunc_Default');
-		dmgFunc.CustomSet(minDamage, maxDamage);
-		Pipeline.SetDamageFunctor(dmgFunc);
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Default')
+			.CustomSet(minDamage, maxDamage));
 
 		Pipeline.SetSpread(hSpread, vSpread);
 		return self;
@@ -54,9 +53,8 @@ class BIO_WeaponPipelineBuilder play
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(fireCount);
 
-		let dmgFunc = new('BIO_DmgFunc_Default');
-		dmgFunc.CustomSet(minDamage, maxDamage);
-		Pipeline.SetDamageFunctor(dmgFunc);
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Default')
+			.CustomSet(minDamage, maxDamage));
 
 		Pipeline.SetSpread(hSpread, vSpread);
 		return self;
@@ -77,9 +75,8 @@ class BIO_WeaponPipelineBuilder play
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(hitCount);
 		
-		let dmgFunc = new('BIO_DmgFunc_Default');
-		dmgFunc.CustomSet(minDamage, maxDamage);
-		Pipeline.SetDamageFunctor(dmgFunc);
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Default')
+			.CustomSet(minDamage, maxDamage));
 
 		return self;
 	}
@@ -99,9 +96,8 @@ class BIO_WeaponPipelineBuilder play
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(hitCount);
 		
-		let dmgFunc = new('BIO_DmgFunc_Default');
-		dmgFunc.CustomSet(minDamage, maxDamage);
-		Pipeline.SetDamageFunctor(dmgFunc);
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Default')
+			.CustomSet(minDamage, maxDamage));
 
 		return self;
 	}
@@ -127,9 +123,8 @@ class BIO_WeaponPipelineBuilder play
 		sprayFunctor.MaxDamage = maxRayDmg;
 		Pipeline.PushFiredThingDeathFunctor(sprayFunctor);
 
-		let dmgFunc = new('BIO_DmgFunc_Default');
-		dmgFunc.CustomSet(minDamage, maxDamage);
-		Pipeline.SetDamageFunctor(dmgFunc);
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Default')
+			.CustomSet(minDamage, maxDamage));
 
 		Pipeline.SetSpread(hSpread, vSpread);
 		return self;
@@ -213,36 +208,29 @@ class BIO_WeaponPipelineBuilder play
 	BIO_WeaponPipelineBuilder BasicDamage(int minDmg, int maxDmg)
 	{
 		CheckDamageFunctorRestricted();
-		let dmgFunc = new('BIO_DmgFunc_Default');
-		dmgFunc.CustomSet(minDmg, maxDmg);
-		Pipeline.SetDamageFunctor(dmgFunc);
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Default')
+			.CustomSet(minDmg, maxDmg));
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder X1D3Damage(int baseline)
 	{
 		CheckDamageFunctorRestricted();
-		let dmgFunc = new('BIO_DmgFunc_1DX');
-		dmgFunc.CustomSet(baseline, 3);
-		Pipeline.SetDamageFunctor(dmgFunc);
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_1DX').CustomSet(baseline, 3));
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder X1D8Damage(int baseline)
 	{
 		CheckDamageFunctorRestricted();
-		let dmgFunc = new('BIO_DmgFunc_1Dx');
-		dmgFunc.CustomSet(baseline, 8);
-		Pipeline.SetDamageFunctor(dmgFunc);
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_1Dx').CustomSet(baseline, 8));
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder SingleDamage(int dmg)
 	{
 		CheckDamageFunctorRestricted();
-		let dmgFunc = new('BIO_DmgFunc_Single');
-		dmgFunc.CustomSet(dmg);
-		Pipeline.SetDamageFunctor(dmgFunc);
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Single').CustomSet(dmg));
 		return self;
 	}
 

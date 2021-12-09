@@ -36,10 +36,11 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 		Maximum = vals[1];
 	}
 
-	void CustomSet(int minDmg, int maxDmg)
+	BIO_DmgFunc_Default CustomSet(int minDmg, int maxDmg)
 	{
 		Minimum = minDmg;
 		Maximum = maxDmg;
+		return self;
 	}
 
 	override string ToString(BIO_DamageFunctor def) const
@@ -74,10 +75,11 @@ class BIO_DmgFunc_1DX : BIO_DamageFunctor
 		return Baseline * Random(1, MaxFactor);
 	}
 
-	void CustomSet(int base, int maxFac)
+	BIO_DmgFunc_1DX CustomSet(int base, int maxFac)
 	{
 		Baseline = base;
 		MaxFactor = maxFac;
+		return self;
 	}
 
 	override void GetValues(in out Array<int> vals) const
@@ -122,7 +124,7 @@ class BIO_DmgFunc_Single : BIO_DamageFunctor
 		Value = vals[0];
 	}
 
-	void CustomSet(int val) { Value = val; }
+	BIO_DmgFunc_Single CustomSet(int val) { Value = val; return self; }
 
 	override string ToString(BIO_DamageFunctor def) const
 	{
