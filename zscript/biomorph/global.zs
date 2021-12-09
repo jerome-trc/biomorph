@@ -254,6 +254,14 @@ class BIO_GlobalData : Thinker
 
 	static BIO_GlobalData Create()
 	{
+		let iter = ThinkerIterator.Create('BIO_GlobalData', STAT_STATIC);
+		if (iter.Next(true) != null)
+		{
+			Console.Printf(Biomorph.LOGPFX_WARN ..
+				"Attempted to re-create global data.");
+			return null;
+		}
+
 		uint ms = MsTime();
 		let ret = new('BIO_GlobalData');
 		ret.ChangeStatNum(STAT_STATIC);
