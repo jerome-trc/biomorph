@@ -406,6 +406,7 @@
 // Quit messages ===============================================================
 
 	BIO_QUITMSG_CRIT = "\cjCritical strike affixes can only roll on pistols.";
+	BIO_QUITMSG_EXAMINE = "\cjPress the \cnUse\cj button on a gear item to examine its stats.";
 	BIO_QUITMSG_GRADES = "\cjAll gear fits into one of three grades: "
 		"Standard, \c[Spec]Specialty\cj, and \c[Clsf]Classified\cj.";
 	BIO_QUITMSG_LIFESTEAL = "\cjLifesteal affixes can only roll on melee weapons.";
