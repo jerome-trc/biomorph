@@ -30,6 +30,11 @@ class BIO_CVar abstract
 		return CVar.GetCVar("BIO_multireload", pInfo)
 			.GetInt() == BIO_CV_MRM_AUTORELOAD;
 	}
+
+	static bool StayZoomedAfterReload(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar("BIO_postreloadzoom", pInfo).GetBool();
+	}
 }
 
 enum BIO_CVar_AutoReload : int
