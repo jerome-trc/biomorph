@@ -151,12 +151,13 @@ class BIO_Weapon : DoomWeapon abstract
 	property MinAmmoReserve2: MinAmmoReserve2;
 	property MinAmmoReserves: MinAmmoReserve1, MinAmmoReserve2;
 
-	protected Ammo Magazine1, Magazine2;
-
-	private uint LastPipeline;
 	Array<BIO_WeaponPipeline> Pipelines;
 	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
 	Dictionary Userdata; // Your derived weapon must instantiate this itself.
+	
+	protected Ammo Magazine1, Magazine2;
+	protected bool Zoomed;
+	private uint LastPipeline;
 
 	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
 	Array<string> StatReadout, AffixReadout;
@@ -1539,6 +1540,15 @@ class BIO_Weapon : DoomWeapon abstract
 	
 		if (!(flags & SF_NOPULLIN))
 			bJustAttacked = true;
+	}
+}
+
+class BIO_WeaponZoomCooldown : Powerup
+{
+	Default
+	{
+		Powerup.Duration 15;
+		+INVENTORY.UNTOSSABLE
 	}
 }
 
