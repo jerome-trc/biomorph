@@ -9,7 +9,7 @@ class BIO_Affix play abstract
 	abstract string GetTag() const;
 }
 
-enum BIO_WeaponAffixFlags : uint16
+enum BIO_WeaponAffixFlags : uint
 {
 	BIO_WAF_NONE = 0,
 	BIO_WAF_FIREFUNC = 1 << 0,
@@ -28,7 +28,9 @@ enum BIO_WeaponAffixFlags : uint16
 	BIO_WAF_SWITCHSPEED = 1 << 13,
 	BIO_WAF_KICKBACK = 1 << 14,
 	BIO_WAF_CRIT = 1 << 15,
-	BIO_WAF_ALL = uint16.MAX
+	BIO_WAF_LIFESTEAL = 1 << 16,
+	BIO_WAF_MELEERANGE = 1 << 17,
+	BIO_WAF_ALL = uint.MAX
 }
 
 class BIO_WeaponAffix : BIO_Affix abstract

@@ -157,6 +157,16 @@ class BIO_Recoil_HeavyReload : BIO_RecoilThinker
 	final override float GetPitch(int lifeTic) const { return PITCH_VALUES[lifeTic]; }
 }
 
+class BIO_Recoil_ChainsawIdle : BIO_RecoilThinker
+{
+	static const float[] PITCH_VALUES = {
+		-0.05, -0.2, -0.05, -0.02, 0.05, 0.2, 0.05, 0.02
+	};
+
+	final override void Init() { TimeToLive = PITCH_VALUES.Size(); }
+	final override float GetPitch(int lifeTic) const { return PITCH_VALUES[lifeTic]; }
+}
+
 /*
 First try at a purely-procedural implementation, kept as an artifact.
 

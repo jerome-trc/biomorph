@@ -303,11 +303,23 @@ class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 	}
 }
 
-class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
+class BIO_FireFunc_Saw : BIO_FireFunc_Melee
 {
+	ESawFlags Flags;
+	sound FullSound, HitSound;
+
+	override void Init()
+	{
+		if (FullSound == "")
+			FullSound = "weapons/sawfull";
+		if (HitSound == "")
+			HitSound = "weapons/sawhit";
+	}
+
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
-		weap.BIO_Saw(fireData.FireType, fireData.Damage, Range, Lifesteal);
+		weap.BIO_Saw(FullSound, HitSound, fireData.Damage,
+			fireData.FireType, Flags, Range, Lifesteal);
 		return null;
 	}
 
@@ -316,7 +328,7 @@ class BIO_FireFunc_Chainsaw : BIO_FireFunc_Melee
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
-		readout.Push(StringTable.Localize("$BIO_FIREFUNC_CHAINSAW"));
+		readout.Push(StringTable.Localize("$BIO_FIREFUNC_SAW"));
 	}
 
 	override BIO_FireFunctorType GetType() const

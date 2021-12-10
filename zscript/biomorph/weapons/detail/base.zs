@@ -827,6 +827,17 @@ class BIO_Weapon : DoomWeapon abstract
 		return false;
 	}
 
+	// Returns `true` if any of this weapon's pipelines has a 
+	// fire functor inheriting from `BIO_FireFunc_Melee`.
+	bool HasMeleePipeline() const
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].IsMelee())
+				return true;
+
+		return false;
+	}
+
 	bool DamageMutable() const
 	{
 		for (uint i = 0; i < Pipelines.Size(); i++)
@@ -1486,9 +1497,9 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	void BIO_Saw(Class<Actor> puff_t, int dmg, float range, float lifestealPercent)
+	void BIO_Saw(sound fullSound, sound hitSound, int dmg, Class<Actor> puff_t,
+		ESawFlags flags, float range, float lifestealPercent)
 	{
-		int flags = 0; // TODO: Sort this out
 		FTranslatedLineTarget t;
 
 		double ang = Owner.Angle + 2.8125 * (Random2[Saw]() / 255.0);
@@ -1505,7 +1516,7 @@ class BIO_Weapon : DoomWeapon abstract
 			if ((flags & SF_RANDOMLIGHTMISS) && (Random[Saw]() > 64))
 				Player.ExtraLight = !Player.ExtraLight;
 			
-			Owner.A_StartSound("weapons/sawfull", CHAN_WEAPON);
+			Owner.A_StartSound(fullSound, CHAN_WEAPON);
 			return;
 		}
 
@@ -1524,24 +1535,24 @@ class BIO_Weapon : DoomWeapon abstract
 		if (!t.LineTarget.bDontDrain)
 			ApplyLifeSteal(lifestealPercent, actualDmg);
 
-		Owner.A_StartSound("weapons/sawhit", CHAN_WEAPON);
+		Owner.A_StartSound(hitSound, CHAN_WEAPON);
 
 		// Turn to face target
 		if (!(flags & SF_NOTURN))
 		{
-			double angleDiff = DeltaAngle(Owner.Angle, t.angleFromSource);
+			double angleDiff = DeltaAngle(Owner.Angle, t.AngleFromSource);
 
 			if (angleDiff < 0.0)
 			{
 				if (angleDiff < -4.5)
-					Owner.Angle = t.angleFromSource + 90.0 / 21;
+					Owner.Angle = t.AngleFromSource + 90.0 / 21;
 				else
 					Owner.Angle -= 4.5;
 			}
 			else
 			{
 				if (angleDiff > 4.5)
-					Owner.Angle = t.angleFromSource - 90.0 / 21;
+					Owner.Angle = t.AngleFromSource - 90.0 / 21;
 				else
 					Owner.Angle += 4.5;
 			}
