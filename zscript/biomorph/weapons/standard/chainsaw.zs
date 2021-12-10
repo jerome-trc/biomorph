@@ -24,7 +24,8 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.SawPipeline('BIO_MeleeHit', 1, 2, 20)
+			.Saw()
+			.BasicDamage(2, 20)
 			.Build());
 	}
 
@@ -36,6 +37,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 	States
 	{
 	Ready:
+		TNT1 A 0 A_PresetRecoil('BIO_Recoil_ChainsawIdle');
 		SAWG CD 4 A_WeaponReady;
 		Loop;
 	Deselect:

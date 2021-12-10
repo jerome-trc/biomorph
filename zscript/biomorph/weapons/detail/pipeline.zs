@@ -166,6 +166,11 @@ class BIO_WeaponPipeline play
 		return !(Mask & BIO_WPM_FIREFUNCTOR);
 	}
 
+	bool IsMelee() const
+	{
+		return FireFunctor is 'BIO_FireFunc_Melee';
+	}
+
 	BIO_FireFunctor GetFireFunctor()
 	{
 		if (Mask & BIO_WPM_FIREFUNCTOR) return null;

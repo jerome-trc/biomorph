@@ -62,7 +62,7 @@
 		"\c[MidGrey]Hits %s%d time(s)";
 	BIO_FIREFUNC_FIST =
 		"\c[MidGrey]Throws a left hook";
-	BIO_FIREFUNC_CHAINSAW =
+	BIO_FIREFUNC_SAW =
 		"\c[MidGrey]Cuts continually";
 	BIO_FIREFUNC_RAIL =
 		"\c[MidGrey]Fires %s%d \c[MidGrey]rail %s%s, spawning %s%s \c[MidGrey]on impact";
@@ -322,12 +322,10 @@
 	BIO_WAFX_RELOADTIME_TOSTR = "Reload time%s: %s%s%.2f seconds";
 
 	BIO_WAFX_MELEERANGE_TAG = "Outreach";
-	BIO_WAFX_MELEERANGE1_TOSTR = "%s%s%.1f\cj range (primary)";
-	BIO_WAFX_MELEERANGE2_TOSTR = "%s%s%.1f\cj range (secondary)";
+	BIO_WAFX_MELEERANGE_TOSTR = "%s%s%.1f\cj range%s";
 
 	BIO_WAFX_LIFESTEAL_TAG = "Parasitic";
-	BIO_WAFX_LIFESTEAL1_TOSTR = "%d%% of primary damage dealt gained as health";
-	BIO_WAFX_LIFESTEAL2_TOSTR = "%d%% of secondary damage dealt gained as health";
+	BIO_WAFX_LIFESTEAL_TOSTR = "\c[Green]%d%% of damage dealt gained as health%s";
 
 	BIO_WAFX_SWITCHSPEED_TAG = "Speedsling";
 	BIO_WAFX_SWITCHSPEED_TOSTR_RAISE = "%s%d%% %s\cj raise speed";

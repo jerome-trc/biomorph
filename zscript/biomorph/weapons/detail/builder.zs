@@ -81,23 +81,22 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder SawPipeline(Class<Actor> fireType = 'BIO_MeleeHit',
-		int hitCount = 1, int minDamage = 2, int maxDamage = 20,
-		float range = SAWRANGE)
+	BIO_WeaponPipelineBuilder Saw(Class<Actor> fireType = 'BIO_MeleeHit',
+		int hitCount = 1, float range = SAWRANGE, ESawFlags flags = 0,
+		sound fullSound = "weapons/sawfull", sound hitSound = "weapons/sawhit")
 	{
 		CheckFireFunctorRestricted();
 		CheckFireTypeRestricted();
 		CheckFireCountRestricted();
-		CheckDamageFunctorRestricted();
 
-		let fireFunc = new('BIO_FireFunc_Chainsaw');
+		let fireFunc = new('BIO_FireFunc_Saw');
 		Pipeline.SetFireFunctor(fireFunc);
 		fireFunc.Range = range;
+		fireFunc.FullSound = fullSound;
+		fireFunc.HitSound = hitSound;
+		fireFunc.Flags = flags;
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(hitCount);
-		
-		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Default')
-			.CustomSet(minDamage, maxDamage));
 
 		return self;
 	}
@@ -251,6 +250,22 @@ class BIO_WeaponPipelineBuilder play
 	{
 		CheckSplashRestricted();
 		Pipeline.SetSplash(damage, radius);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Lifesteal(float lifesteal)
+	{
+		let ff = Pipeline.GetFireFunctor();
+
+		if (!(ff.GetClass() is 'BIO_FireFunc_Melee'))
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Tried to apply lifesteal to a non-melee fire functor (type: %s).",
+				ff.GetClassName());
+			return self;
+		}
+
+		BIO_FireFunc_Melee(ff).Lifesteal = lifesteal;
 		return self;
 	}
 
