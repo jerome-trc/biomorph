@@ -601,6 +601,7 @@ class BIO_WAfx_ProjSeek : BIO_WeaponAffix
 
 	final override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
 	{
+		proj.bSeekerMissile = true;
 		proj.SeekAngle = 4;
 	}
 
