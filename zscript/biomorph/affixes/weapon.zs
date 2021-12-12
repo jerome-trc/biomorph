@@ -982,7 +982,6 @@ class BIO_WAfx_MeleeRange : BIO_WeaponAffix
 	}
 }
 
-
 // Miscellaneous ===============================================================
 
 class BIO_WAfx_SwitchSpeed : BIO_WeaponAffix

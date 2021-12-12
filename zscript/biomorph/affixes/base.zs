@@ -46,6 +46,7 @@ class BIO_WeaponAffix : BIO_Affix abstract
 
 	virtual void OnTick(BIO_Weapon weap) {}
 
+	virtual void ModifyFireCount(BIO_Weapon weap, in out int fireCount) const {}
 	virtual void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const {}
 
 	virtual void OnTrueProjectileFired(BIO_Weapon weap,

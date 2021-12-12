@@ -67,11 +67,18 @@ class BIO_WeaponPipeline play
 
 	void Invoke(BIO_Weapon weap, uint fireFactor = 1, float spreadFactor = 1.0)
 	{
-		for (uint i = 0; i < FireCount * fireFactor; i++)
+		int fc = fireCount * fireFactor;
+
+		for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
+			weap.ImplicitAffixes[i].ModifyFireCount(weap, fc);
+		for (uint i = 0; i < weap.Affixes.Size(); i++)
+			weap.Affixes[i].ModifyFireCount(weap, fc);
+
+		for (uint i = 0; i < fc; i++)
 		{
 			BIO_FireData fireData;
 			fireData.Number = i;
-			fireData.Count = uint(FireCount);
+			fireData.Count = uint(fc);
 			fireData.FireType = FireType;
 			fireData.Damage = Damage.Invoke();
 			fireData.HSpread = HSpread * spreadFactor;
