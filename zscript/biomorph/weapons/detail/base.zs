@@ -490,7 +490,7 @@ class BIO_Weapon : DoomWeapon abstract
 		bool secAmmo = invoker.Pipelines[pipeline].UsesSecondaryAmmo();
 
 		if (!invoker.DepleteAmmo(secAmmo, true,
-			!secAmmo ? invoker.AmmoUse1 : invoker.AmmoUse2 * fireFactor))
+			!secAmmo ? invoker.AmmoUse1 * fireFactor : invoker.AmmoUse2 * fireFactor))
 			return false;
 
 		invoker.Pipelines[pipeline].Invoke(invoker, fireFactor, spreadFactor);
