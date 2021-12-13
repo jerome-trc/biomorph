@@ -73,7 +73,7 @@
 	BIO_FIREFUNC_RAIL_NOTHING =
 		"\c[MidGrey]Fires %s%d \c[MidGrey]rail shots";
 	
-	BIO_DMGFUNC_DEFAULT =
+	BIO_DMGFUNC_RAND =
 		"\c[MidGrey]Damage: %s%d\c[MidGrey] \cu-\c[MidGrey] %s%d";
 	BIO_DMGFUNC_1DX =
 		"\c[MidGrey]Damage: %s%d\c[MidGrey] x (1 - %d)";

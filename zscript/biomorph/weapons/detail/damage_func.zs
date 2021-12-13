@@ -19,7 +19,7 @@ class BIO_DamageFunctor play abstract
 }
 
 // Emits a random number between a minimum and a maximum.
-class BIO_DmgFunc_Default : BIO_DamageFunctor
+class BIO_DmgFunc_Rand : BIO_DamageFunctor
 {
 	protected int Minimum, Maximum;
 
@@ -36,7 +36,7 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 		Maximum = vals[1];
 	}
 
-	BIO_DmgFunc_Default CustomSet(int minDmg, int maxDmg)
+	BIO_DmgFunc_Rand CustomSet(int minDmg, int maxDmg)
 	{
 		Minimum = minDmg;
 		Maximum = maxDmg;
@@ -45,7 +45,7 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 
 	override string ToString(BIO_DamageFunctor def) const
 	{
-		let myDefs = BIO_DmgFunc_Default(def);
+		let myDefs = BIO_DmgFunc_Rand(def);
 		string crEsc_min = "", crEsc_max = "";
 
 		if (myDefs != null)
@@ -59,7 +59,7 @@ class BIO_DmgFunc_Default : BIO_DamageFunctor
 		}
 
 		return String.Format(
-			StringTable.Localize("$BIO_DMGFUNC_DEFAULT"),
+			StringTable.Localize("$BIO_DMGFUNC_RAND"),
 			crEsc_min, Minimum, crEsc_max, Maximum);
 	}
 }
