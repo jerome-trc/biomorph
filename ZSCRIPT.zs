@@ -4,7 +4,14 @@ version "2.4"
 // you can always rely on this class to exist.
 class Biomorph abstract
 {
-	const VERS_STR = "0.0.1";
+	const VERSION_MAJOR = 0;
+	const VERSION_MINOR = 0;
+	const VERSION_PATCH = 1;
+	
+	static string VersionString()
+	{
+		return VERSION_MAJOR .. "." .. VERSION_MINOR .. "." .. VERSION_PATCH;
+	}
 
 	const LOGPFX_INFO = "\cfBiomorph: \c-";
 	const LOGPFX_WARN = "\cfBiomorph: \ck(WARNING)\c- "; // Yellow
