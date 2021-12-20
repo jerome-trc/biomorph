@@ -239,7 +239,6 @@ class BIO_Nail : BIO_Projectile
 		NAIL A 3 A_Travel;
 		Loop;
 	Death:
-		TNT1 A 0;
 		TNT1 A 0 A_ProjectileDeath;
 		TNT1 A 0 A_JumpIf(Tracer != null, 'Death.Stuck');
 	Death.Loop:
