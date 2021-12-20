@@ -289,7 +289,7 @@
 
 	BIO_WAFX_PROJGRAVITY_TAG = "Dense Payload";
 	BIO_WAFX_PROJGRAVITY_TOSTR = "Projectiles are affected by gravity, but deal %s%s%d%% damage";
-	
+
 	BIO_WAFX_PROJBOUNCE_TAG = "Rebound";
 	BIO_WAFX_PROJBOUNCE_TOSTR = "Projectiles bounce";
 

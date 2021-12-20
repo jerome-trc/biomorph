@@ -46,8 +46,12 @@ class BIO_WeaponAffix : BIO_Affix abstract
 
 	virtual void OnTick(BIO_Weapon weap) {}
 
-	virtual void ModifyFireCount(BIO_Weapon weap, in out int fireCount) const {}
-	virtual void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const {}
+	// Modify only the fire count or the critical flag here;
+	// everything else gets overwritten afterwards.
+	virtual void BeforeAllFire(BIO_Weapon weap, in out BIO_FireData fireData) const {}
+	
+	// Modifying `FireCount` here does nothing, since it is overwritten afterwards.
+	virtual void BeforeEachFire(BIO_Weapon weap, in out BIO_FireData fireData) const {}
 
 	virtual void OnTrueProjectileFired(BIO_Weapon weap,
 		BIO_Projectile proj) const {}	
@@ -58,6 +62,8 @@ class BIO_WeaponAffix : BIO_Affix abstract
 
 	virtual void OnKill(readOnly<BIO_Weapon> weap,
 		Actor killed, Actor inflictor) const {}
+	virtual void OnCriticalShot(BIO_Weapon weap,
+		in out BIO_FireData fireData) const {}
 
 	virtual bool CanGenerate() const { return true; }
 

@@ -1191,6 +1191,14 @@ class BIO_Weapon : DoomWeapon abstract
 			Affixes[i].OnKill(self, killed, inflictor);
 	}
 
+	void OnCriticalShot(in out BIO_FireData fireData)
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].OnCriticalShot(self, fireData);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnCriticalShot(self, fireData);
+	}
+
 	// Weapon-making helpers ===================================================
 
 	// Shortcut for `BIO_StateTimeGroup::FromState()`.
