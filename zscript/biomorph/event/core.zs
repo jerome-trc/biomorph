@@ -6,7 +6,7 @@ class BIO_EventHandler : EventHandler
 
 	final override void OnRegister()
 	{
-		if (BIO_CVar.Debug())
+		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Registering event handler...");
 
 		super.OnRegister();
@@ -19,7 +19,7 @@ class BIO_EventHandler : EventHandler
 
 	final override void OnUnregister()
 	{
-		if (BIO_CVar.Debug())
+		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Unregistering event handler...");
 
 		super.OnUnregister();
@@ -27,7 +27,7 @@ class BIO_EventHandler : EventHandler
 
 	final override void NewGame()
 	{
-		if (BIO_CVar.Debug())
+		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Handling NewGame event...");
 
 		super.NewGame();
@@ -36,7 +36,7 @@ class BIO_EventHandler : EventHandler
 
 	final override void WorldLoaded(WorldEvent event)
 	{
-		if (BIO_CVar.Debug())
+		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Handling WorldLoaded event...");
 
 		super.WorldLoaded(event);
@@ -50,7 +50,7 @@ class BIO_EventHandler : EventHandler
 
 	final override void PlayerEntered(PlayerEvent event)
 	{
-		if (BIO_CVar.Debug())
+		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Handling PlayerEntered (player %d)...", event.PlayerNumber);
 
@@ -60,7 +60,7 @@ class BIO_EventHandler : EventHandler
 
 	final override void PlayerSpawned(PlayerEvent event)
 	{
-		if (BIO_CVar.Debug())
+		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Handling PlayerSpawned (player %d)...", event.PlayerNumber);
 

@@ -10,7 +10,7 @@ class BIO_StatusBar : BaseStatusBar
 
 	final override void Init()
 	{
-		if (BIO_CVar.Debug())
+		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Initialising status bar...");
 	
 		super.Init();
