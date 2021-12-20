@@ -217,7 +217,7 @@ class BIO_GlobalData : Thinker
 		{
 			PartyLevel++;
 
-			if (BIO_CVar.Debug())
+			if (BIO_debug)
 				Console.Printf(Biomorph.LOGPFX_DEBUG ..
 					"Party leveled up to %d.", PartyLevel);
 		}
@@ -242,7 +242,7 @@ class BIO_GlobalData : Thinker
 			return;
 		}
 
-		if (prev != MaxWeaponGrade && BIO_CVar.Debug())
+		if (prev != MaxWeaponGrade && BIO_debug)
 		{
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Max weapon grade increased to %s.",
@@ -305,7 +305,7 @@ class BIO_GlobalData : Thinker
 		ret.CreateBasePerkGraph();
 		ret.ReadWeaponLumps();
 
-		if (BIO_CVar.Debug())
+		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Global init done (took %d ms).", MsTime() - ms);
 

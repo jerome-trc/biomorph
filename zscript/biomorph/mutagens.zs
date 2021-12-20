@@ -64,7 +64,7 @@ class BIO_Mutagen : Inventory abstract
 
 		if (mpt_t != null)
 		{
-			if (BIO_CVar.Debug() && danger > 0)
+			if (BIO_debug && danger > 0)
 				Console.Printf(Biomorph.LOGPFX_DEBUG ..
 					"Increasing DRLA danger level by %d.", danger);
 

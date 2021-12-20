@@ -53,7 +53,7 @@ mixin class BIO_Gear
 			default: break;
 			}
 
-			if (BIO_CVar.Debug() && danger > 0)
+			if (BIO_debug && danger > 0)
 				Console.Printf(Biomorph.LOGPFX_DEBUG ..
 					"Increasing DRLA danger level by %d.", danger);
 
