@@ -11,7 +11,8 @@ class BIO_EventHandler : EventHandler
 
 		super.OnRegister();
 
-		Globals = BIO_GlobalData.Create();
+		Globals = BIO_GlobalData.Get();
+
 		name ldtoken_tn = 'LDLegendaryMonsterToken';
 		LDToken = ldtoken_tn;
 	}
@@ -30,6 +31,7 @@ class BIO_EventHandler : EventHandler
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Handling NewGame event...");
 
 		super.NewGame();
+		Globals = BIO_GlobalData.Create();
 	}
 
 	final override void WorldLoaded(WorldEvent event)
