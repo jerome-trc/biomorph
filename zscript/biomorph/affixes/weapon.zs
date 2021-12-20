@@ -122,7 +122,8 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 		}
 	}
 
-	final override void ToString(in out Array<string> strings, readOnly<BIO_Weapon> weap) const
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -164,13 +165,22 @@ class BIO_WAfx_Crit : BIO_WeaponAffix
 		return weap.BIOFlags & BIO_WF_PISTOL;
 	}
 
-	final override void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const
+	final override void BeforeAllFire(BIO_Weapon weap,
+		in out BIO_FireData fireData) const
 	{
 		if (Random(0, 100) < Chance)
 		{
-			fireData.Damage += (fireData.Damage * DamageMulti);
+			fireData.Critical = true;
 			weap.Owner.A_StartSound("bio/weap/crit", CHAN_AUTO);
+			weap.OnCriticalShot(fireData);
 		}
+	}
+
+	final override void BeforeEachFire(BIO_Weapon weap,
+		in out BIO_FireData fireData) const
+	{
+		if (fireData.Critical)
+			fireData.Damage += (fireData.Damage * DamageMulti);
 	}
 
 	final override void ToString(in out Array<string> strings,
@@ -207,12 +217,11 @@ class BIO_WAfx_ForwardDamage : BIO_WeaponAffix
 		return weap.DealsAnyDamage();
 	}
 
-	final override void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const
+	final override void BeforeEachFire(BIO_Weapon weap,
+		in out BIO_FireData fireData) const
 	{
 		if (weap.Owner.Player.Cmd.Buttons & BT_FORWARD)
-		{
 			fireData.Damage += (fireData.Damage * Multi);
-		}
 	}
 
 	final override void ToString(in out Array<string> strings,
@@ -250,7 +259,8 @@ class BIO_WAfx_StrafeDamage : BIO_WeaponAffix
 		return weap.DealsAnyDamage();
 	}
 
-	final override void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const
+	final override void BeforeEachFire(BIO_Weapon weap,
+		in out BIO_FireData fireData) const
 	{
 		if (weap.Owner.Player.Cmd.Buttons & BT_MOVELEFT ||
 			weap.Owner.Player.Cmd.Buttons & BT_MOVERIGHT)
@@ -636,14 +646,18 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 		return weap.FiresTrueProjectile();
 	}
 
+	final override void Apply(BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FiresTrueProjectile()) continue;
+			weap.Pipelines[i].MultiplyAllDamage(1.0 + Multi);
+		}
+	}
+
 	final override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
 	{
 		proj.bNoGravity = false;
-	}
-
-	final override void BeforeFire(BIO_Weapon weap, in out BIO_FireData fireData) const
-	{
-		fireData.Damage += (fireData.Damage * Multi);
 	}
 
 	final override void ToString(in out Array<string> strings,
@@ -661,7 +675,7 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_ONPROJFIRED;
+		return BIO_WAF_ONPROJFIRED | BIO_WAF_DAMAGE;
 	}
 }
 

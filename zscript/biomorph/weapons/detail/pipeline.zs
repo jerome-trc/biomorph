@@ -29,6 +29,7 @@ struct BIO_FireData
 	Class<Actor> FireType;
 	int Damage;
 	float HSpread, VSpread, Angle, Pitch;
+	bool Critical;
 }
 
 class BIO_WeaponPipeline play
@@ -69,16 +70,17 @@ class BIO_WeaponPipeline play
 	{
 		int fc = fireCount * fireFactor;
 
+		BIO_FireData fireData;
+		fireData.Count = uint(fc);
+
 		for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
-			weap.ImplicitAffixes[i].ModifyFireCount(weap, fc);
+			weap.ImplicitAffixes[i].BeforeAllFire(weap, fireData);
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
-			weap.Affixes[i].ModifyFireCount(weap, fc);
+			weap.Affixes[i].BeforeAllFire(weap, fireData);
 
 		for (uint i = 0; i < fc; i++)
 		{
-			BIO_FireData fireData;
 			fireData.Number = i;
-			fireData.Count = uint(fc);
 			fireData.FireType = FireType;
 			fireData.Damage = Damage.Invoke();
 			fireData.HSpread = HSpread * spreadFactor;
@@ -87,13 +89,11 @@ class BIO_WeaponPipeline play
 			fireData.Pitch = Pitch;
 
 			for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
-				weap.ImplicitAffixes[i].BeforeFire(weap, fireData);
+				weap.ImplicitAffixes[i].BeforeEachFire(weap, fireData);
 			for (uint i = 0; i < weap.Affixes.Size(); i++)
-				weap.Affixes[i].BeforeFire(weap, fireData);
+				weap.Affixes[i].BeforeEachFire(weap, fireData);
 
 			Actor output = FireFunctor.Invoke(weap, fireData);
-
-			if (output == null) continue;
 
 			if (output is 'BIO_Puff') // Might be of `FireType`, might be `FakePuff`
 			{
