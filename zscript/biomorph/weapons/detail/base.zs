@@ -205,11 +205,11 @@ class BIO_Weapon : DoomWeapon abstract
 		#### # 1 A_BIO_Lower;
 		Loop;
 	Spawn.Common:
-		#### # 4;
+		#### # 10;
 		#### # 1 A_GroundHit;
 		Goto Spawn.Common + 1;
 	Spawn.Mutated:
-		#### # 4;
+		#### # 10;
 		#### # 1
 		{
 			A_GroundHit();
@@ -224,7 +224,7 @@ class BIO_Weapon : DoomWeapon abstract
 		#### ##### 1 Bright A_GroundHit;
 		Goto Spawn.Mutated + 1;
 	Spawn.Unique:
-		#### # 4;
+		#### # 10;
 		#### # 1
 		{
 			A_GroundHit();
