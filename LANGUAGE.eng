@@ -248,14 +248,6 @@
 
 	BIO_AFFIXESUNKNOWN = "Affixes unknown";
 
-	BIO_WAFX_WEAPDMG1_TOSTR = "Primary damage: %s%s%d";
-	BIO_WAFX_WEAPDMG2_TOSTR = "Secondary damage: %s%s%d";
-	BIO_WAFX_WEAPDMG_TOSTR = "Damage: %s%s%d primary, %s%s%d secondary";
-	
-	BIO_WAFX_WEAPDMGPERCENT1_TOSTR = "Primary damage: %s%s%%%d";
-	BIO_WAFX_WEAPDMGPERCENT2_TOSTR = "Secondary damage: %s%s%%%d";
-	BIO_WAFX_WEAPDMGPERCENT_TOSTR = "Damage: %s%s%%%d primary, %s%s%%%d secondary";
-
 	BIO_WAFX_DAMAGE_TAG = "High-Power";
 	BIO_WAFX_DAMAGE_TOSTR = "%s damage: %s%s%d";
 
