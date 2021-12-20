@@ -21,6 +21,10 @@ class BIO_All : Inventory
 		uint mwh = bioPlayer.MaxWeaponsHeld;
 		bioPlayer.MaxWeaponsHeld = uint.MAX;
 
+		Array<Class<Weapon> > WeaponTypes;
+		Array<Class<BIO_Mutagen> > MutagenTypes;
+		Array<Class<Ammo> > AmmoTypes;
+
 		for (uint i = 0; i < AllActorClasses.Size(); i++)
 		{
 			let t = (Class<Inventory>)(AllActorClasses[i]);
@@ -29,20 +33,32 @@ class BIO_All : Inventory
 			{
 				if (t == 'BIO_Fist') continue;
 				if (bioPlayer.FindInventory(t)) continue;
-
-				bioPlayer.GiveInventory(t, 1);
+				WeaponTypes.Push((Class<Weapon>)(t));
 			}
 			else if (t is 'BIO_Mutagen' && !t.IsAbstract())
 			{
-				bioPlayer.GiveInventory(t, GetDefaultByType(t).MaxAmount);
+				MutagenTypes.Push((Class<BIO_Mutagen>)(t));
 			}
 			else if (t is 'Ammo' && !t.IsAbstract())
 			{
 				let defs = GetDefaultByType(t);
 				if (defs.bIgnoreSkill) continue; // Skip magazines
-				bioPlayer.GiveInventory(t, defs.MaxAmount);
+				AmmoTypes.Push((Class<Ammo>)(t));
 			}
 		}
+
+		// Give these items in a specific order
+
+		for (uint i = 0; i < WeaponTypes.Size(); i++)
+			bioPlayer.GiveInventory(WeaponTypes[i], 1);
+
+		for (uint i = 0; i < MutagenTypes.Size(); i++)
+			bioPlayer.GiveInventory(MutagenTypes[i],
+				GetDefaultByType(MutagenTypes[i]).MaxAmount);
+				
+		for (uint i = 0; i < AmmoTypes.Size(); i++)
+			bioPlayer.GiveInventory(AmmoTypes[i],
+				GetDefaultByType(AmmoTypes[i]).MaxAmount);
 
 		bioPlayer.MaxWeaponsHeld = mwh;
 		return true;
