@@ -111,7 +111,7 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
-		int fc = ppl.GetFireCount();
+		uint fc = ppl.GetFireCount();
 		Class<Actor> ft = ppl.GetFireType();
 
 		readout.Push(String.Format(
@@ -156,7 +156,7 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
-		int fc = ppl.GetFireCount();
+		uint fc = ppl.GetFireCount();
 		Class<Actor> ft = ppl.GetFireType();
 
 		readout.Push(String.Format(
@@ -217,7 +217,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 	{
 		Class<Actor> ft = ppl.GetFireType(), puff_t = null, spawnClass = null;
 		bool defaultPuff = true, defaultSpawn = true;
-		int fc = ppl.GetFireCount();
+		uint fc = ppl.GetFireCount();
 
 		if (ft is 'BIO_RailPuff')
 		{
