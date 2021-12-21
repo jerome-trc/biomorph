@@ -432,6 +432,7 @@
 	BIO_FIRE = "fire";
 	BIO_COOLDOWN = "cooldown";
 	BIO_FIRE_MODE = "fire mode";
+	BIO_SINGLE = "single";
 	BIO_BURST = "burst";
 	BIO_PER_2_ROUNDS = "per 2 rounds";
 	BIO_SEMI_AUTO = "semi-automatic";

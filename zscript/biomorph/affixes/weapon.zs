@@ -475,7 +475,7 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 			}
 
 			weap.Pipelines[i].SetFireType('BIO_Slug');
-			int fc = weap.Pipelines[i].GetFireCount();
+			uint fc = weap.Pipelines[i].GetFireCount();
 			weap.Pipelines[i].SetFireCount(fc / fc);
 			weap.Pipelines[i].MultiplyAllDamage(float(fc));
 			weap.Pipelines[i].SetSpread(0.5, 0.5);

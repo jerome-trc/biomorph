@@ -11,7 +11,7 @@ class BIO_WeaponPipelineBuilder play
 	}
 
 	BIO_WeaponPipelineBuilder BasicProjectilePipeline(Class<Actor> fireType,
-		int fireCount, int minDamage, int maxDamage, float hSpread, float vSpread)
+		uint fireCount, int minDamage, int maxDamage, float hSpread, float vSpread)
 	{
 		if (fireType is 'BIO_Puff')
 			Console.Printf(Biomorph.LOGPFX_WARN ..
@@ -37,7 +37,7 @@ class BIO_WeaponPipelineBuilder play
 	}
 
 	BIO_WeaponPipelineBuilder BasicBulletPipeline(Class<Actor> fireType,
-		int fireCount, int minDamage, int maxDamage, float hSpread, float vSpread,
+		uint fireCount, int minDamage, int maxDamage, float hSpread, float vSpread,
 		int accuracyType = BULLET_ALWAYS_SPREAD)
 	{
 		CheckFireFunctorRestricted();
@@ -61,7 +61,7 @@ class BIO_WeaponPipelineBuilder play
 	}
 
 	BIO_WeaponPipelineBuilder PunchPipeline(Class<Actor> fireType = 'BIO_MeleeHit',
-		int hitCount = 1, int minDamage = 2, int maxDamage = 20,
+		uint hitCount = 1, int minDamage = 2, int maxDamage = 20,
 		float range = DEFMELEERANGE)
 	{
 		CheckFireFunctorRestricted();
@@ -82,7 +82,7 @@ class BIO_WeaponPipelineBuilder play
 	}
 
 	BIO_WeaponPipelineBuilder Saw(Class<Actor> fireType = 'BIO_MeleeHit',
-		int hitCount = 1, float range = SAWRANGE, ESawFlags flags = 0,
+		uint hitCount = 1, float range = SAWRANGE, ESawFlags flags = 0,
 		sound fullSound = "weapons/sawfull", sound hitSound = "weapons/sawhit")
 	{
 		CheckFireFunctorRestricted();
@@ -102,7 +102,7 @@ class BIO_WeaponPipelineBuilder play
 	}
 
 	BIO_WeaponPipelineBuilder BFGPipeline(Class<Actor> fireType = 'BIO_BFGBall',
-		int fireCount = 1, int rayCount = 40, int minDamage = 100, int maxDamage = 800,
+		uint fireCount = 1, int rayCount = 40, int minDamage = 100, int maxDamage = 800,
 		int minRayDmg = 49, int maxRayDmg = 87, float hSpread = 0.4, float vSpread = 0.4)
 	{
 		CheckFireFunctorRestricted();
@@ -142,8 +142,7 @@ class BIO_WeaponPipelineBuilder play
 	}
 
 	BIO_WeaponPipelineBuilder Bullet(Class<Actor> fireType = 'BIO_Bullet',
-		int fireCount = 1,
-		int accuracyType = BULLET_ALWAYS_SPREAD)
+		uint fireCount = 1, int accuracyType = BULLET_ALWAYS_SPREAD)
 	{
 		CheckFireFunctorRestricted();
 		CheckFireTypeRestricted();

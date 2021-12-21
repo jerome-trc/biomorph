@@ -65,6 +65,5 @@ class BIO_TransitionFunctor : BIO_PlayerFunctor abstract
 
 class BIO_WeaponFunctor : BIO_PlayerFunctor abstract
 {
-	virtual void PreFire(BIO_Player bioPlayer, Class<Actor> fireType, int fireCount,
-		int damage, float angle, float pitch) const {}
+	virtual void PreFire(BIO_Player bioPlayer, in out BIO_FireData fireData) const {}
 }

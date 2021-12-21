@@ -48,7 +48,7 @@ class BIO_WeaponPipeline play
 
 	private BIO_FireFunctor FireFunctor;
 	private Class<Actor> FireType;
-	private int FireCount;
+	private uint FireCount;
 	private BIO_DamageFunctor Damage;
 	private int SplashDamage, SplashRadius;
 	private float HSpread, VSpread, Angle, Pitch;
@@ -68,10 +68,10 @@ class BIO_WeaponPipeline play
 
 	void Invoke(BIO_Weapon weap, uint fireFactor = 1, float spreadFactor = 1.0)
 	{
-		int fc = fireCount * fireFactor;
+		uint fc = fireCount * fireFactor;
 
 		BIO_FireData fireData;
-		fireData.Count = uint(fc);
+		fireData.Count = fc;
 
 		for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
 			weap.ImplicitAffixes[i].BeforeAllFire(weap, fireData);
@@ -242,9 +242,9 @@ class BIO_WeaponPipeline play
 		FireType = fType;
 	}
 
-	int GetFireCount() const { return FireCount; }
+	uint GetFireCount() const { return FireCount; }
 
-	void SetFireCount(int fCount)
+	void SetFireCount(uint fCount)
 	{
 		if (Mask & BIO_WPM_FIRECOUNT) return;
 		FireCount = fCount;
