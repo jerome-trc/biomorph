@@ -114,6 +114,7 @@ class BIO_Weapon : DoomWeapon abstract
 	mixin BIO_Gear;
 
 	meta Class<BIO_Weapon> UniqueBase; property UniqueBase: UniqueBase;
+	meta BIO_PlayerVisual PlayerVisual; property PlayerVisual: PlayerVisual;
 
 	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
 	BIO_WeaponAffixMask AffixMask; property AffixMask: AffixMask;
@@ -200,6 +201,7 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_Weapon.Grade BIO_GRADE_NONE;
 		BIO_Weapon.MaxAffixes DEFAULT_MAX_AFFIXES;
 		BIO_Weapon.MinAmmoReserves 1, 1;
+		BIO_Weapon.PlayerVisual BIO_PVIS_RIFLE;
 		BIO_Weapon.Rarity BIO_RARITY_COMMON;
 		BIO_Weapon.ReloadRatio1 1, 1;
 		BIO_Weapon.ReloadRatio2 1, 1;
@@ -494,7 +496,11 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Each is called once before starting its respective loop.
 	virtual void OnDeselect() {}
-	virtual void OnSelect() {}
+	
+	virtual void OnSelect()
+	{
+		BIO_Player(Owner).WeaponVisual = PlayerVisual;
+	}
 
 	/*	The first return value indicates if the mutagen should reset the weapon's
 		stats, set the corrupted flag, and try for a generic corruption effect.
