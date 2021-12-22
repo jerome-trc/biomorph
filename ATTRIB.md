@@ -19,6 +19,8 @@ The following sprites are edits of the work of id Software LLC:
 - SHOTB0.png
 - SUITX0.png
 
+Sprites for players and Doppel are courtesy of Skulltag, id Software LLC, DBJ87, Mark Quinn, Anthony Cole, Xim, CaptainToenail, FuzzballFox, and Alando1.
+
 Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as well as id Software LLC.
 
 Auto Shotgun sprites are courtesy of id Software LLC, Infinity Ward, Inc., and were edited by Realm667 user Captain Toenail. 
