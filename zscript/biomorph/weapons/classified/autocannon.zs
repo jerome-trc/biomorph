@@ -2,7 +2,6 @@ class BIO_Autocannon : BIO_Weapon
 {
 	Default
 	{
-		Decal 'BulletChip';
 		Tag "$BIO_AUTOCANNON_TAG";
 
 		Inventory.Icon 'ACANX0';

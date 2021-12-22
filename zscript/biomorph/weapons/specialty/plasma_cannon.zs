@@ -2,7 +2,6 @@ class BIO_PlasmaCannon : BIO_Weapon
 {
 	Default
 	{
-		Decal 'BulletChip';
 		Tag "$BIO_PLASMACANNON_TAG";
 
 		Inventory.Icon 'PLSCX0';

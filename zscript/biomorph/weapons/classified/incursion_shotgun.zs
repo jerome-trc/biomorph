@@ -2,7 +2,6 @@ class BIO_IncursionShotgun : BIO_Weapon
 {
 	Default
 	{
-		Decal 'BulletChip';
 		Tag "$BIO_INCURSIONSHOTGUN_TAG";
 
 		Inventory.Icon 'INCUX0';

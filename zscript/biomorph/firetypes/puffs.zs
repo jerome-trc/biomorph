@@ -2,6 +2,7 @@ class BIO_Bullet : BIO_Puff
 {
 	Default
 	{
+		Decal 'BulletChip';
 		Tag "$BIO_BULLET_TAG";
 		BIO_Puff.PluralTag "$BIO_BULLET_TAG_PLURAL";
 		BIO_Puff.MetaFlags BIO_FTMF_BALLISTIC;

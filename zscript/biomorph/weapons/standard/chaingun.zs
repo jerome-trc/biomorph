@@ -2,7 +2,6 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 {
 	Default
 	{
-		Decal 'BulletChip';
 		Obituary "$OB_MPCHAINGUN";
 		Tag "$TAG_CHAINGUN";
 
