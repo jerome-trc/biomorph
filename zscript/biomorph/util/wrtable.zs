@@ -20,6 +20,13 @@ class WeightedRandomTable
 			return;
 		}
 
+		if (weight <= 0)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Tried to push a weight of 0 onto a WeightedRandomTable.");
+			return;
+		}
+
 		uint end = Entries.Push(new('WeightedRandomTableEntry'));
 		Entries[end].Type = type;
 		Entries[end].Weight = weight;
@@ -28,6 +35,13 @@ class WeightedRandomTable
 
 	WeightedRandomTable AddLayer(uint weight)
 	{
+		if (weight <= 0)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Tried to push a weight of 0 onto a WeightedRandomTable.");
+			return null;
+		}
+		
 		uint end = Entries.Push(new('WeightedRandomTableEntry'));
 		Entries[end].SubTable = new('WeightedRandomTable');
 		Entries[end].Weight = weight;
@@ -41,6 +55,13 @@ class WeightedRandomTable
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
 				"Attempted to nest a WeightedRandomTable within itself.");
+			return;
+		}
+
+		if (weight <= 0)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Tried to push a weight of 0 onto a WeightedRandomTable.");
 			return;
 		}
 

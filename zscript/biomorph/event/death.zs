@@ -53,7 +53,7 @@ extend class BIO_EventHandler
 			// If we made it here, this was a legendary monster from LegenDoom
 			// or LegenDoom Lite. Drop some extra-special loot
 			[success, spawned] = event.Thing.A_SpawnItemEx(
-				Globals.LootWeaponType(), 0.0, 0.0, 32.0,
+				Globals.AnyLootWeaponType(), 0.0, 0.0, 32.0,
 				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
 				FRandom(0.0, 360.0));
 

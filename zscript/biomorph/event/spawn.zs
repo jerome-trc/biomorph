@@ -5,7 +5,7 @@ extend class BIO_EventHandler
 		if (event.Thing == null || event.Thing.bMissile || event.Thing.bIsMonster)
 			return;
 
-		if (event.Thing is "Inventory")
+		if (event.Thing is 'Inventory')
 		{
 			let item = Inventory(event.Thing);
 			if (item.Owner != null || item.Master != null)
@@ -18,10 +18,7 @@ extend class BIO_EventHandler
 		if (ReplaceSmallAmmo(event) || ReplaceBigAmmo(event))
 			return;
 
-		if (ReplaceShotgun(event) || ReplaceChaingun(event))
-			return;
-
-		if (ReplaceArmor(event))
+		if (ReplaceWeapon(event) || ReplaceArmor(event))
 			return;
 	}
 
@@ -29,7 +26,7 @@ extend class BIO_EventHandler
 	{
 		if (toSpawn == null)
 		{
-			Actor.Spawn("Unknown", eventThing.Pos, NO_REPLACE);
+			Actor.Spawn('Unknown', eventThing.Pos, NO_REPLACE);
 			// For diagnostic purposes, don't destroy the original thing
 		}
 		else
@@ -42,7 +39,13 @@ extend class BIO_EventHandler
 	private bool ReplaceSmallAmmo(WorldEvent event) const
 	{
 		if (event.Thing.GetClass() == 'Clip')
-			FinalizeSpawn('BIO_Clip', event.Thing);
+		{
+			if (Random(1, 10) == 1)
+				FinalizeSpawn(Globals.LootWeaponType(
+					Globals.LOOTTABLE_PISTOL), event.Thing);
+			else
+				FinalizeSpawn('BIO_Clip', event.Thing);
+		}
 		else if (event.Thing.GetClass() == 'Shell')
 			FinalizeSpawn('BIO_Shell', event.Thing);
 		else if (event.Thing.GetClass() == 'RocketAmmo')
@@ -77,6 +80,54 @@ extend class BIO_EventHandler
 		return true;
 	}
 
+	private bool ReplaceWeapon(WorldEvent event) const
+	{
+		if (event.Thing.GetClass() == 'Shotgun')
+		{
+			FinalizeSpawn(Globals.LootWeaponType(
+				Globals.LOOTTABLE_SHOTGUN), event.Thing);
+		}
+		else if (event.Thing.GetClass() == 'Chaingun')
+		{
+			FinalizeSpawn(Globals.LootWeaponType(
+				Globals.LOOTTABLE_AUTOGUN), event.Thing);
+		}
+		else if (event.Thing.GetClass() == 'SuperShotgun')
+		{
+			FinalizeSpawn(Globals.LootWeaponType(
+				Globals.LOOTTABLE_SSG), event.Thing);
+		}
+		else if (event.Thing.GetClass() == 'RocketLauncher')
+		{
+			FinalizeSpawn(Globals.LootWeaponType(
+				Globals.LOOTTABLE_LAUNCHER), event.Thing);
+		}
+		else if (event.Thing.GetClass() == 'PlasmaRifle')
+		{
+			FinalizeSpawn(Globals.LootWeaponType(
+				Globals.LOOTTABLE_ENERGY), event.Thing);
+		}
+		else if (event.Thing.GetClass() == 'BFG9000')
+		{
+			FinalizeSpawn(Globals.LootWeaponType(
+				Globals.LOOTTABLE_SUPER), event.Thing);
+		}
+		else if (event.Thing.GetClass() == 'Chainsaw')
+		{
+			FinalizeSpawn(Globals.LootWeaponType(
+				Globals.LOOTTABLE_MELEE), event.Thing);
+		}
+		else if (event.Thing.GetClass() == 'Pistol')
+		{
+			FinalizeSpawn(Globals.LootWeaponType(
+				Globals.LOOTTABLE_PISTOL), event.Thing);
+		}
+		else
+			return false;
+
+		return true;
+	}
+
 	private bool ReplaceArmor(WorldEvent event) const
 	{
 		if (event.Thing.GetClass() == 'GreenArmor')
@@ -90,30 +141,6 @@ extend class BIO_EventHandler
 		}
 		else
 			return false;
-
-		return true;
-	}
-
-	private bool ReplaceShotgun(WorldEvent event) const
-	{
-		if (event.Thing.GetClass() != 'BIO_Shotgun') return false;
-
-		// If a Shotgun has been dropped (as opposed to hand-placed on the map),
-		// almost always replace it with an ammo pickup
-		if (Level.MapTime > 0 && Random(0, 15) != 0)
-			FinalizeSpawn('BIO_Shell', event.Thing);
-
-		return true;
-	}
-
-	private bool ReplaceChaingun(WorldEvent event) const
-	{
-		if (event.Thing.GetClass() != 'BIO_Chaingun') return false;
-
-		// If a Chaingun has been dropped (as opposed to hand-placed on the map),
-		// almost always replace it with an ammo pickup
-		if (Level.MapTime > 0 && Random(0, 15) != 0)
-			FinalizeSpawn('BIO_Clip', event.Thing);
 
 		return true;
 	}

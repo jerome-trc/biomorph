@@ -1,4 +1,4 @@
-class BIO_BFG9000 : BIO_Weapon replaces BFG9000
+class BIO_BFG9000 : BIO_Weapon
 {
 	Default
 	{

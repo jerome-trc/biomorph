@@ -1,4 +1,4 @@
-class BIO_Chaingun : BIO_Weapon replaces Chaingun
+class BIO_Chaingun : BIO_Weapon
 {
 	Default
 	{

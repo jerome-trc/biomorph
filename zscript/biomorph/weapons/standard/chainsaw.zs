@@ -1,4 +1,4 @@
-class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
+class BIO_Chainsaw : BIO_Weapon
 {
 	Default
 	{
