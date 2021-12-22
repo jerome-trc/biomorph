@@ -301,22 +301,97 @@ class BIO_Muta_Corrupting : BIO_Mutagen
 		[proceed, consumed] = weap.OnCorrupt();
 
 		if (!proceed) return consumed;
-		weap.BIOFlags |= BIO_WF_CORRUPTED;
-
+		
 		weap.ResetStats();
-
-		switch (Random(0, 0))
+		Array<BIO_CorruptionFunctor> funcs;
+		
+		for (uint i = 0; i < AllClasses.Size(); i++)
 		{
-		default:
-			// Randomize affixes and then hide them
-			weap.RandomizeAffixes();
-			weap.BIOFlags |= BIO_WF_AFFIXESHIDDEN;
-			Owner.A_Print("$BIO_MUTA_CORRUPT_HIDDENRAND");
-			break;
+			let t = (Class<BIO_CorruptionFunctor>)(AllClasses[i]);
+			if (t == null || t.IsAbstract()) continue;
+			let func = BIO_CorruptionFunctor(new(t));
+			if (!func.Compatible(weap.AsConst())) continue;
+			funcs.Push(func);
 		}
 
+		weap.ApplyImplicitAffixes();
+		funcs[Random(0, funcs.Size() - 1)].Invoke(weap);
+
+		// Prune explicit affixes which are no longer compatible post-corruption
+		for (uint i = weap.Affixes.Size() - 1; i >= 0; i--)
+		{
+			if (!weap.Affixes[i].Compatible(weap.AsConst()))
+				weap.Affixes.Delete(i);
+		}
+
+		weap.ApplyExplicitAffixes();
+		weap.BIOFlags |= BIO_WF_CORRUPTED;
 		weap.OnWeaponChange();
 		RLMDangerLevel(25);
-		return consumed;
+		return true;
+	}
+}
+
+class BIO_CorruptionFunctor play abstract
+{
+	abstract void Invoke(BIO_Weapon weap) const;
+	abstract bool Compatible(readOnly<BIO_Weapon> weap) const;
+}
+
+// Randomize affixes and then obfuscates them from the player.
+class BIO_CorrFunc_RandomizeHide : BIO_CorruptionFunctor
+{
+	final override void Invoke(BIO_Weapon weap) const
+	{
+		weap.ClearAffixes();
+
+		uint c = Random(2, BIO_Weapon.MAX_AFFIXES);
+
+		for (uint i = 0; i < c; i++)
+			weap.AddRandomAffix();
+		
+		weap.BIOFlags |= BIO_WF_AFFIXESHIDDEN;
+		weap.Owner.A_Print("$BIO_MUTA_CORRUPT_HIDDENRAND");
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return true;
+	}
+}
+
+// Add either one or two implicit affixes.
+class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
+{
+	Array<BIO_WeaponAffix> Eligibles;
+
+	final override void Invoke(BIO_Weapon weap) const
+	{
+		if (Eligibles.Size() == 1)
+		{
+			uint r = Random(0, Eligibles.Size() - 1);
+			uint e = weap.ImplicitAffixes.Push(Eligibles[r]);
+			weap.ImplicitAffixes[e].Init(weap.AsConst());
+			weap.ImplicitAffixes[e].Apply(weap);
+		}
+		else
+		{
+			uint r = Random(0, Eligibles.Size() - 1);
+			uint e = weap.ImplicitAffixes.Push(Eligibles[r]);
+			weap.ImplicitAffixes[e].Init(weap.AsConst());
+			weap.ImplicitAffixes[e].Apply(weap);
+
+			Eligibles.Delete(r);
+
+			r = Random(0, Eligibles.Size() - 1);
+			e = weap.ImplicitAffixes.Push(Eligibles[r]);
+			weap.ImplicitAffixes[e].Init(weap.AsConst());
+			weap.ImplicitAffixes[e].Apply(weap);
+		}
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return BIO_GlobalData.Get().EligibleImplicitWeaponAffixes(Eligibles, weap);
 	}
 }

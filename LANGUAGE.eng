@@ -269,6 +269,11 @@
 	BIO_WAFX_STRAFEDAMAGE_TAG = "Flanking";
 	BIO_WAFX_STRAFEDAMAGE_TOSTR = "%s%.1f%% %s damage when strafing";
 
+	BIO_WAFX_RANDDMGMULTI_TAG = "Wild Fortunes";
+	BIO_WAFX_RANDDMGMULTI_TOSTR =
+		"\c[White]All damage multiplied by "
+		"(\c[Red]%.1f \c[White]- \c[Green]%.1f\c[White])";
+
 	BIO_WAFX_DEMONSLAYER_TAG = "Demonslayer";
 	BIO_WAFX_DEMONSLAYER_TOSTR = "\c[Green]400% damage to Legendary enemies";
 
