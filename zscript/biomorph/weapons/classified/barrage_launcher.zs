@@ -20,6 +20,7 @@ class BIO_BarrageLauncher : BIO_Weapon
 
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.MagazineType 'RocketAmmo';
+		BIO_Weapon.PlayerVisual BIO_PVIS_ROCKETLAUNCHER;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

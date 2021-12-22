@@ -20,6 +20,7 @@ class BIO_Shotgun : BIO_Weapon replaces Shotgun
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 1;
 		BIO_Weapon.MagazineType 'BIO_MAG_Shotgun';
+		BIO_Weapon.PlayerVisual BIO_PVIS_SHOTGUN;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

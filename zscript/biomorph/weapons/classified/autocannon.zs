@@ -17,6 +17,7 @@ class BIO_Autocannon : BIO_Weapon
 		BIO_Weapon.AffixMask BIO_WAM_FIRETIME | BIO_WAM_MAGAZINELESS;
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.MagazineType 'Clip';
+		BIO_Weapon.PlayerVisual BIO_PVIS_MINIGUN;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

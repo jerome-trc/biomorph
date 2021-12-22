@@ -14,6 +14,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		Weapon.SlotPriority 1.0;
 
 		BIO_Weapon.AffixMask BIO_WAM_MAGAZINELESS;
+		BIO_Weapon.PlayerVisual BIO_PVIS_UNARMED;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

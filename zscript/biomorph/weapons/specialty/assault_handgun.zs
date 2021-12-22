@@ -20,6 +20,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.MagazineSize 18;
 		BIO_Weapon.MagazineType 'BIO_MAG_AssaultHandgun';
+		BIO_Weapon.PlayerVisual BIO_PVIS_PISTOL;
 		BIO_Weapon.SwitchSpeeds 18, 18;
 	}
 
