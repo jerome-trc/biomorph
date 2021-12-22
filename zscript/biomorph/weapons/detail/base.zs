@@ -118,7 +118,6 @@ class BIO_Weapon : DoomWeapon abstract
 	BIO_WeaponFlags BIOFlags; property Flags: BIOFlags;
 	BIO_WeaponAffixMask AffixMask; property AffixMask: AffixMask;
 
-	// Between this and `MAX_AFFIXES`, the lowest will be used.
 	uint MaxAffixes; property MaxAffixes: MaxAffixes;
 
 	int RaiseSpeed, LowerSpeed;
@@ -199,7 +198,7 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_Weapon.AffixMask BIO_WAM_NONE;
 		BIO_Weapon.Flags BIO_WF_NONE;
 		BIO_Weapon.Grade BIO_GRADE_NONE;
-		BIO_Weapon.MaxAffixes MAX_AFFIXES;
+		BIO_Weapon.MaxAffixes DEFAULT_MAX_AFFIXES;
 		BIO_Weapon.MinAmmoReserves 1, 1;
 		BIO_Weapon.Rarity BIO_RARITY_COMMON;
 		BIO_Weapon.ReloadRatio1 1, 1;
@@ -804,7 +803,7 @@ class BIO_Weapon : DoomWeapon abstract
 	bool NoImplicitAffixes() const { return ImplicitAffixes.Size() < 1; }
 	bool NoExplicitAffixes() const { return Affixes.Size() < 1; }
 	bool NoAffixes() const { return NoImplicitAffixes() && NoExplicitAffixes(); }
-	bool FullOnAffixes() const { return Affixes.Size() >= Min(MAX_AFFIXES, MaxAffixes); }
+	bool FullOnAffixes() const { return Affixes.Size() >= MaxAffixes; }
 
 	bool HasAffixOfType(Class<BIO_WeaponAffix> t, bool implicit = false) const
 	{
@@ -1041,7 +1040,7 @@ class BIO_Weapon : DoomWeapon abstract
 		ResetStats();
 		ApplyImplicitAffixes();
 
-		uint c = Random(2, MAX_AFFIXES);
+		uint c = Random(2, MaxAffixes);
 
 		for (uint i = 0; i < c; i++)
 		{
