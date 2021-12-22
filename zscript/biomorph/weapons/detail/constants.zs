@@ -98,4 +98,14 @@ extend class BIO_Weapon
 	const SLOTPRIO_MIN = 0.0;
 
 	// (RAT: Who designed those two properties to be so counter-intuitive?)
+
+	static const name MUTATED_SPAWN_TRANS[] = {
+		'',
+		'BIO_Mutated_1',
+		'BIO_Mutated_2',
+		'BIO_Mutated_3',
+		'BIO_Mutated_4',
+		'BIO_Mutated_5',
+		'BIO_Mutated_6'
+	};
 }

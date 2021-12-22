@@ -230,7 +230,7 @@ class BIO_Weapon : DoomWeapon abstract
 		#### # 1 Bright
 		{
 			A_GroundHit();
-			A_SetTranslation('BIO_Mutated');
+			A_SetTranslation(invoker.MUTATED_SPAWN_TRANS[invoker.Affixes.Size()]);
 		}
 		#### ##### 1 Bright A_GroundHit;
 		Goto Spawn.Mutated + 1;
