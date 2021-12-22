@@ -1,5 +1,146 @@
+enum BIO_PlayerVisual : uint8
+{
+	BIO_PVIS_UNARMED,
+	BIO_PVIS_CHAINSAW,
+	BIO_PVIS_PISTOL,
+	BIO_PVIS_SHOTGUN,
+	BIO_PVIS_SSG,
+	BIO_PVIS_RIFLE,
+	BIO_PVIS_CHAINGUN,
+	BIO_PVIS_MINIGUN,
+	BIO_PVIS_SNIPER,
+	BIO_PVIS_ROCKETLAUNCHER,
+	BIO_PVIS_GRENADELAUNCHER,
+	BIO_PVIS_SHOULDERMOUNT,
+	BIO_PVIS_FLAMETHROWER,
+	BIO_PVIS_PLASMARIFLE,
+	BIO_PVIS_RAILGUN,
+	BIO_PVIS_BFG9K,
+	BIO_PVIS_BFG10K
+}
+
 class BIO_Player : DoomPlayer
-{	
+{
+	static const name PVIS_STATES_SPAWN[] = {
+		'Spawn_Unarmed',
+		'Spawn_Chainsaw',
+		'Spawn_Pistol',
+		'Spawn_Shotgun',
+		'Spawn_SSG',
+		'Spawn_Rifle',
+		'Spawn_Chaingun',
+		'Spawn_Minigun',
+		'Spawn_Sniper',
+		'Spawn_RocketLauncher',
+		'Spawn_GrenadeLauncher',
+		'Spawn_ShoulderMount',
+		'Spawn_Flamethrower',
+		'Spawn_PlasmaRifle',
+		'Spawn_Railgun',
+		'Spawn_BFG9K',
+		'Spawn_BFG10K'
+	};
+
+	static const name PVIS_STATES_SEE[] = {
+		'See_Unarmed',
+		'See_Chainsaw',
+		'See_Pistol',
+		'See_Shotgun',
+		'See_SSG',
+		'See_Rifle',
+		'See_Chaingun',
+		'See_Minigun',
+		'See_Sniper',
+		'See_RocketLauncher',
+		'See_GrenadeLauncher',
+		'See_ShoulderMount',
+		'See_Flamethrower',
+		'See_PlasmaRifle',
+		'See_Railgun',
+		'See_BFG9K',
+		'See_BFG10K'
+	};
+
+	static const name PVIS_STATES_MISSILE[] {
+		'Missile_Unarmed',
+		'Missile_Chainsaw',
+		'Missile_Pistol',
+		'Missile_Shotgun',
+		'Missile_SSG',
+		'Missile_Rifle',
+		'Missile_Chaingun',
+		'Missile_Minigun',
+		'Missile_Sniper',
+		'Missile_RocketLauncher',
+		'Missile_GrenadeLauncher',
+		'Missile_ShoulderMount',
+		'Missile_Flamethrower',
+		'Missile_PlasmaRifle',
+		'Missile_Railgun',
+		'Missile_BFG9K',
+		'Missile_BFG10K'
+	};
+
+	static const name PVIS_STATES_PAIN[] = {
+		'Pain_Unarmed',
+		'Pain_Chainsaw',
+		'Pain_Pistol',
+		'Pain_Shotgun',
+		'Pain_SSG',
+		'Pain_Rifle',
+		'Pain_Chaingun',
+		'Pain_Minigun',
+		'Pain_Sniper',
+		'Pain_RocketLauncher',
+		'Pain_GrenadeLauncher',
+		'Pain_ShoulderMount',
+		'Pain_Flamethrower',
+		'Pain_PlasmaRifle',
+		'Pain_Railgun',
+		'Pain_BFG9K',
+		'Pain_BFG10K'
+	};
+
+	static const name PVIS_STATES_DEATH[] = {
+		'Death_Unarmed',
+		'Death_Chainsaw',
+		'Death_Pistol',
+		'Death_Shotgun',
+		'Death_SSG',
+		'Death_Rifle',
+		'Death_Chaingun',
+		'Death_Minigun',
+		'Death_Sniper',
+		'Death_RocketLauncher',
+		'Death_GrenadeLauncher',
+		'Death_ShoulderMount',
+		'Death_Flamethrower',
+		'Death_PlasmaRifle',
+		'Death_Railgun',
+		'Death_BFG9K',
+		'Death_BFG10K'
+	};
+
+	static const name PVIS_STATES_XDEATH[] = {
+		'XDeath_Unarmed',
+		'XDeath_Chainsaw',
+		'XDeath_Pistol',
+		'XDeath_Shotgun',
+		'XDeath_SSG',
+		'XDeath_Rifle',
+		'XDeath_Chaingun',
+		'XDeath_Minigun',
+		'XDeath_Sniper',
+		'XDeath_RocketLauncher',
+		'XDeath_GrenadeLauncher',
+		'XDeath_ShoulderMount',
+		'XDeath_Flamethrower',
+		'XDeath_PlasmaRifle',
+		'XDeath_Railgun',
+		'XDeath_BFG9K',
+		'XDeath_BFG10K'
+	};
+
 	Array<BIO_Passive> Passives;
 	Array<BIO_PlayerFunctor> Functors[FUNCTOR_ARRAY_LENGTH];
 
@@ -8,6 +149,8 @@ class BIO_Player : DoomPlayer
 	property MaxEquipmentHeld: MaxEquipmentHeld;
 
 	BIO_Armor EquippedArmor;
+
+	BIO_PlayerVisual WeaponVisual;
 
 	Default
 	{
