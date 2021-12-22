@@ -18,6 +18,7 @@ class BIO_Nailgun : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.MagazineSize 100;
 		BIO_Weapon.MagazineType 'BIO_MAG_Nailgun';
+		BIO_Weapon.PlayerVisual BIO_PVIS_CHAINGUN;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

@@ -18,6 +18,7 @@ class BIO_PrecisionRifle : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.MagazineSize 20;
 		BIO_Weapon.MagazineType 'BIO_MAG_PrecisionRifle';
+		BIO_Weapon.PlayerVisual BIO_PVIS_RIFLE;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

@@ -19,6 +19,7 @@ class BIO_Chainsaw : BIO_Weapon replaces Chainsaw
 
 		BIO_Weapon.AffixMask BIO_WAM_MAGAZINELESS;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
+		BIO_Weapon.PlayerVisual BIO_PVIS_CHAINSAW;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

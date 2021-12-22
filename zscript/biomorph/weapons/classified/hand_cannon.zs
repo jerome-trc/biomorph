@@ -19,6 +19,7 @@ class BIO_HandCannon : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.MagazineSize 7;
 		BIO_Weapon.MagazineType 'BIO_MAG_HandCannon';
+		BIO_Weapon.PlayerVisual BIO_PVIS_PISTOL;
 		BIO_Weapon.SwitchSpeeds 16, 16;
 	}
 

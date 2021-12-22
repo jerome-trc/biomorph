@@ -18,6 +18,7 @@ class BIO_PlasmaCannon : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.MagazineSize 50;
 		BIO_Weapon.MagazineType 'BIO_MAG_PlasmaCannon';
+		BIO_Weapon.PlayerVisual BIO_PVIS_PLASMARIFLE;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

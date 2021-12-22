@@ -19,6 +19,7 @@ class BIO_Chaingun : BIO_Weapon replaces Chaingun
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 40;
 		BIO_Weapon.MagazineType 'BIO_MAG_Chaingun';
+		BIO_Weapon.PlayerVisual BIO_PVIS_CHAINGUN;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

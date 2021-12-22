@@ -20,6 +20,7 @@ class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 2;
 		BIO_Weapon.MagazineType 'BIO_MAG_SuperShotgun';
+		BIO_Weapon.PlayerVisual BIO_PVIS_SSG;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

@@ -16,6 +16,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.MagazineSize 60;
 		BIO_Weapon.MagazineType 'BIO_MAG_HBR';
+		BIO_Weapon.PlayerVisual BIO_PVIS_RIFLE;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

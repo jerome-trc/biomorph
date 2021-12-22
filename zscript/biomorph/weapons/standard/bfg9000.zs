@@ -22,6 +22,7 @@ class BIO_BFG9000 : BIO_Weapon replaces BFG9000
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 80;
 		BIO_Weapon.MagazineType 'BIO_MAG_BFG9000';
+		BIO_Weapon.PlayerVisual BIO_PVIS_BFG9K;
 		BIO_Weapon.SwitchSpeeds 5, 5;
 	}
 

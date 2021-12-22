@@ -19,6 +19,7 @@ class BIO_AutoShotgun : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.MagazineType 'BIO_MAG_AutoShotgun';
 		BIO_Weapon.MagazineSize 15;
+		BIO_Weapon.PlayerVisual BIO_PVIS_SHOTGUN;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

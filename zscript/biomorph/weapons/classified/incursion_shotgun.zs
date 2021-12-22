@@ -18,6 +18,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.MagazineSize 4;
 		BIO_Weapon.MagazineType 'BIO_MAG_IncursionShotgun';
+		BIO_Weapon.PlayerVisual BIO_PVIS_SHOTGUN;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
