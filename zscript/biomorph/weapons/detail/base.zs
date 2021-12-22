@@ -1034,7 +1034,7 @@ class BIO_Weapon : DoomWeapon abstract
 		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, AsConst()))
 			return false;
 
-		uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
+		uint e = Affixes.Push(eligibles[Random[BIO_Afx](0, eligibles.Size() - 1)]);
 		Affixes[e].Init(AsConst());
 		return true;
 	}
@@ -1046,7 +1046,7 @@ class BIO_Weapon : DoomWeapon abstract
 		ResetStats();
 		ApplyImplicitAffixes();
 
-		uint c = Random(2, MaxAffixes);
+		uint c = Random[BIO_Afx](2, MaxAffixes);
 
 		for (uint i = 0; i < c; i++)
 		{

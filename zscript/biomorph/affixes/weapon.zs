@@ -29,7 +29,7 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 				continue;
 			}
 
-			Modifiers.Push(Random(vals[0] / 2, vals[0] * 2));
+			Modifiers.Push(Random[BIO_Afx](vals[0] / 2, vals[0] * 2));
 		}
 	}
 
@@ -102,7 +102,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 				continue;
 			}
 
-			Modifiers.Push(FRandom(0.25, 0.75));
+			Modifiers.Push(FRandom[BIO_Afx](0.25, 0.75));
 		}
 	}
 
@@ -156,8 +156,8 @@ class BIO_WAfx_Crit : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Chance = Random(15, 30);
-		DamageMulti = FRandom(1.0, 2.0);
+		Chance = Random[BIO_Afx](15, 30);
+		DamageMulti = FRandom[BIO_Afx](1.0, 2.0);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
@@ -209,7 +209,7 @@ class BIO_WAfx_ForwardDamage : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Multi = FRandom(0.25, 0.75);
+		Multi = FRandom[BIO_Afx](0.25, 0.75);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
@@ -251,7 +251,7 @@ class BIO_WAfx_StrafeDamage : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Multi = FRandom(0.25, 0.75);
+		Multi = FRandom[BIO_Afx](0.25, 0.75);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
@@ -295,7 +295,7 @@ class BIO_WAfx_RandDmgMulti : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		MaxMulti = FRandom(2.0, 4.0);
+		MaxMulti = FRandom[BIO_Afx](2.0, 4.0);
 		int avgDamage = 0;
 
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
@@ -317,7 +317,7 @@ class BIO_WAfx_RandDmgMulti : BIO_WeaponAffix
 		if (avgDamage < 50)
 			MaxMulti += 0.5;
 
-		MinMulti = FRandom(0.2, 0.4);
+		MinMulti = FRandom[BIO_Afx](0.2, 0.4);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
@@ -702,7 +702,7 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Multi = FRandom(0.5, 1.0);
+		Multi = FRandom[BIO_Afx](0.5, 1.0);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
@@ -806,7 +806,7 @@ class BIO_WAfx_FireTime : BIO_WeaponAffix
 			if (poss < 1)
 				Modifiers.Push(0);
 			else
-				Modifiers.Push(-Random(1, poss));
+				Modifiers.Push(-Random[BIO_Afx](1, poss));
 		}
 	}
 
@@ -866,7 +866,7 @@ class BIO_WAfx_ReloadTime : BIO_WeaponAffix
 			if (poss < 1)
 				Modifiers.Push(0);
 			else
-				Modifiers.Push(-Random(1, poss));
+				Modifiers.Push(-Random[BIO_Afx](1, poss));
 		}
 	}
 
@@ -938,7 +938,7 @@ class BIO_WAfx_Lifesteal : BIO_WeaponAffix
 				continue;
 			}
 
-			AddPercents.Push(FRandom(0.2, 0.8));
+			AddPercents.Push(FRandom[BIO_Afx](0.2, 0.8));
 		}
 	}
 
@@ -1013,7 +1013,7 @@ class BIO_WAfx_MeleeRange : BIO_WeaponAffix
 			}
 
 			let ff = BIO_FireFunc_Melee(weap.Pipelines[i].GetFireFunctor());
-			Modifiers.Push(FRandom(ff.Range * 0.25, ff.Range * 0.5));
+			Modifiers.Push(FRandom[BIO_Afx](ff.Range * 0.25, ff.Range * 0.5));
 		}
 	}
 
@@ -1069,7 +1069,7 @@ class BIO_WAfx_SwitchSpeed : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Modifier = Random(5, 9);
+		Modifier = Random[BIO_Afx](5, 9);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
@@ -1126,7 +1126,7 @@ class BIO_WAfx_Kickback : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Modifier = Random(200, 400);
+		Modifier = Random[BIO_Afx](200, 400);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const

@@ -264,7 +264,7 @@ class BIO_Muta_Remove : BIO_Mutagen
 		}
 
 		weap.ResetStats();
-		weap.Affixes.Delete(Random(0, weap.Affixes.Size() - 1));
+		weap.Affixes.Delete(Random[BIO_Afx](0, weap.Affixes.Size() - 1));
 		weap.ApplyAllAffixes();
 		weap.OnWeaponChange();
 
@@ -315,7 +315,7 @@ class BIO_Muta_Corrupting : BIO_Mutagen
 		}
 
 		weap.ApplyImplicitAffixes();
-		funcs[Random(0, funcs.Size() - 1)].Invoke(weap);
+		funcs[Random[BIO_Afx](0, funcs.Size() - 1)].Invoke(weap);
 
 		// Prune explicit affixes which are no longer compatible post-corruption
 		for (uint i = weap.Affixes.Size() - 1; i >= 0; i--)
@@ -345,7 +345,7 @@ class BIO_CorrFunc_RandomizeHide : BIO_CorruptionFunctor
 	{
 		weap.ClearAffixes();
 
-		uint c = Random(2, weap.MaxAffixes);
+		uint c = Random[BIO_Afx](2, weap.MaxAffixes);
 
 		for (uint i = 0; i < c; i++)
 			weap.AddRandomAffix();
@@ -369,21 +369,21 @@ class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
 	{
 		if (Eligibles.Size() == 1)
 		{
-			uint r = Random(0, Eligibles.Size() - 1);
+			uint r = Random[BIO_Afx](0, Eligibles.Size() - 1);
 			uint e = weap.ImplicitAffixes.Push(Eligibles[r]);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
 			weap.ImplicitAffixes[e].Apply(weap);
 		}
 		else
 		{
-			uint r = Random(0, Eligibles.Size() - 1);
+			uint r = Random[BIO_Afx](0, Eligibles.Size() - 1);
 			uint e = weap.ImplicitAffixes.Push(Eligibles[r]);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
 			weap.ImplicitAffixes[e].Apply(weap);
 
 			Eligibles.Delete(r);
 
-			r = Random(0, Eligibles.Size() - 1);
+			r = Random[BIO_Afx](0, Eligibles.Size() - 1);
 			e = weap.ImplicitAffixes.Push(Eligibles[r]);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
 			weap.ImplicitAffixes[e].Apply(weap);
