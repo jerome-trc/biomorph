@@ -1,4 +1,4 @@
-class BIO_SuperShotgun : BIO_Weapon replaces SuperShotgun
+class BIO_SuperShotgun : BIO_Weapon
 {
 	Default
 	{

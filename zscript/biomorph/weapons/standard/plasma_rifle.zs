@@ -1,4 +1,4 @@
-class BIO_PlasmaRifle : BIO_Weapon replaces PlasmaRifle
+class BIO_PlasmaRifle : BIO_Weapon
 {
 	Default
 	{

@@ -42,11 +42,25 @@ class BIO_GlobalData : Thinker
 
 	private Array<BIO_WeaponUpgrade> WeaponUpgrades;
 
-	// 0 is Standard, 1 is Specialty, 2 is Classified
-	private Array<WeightedRandomTable>
-		WRTA_MeleeWeapons, WRTA_Pistols, WRTA_Shotguns, WRTA_Autoguns,
-		WRTA_Launchers, WRTA_EnergyWeapons, WRTA_SuperWeapons;
+	enum LootTable : uint
+	{
+		LOOTTABLE_MELEE = 0,
+		LOOTTABLE_PISTOL,
+		LOOTTABLE_SHOTGUN,
+		LOOTTABLE_SSG,
+		LOOTTABLE_AUTOGUN,
+		LOOTTABLE_LAUNCHER,
+		LOOTTABLE_ENERGY,
+		LOOTTABLE_SUPER = 7,
+		LOOTTABLE_ARRAY_LENGTH = 8
+	}
 
+	// 0 is Standard, 1 is Specialty, 2 is Classified
+	private WeightedRandomTable[LOOTTABLE_ARRAY_LENGTH][3] WeaponLootTables;
+	
+	// Contains all tables in `WeaponLootTables`
+	private WeightedRandomTable WeaponLootMetaTable;
+	
 	private WeightedRandomTable WRT_Mutagens;
 
 	// Getters =================================================================
@@ -188,7 +202,12 @@ class BIO_GlobalData : Thinker
 		}
 	}
 
-	Class<BIO_Weapon> LootWeaponType() const
+	Class<BIO_Weapon> AnyLootWeaponType() const
+	{
+		return (Class<BIO_Weapon>)(WeaponLootMetaTable.Result());
+	}
+
+	Class<BIO_Weapon> LootWeaponType(LootTable table) const
 	{
 		uint i = int.MAX;
 
@@ -203,25 +222,7 @@ class BIO_GlobalData : Thinker
 			i = 2; break;
 		}
 
-		WeightedRandomTable table = null;
-		int r = Random(0, 18);
-
-		if (r == 18)
-			table = WRTA_SuperWeapons[Random(0, i)];
-		else if (r > 15)
-			table = WRTA_EnergyWeapons[Random(0, i)];
-		else if (r > 12)
-			table = WRTA_Launchers[Random(0, i)];
-		else if (r > 9)
-			table = WRTA_Autoguns[Random(0, i)];
-		else if (r > 6)
-			table = WRTA_Shotguns[Random(0, i)];
-		else if (r > 3)
-			table = WRTA_Pistols[Random(0, i)];
-		else
-			table = WRTA_MeleeWeapons[Random(0, i)];
-
-		return (Class<BIO_Weapon>)(table.Result());
+		return (Class<BIO_Weapon>)(WeaponLootTables[Random(0, i)][table].Result());
 	}
 
 	// Setters =================================================================
@@ -282,16 +283,9 @@ class BIO_GlobalData : Thinker
 		let ret = new('BIO_GlobalData');
 		ret.ChangeStatNum(STAT_STATIC);
 
-		for (uint i = 0; i < 3; i++)
-		{
-			ret.WRTA_MeleeWeapons.Push(new('WeightedRandomTable'));
-			ret.WRTA_Pistols.Push(new('WeightedRandomTable'));
-			ret.WRTA_Shotguns.Push(new('WeightedRandomTable'));
-			ret.WRTA_Autoguns.Push(new('WeightedRandomTable'));
-			ret.WRTA_Launchers.Push(new('WeightedRandomTable'));
-			ret.WRTA_EnergyWeapons.Push(new('WeightedRandomTable'));
-			ret.WRTA_SuperWeapons.Push(new('WeightedRandomTable'));
-		}
+		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
+			for (uint j = 0; j < 3; j++)
+				ret.WeaponLootTables[j][i] = new('WeightedRandomTable');
 
 		ret.WRT_Mutagens = new('WeightedRandomTable');
 
@@ -320,6 +314,29 @@ class BIO_GlobalData : Thinker
 
 		ret.CreateBasePerkGraph();
 		ret.ReadWeaponLumps();
+
+		ret.WeaponLootMetaTable = new('WeightedRandomTable');
+
+		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
+		{
+			uint weight = 0;
+
+			switch (i)
+			{
+			case LOOTTABLE_MELEE: weight = 3; break;
+			case LOOTTABLE_PISTOL: weight = 5; break;
+			case LOOTTABLE_SHOTGUN: weight = 9; break;
+			case LOOTTABLE_SSG: weight = 6; break;
+			case LOOTTABLE_AUTOGUN: weight = 9; break;
+			case LOOTTABLE_LAUNCHER: weight = 6; break;
+			case LOOTTABLE_ENERGY: weight = 4; break;
+			case LOOTTABLE_SUPER: weight = 1; break;
+			}
+
+			ret.WeaponLootMetaTable.PushLayer(ret.WeaponLootTables[0][i], weight * 3);
+			ret.WeaponLootMetaTable.PushLayer(ret.WeaponLootTables[1][i], weight * 2);
+			ret.WeaponLootMetaTable.PushLayer(ret.WeaponLootTables[2][i], weight);
+		}
 
 		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
@@ -534,20 +551,21 @@ class BIO_GlobalData : Thinker
 			let loot = BIO_Utils.TryGetJsonObject(obj.get("loot"));
 			if (loot != null)
 			{
-				TryReadWeaponLootArray(lump, loot, "melee", WRTA_MeleeWeapons);
-				TryReadWeaponLootArray(lump, loot, "pistols", WRTA_Pistols);
-				TryReadWeaponLootArray(lump, loot, "shotguns", WRTA_Shotguns);
-				TryReadWeaponLootArray(lump, loot, "autoguns", WRTA_Autoguns);
-				TryReadWeaponLootArray(lump, loot, "launchers", WRTA_Launchers);
-				TryReadWeaponLootArray(lump, loot, "energy", WRTA_EnergyWeapons);
-				TryReadWeaponLootArray(lump, loot, "super", WRTA_SuperWeapons);
+				TryReadWeaponLootArray(lump, loot, "melee", LOOTTABLE_MELEE);
+				TryReadWeaponLootArray(lump, loot, "pistol", LOOTTABLE_PISTOL);
+				TryReadWeaponLootArray(lump, loot, "shotgun", LOOTTABLE_SHOTGUN);
+				TryReadWeaponLootArray(lump, loot, "ssg", LOOTTABLE_SSG);
+				TryReadWeaponLootArray(lump, loot, "autogun", LOOTTABLE_AUTOGUN);
+				TryReadWeaponLootArray(lump, loot, "launcher", LOOTTABLE_LAUNCHER);
+				TryReadWeaponLootArray(lump, loot, "energy", LOOTTABLE_ENERGY);
+				TryReadWeaponLootArray(lump, loot, "super", LOOTTABLE_SUPER);
 			}
 		}
 		while (true);
 	}
 
 	private void TryReadWeaponLootArray(int lump, BIO_JsonObject loot,
-		string arrName, in out Array<WeightedRandomTable> targetTables)
+		string arrName, LootTable targetTables)
 	{
 		let arr = BIO_Utils.TryGetJsonArray(loot.get(arrName));
 		if (arr != null)
@@ -574,16 +592,16 @@ class BIO_GlobalData : Thinker
 				}
 
 				let defs = GetDefaultByType(weap_t);
-				uint g = uint.MAX;
+				uint g = uint.MAX, wt = 0;
 
 				switch (defs.Grade)
 				{
 				case BIO_GRADE_STANDARD:
-					g = 0; break;
+					g = 0; wt = 7; break;
 				case BIO_GRADE_SPECIALTY:
-					g = 1; break;
+					g = 1; wt = 3; break;
 				case BIO_GRADE_CLASSIFIED:
-					g = 2; break;
+					g = 2; wt = 1; break;
 				default:
 					Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
 						" lump %d, loot object, %s weapon %d has invalid grade %s.",
@@ -591,7 +609,7 @@ class BIO_GlobalData : Thinker
 					continue;
 				}
 
-				targetTables[g].Push(weap_t, 1);
+				WeaponLootTables[g][targetTables].Push(weap_t, 1);
 			}
 		}
 	}

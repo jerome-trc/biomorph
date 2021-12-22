@@ -40,24 +40,27 @@
 		"melee": [
 			"BIO_Chainsaw"
 		],
-		"pistols": [
+		"pistol": [
 			"BIO_Pistol",
 			"BIO_AssaultHandgun",
 			"BIO_HandCannon"
 		],
-		"shotguns": [
+		"shotgun": [
 			"BIO_Shotgun",
-			"BIO_SuperShotgun",
 			"BIO_AutoShotgun",
 			"BIO_IncursionShotgun"
 		],
-		"autoguns": [
+		"ssg": [
+			"BIO_SuperShotgun",
+			"BIO_IncursionShotgun"
+		],
+		"autogun": [
 			"BIO_Chaingun",
 			"BIO_Nailgun",
 			"BIO_Autocannon",
 			"BIO_HeavyBattleRifle"
 		],
-		"launchers": [
+		"launcher": [
 			"BIO_RocketLauncher",
 			"BIO_BarrageLauncher"
 		],

@@ -1,4 +1,4 @@
-class BIO_RocketLauncher : BIO_Weapon replaces RocketLauncher
+class BIO_RocketLauncher : BIO_Weapon
 {
 	Default
 	{
