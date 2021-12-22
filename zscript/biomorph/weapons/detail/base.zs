@@ -136,12 +136,23 @@ class BIO_Weapon : DoomWeapon abstract
 	property MagazineSize2: MagazineSize2;
 	property MagazineSizes: MagazineSize1, MagazineSize2;
 
-	// Reloading 1 round costs `ReloadFactor` rounds in reserve.
-	int ReloadFactor1, ReloadFactor2;
-	property ReloadFactor: ReloadFactor1;
-	property ReloadFactor1: ReloadFactor1;
-	property ReloadFactor2: ReloadFactor2;
-	property ReloadFactors: ReloadFactor1, ReloadFactor2;
+	// When reloading a round, `ReloadCost` gets taken from the
+	// reserve, and `ReloadOutput` gets added to the magazine.
+	uint8 ReloadCost1, ReloadCost2, ReloadOutput1, ReloadOutput2;
+	
+	property ReloadCost: ReloadCost1;
+	property ReloadCost1: ReloadCost1;
+	property ReloadCost2: ReloadCost2;
+	property ReloadCosts: ReloadCost1, ReloadCost2;
+
+	property ReloadOutput: ReloadOutput1;
+	property ReloadOutput1: ReloadOutput1;
+	property ReloadOutput2: ReloadOutput2;
+	property ReloadOutputs: ReloadOutput1, ReloadOutput2;
+
+	property ReloadRatio: ReloadCost1, ReloadOutput1;
+	property ReloadRatio1: ReloadCost1, ReloadOutput1;
+	property ReloadRatio2: ReloadCost2, ReloadOutput2;
 
 	// Reloading is only possible if `MinAmmoReserve * ReloadFactor` rounds
 	// are held in reserve. Has no effect on magazineless weapons.
@@ -191,7 +202,8 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_Weapon.MaxAffixes MAX_AFFIXES;
 		BIO_Weapon.MinAmmoReserves 1, 1;
 		BIO_Weapon.Rarity BIO_RARITY_COMMON;
-		BIO_Weapon.ReloadFactors 1, 1;
+		BIO_Weapon.ReloadRatio1 1, 1;
+		BIO_Weapon.ReloadRatio2 1, 1;
 		BIO_Weapon.SwitchSpeeds 6, 6;
 		BIO_Weapon.UniqueBase '';
 	}
@@ -510,29 +522,31 @@ class BIO_Weapon : DoomWeapon abstract
 	action void A_LoadMag(uint amt = 0, bool secondary = false)
 	{
 		Ammo magItem = null, reserveAmmo = null;
-		int factor = -1, magSize = -1, reserve = -1;
+		int cost = -1, output = -1, magSize = -1, reserve = -1;
 		
 		if (!secondary)
 		{
 			magItem = invoker.Magazine1;
 			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType1));
 			magSize = invoker.MagazineSize1;
-			factor = invoker.ReloadFactor1;
-			reserve = reserveAmmo.Amount / factor;
+			cost = invoker.ReloadCost1;
+			output = invoker.ReloadOutput1;
+			reserve = reserveAmmo.Amount / cost;
 		}
 		else
 		{
 			magItem = invoker.Magazine2;
 			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType2));
 			magSize = invoker.MagazineSize2;
-			factor = invoker.ReloadFactor2;
-			reserve = reserveAmmo.Amount / factor;
+			cost = invoker.ReloadCost2;
+			output = invoker.ReloadOutput2;
+			reserve = reserveAmmo.Amount / cost;
 		}
 
 		let diff = Min(reserve, amt > 0 ? amt : magSize - magItem.Amount);
-		magItem.Amount += diff;
+		magItem.Amount += (diff * output);
 
-		int subtract = diff * factor;
+		int subtract = diff * cost;
 		reserveAmmo.Amount -= subtract;
 	}
 
@@ -564,22 +578,24 @@ class BIO_Weapon : DoomWeapon abstract
 	protected action void A_EmptyMagazine(bool secondary = false)
 	{
 		Ammo magItem = null, reserveAmmo = null;
-		int factor = -1;
+		int cost = -1, output = -1;
 
 		if (!secondary)
 		{
 			magItem = invoker.Magazine1;
 			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType1));
-			factor = invoker.ReloadFactor1;
+			cost = invoker.ReloadCost1;
+			output = invoker.ReloadOutput1;
 		}
 		else
 		{
 			magItem = invoker.Magazine2;
 			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType2));
-			factor = invoker.ReloadFactor2;
+			cost = invoker.ReloadCost2;
+			output = invoker.ReloadOutput2;
 		}
 
-		reserveAmmo.Amount += magItem.Amount * factor;
+		reserveAmmo.Amount += (magItem.Amount / output) * cost;
 		magItem.Amount -= magItem.Amount;
 	}
 
@@ -733,14 +749,14 @@ class BIO_Weapon : DoomWeapon abstract
 	bool CanReload(bool secondary = false) const
 	{
 		Ammo magItem = null, reserveAmmo = null;
-		int factor = -1, magSize = -1, minReserve = -1;
+		int cost = -1, magSize = -1, minReserve = -1;
 		
 		if (!secondary)
 		{
 			magItem = Magazine1;
 			reserveAmmo = Ammo(Owner.FindInventory(AmmoType1));
 			magSize = MagazineSize1;
-			factor = ReloadFactor1;
+			cost = ReloadCost1;
 			minReserve = MinAmmoReserve1;
 		}
 		else
@@ -748,11 +764,11 @@ class BIO_Weapon : DoomWeapon abstract
 			magItem = Magazine2;
 			reserveAmmo = Ammo(Owner.FindInventory(AmmoType2));
 			magSize = MagazineSize2;
-			factor = ReloadFactor2;
+			cost = ReloadCost2;
 			minReserve = MinAmmoReserve2;
 		}
 
-		int minAmt = minReserve * factor;
+		int minAmt = minReserve * cost;
 
 		// Insufficient reserves
 		if (reserveAmmo == null || reserveAmmo.Amount < minAmt)
@@ -950,8 +966,10 @@ class BIO_Weapon : DoomWeapon abstract
 		RaiseSpeed = Default.RaiseSpeed;
 		LowerSpeed = Default.LowerSpeed;
 		
-		ReloadFactor1 = Default.ReloadFactor1;
-		ReloadFactor2 = Default.ReloadFactor2;
+		ReloadCost1 = Default.ReloadCost1;
+		ReloadOutput1 = Default.ReloadOutput1;
+		ReloadCost2 = Default.ReloadCost2;
+		ReloadOutput2 = Default.ReloadOutput2;
 
 		MinAmmoReserve1 = Default.MinAmmoReserve1;
 		MinAmmoReserve2 = Default.MinAmmoReserve2;
