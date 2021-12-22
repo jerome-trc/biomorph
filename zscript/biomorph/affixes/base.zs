@@ -66,6 +66,7 @@ class BIO_WeaponAffix : BIO_Affix abstract
 		in out BIO_FireData fireData) const {}
 
 	virtual bool CanGenerate() const { return true; }
+	virtual bool CanGenerateImplicit() const { return false; }
 
 	abstract void ToString(in out Array<string> strings,
 		readOnly<BIO_Weapon> weap) const;

@@ -289,6 +289,70 @@ class BIO_WAfx_StrafeDamage : BIO_WeaponAffix
 	}
 }
 
+class BIO_WAfx_RandDmgMulti : BIO_WeaponAffix
+{
+	float MinMulti, MaxMulti;
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		MaxMulti = FRandom(2.0, 4.0);
+		int avgDamage = 0;
+
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			Array<int> vals;
+			weap.Pipelines[i].GetDamageValues(vals);
+
+			for (uint j = 0; j < vals.Size(); j++)
+				avgDamage += vals[j];
+			
+			avgDamage *= weap.Pipelines[i].GetFireCount();
+		}
+
+		avgDamage /= int(weap.Pipelines.Size());
+		
+		// Higher possible maximum roll if weapon is weaker to begin with
+		if (avgDamage < 100)
+			MaxMulti += 0.5;
+		if (avgDamage < 50)
+			MaxMulti += 0.5;
+
+		MinMulti = FRandom(0.2, 0.4);
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.DealsAnyDamage();
+	}
+
+	final override void BeforeEachFire(BIO_Weapon weap,
+		in out BIO_FireData fireData) const
+	{
+		fireData.Damage = Ceil(fireData.Damage * FRandom(MinMulti, MaxMulti));
+	}
+
+	final override bool CanGenerate() const { return false; }
+	final override bool CanGenerateImplicit() const { return true; }
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_WAFX_RANDDMGMULTI_TOSTR"),
+			MinMulti, MaxMulti));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_RANDDMGMULTI_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE;
+	}
+}
+
 // LegenDoom(Lite) exclusive. 400% damage to Legendary enemies.
 class BIO_WAfx_DemonSlayer : BIO_WeaponAffix
 {

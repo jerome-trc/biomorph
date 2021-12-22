@@ -139,6 +139,22 @@ class BIO_GlobalData : Thinker
 	}
 
 	// Returns `false` if no affixes are compatible.
+	bool EligibleImplicitWeaponAffixes(in out Array<BIO_WeaponAffix> eligibles,
+		readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < WeaponAffixDefaults.Size(); i++)
+		{
+			if (!WeaponAffixDefaults[i].CanGenerateImplicit()) continue;
+			if (!WeaponAffixDefaults[i].Compatible(weap)) continue;
+			let wafx_t = WeaponAffixDefaults[i].GetClass();
+			if (weap.HasAffixOfType(wafx_t)) continue;
+			eligibles.Push(BIO_WeaponAffix(new(wafx_t)));
+		}
+
+		return eligibles.Size() > 0;
+	}
+
+	// Returns `false` if no affixes are compatible.
 	bool AllEligibleEquipmentAffixes(
 		Array<BIO_EquipmentAffix> eligibles, BIO_Equipment equip) const
 	{
