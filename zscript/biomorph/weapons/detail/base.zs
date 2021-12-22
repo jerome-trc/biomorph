@@ -293,6 +293,16 @@ class BIO_Weapon : DoomWeapon abstract
 	// For now, weapons cannot be cannibalised for ammunition.
 	final override bool TryPickupRestricted(in out Actor toucher) { return false; }
 
+	override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].OnPickup(self);
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnPickup(self);
+	}
+
 	override string PickupMessage()
 	{
 		string ret = "";
@@ -368,10 +378,15 @@ class BIO_Weapon : DoomWeapon abstract
 		if (MagazineType1 == MagazineType2) Magazine2 = Magazine1;
 	}
 
-	final override void OnDrop(Actor dropper)
+	override void OnDrop(Actor dropper)
 	{
 		super.OnDrop(dropper);
 		HitGround = false;
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].OnDrop(self, BIO_Player(dropper));
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnDrop(self, BIO_Player(dropper));
 	}
 
 	final override void Activate(Actor activator)
@@ -543,10 +558,15 @@ class BIO_Weapon : DoomWeapon abstract
 			reserve = reserveAmmo.Amount / cost;
 		}
 
-		let diff = Min(reserve, amt > 0 ? amt : magSize - magItem.Amount);
-		magItem.Amount += (diff * output);
+		int diff = Min(reserve, amt > 0 ? amt : magSize - magItem.Amount);
+
+		for (uint i = 0; i < invoker.ImplicitAffixes.Size(); i++)
+			invoker.ImplicitAffixes[i].OnMagLoad(invoker, secondary, diff);
+		for (uint i = 0; i < invoker.Affixes.Size(); i++)
+			invoker.Affixes[i].OnMagLoad(invoker, secondary, diff);
 
 		int subtract = diff * cost;
+		magItem.Amount += (diff * output);
 		reserveAmmo.Amount -= subtract;
 	}
 

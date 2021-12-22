@@ -65,6 +65,10 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	virtual void OnCriticalShot(BIO_Weapon weap,
 		in out BIO_FireData fireData) const {}
 
+	virtual void OnPickup(BIO_Weapon weap) const {}
+	virtual void OnMagLoad(BIO_Weapon weap, bool secondary, in out int diff) const {}
+	virtual void OnDrop(BIO_Weapon weap, BIO_Player dropper) const {}
+
 	virtual bool CanGenerate() const { return true; }
 	virtual bool CanGenerateImplicit() const { return false; }
 
