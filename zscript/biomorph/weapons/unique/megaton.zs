@@ -59,7 +59,7 @@ class BIO_Megaton : BIO_IncursionShotgun
 				invoker.ReloadFactor1 = invoker.Default.ReloadFactor1;
 			}
 			A_LoadMag();
-			A_StartSound("bio/weap/incursion/firereload", CHAN_7);
+			A_StartSound("bio/weap/incursion/reload", CHAN_7);
 		}
 		INCU A 3 Offset(0, 32 + 3) A_SetReloadTime(4);
 		Goto Ready;
