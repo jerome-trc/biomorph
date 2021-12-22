@@ -51,12 +51,12 @@ class BIO_Megaton : BIO_IncursionShotgun
 			if (invoker.ClipFed)
 			{
 				invoker.AmmoType1 = 'Clip';
-				invoker.ReloadFactor1 = 10;
+				invoker.ReloadCost1 = 10;
 			}
 			else
 			{
 				invoker.AmmoType1 = invoker.Default.AmmoType1;
-				invoker.ReloadFactor1 = invoker.Default.ReloadFactor1;
+				invoker.ReloadCost1 = invoker.Default.ReloadCost1;
 			}
 			A_LoadMag();
 			A_StartSound("bio/weap/incursion/reload", CHAN_7);
