@@ -1,4 +1,3 @@
-
 /*	Commonwealth English localization.
 
 	Some notes:
@@ -11,10 +10,8 @@
 */
 
 [eng default]
+
 	BIO_MODTITLE = "Biomorph";
-
-// Player strings (display name) ===============================================
-
 	BIO_PLAYER_DISPLAYNAME = "Biomorph";
 
 // Grades and rarities =========================================================
@@ -365,6 +362,12 @@
 // Dropping and digestion ======================================================
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";
+
+// Doppel ======================================================================
+
+	BIO_DOPPEL_TAG = "Doppel";
+	BIO_DOPPEL_OB = "%o met %p doppelganger.";
+	BIO_DOPPEL_SPAWNED = "Something's approaching, and it's a lot like you.";
 
 // Menus =======================================================================
 
