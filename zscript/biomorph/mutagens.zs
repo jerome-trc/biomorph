@@ -345,7 +345,7 @@ class BIO_CorrFunc_RandomizeHide : BIO_CorruptionFunctor
 	{
 		weap.ClearAffixes();
 
-		uint c = Random(2, BIO_Weapon.MAX_AFFIXES);
+		uint c = Random(2, weap.MaxAffixes);
 
 		for (uint i = 0; i < c; i++)
 			weap.AddRandomAffix();
