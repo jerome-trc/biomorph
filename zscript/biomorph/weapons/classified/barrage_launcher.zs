@@ -6,7 +6,6 @@ class BIO_BarrageLauncher : BIO_Weapon
 		+WEAPON.EXPLOSIVE
 		+WEAPON.NOAUTOFIRE
 
-		Decal 'BulletChip';
 		Tag "$BIO_BARRAGELAUNCHER_TAG";
 		
 		Inventory.Icon 'BARRX0';

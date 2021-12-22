@@ -2,7 +2,6 @@ class BIO_HandCannon : BIO_Weapon
 {
 	Default
 	{
-		Decal 'BulletChip';
 		Tag "$BIO_HANDCANNON_TAG";
 
 		Inventory.Icon 'HCANX0';

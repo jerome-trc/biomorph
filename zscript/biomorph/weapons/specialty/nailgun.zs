@@ -2,7 +2,6 @@ class BIO_Nailgun : BIO_Weapon
 {
 	Default
 	{
-		Decal 'BulletChip';
 		Tag "$BIO_NAILGUN_TAG";
 
 		Inventory.Icon 'NLGNX0';

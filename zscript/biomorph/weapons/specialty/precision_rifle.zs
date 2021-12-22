@@ -2,7 +2,6 @@ class BIO_PrecisionRifle : BIO_Weapon
 {
 	Default
 	{
-		Decal 'BulletChip';
 		Tag "$BIO_PRECISIONRIFLE_TAG";
 
 		Inventory.Icon 'PRECX0';

@@ -2,7 +2,6 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 {
 	Default
 	{
-		Decal 'BulletChip';
 		Tag "$BIO_HBR_TAG";
 
 		Inventory.PickupMessage "$BIO_HBR_PKUP";

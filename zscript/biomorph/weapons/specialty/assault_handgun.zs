@@ -2,7 +2,6 @@ class BIO_AssaultHandgun : BIO_Weapon
 {
 	Default
 	{
-		Decal 'BulletChip';
 		Obituary "$OB_MPPISTOL";
 		Tag "$BIO_ASSAULTHANDGUN_TAG";
 
