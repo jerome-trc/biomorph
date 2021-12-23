@@ -34,7 +34,6 @@ const CRESC_STATWORSE = "\c[Red]";
 #include "zscript/biomorph/health.zs"
 #include "zscript/biomorph/keybinds.zs"
 #include "zscript/biomorph/mutagens.zs"
-#include "zscript/biomorph/player.zs"
 #include "zscript/biomorph/powerups.zs"
 #include "zscript/biomorph/sbar.zs"
 
@@ -70,6 +69,9 @@ const CRESC_STATWORSE = "\c[Red]";
 
 #include "zscript/biomorph/passives/base.zs"
 #include "zscript/biomorph/passives/perks.zs"
+
+#include "zscript/biomorph/player/core.zs"
+#include "zscript/biomorph/player/states.zs"
 
 #include "zscript/biomorph/weapons/fist.zs"
 
