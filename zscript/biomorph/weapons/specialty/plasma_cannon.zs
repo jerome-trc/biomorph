@@ -7,7 +7,6 @@ class BIO_PlasmaCannon : BIO_Weapon
 		Inventory.Icon 'PLSCX0';
 		Inventory.PickupMessage "$BIO_PLASMACANNON_PKUP";
 
-		Weapon.AmmoGive 50;
 		Weapon.AmmoType 'Cell';
 		Weapon.AmmoUse 2;
 		Weapon.SelectionOrder SELORDER_PLASRIFLE_SPEC;

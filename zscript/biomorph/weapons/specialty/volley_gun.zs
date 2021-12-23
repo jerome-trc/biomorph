@@ -7,7 +7,6 @@ class BIO_VolleyGun : BIO_Weapon
 		Inventory.Icon 'VOLLZ0';
 		Inventory.PickupMessage "$BIO_VOLLEYGUN_PKUP";
 	
-		Weapon.AmmoGive 16;
 		Weapon.AmmoType 'Shell';
 		Weapon.AmmoUse 1; // Per barrel
 		Weapon.SelectionOrder SELORDER_SSG_SPEC;

@@ -11,7 +11,6 @@ class BIO_BarrageLauncher : BIO_Weapon
 		Inventory.Icon 'BARRX0';
 		Inventory.PickupMessage "$BIO_BARRAGELAUNCHER_PKUP";
 
-		Weapon.AmmoGive 20;
 		Weapon.AmmoType 'RocketAmmo';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_RLAUNCHER_CLSF;

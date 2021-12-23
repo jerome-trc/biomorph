@@ -8,7 +8,6 @@ class BIO_AssaultHandgun : BIO_Weapon
 		Inventory.Icon 'ASHGX0';
 		Inventory.PickupMessage "$BIO_ASSAULTHANDGUN_PKUP";
 
-		Weapon.AmmoGive 18;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_PISTOL_SPEC;

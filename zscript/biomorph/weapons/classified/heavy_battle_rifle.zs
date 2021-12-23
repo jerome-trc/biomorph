@@ -6,7 +6,6 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 
 		Inventory.PickupMessage "$BIO_HBR_PKUP";
 
-		Weapon.AmmoGive 60;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_CHAINGUN_CLSF;

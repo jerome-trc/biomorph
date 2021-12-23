@@ -7,7 +7,6 @@ class BIO_Nailgun : BIO_Weapon
 		Inventory.Icon 'NLGNX0';
 		Inventory.PickupMessage "$BIO_NAILGUN_PKUP";
 
-		Weapon.AmmoGive 100;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_CHAINGUN - 20;

@@ -7,7 +7,6 @@ class BIO_HandCannon : BIO_Weapon
 		Inventory.Icon 'HCANX0';
 		Inventory.PickupMessage "$BIO_HANDCANNON_PKUP";
 
-		Weapon.AmmoGive 15;
 		Weapon.AmmoType 'Clip';
 		Weapon.Ammouse 1;
 		Weapon.SelectionOrder SELORDER_PISTOL_CLSF;
