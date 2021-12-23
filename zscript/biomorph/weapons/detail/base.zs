@@ -284,15 +284,25 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
-	// Prevents picking up a weapon if one weapon of that class is already held.
 	final override bool HandlePickup(Inventory item)
 	{
-		if (item.GetClass() == self.GetClass()) return true;
-		return super.HandlePickup(item);
+		if (item.GetClass() != self.GetClass()) return false;
+
+		if (MaxAmount > 1)
+			return super.HandlePickup(item);
+
+		if (Owner.Player.Cmd.Buttons & BT_RELOAD &&
+			Rarity == BIO_RARITY_COMMON &&
+			Grade == BIO_GRADE_STANDARD)
+			item.bPickupGood = Weapon(item).PickupForAmmo(self);
+
+		return true;
 	}
 
-	// For now, weapons cannot be cannibalised for ammunition.
-	final override bool TryPickupRestricted(in out Actor toucher) { return false; }
+	final override bool TryPickupRestricted(in out Actor toucher)
+	{
+		return false;
+	}
 
 	override void DoPickupSpecial(Actor toucher)
 	{
