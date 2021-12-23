@@ -107,7 +107,10 @@
 	
 	BIO_PRECISIONRIFLE_TAG = "Precision Rifle";
 	BIO_PRECISIONRIFLE_PKUP = "Obtained a %s.";
-	
+
+	BIO_VOLLEYGUN_TAG = "Volley Gun";
+	BIO_VOLLEYGUN_PKUP = "Obtained a %s.";
+
 	BIO_AUTOCANNON_TAG = "Autocannon";
 	BIO_AUTOCANNON_PKUP = "Procured an %s.";
 
@@ -447,3 +450,5 @@
 	BIO_WINDUP = "windup";
 	BIO_WINDDOWN = "winddown";
 	BIO_RELOAD = "reload";
+	BIO_ALL_4 = "all 4";
+	BIO_2 = "2";

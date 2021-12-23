@@ -21,6 +21,16 @@
 			"cost": 7
 		},
 		{
+			"input": "BIO_SuperShotgun",
+			"output": "BIO_VolleyGun",
+			"cost": 3
+		},
+		{
+			"input": "BIO_VolleyGun",
+			"output": "BIO_IncursionShotgun",
+			"cost": 7
+		},
+		{
 			"input": "BIO_Chaingun",
 			"output": "BIO_Nailgun",
 			"cost": 3
@@ -52,6 +62,7 @@
 		],
 		"ssg": [
 			"BIO_SuperShotgun",
+			"BIO_VolleyGun",
 			"BIO_IncursionShotgun"
 		],
 		"autogun": [
