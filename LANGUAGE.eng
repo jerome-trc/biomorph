@@ -129,19 +129,6 @@
 	BIO_MEGATON_DETAIL = "\c[Orange]Can load shells or bullets";
 	BIO_MEGATON_HOWTO = "\cnZoom\c[Orange] switches ammo type";
 
-// Weapon upgrade kit (tag, pickup message, UI messaging) ======================
-
-	BIO_WUK_TAG = "Weapon Upgrade Kit";
-	BIO_WUK_PICKUP = "Picked up a \ckWeapon Upgrade Kit\c-.";
-	BIO_WUK_FAIL_NULLWEAP = "This weapon can't be upgraded in any way.";
-	BIO_WUK_FAIL_UNIQUE = "This weapon is unique; it can't be upgraded.";
-	BIO_WUK_FAIL_NOOPTIONS = "No upgraded versions of this weapon exist.";
-	BIO_WUK_FAIL_INSUFFICIENT = "You don't have enough upgrade kits for this.";
-
-	BIO_WUK_UIHELP_0 = "Use %s and %s to choose weapon to upgrade to.";
-	BIO_WUK_UIHELP_1 = "Press %s to confirm or %s to cancel.";
-	BIO_WUK_UIKITCOST = "Requires \cj%d\c- \ckupgrade kits\c-.";
-
 // Fired things (puff/projectile tags) =========================================
 
 	// Generic tags used as defaults
@@ -218,6 +205,18 @@
 	BIO_MUTA_REMOVE_TAG = "T.R.I.M. Mutagen";
 	BIO_MUTA_REMOVE_PKUP = "Obtained a sample of T.R.I.M. Mutagen.";
 	BIO_MUTA_REMOVE_USE = "Your weapon returns partly to normal.";
+
+	BIO_MUTA_UPGRADE_TAG = "E.V.O. Mutagen";
+	BIO_MUTA_UPGRADE_PKUP = "Obtained a sample of E.V.O. Mutagen.";
+
+	BIO_WUP_FAIL_NULLWEAP = "This weapon can't be upgraded in any way.";
+	BIO_WUP_FAIL_UNIQUE = "This weapon is unique; it can't be upgraded.";
+	BIO_WUP_FAIL_NOOPTIONS = "No upgraded versions of this weapon exist.";
+	BIO_WUP_FAIL_INSUFFICIENT = "You don't have enough mutagen for this.";
+
+	BIO_WUP_UIHELP_0 = "Use %s and %s to choose weapon to upgrade to.";
+	BIO_WUP_UIHELP_1 = "Press %s to confirm or %s to cancel.";
+	BIO_WUP_UICOST = "Requires \cj%d\c- samples of \ckE.V.O. mutagen\c-.";
 
 	BIO_MUTA_CORRUPT_TAG = "R.O.T. Mutagen";
 	BIO_MUTA_CORRUPT_PKUP = "Obtained a sample of R.O.T. Mutagen.";

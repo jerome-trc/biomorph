@@ -25,7 +25,7 @@ class BIO_PerkGraph
 class BIO_WeaponUpgrade
 {
 	Class<BIO_Weapon> Input, Output;
-	uint KitCost;
+	uint Cost;
 }
 
 class BIO_GlobalData : Thinker
@@ -511,28 +511,28 @@ class BIO_GlobalData : Thinker
 						continue;
 					}
 
-					let kitCost = BIO_Utils.TryGetJsonInt(upgrade.get("cost"));
-					if (kitCost == null)
+					let cost = BIO_Utils.TryGetJsonInt(upgrade.get("cost"));
+					if (cost == null)
 					{
 						Console.Printf(errpfx ..
-							"upgrade kit cost field is missing or malformed.");
+							"upgrade cost field is missing or malformed.");
 						continue;
 					}
 
-					let kc = kitCost.i;
-					let wukDefs = GetDefaultByType("BIO_WeaponUpgradeKit");
-					if (kc < 0 || kc > wukDefs.MaxAmount)
+					let uc = cost.i;
+					let wupItemDefs = GetDefaultByType('BIO_Muta_Upgrade');
+					if (uc < 0 || uc > wupItemDefs.MaxAmount)
 					{
 						Console.Printf(errpfx ..
-							"upgrade kit cost is invalid (must be between 0 and %d inclusive).",
-							wukDefs.MaxAmount);
+							"upgrade cost is invalid (must be between 0 and %d inclusive).",
+							wupItemDefs.MaxAmount);
 						continue;
 					}
 
 					uint e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
 					WeaponUpgrades[e].Input = input_t;
 					WeaponUpgrades[e].Output = output_t;
-					WeaponUpgrades[e].KitCost = kc;
+					WeaponUpgrades[e].Cost = uc;
 
 					let reversible = BIO_Utils.TryGetJsonBool(
 						upgrade.get("reversible"), errMsg: false);
@@ -541,7 +541,7 @@ class BIO_GlobalData : Thinker
 						uint er = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
 						WeaponUpgrades[er].Input = output_t;
 						WeaponUpgrades[er].Output = input_t;
-						WeaponUpgrades[er].KitCost = kc;
+						WeaponUpgrades[er].Cost = uc;
 					}
 				}
 			}

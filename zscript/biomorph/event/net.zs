@@ -4,7 +4,7 @@ extend class BIO_EventHandler
 	{
 		// Normal gameplay events
 
-		if (NetEvent_WUKOverlay(event) || NetEvent_WeaponUpgrade(event))
+		if (NetEvent_WUpOverlay(event) || NetEvent_WeaponUpgrade(event))
 			return;
 
 		// Debugging events
@@ -16,14 +16,14 @@ extend class BIO_EventHandler
 			return;
 	}
 
-	const EVENT_WUKOVERLAY = "bio_wukoverlay";
+	const EVENT_WUPOVERLAY = "bio_wupoverlay";
 	const EVENT_WEAPUPGRADE = "bio_weapupgrade";
 
 	private transient BIO_WeaponUpgradeOverlay WeaponUpgradeOverlay;
 
-	private bool NetEvent_WUKOverlay(ConsoleEvent event) const
+	private bool NetEvent_WUpOverlay(ConsoleEvent event) const
 	{
-		if (!(event.Name ~== EVENT_WUKOVERLAY)) return false;
+		if (!(event.Name ~== EVENT_WUPOVERLAY)) return false;
 		if (event.Player != ConsolePlayer) return true;
 
 		if (event.IsManual)
@@ -36,7 +36,7 @@ extend class BIO_EventHandler
 		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
 		if (bioPlayer == null)
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_WUKOVERLAY ..
+			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_WUPOVERLAY ..
 				" was illegally invoked by a non-Biomorph PlayerPawn.");
 			return true;
 		}
@@ -44,7 +44,7 @@ extend class BIO_EventHandler
 		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
 		if (weap == null)
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_WUKOVERLAY ..
+			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_WUPOVERLAY ..
 				" was illegally invoked for a non-Biomorph weapon.");
 			return true;
 		}
@@ -54,7 +54,7 @@ extend class BIO_EventHandler
 
 		if (options.Size() < 1)
 		{
-			bioPlayer.A_Print("$BIO_WUK_FAIL_NOOPTIONS");
+			bioPlayer.A_Print("$BIO_WUP_FAIL_NOOPTIONS");
 			return true;
 		}
 
@@ -111,9 +111,9 @@ extend class BIO_EventHandler
 			return true;
 		}
 
-		if (event.Args[0] > bioPlayer.CountInv('BIO_WeaponUpgradeKit'))
+		if (event.Args[0] > bioPlayer.CountInv('BIO_Muta_Upgrade'))
 		{
-			bioPlayer.A_Print("$BIO_WUK_FAIL_INSUFFICIENT", 4.0);
+			bioPlayer.A_Print("$BIO_WUP_FAIL_INSUFFICIENT", 4.0);
 			return true;
 		}
 		
@@ -122,7 +122,7 @@ extend class BIO_EventHandler
 		bioPlayer.A_SelectWeapon(outputChoice);
 		bioPlayer.TakeInventory(bioPlayer.Player.ReadyWeapon.GetClass(), 1);
 		bioPlayer.A_StartSound("bio/item/weapupgrade/use", CHAN_ITEM);
-		bioPlayer.TakeInventory('BIO_WeaponUpgradeKit', event.Args[0]);
+		bioPlayer.TakeInventory('BIO_Muta_Upgrade', event.Args[0]);
 		WeaponUpgradeOverlay.Destroy();
 		return true;
 	}
