@@ -4,7 +4,7 @@ class BIO_PrecisionRifle : BIO_Weapon
 	{
 		Tag "$BIO_PRECISIONRIFLE_TAG";
 
-		Inventory.Icon 'PRECX0';
+		Inventory.Icon 'PRECZ0';
 		Inventory.PickupMessage "$BIO_PRECISIONRIFLE_PKUP";
 
 		Weapon.AmmoType 'Clip';

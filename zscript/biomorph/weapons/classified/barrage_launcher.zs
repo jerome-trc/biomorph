@@ -8,7 +8,7 @@ class BIO_BarrageLauncher : BIO_Weapon
 
 		Tag "$BIO_BARRAGELAUNCHER_TAG";
 		
-		Inventory.Icon 'BARRX0';
+		Inventory.Icon 'BARRZ0';
 		Inventory.PickupMessage "$BIO_BARRAGELAUNCHER_PKUP";
 
 		Weapon.AmmoType 'RocketAmmo';

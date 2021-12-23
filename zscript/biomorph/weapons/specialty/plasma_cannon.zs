@@ -4,7 +4,7 @@ class BIO_PlasmaCannon : BIO_Weapon
 	{
 		Tag "$BIO_PLASMACANNON_TAG";
 
-		Inventory.Icon 'PLSCX0';
+		Inventory.Icon 'PLSCZ0';
 		Inventory.PickupMessage "$BIO_PLASMACANNON_PKUP";
 
 		Weapon.AmmoType 'Cell';
