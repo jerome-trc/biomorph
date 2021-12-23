@@ -36,8 +36,6 @@ class BIO_GlobalData : Thinker
 	private Array<BIO_PerkGraph> PerkGraphs; // One per player
 
 	private Array<BIO_WeaponAffix> WeaponAffixDefaults;
-
-	private Array<Class<BIO_EquipmentAffix> > AllEquipmentAffixClasses;
 	private Array<BIO_EquipmentAffix> EquipmentAffixDefaults;
 
 	private Array<BIO_WeaponUpgrade> WeaponUpgrades;
@@ -169,12 +167,12 @@ class BIO_GlobalData : Thinker
 	}
 
 	// Returns `false` if no affixes are compatible.
-	bool AllEligibleEquipmentAffixes(
-		Array<BIO_EquipmentAffix> eligibles, BIO_Equipment equip) const
+	bool AllEligibleEquipmentAffixes(in out Array<BIO_EquipmentAffix> eligibles,
+		readOnly<BIO_Equipment> equip) const
 	{
-		for (uint i = 0; i < AllEquipmentAffixClasses.Size(); i++)
+		for (uint i = 0; i < EquipmentAffixDefaults.Size(); i++)
 		{
-			let eafx_t = AllEquipmentAffixClasses[i];
+			let eafx_t = EquipmentAffixDefaults[i].GetClass();
 			if (equip.HasAffixOfType(eafx_t)) continue;
 
 			let eafx = BIO_EquipmentAffix(new(eafx_t));
@@ -300,7 +298,6 @@ class BIO_GlobalData : Thinker
 			}
 			else if (AllClasses[i] is 'BIO_EquipmentAffix')
 			{
-				ret.AllEquipmentAffixClasses.Push(AllClasses[i]);
 				let eafx = BIO_EquipmentAffix(new(AllClasses[i]));
 				ret.EquipmentAffixDefaults.Push(eafx);
 			}

@@ -202,14 +202,23 @@ class BIO_Equipment : Inventory abstract
 			return false;
 		}
 	}
+
+	readOnly<BIO_Equipment> AsConst() const { return self; }
+}
+
+struct BIO_ArmorData
+{
+	double SavePercent;
+	int MaxAbsorb, MaxFullAbsorb, SaveAmount;
 }
 
 class BIO_Armor : BIO_Equipment abstract
 {
 	// If a player manages to burn all of this down I'll be amazed
-	const INFINITE_ARMOR = 2147483647;
+	const INFINITE_ARMOR = int.MAX;
 
 	meta Class<BIO_ArmorStats> StatClass; property StatClass: StatClass;
+	BIO_ArmorData ArmorData;
 
 	Default
 	{
@@ -233,19 +242,22 @@ class BIO_Armor : BIO_Equipment abstract
 		for (uint i = 0; i < c; i++)
 		{
 			Array<BIO_EquipmentAffix> eligibles;
-			BIO_GlobalData.Get().AllEligibleEquipmentAffixes(eligibles, self);
+			BIO_GlobalData.Get().AllEligibleEquipmentAffixes(eligibles, AsConst());
 			if (eligibles.Size() < 1) return;
 			uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
-			Affixes[e].Init(self);
+			Affixes[e].Init(AsConst());
 		}
-	}
 
-	void PreArmorApply(BIO_Player bioPlayer, BIO_ArmorStats stats)
-	{
+		let statDefs = GetDefaultByType(StatClass);
+		ArmorData.SavePercent = statDefs.SavePercent;
+		ArmorData.MaxAbsorb = statDefs.MaxAbsorb;
+		ArmorData.MaxFullAbsorb = statDefs.MaxFullAbsorb;
+		ArmorData.SaveAmount = statDefs.SaveAmount;
+
 		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-			ImplicitAffixes[i].PreArmorApply(self, stats);
+			ImplicitAffixes[i].PreArmorApply(self, ArmorData);
 		for (uint i = 0; i < Affixes.Size(); i++)
-			Affixes[i].PreArmorApply(self, stats);
+			Affixes[i].PreArmorApply(self, ArmorData);
 	}
 
 	// Does not check if already in perfect condition.

@@ -144,13 +144,13 @@ class BIO_StatusBar : BaseStatusBar
 		Array<string> afxStrings;
 		
 		for (uint i = bioArmor.Affixes.Size() - 1; i >= 0; i--)
-			bioArmor.Affixes[i].ToString(afxStrings, bioArmor);
+			bioArmor.Affixes[i].ToString(afxStrings, bioArmor.AsConst());
 
 		if (bioArmor.ImplicitAffixes.Size() > 0)
 			afxStrings.Push(""); // Blank line between implicit and explicit affixes
 
 		for (uint i = bioArmor.ImplicitAffixes.Size() - 1; i >= 0; i--)
-			bioArmor.ImplicitAffixes[i].ToString(afxStrings, bioArmor);
+			bioArmor.ImplicitAffixes[i].ToString(afxStrings, bioArmor.AsConst());
 
 		for (uint i = 0; i < afxStrings.Size(); i++)
 		{

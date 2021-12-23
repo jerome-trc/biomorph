@@ -733,10 +733,11 @@ class BIO_Player : DoomPlayer
 
 		if (EquippedArmor != null)
 		{
-			if (CountInv('BasicArmor') < 1)
-			{
+			EquippedArmor.ArmorData.SaveAmount = CountInv('BasicArmor');
+
+			if (EquippedArmor.ArmorData.SaveAmount < 1)
 				UnequipArmor(true);
-			}
+
 			// TODO: Armor break sound
 		}
 
@@ -821,7 +822,20 @@ class BIO_Player : DoomPlayer
 		}
 
 		EquippedArmor.OnUnequip(broken);
+		EquippedArmor.ArmorData.SaveAmount = CountInv('BasicArmor');
 		EquippedArmor.Equipped = false;
+
+		if (broken)
+		{
+			for (Inventory i = Inv; i != null; i = i.Inv)
+			{
+				if (i != EquippedArmor) continue;
+
+				i.Amount = 0;
+				i.DepleteOrDestroy();
+			}
+		}
+
 		EquippedArmor = null;
 		TakeInventory('BasicArmor', BIO_Armor.INFINITE_ARMOR);
 		FindInventory('BasicArmor').MaxAmount = 1;
@@ -831,13 +845,16 @@ class BIO_Player : DoomPlayer
 	// opening it up to modification by passives.
 	void PreArmorApply(BIO_ArmorStats armor)
 	{
+		armor.SavePercent = EquippedArmor.ArmorData.SavePercent;
+		armor.MaxAbsorb = EquippedArmor.ArmorData.MaxAbsorb;
+		armor.MaxFullAbsorb = EquippedArmor.ArmorData.MaxFullAbsorb;
+		armor.SaveAmount = EquippedArmor.ArmorData.SaveAmount;
+
 		for (uint i = 0; i < Functors[FANDX_EQUIPMENT].Size(); i++)
 		{
 			BIO_EquipmentFunctor(Functors[FANDX_EQUIPMENT][i])
 				.PreArmorApply(self, EquippedArmor, armor);
 		}
-
-		EquippedArmor.PreArmorApply(self, armor);
 	}
 
 	void OnHealthPickup(Inventory item)
