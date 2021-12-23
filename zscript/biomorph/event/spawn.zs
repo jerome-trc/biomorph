@@ -73,9 +73,6 @@ extend class BIO_EventHandler
 		else
 			return false;
 
-		if (Random(0, 8) == 0)
-			Actor.Spawn('BIO_WeaponUpgradeKitSpawner', event.Thing.Pos);
-
 		FinalizeSpawn(choice, event.Thing);
 		return true;
 	}

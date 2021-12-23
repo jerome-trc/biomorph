@@ -4,11 +4,12 @@
 
 class BIO_Mutagen : Inventory abstract
 {
-	const DROPWT_RESET = 64;
+	const DROPWT_RESET = 30;
 	const DROPWT_ADD = 12;
-	const DROPWT_RANDOM = 72;
+	const DROPWT_RANDOM = 50;
 	const DROPWT_REROLL = 10;
 	const DROPWT_REMOVE = 24;
+	const DROPWT_UPGRADE = 20;
 	const DROPWT_CORR = 1;
 
 	meta uint DropWeight; property DropWeight: DropWeight;
@@ -272,6 +273,34 @@ class BIO_Muta_Remove : BIO_Mutagen
 
 		Owner.A_Print("$BIO_MUTA_REROLL_USE");
 		return true;
+	}
+}
+
+class BIO_Muta_Upgrade : BIO_Mutagen
+{
+	Default
+	{
+		Tag "$BIO_MUTA_UPGRADE_TAG";
+		Inventory.Icon 'MUUPA0';
+		Inventory.PickupMessage "$BIO_MUTA_UPGRADE_PKUP";
+		BIO_Mutagen.DropWeight DROPWT_UPGRADE;
+		BIO_Mutagen.WorksOnUniques true;
+	}
+
+	States
+	{
+	Spawn:
+		MUUP A 6;
+		---- A 6 Bright;
+		Loop;
+	}
+
+	final override bool Use(bool pickup)
+	{
+		if (!super.Use(pickup)) return false;
+		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
+		EventHandler.SendNetworkEvent(BIO_EventHandler.EVENT_WUPOVERLAY);
+		return false;
 	}
 }
 

@@ -11,10 +11,10 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 		let ret = new('BIO_WeaponUpgradeOverlay');
 		ret.OnCreate();
 
-		ret.Help_0 = String.Format(StringTable.Localize("$BIO_WUK_UIHELP_0"),
+		ret.Help_0 = String.Format(StringTable.Localize("$BIO_WUP_UIHELP_0"),
 			ret.Key_Left.KeyName, ret.Key_Right.KeyName);
 		
-		ret.Help_1 = String.Format(StringTable.Localize("$BIO_WUK_UIHELP_1"),
+		ret.Help_1 = String.Format(StringTable.Localize("$BIO_WUP_UIHELP_1"),
 			ret.Key_Confirm.KeyName, ret.Key_Cancel.KeyName);
 
 		for (uint i = 0; i < options.Size(); i++)
@@ -44,7 +44,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 		EventHandler.SendNetworkEvent(
 			BIO_EventHandler.EVENT_WEAPUPGRADE .. ":" .. 
 			Choices[SelectedWeapon].Output.GetClassName(),
-			Choices[SelectedWeapon].KitCost);
+			Choices[SelectedWeapon].Cost);
 	}
 
 	final override void OnKeyPressed_Cancel()
@@ -72,11 +72,11 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 			VIRTUAL_HEIGHT_X2 * 0.79,
 			tag, DTA_VIRTUALWIDTH, VIRTUAL_WIDTH_X2, DTA_VIRTUALHEIGHT, VIRTUAL_HEIGHT_X2);
 
-		// Upgrade kit cost for current selection
+		// Cost for current selection
 
 		string cost = String.Format(
-			StringTable.Localize("$BIO_WUK_UIKITCOST"),
-			Choices[SelectedWeapon].KitCost);
+			StringTable.Localize("$BIO_WUP_UICOST"),
+			Choices[SelectedWeapon].Cost);
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
 			VIRTUAL_WIDTH_X2 * 0.5 - (SmallFont.StringWidth(cost) / 2),

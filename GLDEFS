@@ -72,16 +72,3 @@ object BIO_ArmorBonus
 	frame ARSDC { light BIO_ArmorBonus_C }
 	frame ARSDD { light BIO_ArmorBonus_D }
 }
-
-// Weapon Upgrade Kit
-
-pointlight BIO_WeaponUpgradeKit
-{
-	color 0.0 0.8 0.2
-    size 16
-}
-
-object BIO_WeaponUpgradeKit
-{
-	frame WUPKB { Light BIO_WeaponUpgradeKit }
-}

@@ -10,8 +10,6 @@ The GLDEFS for the Plasma Globule were devised by Realm667 user Robot J.
 
 The GLDEFS for the Armor Bonus were devised by Realm667 user Infirnex.
 
-The GLDEFS for the Weapon Upgrade Kit were devised by Realm667 user Dreadopp.
-
 ## Graphics
 
 The following sprites are edits of the work of id Software LLC:
@@ -42,8 +40,6 @@ Barrage Launcher sprites are courtesy of ZDoom forum user LossForWords, alongsid
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
 Classified Armour sprites are courtesy of id Software LLC, and edited by Realm667 user Ghastly_dragon.
-
-Weapon Upgrade Kit sprites are courtesy of Rogue Entertainment, and edited by Realm667 user Dreadopp.
 
 The Supply Box sprite is courtesy of id Software LLC, and edited by Realm667 user Dreadopp. 
 
