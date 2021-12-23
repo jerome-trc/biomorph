@@ -36,8 +36,8 @@ class BIO_Equipment : Inventory abstract
 		Radius 20;
 		Height 16;
 
-		Inventory.InterHubAmount 99;
-		Inventory.MaxAmount 99;
+		Inventory.InterHubAmount 1;
+		Inventory.MaxAmount 1;
 		Inventory.PickupMessage "";
 
 		BIO_Equipment.AffixMask BIO_EAM_NONE;
@@ -66,6 +66,9 @@ class BIO_Equipment : Inventory abstract
 
 		return true;
 	}
+
+	// Prevent armor pickups from being folded together.
+	final override bool HandlePickup(Inventory item) { return false; }
 
 	final override void AttachToOwner(Actor newOwner)
 	{
@@ -122,6 +125,9 @@ class BIO_Equipment : Inventory abstract
 	// related items (e.g. armor StatClass) get added to the player's inventory.
 	virtual void OnEquip()
 	{
+		bUndroppable = true;
+		bUntossable = true;
+
 		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			ImplicitAffixes[i].OnEquip(self);
 		for (uint i = 0; i < Affixes.Size(); i++)
@@ -132,6 +138,9 @@ class BIO_Equipment : Inventory abstract
 	// related items (e.g. armor StatClass) get taken away.
 	virtual void OnUnequip(bool broken)
 	{
+		bUndroppable = false;
+		bUntossable = false;
+
 		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			ImplicitAffixes[i].OnUnequip(self, broken);
 		for (uint i = 0; i < Affixes.Size(); i++)
