@@ -86,7 +86,7 @@ class WeightedRandomTable
 
 		while (ret == null && iters < 10000)
 		{
-			readOnly<uint> chance = Random(1, WeightSum);
+			readOnly<uint> chance = Random[BIO_WRT](1, WeightSum);
 			uint runningSum = 0, choice = 0;
 
 			for (uint i = 0; i < Entries.Size(); i++)
