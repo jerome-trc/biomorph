@@ -368,7 +368,9 @@ class BIO_Weapon : DoomWeapon abstract
 				Magazine1 = Ammo(Actor.Spawn(MagazineType1));
 				Magazine1.AttachToOwner(newOwner);
 			}
-			Magazine1.Amount = Max(Default.MagazineSize1, 0);
+
+			if (Default.MagazineSize1 != 0)
+				Magazine1.Amount = Max(Default.MagazineSize1, 0);
 		}
 
 		// Same for secondary:
@@ -383,7 +385,9 @@ class BIO_Weapon : DoomWeapon abstract
 				Magazine2 = Ammo(Actor.Spawn(MagazineType2));
 				Magazine2.AttachToOwner(newOwner);
 			}
-			Magazine2.Amount = Max(Default.MagazineSize2, 0);
+
+			if (Default.MagazineSize2 != 0)
+				Magazine2.Amount = Max(Default.MagazineSize2, 0);
 		}
 
 		if (MagazineType1 == MagazineType2) Magazine2 = Magazine1;
