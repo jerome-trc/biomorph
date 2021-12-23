@@ -35,6 +35,8 @@ Incursion Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn a
 
 Precision Rifle sprites are courtesy of xLightningStormL, Kinsie, Finalizer, id Software LLC, and TODM, with edits by Realm667 user Super Piter.
 
+Volley Gun sprites are courtesy of Superdave, Sonik.o.fan, 1337spy, Bgraybr, Warhawk, DBJ87, and id Software LLC.
+
 Barrage Launcher sprites are courtesy of ZDoom forum user LossForWords, alongside zrrion the insect, id Software LLC, and Apogee Entertainment.
 
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
@@ -72,6 +74,8 @@ The following audio files are provided by ZDoom forum user Joblez_I, under no li
 Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 
 PLSCIDLE and PLSCRAIS are courtesy of id Software LLC and Midway Software Inc.
+
+VOLLFIRE is courtesy of EA Digital Illusions CE AB.
 
 "m60-1.wav" (HVBRFIRE) and "deagle.wav" (HANDCANN) are courtesy of ZDoom forum user Joblez_I. 
 
