@@ -4,7 +4,7 @@ class BIO_Nailgun : BIO_Weapon
 	{
 		Tag "$BIO_NAILGUN_TAG";
 
-		Inventory.Icon 'NLGNX0';
+		Inventory.Icon 'NLGNZ0';
 		Inventory.PickupMessage "$BIO_NAILGUN_PKUP";
 
 		Weapon.AmmoType 'Clip';

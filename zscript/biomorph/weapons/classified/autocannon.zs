@@ -4,7 +4,7 @@ class BIO_Autocannon : BIO_Weapon
 	{
 		Tag "$BIO_AUTOCANNON_TAG";
 
-		Inventory.Icon 'ACANX0';
+		Inventory.Icon 'ACANZ0';
 		Inventory.PickupMessage "$BIO_AUTOCANNON_PKUP";
 
 		Weapon.AmmoType 'Clip';

@@ -4,7 +4,7 @@ class BIO_AutoShotgun : BIO_Weapon
 	{
 		Tag "$BIO_AUTOSHOTGUN_TAG";
 
-		Inventory.Icon 'AUSGX0';
+		Inventory.Icon 'AUSGZ0';
 		Inventory.PickupMessage "$BIO_AUTOSHOTGUN_PKUP";
 
 		Weapon.AmmoType 'Shell';

@@ -5,7 +5,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		Obituary "$OB_MPPISTOL";
 		Tag "$BIO_ASSAULTHANDGUN_TAG";
 
-		Inventory.Icon 'ASHGX0';
+		Inventory.Icon 'ASHGZ0';
 		Inventory.PickupMessage "$BIO_ASSAULTHANDGUN_PKUP";
 
 		Weapon.AmmoType 'Clip';
