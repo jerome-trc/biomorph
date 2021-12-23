@@ -10,7 +10,7 @@ class BIO_SuperShotgun : BIO_Weapon
 
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType1 'Shell';
-		Weapon.AmmoUse1 1;
+		Weapon.AmmoUse1 1; // Per barrel
 		Weapon.SelectionOrder SELORDER_SSG;
 		Weapon.SlotNumber 3;
 		Weapon.SlotPriority SLOTPRIO_STANDARD;
@@ -99,11 +99,7 @@ class BIO_SuperShotgun : BIO_Weapon
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		SHT2 B 7 A_SetReloadTime(0);
-		SHT2 C 7
-		{
-			A_SetReloadTime(1);
-			A_CheckReload();
-		}
+		SHT2 C 7 A_SetReloadTime(1);
 		SHT2 D 7
 		{
 			A_SetReloadTime(2);
