@@ -308,6 +308,7 @@ class BIO_GlobalData : Thinker
 			{
 				let mut_t = (Class<BIO_Mutagen>)(AllClasses[i]);
 				let defs = GetDefaultByType(mut_t);
+				if (defs.NoLoot) continue;
 				ret.WRT_Mutagens.Push(mut_t, defs.DropWeight);
 			}
 		}

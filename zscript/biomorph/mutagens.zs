@@ -13,6 +13,7 @@ class BIO_Mutagen : Inventory abstract
 
 	meta uint DropWeight; property DropWeight: DropWeight;
 	meta bool WorksOnUniques; property WorksOnUniques: WorksOnUniques;
+	meta bool NoLoot; property NoLoot: NoLoot;
 
 	Default
     {
@@ -28,6 +29,7 @@ class BIO_Mutagen : Inventory abstract
 
 		BIO_Mutagen.DropWeight 0;
 		BIO_Mutagen.WorksOnUniques false;
+		BIO_Mutagen.NoLoot false;
     }
 
 	// Provides preliminary checks, and prints failure messaging.
