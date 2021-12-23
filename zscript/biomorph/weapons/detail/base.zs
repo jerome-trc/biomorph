@@ -505,7 +505,17 @@ class BIO_Weapon : DoomWeapon abstract
 	virtual void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const {}
 
 	// Each is called once before starting its respective loop.
-	virtual void OnDeselect() {}
+	virtual void OnDeselect()
+	{
+		let dropper = BIO_WeaponDrop(Owner.FindInventory('BIO_WeaponDrop'));
+		
+		if (dropper.IsPrimed())
+		{
+			// Flush confirmation message off screen
+			Owner.A_Print("", 0.0);
+			dropper.Disarm();
+		}
+	}
 	
 	virtual void OnSelect()
 	{

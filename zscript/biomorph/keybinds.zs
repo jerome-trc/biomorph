@@ -2,6 +2,8 @@
 
 class BIO_Keybind : Inventory abstract
 {
+	protected bool Primed;
+
 	Default
 	{
 		Inventory.Icon 'TNT1A0';
@@ -22,13 +24,14 @@ class BIO_Keybind : Inventory abstract
 		TNT1 A -1;
 		Loop;
 	}
+
+	bool IsPrimed() const { return Primed; }
+	void Disarm() { Primed = false; }
 }
 
 // Making weapons try to drop themselves leads to buggy behaviour.
 class BIO_WeaponDrop : BIO_Keybind
 {
-	private bool Primed;
-
 	final override bool Use(bool pickup)
 	{
 		let bioPlayer = BIO_Player(Owner);
@@ -44,11 +47,14 @@ class BIO_WeaponDrop : BIO_Keybind
 			string prompt = String.Format(
 				StringTable.Localize("$BIO_WEAPDROP_CONFIRM"),
 				Keybindings.NameKeys(k1, k2));
-			bioPlayer.A_Print(prompt);
+			bioPlayer.A_Print(prompt, 3.0);
 			Primed = true;
+			BIO_KeybindDisarmer.Create(self);
 		}
 		else
 		{
+			// Flush confirm message off screen
+			bioPlayer.A_Print("", 0.0);
 			Owner.DropInventory(weap, 1);
 			Primed = false;
 		}
@@ -59,8 +65,6 @@ class BIO_WeaponDrop : BIO_Keybind
 
 class BIO_UnequipArmor : BIO_Keybind
 {
-	private bool Primed;
-
 	final override bool Use(bool pickup)
 	{
 		let bioPlayer = BIO_Player(Owner);
@@ -80,8 +84,9 @@ class BIO_UnequipArmor : BIO_Keybind
 			string prompt = String.Format(
 				StringTable.Localize("$BIO_ARMORUNEQUIP_CONFIRM"),
 				Keybindings.NameKeys(k1, k2));
-			bioPlayer.A_Print(prompt);
+			bioPlayer.A_Print(prompt, 3.0);
 			Primed = true;
+			BIO_KeybindDisarmer.Create(self);
 		}
 		else
 		{
@@ -93,5 +98,30 @@ class BIO_UnequipArmor : BIO_Keybind
 		}
 
 		return false;
+	}
+}
+
+class BIO_KeybindDisarmer : Thinker
+{
+	private BIO_Keybind ToDisarm;
+	private int Lifetime;
+
+	static BIO_KeybindDisarmer Create(BIO_Keybind toDisarm)
+	{
+		let ret = new('BIO_KeybindDisarmer');
+		ret.ToDisarm = toDisarm;
+		return ret;
+	}
+
+	final override void Tick()
+	{
+		super.Tick();
+		
+		if (Lifetime++ >= TICRATE * 3)
+		{
+			ToDisarm.Disarm();
+			if (!bDestroyed) Destroy();
+			return;
+		}
 	}
 }
