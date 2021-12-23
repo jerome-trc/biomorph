@@ -291,20 +291,20 @@ class BIO_GlobalData : Thinker
 
 		for (uint i = 0; i < AllClasses.Size(); i++)
 		{
-			if (AllClasses[i].GetParentClass() is 'BIO_WeaponAffix')
+			if (AllClasses[i].IsAbstract()) continue;
+
+			if (AllClasses[i] is 'BIO_WeaponAffix')
 			{
-				if (AllClasses[i].IsAbstract()) continue;
 				let wafx = BIO_WeaponAffix(new(AllClasses[i]));
 				ret.WeaponAffixDefaults.Push(wafx);
 			}
-			else if (AllClasses[i].GetParentClass() is 'BIO_EquipmentAffix')
+			else if (AllClasses[i] is 'BIO_EquipmentAffix')
 			{
-				if (AllClasses[i].IsAbstract()) continue;
 				ret.AllEquipmentAffixClasses.Push(AllClasses[i]);
 				let eafx = BIO_EquipmentAffix(new(AllClasses[i]));
 				ret.EquipmentAffixDefaults.Push(eafx);
 			}
-			else if (AllClasses[i].GetParentClass() is 'BIO_Mutagen')
+			else if (AllClasses[i] is 'BIO_Mutagen')
 			{
 				let mut_t = (Class<BIO_Mutagen>)(AllClasses[i]);
 				let defs = GetDefaultByType(mut_t);
