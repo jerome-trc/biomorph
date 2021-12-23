@@ -23,7 +23,8 @@ class WeightedRandomTable
 		if (weight <= 0)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Tried to push a weight of 0 onto a WeightedRandomTable.");
+				"Tried to push a weight of 0 onto a WeightedRandomTable (%s).",
+				type.GetClassName());
 			return;
 		}
 
@@ -38,7 +39,7 @@ class WeightedRandomTable
 		if (weight <= 0)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Tried to push a weight of 0 onto a WeightedRandomTable.");
+				"Tried to add a layer with a weight of 0 onto a WeightedRandomTable.");
 			return null;
 		}
 		
@@ -61,7 +62,7 @@ class WeightedRandomTable
 		if (weight <= 0)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Tried to push a weight of 0 onto a WeightedRandomTable.");
+				"Tried to push a layer with a weight of 0 onto a WeightedRandomTable.");
 			return;
 		}
 
