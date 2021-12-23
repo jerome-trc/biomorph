@@ -7,7 +7,6 @@ class BIO_Autocannon : BIO_Weapon
 		Inventory.Icon 'ACANX0';
 		Inventory.PickupMessage "$BIO_AUTOCANNON_PKUP";
 
-		Weapon.AmmoGive 100;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_CHAINGUN_CLSF;

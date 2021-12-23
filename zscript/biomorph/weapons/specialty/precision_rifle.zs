@@ -7,7 +7,6 @@ class BIO_PrecisionRifle : BIO_Weapon
 		Inventory.Icon 'PRECX0';
 		Inventory.PickupMessage "$BIO_PRECISIONRIFLE_PKUP";
 
-		Weapon.AmmoGive 40;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_PISTOL;
