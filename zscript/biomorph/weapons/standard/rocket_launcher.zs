@@ -75,7 +75,7 @@ class BIO_RocketLauncher : BIO_Weapon
 		MISG A 1 Fast Offset(0, 32 + 7) A_SetReloadTime(3);
 		MISG A 1 Fast Offset(0, 32 + 15) A_SetReloadTime(4);
 		MISG A 1 Offset(0, 32 + 30) A_SetReloadTime(5);
-		MISG A 45 Offset(0, 32 + 30) 
+		MISG A 24 Offset(0, 32 + 30) 
 		{
 			A_SetReloadTime(6);
 			A_PresetRecoil('BIO_Recoil_HeavyReload');
