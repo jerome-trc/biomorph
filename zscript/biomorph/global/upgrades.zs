@@ -111,6 +111,34 @@ extend class BIO_GlobalData
 		return true;
 	}
 
+	static const string UPGRADE_COST_CONSTANT_NAMES[] = {
+		"STANDARD_TO_STANDARD",
+		"STANDARD_TO_SPECIALTY",
+		"SPECIALTY_TO_SPECIALTY",
+		"SPECIALTY_TO_CLASSIFIED",
+		"CLASSIFIED_TO_CLASSIFIED"
+	};
+
+	static const uint UPGRADE_COST_CONSTANTS[] = {
+		1,
+		3,
+		2,
+		7,
+		3
+	};
+
+	private static uint ResolveUpgradeCostConstant(string str, string errpfx)
+	{
+		for (uint i = 0; i < BIO_GlobalData.UPGRADE_COST_CONSTANT_NAMES.Size(); i++)
+		{
+			if (str ~== BIO_GlobalData.UPGRADE_COST_CONSTANT_NAMES[i])
+				return BIO_GlobalData.UPGRADE_COST_CONSTANTS[i];
+		}
+
+		Console.Printf(errpfx .. "unrecognized upgrade cost constant: " .. str);
+		return uint.MAX;
+	}
+
 	private void ReadWeaponUpgradeJSON(BIO_JsonArray upgrades, int lump)
 	{
 		let wupItemDefs = GetDefaultByType('BIO_Muta_Upgrade');
@@ -204,15 +232,20 @@ extend class BIO_GlobalData
 				}
 				else if (keys[j] ~== "cost")
 				{
-					let costJSON = BIO_Utils.TryGetJsonInt(upgrade.get("cost"));
-					if (costJSON == null)
+					let costInt = BIO_Utils.TryGetJsonInt(
+						upgrade.get("cost"), errMsg: false);
+					let costStr = BIO_Utils.StringFromJson(
+						upgrade.get("cost"), errMsg: false);
+
+					if (costStr.Length() > 0)
+						cost = ResolveUpgradeCostConstant(costStr, errpfx);
+					else if (costInt != null)
+						cost = uint(costInt.i);
+					else
 					{
-						Console.Printf(errpfx ..
-							"upgrade cost field is missing or malformed.");
+						Console.Printf(errpfx .. "`cost` must be a string or integer.");
 						continue;
 					}
-
-					cost = uint(costJSON.i);
 
 					if (cost > wupItemDefs.MaxAmount)
 					{
