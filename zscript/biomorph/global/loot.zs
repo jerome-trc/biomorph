@@ -139,7 +139,7 @@ extend class BIO_GlobalData
 				continue;
 			}
 
-			if (defs.Rarity != BIO_RARITY_UNIQUE) wt *= 2;
+			if (defs.Rarity != BIO_RARITY_UNIQUE) wt *= 4;
 
 			WeaponLootTables[g][targetTables].Push(weap_t, wt);
 		}
