@@ -225,7 +225,8 @@
 
 	BIO_WUP_UIHELP_0 = "Use %s and %s to choose weapon to upgrade to.";
 	BIO_WUP_UIHELP_1 = "Press %s to confirm or %s to cancel.";
-	BIO_WUP_UICOST = "Requires \cj%d\c- samples of \c[Green]E.V.O. mutagen\c-.";
+	BIO_WUP_UICOST = "Requires \cj%d\c- sample of \c[Green]E.V.O. mutagen\c-.";
+	BIO_WUP_UICOST_PLURAL = "Requires \cj%d\c- samples of \c[Green]E.V.O. mutagen\c-.";
 
 	BIO_MUTA_CORRUPT_TAG = "\c[DarkRed]R.O.T.\c[White] Mutagen\c-";
 	BIO_MUTA_CORRUPT_PKUP = "Acquired a sample of \c[DarkRed]R.O.T. Mutagen\c-.";
