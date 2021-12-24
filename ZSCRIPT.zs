@@ -98,6 +98,7 @@ const CRESC_STATWORSE = "\c[Red]";
 #include "zscript/biomorph/weapons/specialty/nailgun.zs"
 #include "zscript/biomorph/weapons/specialty/plasma_cannon.zs"
 #include "zscript/biomorph/weapons/specialty/precision_rifle.zs"
+#include "zscript/biomorph/weapons/specialty/proximity_launcher.zs"
 #include "zscript/biomorph/weapons/specialty/volley_gun.zs"
 
 #include "zscript/biomorph/weapons/classified/autocannon.zs"

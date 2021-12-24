@@ -41,6 +41,16 @@
 			"cost": 7
 		},
 		{
+			"input": "BIO_RocketLauncher",
+			"output": "BIO_ProximityLauncher",
+			"cost": 3
+		},
+		{
+			"input": "BIO_ProximityLauncher",
+			"output": "BIO_BarrageLauncher",
+			"cost": 7
+		},
+		{
 			"input": "BIO_PlasmaRifle",
 			"output": "BIO_PlasmaCannon",
 			"cost": 3
@@ -73,6 +83,7 @@
 		],
 		"launcher": [
 			"BIO_RocketLauncher",
+			"BIO_ProximityLauncher",
 			"BIO_BarrageLauncher"
 		],
 		"energy": [

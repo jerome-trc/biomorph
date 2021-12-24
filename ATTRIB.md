@@ -8,6 +8,8 @@ The [ZJSON library](https://github.com/RicardoLuis0/ZJSON) is courtesy of [Ricar
 
 The GLDEFS for the Plasma Globule were devised by Realm667 user Robot J.
 
+The GLDEFS and state machines for the Proximity Mine were devised by MG_Man, Hidon, Theshooter7, Jimmy91, Arachnotron II, and Blzut3.
+
 The GLDEFS for the Armor Bonus were devised by Realm667 user Infirnex.
 
 ## Graphics
@@ -34,6 +36,8 @@ Hand Cannon sprites are courtesy of Realm667 user Mor'ladim, id Software, and Le
 Incursion Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
 
 Precision Rifle sprites are courtesy of xLightningStormL, Kinsie, Finalizer, id Software LLC, and TODM, with edits by Realm667 user Super Piter.
+
+Proximity Mine Launcher sprites, as well as those of its projectiles, are courtesy of Mechadon and 3D Realms Entertainment ApS.
 
 Volley Gun sprites are courtesy of Superdave, Sonik.o.fan, 1337spy, Bgraybr, Warhawk, DBJ87, and id Software LLC.
 
@@ -74,6 +78,8 @@ The following audio files are provided by ZDoom forum user Joblez_I, under no li
 Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 
 PLSCIDLE and PLSCRAIS are courtesy of id Software LLC and Midway Software Inc.
+
+PROXBEEP, PROXFIRE, and PROXHIT are courtesy of id Software LLC. 
 
 VOLLFIRE is courtesy of EA Digital Illusions CE AB.
 
