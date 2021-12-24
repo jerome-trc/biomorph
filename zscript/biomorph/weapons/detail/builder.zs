@@ -242,7 +242,8 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Splash(int damage, int radius, EExplodeFlags flags = 0)
+	BIO_WeaponPipelineBuilder Splash(int damage, int radius,	
+		EExplodeFlags flags = XF_NONE)
 	{
 		CheckSplashRestricted();
 		Pipeline.SetSplash(damage, radius);

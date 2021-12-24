@@ -133,9 +133,6 @@ class BIO_Utils abstract
 	}
 }
 
-const LAF_NONE = 0;
-const TRF_NONE = 0;
-
 class BIO_FakePuff : BIO_Puff
 {
 	Default
@@ -157,3 +154,10 @@ class BIO_FakePuff : BIO_Puff
         Stop;
     }
 }
+
+// Symbolic constants which pretend to be a part of certain gzdoom.pk3 enums
+// (zscript/constants.zs), for better clarity what arguments really mean. 
+
+const LAF_NONE = 0; // ELineAttackFlags
+const TRF_NONE = 0; // ELineTraceFlags
+const XF_NONE = 0; // EExplodeFlags

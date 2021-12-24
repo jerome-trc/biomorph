@@ -406,7 +406,7 @@ class BIO_WeaponPipeline play
 
 		if (func == null)
 		{
-			func = BIO_FTDF_Explode.Create(0, 0, 0, count, damage);
+			func = BIO_FTDF_Explode.Create(0, 0, XF_NONE, count, damage);
 			func.ShrapnelCount = count;
 			func.ShrapnelDamage = damage;
 		}
