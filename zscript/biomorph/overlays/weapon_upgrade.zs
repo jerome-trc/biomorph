@@ -54,7 +54,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 		S_StartSound("bio/ui/cancel", CHAN_AUTO);
 	}
 
-	const X_OFFS = VIRTUAL_WIDTH * 0.1;
+	const X_OFFS = VIRTUAL_WIDTH * 0.25;
 	const WEAPICONHEIGHT = VIRTUAL_HEIGHT * 0.725;
 
 	final override void Draw(RenderEvent event) const
@@ -75,7 +75,8 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 		// Cost for current selection
 
 		string cost = String.Format(
-			StringTable.Localize("$BIO_WUP_UICOST"),
+			StringTable.Localize(Choices[SelectedWeapon].Cost == 1 ?
+				"$BIO_WUP_UICOST" : "$BIO_WUP_UICOST_PLURAL"),
 			Choices[SelectedWeapon].Cost);
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
