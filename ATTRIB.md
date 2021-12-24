@@ -71,6 +71,9 @@ The following audio files are provided by CturiX Kemilon, under no license:
 The following audio files are provided by ZDoom forum user Joblez_I, under no license:
 - "autoshotgun-1.wav" (AUSGFIRE)
 - "deagle.wav" (HANDCANN)
+- "generic_alt_pistol1.wav" (PISTFIR0)
+- "generic_alt_pistol2.wav" (PISTFIR1)
+- "generic_alt_pistol3.wav" (PISTFIR2)
 - "m14-1.wav" (NLGNFIRE)
 - "m60-1.wav" (HVBRFIRE)
 - "madsenm47-1.wav" (PRECFIRE)
