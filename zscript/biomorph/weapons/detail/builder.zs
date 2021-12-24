@@ -116,11 +116,8 @@ class BIO_WeaponPipelineBuilder play
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(fireCount);
 
-		let sprayFunctor = new('BIO_FTDF_BFGSpray');
-		sprayFunctor.RayCount = rayCount;
-		sprayFunctor.MinDamage = minRayDmg;
-		sprayFunctor.MaxDamage = maxRayDmg;
-		Pipeline.PushFiredThingDeathFunctor(sprayFunctor);
+		Pipeline.PushFiredThingDeathFunctor(
+			BIO_FTDF_BFGSpray.Create(rayCount, minRayDmg, maxRayDmg));
 
 		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Rand')
 			.CustomSet(minDamage, maxDamage));
@@ -245,10 +242,17 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Splash(int damage, int radius)
+	BIO_WeaponPipelineBuilder Splash(int damage, int radius, EExplodeFlags flags = 0)
 	{
 		CheckSplashRestricted();
 		Pipeline.SetSplash(damage, radius);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Shrapnel(int count, int damage)
+	{
+		CheckSplashRestricted();
+		Pipeline.SetShrapnel(count, damage);
 		return self;
 	}
 

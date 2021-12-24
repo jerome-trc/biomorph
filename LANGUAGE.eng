@@ -38,8 +38,6 @@
 	BIO_WEAPTOSTR_HEADER_2 = "\c[Gold]Tertiary fire:";
 	BIO_WEAPTOSTR_HEADER_3 = "\c[Gold]Quaternary fire:";
 
-	BIO_WEAPTOSTR_SPLASH =
-		"\c[MidGrey]Splash: %s%d \c[MidGrey]damage, %s%d \c[MidGrey]radius";
 	BIO_WEAPTOSTR_HSPREAD =
 		"\c[MidGrey]Horizontal spread: %s%.2f \c[MidGrey]degree(s)";
 	BIO_WEAPTOSTR_VSPREAD =
@@ -76,9 +74,6 @@
 		"\c[MidGrey]Damage: %s%d\c[MidGrey] x (1 - %d)";
 	BIO_DMGFUNC_SINGLE =
 		"\c[MidGrey]Damage: %s%d";
-
-	BIO_WEAPTOSTR_NAILSHRAPNEL =
-		"\cjNails break into two shards of shrapnel";
 
 	BIO_OB_GENERIC = "%k killed %o.";
 
@@ -184,6 +179,10 @@
 	BIO_HDF_ENEMYHEALTHDMG =
 		"%.1f%% of enemy health added to damage";
 
+	BIO_FTDF_EXPLODE_SPLASH =
+		"\c[MidGrey]Splash: %s%d \c[MidGrey]damage, %s%d \c[MidGrey]radius";
+	BIO_FTDF_EXPLODE_SHRAPNEL =
+		"\c[MidGrey]Shrapnel: %s%d\c[MidGrey] x %s%d\c[MidGrey] damage";
 	BIO_FTDF_BFGSPRAY =
 		"\c[MidGrey]%s%d \c[MidGrey]rays, %s%d \cu-\c[MidGrey] %s%d damage";
 

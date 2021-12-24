@@ -24,6 +24,7 @@ class BIO_Nailgun : BIO_Weapon
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicProjectilePipeline('BIO_Nail', 1, 7, 20, 3.6, 1.8)
+			.Shrapnel(2, 4)
 			.FireSound("bio/weap/nailgun/fire")
 			.Build());
 	}
