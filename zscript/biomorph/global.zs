@@ -567,51 +567,58 @@ class BIO_GlobalData : Thinker
 		string arrName, LootTable targetTables)
 	{
 		let arr = BIO_Utils.TryGetJsonArray(loot.get(arrName));
-		if (arr != null)
+		if (arr == null) return;
+		
+		for (uint i = 0; i < arr.size(); i++)
 		{
-			for (uint i = 0; i < arr.size(); i++)
+			Class<BIO_Weapon> weap_t = (Class<BIO_Weapon>)
+				(BIO_Utils.TryGetJsonClassName(arr.get(i)));
+
+			if (weap_t == null)
 			{
-				Class<BIO_Weapon> weap_t = (Class<BIO_Weapon>)
-					(BIO_Utils.TryGetJsonClassName(arr.get(i)));
-
-				if (weap_t == null || weap_t == 'BIO_Weapon')
-				{
-					Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
-						" lump %d, loot object, %s weapon %d is an invalid class.",
-						lump, arrName, i);
-					continue;
-				}
-
-				if (weap_t == 'BIO_Fist')
-				{
-					Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
-						"lump %d, loot object, %s weapon includes illegal class `BIO_Fist`.",
-						lump, arrName, i);
-					continue;
-				}
-
-				let defs = GetDefaultByType(weap_t);
-				uint g = uint.MAX, wt = 0;
-
-				switch (defs.Grade)
-				{
-				case BIO_GRADE_STANDARD:
-					g = 0; wt = 7; break;
-				case BIO_GRADE_SPECIALTY:
-					g = 1; wt = 3; break;
-				case BIO_GRADE_CLASSIFIED:
-					g = 2; wt = 1; break;
-				default:
-					Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
-						" lump %d, loot object, %s weapon %d has invalid grade %s.",
-						lump, arrName, i, BIO_Utils.GradeToString(defs.Grade));
-					continue;
-				}
-	
-				if (defs.Rarity != BIO_RARITY_UNIQUE) wt *= 2;
-				
-				WeaponLootTables[g][targetTables].Push(weap_t, wt);
+				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+					" lump %d, loot object, %s weapon %d is an invalid class.",
+					lump, arrName, i);
+				continue;
 			}
+
+			if (weap_t.IsAbstract())
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+					"lump %d, loot object, %s weapon includes abstract class %s.",
+					lump, arrName, i, weap_t.GetClassName());
+				continue;
+			}
+
+			if (weap_t == 'BIO_Fist')
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+					"lump %d, loot object, %s weapon includes illegal class `BIO_Fist`.",
+					lump, arrName, i);
+				continue;
+			}
+
+			let defs = GetDefaultByType(weap_t);
+			uint g = uint.MAX, wt = 0;
+
+			switch (defs.Grade)
+			{
+			case BIO_GRADE_STANDARD:
+				g = 0; wt = 7; break;
+			case BIO_GRADE_SPECIALTY:
+				g = 1; wt = 3; break;
+			case BIO_GRADE_CLASSIFIED:
+				g = 2; wt = 1; break;
+			default:
+				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+					" lump %d, loot object, %s weapon %d has invalid grade %s.",
+					lump, arrName, i, BIO_Utils.GradeToString(defs.Grade));
+				continue;
+			}
+
+			if (defs.Rarity != BIO_RARITY_UNIQUE) wt *= 2;
+
+			WeaponLootTables[g][targetTables].Push(weap_t, wt);
 		}
 	}
 
