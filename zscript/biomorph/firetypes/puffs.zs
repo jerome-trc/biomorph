@@ -30,10 +30,11 @@ class BIO_Slug : BIO_Bullet
 	}
 }
 
-class BIO_MeleeHit : BIO_Bullet
+class BIO_MeleeHit : BIO_Puff
 {
 	Default
 	{
+		Decal 'BulletChip';
 		Tag "$BIO_MELEEHIT_TAG";
 		BIO_Puff.PluralTag "$BIO_MELEEHIT_TAG_PLURAL";
 	}
