@@ -553,6 +553,7 @@ class BIO_GlobalData : Thinker
 				TryReadWeaponLootArray(lump, loot, "pistol", LOOTTABLE_PISTOL);
 				TryReadWeaponLootArray(lump, loot, "shotgun", LOOTTABLE_SHOTGUN);
 				TryReadWeaponLootArray(lump, loot, "ssg", LOOTTABLE_SSG);
+				TryReadWeaponLootArray(lump, loot, "supershotgun", LOOTTABLE_SSG);
 				TryReadWeaponLootArray(lump, loot, "autogun", LOOTTABLE_AUTOGUN);
 				TryReadWeaponLootArray(lump, loot, "launcher", LOOTTABLE_LAUNCHER);
 				TryReadWeaponLootArray(lump, loot, "energy", LOOTTABLE_ENERGY);
