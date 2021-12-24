@@ -30,7 +30,6 @@ const CRESC_STATWORSE = "\c[Red]";
 #include "zscript/biomorph/cvars.zs"
 #include "zscript/biomorph/debug.zs"
 #include "zscript/biomorph/gear.zs"
-#include "zscript/biomorph/global.zs"
 #include "zscript/biomorph/health.zs"
 #include "zscript/biomorph/keybinds.zs"
 #include "zscript/biomorph/mutagens.zs"
@@ -43,6 +42,12 @@ const CRESC_STATWORSE = "\c[Red]";
 #include "zscript/biomorph/util/json.zs"
 #include "zscript/biomorph/util/texture.zs"
 #include "zscript/biomorph/util/wrtable.zs"
+
+#include "zscript/biomorph/global/core.zs"
+#include "zscript/biomorph/global/affixes.zs"
+#include "zscript/biomorph/global/loot.zs"
+#include "zscript/biomorph/global/upgrades.zs"
+#include "zscript/biomorph/global/xp.zs"
 
 #include "zscript/biomorph/affixes/base.zs"
 #include "zscript/biomorph/affixes/armor.zs"
