@@ -8,6 +8,7 @@ class WeightedRandomTableEntry
 // Simple running-sum weighted random Actor class picker with nesting support.
 class WeightedRandomTable
 {
+	string Label;
 	private Array<WeightedRandomTableEntry> Entries;
 	private uint WeightSum;
 
@@ -34,7 +35,7 @@ class WeightedRandomTable
 		WeightSum += weight;
 	}
 
-	WeightedRandomTable AddLayer(uint weight)
+	WeightedRandomTable EmplaceLayer(uint weight)
 	{
 		if (weight <= 0)
 		{
@@ -114,6 +115,21 @@ class WeightedRandomTable
 	{
 		Entries.Clear();
 		WeightSum = 0;
+	}
+
+	uint Size() const
+	{
+		uint ret = 0;
+
+		for (uint i = 0; i < Entries.Size(); i++)
+		{
+			if (Entries[i].SubTable != null)
+				ret += Entries[i].SubTable.Size();
+			else
+				ret++;
+		}
+
+		return ret;
 	}
 
 	void Print(uint depth = 0) const
