@@ -21,11 +21,11 @@ extend class BIO_Utils
 		return ret;
 	}
 
-	static BIO_JsonObject TryGetJsonObject(BIO_JsonElement elem, bool suppressErrMsg = false)
+	static BIO_JsonObject TryGetJsonObject(BIO_JsonElement elem, bool errMsg = true)
 	{
 		if (elem == null)
 		{
-			if (!suppressErrMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR .. "Expected object, got null.");
 			return null;
 		}
@@ -33,7 +33,7 @@ extend class BIO_Utils
 		let ret = BIO_JsonObject(elem);
 		if (ret == null)
 		{
-			if (!suppressErrMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR .. "Expected object, got %s.",
 					elem.GetClassName());
 			return null;
@@ -42,11 +42,11 @@ extend class BIO_Utils
 		return ret;
 	}
 
-	static BIO_JsonArray TryGetJsonArray(BIO_JsonElement elem, bool suppressErrMsg = false)
+	static BIO_JsonArray TryGetJsonArray(BIO_JsonElement elem, bool errMsg = true)
 	{
 		if (elem == null)
 		{
-			if (!suppressErrMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR .. "Expected array, got null.");
 			return null;
 		}
@@ -54,7 +54,7 @@ extend class BIO_Utils
 		let ret = BIO_JsonArray(elem);
 		if (ret == null)
 		{
-			if (!suppressErrMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR .. 
 					"Expected array, got %s.", elem.GetClassName());
 			return null;
@@ -62,7 +62,7 @@ extend class BIO_Utils
 
 		if (ret.Size() < 1)
 		{
-			if (!suppressErrMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR .. "Array is empty.");
 			return null;
 		}
@@ -70,11 +70,11 @@ extend class BIO_Utils
 		return ret;
 	}
 
-	static string StringFromJson(BIO_JsonElement elem, bool suppressErrMsg = false)
+	static string StringFromJson(BIO_JsonElement elem, bool errMsg = true)
 	{
 		if (elem == null)
 		{
-			if (!suppressErrMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR .. "Expected string, got null.");
 			return "";
 		}
@@ -82,7 +82,7 @@ extend class BIO_Utils
 		let str = BIO_JsonString(elem);
 		if (str == null)
 		{
-			if (!suppressErrMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR ..
 					"Expected string, got %s.", elem.GetClassName());
 			return "";
@@ -91,11 +91,11 @@ extend class BIO_Utils
 		return str.s;
 	}
 
-	static BIO_JsonInt TryGetJsonInt(BIO_JsonElement elem, bool suppressErrMsg = false)
+	static BIO_JsonInt TryGetJsonInt(BIO_JsonElement elem, bool errMsg = true)
 	{
 		if (elem == null)
 		{
-			if (!suppressErrMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR .. "Expected int, got null.");
 			return null;
 		}
@@ -103,7 +103,7 @@ extend class BIO_Utils
 		let ret = BIO_JsonInt(elem);
 		if (ret == null)
 		{
-			if (!suppressErrMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR ..
 					"Expected int, got %s.", elem.GetClassName());
 			return null;
@@ -112,11 +112,11 @@ extend class BIO_Utils
 		return ret;
 	}
 
-	static Class<Object> TryGetJsonClassName(BIO_JsonElement elem, bool suppressErrMsg = false)
+	static Class<Object> TryGetJsonClassName(BIO_JsonElement elem, bool errMsg = true)
 	{
 		if (elem == null)
 		{
-			if (!suppressErrMsg)
+			if (!errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR .. "Expected string, got null.");
 			return null;
 		}
@@ -124,7 +124,7 @@ extend class BIO_Utils
 		let str = BIO_JsonString(elem);
 		if (str == null)
 		{
-			if (!suppressErrMsg)
+			if (!errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR ..
 					"Expected string, got %s", elem.GetClassName());
 			return null;
@@ -133,7 +133,7 @@ extend class BIO_Utils
 		Class<Object> ret = str.s;
 		if (ret == null)
 		{
-			if (!suppressErrMsg)
+			if (!errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR ..
 					"Illegal class identifier: %s", str.s);
 			return null;

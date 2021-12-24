@@ -380,7 +380,7 @@ class BIO_GlobalData : Thinker
 				continue;
 			}
 
-			let perks = BIO_Utils.TryGetJsonArray(obj.get("perks"), true);
+			let perks = BIO_Utils.TryGetJsonArray(obj.get("perks"), errMsg: false);
 			if (perks != null)
 			{
 				for (uint i = 0; i < perks.size(); i++)
@@ -455,8 +455,8 @@ class BIO_GlobalData : Thinker
 			if (fileOpt is 'BIO_JsonError')
 			{
 				Console.Printf(Biomorph.LOGPFX_ERR .. 
-					"Skipping malformed %s lump %d. Details: %s", lump,
-					LMPNAME_WEAPONS, BIO_JsonError(fileOpt).what);
+					"Skipping malformed %s lump %d. Details: %s", LMPNAME_WEAPONS,
+					lump, BIO_JsonError(fileOpt).what);
 				continue;
 			}
 
@@ -546,7 +546,7 @@ class BIO_GlobalData : Thinker
 				}
 			}
 
-			let loot = BIO_Utils.TryGetJsonObject(obj.get("loot"));
+			let loot = BIO_Utils.TryGetJsonObject(obj.get("loot"), errMsg: false);
 			if (loot != null)
 			{
 				TryReadWeaponLootArray(lump, loot, "melee", LOOTTABLE_MELEE);
