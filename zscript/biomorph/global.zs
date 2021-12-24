@@ -606,8 +606,10 @@ class BIO_GlobalData : Thinker
 						lump, arrName, i, BIO_Utils.GradeToString(defs.Grade));
 					continue;
 				}
-
-				WeaponLootTables[g][targetTables].Push(weap_t, 1);
+	
+				if (defs.Rarity != BIO_RARITY_UNIQUE) wt *= 2;
+				
+				WeaponLootTables[g][targetTables].Push(weap_t, wt);
 			}
 		}
 	}
