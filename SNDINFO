@@ -35,6 +35,17 @@ $RANDOM bio/weap/pistol/fire
 	bio/weap/pistol/fire_2
 }
 
+bio/weap/chaingun/fire_0 CHGNFIR0
+bio/weap/chaingun/fire_1 CHGNFIR1
+bio/weap/chaingun/fire_2 CHGNFIR2
+
+$RANDOM bio/weap/chaingun/fire
+{
+	bio/weap/chaingun/fire_0
+	bio/weap/chaingun/fire_1
+	bio/weap/chaingun/fire_2
+}
+
 bio/weap/assaulthandgun/fire ASHGFIRE
 bio/weap/autoshotgun/fire AUSGFIRE
 bio/weap/nailgun/fire NLGNFIRE
