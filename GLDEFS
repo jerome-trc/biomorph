@@ -2,73 +2,147 @@
 
 pointlight BIO_PlasmaGlob_A
 {
-    color 1.0 0.1 0.0
-    size 56
+	color 1.0 0.1 0.0
+	size 56
 }
 
 flickerlight BIO_PlasmaGlob_B
 {
-    color 0.6 0.2 0.2
-    size 48
-    secondarySize 32
-    chance 0.3
+	color 0.6 0.2 0.2
+	size 48
+	secondarySize 32
+	chance 0.3
 }
 
 flickerlight BIO_PlasmaGlob_C
 {
-    color 0.4 0.1 0.1
-    size 24
-    secondarySize 16
-    chance 0.3
+	color 0.4 0.1 0.1
+	size 24
+	secondarySize 16
+	chance 0.3
 }
 
 flickerlight BIO_PlasmaGlob_D
 {
-    color 0.9 0.2 0.2
-    size 18
-    secondarySize 12
-    chance 0.4
+	color 0.9 0.2 0.2
+	size 18
+	secondarySize 12
+	chance 0.4
 }
 
 Object BIO_PlasmaGlobule
 {
-    frame GLOBA { light BIO_PlasmaGlob_A }
-    frame GLOBB { light BIO_PlasmaGlob_A }
-    frame GLOBC { light BIO_PlasmaGlob_B }
-    frame GLOBD { light BIO_PlasmaGlob_C }
-    frame GLOBE { light BIO_PlasmaGlob_D }
+	frame GLOBA { light BIO_PlasmaGlob_A }
+	frame GLOBB { light BIO_PlasmaGlob_A }
+	frame GLOBC { light BIO_PlasmaGlob_B }
+	frame GLOBD { light BIO_PlasmaGlob_C }
+	frame GLOBE { light BIO_PlasmaGlob_D }
+}
+
+// Proximity mine
+
+pulselight BIO_ProximityMine
+{
+	Color 0.2 0.2 1.0
+	Size 22
+	SecondarySize 16
+	Interval 1.5
+}
+
+pointlight BIO_ProximityMine_X1
+{
+	Color 1.0 0.2 0.0
+	Size 32
+}
+
+pointlight BIO_ProximityMine_X2
+{
+	Color 1.0 0.2 0.0
+	Size 56
+}
+
+pointlight BIO_ProximityMine_X3
+{
+	Color 1.0 0.2 0.0
+	Size 64
+}
+
+pointlight BIO_ProximityMine_X4
+{
+	Color 1.0 0.2 0.0
+	Size 72
+}
+
+object BIO_ProxMineProj
+{
+	frame PROXA0 { light BIO_ProximityMine }
+	frame PROXB0 { light BIO_ProximityMine }
+	frame PRXDA0 { light BIO_ProximityMine_X1 }
+	frame PRXDB0 { light BIO_ProximityMine_X1 }
+	frame PRXDC0 { light BIO_ProximityMine_X2 }
+	frame PRXDD0 { light BIO_ProximityMine_X2 }
+	frame PRXDE0 { light BIO_ProximityMine_X2 }
+	frame PRXDF0 { light BIO_ProximityMine_X3 }
+	frame PRXDG0 { light BIO_ProximityMine_X3 }
+	frame PRXDH0 { light BIO_ProximityMine_X4 }
+	frame PRXDI0 { light BIO_ProximityMine_X4 }
+	frame PRXDJ0 { light BIO_ProximityMine_X4 }
+	frame PRXDK0 { light BIO_ProximityMine_X4 }
+	frame PRXDL0 { light BIO_ProximityMine_X2 }
+	frame PRXDM0 { light BIO_ProximityMine_X2 }
+	frame PRXDN0 { light BIO_ProximityMine_X1 }
+}
+
+object BIO_ProxMine
+{
+	frame PROXA0 { light BIO_ProximityMine }
+	frame PROXB0 { light BIO_ProximityMine }
+	frame PRXDA0 { light BIO_ProximityMine_X1 }
+	frame PRXDB0 { light BIO_ProximityMine_X1 }
+	frame PRXDC0 { light BIO_ProximityMine_X2 }
+	frame PRXDD0 { light BIO_ProximityMine_X2 }
+	frame PRXDE0 { light BIO_ProximityMine_X2 }
+	frame PRXDF0 { light BIO_ProximityMine_X3 }
+	frame PRXDG0 { light BIO_ProximityMine_X3 }
+	frame PRXDH0 { light BIO_ProximityMine_X4 }
+	frame PRXDI0 { light BIO_ProximityMine_X4 }
+	frame PRXDJ0 { light BIO_ProximityMine_X4 }
+	frame PRXDK0 { light BIO_ProximityMine_X4 }
+	frame PRXDL0 { light BIO_ProximityMine_X2 }
+	frame PRXDM0 { light BIO_ProximityMine_X2 }
+	frame PRXDN0 { light BIO_ProximityMine_X1 }
 }
 
 // Armor bonus
 
 pointlight BIO_ArmorBonus_A
 {
-    color 0.0 0.7 0.0
-    size 6
+	color 0.0 0.7 0.0
+	size 6
 }
 
 pointlight BIO_ArmorBonus_B
 {
-    color 0.0 0.7 0.0
-    size 7
+	color 0.0 0.7 0.0
+	size 7
 }
 
 pointlight BIO_ArmorBonus_C
 {
-    color 0.0 0.7 0.0
-    size 8
+	color 0.0 0.7 0.0
+	size 8
 }
 
 pointlight BIO_ArmorBonus_D
 {
-    color 0.0 0.7 0.0
-    size 9
+	color 0.0 0.7 0.0
+	size 9
 }
 
 object BIO_ArmorBonus
 {
-    frame ARSDA { light BIO_ArmorBonus_A }
-    frame ARSDB { light BIO_ArmorBonus_B }
+	frame ARSDA { light BIO_ArmorBonus_A }
+	frame ARSDB { light BIO_ArmorBonus_B }
 	frame ARSDC { light BIO_ArmorBonus_C }
 	frame ARSDD { light BIO_ArmorBonus_D }
 }

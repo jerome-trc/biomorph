@@ -108,6 +108,10 @@
 	BIO_PRECISIONRIFLE_TAG = "Precision Rifle";
 	BIO_PRECISIONRIFLE_PKUP = "Obtained a %s.";
 
+	BIO_PROXIMITYLAUNCHER_TAG = "Proximity Mine Launcher";
+	BIO_PROXIMITYLAUNCHER_PKUP = "Obtained a %s.";
+	BIO_PROXLAUNCHER_DETONATE = "\cnAlt-fire\cj detonates mines";
+
 	BIO_VOLLEYGUN_TAG = "Volley Gun";
 	BIO_VOLLEYGUN_PKUP = "Obtained a %s.";
 
@@ -167,6 +171,9 @@
 
 	BIO_NAIL_TAG = "nail";
 	BIO_NAIL_TAG_PLURAL = "nails";
+
+	BIO_PROXMINE_TAG = "proximity mine";
+	BIO_PROXMINE_TAG_PLURAL = "proximity mines";
 
 	BIO_PROJEXTRA_TAG_BFGRAY = "ray";
 	BIO_PROJEXTRA_TAG_BFGRAYS = "rays";
