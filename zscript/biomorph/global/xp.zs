@@ -93,60 +93,59 @@ extend class BIO_GlobalData
 			}
 
 			let perks = BIO_Utils.TryGetJsonArray(obj.get("perks"), errMsg: false);
-			if (perks != null)
+			if (perks == null) continue;
+			
+			for (uint i = 0; i < perks.size(); i++)
 			{
-				for (uint i = 0; i < perks.size(); i++)
+				string errpfx = String.Format(Biomorph.LOGPFX_ERR ..
+					LMPNAME_PERKS .. " lump %d, upgrade object %d; ", lump, i);
+
+				let perk = BIO_Utils.TryGetJsonObject(perks.get(i));
+				if (perk == null)
 				{
-					string errpfx = String.Format(Biomorph.LOGPFX_ERR ..
-						LMPNAME_PERKS .. " lump %d, upgrade object %d; ", lump, i);
-
-					let perk = BIO_Utils.TryGetJsonObject(perks.get(i));
-					if (perk == null)
-					{
-						Console.Printf(errpfx .. "skipping it.");
-						continue;
-					}
-
-					let uuid = BIO_Utils.StringFromJson(perk.get("uuid"));
-					if (uuid == "")
-					{
-						Console.Printf(errpfx .. "malformed or missing UUID.");
-						continue;
-					}
-
-					if (uuid == "bio_start")
-					{
-						Console.Printf(errpfx .. "the starting node cannot be modified.");
-						continue;
-					}
-
-					let perk_t = (Class<BIO_Passive>)
-						(BIO_Utils.TryGetJsonClassName(perk.get("class")));
-					if (perk_t == null)
-					{
-						Console.Printf(errpfx .. "malformed or invalid class name.");
-						continue;
-					}
-
-					let posX_json = BIO_Utils.TryGetJsonInt(perk.get("x"));
-					if (posX_json == null)
-					{
-						Console.Printf(errpfx .. "malformed or missing x-position.");
-						continue;
-					}
-
-					let posY_json = BIO_Utils.TryGetJsonInt(perk.get("y"));
-					if (posY_json == null)
-					{
-						Console.Printf(errpfx .. "malformed or missing y-position.");
-						continue;
-					}
-
-					uint e = BasePerkGraph.Nodes.Push(new('BIO_PerkGraphNode'));
-					BasePerkGraph.Nodes[e].UUID = uuid;
-					BasePerkGraph.Nodes[e].PerkClass = perk_t;
-					BasePerkGraph.Nodes[e].Position = (posX_json.i, posY_json.i);
+					Console.Printf(errpfx .. "skipping it.");
+					continue;
 				}
+
+				let uuid = BIO_Utils.StringFromJson(perk.get("uuid"));
+				if (uuid == "")
+				{
+					Console.Printf(errpfx .. "malformed or missing UUID.");
+					continue;
+				}
+
+				if (uuid == "bio_start")
+				{
+					Console.Printf(errpfx .. "the starting node cannot be modified.");
+					continue;
+				}
+
+				let perk_t = (Class<BIO_Passive>)
+					(BIO_Utils.TryGetJsonClassName(perk.get("class")));
+				if (perk_t == null)
+				{
+					Console.Printf(errpfx .. "malformed or invalid class name.");
+					continue;
+				}
+
+				let posX_json = BIO_Utils.TryGetJsonInt(perk.get("x"));
+				if (posX_json == null)
+				{
+					Console.Printf(errpfx .. "malformed or missing x-position.");
+					continue;
+				}
+
+				let posY_json = BIO_Utils.TryGetJsonInt(perk.get("y"));
+				if (posY_json == null)
+				{
+					Console.Printf(errpfx .. "malformed or missing y-position.");
+					continue;
+				}
+
+				uint e = BasePerkGraph.Nodes.Push(new('BIO_PerkGraphNode'));
+				BasePerkGraph.Nodes[e].UUID = uuid;
+				BasePerkGraph.Nodes[e].PerkClass = perk_t;
+				BasePerkGraph.Nodes[e].Position = (posX_json.i, posY_json.i);
 			}
 		} while (true);
 	}
