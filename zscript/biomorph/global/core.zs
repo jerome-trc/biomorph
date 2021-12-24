@@ -18,7 +18,25 @@ class BIO_GlobalData : Thinker
 
 		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
 			for (uint j = 0; j < 3; j++)
+			{
+				string category = "";
+
+				switch (i)
+				{
+				case LOOTTABLE_MELEE: category = "melee"; break;
+				case LOOTTABLE_PISTOL: category = "pistol"; break;
+				case LOOTTABLE_SHOTGUN: category = "shotgun"; break;
+				case LOOTTABLE_SSG: category = "ssg"; break;
+				case LOOTTABLE_AUTOGUN: category = "autogun"; break;
+				case LOOTTABLE_LAUNCHER: category = "launcher"; break;
+				case LOOTTABLE_ENERGY: category = "energy"; break;
+				case LOOTTABLE_SUPER: category = "super"; break;
+				}
+
 				ret.WeaponLootTables[j][i] = new('WeightedRandomTable');
+				ret.WeaponLootTables[j][i].Label = String.Format("%s_%s",
+					BIO_Utils.GradeToString(j + 2), category);
+			}
 
 		ret.WRT_Mutagens = new('WeightedRandomTable');
 
@@ -72,10 +90,74 @@ class BIO_GlobalData : Thinker
 		}
 
 		if (BIO_debug)
+		{
+			Console.Printf(Biomorph.LOGPFX_DEBUG ..
+				"%d weapon upgrades generated.", ret.WeaponUpgrades.Size());
+
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Global init done (took %d ms).", MsTime() - ms);
+		}
 
 		return ret;
+	}
+
+	const LMPNAME_WEAPONS = "BIOWEAP";
+
+	private void ReadWeaponLumps()
+	{
+		for (int lump = 0; lump < Wads.GetNumLumps(); lump++)
+		{
+			if (Wads.GetLumpNamespace(lump) != Wads.NS_GLOBAL)
+				continue;
+			if (!(Wads.GetLumpFullName(lump).Left(7) ~== LMPNAME_WEAPONS))
+				continue;
+
+			BIO_JsonElementOrError fileOpt = BIO_JSON.parse(Wads.ReadLump(lump));
+			if (fileOpt is 'BIO_JsonError')
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. 
+					"Skipping malformed %s lump %d. Details: %s", LMPNAME_WEAPONS,
+					lump, BIO_JsonError(fileOpt).what);
+				continue;
+			}
+
+			let obj = BIO_Utils.TryGetJsonObject(BIO_JsonElement(fileOpt));
+			if (obj == null)
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+					" lump %d has malformed contents.", lump);
+				continue;
+			}
+
+			// If the user gives a compatibility class name here, only parse
+			// this lump if that class exists in the current setup.
+			let compatJson = BIO_JsonString(obj.get("compat"));
+			if (compatJson != null)
+			{
+				let compat_t = BIO_Utils.TryGetJsonClassName(
+					compatJson, errMsg: false);
+				if (compat_t == null) continue;
+			}
+
+			let upgrades = BIO_Utils.TryGetJsonArray(
+				obj.get("upgrades"), errMsg: false);
+			if (upgrades != null)
+				ReadWeaponUpgradeJSON(upgrades, lump);
+
+			let loot = BIO_Utils.TryGetJsonObject(obj.get("loot"), errMsg: false);
+			if (loot != null)
+			{
+				TryReadWeaponLootArray(lump, loot, "melee", LOOTTABLE_MELEE);
+				TryReadWeaponLootArray(lump, loot, "pistol", LOOTTABLE_PISTOL);
+				TryReadWeaponLootArray(lump, loot, "shotgun", LOOTTABLE_SHOTGUN);
+				TryReadWeaponLootArray(lump, loot, "ssg", LOOTTABLE_SSG);
+				TryReadWeaponLootArray(lump, loot, "supershotgun", LOOTTABLE_SSG);
+				TryReadWeaponLootArray(lump, loot, "autogun", LOOTTABLE_AUTOGUN);
+				TryReadWeaponLootArray(lump, loot, "launcher", LOOTTABLE_LAUNCHER);
+				TryReadWeaponLootArray(lump, loot, "energy", LOOTTABLE_ENERGY);
+				TryReadWeaponLootArray(lump, loot, "super", LOOTTABLE_SUPER);
+			}
+		}
 	}
 
 	static clearscope BIO_GlobalData Get()
