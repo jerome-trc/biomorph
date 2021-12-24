@@ -284,11 +284,11 @@ class BIO_FTDF_Explode : BIO_FTDeathFunctor
 {
 	private readOnly<BIO_FTDF_Explode> Defaults;
 
-	int Damage, Radius, ShrapnelCount, ShrapnelDamage;
+	int Damage, Radius, ShrapnelCount, ShrapnelDamage, FullDamageDistance;
 	EExplodeFlags Flags;
 
 	static BIO_FTDF_Explode Create(int damage, int radius,
-		EExplodeFlags flags, int shrapnel, int shrapnelDmg)
+		EExplodeFlags flags = XF_NONE, int shrapnel = 0, int shrapnelDmg = 0)
 	{
 		let ret = new('BIO_FTDF_Explode'), defs = new('BIO_FTDF_Explode');
 
@@ -307,8 +307,8 @@ class BIO_FTDF_Explode : BIO_FTDeathFunctor
 		// Temporarily bypass `DoSpecialDamage()`
 		int d = proj.Damage;
 		proj.SetDamage(Damage);
-		proj.A_Explode(Damage, Radius, Flags,
-			nails: ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
+		proj.A_Explode(Damage, Radius, Flags, true, FullDamageDistance,
+			ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
 		proj.SetDamage(d);
 	}
 
@@ -317,15 +317,15 @@ class BIO_FTDF_Explode : BIO_FTDeathFunctor
 		// Temporarily bypass `DoSpecialDamage()`
 		int d = proj.Damage;
 		proj.SetDamage(Damage);
-		proj.A_Explode(Damage, Radius, Flags,
-			nails: ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
+		proj.A_Explode(Damage, Radius, Flags, true, FullDamageDistance,
+			ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
 		proj.SetDamage(d);
 	}
 
 	final override void InvokePuff(BIO_Puff puff) const
 	{
-		puff.A_Explode(Damage, Radius, Flags,
-			nails: ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
+		puff.A_Explode(Damage, Radius, Flags, true, FullDamageDistance,
+			ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
 	}
 
 	final override void GetDamageValues(in out Array<int> damages) const
