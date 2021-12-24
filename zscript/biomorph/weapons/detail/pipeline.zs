@@ -50,7 +50,6 @@ class BIO_WeaponPipeline play
 	private Class<Actor> FireType;
 	private uint FireCount;
 	private BIO_DamageFunctor Damage;
-	private int SplashDamage, SplashRadius;
 	private float HSpread, VSpread, Angle, Pitch;
 
 	private int AlertFlags;
@@ -113,8 +112,6 @@ class BIO_WeaponPipeline play
 			{
 				let tProj = BIO_Projectile(output);
 				tProj.SetDamage(fireData.Damage);
-				tProj.SplashDamage = SplashDamage;
-				tProj.SplashRadius = SplashRadius;
 				tProj.HitDamageFunctors.Copy(HitDamageFunctors);
 				tProj.ProjTravelFunctors.Copy(ProjTravelFunctors);
 				tProj.FTDeathFunctors.Copy(FTDeathFunctors);
@@ -128,8 +125,6 @@ class BIO_WeaponPipeline play
 			{
 				let fProj = BIO_FastProjectile(output);
 				fProj.SetDamage(fireData.Damage);
-				fProj.SplashDamage = SplashDamage;
-				fProj.SplashRadius = SplashRadius;
 				fProj.HitDamageFunctors.Copy(HitDamageFunctors);
 				fProj.FTDeathFunctors.Copy(FTDeathFunctors);
 
@@ -369,17 +364,54 @@ class BIO_WeaponPipeline play
 		FTDeathFunctors.Push(func);
 	}
 
-	bool Splashes() const { return SplashDamage > 0; }
-	int GetSplashDamage() const { return SplashDamage; }
-	int GetSplashRadius() const { return SplashRadius; }
+	BIO_FTDF_Explode GetSplashFunctor() const
+	{
+		for (uint i = 0; i < FTDeathFunctors.Size(); i++)
+			if (FTDeathFunctors[i].GetClass() == 'BIO_FTDF_Explode')
+				return BIO_FTDF_Explode(FTDeathFunctors[i]);
+
+		return null;
+	}
+
+	bool Splashes() const
+	{
+		let func = GetSplashFunctor();
+		return func != null && func.Damage > 0 && func.Radius > 0;
+	}
 
 	bool SplashMutable() const { return Mask & BIO_WPM_SPLASH; }
 
-	void SetSplash(int damage, int radius)
+	void SetSplash(int damage, int radius, EExplodeFlags flags = 0)
 	{
 		if (Mask & BIO_WPM_SPLASH) return;
-		SplashDamage = damage;
-		SplashRadius = radius;
+
+		let func = GetSplashFunctor();
+
+		if (func == null)
+		{
+			func = BIO_FTDF_Explode.Create(damage, radius, flags, 0, 0);
+			func.Damage = damage;
+			func.Radius = radius;
+			func.Flags = flags;
+		}
+
+		FTDeathFunctors.Push(func);
+	}
+
+	void SetShrapnel(int count, int damage)
+	{
+		if (Mask & BIO_WPM_SPLASH) return;
+
+		let func = GetSplashFunctor();
+
+		if (func == null)
+		{
+			func = BIO_FTDF_Explode.Create(0, 0, 0, count, damage);
+			func.ShrapnelCount = count;
+			func.ShrapnelDamage = damage;
+		}
+
+		FTDeathFunctors.Push(func);
 	}
 
 	float, float GetSpread() const { return HSpread, VSpread; }
@@ -515,16 +547,6 @@ class BIO_WeaponPipeline play
 
 		if (Damage != null)
 			readout.Push(Damage.ToString(Defaults.Damage));
-
-		if (SplashDamage > 0)
-		{
-			readout.Push(String.Format(
-				StringTable.Localize("$BIO_WEAPTOSTR_SPLASH"),
-				BIO_Utils.StatFontColor(SplashDamage, Defaults.SplashDamage),
-				SplashDamage,
-				BIO_Utils.StatFontColor(SplashRadius, Defaults.SplashRadius),
-				SplashRadius));
-		}
 
 		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
 			ProjTravelFunctors[i].ToString(readout);

@@ -27,11 +27,8 @@ mixin class BIO_FireTypeCommon
 
 mixin class BIO_ProjectileCommon
 {
-	int SplashDamage, SplashRadius; property Splash: SplashDamage, SplashRadius;
-	int Shrapnel; property Shrapnel: Shrapnel;
-
-	// These are set by the firing weapon to point to that 
-	// weapon's own counterparts of these arrays.
+	// These are filled with copies of the contents of the
+	// corresponding arrays in the pipeline firing this projectile.
 	Array<BIO_HitDamageFunctor> HitDamageFunctors;
 	Array<BIO_FTDeathFunctor> FTDeathFunctors;
 
@@ -39,6 +36,18 @@ mixin class BIO_ProjectileCommon
 	{
 		+FORCEXYBILLBOARD
 		Gravity 0.3;
+	}
+
+	protected int, int GetSplashData() const
+	{
+		for (uint i = 0; i < FTDeathFunctors.Size(); i++)
+		{
+			let expl = BIO_FTDF_Explode(FTDeathFunctors[i]);
+			if (expl == null) continue;
+			return expl.Damage, expl.Radius;
+		}
+
+		return 0, 0;
 	}
 }
 
@@ -66,8 +75,6 @@ class BIO_Projectile : Actor abstract
 		BIO_Projectile.MetaFlags BIO_FTMF_NONE;
 		BIO_Projectile.Acceleration 1.0;
 		BIO_Projectile.PluralTag "$BIO_ROUND_TAGS";
-		BIO_Projectile.Splash 0, 0;
-		BIO_Projectile.Shrapnel 0;
 		BIO_Projectile.SeekAngle 0;
 	}
 
@@ -117,19 +124,6 @@ class BIO_Projectile : Actor abstract
 
 		for (uint i = 0; i < invoker.FTDeathFunctors.Size(); i++)
 			invoker.FTDeathFunctors[i].InvokeTrue(BIO_Projectile(self));
-
-		// TODO: Subtle sound if Shrapnel is >0
-		if (invoker.Shrapnel > 0)
-		{
-			A_Explode(invoker.SplashDamage, invoker.SplashRadius,
-				nails: invoker.Shrapnel,
-				nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
-				puffType: 'BIO_Shrapnel');
-		}
-		else
-		{
-			A_Explode(invoker.SplashDamage, invoker.SplashRadius);
-		}
 	}
 }
 
@@ -147,8 +141,6 @@ class BIO_FastProjectile : FastProjectile abstract
 
 		BIO_FastProjectile.MetaFlags BIO_FTMF_NONE;
 		BIO_FastProjectile.PluralTag "$BIO_ROUND_TAGS";
-		BIO_FastProjectile.Splash 0, 0;
-		BIO_FastProjectile.Shrapnel 0;
 	}
 
 	// Don't multiply damage by `Random(1, 8)`.
@@ -175,19 +167,6 @@ class BIO_FastProjectile : FastProjectile abstract
 
 		for (uint i = 0; i < invoker.FTDeathFunctors.Size(); i++)
 			invoker.FTDeathFunctors[i].InvokeFast(BIO_FastProjectile(self));
-
-		// TODO: Subtle sound if `Shrapnel` is >0
-		if (invoker.Shrapnel > 0)
-		{
-			A_Explode(invoker.SplashDamage, invoker.SplashRadius,
-				nails: invoker.Shrapnel,
-				nailDamage: Max(((invoker.Damage * 3) / invoker.Shrapnel), 0),
-				puffType: 'BIO_Shrapnel');
-		}
-		else
-		{
-			A_Explode(invoker.SplashDamage, invoker.SplashRadius);
-		}
 	}
 }
 
@@ -253,6 +232,8 @@ class BIO_ProjTravelFunctor play abstract
 	}
 
 	abstract void ToString(in out Array<string> readout) const;
+
+	readOnly<BIO_ProjTravelFunctor> AsConst() const { return self; }
 }
 
 class BIO_HitDamageFunctor play abstract
@@ -274,6 +255,8 @@ class BIO_HitDamageFunctor play abstract
 	}
 
 	abstract void ToString(in out Array<string> readout) const;
+
+	readOnly<BIO_HitDamageFunctor> AsConst() const { return self; }
 }
 
 class BIO_FTDeathFunctor play abstract
@@ -293,4 +276,104 @@ class BIO_FTDeathFunctor play abstract
 	}
 
 	abstract void ToString(in out Array<string> readout) const;
+	
+	readOnly<BIO_FTDeathFunctor> AsConst() const { return self; }
+}
+
+class BIO_FTDF_Explode : BIO_FTDeathFunctor
+{
+	private readOnly<BIO_FTDF_Explode> Defaults;
+
+	int Damage, Radius, ShrapnelCount, ShrapnelDamage;
+	EExplodeFlags Flags;
+
+	static BIO_FTDF_Explode Create(int damage, int radius,
+		EExplodeFlags flags, int shrapnel, int shrapnelDmg)
+	{
+		let ret = new('BIO_FTDF_Explode'), defs = new('BIO_FTDF_Explode');
+
+		ret.Damage = defs.Damage = damage;
+		ret.Radius = defs.Radius = radius;
+		ret.Flags = defs.Flags = flags;
+		ret.ShrapnelCount = defs.ShrapnelCount = shrapnel;
+		ret.ShrapnelDamage = defs.ShrapnelDamage = shrapnelDmg;
+		ret.Defaults = BIO_FTDF_Explode(defs.AsConst());
+
+		return ret;
+	}
+
+	final override void InvokeTrue(BIO_Projectile proj) const
+	{
+		// Temporarily bypass `DoSpecialDamage()`
+		int d = proj.Damage;
+		proj.SetDamage(Damage);
+		proj.A_Explode(Damage, Radius, Flags,
+			nails: ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
+		proj.SetDamage(d);
+	}
+
+	final override void InvokeFast(BIO_FastProjectile proj) const
+	{
+		// Temporarily bypass `DoSpecialDamage()`
+		int d = proj.Damage;
+		proj.SetDamage(Damage);
+		proj.A_Explode(Damage, Radius, Flags,
+			nails: ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
+		proj.SetDamage(d);
+	}
+
+	final override void InvokePuff(BIO_Puff puff) const
+	{
+		puff.A_Explode(Damage, Radius, Flags,
+			nails: ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
+	}
+
+	final override void GetDamageValues(in out Array<int> damages) const
+	{
+		damages.Push(ShrapnelDamage);
+	}
+
+	final override void SetDamageValues(in out Array<int> damages)
+	{
+		ShrapnelDamage = damages[0];
+	}
+
+	final override void ToString(in out Array<string> readout) const
+	{
+		if (Damage > 0 && Radius > 0)
+		{
+			string crEsc_dmg = "", crEsc_rad = "";
+
+			if (Defaults != null)
+			{
+				crEsc_dmg = BIO_Utils.StatFontColor(Damage, Defaults.Damage);
+				crEsc_rad = BIO_Utils.StatFontColor(Radius, Defaults.Radius);
+			}
+			else
+				crEsc_dmg = crEsc_rad = CRESC_STATMODIFIED;
+
+			readout.Push(String.Format(
+				StringTable.Localize("$BIO_FTDF_EXPLODE_SPLASH"),
+				crEsc_dmg, Damage, crEsc_rad, Radius));
+		}
+
+		if (ShrapnelCount > 0 && ShrapnelDamage > 0)
+		{
+			string crEsc_count = "", crEsc_dmg = "";
+
+			if (Defaults != null)
+			{
+				crEsc_count = BIO_Utils.StatFontColor(
+					ShrapnelCount, Defaults.ShrapnelCount);
+				crEsc_dmg = BIO_Utils.StatFontColor(
+					ShrapnelDamage, Defaults.ShrapnelDamage);
+			}
+			else
+				crEsc_count = crEsc_dmg = CRESC_STATMODIFIED;
+
+			readout.Push(String.Format(
+				StringTable.Localize("$BIO_FTDF_EXPLODE_SHRAPNEL"),
+				crEsc_count, ShrapnelCount, crEsc_dmg, ShrapnelDamage));
+		}
+	}
 }

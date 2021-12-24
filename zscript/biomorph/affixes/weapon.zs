@@ -431,7 +431,7 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 		}
 	}
 	
-	override void ToString(in out Array<string> readout) const
+	override void ToString(in out Array<string> _) const
 	{
 		// Nothing needed here; the affix to-string tells all
 	}
@@ -603,8 +603,7 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 
 			weap.Pipelines[i].SetFireType('BIO_MiniMissile');
 			let defs = GetDefaultByType('BIO_MiniMissile');
-			weap.Pipelines[i].SetSplash(
-				defs.SplashDamage, defs.SplashRadius);
+			weap.Pipelines[i].SetSplash(48, 48);
 		}
 	}
 
