@@ -195,28 +195,28 @@
 	BIO_MUTA_FAIL_NOCOMPATIBLEAFFIXES = "No affixes are compatible with this weapon; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_CORRUPTED = "This weapon has been corrupted by R.O.T. Mutagen; it can't be mutated at all.";
 
-	BIO_MUTA_RESET_TAG = "\c[Gray]R.E.S.E.T.\c[White] Mutagen";
-	BIO_MUTA_RESET_PKUP = "\c[White]Acquired a sample of \c[Gray]R.E.S.E.T.\c[White] Mutagen.";
+	BIO_MUTA_RESET_TAG = "\c[Gray]R.E.S.E.T.\c[White] Mutagen\c-";
+	BIO_MUTA_RESET_PKUP = "Acquired a sample of \c[Gray]R.E.S.E.T. Mutagen\c-.";
 	BIO_MUTA_RESET_USE = "Your weapon returns to its normal state.";
 
-	BIO_MUTA_RANDOM_TAG = "\c[Purple]W.I.L.D. \c[White]Mutagen";
-	BIO_MUTA_RANDOM_PKUP = "\c[White]Acquired a sample of \c[Purple]W.I.L.D.\c[White] Mutagen.";
+	BIO_MUTA_RANDOM_TAG = "\c[Purple]W.I.L.D. \c[White]Mutagen\c-";
+	BIO_MUTA_RANDOM_PKUP = "Acquired a sample of \c[Purple]W.I.L.D. Mutagen\c-.";
 	BIO_MUTA_RANDOM_USE = "Your weapon mutates violently.";
 
-	BIO_MUTA_ADD_TAG = "\c[Cyan]A.D.D.\c[White] Mutagen";
-	BIO_MUTA_ADD_PKUP = "\c[White]Acquired a sample of \c[Cyan]A.D.D.\c[White] Mutagen.";
+	BIO_MUTA_ADD_TAG = "\c[Cyan]A.D.D.\c[White] Mutagen\c-";
+	BIO_MUTA_ADD_PKUP = "Acquired a sample of \c[Cyan]A.D.D. Mutagen\c-.";
 	BIO_MUTA_ADD_USE = "Your weapon mutates and changes before your eyes.";
 
-	BIO_MUTA_REROLL_TAG = "\c[Orange]R.O.L.L.\c[White] Mutagen";
-	BIO_MUTA_REROLL_PKUP = "\c[White]Acquired a sample of \c[Orange]R.O.L.L.\c[White] Mutagen.";
+	BIO_MUTA_REROLL_TAG = "\c[Orange]R.O.L.L.\c[White] Mutagen\c-";
+	BIO_MUTA_REROLL_PKUP = "Acquired a sample of \c[Orange]R.O.L.L. Mutagen\c-.";
 	BIO_MUTA_REROLL_USE = "Your weapon mutates subtly.";
 
-	BIO_MUTA_REMOVE_TAG = "\c[Tan]T.R.I.M.\c[White] Mutagen";
-	BIO_MUTA_REMOVE_PKUP = "\c[White]Acquired a sample of \c[Tan]T.R.I.M.\c[White] Mutagen.";
+	BIO_MUTA_REMOVE_TAG = "\c[Tan]T.R.I.M.\c[White] Mutagen\c-";
+	BIO_MUTA_REMOVE_PKUP = "Acquired a sample of \c[Tan]T.R.I.M. Mutagen\c-.";
 	BIO_MUTA_REMOVE_USE = "Your weapon returns partly to normal.";
 
-	BIO_MUTA_UPGRADE_TAG = "\c[Green]E.V.O.\c[White] Mutagen";
-	BIO_MUTA_UPGRADE_PKUP = "\c[White]Acquired a sample of \c[Green]E.V.O.\c[White] Mutagen.";
+	BIO_MUTA_UPGRADE_TAG = "\c[Green]E.V.O.\c[White] Mutagen\c-";
+	BIO_MUTA_UPGRADE_PKUP = "Acquired a sample of \c[Green]E.V.O. Mutagen\c-.";
 
 	BIO_WUP_FAIL_NULLWEAP = "This weapon can't be upgraded in any way.";
 	BIO_WUP_FAIL_UNIQUE = "This weapon is unique; it can't be upgraded.";
@@ -227,8 +227,8 @@
 	BIO_WUP_UIHELP_1 = "Press %s to confirm or %s to cancel.";
 	BIO_WUP_UICOST = "Requires \cj%d\c- samples of \c[Green]E.V.O. mutagen\c-.";
 
-	BIO_MUTA_CORRUPT_TAG = "\c[Red]R.O.T.\c[White] Mutagen";
-	BIO_MUTA_CORRUPT_PKUP = "\c[White]Acquired a sample of \c[Red]R.O.T.\c[White] Mutagen.";
+	BIO_MUTA_CORRUPT_TAG = "\c[DarkRed]R.O.T.\c[White] Mutagen\c-";
+	BIO_MUTA_CORRUPT_PKUP = "Acquired a sample of \c[DarkRed]R.O.T. Mutagen\c-.";
 	BIO_MUTA_CORRUPT_HIDDENRAND = "Your weapon mutates in ways you cannot understand.";
 
 // Equipment (tags, UI messaging) ==============================================
