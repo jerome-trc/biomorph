@@ -116,7 +116,7 @@ extend class BIO_Utils
 	{
 		if (elem == null)
 		{
-			if (!errMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR .. "Expected string, got null.");
 			return null;
 		}
@@ -124,7 +124,7 @@ extend class BIO_Utils
 		let str = BIO_JsonString(elem);
 		if (str == null)
 		{
-			if (!errMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR ..
 					"Expected string, got %s", elem.GetClassName());
 			return null;
@@ -133,7 +133,7 @@ extend class BIO_Utils
 		Class<Object> ret = str.s;
 		if (ret == null)
 		{
-			if (!errMsg)
+			if (errMsg)
 				Console.Printf(Biomorph.LOGPFX_ERR ..
 					"Illegal class identifier: %s", str.s);
 			return null;
