@@ -15,5 +15,6 @@ alias bio_help_ "event bio_help"
 
 alias bio_weapdiag_ "event bio_weapdiag"
 alias bio_pasvdiag_ "event bio_pasvdiag"
+alias bio_lootdiag_ "event bio_lootdiag"
 alias bio_xp_ "event bio_xp"
 alias bio_xpinfo_ "event bio_xp"

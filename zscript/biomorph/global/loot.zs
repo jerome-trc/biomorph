@@ -144,4 +144,11 @@ extend class BIO_GlobalData
 			WeaponLootTables[g][targetTables].Push(weap_t, wt);
 		}
 	}
+
+	void PrintLootDiag() const
+	{
+		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
+			for (uint j = 0; j < 3; j++)
+				WeaponLootTables[j][i].Print();
+	}
 }
