@@ -279,8 +279,6 @@ class BIO_Weapon : DoomWeapon abstract
 		let bioPlayer = BIO_Player(toucher);
 		if (bioPlayer == null) return false;
 
-		if (bioPlayer.IsFullOnWeapons()) return false;
-
 		return true;
 	}
 
@@ -289,12 +287,15 @@ class BIO_Weapon : DoomWeapon abstract
 		if (item.GetClass() != self.GetClass()) return false;
 
 		if (MaxAmount > 1)
-			return super.HandlePickup(item);
+			return Inventory.HandlePickup(item);
 
 		if (Owner.Player.Cmd.Buttons & BT_RELOAD &&
 			Rarity == BIO_RARITY_COMMON &&
 			Grade == BIO_GRADE_STANDARD)
 			item.bPickupGood = Weapon(item).PickupForAmmo(self);
+
+		if (!BIO_Player(Owner).IsFullOnWeapons())
+			return false;
 
 		return true;
 	}
