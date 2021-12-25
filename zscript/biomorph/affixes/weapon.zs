@@ -634,6 +634,44 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 
 // Modify fired thing ==========================================================
 
+class BIO_WAfx_ForcePain : BIO_WeaponAffix
+{
+	final override void Init(readOnly<BIO_Weapon> weap) {}
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const { return true; }
+
+	final override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
+	{
+		proj.bForcePain = true;
+	}
+
+	final override void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const
+	{
+		proj.bForcePain = true;
+	}
+
+	final override void OnPuffFired(BIO_Weapon weap, BIO_Puff puff) const
+	{
+		if (puff.Target != null)
+			puff.Target.TriggerPainChance(puff.DamageType, true);
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_FORCEPAIN_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_FORCEPAIN_TAG");
+	}
+	
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_ONPROJFIRED;
+	}
+}
+
 class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 {
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const

@@ -103,41 +103,6 @@ class BIO_WAFX_SplashForDamage : BIO_WeaponAffix
 	}
 }
 
-// Modify fired thing ==========================================================
-
-class BIO_WAFX_ForcePain : BIO_WeaponAffix
-{
-	final override void Init(BIO_Weapon weap) {}
-
-	final override bool Compatible(BIO_Weapon weap) const
-	{
-		if (weap.bMeleeWeapon)
-			return false;
-		else
-			return (weap.AffixMask1 & BIO_WAM_ONPROJFIRED) != BIO_WAM_ONPROJFIRED;
-	}
-
-	final override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
-	{
-		proj.bForcePain = true;
-	}
-
-	final override void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) const
-	{
-		proj.bForcePain = true;
-	}
-
-	final override void ToString(in out Array<string> strings, BIO_Weapon weap) const
-	{
-		strings.Push(StringTable.Localize("$BIO_WAFX_FORCEPAIN_TOSTR"));
-	}
-
-	final override string GetTag() const
-	{
-		return StringTable.Localize("$BIO_WAFX_FORCEPAIN_TAG");
-	}
-}
-
 // Miscellaneous ===============================================================
 
 class BIO_WAFX_FireCount : BIO_WeaponAffix
