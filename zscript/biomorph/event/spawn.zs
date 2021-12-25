@@ -20,6 +20,9 @@ extend class BIO_EventHandler
 
 		if (ReplaceWeapon(event) || ReplaceArmor(event))
 			return;
+
+		if (TrySpawnSupplyBox(event))
+			return;
 	}
 
 	private void FinalizeSpawn(Class<Actor> toSpawn, Actor eventThing) const
@@ -140,5 +143,24 @@ extend class BIO_EventHandler
 			return false;
 
 		return true;
+	}
+
+	static const Class<Actor> SUPPLY_BOX_SPAWNSPOTS[] = {
+		'Berserk',
+		'PowerupGiver',
+		'MapRevealer',
+		'Megasphere',
+		'Soulsphere'
+	};
+
+	private bool TrySpawnSupplyBox(WorldEvent event) const
+	{
+		for (uint i = 0; i < SUPPLY_BOX_SPAWNSPOTS.Size(); i++)
+		{
+			if (!(event.Thing is SUPPLY_BOX_SPAWNSPOTS[i])) continue;
+			Actor.Spawn('BIO_SupplyBoxSpawner', event.Thing.Pos);
+		}
+
+		return false;
 	}
 }

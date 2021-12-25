@@ -35,6 +35,7 @@ const CRESC_STATWORSE = "\c[Red]";
 #include "zscript/biomorph/mutagens.zs"
 #include "zscript/biomorph/powerups.zs"
 #include "zscript/biomorph/sbar.zs"
+#include "zscript/biomorph/supply_box.zs"
 
 #include "zscript/biomorph/util/misc.zs"
 #include "zscript/biomorph/util/color.zs"
