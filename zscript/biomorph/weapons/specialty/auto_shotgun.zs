@@ -100,8 +100,8 @@ class BIO_AutoShotgun : BIO_Weapon
 		}
 		Goto LightDone;
 	Spawn:
-		AUSG X 0;
-		AUSG X 0 A_BIO_Spawn;
+		AUSG Z 0;
+		AUSG Z 0 A_BIO_Spawn;
 		Stop;
 	}
 }

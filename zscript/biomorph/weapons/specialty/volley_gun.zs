@@ -161,8 +161,8 @@ class BIO_VolleyGun : BIO_Weapon
 		VOLL C 3 Bright A_Light(2);
 		Goto LightDone;
 	Spawn:
-		VOLL X 0;
-		VOLL X 0 A_BIO_Spawn;
+		VOLL Z 0;
+		VOLL Z 0 A_BIO_Spawn;
 		Stop;
 	}
 }

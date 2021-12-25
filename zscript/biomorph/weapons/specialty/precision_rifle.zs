@@ -92,8 +92,8 @@ class BIO_PrecisionRifle : BIO_Weapon
 		TNT1 A 2 A_Light(1);
 		Goto LightDone;
 	Spawn:
-		PREC X 0;
-		PREC X 0 A_BIO_Spawn;
+		PREC Z 0;
+		PREC Z 0 A_BIO_Spawn;
 		Stop;
 	}
 }

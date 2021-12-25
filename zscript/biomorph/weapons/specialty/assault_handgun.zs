@@ -136,8 +136,8 @@ class BIO_AssaultHandgun : BIO_Weapon
 		TNT1 A 1 Bright A_Light(0);
 		Stop;
 	Spawn:
-		ASHG X 0;
-		ASHG X 0 A_BIO_Spawn;
+		ASHG Z 0;
+		ASHG Z 0 A_BIO_Spawn;
 		Stop;
 	}
 }
