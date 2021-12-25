@@ -1251,7 +1251,7 @@ class BIO_Weapon : DoomWeapon abstract
 		Owner.GiveBody(given, Owner.GetMaxHealth(true) + 100);
 	}
 
-	void OnKill(Actor killed, Actor inflictor) const
+	void OnKill(Actor killed, Actor inflictor)
 	{
 		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			ImplicitAffixes[i].OnKill(self, killed, inflictor);
