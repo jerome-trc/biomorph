@@ -11,6 +11,7 @@ extend class BIO_EventHandler
 		if (ConEvent_WeapDiag(event)) return;
 		if (ConEvent_XPInfo(event)) return;
 		if (ConEvent_WeapAfxCompat(event)) return;
+		if (ConEvent_LootDiag(event)) return;
 	}
 
 	private ui bool ConEvent_Help(ConsoleEvent event) const
@@ -236,6 +237,23 @@ extend class BIO_EventHandler
 		Console.Printf("Party level: %d", Globals.GetPartyLevel());
 		Console.Printf("Current party XP: %d", Globals.GetPartyXP());
 		Console.Printf("XP to next level: %d", Globals.XPToNextLevel());
+		return true;
+	}
+
+	private ui bool ConEvent_LootDiag(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_lootdiag")) return false;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Illegal attempt by a script to invoke `bio_lootdiag`.");
+			return true;
+		}
+
+		Console.Printf(Biomorph.LOGPFX_INFO .. "All loot tables:");
+		Globals.PrintLootDiag();
+
 		return true;
 	}
 }
