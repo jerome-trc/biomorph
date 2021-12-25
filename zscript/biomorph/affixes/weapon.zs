@@ -100,9 +100,13 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 		{
 			if (Modifiers[i] == 0) continue;
 
+			string qual = "";
+
+			if (Modifiers.Size() > 1)
+				qual = "(\c[Yellow]" .. weap.Pipelines[i].Tag .. "\c[White])";
+
 			strings.Push(String.Format(
-				StringTable.Localize("$BIO_WAFX_DAMAGE_TOSTR"),
-				BIO_Utils.RankString(i, "$BIO_FIRE_MODE"),
+				StringTable.Localize("$BIO_WAFX_DAMAGE_TOSTR"), qual,
 				BIO_Utils.StatFontColor(Modifiers[i], 0),
 				Modifiers[i] >= 0 ? "+" : "", Modifiers[i]));
 		}
@@ -174,9 +178,13 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 		{
 			if (Modifiers[i] ~== 0.0) continue;
 
+			string qual = "";
+
+			if (Modifiers.Size() > 1)
+				qual = " (\c[Yellow]" .. weap.Pipelines[i].Tag .. "\c[White])";
+
 			strings.Push(String.Format(
-				StringTable.Localize("$BIO_WAFX_DMGMULTI_TOSTR"),
-				BIO_Utils.RankString(i, "$BIO_FIRE_MODE"),
+				StringTable.Localize("$BIO_WAFX_DMGMULTI_TOSTR"), qual,
 				BIO_Utils.StatFontColorF(Modifiers[i], 0.0),
 				Modifiers[i] >= 0 ? "+" : "", Modifiers[i] * 100.0));
 		}
@@ -1004,13 +1012,9 @@ class BIO_WAfx_Lifesteal : BIO_WeaponAffix
 			if (AddPercents[i] ~== 0.0) continue;
 
 			string suffix = "";
+
 			if (AddPercents.Size() > 1)
-			{
-				suffix = 
-					" (\c[Gold]" ..
-					BIO_Utils.RankString(i, "$BIO_FIRE_MODE") ..
-					"\c[White])";
-			}
+				suffix = " (\c[Yellow]" .. weap.Pipelines[i].Tag .. "\c[White])";
 
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_WAFX_LIFESTEAL_TOSTR"),
@@ -1079,13 +1083,9 @@ class BIO_WAfx_MeleeRange : BIO_WeaponAffix
 			if (Modifiers[i] ~== 0.0) continue;
 
 			string suffix = "";
+			
 			if (Modifiers.Size() > 1)
-			{
-				suffix = 
-					" (\c[Gold]" ..
-					BIO_Utils.RankString(i, "$BIO_FIRE_MODE") ..
-					"\c[White])";
-			}
+				suffix = " (\c[Yellow]" .. weap.Pipelines[i].Tag .. "\c[White])";
 
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_WAFX_MELEERANGE_TOSTR"),

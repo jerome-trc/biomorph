@@ -305,10 +305,44 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	// Argument should be non-localized.
+	BIO_WeaponPipelineBuilder Tag(string tag)
+	{
+		Pipeline.Tag = tag;
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder TagAsPrimary()
+	{
+		Pipeline.Tag = BIO_Utils.Capitalize(
+			StringTable.Localize("$BIO_PRIMARY"));
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder TagAsSecondary()
+	{
+		Pipeline.Tag = BIO_Utils.Capitalize(
+			StringTable.Localize("$BIO_SECONDARY"));
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder TagAsTertiary()
+	{
+		Pipeline.Tag = BIO_Utils.Capitalize(
+			StringTable.Localize("$BIO_TERTIARY"));
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder TagAsQuaternary()
+	{
+		Pipeline.Tag = BIO_Utils.Capitalize(
+			StringTable.Localize("$BIO_QUATERNARY"));
+		return self;
+	}
+
+	// Argument can be non-localized.
 	BIO_WeaponPipelineBuilder Obituary(string obit)
 	{
-		Pipeline.SetObituary(obit);
+		Pipeline.Obituary = obit;
 		return self;
 	}
 

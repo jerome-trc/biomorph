@@ -61,7 +61,7 @@ class BIO_WeaponPipeline play
 
 	private sound FireSound;
 
-	private string Obituary;
+	string Tag, Obituary;
 	private Array<string> ReadoutExtra;
 	private string[TOSTREX_COUNT] ToStringAppends, ToStringPrepends;
 
@@ -490,11 +490,6 @@ class BIO_WeaponPipeline play
 		ToStringPrepends[index] = str;
 	}
 
-	void SetObituary(string obit)
-	{
-		Obituary = obit;
-	}
-
 	BIO_WeaponPipelineMask GetRestrictions() const { return Mask; }
 	bool HasRestriction(BIO_WeaponPipelineMask m) const { return Mask & m; }
 	void SetRestrictions(BIO_WeaponPipelineMask msk) { Mask = msk; }
@@ -502,34 +497,8 @@ class BIO_WeaponPipeline play
 
 	void ToString(in out Array<string> readout, uint index, bool alone) const
 	{
-		// If this is the weapon's only pipeline, the header is unnecessary
-		// Otherwise tell the user which fire mode this is
-		if (!alone)
-		{
-			string header = "";
-			
-			switch (index)
-			{
-			case 0:
-				header = StringTable.Localize("$BIO_WEAPTOSTR_HEADER_0");
-				break;
-			case 1:
-				header = StringTable.Localize("$BIO_WEAPTOSTR_HEADER_1");
-				break;
-			case 2:
-				header = StringTable.Localize("$BIO_WEAPTOSTR_HEADER_2");
-				break;
-			case 3:
-				header = StringTable.Localize("$BIO_WEAPTOSTR_HEADER_3");
-				break;
-			default:
-				header = String.Format(
-					StringTable.Localize("$BIO_WEAPTOSTR_HEADER_DEFAULT"), index);
-				break;
-			}
-
-			readout.Push(header);
-		}
+		if (Tag.Length() > 1)
+			readout.Push("\c[Yellow]" .. Tag .. ":");
 
 		if (FireFunctor != null)
 		{

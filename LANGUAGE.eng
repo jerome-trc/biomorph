@@ -256,10 +256,10 @@
 	BIO_WAFX_BERSERKDMG_TOSTR = "%s%d%% damage from berserk";
 
 	BIO_WAFX_DAMAGE_TAG = "High-Power";
-	BIO_WAFX_DAMAGE_TOSTR = "%s damage: %s%s%d";
+	BIO_WAFX_DAMAGE_TOSTR = "Damage%s: %s%s%d";
 
 	BIO_WAFX_DMGMULTI_TAG = "Assault Variant";
-	BIO_WAFX_DMGMULTI_TOSTR = "%s damage: %s%s%.1f%%";
+	BIO_WAFX_DMGMULTI_TOSTR = "Damage%s: %s%s%.1f%%";
 	
 	BIO_WAFX_ENEMYHEALTHDAMAGE_TAG = "Viral Payload";
 	BIO_WAFX_ENEMYHEALTHDAMAGE_TOSTR = "%s%.1f%% of enemy's health %s damage";
