@@ -361,6 +361,91 @@ class BIO_WAfx_RandDmgMulti : BIO_WeaponAffix
 	}
 }
 
+// n% of the hit enemy's health is given to the fired thing's dealt damage.
+class BIO_WAfx_EnemyHealthDamage : BIO_WeaponAffix
+{
+	float Factor;
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		Factor = FRandom[BIO_Afx](0.025, 0.05);
+	}
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+			if (weap.Pipelines[i].HitDamageFunctorsMutable())
+				return true;
+
+		return false;
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			let func = new('BIO_HDF_EnemyHealthDamage');
+			func.Factor = Factor;
+			weap.Pipelines[i].PushHitDamageFunctor(func);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(String.Format(StringTable.Localize(
+			"$BIO_WAFX_ENEMYHEALTHDAMAGE_TOSTR"),
+			Factor > 0.0 ? CRESC_POSITIVE : CRESC_NEGATIVE,
+			Factor * 100.0, Factor > 0.0 ?
+				StringTable.Localize("$BIO_ADDED_TO") :
+				StringTable.Localize("$BIO_REMOVED_FROM")));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_ENEMYHEALTHDAMAGE_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE;
+	}
+}
+
+class BIO_HDF_EnemyHealthDamage : BIO_HitDamageFunctor
+{
+	float Factor;
+
+	final override void InvokeTrue(BIO_Projectile proj,
+		Actor target, in out int damage, name dmgType) const
+	{
+		damage += (target.Health * Factor);
+	}
+
+	final override void InvokeFast(BIO_FastProjectile proj,
+		Actor target, in out int damage, name dmgType) const
+	{
+		damage += (target.Health * Factor);
+	}
+
+	final override void InvokePuff(BIO_Puff puff) const
+	{
+		if (puff.Target != null)
+		{
+			int dmg = puff.Target.Health * Factor;
+			puff.Target.DamageMObj(puff, null, dmg, puff.DamageType);
+			puff.SetDamage(puff.Damage + dmg);
+		}
+	}
+
+	final override void ToString(in out Array<string> readout) const
+	{
+		readout.Push(String.Format(
+			StringTable.Localize("$BIO_HDF_ENEMYHEALTHDMG"),
+			Factor * 100.0));
+	}
+}
+
 // LegenDoom(Lite) exclusive. 400% damage to Legendary enemies.
 class BIO_WAfx_DemonSlayer : BIO_WeaponAffix
 {
@@ -961,8 +1046,8 @@ class BIO_WAfx_InfiniteAmmoOnKill : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Chance = Random(3, 6);
-		Duration = Random(5, 10);
+		Chance = Random[BIO_Afx](3, 6);
+		Duration = Random[BIO_Afx](5, 10);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const { return true; }

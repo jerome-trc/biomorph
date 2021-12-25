@@ -13,12 +13,12 @@ enum BIO_WeaponPipelineMask : uint16
 	BIO_WPM_PITCH = 1 << 9,
 	BIO_WPM_AMMOUSE = 1 << 10,
 	BIO_WPM_PROJTRAVELFUNCS = 1 << 11,
-	BIO_WPM_PROJDAMAGEFUNCS = 1 << 12,
-	BIO_WPM_PROJDEATHFUNCS = 1 << 13,
+	BIO_WPM_HITDAMAGEFUNCS = 1 << 12,
+	BIO_WPM_FTDEATHFUNCS = 1 << 13,
 	BIO_WPM_PROJFUNCTORS =
 		BIO_WPM_PROJTRAVELFUNCS |
-		BIO_WPM_PROJDAMAGEFUNCS |
-		BIO_WPM_PROJDEATHFUNCS,
+		BIO_WPM_HITDAMAGEFUNCS |
+		BIO_WPM_FTDEATHFUNCS,
 	BIO_WPM_ALERT = 1 << 15,
 	BIO_WPM_ALL = uint16.MAX
 }
@@ -347,6 +347,10 @@ class BIO_WeaponPipeline play
 
 		return false;
 	}
+	
+	bool ProjTravelFunctorsMutable() const { return !(Mask & BIO_WPM_PROJTRAVELFUNCS); }
+	bool HitDamageFunctorsMutable() const { return !(Mask & BIO_WPM_HITDAMAGEFUNCS); }
+	bool FTDeathFunctorsMutable() const { return !(Mask & BIO_WPM_FTDEATHFUNCS); }
 
 	void PushProjTravelFunctor(BIO_ProjTravelFunctor func)
 	{
@@ -356,13 +360,13 @@ class BIO_WeaponPipeline play
 
 	void PushHitDamageFunctor(BIO_HitDamageFunctor func)
 	{
-		if (Mask & BIO_WPM_PROJDAMAGEFUNCS) return;
+		if (Mask & BIO_WPM_HITDAMAGEFUNCS) return;
 		HitDamageFunctors.Push(func);
 	}
 
 	void PushFiredThingDeathFunctor(BIO_FTDeathFunctor func)
 	{
-		if (Mask & BIO_WPM_PROJDEATHFUNCS) return;
+		if (Mask & BIO_WPM_FTDEATHFUNCS) return;
 		FTDeathFunctors.Push(func);
 	}
 
