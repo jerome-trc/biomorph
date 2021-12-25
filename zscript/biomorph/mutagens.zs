@@ -271,7 +271,7 @@ class BIO_Muta_Remove : BIO_Mutagen
 		weap.ApplyAllAffixes();
 		weap.OnWeaponChange();
 
-		Owner.A_Print("$BIO_MUTA_REROLL_USE");
+		Owner.A_Print("$BIO_MUTA_REMOVE_USE");
 		return true;
 	}
 }
