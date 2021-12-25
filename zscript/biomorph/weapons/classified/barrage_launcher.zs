@@ -110,8 +110,8 @@ class BIO_BarrageLauncher : BIO_Weapon
 		TNT1 A 0 A_JumpIf(Player.Cmd.Buttons & BT_ALTATTACK, 'AltFire');
 		Goto Ready;
 	Spawn:
-		BARR X 0;
-		BARR X 0 A_BIO_Spawn;
+		BARR Z 0;
+		BARR Z 0 A_BIO_Spawn;
 		Loop;
 	}
 }

@@ -89,8 +89,8 @@ class BIO_Nailgun : BIO_Weapon
 	Flash:
 		Goto LightDone;
 	Spawn:
-		NLGN X 0;
-		NLGN X 0 A_BIO_Spawn;
+		NLGN Z 0;
+		NLGN Z 0 A_BIO_Spawn;
 		Stop;
 	}
 }

@@ -105,8 +105,8 @@ class BIO_HandCannon : BIO_Weapon
 		TNT1 A 1 Bright A_Light(0);
 		Stop;
 	Spawn:
-		HCAN X 0;
-		HCAN X 0 A_BIO_Spawn;
+		HCAN Z 0;
+		HCAN Z 0 A_BIO_Spawn;
 		Loop;
 	}
 }

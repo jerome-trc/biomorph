@@ -104,8 +104,8 @@ class BIO_PlasmaCannon : BIO_Weapon
 		PLSC W 1 Fast Offset(0, 32 + 1) A_SetReloadTime(13);
 		Goto Ready;
 	Spawn:
-		PLSC X 0;
-		PLSC X 0 A_BIO_Spawn;
+		PLSC Z 0;
+		PLSC Z 0 A_BIO_Spawn;
 		Stop;
 	}
 }

@@ -121,8 +121,8 @@ class BIO_IncursionShotgun : BIO_Weapon
 		}
 		Goto LightDone;
 	Spawn:
-		INCU X 0;
-		INCU X 0 A_BIO_Spawn;
+		INCU Z 0;
+		INCU Z 0 A_BIO_Spawn;
 		Loop;
 	}
 }

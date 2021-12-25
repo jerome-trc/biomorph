@@ -94,8 +94,8 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		HVBR A 1 Fast Offset(0, 32 + 1) A_SetReloadTime(13);
 		Goto Ready;
 	Spawn:
-		HVBR X 0;
-		HVBR X 0 A_BIO_Spawn;
+		HVBR Z 0;
+		HVBR Z 0 A_BIO_Spawn;
 		Loop;
 	}
 }
