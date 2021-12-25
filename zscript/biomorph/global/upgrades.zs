@@ -294,6 +294,8 @@ extend class BIO_GlobalData
 			{
 				for (uint k = 0; k < outputs.Size(); k++)
 				{
+					if (inputs[j] == outputs[k]) continue;
+
 					uint e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
 					WeaponUpgrades[e].Input = inputs[j];
 					WeaponUpgrades[e].Output = outputs[k];
