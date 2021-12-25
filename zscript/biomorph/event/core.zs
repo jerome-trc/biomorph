@@ -11,8 +11,6 @@ class BIO_EventHandler : EventHandler
 
 		super.OnRegister();
 
-		Globals = BIO_GlobalData.Get();
-
 		name ldtoken_tn = 'LDLegendaryMonsterToken';
 		LDToken = ldtoken_tn;
 	}
