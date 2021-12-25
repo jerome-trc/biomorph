@@ -446,6 +446,37 @@ class BIO_HDF_EnemyHealthDamage : BIO_HitDamageFunctor
 	}
 }
 
+class BIO_WAfx_DamageInverseHealth : BIO_WeaponAffix
+{
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.DealsAnyDamage();
+	}
+
+	final override void BeforeEachFire(BIO_Weapon weap, in out BIO_FireData fireData) const
+	{
+		fireData.Damage *= (1.0 + Log(
+			float(weap.Owner.GetMaxHealth() /
+			float(weap.Owner.Health))));
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_DMGINVERSEHEALTH_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_DMGINVERSEHEALTH_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE;
+	}
+}
+
 // LegenDoom(Lite) exclusive. 400% damage to Legendary enemies.
 class BIO_WAfx_DemonSlayer : BIO_WeaponAffix
 {
@@ -591,10 +622,7 @@ class BIO_WAfx_Plasma : BIO_WeaponAffix
 
 class BIO_WAfx_Slug : BIO_WeaponAffix
 {
-	final override void Init(readOnly<BIO_Weapon> weap) {}
-
-	// Weapon must be firing shot pellets for this affix to be applicable.
-	
+	// Weapon must be firing shot pellets for this affix to be applicable.	
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
@@ -721,7 +749,6 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 
 class BIO_WAfx_ForcePain : BIO_WeaponAffix
 {
-	final override void Init(readOnly<BIO_Weapon> weap) {}
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const { return true; }
 
 	final override void OnTrueProjectileFired(BIO_Weapon weap, BIO_Projectile proj) const
@@ -796,8 +823,6 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 
 class BIO_WAfx_ProjSeek : BIO_WeaponAffix
 {
-	final override void Init(readOnly<BIO_Weapon> weap) {}
-
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
 		return weap.FiresTrueProjectile();

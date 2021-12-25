@@ -280,6 +280,9 @@
 		"\c[White]All damage multiplied by "
 		"(\c[Red]%.1f \c[White]- \c[Green]%.1f\c[White])";
 
+	BIO_WAFX_DMGINVERSEHEALTH_TAG = "Adrenaline";
+	BIO_WAFX_DMGINVERSEHEALTH_TOSTR = "\c[Green]Damage increases as you lose health";
+
 	BIO_WAFX_DEMONSLAYER_TAG = "Demonslayer";
 	BIO_WAFX_DEMONSLAYER_TOSTR = "\c[Green]400% damage to Legendary enemies";
 
