@@ -134,13 +134,19 @@ class WeightedRandomTable
 
 	void Print(uint depth = 0) const
 	{
+		string lbl = Label.Length() > 0 ? Label : String.Format("%p", self);
+
 		if (Entries.Size() < 1)
 		{
-			Console.Printf(Biomorph.LOGPFX_INFO .. "WeightedRandomTable is empty.");
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"WeightedRandomTable `%s` is empty.", lbl);
 			return;
 		}
+			
+		Console.Printf(Biomorph.LOGPFX_INFO .. String.Format(
+			"Contents of WeightedRandomTable `%s`:", lbl));
 
-		string prefix = "";
+		string prefix = "\t";
 
 		for (uint i = 0; i < depth; i++)
 			prefix = prefix .. "\t";
@@ -150,7 +156,7 @@ class WeightedRandomTable
 			if (Entries[i].SubTable != null)
 				Entries[i].SubTable.Print(depth + 1);
 			else
-				Console.Printf(Biomorph.LOGPFX_INFO .. prefix .. "%s: %d",
+				Console.Printf(prefix .. "%s: %d",
 					Entries[i].Type.GetClassName(), Entries[i].Weight);
 		}
 	}
