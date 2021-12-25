@@ -30,6 +30,7 @@ enum BIO_WeaponAffixFlags : uint
 	BIO_WAF_CRIT = 1 << 15,
 	BIO_WAF_LIFESTEAL = 1 << 16,
 	BIO_WAF_MELEERANGE = 1 << 17,
+	BIO_WAF_ONKILL = 1 << 18,
 	BIO_WAF_ALL = uint.MAX
 }
 
@@ -60,10 +61,8 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	virtual void OnPuffFired(BIO_Weapon weap,
 		BIO_Puff puff) const {}
 
-	virtual void OnKill(readOnly<BIO_Weapon> weap,
-		Actor killed, Actor inflictor) const {}
-	virtual void OnCriticalShot(BIO_Weapon weap,
-		in out BIO_FireData fireData) const {}
+	virtual void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const {}
+	virtual void OnCriticalShot(BIO_Weapon weap, in out BIO_FireData fireData) const {}
 
 	virtual void OnPickup(BIO_Weapon weap) const {}
 	virtual void OnMagLoad(BIO_Weapon weap, bool secondary, in out int diff) const {}
