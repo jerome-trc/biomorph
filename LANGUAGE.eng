@@ -317,7 +317,8 @@
 	BIO_WAFX_FIRETIME_TOSTR = "Fire time%s: %s%s%.2f seconds";
 
 	BIO_WAFX_SPREAD_TAG = "Accurised";
-	BIO_WAFX_SPREAD_TOSTR = "Spread: ";
+	BIO_WAFX_SPREAD_TOSTR_H = "Horizontal spread%s: %s%s%.1f\c[White] degree(s)";
+	BIO_WAFX_SPREAD_TOSTR_V = "Vertical spread%s: %s%s%.1f\c[White] degree(s)";
 
 	BIO_WAFX_KICKBACK_TAG = "Stopping";
 	BIO_WAFX_KICKBACK_TOSTR = "%s%.1f%% %s\cj knockback";

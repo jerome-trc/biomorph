@@ -23,6 +23,8 @@ enum BIO_WeaponPipelineMask : uint16
 	BIO_WPM_ALL = uint16.MAX
 }
 
+const TRIVIAL_WEAPON_SPREAD = 0.48;
+
 struct BIO_FireData
 {
 	uint Number, Count;
@@ -418,6 +420,10 @@ class BIO_WeaponPipeline play
 	float GetHSpread() const { return HSpread; }
 	float GetVSpread() const { return VSpread; }
 	bool HasAnySpread() const { return HSpread > 0.0 || VSpread > 0.0; }
+	bool NonTrivialSpread() const
+	{
+		return HSpread > TRIVIAL_WEAPON_SPREAD || VSpread > TRIVIAL_WEAPON_SPREAD;
+	}
 
 	bool SpreadMutable() const
 	{
@@ -526,7 +532,7 @@ class BIO_WeaponPipeline play
 
 		// Don't report spread unless it's non-trivial (weapons with 
 		// true projectiles are likely to have little to no spread)
-		if (HSpread > 0.48)
+		if (HSpread > TRIVIAL_WEAPON_SPREAD)
 		{
 			string fontColor = BIO_Utils.StatFontColorF(
 				HSpread, Defaults.HSpread, invert: true);
@@ -538,7 +544,7 @@ class BIO_WeaponPipeline play
 			readout.Push(hSpreadStr);
 		}
 
-		if (VSpread > 0.48)
+		if (VSpread > TRIVIAL_WEAPON_SPREAD)
 		{
 			string fontColor = BIO_Utils.StatFontColorF(
 				VSpread, Defaults.VSpread, invert: true);
