@@ -1243,7 +1243,7 @@ class BIO_WAfx_Lifesteal : BIO_WeaponAffix
 				continue;
 			}
 
-			AddPercents.Push(FRandom[BIO_Afx](0.2, 0.8));
+			AddPercents.Push(FRandom[BIO_Afx](0.15, 0.3));
 		}
 	}
 
@@ -1251,7 +1251,7 @@ class BIO_WAfx_Lifesteal : BIO_WeaponAffix
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (AddPercents[i] ~== 0.0) continue;
+			if (AddPercents[i] == 0.0) continue;
 			let ff = BIO_FireFunc_Melee(weap.Pipelines[i].GetFireFunctor());
 			ff.Lifesteal += AddPercents[i];
 		}
