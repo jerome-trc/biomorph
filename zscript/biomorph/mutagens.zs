@@ -369,6 +369,13 @@ class BIO_CorruptionFunctor play abstract
 	abstract bool Compatible(readOnly<BIO_Weapon> weap) const;
 }
 
+// The corruption flag gets set but nothing else happens. Congratulations!
+class BIO_CorrFunc_Noop : BIO_CorruptionFunctor
+{
+	final override void Invoke(BIO_Weapon weap) const { }
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const { return true; }
+}
+
 // Randomize affixes and then obfuscates them from the player.
 class BIO_CorrFunc_RandomizeHide : BIO_CorruptionFunctor
 {
