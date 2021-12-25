@@ -48,8 +48,6 @@
 		"\c[MidGrey]Attack time: %s%.2f \c[MidGrey]seconds";
 	BIO_WEAPTOSTR_RELOADTIME =
 		"\c[MidGrey]Reload time: %s%.2f \c[MidGrey]seconds";
-	BIO_WEAPTOSTR_BERSERKMULTI =
-		"\cj%d%% more damage from berserk";
 
 	BIO_FIREFUNC_PROJECTILE =
 		"\c[MidGrey]Fires %s%d %s%s";
@@ -253,6 +251,9 @@
 // Affixes (tags, details, to-string templates) ================================
 
 	BIO_AFFIXESUNKNOWN = "Affixes unknown";
+
+	BIO_WAFX_BERSERKDMG_TAG = "Frenzy";
+	BIO_WAFX_BERSERKDMG_TOSTR = "%s%d%% damage from berserk";
 
 	BIO_WAFX_DAMAGE_TAG = "High-Power";
 	BIO_WAFX_DAMAGE_TOSTR = "%s damage: %s%s%d";
