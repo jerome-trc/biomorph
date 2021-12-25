@@ -17,19 +17,24 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		BIO_Weapon.PlayerVisual BIO_PVIS_UNARMED;
 	}
 
-	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
+	final override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.PunchPipeline('BIO_MeleeHit', 1, 2, 20)
-			.CustomReadout(String.Format(
-				StringTable.Localize("$BIO_WEAPTOSTR_BERSERKMULTI"), 900))
 			.Alert(-1.0, 0)
 			.Build());
 	}
 
-	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
+	final override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
 		groups.Push(StateTimeGroupFrom('Fire'));
+	}
+
+	final override void InitImplicitAffixes(in out Array<BIO_WeaponAffix> affixes) const
+	{
+		let berserkDmg = new('BIO_WAfx_BerserkDamage');
+		berserkDmg.Multiplier = 10.0;
+		affixes.Push(berserkDmg);
 	}
 
 	States

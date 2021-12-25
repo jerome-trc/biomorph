@@ -1,5 +1,50 @@
 // Damage ======================================================================
 
+// Comes implicitly with the fist at a 10.0 multiplier, but can generate
+// as an explicit affix from mutation with a significantly smaller multiplier.
+class BIO_WAfx_BerserkDamage : BIO_WeaponAffix
+{
+	float Multiplier;
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		Multiplier = FRandom(1.5, 3.5);
+	}
+
+	// This can't generate on weapons with implicit berserk damage.
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.HasMeleePipeline() && !weap.HasAffixOfType(GetClass(), true);
+	}
+
+	final override void BeforeEachFire(BIO_Weapon weap,
+		in out BIO_FireData fireData) const
+	{
+		if (fireData.FireType is 'BIO_MeleeHit' &&
+			weap.Owner.FindInventory('PowerStrength', true))
+			fireData.Damage *= Multiplier;
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_WAFX_BERSERKDMG_TOSTR"),
+			BIO_Utils.StatFontColorF(Multiplier, 1.0),
+			int(Multiplier * 100.0)));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_BERSERKDMG_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE;
+	}
+}
+
 class BIO_WAfx_Damage : BIO_WeaponAffix
 {
 	// One per pipeline; if pipeline is incompatible, value will be 0

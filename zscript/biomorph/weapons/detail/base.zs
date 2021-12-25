@@ -1551,8 +1551,6 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		FTranslatedLineTarget t;
 
-		if (FindInventory('PowerStrength', true)) dmg *= 10;
-		
 		double ang = Owner.Angle + Random2[Punch]() * (5.625 / 256);
 		double pitch = Owner.AimLineAttack(ang, range, null, 0.0, ALF_CHECK3D);
 
