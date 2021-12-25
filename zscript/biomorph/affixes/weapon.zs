@@ -58,7 +58,7 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 			string qual = "";
 
 			if (Modifiers.Size() > 1)
-				qual = "(\c[Yellow]" .. weap.Pipelines[i].Tag .. "\c[White])";
+				qual = " " .. weap.Pipelines[i].GetTagAsQualifier();
 
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_WAFX_DAMAGE_TOSTR"), qual,
@@ -136,7 +136,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 			string qual = "";
 
 			if (Modifiers.Size() > 1)
-				qual = " (\c[Yellow]" .. weap.Pipelines[i].Tag .. "\c[White])";
+				qual = " " .. weap.Pipelines[i].GetTagAsQualifier();
 
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_WAFX_DMGMULTI_TOSTR"), qual,
@@ -1065,14 +1065,14 @@ class BIO_WAfx_Lifesteal : BIO_WeaponAffix
 		{
 			if (AddPercents[i] ~== 0.0) continue;
 
-			string suffix = "";
+			string qual = "";
 
 			if (AddPercents.Size() > 1)
-				suffix = " (\c[Yellow]" .. weap.Pipelines[i].Tag .. "\c[White])";
+				qual = " " .. weap.Pipelines[i].GetTagAsQualifier();
 
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_WAFX_LIFESTEAL_TOSTR"),
-				int(AddPercents[i] * 100.0), suffix));
+				int(AddPercents[i] * 100.0), qual));
 		}
 	}
 
@@ -1136,15 +1136,15 @@ class BIO_WAfx_MeleeRange : BIO_WeaponAffix
 		{
 			if (Modifiers[i] ~== 0.0) continue;
 
-			string suffix = "";
+			string qual = "";
 			
 			if (Modifiers.Size() > 1)
-				suffix = " (\c[Yellow]" .. weap.Pipelines[i].Tag .. "\c[White])";
+				qual = " " .. weap.Pipelines[i].GetTagAsQualifier();
 
 			strings.Push(String.Format(
 				StringTable.Localize("$BIO_WAFX_MELEERANGE_TOSTR"),
 				BIO_Utils.StatFontColorF(Modifiers[i], 0.0),
-				Modifiers[i] >= 0 ? "+" : "", Modifiers[i], suffix));
+				Modifiers[i] >= 0 ? "+" : "", Modifiers[i], qual));
 		}
 	}
 
@@ -1223,7 +1223,7 @@ class BIO_WAfx_Spread : BIO_WeaponAffix
 			string qual = "";
 
 			if (HorizModifiers.Size() > 1)
-				qual = "(\c[Yellow]" .. weap.Pipelines[i].Tag .. "\c[White])";
+				qual = " " .. weap.Pipelines[i].GetTagAsQualifier();
 
 			if (HorizModifiers[i] != 0.0)
 			{
