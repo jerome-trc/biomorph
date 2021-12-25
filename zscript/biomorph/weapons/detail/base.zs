@@ -986,6 +986,9 @@ class BIO_Weapon : DoomWeapon abstract
 		InitReloadTimes(ReloadTimeGroups);
 		InitImplicitAffixes(ImplicitAffixes);
 
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].Apply(self);
+
 		Array<BIO_WeaponPipeline> pplDefs;
 		InitPipelines(pplDefs);
 
