@@ -210,6 +210,57 @@ class BIO_WAfx_Crit : BIO_WeaponAffix
 	}
 }
 
+// All splash damage on the fired thing is converted into direct hit damage.
+class BIO_WAfx_SplashForDamage : BIO_WeaponAffix
+{
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (weap.Pipelines[i].Splashes() &&
+				weap.Pipelines[i].DealsAnyDamage() &&
+				weap.Pipelines[i].ExportsDamageValues())
+				return true;
+		}
+
+		return false;
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].Splashes() ||
+				!weap.Pipelines[i].DealsAnyDamage() ||
+				!weap.Pipelines[i].ExportsDamageValues())
+				continue;
+			
+			let expl = weap.Pipelines[i].GetSplashFunctor();
+			let dmg = expl.Damage;
+			weap.Pipelines[i].AddToAllDamageValues(dmg);
+			expl.Damage = 0;
+			expl.Radius = 0;
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(CRESC_MIXED .. StringTable.Localize(
+			"$BIO_WAFX_SPLASHFORDAMAGE_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_SPLASHFORDAMAGE_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE | BIO_WAF_SPLASH;
+	}
+}
+
 // Damage gets added if the wielder is moving forward.
 class BIO_WAfx_ForwardDamage : BIO_WeaponAffix
 {

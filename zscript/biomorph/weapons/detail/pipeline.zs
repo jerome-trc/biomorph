@@ -323,6 +323,19 @@ class BIO_WeaponPipeline play
 		}
 	}
 
+	void AddToAllDamageValues(int dmg)
+	{
+		if (Mask & BIO_WPM_DAMAGEVALS) return;
+
+		Array<int> vals;
+		GetDamageValues(vals);
+
+		for (uint i = 0; i < vals.Size(); i++)
+			vals[i] += dmg;
+
+		SetDamageValues(vals);
+	}
+
 	void MultiplyAllDamage(float multi)
 	{
 		if (Mask & BIO_WPM_DAMAGEVALS) return;
@@ -372,9 +385,20 @@ class BIO_WeaponPipeline play
 
 	BIO_FTDF_Explode GetSplashFunctor() const
 	{
+		if (Mask & BIO_WPM_SPLASH) return null;
+
 		for (uint i = 0; i < FTDeathFunctors.Size(); i++)
 			if (FTDeathFunctors[i].GetClass() == 'BIO_FTDF_Explode')
 				return BIO_FTDF_Explode(FTDeathFunctors[i]);
+
+		return null;
+	}
+
+	readOnly<BIO_FTDF_Explode> GetSplashFunctorConst() const
+	{
+		for (uint i = 0; i < FTDeathFunctors.Size(); i++)
+			if (FTDeathFunctors[i].GetClass() == 'BIO_FTDF_Explode')
+				return BIO_FTDF_Explode(FTDeathFunctors[i].AsConst());
 
 		return null;
 	}

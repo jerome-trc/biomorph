@@ -922,6 +922,15 @@ class BIO_Weapon : DoomWeapon abstract
 		return false;
 	}
 
+	bool DealsAnySplashDamage() const
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].Splashes())
+				return true;
+
+		return false;
+	}
+
 	bool HasAnySpread() const
 	{
 		for (uint i = 0; i < Pipelines.Size(); i++)
