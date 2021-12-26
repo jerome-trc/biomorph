@@ -65,6 +65,8 @@
 		"\c[MidGrey]Fires %s%d \c[MidGrey]rail %s%s"
 	BIO_FIREFUNC_RAIL_NOTHING =
 		"\c[MidGrey]Fires %s%d \c[MidGrey]rail shots";
+	BIO_FIREFUNC_BFGSPRAY =
+		"\c[MidGrey]Fires %s%d \c[MidGrey]BFG rays";
 	
 	BIO_DMGFUNC_RAND =
 		"\c[MidGrey]Damage: %s%d\c[MidGrey] \cu-\c[MidGrey] %s%d";
@@ -294,6 +296,9 @@
 	
 	BIO_WAFX_MINIMISSILE_TAG = "Gyrojet";
 	BIO_WAFX_MINIMISSILE_TOSTR = "Fires fast mini-missiles";
+
+	BIO_WAFX_BFGSPRAY_TAG = "Gamma Projector";
+	BIO_WAFX_BFGSPRAY_TOSTR = "Fires BFG rays";
 
 	BIO_WAFX_FORCEPAIN_TAG = "Neurotoxic Payload";
 	BIO_WAFX_FORCEPAIN_TOSTR = "Always causes monsters to flinch";

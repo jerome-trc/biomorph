@@ -239,6 +239,8 @@ class BIO_WeaponPipeline play
 		FireType = fType;
 	}
 
+	bool FireCountMutable() const { return !(Mask & BIO_WPM_FIRECOUNT); }
+
 	uint GetFireCount() const { return FireCount; }
 
 	void SetFireCount(uint fCount)
@@ -464,6 +466,17 @@ class BIO_WeaponPipeline play
 			hSpread = hSpr;
 		if (!(Mask & BIO_WPM_VSPREAD))
 			vSpread = vSpr;
+	}
+
+	bool AngleMutable() const { return !(Mask & BIO_WPM_ANGLE); }
+	bool PitchMutable() const { return !(Mask & BIO_WPM_PITCH); }
+
+	void ModifyAngleAndPitch(float ang, float ptch)
+	{
+		if (!(Mask & BIO_WPM_ANGLE))
+			Angle += ang;
+		if (!(Mask & BIO_WPM_PITCH))
+			Pitch += ptch;
 	}
 
 	void SetAngleAndPitch(float ang, float ptch)
