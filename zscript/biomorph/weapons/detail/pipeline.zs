@@ -550,7 +550,7 @@ class BIO_WeaponPipeline play
 	void ToString(in out Array<string> readout, uint index, bool alone) const
 	{
 		if (Tag.Length() > 1)
-			readout.Push("\c[Yellow]" .. Tag .. ":");
+			readout.Push("\c[Yellow]" .. Tag .. "\c[MidGrey]:");
 
 		if (FireFunctor != null)
 		{
