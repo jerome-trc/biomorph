@@ -19,11 +19,6 @@ class Biomorph abstract
 	const LOGPFX_DEBUG = "\cfBiomorph: \cn(DEBUG)\c- "; // Light blue
 }
 
-const CRESC_STATDEFAULT = "\c[White]";
-const CRESC_STATMODIFIED = "\c[Cyan]";
-const CRESC_STATBETTER = "\c[Green]";
-const CRESC_STATWORSE = "\c[Red]";
-
 #include "zscript/bio_zjson/Include.zs"
 
 #include "zscript/biomorph/ammo.zs"
