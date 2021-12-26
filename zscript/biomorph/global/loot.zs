@@ -78,11 +78,44 @@ extend class BIO_GlobalData
 			return;
 		}
 
-		if (prev != MaxWeaponGrade && BIO_debug)
+		if (prev == MaxWeaponGrade) return;
+
+		if (BIO_debug)
 		{
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Max weapon grade increased to %s.",
 				BIO_Utils.GradeToString(grade));
+		}
+
+		// If a new weapon grade precedent was set,
+		// expand the weapon loot meta-table
+		uint g = uint.MAX, m = 1;
+
+		switch (MaxWeaponGrade)
+		{
+		case BIO_PMWG_STANDARD: g = 0; m = 30; break;
+		case BIO_PMWG_SPECIALTY: g = 1; m = 10; break;
+		case BIO_PMWG_CLASSIFIED: g = 2; break;
+		default: return;
+		}
+
+		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
+		{
+			uint weight = 0;
+
+			switch (i)
+			{
+			case LOOTTABLE_MELEE: weight = 3; break;
+			case LOOTTABLE_PISTOL: weight = 5; break;
+			case LOOTTABLE_SHOTGUN: weight = 9; break;
+			case LOOTTABLE_SSG: weight = 6; break;
+			case LOOTTABLE_AUTOGUN: weight = 9; break;
+			case LOOTTABLE_LAUNCHER: weight = 6; break;
+			case LOOTTABLE_ENERGY: weight = 4; break;
+			case LOOTTABLE_SUPER: weight = 1; break;
+			}
+
+			WeaponLootMetaTable.PushLayer(WeaponLootTables[g][i], weight * m);
 		}
 	}
 
@@ -127,9 +160,9 @@ extend class BIO_GlobalData
 			switch (defs.Grade)
 			{
 			case BIO_GRADE_STANDARD:
-				g = 0; wt = 7; break;
+				g = 0; wt = 30; break;
 			case BIO_GRADE_SPECIALTY:
-				g = 1; wt = 3; break;
+				g = 1; wt = 10; break;
 			case BIO_GRADE_CLASSIFIED:
 				g = 2; wt = 1; break;
 			default:
@@ -150,5 +183,7 @@ extend class BIO_GlobalData
 		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
 			for (uint j = 0; j < 3; j++)
 				WeaponLootTables[j][i].Print();
+
+		WeaponLootMetaTable.Print();
 	}
 }

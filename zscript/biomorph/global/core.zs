@@ -34,8 +34,8 @@ class BIO_GlobalData : Thinker
 				}
 
 				ret.WeaponLootTables[j][i] = new('WeightedRandomTable');
-				ret.WeaponLootTables[j][i].Label = String.Format("%s_%s",
-					BIO_Utils.GradeToString(j + 2), category);
+				ret.WeaponLootTables[j][i].Label = String.Format(
+					"weap_loot_%s_%s", BIO_Utils.GradeToString(j + 2), category);
 			}
 
 		ret.WRT_Mutagens = new('WeightedRandomTable');
@@ -67,27 +67,7 @@ class BIO_GlobalData : Thinker
 		ret.ReadWeaponLumps();
 
 		ret.WeaponLootMetaTable = new('WeightedRandomTable');
-
-		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
-		{
-			uint weight = 0;
-
-			switch (i)
-			{
-			case LOOTTABLE_MELEE: weight = 3; break;
-			case LOOTTABLE_PISTOL: weight = 5; break;
-			case LOOTTABLE_SHOTGUN: weight = 9; break;
-			case LOOTTABLE_SSG: weight = 6; break;
-			case LOOTTABLE_AUTOGUN: weight = 9; break;
-			case LOOTTABLE_LAUNCHER: weight = 6; break;
-			case LOOTTABLE_ENERGY: weight = 4; break;
-			case LOOTTABLE_SUPER: weight = 1; break;
-			}
-
-			ret.WeaponLootMetaTable.PushLayer(ret.WeaponLootTables[0][i], weight * 3);
-			ret.WeaponLootMetaTable.PushLayer(ret.WeaponLootTables[1][i], weight * 2);
-			ret.WeaponLootMetaTable.PushLayer(ret.WeaponLootTables[2][i], weight);
-		}
+		ret.WeaponLootMetaTable.Label = "weap_loot_meta";
 
 		if (BIO_debug)
 		{
