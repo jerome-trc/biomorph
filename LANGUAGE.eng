@@ -74,6 +74,8 @@
 		"\c[MidGrey]Damage: %s%d\c[MidGrey] x (1 - %d)";
 	BIO_DMGFUNC_SINGLE =
 		"\c[MidGrey]Damage: %s%d";
+	BIO_DMGFUNC_NOOP =
+		"\c[MidGrey]Deals no damage";
 
 	BIO_OB_GENERIC = "%k killed %o.";
 

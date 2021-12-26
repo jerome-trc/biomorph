@@ -141,3 +141,13 @@ class BIO_DmgFunc_Single : BIO_DamageFunctor
 			crEsc, Value);
 	}
 }
+
+class BIO_DmgFunc_Noop : BIO_DamageFunctor
+{
+	override int Invoke() const { return 0; }
+	
+	override string ToString(BIO_DamageFunctor def) const
+	{
+		return StringTable.Localize("$BIO_DMGFUNC_NOOP");
+	}
+}

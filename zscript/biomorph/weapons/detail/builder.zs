@@ -229,6 +229,13 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
+	BIO_WeaponPipelineBuilder NoDamage()
+	{
+		CheckDamageFunctorRestricted();
+		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Noop'));
+		return self;
+	}
+
 	BIO_WeaponPipelineBuilder Spread(float horiz, float vert)
 	{
 		CheckSpreadRestricted();
