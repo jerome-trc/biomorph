@@ -621,10 +621,10 @@ class BIO_WAfx_Plasma : BIO_WeaponAffix
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
 			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_PlasmaBall'))
-				return false;
+				continue;
 			if (!weap.Pipelines[i].CanFireProjectiles() &&
 				!weap.Pipelines[i].FireFunctorMutable())
-				return false;
+				continue;
 
 			return true;
 		}
@@ -679,13 +679,13 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
 			if (!weap.Pipelines[i].FireTypeMutableFrom('BIO_ShotPellet'))
-				return false;
+				continue;
 			if (!weap.Pipelines[i].DamageMutable() ||
 				!weap.Pipelines[i].SpreadMutable())
-				return false;
+				continue;
 			if (!weap.Pipelines[i].CanFirePuffs() &&
 				!weap.Pipelines[i].FireFunctorMutable())
-				return false;
+				continue;
 
 			return true;
 		}
@@ -742,12 +742,12 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
 			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_MiniMissile'))
-				return false;
+				continue;
 			if (!weap.Pipelines[i].SplashMutable())
-				return false;
+				continue;
 			if (!weap.Pipelines[i].CanFireProjectiles() &&
 				!weap.Pipelines[i].FireFunctorMutable())
-				return false;
+				continue;
 			
 			return true;
 		}
@@ -774,7 +774,6 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 			}
 
 			weap.Pipelines[i].SetFireType('BIO_MiniMissile');
-			let defs = GetDefaultByType('BIO_MiniMissile');
 			weap.Pipelines[i].SetSplash(48, 48);
 		}
 	}
