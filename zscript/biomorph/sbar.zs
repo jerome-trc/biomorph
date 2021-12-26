@@ -60,19 +60,18 @@ class BIO_StatusBar : BaseStatusBar
 			double roww = 0;
 			for (let i = CPlayer.MO.Inv; i != null; i = i.Inv)
 			{
-				if (i is 'Key' && i.Icon.IsValid())
+				if (!(i is 'Key') || !i.Icon.IsValid()) continue;
+				
+				DrawTexture(i.Icon, keypos, DI_SCREEN_RIGHT_TOP | DI_ITEM_LEFT_TOP);
+				Vector2 size = TexMan.GetScaledSize(i.Icon);
+				keypos.Y += size.Y + 2;
+				roww = max(roww, size.X);
+				if (++rowc == 3)
 				{
-					DrawTexture(i.Icon, keypos, DI_SCREEN_RIGHT_TOP | DI_ITEM_LEFT_TOP);
-					Vector2 size = TexMan.GetScaledSize(i.Icon);
-					keypos.Y += size.Y + 2;
-					roww = max(roww, size.X);
-					if (++rowc == 3)
-					{
-						keypos.Y = 2;
-						keypos.X -= roww + 2;
-						roww = 0;
-						rowc = 0;
-					}
+					keypos.Y = 2;
+					keypos.X -= roww + 2;
+					roww = 0;
+					rowc = 0;
 				}
 			}
 		}
@@ -218,7 +217,7 @@ class BIO_StatusBar : BaseStatusBar
 			{
 				DrawString(Font_HUD, String.Format(
 					"%s", FormatNumber(ammoItem2.Amount, 3, 6)),
-					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+					(-30, -36), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 			}
 			else // Magazine with reserve ammo
 			{
