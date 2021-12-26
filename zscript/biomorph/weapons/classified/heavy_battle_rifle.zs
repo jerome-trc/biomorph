@@ -13,7 +13,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
-		BIO_Weapon.MagazineSize 60;
+		BIO_Weapon.MagazineSize 50;
 		BIO_Weapon.MagazineType 'BIO_MAG_HBR';
 		BIO_Weapon.PlayerVisual BIO_PVIS_RIFLE;
 	}
@@ -21,8 +21,11 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.BasicBulletPipeline('BIO_Bullet', 1, 25, 75, 0.6, 0.6)
+			.Bullet('BIO_Bullet', 1)
+			.BasicDamage(60, 80)
+			.Spread(0.6, 0.6)
 			.FireSound("bio/weap/hbr/fire")
+			.CustomReadout(StringTable.Localize("$BIO_HBR_INFO"))
 			.Build());
 	}
 
@@ -39,7 +42,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	States
 	{
 	Ready:
-		HVBR A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
+		HVBR A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
 	Deselect:
 		HVBR A 0 A_BIO_Deselect;
@@ -48,28 +51,34 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		HVBR A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
-		HVBR A 1 Offset(0, 32 + 3) Bright
+		TNT1 A 0 A_BIO_CheckAmmo;
+		HVBR B 1 Bright Offset(0, 33)
 		{
 			A_SetFireTime(0);
 			A_BIO_Fire();
 			A_GunFlash();
-			A_FireSound();
-			A_PresetRecoil('BIO_Recoil_Shotgun');
+			A_FireSound(CHAN_AUTO);
 		}
-		HVBR B 4 Offset(0, 32 + 6) Bright A_SetFireTime(1);
-		HVBR C 5 Offset(0, 32 + 9) Bright A_SetFireTime(2);
-		HVBR B 4 Offset(0, 32 + 6) A_SetFireTime(3);
-		HVBR A 8 Offset(0, 32 + 3)
+		HVBR C 1 Bright Offset(0, 35) A_SetFireTime(1);
+		HVBR B 1 Bright Offset(0, 33) A_SetFireTime(2);
+		TNT1 A 0 A_BIO_CheckAmmo;
+		HVBR B 1 Bright Offset(0, 33)
 		{
-			A_SetFireTime(4);
-			A_ReFire();
+			A_SetFireTime(3);
+			A_BIO_Fire();
+			A_GunFlash();
+			A_FireSound(CHAN_AUTO);
+			A_PresetRecoil('BIO_Recoil_SuperShotgun');
 		}
+		HVBR C 1 Bright Offset(0, 35) A_SetFireTime(4);
+		HVBR B 1 Bright Offset(0, 33) A_SetFireTime(5);
+		HVBR A 10 Fast A_SetFireTime(6);
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	Flash:
 		HVBR D 1 Bright A_Light(1);
-		HVBR E 4 Bright A_Light(2);
-		HVBR F 5 Bright A_Light(1);
+		HVBR E 1 Bright A_Light(2);
+		HVBR F 1 Bright A_Light(1);
 		Goto LightDone;
 	Reload:
 		// TODO: Reload sounds
@@ -80,7 +89,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		HVBR A 1 Fast Offset(0, 32 + 7) A_SetReloadTime(3);
 		HVBR A 1 Fast Offset(0, 32 + 15) A_SetReloadTime(4);
 		HVBR A 1 Offset(0, 32 + 30) A_SetReloadTime(5);
-		HVBR A 40 Offset(0, 32 + 30) A_SetReloadTime(6);
+		HVBR A 28 Offset(0, 32 + 30) A_SetReloadTime(6);
 		HVBR A 1 Offset(0, 32 + 15)
 		{
 			A_SetReloadTime(7);
