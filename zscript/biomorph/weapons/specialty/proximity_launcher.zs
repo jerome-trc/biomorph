@@ -41,6 +41,11 @@ class BIO_ProximityLauncher : BIO_Weapon
 		groups.Push(StateTimeGroupFrom('Reload'));
 	}
 
+	override void InitImplicitAffixes(in out Array<BIO_WeaponAffix> affixes) const
+	{
+		affixes.Push(new('BIO_Wafx_ForceRadiusDmg'));
+	}
+
 	States
 	{
 	Ready:
