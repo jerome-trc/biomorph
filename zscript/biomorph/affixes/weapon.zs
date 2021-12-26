@@ -795,6 +795,61 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 	}
 }
 
+class BIO_WAfx_BFGSpray : BIO_WeaponAffix
+{
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (CompatibleWithPipeline(weap.Pipelines[i].AsConst()))
+				return true;
+		}
+
+		return false;
+	}
+
+	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
+	{
+		return
+			ppl.FireTypeMutableTo('BIO_BFGExtra') && ppl.FireFunctorMutable() &&
+			ppl.FireCountMutable() && ppl.DamageMutable() && ppl.AngleMutable();
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			let ppl = weap.Pipelines[i];
+
+			if (!CompatibleWithPipeline(ppl.AsConst()))
+				continue;
+
+			ppl.SetFireFunctor(new('BIO_FireFunc_BFGSpray'));
+			ppl.SetFireType('BIO_BFGExtra');
+			ppl.SetFireCount(ppl.GetFireCount() * 4);
+			ppl.MultiplyAllDamage(0.5);
+			ppl.SetFireSound("weapons/bfgx");
+			ppl.ModifyAngleAndPitch(45.0, 0.0);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_BFGSPRAY_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_BFGSPRAY_TAG");
+	}
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_FIRETYPE;
+	}
+}
+
 // Modify fired thing ==========================================================
 
 class BIO_WAfx_ForcePain : BIO_WeaponAffix

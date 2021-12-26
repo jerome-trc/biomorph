@@ -81,6 +81,15 @@ class BIO_FireFunctor play abstract
 			default: return StringTable.Localize(defs.PluralTag);
 			}
 		}
+		else if (fireType is 'BIO_BFGExtra')
+		{
+			switch (count)
+			{
+			case -1:
+			case 1: return StringTable.Localize("$BIO_PROJEXTRA_TAG_BFGRAY");
+			default: return StringTable.Localize("$BIO_PROJEXTRA_TAG_BFGRAYS"); 
+			}
+		}
 		else
 			return StringTable.Localize(GetDefaultByType(fireType).GetTag());
 	}
@@ -160,7 +169,7 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 		Class<Actor> ft = ppl.GetFireType();
 
 		readout.Push(String.Format(
-			StringTable.Localize("$BIO_FIREFUNC_Projectile"),
+			StringTable.Localize("$BIO_FIREFUNC_PROJECTILE"),
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc,
 			ft != pplDef.GetFireType() ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
 			FireTypeTag(ft, fc)));
@@ -334,5 +343,31 @@ class BIO_FireFunc_Saw : BIO_FireFunc_Melee
 	override BIO_FireFunctorType GetType() const
 	{
 		return BIO_FFT_PUFF;
+	}
+}
+
+class BIO_FireFunc_BFGSpray : BIO_FireFunctor
+{
+	final override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
+	{
+		return BIO_Player(weap.Owner).BIO_BFGSpray(fireData);
+	}
+
+	final override void ToString(
+		in out Array<string> readout,
+		readOnly<BIO_WeaponPipeline> ppl,
+		readOnly<BIO_WeaponPipeline> pplDef) const
+	{
+		uint fc = ppl.GetFireCount();
+		Class<Actor> ft = ppl.GetFireType();
+
+		readout.Push(String.Format(
+			StringTable.Localize("$BIO_FIREFUNC_BFGSPRAY"),
+			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc));
+	}
+
+	final override BIO_FireFunctorType GetType() const
+	{
+		return BIO_FFT_NONE;
 	}
 }

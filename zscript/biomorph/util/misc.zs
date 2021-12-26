@@ -158,6 +158,7 @@ class BIO_FakePuff : BIO_Puff
 // Symbolic constants which pretend to be a part of certain gzdoom.pk3 enums
 // (zscript/constants.zs), for better clarity what arguments really mean. 
 
+const BFGF_NONE = 0; // EBFGSprayFlags
 const LAF_NONE = 0; // ELineAttackFlags
 const TRF_NONE = 0; // ELineTraceFlags
 const XF_NONE = 0; // EExplodeFlags
