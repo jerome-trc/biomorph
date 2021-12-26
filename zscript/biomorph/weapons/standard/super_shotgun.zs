@@ -72,7 +72,7 @@ class BIO_SuperShotgun : BIO_Weapon
 				return ResolveState('Fire.Double');
 		}
 	Fire.Single:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		SHT2 A 3 A_SetFireTime(0);
 		SHT2 A 7 Bright
 		{
@@ -83,9 +83,10 @@ class BIO_SuperShotgun : BIO_Weapon
 			// TODO: Replace with a smaller sound
 			A_FireSound();
 		}
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	Fire.Double:
-		TNT1 A 0 A_AutoReload(single: true, min: 2);
+		TNT1 A 0 A_BIO_CheckAmmo(multi: 2, single: true);
 		SHT2 A 3 A_SetFireTime(0);
 		SHT2 A 7 Bright
 		{
@@ -95,6 +96,7 @@ class BIO_SuperShotgun : BIO_Weapon
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			A_FireSound();
 		}
+		TNT1 A 0 A_AutoReload(multi: 2, single: true);
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');

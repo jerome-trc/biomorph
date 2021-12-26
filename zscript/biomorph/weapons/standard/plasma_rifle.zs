@@ -51,7 +51,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 		PLSG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		PLSG A 3
 		{
 			A_SetFireTime(0);
@@ -65,6 +65,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 			A_SetFireTime(0, 1);
 			A_ReFire();
 		}
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');

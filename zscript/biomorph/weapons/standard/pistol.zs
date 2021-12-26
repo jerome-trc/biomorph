@@ -54,7 +54,7 @@ class BIO_Pistol : BIO_Weapon
 		PISG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		PISG A 4 A_SetFireTime(0);
 		PISG B 6 Bright
 		{
@@ -70,6 +70,7 @@ class BIO_Pistol : BIO_Weapon
 			A_SetFireTime(3);
 			A_ReFire();
 		}
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	Reload:
 		// TODO: Reload sounds

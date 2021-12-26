@@ -53,7 +53,7 @@ class BIO_Shotgun : BIO_Weapon
 		SHTG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload(single: true);
+		TNT1 A 0 A_BIO_CheckAmmo(single: true);
 		SHTG A 3 A_SetFireTime(0);
 		SHTG A 4 Bright
 		{
@@ -64,6 +64,7 @@ class BIO_Shotgun : BIO_Weapon
 			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		SHTG A 3 Bright A_SetFireTime(2);
+		TNT1 A 0 A_AutoReload(single: true);
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');

@@ -51,7 +51,7 @@ class BIO_AutoShotgun : BIO_Weapon
 		AUSG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		AUSG B 1 Bright Offset(0, 32 + 2)
 		{
 			A_SetFireTime(0);
@@ -68,6 +68,7 @@ class BIO_AutoShotgun : BIO_Weapon
 			A_SetFireTime(4);
 			A_ReFire();
 		}
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');

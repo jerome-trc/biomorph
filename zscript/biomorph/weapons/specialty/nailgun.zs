@@ -51,7 +51,7 @@ class BIO_Nailgun : BIO_Weapon
 		NLGN A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		NLGN B 1 Bright Offset(0, 32 + 2)
 		{
 			A_SetFireTime(0);
@@ -63,6 +63,7 @@ class BIO_Nailgun : BIO_Weapon
 		NLGN C 1 Offset(0, 32) A_SetFireTime(1);
 		NLGN D 1 A_SetFireTime(2);
 		NLGN E 1 A_SetFireTime(3);
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	Reload:
 		// TODO: Reload sounds

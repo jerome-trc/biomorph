@@ -54,7 +54,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		ASHG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		ASHG B 2 Fast A_SetFireTime(0);
 		ASHG D 1 Bright
 		{
@@ -66,7 +66,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		}
 		ASHG C 1 Fast A_SetFireTime(2);
 		ASHG B 1 Fast A_SetFireTime(3);
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		ASHG E 1 Bright
 		{
 			A_SetFireTime(4);
@@ -77,7 +77,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		}
 		ASHG C 2 Fast A_SetFireTime(5);
 		ASHG C 1 Fast A_SetFireTime(6);
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		ASHG D 1 Bright
 		{
 			A_SetFireTime(7);
@@ -89,6 +89,7 @@ class BIO_AssaultHandgun : BIO_Weapon
 		ASHG C 1 Fast A_SetFireTime(8);
 		ASHG B 1 Fast A_SetFireTime(9);
 		ASHG B 0 A_ReFire;
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	AltFire:
 		ASHG B 3 Fast A_SetFireTime(0, 1);
