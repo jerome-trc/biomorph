@@ -79,13 +79,13 @@ class BIO_StatusBar : BaseStatusBar
 		if (isInventoryBarVisible())
 			DrawInventoryBar(InvBarState, (0, 0), 7, DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
 
-		{
+		{ // Draw powerup icons and their durations in seconds
 			int yPos = 0;
 			for (Inventory i = CPlayer.MO.Inv; i != null; i = i.Inv)
 			{
 				int yOffs = NotifyLineCount.GetInt() * 16;
 				let powup = Powerup(i);
-				if (powup == null) continue;
+				if (powup == null || powup is 'PowerStrength') continue;
 				DrawInventoryIcon(powup, (20, yOffs + yPos));
 				yPos += 8;
 				int secs = powup.EffectTics / GameTicRate;
