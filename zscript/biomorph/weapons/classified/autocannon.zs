@@ -22,7 +22,7 @@ class BIO_Autocannon : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.BasicBulletPipeline('BIO_Bullet', 1, 10, 30, 3.5, 1.5)
+			.BasicBulletPipeline('BIO_Bullet', 1, 30, 36, 3.5, 1.5)
 			.FireSound("bio/weap/autocannon/fire")
 			.Build());
 	}
