@@ -101,3 +101,49 @@ class BIO_WeaponFountain : Actor
 		}
 	}
 }
+
+// For testing weapon loot weights.
+class BIO_WeaponLootFountain : Actor
+{
+	private BIO_GlobalData Globals;
+
+	Default
+	{
+		-SOLID
+		+DONTGIB
+		+NEVERRESPAWN
+		+NOBLOOD
+		+NOTELEPORT
+		+SHOOTABLE
+	
+		Health 10;
+		Scale 0.75;
+		Tag "Weapon Loot Fountain!";
+	}
+
+	States
+	{
+	Spawn:
+		SUPB A 2
+		{
+			Actor weap = null; bool spawned = false;
+			[spawned, weap] = A_SpawnItemEx(Globals.AnyLootWeaponType(),
+				xVel: FRandom(-3.0, 3.0), FRandom(-3.0, 3.0), FRandom(18.0, 24.0),
+				FRandom(0.0, 360.0), SXF_NOCHECKPOSITION);
+
+			if (spawned && Random(1, 4) == 1)
+			{
+				let bioWeap = BIO_Weapon(weap);
+				bioWeap.RandomizeAffixes();
+				bioWeap.OnWeaponChange();
+			}
+		}
+		Loop;
+	}
+
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+		Globals = BIO_GlobalData.Get();
+	}
+}
