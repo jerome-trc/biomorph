@@ -63,7 +63,7 @@ class BIO_PlasmaCannon : BIO_Weapon
 		PLSC W 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		PLSC K 1 A_SetFireTime(0);
 		PLSC L 1 A_SetFireTime(1);
 		PLSC M 1 A_SetFireTime(2);
@@ -80,6 +80,7 @@ class BIO_PlasmaCannon : BIO_Weapon
 			A_ReFire();
 		}
 		PLSC K 1 A_SetFireTime(7);
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	Reload:
 		// TODO: Reload sounds

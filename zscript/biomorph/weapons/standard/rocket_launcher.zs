@@ -53,7 +53,7 @@ class BIO_RocketLauncher : BIO_Weapon
 		MISG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo(single: true);
 		MISG B 8
 		{
 			A_SetFireTime(0);
@@ -66,6 +66,7 @@ class BIO_RocketLauncher : BIO_Weapon
 			A_PresetRecoil('BIO_Recoil_RocketLauncher');
 		}
 		MISG B 0 A_ReFire;
+		TNT1 A 0 A_AutoReload(single: true);
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');

@@ -72,7 +72,7 @@ class BIO_VolleyGun : BIO_Weapon
 				return ResolveState('Fire.Quad');
 		}
 	Fire.Quad:
-		TNT1 A 0 A_AutoReload(single: true, min: 4);
+		TNT1 A 0 A_BIO_CheckAmmo(multi: 4, single: true);
 		VOLL A 3;
 		VOLL A 7 Bright
 		{
@@ -82,9 +82,10 @@ class BIO_VolleyGun : BIO_Weapon
 			A_FireSound(attenuation: ATTN_NORM / 2.0);
 			A_FireSound(CHAN_7, attenuation: ATTN_NORM / 2.0);
 		}
+		TNT1 A 0 A_AutoReload(multi: 4, single: true);
 		Goto Ready;
 	Fire.Double:
-		TNT1 A 0 A_AutoReload(min: 2);
+		TNT1 A 0 A_BIO_CheckAmmo(multi: 2);
 		VOLL A 3;
 		VOLL A 7 Bright
 		{
@@ -93,13 +94,15 @@ class BIO_VolleyGun : BIO_Weapon
 			A_GunFlash('Flash.Double');
 			A_FireSound();
 		}
+		TNT1 A 0 A_AutoReload(multi: 2);
 		Goto Ready;
 	Reload:
 		TNT1 A 0
 		{
 			if (!invoker.CanReload())
 				return ResolveState('Ready');
-			else if (invoker.Magazine1.Amount >= invoker.Default.MagazineSize1 / 2)
+			else if ((invoker.Magazine1.Amount >= invoker.Default.MagazineSize1 / 2) ||
+					CountInv(invoker.AmmoType1) < invoker.Default.MagazineSize1 / 2)
 				return ResolveState('Reload.Two');
 			else
 				return state(null);

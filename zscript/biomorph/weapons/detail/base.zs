@@ -600,27 +600,55 @@ class BIO_Weapon : DoomWeapon abstract
 		reserveAmmo.Amount -= subtract;
 	}
 
-	// To be placed at the very start of `Fire` and `AltFire`.
-	protected action state A_AutoReload(bool secondary = false,
-		bool single = false, int min = -1)
+	// Conventionally called on a `TNT1 A 0` state at the
+	// very beginning of a fire/altfire state.
+	protected action state A_BIO_CheckAmmo(
+		bool secondary = false, int multi = 1, bool single = false)
 	{
-		if (invoker.SufficientAmmo(secondary))
-			return state(null);
-		
-		if (min == -1) min = !secondary ? invoker.AmmoUse1 : invoker.AmmoUse2;
-		
-		if ((!secondary ? invoker.Magazine1 : invoker.Magazine2).Amount >= min)
+		if (invoker.SufficientAmmo(secondary, multi))
 			return state(null);
 
 		if (!invoker.CanReload())
-			return ResolveState('Ready');
+		{
+			state dfs = ResolveState('Dryfire');
+			
+			if (dfs != null)
+				return dfs;
+			else
+				return ResolveState('Ready');
+		}
 
-		let cv = BIO_CVar.AutoReload(Player);
+		let cv = BIO_CVar.AutoReloadPre(Player);
 
 		if (cv == BIO_CV_AUTOREL_ALWAYS || (cv == BIO_CV_AUTOREL_SINGLE && single))
 			return ResolveState('Reload');
 		else
-			return ResolveState('Ready');
+		{
+			state dfs = ResolveState('Dryfire');
+			
+			if (dfs != null)
+				return dfs;
+			else
+				return ResolveState('Ready');
+		}
+	}
+
+	// To be called at the end of a fire/altfire state.
+	protected action state A_AutoReload(
+		bool secondary = false, int multi = 1, bool single = false)
+	{
+		if (invoker.SufficientAmmo(secondary, multi))
+			return state(null);
+
+		if (!invoker.CanReload())
+			return state(null);
+		
+		let cv = BIO_CVar.AutoReloadPost(Player);
+
+		if (cv == BIO_CV_AUTOREL_ALWAYS || (cv == BIO_CV_AUTOREL_SINGLE && single))
+			return ResolveState('Reload');
+		else
+			return state(null);
 	}
 
 	// Clear the magazine and return rounds in it to the reserve, with

@@ -389,7 +389,8 @@
 
 // Menus =======================================================================
 
-	BIO_OPTLBL_AUTORELOAD = "Firing an empty weapon reloads it";
+	BIO_OPTLBL_AUTORELOAD_PRE = "Firing an empty weapon reloads it";
+	BIO_OPTLBL_AUTORELOAD_POST = "Auto-reload after emptying magazine";
 	BIO_OPTVAL_AUTOREL_ALWAYS = "Always";
 	BIO_OPTVAL_AUTOREL_SINGLE = "Single-shot weapons only";
 	BIO_OPTVAL_AUTOREL_NEVER = "Never";

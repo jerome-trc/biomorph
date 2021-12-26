@@ -53,7 +53,7 @@ class BIO_ProximityLauncher : BIO_Weapon
 		PRXL A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		PRXL B 4 Bright
 		{
 			A_SetFireTime(0);
@@ -66,6 +66,7 @@ class BIO_ProximityLauncher : BIO_Weapon
 		PRXL E 4 A_SetFireTime(3);
 		PRXL A 24 A_SetFireTime(4);
 		PRXL A 1 A_ReFire;
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	AltFire:
 		TNT1 A 0

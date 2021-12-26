@@ -1,9 +1,14 @@
 // Helper functions for getting and setting Biomorph's user CVars.
 class BIO_CVar abstract
 {
-	static int AutoReload(PlayerInfo pInfo)
+	static int AutoReloadPre(PlayerInfo pInfo)
 	{
-		return CVar.GetCVar('BIO_autoreload', pInfo).GetInt();
+		return CVar.GetCVar('BIO_autoreload_pre', pInfo).GetInt();
+	}
+
+	static int AutoReloadPost(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar('BIO_autoreload_post', pInfo).GetInt();
 	}
 
 	static int BerserkSwitch(PlayerInfo pInfo)

@@ -52,7 +52,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		INCU A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		INCU B 3 Bright
 		{
 			A_SetFireTime(0);
@@ -69,9 +69,10 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_SetFireTime(4);
 			A_ReFire();
 		}
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	AltFire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo(multi: 4, single: true);
 		INCU B 3 Bright
 		{
 			A_SetFireTime(0);
@@ -93,6 +94,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_SetFireTime(4);
 			A_ReFire();
 		}
+		TNT1 A 0 A_AutoReload(multi: 4, single: true);
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');

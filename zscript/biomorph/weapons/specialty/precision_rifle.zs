@@ -50,7 +50,7 @@ class BIO_PrecisionRifle : BIO_Weapon
 		PREC A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		PREC B 3
 		{
 			A_SetFireTime(0);
@@ -61,6 +61,7 @@ class BIO_PrecisionRifle : BIO_Weapon
 		}
 		PREC C 2 A_SetFireTime(1);
 		PREC A 15 Fast A_SetFireTime(2);
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	AltFire:
 	Zoom:

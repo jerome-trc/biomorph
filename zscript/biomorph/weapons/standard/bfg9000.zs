@@ -56,7 +56,7 @@ class BIO_BFG9000 : BIO_Weapon
 		BFGG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_AutoReload;
+		TNT1 A 0 A_BIO_CheckAmmo;
 		BFGG A 20
 		{
 			A_SetFireTime(0);
@@ -78,6 +78,7 @@ class BIO_BFG9000 : BIO_Weapon
 			A_SetFireTime(3);
 			A_ReFire();
 		}
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');

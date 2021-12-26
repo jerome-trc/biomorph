@@ -52,7 +52,7 @@ class BIO_Chaingun : BIO_Weapon
 		CHGG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		CHGG A 0 A_AutoReload;
+		CHGG A 0 A_BIO_CheckAmmo;
 		CHGG A 4
 		{
 			A_SetFireTime(0);
@@ -64,6 +64,7 @@ class BIO_Chaingun : BIO_Weapon
 			A_ChaingunFire();
 		}
 		CHGG B 0 A_ReFire;
+		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
