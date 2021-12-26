@@ -17,14 +17,16 @@ class WeightedRandomTable
 		if (type == null)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Tried to push `null` onto a WeightedRandomTable.");
+				"Tried to push `null` onto WeightedRandomTable `%s`.",
+				Label.Length() > 0 ? Label : String.Format("%p", self));
 			return;
 		}
 
 		if (weight <= 0)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Tried to push a weight of 0 onto a WeightedRandomTable (%s).",
+				"Tried to push a weight of 0 onto WeightedRandomTable `%s` (%s).",
+				Label.Length() > 0 ? Label : String.Format("%p", self),
 				type.GetClassName());
 			return;
 		}
@@ -40,7 +42,8 @@ class WeightedRandomTable
 		if (weight <= 0)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Tried to add a layer with a weight of 0 onto a WeightedRandomTable.");
+				"Tried to add a layer with a weight of 0 onto WeightedRandomTable `%s`.",
+				Label.Length() > 0 ? Label : String.Format("%p", self));
 			return null;
 		}
 		
@@ -56,14 +59,16 @@ class WeightedRandomTable
 		if (wrt == self)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Attempted to nest a WeightedRandomTable within itself.");
+				"Attempted to nest WeightedRandomTable `%s` within itself.",
+				Label.Length() > 0 ? Label : String.Format("%p", self));
 			return;
 		}
 
 		if (weight <= 0)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Tried to push a layer with a weight of 0 onto a WeightedRandomTable.");
+				"Tried to push a layer with a weight of 0 onto WeightedRandomTable `%s`.",
+				Label.Length() > 0 ? Label : String.Format("%p", self));
 			return;
 		}
 
@@ -78,7 +83,8 @@ class WeightedRandomTable
 		if (Entries.Size() < 1)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Tried to get a result from an empty WeightedRandomTable.");
+				"Tried to get a result from an empty WeightedRandomTable (`%s`).",
+				Label.Length() > 0 ? Label : String.Format("%p", self));
 			return null;
 		}
 
@@ -107,7 +113,8 @@ class WeightedRandomTable
 		}
 
 		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"Failed to make a weighted random choice after 10000 tries.");
+			"Failed to make a weighted random choice after 10000 tries (`%s`).",
+			Label.Length() > 0 ? Label : String.Format("%p", self));
 		return null;
 	}		
 
