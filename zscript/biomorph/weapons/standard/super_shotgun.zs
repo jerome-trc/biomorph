@@ -103,20 +103,21 @@ class BIO_SuperShotgun : BIO_Weapon
 		SHT2 D 7
 		{
 			A_SetReloadTime(2);
-			A_OpenShotgun2();
+			A_StartSound("weapons/sshoto", CHAN_AUTO); 
 		}
 		SHT2 E 7 A_SetTics(3);
 		SHT2 F 7
 		{
 			A_SetReloadTime(4);
 			A_LoadMag();
-			A_LoadShotgun2();
+			A_StartSound("weapons/sshotl", CHAN_AUTO); 
 		}
 		SHT2 G 6 A_SetTics(5);
 		SHT2 H 6
 		{
 			A_SetReloadTime(6);
-			A_CloseShotgun2();
+			A_StartSound("weapons/sshotc", CHAN_AUTO);
+			A_ReFire();
 		}
 		SHT2 A 5
 		{
