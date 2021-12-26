@@ -20,6 +20,11 @@ enum BIO_Rarity : uint8
 	BIO_RARITY_UNIQUE
 }
 
+const CRESC_STATDEFAULT = "\c[White]";
+const CRESC_STATMODIFIED = "\c[Cyan]";
+const CRESC_STATBETTER = "\c[Green]";
+const CRESC_STATWORSE = "\c[Red]";
+
 mixin class BIO_Gear
 {
 	meta BIO_Grade Grade; property Grade: Grade;
