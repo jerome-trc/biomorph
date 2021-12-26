@@ -1675,6 +1675,55 @@ class BIO_Weapon : DoomWeapon abstract
 		if (!(flags & SF_NOPULLIN))
 			bJustAttacked = true;
 	}
+
+	// A specialized variation on `A_BFGSpray()`, for use by
+	// `BIO_FireFunc_BFGSpray()`. Shoots only one ray and returns a fake puff.
+	Actor BIO_BFGSpray(in out BIO_FireData fireData, double distance = 16.0 * 64.0,
+		double vrange = 32.0, EBFGSprayFlags flags = BFGF_NONE)
+	{
+		FTranslatedLineTarget t;
+		double an = Owner.Angle - fireData.Angle / 2 + fireData.Angle /
+			fireData.Count * fireData.Number;
+
+		Owner.AimLineAttack(an, distance, t, vrange);
+
+		if (t.LineTarget == null) return null;
+
+		Actor
+			spray = Spawn(fireData.FireType, t.LineTarget.Pos +
+			(0, 0, t.LineTarget.Height / 4), ALLOW_REPLACE),
+			ret = Spawn('BIO_FakePuff', t.LineTarget.Pos);
+
+		int dmgFlags = 0;
+		name dmgType = 'BFGSplash';
+
+		if (spray != null)
+		{
+			// [XA] Don't hit oneself unless we say so.
+			if ((spray.bMThruSpecies &&
+				Owner.GetSpecies() == t.LineTarget.GetSpecies()) || 
+				(!(flags & BFGF_HURTSOURCE) && Owner == t.LineTarget)) 
+			{
+				// [MC] Remove it because technically, the spray isn't trying to "hit" them.
+				spray.Destroy(); 
+				return null;
+			}
+
+			if (spray.bPuffGetsOwner) spray.Target = Owner;
+			if (spray.bFoilInvul) dmgFlags |= DMG_FOILINVUL;
+			if (spray.bFoilBuddha) dmgFlags |= DMG_FOILBUDDHA;
+			dmgType = spray.DamageType;
+		}
+
+		int newdam = t.LineTarget.DamageMObj(
+			ret, Owner, fireData.Damage, dmgType,
+			dmgFlags | DMG_USEANGLE, t.AngleFromSource);
+		ret.SetDamage(newDam);
+		ret.DamageType = 'BFGSplash';
+		ret.Target = t.LineTarget;
+		t.TraceBleed(newdam > 0 ? newdam : fireData.Damage, Owner);
+		return ret;
+	}
 }
 
 class BIO_WeaponZoomCooldown : Powerup

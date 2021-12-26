@@ -350,7 +350,7 @@ class BIO_FireFunc_BFGSpray : BIO_FireFunctor
 {
 	final override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
-		return BIO_Player(weap.Owner).BIO_BFGSpray(fireData);
+		return weap.BIO_BFGSpray(fireData);
 	}
 
 	final override void ToString(
