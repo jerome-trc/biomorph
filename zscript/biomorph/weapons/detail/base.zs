@@ -136,8 +136,8 @@ class BIO_Weapon : DoomWeapon abstract
 	property MagazineSize2: MagazineSize2;
 	property MagazineSizes: MagazineSize1, MagazineSize2;
 
-	// When reloading a round, `ReloadCost` gets taken from the
-	// reserve, and `ReloadOutput` gets added to the magazine.
+	// To reload a round, `ReloadCost` gets taken from reserve and `ReloadOutput`
+	// gets added to the magazine. Has no effect on magazineless weapons.
 	uint8 ReloadCost1, ReloadCost2, ReloadOutput1, ReloadOutput2;
 	
 	property ReloadCost: ReloadCost1;
@@ -154,7 +154,7 @@ class BIO_Weapon : DoomWeapon abstract
 	property ReloadRatio1: ReloadCost1, ReloadOutput1;
 	property ReloadRatio2: ReloadCost2, ReloadOutput2;
 
-	// Reloading is only possible if `MinAmmoReserve * ReloadFactor` rounds
+	// Reloading is only possible if `MinAmmoReserve * ReloadCost` rounds
 	// are held in reserve. Has no effect on magazineless weapons.
 	int MinAmmoReserve1, MinAmmoReserve2;
 	property MinAmmoReserve: MinAmmoReserve1;
@@ -652,7 +652,7 @@ class BIO_Weapon : DoomWeapon abstract
 	}
 
 	// Clear the magazine and return rounds in it to the reserve, with
-	// consideration given to the relevant reload factor.
+	// consideration given to the relevant reload ratio.
 	protected action void A_EmptyMagazine(bool secondary = false)
 	{
 		Ammo magItem = null, reserveAmmo = null;

@@ -118,6 +118,7 @@
 
 	BIO_HBR_TAG = "Heavy Battle Rifle";
 	BIO_HBR_PKUP = "Procured a %s.";
+	BIO_HBR_INFO = "\c[White]Rapid two-round burst";
 
 	BIO_INCURSIONSHOTGUN_TAG = "Incursion Shotgun";
 	BIO_INCURSIONSHOTGUN_PKUP = "Procured an %s.";
