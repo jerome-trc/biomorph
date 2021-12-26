@@ -200,11 +200,11 @@ class BIO_StatusBar : BaseStatusBar
 			invY -= 20;
 		}
 		
-		if (ammoItem2 != null) // Weapon with disparate magazine
+		if (ammoItem2 != null && ammoItem2 != ammoItem1)
 		{
 			DrawInventoryIcon(ammoItem2, (-14, -24));
 
-			if (mag2 != ammoItem2)
+			if (mag2 != ammoItem2) // Weapon with disparate magazine
 			{
 				DrawString(Font_HUD,
 					String.Format("%s / %s / %s",
