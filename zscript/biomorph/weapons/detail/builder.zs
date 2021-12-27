@@ -90,11 +90,11 @@ class BIO_WeaponPipelineBuilder play
 		CheckFireCountRestricted();
 
 		let fireFunc = new('BIO_FireFunc_Saw');
-		Pipeline.SetFireFunctor(fireFunc);
 		fireFunc.Range = range;
 		fireFunc.FullSound = fullSound;
 		fireFunc.HitSound = hitSound;
 		fireFunc.Flags = flags;
+		Pipeline.SetFireFunctor(fireFunc);
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(hitCount);
 
@@ -126,7 +126,7 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Projectile(Class<Actor> fireType, int fireCount)
+	BIO_WeaponPipelineBuilder Projectile(Class<Actor> fireType, int fireCount = 1)
 	{
 		CheckFireFunctorRestricted();
 		CheckFireTypeRestricted();
@@ -166,6 +166,7 @@ class BIO_WeaponPipelineBuilder play
 			Console.Printf(Biomorph.LOGPFX_ERR ..
 				"Invalid bullet accuracy type given: %d"
 				"(defaulting to always spread)");
+			fireFunc.AlwaysSpread();
 			break;
 		}
 		

@@ -9,8 +9,6 @@ enum BIO_FireFunctorType : uint8
 
 class BIO_FireFunctor play abstract
 {
-	virtual void Init() {} // Use only for setting defaults.
-
 	abstract Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const;
 
 	virtual void GetDamageValues(in out Array<int> vals) const {}
@@ -143,12 +141,6 @@ const BULLET_FIRST_ACCURATE = 1;
 class BIO_FireFunc_Bullet : BIO_FireFunctor
 {
 	private int AccuracyType, Flags;
-
-	override void Init()
-	{
-		AccuracyType = -1;
-		Flags = FBF_NORANDOM | FBF_NOFLASH;
-	}
 
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
@@ -318,14 +310,6 @@ class BIO_FireFunc_Saw : BIO_FireFunc_Melee
 {
 	ESawFlags Flags;
 	sound FullSound, HitSound;
-
-	override void Init()
-	{
-		if (FullSound == "")
-			FullSound = "weapons/sawfull";
-		if (HitSound == "")
-			HitSound = "weapons/sawhit";
-	}
 
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
