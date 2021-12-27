@@ -139,7 +139,9 @@ class WeightedRandomTable
 		return ret;
 	}
 
-	void Print(uint depth = 0) const
+	void Print() const { PrintImpl(); }
+
+	private void PrintImpl(uint depth = 0)
 	{
 		string lbl = Label.Length() > 0 ? Label : String.Format("%p", self);
 
@@ -161,7 +163,7 @@ class WeightedRandomTable
 		for (uint i = 0; i < Entries.Size(); i++)
 		{
 			if (Entries[i].SubTable != null)
-				Entries[i].SubTable.Print(depth + 1);
+				Entries[i].SubTable.PrintImpl(depth + 1);
 			else
 				Console.Printf(prefix .. "%s: %d",
 					Entries[i].Type.GetClassName(), Entries[i].Weight);

@@ -114,4 +114,4 @@ class BIO_Pistol : BIO_Weapon
 	}
 }
 
-class BIO_MAG_Pistol : Ammo { mixin BIO_Magazine; }
+class BIO_Mag_Pistol : Ammo { mixin BIO_Magazine; }
