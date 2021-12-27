@@ -172,6 +172,7 @@ extend class BIO_GlobalData
 			for (uint j = 0; j < 3; j++)
 				WeaponLootTables[j][i].Print();
 
+		Console.Printf("--------------------------------------------------");
 		WeaponLootMetaTable.Print();
 	}
 }
