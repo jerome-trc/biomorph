@@ -55,7 +55,19 @@ bio/weap/precrifle/fire PRECFIRE
 bio/weap/proxlauncher/fire PROXFIRE
 bio/weap/volley/fire VOLLFIRE
 
-bio/weap/autocannon/fire ACANFIRE
+bio/weap/minivulcan/fire_0 VULCFIR0
+bio/weap/minivulcan/fire_1 VULCFIR1
+bio/weap/minivulcan/fire_2 VULCFIR2
+bio/weap/minivulcan/fire_3 VULCFIR3
+
+$RANDOM bio/weap/minivulc/fire
+{
+	bio/weap/minivulcan/fire_0
+	bio/weap/minivulcan/fire_1
+	bio/weap/minivulcan/fire_2
+	bio/weap/minivulcan/fire_3
+}
+
 bio/weap/handcannon/fire HANDCANN
 bio/weap/hbr/fire HVBRFIRE
 bio/weap/incursion/fire INCUFIRE

@@ -29,7 +29,7 @@ Nailgun and Nail sprites are courtesy of ZDoom forum user osjclatchford, with fi
 
 Plasma Cannon sprites (as well as those of the Plasma Globule) are courtesy of id Software LLC and Midway Games Inc., and were edited by Realm667 user Robot J.
 
-Autocannon and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
+Minivulcan and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
 Hand Cannon sprites are courtesy of Realm667 user Mor'ladim, id Software, and Legend of the Monster Hunter.
 
@@ -60,11 +60,14 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "Gunshot_Warped.wav" (CRITDAMG, edited heavily by RatCircus)
 - "hankland.wav" (DSOOF replacement)
 - "Lever_draw.wav" (GUNSWAP1)
-- "Magnum-3.wav" (ACANFIRE)
 - "red_charge.wav" (RAMPAGE, edited by RatCircus)
 - "Shotgun-1.wav" (INCUFIRE)
 - "Shotgun-sweetener1.wav (INCUFIRE)
 - "ShotgunSnatch.wav" (INCURELO)
+- "Steyr-1.wav" (VULCFIR0)
+- "Steyr-2.wav" (VULCFIR1)
+- "Steyr-3.wav" (VULCFIR2)
+- "Steyr-4.wav" (VULCFIR3)
 - "vssdraw.wav" (GUNMECH0)
 - "weapondropped.wav" (GUNDROP0)
 

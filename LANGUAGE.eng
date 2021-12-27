@@ -112,8 +112,8 @@
 	BIO_VOLLEYGUN_TAG = "Volley Gun";
 	BIO_VOLLEYGUN_PKUP = "Obtained a %s.";
 
-	BIO_AUTOCANNON_TAG = "Autocannon";
-	BIO_AUTOCANNON_PKUP = "Procured an %s.";
+	BIO_MINIVULCAN_TAG = "Minivulcan";
+	BIO_MINIVULCAN_PKUP = "Procured an %s.";
 
 	BIO_HANDCANNON_TAG = "Hand Cannon";
 	BIO_HANDCANNON_PKUP = "Procured a %s.";

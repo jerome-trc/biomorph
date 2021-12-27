@@ -1,11 +1,11 @@
-class BIO_Autocannon : BIO_Weapon
+class BIO_Minivulcan : BIO_Weapon
 {
 	Default
 	{
-		Tag "$BIO_AUTOCANNON_TAG";
+		Tag "$BIO_MINIVULCAN_TAG";
 
-		Inventory.Icon 'ACANZ0';
-		Inventory.PickupMessage "$BIO_AUTOCANNON_PKUP";
+		Inventory.Icon 'VULCZ0';
+		Inventory.PickupMessage "$BIO_MINIVULCAN_PKUP";
 
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
@@ -23,7 +23,7 @@ class BIO_Autocannon : BIO_Weapon
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_Bullet', 1, 30, 36, 3.5, 1.5)
-			.FireSound("bio/weap/autocannon/fire")
+			.FireSound("bio/weap/minivulc/fire")
 			.Build());
 	}
 
@@ -37,21 +37,21 @@ class BIO_Autocannon : BIO_Weapon
 	States
 	{
 	Ready:
-		ACAN A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		VULC A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
 	Deselect:
-		ACAN A 0 A_BIO_Deselect;
+		VULC A 0 A_BIO_Deselect;
 		Stop;
 	Select:
-		ACAN A 0 A_BIO_Select;
+		VULC A 0 A_BIO_Select;
 		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 	WindUp:
-		ACAN BCD 1;
-		ACAN EFGH 1;
+		VULC BCD 1;
+		VULC EFGH 1;
 	Wound:
-		ACAN E 1 Bright
+		VULC E 1 Bright
 		{
 			if (!invoker.SufficientAmmo()) return ResolveState('WindDown');
 			A_GunFlash('Flash.I');
@@ -60,8 +60,8 @@ class BIO_Autocannon : BIO_Weapon
 			A_FireSound(CHAN_WEAPON);
 			return state(null);
 		}
-		ACAN F 1 Bright A_GunFlash('Flash.J');
-		ACAN G 1 Bright
+		VULC F 1 Bright A_GunFlash('Flash.J');
+		VULC G 1 Bright
 		{
 			if (!invoker.SufficientAmmo()) return ResolveState('WindDown');
 			A_GunFlash('Flash.K');
@@ -70,31 +70,31 @@ class BIO_Autocannon : BIO_Weapon
 			A_FireSound(CHAN_7);
 			return state(null);
 		}
-		ACAN H 1 Bright A_GunFlash('Flash.L');
+		VULC H 1 Bright A_GunFlash('Flash.L');
 		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'WindDown');
 		Loop;
 	WindDown:
-		ACAN EFGH 1;
-		ACAN ABCD 1;
+		VULC EFGH 1;
+		VULC ABCD 1;
 		Goto Ready;
 	Flash:
 		TNT1 A 0;
 		Goto LightDone;
 	Flash.I:
-		ACAN I 1 Bright A_Light(1);
+		VULC I 1 Bright A_Light(1);
 		Goto LightDone;
 	Flash.J:
-		ACAN J 1 Bright A_Light(2);
+		VULC J 1 Bright A_Light(2);
 		Goto LightDone;
 	Flash.K:
-		ACAN K 1 Bright A_Light(1);
+		VULC K 1 Bright A_Light(1);
 		Goto LightDone;
 	Flash.L:
-		ACAN L 1 Bright A_Light(2);
+		VULC L 1 Bright A_Light(2);
 		Goto LightDone;
 	Spawn:
-		ACAN Z 0;
-		ACAN Z 0 A_BIO_Spawn;
+		VULC Z 0;
+		VULC Z 0 A_BIO_Spawn;
 		Loop;
 	}
 }

@@ -37,7 +37,7 @@
 		},
 		{
 			"input": "BIO_Nailgun",
-			"output": "BIO_Autocannon",
+			"output": "BIO_Minivulcan",
 			"cost": 7
 		},
 		{
@@ -78,7 +78,7 @@
 		"autogun": [
 			"BIO_Chaingun",
 			"BIO_Nailgun",
-			"BIO_Autocannon",
+			"BIO_Minivulcan",
 			"BIO_HeavyBattleRifle"
 		],
 		"launcher": [
