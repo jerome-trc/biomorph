@@ -1180,7 +1180,10 @@ class BIO_WAfx_InfiniteAmmoOnKill : BIO_WeaponAffix
 		Duration = Random[BIO_Afx](5, 10);
 	}
 
-	final override bool Compatible(readOnly<BIO_Weapon> weap) const { return true; }
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return !weap.Ammoless();
+	}
 
 	final override void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const
 	{
