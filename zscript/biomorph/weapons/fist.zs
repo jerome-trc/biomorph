@@ -20,7 +20,8 @@ class BIO_Fist : BIO_Weapon replaces Fist
 	final override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.PunchPipeline('BIO_MeleeHit', 1, 2, 20)
+			.Punch()
+			.BasicDamage(2, 20)
 			.Alert(-1.0, 0)
 			.Build());
 	}

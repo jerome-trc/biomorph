@@ -70,6 +70,13 @@ $RANDOM bio/weap/minivulc/fire
 
 bio/weap/handcannon/fire HANDCANN
 bio/weap/hbr/fire HVBRFIRE
+
+bio/weap/impgaunt/raise IMGARAIS
+bio/weap/impgaunt/prep IMGAPREP
+bio/weap/impgaunt/hit IMGAHIT
+bio/weap/impgaunt/miss IMGAMISS
+bio/weap/impgaunt/thrust IMGATHRU
+
 bio/weap/incursion/fire INCUFIRE
 bio/weap/incursion/reload INCURELO
 

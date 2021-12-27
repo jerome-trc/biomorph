@@ -108,6 +108,54 @@ class BIO_DmgFunc_1DX : BIO_DamageFunctor
 	}
 }
 
+class BIO_DmgFunc_XTimesRand : BIO_DamageFunctor
+{
+	protected int Multiplier, MinRandom, MaxRandom;
+
+	override int Invoke() const { return Multiplier * Random(MinRandom, MaxRandom); }
+
+	override void GetValues(in out Array<int> vals) const
+	{
+		vals.PushV(Multiplier, MinRandom, MaxRandom);
+	}
+
+	override void SetValues(in out Array<int> vals)
+	{
+		Multiplier = vals[0];
+		MinRandom = vals[1];
+		MaxRandom = vals[2];
+	}
+
+	BIO_DmgFunc_XTimesRand CustomSet(int multi, int minRand, int maxRand)
+	{
+		Multiplier = multi;
+		MinRandom = minRand;
+		MaxRandom = maxRand;
+		return self;
+	}
+
+	override string ToString(BIO_DamageFunctor def) const
+	{
+		let myDefs = BIO_DmgFunc_XTimesRand(def);
+		string crEsc_multi = "", crEsc_min = "", crEsc_max = "";
+
+		if (myDefs != null)
+		{
+			crEsc_multi = BIO_Utils.StatFontColor(Multiplier, myDefs.Multiplier);
+			crEsc_min = BIO_Utils.StatFontColor(MinRandom, myDefs.MinRandom);
+			crEsc_max = BIO_Utils.StatFontColor(MaxRandom, myDefs.MaxRandom);
+		}
+		else
+		{
+			crEsc_multi = crEsc_min = crEsc_max = CRESC_STATMODIFIED;
+		}
+
+		return String.Format(
+			StringTable.Localize("$BIO_DMGFUNC_XTIMESRAND"),
+			crEsc_multi, Multiplier, crEsc_min, MinRandom, crEsc_max, MaxRandom);
+	}
+}
+
 class BIO_DmgFunc_Single : BIO_DamageFunctor
 {
 	protected int Value;

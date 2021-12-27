@@ -290,12 +290,14 @@ class BIO_FireFunc_Melee : BIO_FireFunctor abstract
 	float Range, Lifesteal;
 }
 
-class BIO_FireFunc_Fist : BIO_FireFunc_Melee
+class BIO_FireFunc_Punch : BIO_FireFunc_Melee
 {
+	ECustomPunchFlags Flags;
+	sound HitSound, MissSound;
+
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
-		weap.BIO_Punch(fireData.FireType, fireData.Damage, Range, Lifesteal);
-		return null;
+		return weap.BIO_Punch(fireData, Range, Lifesteal, HitSound, MissSound, Flags);
 	}
 
 	override void ToString(
@@ -303,7 +305,7 @@ class BIO_FireFunc_Fist : BIO_FireFunc_Melee
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef) const
 	{
-		readout.Push(StringTable.Localize("$BIO_FIREFUNC_FIST"));
+		readout.Push(StringTable.Localize("$BIO_FIREFUNC_PUNCH"));
 	}
 
 	override BIO_FireFunctorType GetType() const
