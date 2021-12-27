@@ -24,7 +24,7 @@ Each weapon upgrade recipe object also supports the following optional fields:
 
 - "`reversible`" (**optional**); a boolean. If this is present and set to `true`, an extra upgrade recipe will be generated which has the same cost but with the input and output weapon classes flipped. This affects recipes with multiple defined input/outputs; the reverse of each part of the square cross will be generated too.
 
-#### `loot` (object)
+#### `upgrades_auto` (object)
 
 This object can contain arrays with the following keys:
 
@@ -32,10 +32,17 @@ This object can contain arrays with the following keys:
 - "`pistol`"
 - "`shotgun`"
 - "`ssg`" or "`supershotgun`"
+- "`rifle`"
 - "`autogun`"
 - "`launcher`"
 - "`energy`"
 - "`super`"  
+
+Each of these arrays can contain strings corresponding to weapon class names. For every category, reversible weapon upgrade recipes will be generated between weapons in each grade, and one-way weapon upgrade recipes will be generated between weapons in a grade and weapons in the grade above (assuming that a higher grade exists).
+
+#### `loot` (object)
+
+This object can contain arrays with the same keys as `upgrades_auto`.
 
 Each of these arrays can contain strings corresponding to weapon class names; these classes will be added to the loot table of the weapon category to which the array corresponds, automatically sorted by the weapon's grade. For example, putting the name of a weapon class `MyWeapon` into an "`autoguns`" array will result in Chaingunner Zombies possibly dropping that weapon alongside its other possible weapon drops, but only if the players have collectively found or crafted a weapon of at least the same grade as `MyWeapon`.
 

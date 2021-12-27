@@ -1,61 +1,42 @@
 {
-	"upgrades": [
-		{
-			"input": "BIO_Pistol",
-			"output": "BIO_AssaultHandgun",
-			"cost": 3
-		},
-		{
-			"input": "BIO_AssaultHandgun",
-			"output": "BIO_HandCannon",
-			"cost": 7
-		},
-		{
-			"input": "BIO_Shotgun",
-			"output": "BIO_AutoShotgun",
-			"cost": 3
-		},
-		{
-			"input": "BIO_AutoShotgun",
-			"output": "BIO_IncursionShotgun",
-			"cost": 7
-		},
-		{
-			"input": "BIO_SuperShotgun",
-			"output": "BIO_VolleyGun",
-			"cost": 3
-		},
-		{
-			"input": "BIO_VolleyGun",
-			"output": "BIO_IncursionShotgun",
-			"cost": 7
-		},
-		{
-			"input": "BIO_Chaingun",
-			"output": "BIO_Nailgun",
-			"cost": 3
-		},
-		{
-			"input": "BIO_Nailgun",
-			"output": "BIO_Minivulcan",
-			"cost": 7
-		},
-		{
-			"input": "BIO_RocketLauncher",
-			"output": "BIO_ProximityLauncher",
-			"cost": 3
-		},
-		{
-			"input": "BIO_ProximityLauncher",
-			"output": "BIO_BarrageLauncher",
-			"cost": 7
-		},
-		{
-			"input": "BIO_PlasmaRifle",
-			"output": "BIO_PlasmaCannon",
-			"cost": 3
-		}
-	],
+	"upgrades_auto": {
+		"melee": [ "BIO_Chainsaw" ],
+		"pistol": [
+			"BIO_Pistol",
+			"BIO_AssaultHandgun",
+			"BIO_HandCannon"
+		],
+		"shotgun": [
+			"BIO_Shotgun",
+			"BIO_AutoShotgun",
+			"BIO_IncursionShotgun"
+		],
+		"ssg": [
+			"BIO_SuperShotgun",
+			"BIO_VolleyGun",
+			"BIO_IncursionShotgun"
+		],
+		"rifle": [
+			"BIO_PrecisionRifle",
+			"BIO_HeavyBattleRifle"
+		],
+		"autogun": [
+			"BIO_Chaingun",
+			"BIO_Nailgun",
+			"BIO_Minivulcan"
+		],
+		"launcher": [
+			"BIO_RocketLauncher",
+			"BIO_ProximityLauncher"
+		],
+		"energy": [
+			"BIO_PlasmaRifle",
+			"BIO_PlasmaCannon"
+		],
+		"super": [
+			"BIO_BFG9000"
+		]
+	},
 	"loot": {
 		"melee": [
 			"BIO_Chainsaw"
@@ -75,11 +56,14 @@
 			"BIO_VolleyGun",
 			"BIO_IncursionShotgun"
 		],
+		"rifle": [
+			"BIO_PrecisionRifle",
+			"BIO_HeavyBattleRifle"
+		],
 		"autogun": [
 			"BIO_Chaingun",
 			"BIO_Nailgun",
-			"BIO_Minivulcan",
-			"BIO_HeavyBattleRifle"
+			"BIO_Minivulcan"
 		],
 		"launcher": [
 			"BIO_RocketLauncher",

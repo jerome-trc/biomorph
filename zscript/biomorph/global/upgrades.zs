@@ -6,6 +6,33 @@ class BIO_WeaponUpgrade
 
 extend class BIO_GlobalData
 {
+	const WEAP_UPGRADE_COST_STD_TO_STD = 1;
+	const WEAP_UPGRADE_COST_SPEC_TO_SPEC = 2;
+	const WEAP_UPGRADE_COST_CLSF_TO_CLSF = 3;
+
+	const WEAP_UPGRADE_COST_STD_TO_SPEC = 3;
+	const WEAP_UPGRADE_COST_SPEC_TO_CLSF = 7;
+	const WEAP_UPGRADE_COST_STD_TO_CLSF =
+		WEAP_UPGRADE_COST_STD_TO_SPEC + WEAP_UPGRADE_COST_SPEC_TO_CLSF;
+
+	static const string UPGRADE_COST_CONSTANT_NAMES[] = {
+		"STANDARD_TO_SPECIALTY",
+		"SPECIALTY_TO_CLASSIFIED",
+		"STANDARD_TO_CLASSIFIED",
+		"STANDARD_TO_STANDARD",
+		"SPECIALTY_TO_SPECIALTY",
+		"CLASSIFIED_TO_CLASSIFIED"
+	};
+
+	static const uint UPGRADE_COST_CONSTANTS[] = {
+		WEAP_UPGRADE_COST_STD_TO_SPEC,
+		WEAP_UPGRADE_COST_SPEC_TO_CLSF,
+		WEAP_UPGRADE_COST_STD_TO_CLSF,
+		WEAP_UPGRADE_COST_STD_TO_STD,
+		WEAP_UPGRADE_COST_SPEC_TO_SPEC,
+		WEAP_UPGRADE_COST_CLSF_TO_CLSF
+	};
+
 	private Array<BIO_WeaponUpgrade> WeaponUpgrades;
 
 	void PossibleWeaponUpgrades(in out Array<BIO_WeaponUpgrade> options,
@@ -18,6 +45,137 @@ extend class BIO_GlobalData
 			options.Push(WeaponUpgrades[i]);
 		}
 	}
+	
+	// Initialisation: auto-generation =========================================
+
+	private void ReadWeaponAutoUpgradeJSON(
+		BIO_JsonObject autoups, int lump, BIO_WeaponCategory cat,
+		in out Array<Class<BIO_Weapon> > standard,
+		in out Array<Class<BIO_Weapon> > specialty,
+		in out Array<Class<BIO_Weapon> > classified)
+	{
+		let arrJSON = BIO_Utils.TryGetJsonArray(autoups.get(
+			BIO_Weapon.CATEGORY_IDS[cat]));
+		if (arrJSON == null) return;
+
+		string errpfx = String.Format(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+			" lump %d, `upgrades_auto.%s`; ", lump, BIO_Weapon.CATEGORY_IDS[cat]);
+
+		for (uint j = 0; j < arrJSON.arr.Size(); j++)
+		{
+			let t = (Class<BIO_Weapon>)
+				(BIO_Utils.TryGetJsonClassName(arrJSON.arr[j]));
+
+			if (t == null)
+			{
+				Console.Printf(errpfx .. "invalid weapon class at element %d.", j);
+				continue;
+			}
+
+			if (t.IsAbstract())
+			{
+				Console.Printf(errpfx .. "abstract weapon class at element %d.", j);
+				continue;
+			}
+
+			if (t == 'BIO_Fist')
+			{
+				Console.Printf(errpfx ..
+					"`BIO_Fist` cannot have weapon upgrade recipes auto-generated "
+					"(element %d).", j);
+				continue;
+			}
+
+			switch (GetDefaultByType(t).Grade)
+			{
+			case BIO_GRADE_STANDARD:
+				standard.Push(t);
+				break;
+			case BIO_GRADE_SPECIALTY:
+				specialty.Push(t);
+				break;
+			case BIO_GRADE_CLASSIFIED:
+				classified.Push(t);
+				break;
+			default: continue;
+			}
+		}
+	}
+
+	private void AutogenWeaponUpgradeRecipes(
+		in out Array<Class<BIO_Weapon> > standard,
+		in out Array<Class<BIO_Weapon> > specialty,
+		in out Array<Class<BIO_Weapon> > classified)
+	{
+		for (uint j = 0; j < standard.Size(); j++)
+		{
+			for (uint k = 0; k < standard.Size(); k++)
+			{
+				if (standard[j] == standard[k]) continue;
+
+				uint e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
+				WeaponUpgrades[e].Input = standard[j];
+				WeaponUpgrades[e].Output = standard[k];
+				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_STD_TO_STD;
+				e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
+				WeaponUpgrades[e].Input = standard[k];
+				WeaponUpgrades[e].Output = standard[j];
+				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_STD_TO_STD;
+			}
+
+			for (uint k = 0; k < specialty.Size(); k++)
+			{
+				uint e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
+				WeaponUpgrades[e].Input = standard[j];
+				WeaponUpgrades[e].Output = specialty[k];
+				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_STD_TO_SPEC;
+			}
+		}
+
+		for (uint j = 0; j < specialty.Size(); j++)
+		{
+			for (uint k = 0; k < specialty.Size(); k++)
+			{
+				if (specialty[j] == specialty[k]) continue;
+
+				uint e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
+				WeaponUpgrades[e].Input = specialty[j];
+				WeaponUpgrades[e].Output = specialty[k];
+				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_SPEC_TO_SPEC;
+				e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
+				WeaponUpgrades[e].Input = specialty[k];
+				WeaponUpgrades[e].Output = specialty[j];
+				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_SPEC_TO_SPEC;
+			}
+
+			for (uint k = 0; k < classified.Size(); k++)
+			{
+				uint e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
+				WeaponUpgrades[e].Input = specialty[j];
+				WeaponUpgrades[e].Output = classified[k];
+				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_SPEC_TO_CLSF;
+			}
+		}
+
+		for (uint j = 0; j < classified.Size(); j++)
+		{
+			for (uint k = 0; k < classified.Size(); k++)
+			{
+				if (classified[j] == classified[k]) continue;
+
+				uint e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
+				WeaponUpgrades[e].Input = classified[j];
+				WeaponUpgrades[e].Output = classified[k];
+				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_CLSF_TO_CLSF;
+				e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
+				WeaponUpgrades[e].Input = classified[k];
+				WeaponUpgrades[e].Output = classified[j];
+				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_STD_TO_STD;
+			}
+		}
+	}
+
+	// Initialisation: Parsing JSON upgrade definitions ========================
 
 	private static bool ReadWeaponUpgradeInput(
 		in out Array<Class<BIO_Weapon> > inputs,
@@ -110,22 +268,6 @@ extend class BIO_GlobalData
 
 		return true;
 	}
-
-	static const string UPGRADE_COST_CONSTANT_NAMES[] = {
-		"STANDARD_TO_STANDARD",
-		"STANDARD_TO_SPECIALTY",
-		"SPECIALTY_TO_SPECIALTY",
-		"SPECIALTY_TO_CLASSIFIED",
-		"CLASSIFIED_TO_CLASSIFIED"
-	};
-
-	static const uint UPGRADE_COST_CONSTANTS[] = {
-		1,
-		3,
-		2,
-		7,
-		3
-	};
 
 	private static uint ResolveUpgradeCostConstant(string str, string errpfx)
 	{

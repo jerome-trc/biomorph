@@ -8,23 +8,10 @@ enum BIO_PartyMaxWeaponGrade : uint8
 
 extend class BIO_GlobalData
 {
-	enum LootTable : uint
-	{
-		LOOTTABLE_MELEE = 0,
-		LOOTTABLE_PISTOL,
-		LOOTTABLE_SHOTGUN,
-		LOOTTABLE_SSG,
-		LOOTTABLE_AUTOGUN,
-		LOOTTABLE_LAUNCHER,
-		LOOTTABLE_ENERGY,
-		LOOTTABLE_SUPER = 7,
-		LOOTTABLE_ARRAY_LENGTH = 8
-	}
-
 	private BIO_PartyMaxWeaponGrade MaxWeaponGrade;
 
 	// 0 is Standard, 1 is Specialty, 2 is Classified.
-	private WeightedRandomTable[LOOTTABLE_ARRAY_LENGTH][3] WeaponLootTables;
+	private WeightedRandomTable[__BIO_WEAPCAT_COUNT__][3] WeaponLootTables;
 	
 	// Contains all tables in `WeaponLootTables`.
 	private WeightedRandomTable WeaponLootMetaTable;
@@ -36,7 +23,7 @@ extend class BIO_GlobalData
 		return (Class<BIO_Weapon>)(WeaponLootMetaTable.Result());
 	}
 
-	Class<BIO_Weapon> LootWeaponType(LootTable table) const
+	Class<BIO_Weapon> LootWeaponType(BIO_WeaponCategory table) const
 	{
 		uint i = int.MAX;
 
@@ -99,20 +86,21 @@ extend class BIO_GlobalData
 		default: return;
 		}
 
-		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
+		for (uint i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
 		{
 			uint weight = 0;
 
 			switch (i)
 			{
-			case LOOTTABLE_MELEE: weight = 3; break;
-			case LOOTTABLE_PISTOL: weight = 5; break;
-			case LOOTTABLE_SHOTGUN: weight = 9; break;
-			case LOOTTABLE_SSG: weight = 6; break;
-			case LOOTTABLE_AUTOGUN: weight = 9; break;
-			case LOOTTABLE_LAUNCHER: weight = 6; break;
-			case LOOTTABLE_ENERGY: weight = 4; break;
-			case LOOTTABLE_SUPER: weight = 1; break;
+			case BIO_WEAPCAT_MELEE: weight = 3; break;
+			case BIO_WEAPCAT_PISTOL: weight = 5; break;
+			case BIO_WEAPCAT_SHOTGUN: weight = 9; break;
+			case BIO_WEAPCAT_SSG: weight = 6; break;
+			case BIO_WEAPCAT_RIFLE: weight = 9; break;
+			case BIO_WEAPCAT_AUTOGUN: weight = 9; break;
+			case BIO_WEAPCAT_LAUNCHER: weight = 6; break;
+			case BIO_WEAPCAT_ENERGY: weight = 4; break;
+			case BIO_WEAPCAT_SUPER: weight = 1; break;
 			}
 
 			WeaponLootMetaTable.PushLayer(WeaponLootTables[g][i], weight * m);
@@ -120,7 +108,7 @@ extend class BIO_GlobalData
 	}
 
 	private void TryReadWeaponLootArray(int lump, BIO_JsonObject loot,
-		string arrName, LootTable targetTables)
+		string arrName, BIO_WeaponCategory targetTables)
 	{
 		let arr = BIO_Utils.TryGetJsonArray(loot.get(arrName), errMsg: false);
 		if (arr == null) return;
@@ -180,7 +168,7 @@ extend class BIO_GlobalData
 
 	void PrintLootDiag() const
 	{
-		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
+		for (uint i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
 			for (uint j = 0; j < 3; j++)
 				WeaponLootTables[j][i].Print();
 

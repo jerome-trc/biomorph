@@ -35,7 +35,7 @@ extend class BIO_Weapon
 {
 	const DEFAULT_MAX_AFFIXES = 6;
 
-	// SelectionOrder is for when ammo runs out; lower number, higher priority
+	// `SelectionOrder` is for when ammo runs out; lower number, higher priority
 
 	const SELORDER_PLASRIFLE = 100;
 	const SELORDER_PLASRIFLE_SURP = SELORDER_PLASRIFLE + 20;
@@ -79,7 +79,7 @@ extend class BIO_Weapon
 
 	const SELORDER_FIST = 3700;
 
-	// SlotPriority is for manual selection; higher number, higher priority
+	// `SlotPriority` is for manual selection; higher number, higher priority
 
 	const SLOTPRIO_MAX = 1.0;
 
@@ -108,4 +108,30 @@ extend class BIO_Weapon
 		'BIO_Mutated_5',
 		'BIO_Mutated_6'
 	};
+
+	static const string CATEGORY_IDS[] = {
+		"melee",
+		"pistol",
+		"shotgun",
+		"ssg",
+		"rifle",
+		"autogun",
+		"launcher",
+		"energy",
+		"super"
+	};
+}
+
+enum BIO_WeaponCategory : uint8 
+{
+	BIO_WEAPCAT_MELEE,
+	BIO_WEAPCAT_PISTOL,
+	BIO_WEAPCAT_SHOTGUN,
+	BIO_WEAPCAT_SSG,
+	BIO_WEAPCAT_RIFLE,
+	BIO_WEAPCAT_AUTOGUN,
+	BIO_WEAPCAT_LAUNCHER,
+	BIO_WEAPCAT_ENERGY,
+	BIO_WEAPCAT_SUPER,
+	__BIO_WEAPCAT_COUNT__
 }
