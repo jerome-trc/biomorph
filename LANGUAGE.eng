@@ -224,6 +224,7 @@
 	BIO_WUP_FAIL_UNIQUE = "This weapon is unique; it can't be upgraded.";
 	BIO_WUP_FAIL_NOOPTIONS = "No upgraded versions of this weapon exist.";
 	BIO_WUP_FAIL_INSUFFICIENT = "You don't have enough mutagen for this.";
+	BIO_WUP_FAIL_ALREADYHELD = "You already have a weapon of this kind; drop it first.";
 
 	BIO_WUP_UIHELP_0 = "Use %s and %s to choose weapon to upgrade to.";
 	BIO_WUP_UIHELP_1 = "Press %s to confirm or %s to cancel.";

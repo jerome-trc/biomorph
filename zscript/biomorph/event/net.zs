@@ -111,6 +111,12 @@ extend class BIO_EventHandler
 			return true;
 		}
 
+		if (bioPlayer.FindInventory(outputChoice))
+		{
+			bioPlayer.A_Print("$BIO_WUP_FAIL_ALREADYHELD", 4.0);
+			return true;
+		}
+
 		if (event.Args[0] > bioPlayer.CountInv('BIO_Muta_Upgrade'))
 		{
 			bioPlayer.A_Print("$BIO_WUP_FAIL_INSUFFICIENT", 4.0);
