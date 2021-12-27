@@ -33,6 +33,7 @@ enum BIO_WeaponAffixFlags : uint
 	BIO_WAF_LIFESTEAL = 1 << 18,
 	BIO_WAF_MELEERANGE = 1 << 19,
 	BIO_WAF_ONKILL = 1 << 20,
+	BIO_WAF_DEBUFF = 1 << 21,
 	BIO_WAF_ALL = uint.MAX
 }
 
