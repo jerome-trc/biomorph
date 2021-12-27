@@ -29,7 +29,7 @@ class BIO_SuperShotgun : BIO_Weapon
 			.BasicBulletPipeline('BIO_ShotPellet', 7, 5, 15, 12.0, 7.5)
 			.AppendToFireFunctorString(" \c[Yellow]" ..
 				StringTable.Localize("$BIO_PER_BARREL"))
-			.FireSound("weapons/sshotf")
+			.FireSound("bio/weap/ssg/fire")
 			.Build());
 	}
 
@@ -80,8 +80,7 @@ class BIO_SuperShotgun : BIO_Weapon
 			A_BIO_Fire(spreadFactor: 0.5);
 			A_PresetRecoil('BIO_Recoil_Shotgun');
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
-			// TODO: Replace with a smaller sound
-			A_FireSound();
+			A_FireSound(CHAN_AUTO);
 		}
 		TNT1 A 0 A_AutoReload;
 		Goto Ready;
@@ -94,7 +93,8 @@ class BIO_SuperShotgun : BIO_Weapon
 			A_BIO_Fire(fireFactor: 2);
 			A_PresetRecoil('BIO_Recoil_SuperShotgun');
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
-			A_FireSound();
+			A_FireSound(CHAN_AUTO);
+			A_FireSound(CHAN_AUTO);
 		}
 		TNT1 A 0 A_AutoReload(multi: 2, single: true);
 		Goto Ready;
