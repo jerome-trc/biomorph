@@ -8,6 +8,10 @@ enum BIO_PartyMaxWeaponGrade : uint8
 
 extend class BIO_GlobalData
 {
+	const WEIGHTMULTI_STD = 6;
+	const WEIGHTMULTI_SPEC = 3;
+	const WEIGHTMULTI_CLSF = 1;
+
 	private BIO_PartyMaxWeaponGrade MaxWeaponGrade;
 
 	// 0 is Standard, 1 is Specialty, 2 is Classified.
@@ -80,9 +84,9 @@ extend class BIO_GlobalData
 
 		switch (MaxWeaponGrade)
 		{
-		case BIO_PMWG_STANDARD: g = 0; m = 30; break;
-		case BIO_PMWG_SPECIALTY: g = 1; m = 10; break;
-		case BIO_PMWG_CLASSIFIED: g = 2; break;
+		case BIO_PMWG_STANDARD: g = 0; m = WEIGHTMULTI_STD; break;
+		case BIO_PMWG_SPECIALTY: g = 1; m = WEIGHTMULTI_SPEC; break;
+		case BIO_PMWG_CLASSIFIED: g = 2; m = WEIGHTMULTI_CLSF; break;
 		default: return;
 		}
 
@@ -148,11 +152,11 @@ extend class BIO_GlobalData
 			switch (defs.Grade)
 			{
 			case BIO_GRADE_STANDARD:
-				g = 0; wt = 30; break;
+				g = 0; wt = WEIGHTMULTI_STD; break;
 			case BIO_GRADE_SPECIALTY:
-				g = 1; wt = 10; break;
+				g = 1; wt = WEIGHTMULTI_SPEC; break;
 			case BIO_GRADE_CLASSIFIED:
-				g = 2; wt = 1; break;
+				g = 2; wt = WEIGHTMULTI_CLSF; break;
 			default:
 				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
 					" lump %d, loot object, %s weapon %d has invalid grade %s.",
@@ -160,7 +164,7 @@ extend class BIO_GlobalData
 				continue;
 			}
 
-			if (defs.Rarity != BIO_RARITY_UNIQUE) wt *= 4;
+			if (defs.Rarity != BIO_RARITY_UNIQUE) wt *= 20;
 
 			WeaponLootTables[g][targetTables].Push(weap_t, wt);
 		}
