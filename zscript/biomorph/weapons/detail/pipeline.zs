@@ -185,7 +185,6 @@ class BIO_WeaponPipeline play
 	{
 		if (Mask & BIO_WPM_FIREFUNCTOR) return;
 		FireFunctor = fireFunc;
-		FireFunctor.Init();
 	}
 
 	Class<Actor> GetFireType() const { return FireType; }
