@@ -55,7 +55,7 @@ extend class BIO_GlobalData
 		in out Array<Class<BIO_Weapon> > classified)
 	{
 		let arrJSON = BIO_Utils.TryGetJsonArray(autoups.get(
-			BIO_Weapon.CATEGORY_IDS[cat]));
+			BIO_Weapon.CATEGORY_IDS[cat]), errMsg: false);
 		if (arrJSON == null) return;
 
 		string errpfx = String.Format(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
@@ -117,10 +117,6 @@ extend class BIO_GlobalData
 				WeaponUpgrades[e].Input = standard[j];
 				WeaponUpgrades[e].Output = standard[k];
 				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_STD_TO_STD;
-				e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
-				WeaponUpgrades[e].Input = standard[k];
-				WeaponUpgrades[e].Output = standard[j];
-				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_STD_TO_STD;
 			}
 
 			for (uint k = 0; k < specialty.Size(); k++)
@@ -141,10 +137,6 @@ extend class BIO_GlobalData
 				uint e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
 				WeaponUpgrades[e].Input = specialty[j];
 				WeaponUpgrades[e].Output = specialty[k];
-				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_SPEC_TO_SPEC;
-				e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
-				WeaponUpgrades[e].Input = specialty[k];
-				WeaponUpgrades[e].Output = specialty[j];
 				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_SPEC_TO_SPEC;
 			}
 
@@ -167,10 +159,6 @@ extend class BIO_GlobalData
 				WeaponUpgrades[e].Input = classified[j];
 				WeaponUpgrades[e].Output = classified[k];
 				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_CLSF_TO_CLSF;
-				e = WeaponUpgrades.Push(new('BIO_WeaponUpgrade'));
-				WeaponUpgrades[e].Input = classified[k];
-				WeaponUpgrades[e].Output = classified[j];
-				WeaponUpgrades[e].Cost = WEAP_UPGRADE_COST_STD_TO_STD;
 			}
 		}
 	}
