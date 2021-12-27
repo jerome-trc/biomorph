@@ -95,6 +95,9 @@ The following audio files are provided by ZDoom forum user Joblez_I, under no li
 - "madsenm47-1.wav" (PRECFIRE)
 - "shotpumpback" (SHOTBACK)
 - "shotpumpfor" (SHOTFORW)
+- "trenchgun-1.wav" (SSGFIR0)
+- "trenchgun-2.wav" (SSGFIR1)
+- "trenchgun-3.wav" (SSGFIR2)
 
 Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 
