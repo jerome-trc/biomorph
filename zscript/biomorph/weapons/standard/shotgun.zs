@@ -27,7 +27,7 @@ class BIO_Shotgun : BIO_Weapon
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_ShotPellet', 7, 5, 15, 4.0, 2.0)
-			.FireSound("weapons/shotgf")
+			.FireSound("bio/weap/shotgun/fire")
 			.Build());
 	}
 
@@ -68,20 +68,24 @@ class BIO_Shotgun : BIO_Weapon
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
-		SHTG BC 5 A_SetReloadTime(0);
+		SHTG B 5 A_SetReloadTime(0);
+		SHTG C 5 A_SetReloadTime(1);
 		SHTG D 4
 		{
-			A_SetReloadTime(1);
+			A_SetReloadTime(2);
+			A_StartSound("bio/weap/shotgun/pumpback", CHAN_AUTO, volume: 0.7);
 			A_LoadMag();
 			A_PresetRecoil('BIO_Recoil_ShotgunPump');
 		}
-		SHTG CB 5 A_SetReloadTime(2);
-		SHTG A 3 A_SetReloadTime(3);
-		SHTG A 7
+		SHTG C 5
 		{
-			A_SetReloadTime(4);
-			A_ReFire();
+			A_SetReloadTime(3);
+			A_StartSound("bio/weap/shotgun/pumpforward", CHAN_AUTO, volume: 0.7);
 		}
+		SHTG B 5 A_SetReloadTime(4);
+		SHTG A 3 A_SetReloadTime(5);
+		TNT1 A 0 A_ReFire;
+		SHTG A 7 A_SetReloadTime(6);
 		Goto Ready;
 	Flash:
 		SHTF A 4 Bright
