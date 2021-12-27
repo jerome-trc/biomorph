@@ -60,24 +60,24 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder PunchPipeline(Class<Actor> fireType = 'BIO_MeleeHit',
-		uint hitCount = 1, int minDamage = 2, int maxDamage = 20,
-		float range = DEFMELEERANGE)
+	BIO_WeaponPipelineBuilder Punch(Class<Actor> fireType = 'BIO_MeleeHit',
+		uint hitCount = 1, float range = DEFMELEERANGE,
+		ECustomPunchFlags flags = CPF_NONE, sound hitSound = "*fist",
+		sound missSound = "")
 	{
 		CheckFireFunctorRestricted();
 		CheckFireTypeRestricted();
 		CheckFireCountRestricted();
-		CheckDamageFunctorRestricted();
 
-		let fireFunc = new('BIO_FireFunc_Fist');
+		let fireFunc = new('BIO_FireFunc_Punch');
 		Pipeline.SetFireFunctor(fireFunc);
 		fireFunc.Range = range;
+		fireFunc.HitSound = hitSound;
+		fireFunc.MissSound = missSound;
+		fireFunc.Flags = flags;
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(hitCount);
 		
-		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Rand')
-			.CustomSet(minDamage, maxDamage));
-
 		return self;
 	}
 
@@ -219,6 +219,14 @@ class BIO_WeaponPipelineBuilder play
 	{
 		CheckDamageFunctorRestricted();
 		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_1Dx').CustomSet(baseline, 8));
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder XTimesRandomDamage(int multi, int minRand, int maxRand)
+	{
+		CheckDamageFunctorRestricted();
+		Pipeline.SetDamageFunctor(
+			new('BIO_DmgFunc_XTimesRand').CustomSet(multi, minRand, maxRand));
 		return self;
 	}
 

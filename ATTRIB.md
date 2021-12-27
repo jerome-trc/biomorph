@@ -6,6 +6,8 @@ Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https:
 
 The [ZJSON library](https://github.com/RicardoLuis0/ZJSON) is courtesy of [RicardoLuis0](https://github.com/RicardoLuis0) and used under the MIT license.
 
+The Impactor Gauntlet's state machine is derived from code written by Realm667 user TheDoomedArchvile.
+
 The GLDEFS for the Plasma Globule were devised by Realm667 user Robot J.
 
 The GLDEFS and state machines for the Proximity Mine were devised by MG_Man, Hidon, Theshooter7, Jimmy91, Arachnotron II, and Blzut3.
@@ -32,6 +34,8 @@ Plasma Cannon sprites (as well as those of the Plasma Globule) are courtesy of i
 Minivulcan and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
 Hand Cannon sprites are courtesy of Realm667 user Mor'ladim, id Software, and Legend of the Monster Hunter.
+
+Impactor Gauntlet sprites are courtesy of Banjo Software and edited by Realm667 user TheDoomedArchvile.
 
 Incursion Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
 
@@ -93,6 +97,8 @@ PROXBEEP, PROXFIRE, and PROXHIT are courtesy of id Software LLC.
 VOLLFIRE is courtesy of EA Digital Illusions CE AB.
 
 "m60-1.wav" (HVBRFIRE) and "deagle.wav" (HANDCANN) are courtesy of ZDoom forum user Joblez_I. 
+
+Impactor Gauntlet sounds are courtesy of Capcom Co., Ltd.
 
 ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (replaces DSSECRET) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
 

@@ -1376,10 +1376,7 @@ class BIO_Weapon : DoomWeapon abstract
 		return BIO_StateTimeGroup.FromStates(arr, tag);
 	}
 
-	// Substitutes for attack actions ==========================================
-
-	// (The crime part, where we imitate several gzdoom.pk3 functions because
-	// their semantics cave in if called from outside the weapon's state machine.)
+	// Customised variations on attack actions =================================
 
 	Actor BIO_FireProjectile(Class<Actor> proj_t, double angle = 0,
 		double spawnOfs_xy = 0, double spawnHeight = 0,
@@ -1596,27 +1593,57 @@ class BIO_Weapon : DoomWeapon abstract
 		Owner.RailAttack(p);
 	}
 
-	void BIO_Punch(Class<Actor> puff_t, int dmg, float range, float lifestealPercent)
+	/* 	This always returns a puff; if one of `puff_t` doesn't get spawned, a fake
+		stand-in will be spawned in its place. This fake puff lasts 2 tics, has
+		the hit thing in its `Target` field, the real damage dealt in its `Damage` field,
+		and `puff_t`'s default damage type.
+	*/ 
+	Actor BIO_Punch(in out BIO_FireData fireData, double range = DEFMELEERANGE,
+		float lifesteal = 0.0, sound hitSound = 0, sound missSound = "",
+		ECustomPunchFlags flags = CPF_NONE)
 	{
 		FTranslatedLineTarget t;
 
-		double ang = Owner.Angle + Random2[Punch]() * (5.625 / 256);
-		double pitch = Owner.AimLineAttack(ang, range, null, 0.0, ALF_CHECK3D);
-
-		Actor puff = null;
+		fireData.Angle = Owner.Angle + Random2[CWPunch]() * (5.625 / 256);
+		fireData.Pitch = Owner.AimLineAttack(fireData.Angle, range, t, 0.0, ALF_CHECK3D);
+		
+		Actor ret = null;
 		int actualDmg = -1;
 
-		[puff, actualDmg] = Owner.LineAttack(ang, range, pitch, dmg,
-			'Melee', puff_t, LAF_ISMELEEATTACK, t);
+		ELineAttackFlags puffFlags = LAF_ISMELEEATTACK |
+			((flags & CPF_NORANDOMPUFFZ) ? LAF_NORANDOMPUFFZ : 0);
 
-		// Turn to face target
-		if (t.LineTarget)
+		[ret, actualDmg] = Owner.LineAttack(fireData.Angle, range, fireData.Pitch,
+			fireData.Damage, 'Melee', fireData.FireType, puffFlags, t);
+
+		if (t.LineTarget == null)
 		{
-			Owner.A_StartSound("*fist", CHAN_WEAPON);
-			Owner.Angle = t.AngleFromSource;
-			if (!t.LineTarget.bDontDrain)
-				ApplyLifeSteal(lifestealPercent, actualDmg);
+			Owner.A_StartSound(missSound, CHAN_WEAPON);
+			return null;
 		}
+
+		Owner.A_StartSound(hitSound, CHAN_WEAPON);
+
+		if (!(flags & CPF_NOTURN))
+		{
+			// Turn to face target
+			Owner.Angle = t.AngleFromSource;
+		}
+
+		if (flags & CPF_PULLIN) Owner.bJustAttacked = true;
+
+		if (!t.LineTarget.bDontDrain)
+			ApplyLifeSteal(lifesteal, actualDmg);
+
+		if (ret == null)
+		{
+			ret = Spawn('BIO_FakePuff', t.LineTarget.Pos);
+			ret.SetDamage(actualDmg);
+			ret.DamageType = 'Melee';
+			ret.Target = t.LineTarget;
+		}
+
+		return ret;
 	}
 
 	void BIO_Saw(sound fullSound, sound hitSound, int dmg, Class<Actor> puff_t,

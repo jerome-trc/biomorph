@@ -53,8 +53,8 @@
 		"\c[MidGrey]Fires %s%d %s%s";
 	BIO_FIREFUNC_MELEE =
 		"\c[MidGrey]Hits %s%d time(s)";
-	BIO_FIREFUNC_FIST =
-		"\c[MidGrey]Throws a left hook";
+	BIO_FIREFUNC_PUNCH =
+		"\c[MidGrey]Throws a punch";
 	BIO_FIREFUNC_SAW =
 		"\c[MidGrey]Cuts continually";
 	BIO_FIREFUNC_RAIL =
@@ -72,6 +72,8 @@
 		"\c[MidGrey]Damage: %s%d\c[MidGrey] \cu-\c[MidGrey] %s%d";
 	BIO_DMGFUNC_1DX =
 		"\c[MidGrey]Damage: %s%d\c[MidGrey] x (1 - %d)";
+	BIO_DMGFUNC_XTIMESRAND =
+		"\c[MidGrey]Damage: %s%d \c[MidGrey]x (%s%d \c[MidGrey]- %s%d\c[MidGrey])";
 	BIO_DMGFUNC_SINGLE =
 		"\c[MidGrey]Damage: %s%d";
 	BIO_DMGFUNC_NOOP =
@@ -121,6 +123,10 @@
 	BIO_HBR_TAG = "Heavy Battle Rifle";
 	BIO_HBR_PKUP = "Procured a %s.";
 	BIO_HBR_INFO = "\c[White]Rapid two-round burst";
+
+	BIO_IMPACTORGAUNTLET_TAG = "Impactor Gauntlet";
+	BIO_IMPACTORGAUNTLET_PKUP = "Procured an %s.";
+	BIO_IMPACTORGAUNTLET_THRUST = "\c[MidGrey]Lunges forward";
 
 	BIO_INCURSIONSHOTGUN_TAG = "Incursion Shotgun";
 	BIO_INCURSIONSHOTGUN_PKUP = "Procured an %s.";
@@ -461,7 +467,9 @@
 	BIO_QUATERNARY = "quaternary";
 
 	BIO_FIRE = "fire";
+	BIO_CHARGE = "charge";
 	BIO_COOLDOWN = "cooldown";
+	BIO_COOLDOWN_ALT = "cooldown, alt.";
 	BIO_FIRE_MODE = "fire mode";
 	BIO_SINGLE = "single";
 	BIO_BURST = "burst";
