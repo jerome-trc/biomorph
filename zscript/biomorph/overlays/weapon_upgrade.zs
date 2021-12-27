@@ -55,7 +55,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 	}
 
 	const X_OFFS = VIRTUAL_WIDTH * 0.25;
-	const WEAPICONHEIGHT = VIRTUAL_HEIGHT * 0.725;
+	const WEAPICONHEIGHT = VIRTUAL_HEIGHT * 0.7;
 
 	final override void Draw(RenderEvent event) const
 	{
@@ -96,7 +96,7 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 			VIRTUAL_WIDTH - (SmallFont.StringWidth(Help_1) / 2), txtY, Help_1,
 			DTA_VIRTUALWIDTH, VIRTUAL_WIDTH_X2, DTA_VIRTUALHEIGHT, VIRTUAL_HEIGHT_X2);
 
-		// Draw the selected weapon in the center of the screen
+		// Draw the selected choice's icon in the center of the screen
 
 		Screen.DrawTexture(WeaponTextures[SelectedWeapon].ID,
 			false, VIRTUAL_WIDTH * 0.5, WEAPICONHEIGHT,
