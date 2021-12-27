@@ -465,7 +465,9 @@
 	BIO_FIRE_MODE = "fire mode";
 	BIO_SINGLE = "single";
 	BIO_BURST = "burst";
+	BIO_PER_ROUND = "per round";
 	BIO_PER_2_ROUNDS = "per 2 rounds";
+	BIO_AUTOMATIC = "automatic";
 	BIO_SEMI_AUTO = "semi-automatic";
 	BIO_PER_BARREL = "per barrel";
 	BIO_WINDUP = "windup";
