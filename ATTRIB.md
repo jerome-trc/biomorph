@@ -84,12 +84,17 @@ The following audio files are provided by ZDoom forum user Joblez_I, under no li
 - "generic_alt_pistol1.wav" (PISTFIR0)
 - "generic_alt_pistol2.wav" (PISTFIR1)
 - "generic_alt_pistol3.wav" (PISTFIR2)
+- "g_ithaca_1.wav" (SHOTFIR0)
+- "g_ithaca_2.wav" (SHOTFIR1)
+- "g_ithaca_3.wav" (SHOTFIR2)
 - "ak47-1.wav" (CHGNFIR0)
 - "ak47-2.wav" (CHGNFIR1)
 - "ak47-3.wav" (CHGNFIR2)
 - "m14-1.wav" (NLGNFIRE)
 - "m60-1.wav" (HVBRFIRE)
 - "madsenm47-1.wav" (PRECFIRE)
+- "shotpumpback" (SHOTBACK)
+- "shotpumpfor" (SHOTFORW)
 
 Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 
