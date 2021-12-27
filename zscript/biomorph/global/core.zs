@@ -16,23 +16,10 @@ class BIO_GlobalData : Thinker
 		let ret = new('BIO_GlobalData');
 		ret.ChangeStatNum(STAT_STATIC);
 
-		for (uint i = 0; i < LOOTTABLE_ARRAY_LENGTH; i++)
+		for (uint i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
 			for (uint j = 0; j < 3; j++)
 			{
-				string category = "";
-
-				switch (i)
-				{
-				case LOOTTABLE_MELEE: category = "melee"; break;
-				case LOOTTABLE_PISTOL: category = "pistol"; break;
-				case LOOTTABLE_SHOTGUN: category = "shotgun"; break;
-				case LOOTTABLE_SSG: category = "ssg"; break;
-				case LOOTTABLE_AUTOGUN: category = "autogun"; break;
-				case LOOTTABLE_LAUNCHER: category = "launcher"; break;
-				case LOOTTABLE_ENERGY: category = "energy"; break;
-				case LOOTTABLE_SUPER: category = "super"; break;
-				}
-
+				string category = BIO_Weapon.CATEGORY_IDS[i];
 				ret.WeaponLootTables[j][i] = new('WeightedRandomTable');
 				ret.WeaponLootTables[j][i].Label = String.Format(
 					"weap_loot_%s_%s", BIO_Utils.GradeToString(j + 2), category);
@@ -72,7 +59,7 @@ class BIO_GlobalData : Thinker
 		if (BIO_debug)
 		{
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
-				"%d weapon upgrades generated.", ret.WeaponUpgrades.Size());
+				"%d weapon upgrade(s) generated.", ret.WeaponUpgrades.Size());
 
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Global init done (took %d ms).", MsTime() - ms);
@@ -85,6 +72,11 @@ class BIO_GlobalData : Thinker
 
 	private void ReadWeaponLumps()
 	{
+		Array<Class<BIO_Weapon> >
+			agwuStd[__BIO_WEAPCAT_COUNT__],
+			agwuSpec[__BIO_WEAPCAT_COUNT__],
+			agwuClsf[__BIO_WEAPCAT_COUNT__];
+
 		for (int lump = 0; lump < Wads.GetNumLumps(); lump++)
 		{
 			if (Wads.GetLumpNamespace(lump) != Wads.NS_GLOBAL)
@@ -119,6 +111,15 @@ class BIO_GlobalData : Thinker
 				if (compat_t == null) continue;
 			}
 
+			let autoup = BIO_Utils.TryGetJsonObject(
+				obj.get("upgrades_auto"), errMsg: false);
+			if (autoup != null)
+			{
+				for (BIO_WeaponCategory i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
+					ReadWeaponAutoUpgradeJSON(autoup, lump, i,
+						agwuStd[i], agwuSpec[i], agwuClsf[i]);
+			}
+
 			let upgrades = BIO_Utils.TryGetJsonArray(
 				obj.get("upgrades"), errMsg: false);
 			if (upgrades != null)
@@ -127,17 +128,21 @@ class BIO_GlobalData : Thinker
 			let loot = BIO_Utils.TryGetJsonObject(obj.get("loot"), errMsg: false);
 			if (loot != null)
 			{
-				TryReadWeaponLootArray(lump, loot, "melee", LOOTTABLE_MELEE);
-				TryReadWeaponLootArray(lump, loot, "pistol", LOOTTABLE_PISTOL);
-				TryReadWeaponLootArray(lump, loot, "shotgun", LOOTTABLE_SHOTGUN);
-				TryReadWeaponLootArray(lump, loot, "ssg", LOOTTABLE_SSG);
-				TryReadWeaponLootArray(lump, loot, "supershotgun", LOOTTABLE_SSG);
-				TryReadWeaponLootArray(lump, loot, "autogun", LOOTTABLE_AUTOGUN);
-				TryReadWeaponLootArray(lump, loot, "launcher", LOOTTABLE_LAUNCHER);
-				TryReadWeaponLootArray(lump, loot, "energy", LOOTTABLE_ENERGY);
-				TryReadWeaponLootArray(lump, loot, "super", LOOTTABLE_SUPER);
+				TryReadWeaponLootArray(lump, loot, "melee", BIO_WEAPCAT_MELEE);
+				TryReadWeaponLootArray(lump, loot, "pistol", BIO_WEAPCAT_PISTOL);
+				TryReadWeaponLootArray(lump, loot, "shotgun", BIO_WEAPCAT_SHOTGUN);
+				TryReadWeaponLootArray(lump, loot, "ssg", BIO_WEAPCAT_SSG);
+				TryReadWeaponLootArray(lump, loot, "supershotgun", BIO_WEAPCAT_SSG);
+				TryReadWeaponLootArray(lump, loot, "rifle", BIO_WEAPCAT_RIFLE);
+				TryReadWeaponLootArray(lump, loot, "autogun", BIO_WEAPCAT_AUTOGUN);
+				TryReadWeaponLootArray(lump, loot, "launcher", BIO_WEAPCAT_LAUNCHER);
+				TryReadWeaponLootArray(lump, loot, "energy", BIO_WEAPCAT_ENERGY);
+				TryReadWeaponLootArray(lump, loot, "super", BIO_WEAPCAT_SUPER);
 			}
 		}
+
+		for (uint i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
+			AutogenWeaponUpgradeRecipes(agwuStd[i], agwuSpec[i], agwuClsf[i]);
 	}
 
 	static clearscope BIO_GlobalData Get()

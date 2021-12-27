@@ -45,7 +45,7 @@ extend class BIO_EventHandler
 		{
 			if (Random(1, 10) == 1)
 				FinalizeSpawn(Globals.LootWeaponType(
-					Globals.LOOTTABLE_PISTOL), event.Thing);
+					BIO_WEAPCAT_PISTOL), event.Thing);
 			else
 				FinalizeSpawn('BIO_Clip', event.Thing);
 		}
@@ -84,43 +84,38 @@ extend class BIO_EventHandler
 	{
 		if (event.Thing.GetClass() == 'Shotgun')
 		{
-			FinalizeSpawn(Globals.LootWeaponType(
-				Globals.LOOTTABLE_SHOTGUN), event.Thing);
+			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_SHOTGUN), event.Thing);
 		}
 		else if (event.Thing.GetClass() == 'Chaingun')
 		{
-			FinalizeSpawn(Globals.LootWeaponType(
-				Globals.LOOTTABLE_AUTOGUN), event.Thing);
+			if (Random(0, 1) == 0)
+				FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_RIFLE), event.Thing);
+			else
+				FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_AUTOGUN), event.Thing);
 		}
 		else if (event.Thing.GetClass() == 'SuperShotgun')
 		{
-			FinalizeSpawn(Globals.LootWeaponType(
-				Globals.LOOTTABLE_SSG), event.Thing);
+			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_SSG), event.Thing);
 		}
 		else if (event.Thing.GetClass() == 'RocketLauncher')
 		{
-			FinalizeSpawn(Globals.LootWeaponType(
-				Globals.LOOTTABLE_LAUNCHER), event.Thing);
+			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_LAUNCHER), event.Thing);
 		}
 		else if (event.Thing.GetClass() == 'PlasmaRifle')
 		{
-			FinalizeSpawn(Globals.LootWeaponType(
-				Globals.LOOTTABLE_ENERGY), event.Thing);
+			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_ENERGY), event.Thing);
 		}
 		else if (event.Thing.GetClass() == 'BFG9000')
 		{
-			FinalizeSpawn(Globals.LootWeaponType(
-				Globals.LOOTTABLE_SUPER), event.Thing);
+			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_SUPER), event.Thing);
 		}
 		else if (event.Thing.GetClass() == 'Chainsaw')
 		{
-			FinalizeSpawn(Globals.LootWeaponType(
-				Globals.LOOTTABLE_MELEE), event.Thing);
+			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_MELEE), event.Thing);
 		}
 		else if (event.Thing.GetClass() == 'Pistol')
 		{
-			FinalizeSpawn(Globals.LootWeaponType(
-				Globals.LOOTTABLE_PISTOL), event.Thing);
+			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_PISTOL), event.Thing);
 		}
 		else
 			return false;
