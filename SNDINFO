@@ -77,7 +77,19 @@ bio/weap/impgaunt/hit IMGAHIT
 bio/weap/impgaunt/miss IMGAMISS
 bio/weap/impgaunt/thrust IMGATHRU
 
-bio/weap/incursion/fire INCUFIRE
+bio/weap/incursion/fire_0 INCUFIR0
+bio/weap/incursion/fire_1 INCUFIR1
+bio/weap/incursion/fire_2 INCUFIR2
+bio/weap/incursion/fire_3 INCUFIR3
+
+$RANDOM bio/weap/incursion/fire
+{
+	bio/weap/incursion/fire_0
+	bio/weap/incursion/fire_1
+	bio/weap/incursion/fire_2
+	bio/weap/incursion/fire_3
+}
+
 bio/weap/incursion/reload INCURELO
 
 bio/proj/proximity/beep PROXBEEP
