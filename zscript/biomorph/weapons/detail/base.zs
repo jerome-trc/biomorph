@@ -1003,6 +1003,14 @@ class BIO_Weapon : DoomWeapon abstract
 		return false;
 	}
 
+	bool Ammoless() const
+	{
+		return
+			AmmoType1 == null && AmmoType2 == null &&
+			AmmoUse1 <= 0 && AmmoUse2 <= 0 &&
+			MagazineType1 == null && MagazineType2 == null;
+	}
+
 	readOnly<BIO_Weapon> AsConst() const { return self; }
 
 	// Modifying ===============================================================
