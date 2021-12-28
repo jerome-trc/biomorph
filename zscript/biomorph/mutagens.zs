@@ -181,6 +181,13 @@ class BIO_Muta_Random : BIO_Mutagen
 	{
 		if (!super.Use(pickup)) return false;
 		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
+
+		if (weap.MaxAffixes < 1)
+		{
+			Owner.A_Print("$BIO_MUTA_FAIL_MAX0");
+			return false;
+		}
+
 		weap.RandomizeAffixes();
 		weap.OnWeaponChange();
 		Owner.A_Print("$BIO_MUTA_RANDOM_USE");

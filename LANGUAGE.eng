@@ -199,6 +199,7 @@
 	BIO_MUTA_FAIL_NULLWEAP = "This weapon isn't a part of you; it can't be mutated.";
 	BIO_MUTA_FAIL_UNIQUE = "This weapon is unique; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_MAXAFFIXES = "This weapon has evolved to its limits; it can't be mutated in this way.";
+	BIO_MUTA_FAIL_MAX0 = "This weapon cannot have any affixes; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_NOAFFIXES = "This weapon has no affixes; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_NOCOMPATIBLEAFFIXES = "No affixes are compatible with this weapon; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_CORRUPTED = "This weapon has been corrupted by R.O.T. Mutagen; it can't be mutated at all.";
