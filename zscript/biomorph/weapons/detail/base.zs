@@ -1431,8 +1431,9 @@ class BIO_Weapon : DoomWeapon abstract
 		and `puff_t`'s default damage type.
 	*/ 
 	Actor BIO_FireBullet(double spread_xy, double spread_z, int numBullets,
-		int bulletDmg, Class<Actor> puff_t, int flags = 1, double range = 0.0,
-		Class<Actor> missile = null, double spawnHeight = 32.0, double spawnOfs_xy = 0.0)
+		int bulletDmg, Class<Actor> puff_t, EFireBulletsFlags flags = FBF_NONE,
+		double range = 0.0, Class<Actor> missile = null,
+		double spawnHeight = 32.0, double spawnOfs_xy = 0.0)
 	{
 		int i = 0;
 		double bAngle = 0.0, bSlope = 0.0;
@@ -1449,9 +1450,6 @@ class BIO_Weapon : DoomWeapon abstract
 		if ((numBullets == 1 && !Owner.Player.Refire) || numBullets == 0)
 		{
 			int damage = bulletDmg;
-
-			if (!(flags & FBF_NORANDOM))
-				damage *= random[CABullet](1, 3);
 
 			Actor puff = null; int realDmg = -1;
 			[puff, realDmg] = Owner.LineAttack(bAngle, range,
@@ -1515,9 +1513,6 @@ class BIO_Weapon : DoomWeapon abstract
 			}
 
 			int damage = bulletDmg;
-
-			if (!(flags & FBF_NORANDOM))
-				damage *= Random[CABullet](1, 3);
 
 			Actor puff = null; int realDmg = -1;
 			[puff, realDmg] = Owner.LineAttack(pAngle, range, 

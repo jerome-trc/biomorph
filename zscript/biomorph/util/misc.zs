@@ -160,6 +160,7 @@ class BIO_FakePuff : BIO_Puff
 
 const BFGF_NONE = 0; // EBFGSprayFlags
 const CPF_NONE = 0; // ECustomPunchFlags
+const FBF_NONE = 0; // EFireBulletsFlags
 const LAF_NONE = 0; // ELineAttackFlags
 const TRF_NONE = 0; // ELineTraceFlags
 const XF_NONE = 0; // EExplodeFlags
