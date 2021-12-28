@@ -22,7 +22,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.Bullet('BIO_Bullet', 1)
-			.BasicDamage(60, 80)
+			.BasicDamage(60, 65)
 			.Spread(0.6, 0.6)
 			.FireSound("bio/weap/hbr/fire")
 			.CustomReadout(StringTable.Localize("$BIO_HBR_INFO"))
