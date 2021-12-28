@@ -147,3 +147,40 @@ class BIO_WeaponLootFountain : Actor
 		Globals = BIO_GlobalData.Get();
 	}
 }
+
+// Randomises a weapon's affixes 10000 times and then prints the distribution of
+// resultant affix counts, for testing the generation algorithm.
+class BIO_Muta_RandomDebug : BIO_Muta_Random
+{
+	final override bool Use(bool pickup)
+	{
+		if (!super.Use(pickup)) return false;
+		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
+
+		if (weap.MaxAffixes < 1)
+		{
+			Owner.A_Print("$BIO_MUTA_FAIL_MAX0");
+			return false;
+		}
+
+		Array<uint> results;
+
+		for (uint i = 0; i <= weap.MaxAffixes; i++)
+			results.Push(0);
+		
+		for (uint i = 0; i < 10000; i++)
+		{
+			weap.RandomizeAffixes();
+			results[weap.Affixes.Size()]++;
+		}
+
+		for (uint i = 0; i < results.Size(); i++)
+		{
+			Console.Printf("%d: %d", i, results[i]);
+		}
+
+		weap.OnWeaponChange();
+		Owner.A_Print("$BIO_MUTA_RANDOM_USE");
+		return true;
+	}
+}

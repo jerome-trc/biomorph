@@ -1115,11 +1115,20 @@ class BIO_Weapon : DoomWeapon abstract
 	// Affects explicit affixes only.
 	void RandomizeAffixes()
 	{
+		if (MaxAffixes < 1)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Tried to randomize affixes on a weapon with `MaxAffixes` of 0.");
+			return;
+		}
+
 		ClearAffixes();
 		ResetStats();
 		ApplyImplicitAffixes();
 
-		uint c = Random[BIO_Afx](2, MaxAffixes);
+		uint fl = Min(2, MaxAffixes);
+		uint c = Random[BIO_Afx](fl, MaxAffixes);
+		c = Random[BIO_Afx](fl, c);
 
 		for (uint i = 0; i < c; i++)
 		{
