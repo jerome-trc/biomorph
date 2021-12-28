@@ -279,6 +279,9 @@ class BIO_Weapon : DoomWeapon abstract
 		let bioPlayer = BIO_Player(toucher);
 		if (bioPlayer == null) return false;
 
+		if (bioPlayer.IsFullOnWeapons())
+			return false;
+
 		return true;
 	}
 
@@ -294,15 +297,16 @@ class BIO_Weapon : DoomWeapon abstract
 			Grade == BIO_GRADE_STANDARD)
 			item.bPickupGood = Weapon(item).PickupForAmmo(self);
 
-		if (!BIO_Player(Owner).IsFullOnWeapons())
-			return false;
-
 		return true;
 	}
 
 	final override bool TryPickupRestricted(in out Actor toucher)
 	{
-		return false;
+		if (!(BIO_Player(toucher).Player.Cmd.Buttons & BT_RELOAD) ||
+			Rarity != BIO_RARITY_COMMON || Grade != BIO_GRADE_STANDARD)
+			return false;
+
+		return super.TryPickupRestricted(toucher);
 	}
 
 	override void DoPickupSpecial(Actor toucher)
