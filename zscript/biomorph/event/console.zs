@@ -109,8 +109,39 @@ extend class BIO_EventHandler
 		}
 
 		string output = Biomorph.LOGPFX_INFO;
-		output.AppendFormat("%s\n%s\n", weap.GetClassName(), weap.GetTag());
-		output.AppendFormat("\c[Yellow]Pipelines:\n\c-");
+		output.AppendFormat("%s (%s)\n", weap.GetClassName(), weap.GetTag());
+		output.AppendFormat("\c[Yellow]Grade\c-: %s\n\c-", BIO_Utils.GradeToString(weap.Grade));
+		output.AppendFormat("\c[Yellow]Rarity\c-: %s\n\c-", BIO_Utils.RarityToString(weap.Rarity));
+		output.AppendFormat("\c[Yellow]Pipelines\c-:\n");
+
+		string ammo1_tn = "null", ammo2_tn = "null";
+
+		if (weap.AmmoType1 != null)
+			ammo1_tn = weap.AmmoType1.GetClassName();
+		if (weap.AmmoType2 != null)
+			ammo2_tn = weap.AmmoType2.GetClassName();
+
+		output.AppendFormat("\c[Yellow]Ammo 1\c-: %s (give %d, use %d)\n",
+			ammo1_tn, weap.AmmoGive1, weap.AmmoUse1);
+		output.AppendFormat("\c[Yellow]Ammo 2\c-: %s (give %d, use %d)\n",
+			ammo2_tn, weap.AmmoGive2, weap.AmmoUse2);
+
+		output.AppendFormat("\c[Yellow]Switch speeds\c-: %d lower, %d raise\n",
+			weap.LowerSpeed, weap.RaiseSpeed);
+
+		output.AppendFormat("\c[Yellow]Kickback\c-: %d\n", weap.Kickback);
+
+		if (weap.Userdata != null)
+		{
+			output.AppendFormat("\c[Yellow]Userdata contents\c-:\n");
+
+			let iter = DictionaryIterator.Create(weap.Userdata);
+			while (iter.Next())
+			{
+				output.AppendFormat("{ \"%s\": \"%s\" }\n",
+					iter.Key(), iter.Value());
+			}
+		}
 
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -147,11 +178,6 @@ extend class BIO_EventHandler
 			for (uint j = 0; j < rtg.Times.Size(); j++)
 				output.AppendFormat("\t%d, min. %d\n", rtg.Times[j], rtg.Minimums[j]);
 		}
-
-		output.AppendFormat("Switch speeds: %d lower, %d raise\n",
-			weap.LowerSpeed, weap.RaiseSpeed);
-
-		output.AppendFormat("Kickback: %d\n", weap.Kickback);
 
 		if (weap.ImplicitAffixes.Size() > 0)
 		{
