@@ -31,7 +31,7 @@ mixin class BIO_Gear
 	BIO_Rarity Rarity; property Rarity: Rarity;
 	meta string UniqueSuffix; property UniqueSuffix: UniqueSuffix;
 
-	protected bool HitGround, PreviouslyPickedUp;
+	private bool HitGround, PreviouslyPickedUp;
 
 	void RLMDangerLevel() const
 	{
