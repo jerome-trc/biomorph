@@ -84,6 +84,7 @@ class BIO_Muta_Reset : BIO_Mutagen
 		Tag "$BIO_MUTA_RESET_TAG";
 		Inventory.Icon 'MUREA0';
 		Inventory.PickupMessage "$BIO_MUTA_RESET_PKUP";
+		Inventory.UseSound "bio/muta/use/undo";
 		BIO_Mutagen.DropWeight DROPWT_RESET;
 	}
 
@@ -122,6 +123,7 @@ class BIO_Muta_Add : BIO_Mutagen
 		Tag "$BIO_MUTA_ADD_TAG";
 		Inventory.Icon 'MUADA0';
 		Inventory.PickupMessage "$BIO_MUTA_ADD_PKUP";
+		Inventory.UseSound "bio/muta/use/general";
 		BIO_Mutagen.DropWeight DROPWT_ADD;
 	}
 
@@ -166,6 +168,7 @@ class BIO_Muta_Random : BIO_Mutagen
 		Tag "$BIO_MUTA_RANDOM_TAG";
 		Inventory.Icon 'MURAA0';
 		Inventory.PickupMessage "$BIO_MUTA_RANDOM_PKUP";
+		Inventory.UseSound "bio/muta/use/general";
 		BIO_Mutagen.DropWeight DROPWT_RANDOM;
 	}
 
@@ -204,6 +207,7 @@ class BIO_Muta_Reroll : BIO_Mutagen
 		Tag "$BIO_MUTA_REROLL_TAG";
 		Inventory.Icon 'MURRA0';
 		Inventory.PickupMessage "$BIO_MUTA_REROLL_PKUP";
+		Inventory.UseSound "bio/muta/use/general";
 		BIO_Mutagen.DropWeight DROPWT_REROLL;
 		BIO_Mutagen.WorksOnUniques true;
 	}
@@ -251,6 +255,7 @@ class BIO_Muta_Remove : BIO_Mutagen
 		Tag "$BIO_MUTA_REMOVE_TAG";
 		Inventory.Icon 'MURMA0';
 		Inventory.PickupMessage "$BIO_MUTA_REMOVE_PKUP";
+		Inventory.UseSound "bio/muta/use/undo";
 		BIO_Mutagen.DropWeight DROPWT_REMOVE;
 	}
 
@@ -318,6 +323,7 @@ class BIO_Muta_Corrupting : BIO_Mutagen
 		Tag "$BIO_MUTA_CORRUPT_TAG";
 		Inventory.Icon 'MUCOA0';
 		Inventory.PickupMessage "$BIO_MUTA_CORRUPT_PKUP";
+		Inventory.UseSound "bio/muta/use/corrupt";
 		BIO_Mutagen.DropWeight DROPWT_CORR;
 		BIO_Mutagen.WorksOnUniques true;
 	}

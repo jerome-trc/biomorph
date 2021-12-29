@@ -123,6 +123,28 @@ bio/proj/proximity/hit PROXHIT
 
 bio/armor/classified/use CLSARMUS
 
+// Mutagens (pickup, usage) ====================================================
+
+bio/muta/use/general_0 MUTAUSE0
+bio/muta/use/general_1 MUTAUSE1
+
+$RANDOM bio/muta/use/general
+{
+	bio/muta/use/general_0
+	bio/muta/use/general_1
+}
+
+bio/muta/use/undo_0 MUTUNDO0
+bio/muta/use/undo_1 MUTUNDO1
+
+$RANDOM bio/muta/use/undo
+{
+	bio/muta/use/undo_0
+	bio/muta/use/undo_1
+}
+
+bio/muta/use/corrupt MUTACORR
+
 // User interface ==============================================================
 
 bio/ui/beep USRINPT0

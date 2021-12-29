@@ -58,6 +58,9 @@ Any graphical asset which is not mentioned here is custom-made by RatCircus.
 ## Audio
 
 The following audio files are provided by CturiX Kemilon, under no license:
+- "energyscreem.wav" (MUTACORR)
+- "gunbirth1.wav" (MUTAUSE0)
+- "gunbirth2.wav" (MUTAUSE1)
 - "gun_fetch2.wav" (WEAPUPGR)
 - "gun_fetch3.wav" (GUNMECH1)
 - "gun_fetch4.wav" (GUNMECH2)
@@ -77,6 +80,8 @@ The following audio files are provided by CturiX Kemilon, under no license:
 - "Steyr-4.wav" (VULCFIR3)
 - "vssdraw.wav" (GUNMECH0)
 - "weapondropped.wav" (GUNDROP0)
+
+Note that MUTUNDO0 and MUTUNDO1 are reversed versions of MUTAUSE0 and MUTAUSE1, respectively.
 
 The following audio files are provided by ZDoom forum user Joblez_I, under no license:
 - "autoshotgun-1.wav" (AUSGFIRE)
