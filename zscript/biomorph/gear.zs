@@ -31,6 +31,8 @@ mixin class BIO_Gear
 	BIO_Rarity Rarity; property Rarity: Rarity;
 	meta string UniqueSuffix; property UniqueSuffix: UniqueSuffix;
 
+	meta sound GroundHitSound; property GroundHitSound: GroundHitSound;
+
 	private bool HitGround, PreviouslyPickedUp;
 
 	void RLMDangerLevel() const

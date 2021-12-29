@@ -199,6 +199,7 @@ class BIO_Weapon : DoomWeapon abstract
 		BIO_Weapon.AffixMask BIO_WAM_NONE;
 		BIO_Weapon.Flags BIO_WF_NONE;
 		BIO_Weapon.Grade BIO_GRADE_NONE;
+		BIO_Weapon.GroundHitSound "bio/weap/gundrop_0";
 		BIO_Weapon.MaxAffixes DEFAULT_MAX_AFFIXES;
 		BIO_Weapon.MinAmmoReserves 1, 1;
 		BIO_Weapon.PlayerVisual BIO_PVIS_RIFLE;
@@ -771,7 +772,7 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		if (Abs(Vel.Z) <= 0.01 && !invoker.HitGround)
 		{
-			A_StartSound("bio/weap/gundrop_0");
+			A_StartSound(invoker.GroundHitSound);
 			A_ScaleVelocity(0.5);
 			bSpecial = true;
 			bThruActors = false;
