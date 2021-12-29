@@ -25,7 +25,7 @@ class BIO_ProximityLauncher : BIO_Weapon
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.Projectile('BIO_ProxMineProj', 1)
 			.NoDamage()
-			.Splash(176, 176, XF_HURTSOURCE)
+			.Splash(176, 176)
 			.FireSound("bio/weap/proxlauncher/fire")
 			.CustomReadout(StringTable.Localize("$BIO_PROXLAUNCHER_DETONATE"))
 			.Build());

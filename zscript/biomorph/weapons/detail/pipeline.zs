@@ -414,7 +414,8 @@ class BIO_WeaponPipeline play
 
 	bool SplashMutable() const { return Mask & BIO_WPM_SPLASH; }
 
-	void SetSplash(int damage, int radius, EExplodeFlags flags = 0)
+	void SetSplash(int damage, int radius,
+		EExplodeFlags flags = XF_HURTSOURCE, int fullDmgDistance = 0)
 	{
 		if (Mask & BIO_WPM_SPLASH) return;
 
@@ -422,13 +423,16 @@ class BIO_WeaponPipeline play
 
 		if (func == null)
 		{
-			func = BIO_FTDF_Explode.Create(damage, radius, flags, 0, 0);
+			func = BIO_FTDF_Explode.Create(damage, radius, flags, fullDmgDistance);
+			FTDeathFunctors.Push(func);
+		}
+		else
+		{
 			func.Damage = damage;
 			func.Radius = radius;
 			func.Flags = flags;
+			func.FullDamageDistance = fullDmgDistance;
 		}
-
-		FTDeathFunctors.Push(func);
 	}
 
 	void SetShrapnel(int count, int damage)
@@ -439,12 +443,14 @@ class BIO_WeaponPipeline play
 
 		if (func == null)
 		{
-			func = BIO_FTDF_Explode.Create(0, 0, XF_NONE, count, damage);
+			func = BIO_FTDF_Explode.Create(0, 0, shrapnel: count, shrapnelDmg: damage);
+			FTDeathFunctors.Push(func);
+		}
+		else
+		{
 			func.ShrapnelCount = count;
 			func.ShrapnelDamage = damage;
 		}
-
-		FTDeathFunctors.Push(func);
 	}
 
 	float, float GetSpread() const { return HSpread, VSpread; }
