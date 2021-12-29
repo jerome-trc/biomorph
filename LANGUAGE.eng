@@ -433,11 +433,17 @@
 
 // Quit messages ===============================================================
 
-	BIO_QUITMSG_CRIT = "\cjCritical strike affixes can only roll on pistols.";
-	BIO_QUITMSG_EXAMINE = "\cjPress the \cnUse\cj button on a gear item to examine its stats.";
-	BIO_QUITMSG_GRADES = "\cjAll gear fits into one of three grades: "
+	BIO_QUITMSG_CRIT =
+		"\cjCritical strike affixes can only roll on pistols.";
+	BIO_QUITMSG_EXAMINE =
+		"\cjPress the \cnUse\cj button on a gear item to examine its stats.";
+	BIO_QUITMSG_GRADES =
+		"\cjAll gear fits into one of three grades: "
 		"Standard, \c[Spec]Specialty\cj, and \c[Clsf]Classified\cj.";
-	BIO_QUITMSG_LIFESTEAL = "\cjLifesteal affixes can only roll on melee weapons.";
+	BIO_QUITMSG_LIFESTEAL =
+		"\cjLifesteal affixes can only roll on melee weapons.";
+	BIO_QUITMSG_LIFESTEALMAX =
+		"\cjLifesteal, like Health Bonuses, gives health up to your maximum + 100.";
 	BIO_QUITMSG_MULTIBARREL = "\cjMulti-barrelled weapons like the Super Shotgun "
 		"always allow firing only one barrel (try your \cnalt-fire\cj button).";
 	BIO_QUITMSG_MUTACORR = "\cjThe effects of \cgR.O.T. Mutagen\cj "
