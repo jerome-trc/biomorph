@@ -145,11 +145,6 @@ class BIO_WeaponPipeline play
 		return StringTable.Localize(Obituary);
 	}
 
-	readOnly<BIO_FireFunctor> GetFireFunctorConst() const
-	{
-		return FireFunctor.AsConst();
-	}
-
 	bool CanFireProjectiles() const
 	{
 		return FireFunctor != null && (FireFunctor.GetType() & BIO_FFT_PROJECTILE);
@@ -179,6 +174,12 @@ class BIO_WeaponPipeline play
 	{
 		if (Mask & BIO_WPM_FIREFUNCTOR) return null;
 		return FireFunctor;
+	}
+
+	readOnly<BIO_FireFunctor> GetFireFunctorConst() const
+	{
+		if (FireFunctor == null) return null;
+		return FireFunctor.AsConst();
 	}
 
 	void SetFireFunctor(BIO_FireFunctor fireFunc)
@@ -261,6 +262,7 @@ class BIO_WeaponPipeline play
 
 	readOnly<BIO_DamageFunctor> GetDamageFunctorConst() const
 	{
+		if (Damage == null) return null;
 		return Damage.AsConst();
 	}
 
