@@ -117,7 +117,11 @@ Impactor Gauntlet sounds are courtesy of Capcom Co., Ltd.
 
 AMRSHRD (pickup sound for `BIO_ArmorBonus`) is courtesy of id Software LLC.
 
-CLSARMUS (on-equip sound for classified armour) is courtesy of id Software LCC and the Raven Software Corporation.
+CLSARMUS (on-equip sound for classified armour) is courtesy of id Software LLC and the Raven Software Corporation.
+
+## Music
+
+Augmented Borealis (D_AUGBOR, Doppel's theme music) is courtesy of decino.
 
 ## Acknowledgements
 
