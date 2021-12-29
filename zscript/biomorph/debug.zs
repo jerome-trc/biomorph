@@ -152,6 +152,11 @@ class BIO_WeaponLootFountain : Actor
 // resultant affix counts, for testing the generation algorithm.
 class BIO_Muta_RandomDebug : BIO_Muta_Random
 {
+	Default
+	{
+		BIO_Mutagen.NoLoot true;
+	}
+
 	final override bool Use(bool pickup)
 	{
 		if (!super.Use(pickup)) return false;
