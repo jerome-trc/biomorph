@@ -8,7 +8,7 @@ enum BIO_PartyMaxWeaponGrade : uint8
 
 extend class BIO_GlobalData
 {
-	const WEIGHTMULTI_STD = 6;
+	const WEIGHTMULTI_STD = 9;
 	const WEIGHTMULTI_SPEC = 3;
 	const WEIGHTMULTI_CLSF = 1;
 
