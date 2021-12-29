@@ -376,6 +376,30 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipeline Build() const
 	{
+		if (Pipeline.GetFireFunctorConst() == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"A weapon pipeline was constructed without a fire functor.");
+		}
+
+		if (Pipeline.GetDamageFunctorConst() == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"A weapon pipeline was constructed without a damage functor.");
+		}
+
+		if (Pipeline.GetFireType() == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..	
+				"A weapon pipeline was constructed without a fire type.");
+		}
+
+		if (Pipeline.GetFireCount() == 0)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"A weapon pipeline was constructed with a fire count of 0.");
+		}
+
 		return Pipeline;
 	}
 
