@@ -288,13 +288,15 @@ class BIO_FTDF_Explode : BIO_FTDeathFunctor
 	EExplodeFlags Flags;
 
 	static BIO_FTDF_Explode Create(int damage, int radius,
-		EExplodeFlags flags = XF_NONE, int shrapnel = 0, int shrapnelDmg = 0)
+		EExplodeFlags flags = XF_HURTSOURCE, int fullDmgDistance = 0,
+		int shrapnel = 0, int shrapnelDmg = 0)
 	{
 		let ret = new('BIO_FTDF_Explode'), defs = new('BIO_FTDF_Explode');
 
 		ret.Damage = defs.Damage = damage;
 		ret.Radius = defs.Radius = radius;
 		ret.Flags = defs.Flags = flags;
+		ret.FullDamageDistance = defs.FullDamageDistance = fullDmgDistance;
 		ret.ShrapnelCount = defs.ShrapnelCount = shrapnel;
 		ret.ShrapnelDamage = defs.ShrapnelDamage = shrapnelDmg;
 		ret.Defaults = BIO_FTDF_Explode(defs.AsConst());
