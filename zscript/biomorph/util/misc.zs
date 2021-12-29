@@ -95,11 +95,11 @@ class BIO_Utils abstract
 		switch (rarity)
 		{
 		case BIO_RARITY_COMMON:
-			return StringTable.Localize("$BIO_GRADE_SURPLUS");
+			return StringTable.Localize("$BIO_RARITY_COMMON");
 		case BIO_RARITY_MUTATED:
-			return StringTable.Localize("$BIO_GRADE_STANDARD");
+			return StringTable.Localize("$BIO_RARITY_MUTATED");
 		case BIO_RARITY_UNIQUE:
-			return StringTable.Localize("$BIO_GRADE_SPECIALTY");
+			return StringTable.Localize("$BIO_RARITY_UNIQUE");
 		case BIO_RARITY_NONE:
 		default:
 			return StringTable.Localize("$BIO_NONE");
