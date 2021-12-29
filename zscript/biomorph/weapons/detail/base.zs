@@ -279,6 +279,11 @@ class BIO_Weapon : DoomWeapon abstract
 		let bioPlayer = BIO_Player(toucher);
 		if (bioPlayer == null) return false;
 
+		// Gearbox calls this function on every weapon prototype when changing
+		// levels; if one of those checks returns false (i.e. when player
+		// is at weapon capacity) then that weapon can't be displayed
+		if (Level == null) return true;
+
 		if (bioPlayer.IsFullOnWeapons())
 			return false;
 
