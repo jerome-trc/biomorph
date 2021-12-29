@@ -154,6 +154,9 @@ class BIO_Muta_RandomDebug : BIO_Muta_Random
 {
 	Default
 	{
+		Tag "\c[Purple]D.E.B.U.G. Mutagen\c-";
+		Inventory.PickupMessage
+			"Commanded a sample of \c[Purple]D.E.B.U.G. Mutagen\c- into existence.";
 		BIO_Mutagen.NoLoot true;
 	}
 
