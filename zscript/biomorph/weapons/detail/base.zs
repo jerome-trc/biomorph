@@ -285,7 +285,12 @@ class BIO_Weapon : DoomWeapon abstract
 		if (Level == null) return true;
 
 		if (bioPlayer.IsFullOnWeapons())
-			return false;
+		{
+			if (!BIO_Utils.IntelligentSupplies())
+				return false;
+			else
+				return bioPlayer.FindInventory(GetClass());
+		}
 
 		return true;
 	}
@@ -311,7 +316,33 @@ class BIO_Weapon : DoomWeapon abstract
 			Rarity != BIO_RARITY_COMMON || Grade != BIO_GRADE_STANDARD)
 			return false;
 
-		return super.TryPickupRestricted(toucher);
+		if (AmmoGive1 <= 0 && AmmoGive2 <= 0)
+		{
+			GoAwayAndDie();
+			return true;
+		}
+
+		bool gotAnything = false;
+
+		if (AmmoType1 != null)
+		{
+			int amt = toucher.CountInv(AmmoType1);
+			toucher.GiveInventory(AmmoType1,
+				AmmoGive1 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR));
+			gotAnything |= toucher.CountInv(AmmoType1) > amt;
+		}
+
+		if (AmmoType2 != null)
+		{
+			int amt = toucher.CountInv(AmmoType2);
+			toucher.GiveInventory(AmmoType2,
+				AmmoGive2 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR));
+			gotAnything |= toucher.CountInv(AmmoType2) > amt;
+		}
+
+		if (gotAnything) GoAwayAndDie();
+
+		return gotAnything;
 	}
 
 	override void DoPickupSpecial(Actor toucher)
@@ -412,6 +443,22 @@ class BIO_Weapon : DoomWeapon abstract
 			ImplicitAffixes[i].OnDrop(self, BIO_Player(dropper));
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].OnDrop(self, BIO_Player(dropper));
+	}
+
+	// The parent variant of this function clears both `AmmoGive` fields to
+	// prevent exploitation; this is not Biomorph's problem because ammo isn't
+	// given to the player until the weapon is scavenged. This overrides fixes
+	// dropped weapons being impossible to scavenge as such.
+	final override Inventory CreateTossable(int amt)
+	{
+		int ag1 = AmmoGive1, ag2 = AmmoGive2;
+
+		let ret = Weapon(super.CreateTossable(amt));
+		
+		ret.AmmoGive1 = ag1;
+		ret.AmmoGive2 = ag2;
+		
+		return ret;
 	}
 
 	final override void Activate(Actor activator)
