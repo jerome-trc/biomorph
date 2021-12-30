@@ -14,6 +14,9 @@ extend class BIO_EventHandler
 
 		if (NetEvent_AddWeapAffix(event) || NetEvent_RemoveWeapAffix(event))
 			return;
+
+		if (NetEvent_RecalcWeap(event))
+			return;
 	}
 
 	const EVENT_WUPOVERLAY = "bio_wupoverlay";
@@ -355,6 +358,34 @@ extend class BIO_EventHandler
 
 		Console.Printf(Biomorph.LOGPFX_INFO ..
 			"Removed %s from your current weapon.", wafx_t.GetClassName());
+		return true;
+	}
+
+	private bool NetEvent_RecalcWeap(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_recalcweap"))
+			return false;
+		
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"`bio_recalcweap`");
+			return true;
+		}
+
+		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
+		if (weap == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on a Biomorph weapon.");
+			return true;
+		}
+
+		weap.ResetStats();
+		weap.ApplyAllAffixes();
+		weap.OnWeaponChange();
+		Console.Printf(Biomorph.LOGPFX_INFO ..
+			"Reset stats and re-applied affixes of your readied weapon.");
 		return true;
 	}
 }
