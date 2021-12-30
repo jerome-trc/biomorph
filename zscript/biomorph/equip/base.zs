@@ -32,7 +32,10 @@ class BIO_Equipment : Inventory abstract
 		+INVENTORY.BIGPOWERUP
 		+INVENTORY.INVBAR
 		+NOBLOCKMONST
+		+USESPECIAL
 
+		Activation
+			THINGSPEC_ThingActs | THINGSPEC_ThingTargets | THINGSPEC_Switch;
 		Radius 20;
 		Height 16;
 
@@ -94,6 +97,44 @@ class BIO_Equipment : Inventory abstract
 		bioPlayer.A_StartSound(self.UseSound, CHAN_ITEM);
 
 		return false;
+	}
+
+	final override void Activate(Actor activator)
+	{
+		super.Activate(activator);
+
+		let bioPlayer = BIO_Player(activator);
+		if (bioPlayer == null) return;
+
+		Array<string> readout;
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].ToString(readout, AsConst());
+
+		if (Affixes.Size() > 0)
+		{
+			// Blank line between stats/implicit affixes and explicit affixes
+			// readout.Push("");
+
+			for (uint i = 0; i < Affixes.Size(); i++)
+				Affixes[i].ToString(readout, AsConst());
+		}
+
+		string output = GetTag() .. "\n\n";
+
+		for (uint i = 0; i < readout.Size(); i++)
+			output.AppendFormat("%s\n", readout[i]);
+
+		output.DeleteLastCharacter(); // Trim off trailing newline
+		
+		// Scale message uptime off of number of characters in readout
+		float upTime = 2.0;
+
+		for (uint i = 0; i < readout.Size(); i++)
+			upTime += float(readout[i].Length()) * 0.0075;
+		
+		bioPlayer.A_Print(output, upTime);
+		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 0.8);
 	}
 
 	override string PickupMessage()

@@ -360,10 +360,10 @@
 		"\c[Green]%d%% chance of infinite ammo for %d seconds on kill";
 
 	BIO_EAFX_SAVEAMOUNT_TAG = "Reinforced";
-	BIO_EAFX_SAVEAMOUNT_TOSTR = "Durability: %s%s%d";
+	BIO_EAFX_SAVEAMOUNT_TOSTR = "\c[White]Durability: %s%s%d";
 
 	BIO_EAFX_SAVEPERCENT_TAG = "Ablative";
-	BIO_EAFX_SAVEPERCENT_TOSTR = "Damage absorption: %s%s%d%%";
+	BIO_EAFX_SAVEPERCENT_TOSTR = "\c[White]Damage absorption: %s%s%d%%";
 
 // Ammo ========================================================================
 

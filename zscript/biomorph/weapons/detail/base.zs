@@ -479,13 +479,8 @@ class BIO_Weapon : DoomWeapon abstract
 		for (uint i = 0; i < StatReadout.Size(); i++)
 			output.AppendFormat("%s\n", StatReadout[i]);
 
-		if (AffixReadout.Size() > 0)
-		{
-			output = output .. "\n";
-
-			for (uint i = 0; i < AffixReadout.Size(); i++)
-				output.AppendFormat("\cj%s\n", AffixReadout[i]);
-		}
+		for (uint i = 0; i < AffixReadout.Size(); i++)
+			output.AppendFormat("\cj%s\n", AffixReadout[i]);
 
 		// Scale message uptime off of number of characters in both readouts
 		float upTime = 2.0;
@@ -497,7 +492,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 		output.DeleteLastCharacter(); // Trim off trailing newline
 		bioPlayer.A_Print(output, upTime);
-		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 0.2);
+		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 0.8);
 	}
 
 	final override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
