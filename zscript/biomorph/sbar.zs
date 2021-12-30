@@ -34,7 +34,7 @@ class BIO_StatusBar : BaseStatusBar
 
 		Vector2 iconbox = (40, 20);
 
-		let berserk = CPlayer.MO.FindInventory('PowerStrength');
+		let berserk = CPlayer.MO.FindInventory('PowerStrength', true);
 		DrawImage(berserk ? 'PSTRA0' : 'MEDIA0', (20, -2));
 		DrawString(Font_HUD,
 			String.Format("%s / %s",
