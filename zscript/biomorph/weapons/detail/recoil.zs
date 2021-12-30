@@ -21,7 +21,7 @@ class BIO_RecoilThinker : Thinker abstract
 	{
 		super.Tick();
 
-		if (Lifetime >= TimeToLive)
+		if (Lifetime >= TimeToLive || Weapon == null || Weapon.Owner == null)
 		{
 			if (!bDestroyed) Destroy();
 			return;
