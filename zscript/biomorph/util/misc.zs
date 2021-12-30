@@ -7,6 +7,25 @@ class BIO_Utils abstract
 		TRANSLUCENCY_FUZZ = 2
 	}
 
+	static play void GivePowerup(Actor target, Class<Powerup> type, int tics)
+	{
+		let giver = BIO_PowerupGiver(Actor.Spawn('BIO_PowerupGiver', target.Pos));
+	
+		if (giver == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Failed to grant powerup %s to %s.",
+				target.GetClassName(), type.GetClassName());
+			return;
+		}
+
+		giver.PowerupType = type;
+		giver.EffectTics = tics;
+		giver.AttachToOwner(target);
+		giver.Use(false);
+		target.TakeInventory('BIO_PowerupGiver', 1);
+	}
+
 	// Only effective on single words.
 	static string Capitalize(string input)
 	{

@@ -1189,21 +1189,8 @@ class BIO_WAfx_InfiniteAmmoOnKill : BIO_WeaponAffix
 	{
 		if (!weap.Switching() && Random(0, 100) < Chance)
 		{
-			let giver = PowerupGiver(Actor.Spawn('PowerupGiver', weap.Owner.Pos));
-
-			if (giver != null)
-			{
-				weap.Owner.A_StartSound("bio/weap/rampage", CHAN_BODY);
-				giver.PowerupType = 'BIO_PowerInfiniteAmmo';
-				giver.EffectTics = GameTicRate * Duration;
-				giver.AttachToOwner(weap.Owner);
-				giver.Use(false);
-			}
-			else
-			{
-				Console.Printf(Biomorph.LOGPFX_ERR ..
-					"Failed to grant an infinite ammo powerup after a kill.");
-			}
+			BIO_Utils.GivePowerup(weap.Owner,
+				'BIO_PowerInfiniteAmmo', GameTicRate * Duration);
 		}
 	}
 
