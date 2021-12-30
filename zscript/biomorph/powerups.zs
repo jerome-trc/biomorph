@@ -17,6 +17,10 @@ mixin class BIO_Powerup
 	}
 }
 
+// This subclass only exists so that `TakeInventory()` is guaranteed to only
+// remove items of exactly this class and no other `PowerupGiver` items.
+class BIO_PowerupGiver : PowerupGiver {}
+
 // Berserk =====================================================================
 
 class BIO_Berserk : Berserk replaces Berserk
