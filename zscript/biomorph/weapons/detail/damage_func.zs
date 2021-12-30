@@ -116,14 +116,13 @@ class BIO_DmgFunc_XTimesRand : BIO_DamageFunctor
 
 	override void GetValues(in out Array<int> vals) const
 	{
-		vals.PushV(Multiplier, MinRandom, MaxRandom);
+		vals.PushV(MinRandom, MaxRandom);
 	}
 
 	override void SetValues(in out Array<int> vals)
 	{
-		Multiplier = vals[0];
-		MinRandom = vals[1];
-		MaxRandom = vals[2];
+		MinRandom = vals[0];
+		MaxRandom = vals[1];
 	}
 
 	BIO_DmgFunc_XTimesRand CustomSet(int multi, int minRand, int maxRand)
