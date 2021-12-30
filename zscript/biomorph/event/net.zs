@@ -127,9 +127,10 @@ extend class BIO_EventHandler
 		}
 		
 		Globals.OnWeaponAcquired(GetDefaultByType(outputChoice).Grade);
+		bioPlayer.A_SelectWeapon('BIO_Fist');
+		bioPlayer.TakeInventory(bioPlayer.Player.ReadyWeapon.GetClass(), 1);
 		bioPlayer.GiveInventory(outputChoice, 1);
 		bioPlayer.A_SelectWeapon(outputChoice);
-		bioPlayer.TakeInventory(bioPlayer.Player.ReadyWeapon.GetClass(), 1);
 		bioPlayer.A_StartSound("bio/item/weapupgrade/use", CHAN_ITEM);
 		bioPlayer.A_StartSound("bio/muta/use/general", CHAN_7);
 		bioPlayer.TakeInventory('BIO_Muta_Upgrade', event.Args[0]);
