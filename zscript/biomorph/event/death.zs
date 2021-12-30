@@ -60,7 +60,10 @@ extend class BIO_EventHandler
 			if (success) 
 			{
 				let weap = BIO_Weapon(spawned);
-				weap.RandomizeAffixes();
+
+				if (weap.Rarity != BIO_RARITY_UNIQUE)
+					weap.RandomizeAffixes();
+				
 				weap.OnWeaponChange();
 				weap.SetState(weap.FindState("Spawn"));
 			}
