@@ -34,10 +34,11 @@ extend class BIO_EventHandler
 			"bio_xpinfo_\n" ..
 			"event bio_wafxcompat:Classname\n" ..
 			"\c[Gold]Network events:\c-\n" ..
-			"event bio_addpasv:Classname\n" ..
-			"event bio_rmpasv:Classname\n" ..
-			"event bio_addwafx:Classname\n" ..
-			"event bio_rmwafx:Classname");
+			"netevent bio_addpasv:Classname\n" ..
+			"netevent bio_rmpasv:Classname\n" ..
+			"netevent bio_addwafx:Classname\n" ..
+			"netevent bio_rmwafx:Classname\n" ..
+			"bio_recalcweap_ (alias: bio_weaprecalc_)");
 
 		return true;
 	}
