@@ -298,15 +298,18 @@ class BIO_Weapon : DoomWeapon abstract
 
 	final override bool HandlePickup(Inventory item)
 	{
-		if (item.GetClass() != self.GetClass()) return false;
+		let weap = BIO_Weapon(item);
+		
+		if (weap == null || item.GetClass() != self.GetClass())
+			return false;
 
 		if (MaxAmount > 1)
 			return Inventory.HandlePickup(item);
 
 		if (Owner.Player.Cmd.Buttons & BT_RELOAD &&
-			Rarity == BIO_RARITY_COMMON &&
-			Grade == BIO_GRADE_STANDARD)
-			item.bPickupGood = Weapon(item).PickupForAmmo(self);
+			weap.Rarity == BIO_RARITY_COMMON &&
+			weap.Grade == BIO_GRADE_STANDARD)
+			weap.bPickupGood = weap.PickupForAmmo(self);
 
 		return true;
 	}
