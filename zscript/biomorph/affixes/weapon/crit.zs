@@ -14,7 +14,7 @@ class BIO_WAfx_Crit : BIO_WeaponAffix
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
-		return weap.BIOFlags & BIO_WF_PISTOL;
+		return weap.BIOFlags & BIO_WF_PISTOL && weap.DealsAnyDamage();
 	}
 
 	final override void BeforeAllFire(BIO_Weapon weap,
