@@ -329,11 +329,12 @@
 	BIO_WAFX_PROJSEEK_TAG = "Infrared Homing";
 	BIO_WAFX_PROJSEEK_TOSTR = "Projectiles home in on targets";
 
-	BIO_WAFX_FIRECOUNT_TAG = "Area Denial";
-	BIO_WAFX_FIRECOUNT1_TOSTR = "Primary fires %s%s%d %s";
-	BIO_WAFX_FIRECOUNT2_TOSTR = "Secondary fires %s%s%d %s";
-	BIO_WAFX_FIRECOUNT_TOSTR = "Primary fires %s%s%d %s; secondary fires %s%s%d %s";
-	
+	BIO_WAFX_HIGHSPREADFIRECOUNT_TAG = "Replicating";
+	BIO_WAFX_HIGHSPREADFIRECOUNT_TOSTR = "%s%s%d %s fired%s";
+
+	BIO_WAFX_LOWSPREADFIRECOUNT_TAG = "Area Denial";
+	BIO_WAFX_LOWSPREADFIRECOUNT_TOSTR = "%s%s%d %s fired,\c[Red] but +%.1f spread%s";
+
 	BIO_WAFX_FIRETIME_TAG = "Rapid Refire";
 	BIO_WAFX_FIRETIME_TOSTR = "Fire time%s: %s%s%.2f seconds";
 

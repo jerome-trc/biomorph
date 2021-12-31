@@ -52,6 +52,6 @@ class BIO_WAfx_Crit : BIO_WeaponAffix
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_DAMAGE;
+		return BIO_WAF_DAMAGE | BIO_WAF_CRITCHANCE;
 	}
 }
