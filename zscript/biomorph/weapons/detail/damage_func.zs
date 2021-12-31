@@ -2,6 +2,9 @@ class BIO_DamageFunctor play abstract
 {
 	abstract int Invoke() const;
 
+	abstract int MinOutput() const;
+	abstract int MaxOutput() const;
+
 	virtual void GetValues(in out Array<int> vals) const {}
 	virtual void SetValues(in out Array<int> vals) {}
 
@@ -24,6 +27,9 @@ class BIO_DmgFunc_Rand : BIO_DamageFunctor
 	protected int Minimum, Maximum;
 
 	override int Invoke() const { return Random(Minimum, Maximum); }
+
+	override int MinOutput() const { return Minimum; }
+	override int MaxOutput() const { return Maximum; }
 
 	override void GetValues(in out Array<int> vals) const
 	{
@@ -75,6 +81,9 @@ class BIO_DmgFunc_1DX : BIO_DamageFunctor
 		return Baseline * Random(1, MaxFactor);
 	}
 
+	override int MinOutput() const { return Baseline; }
+	override int MaxOutput() const { return Baseline * MaxFactor; }
+
 	BIO_DmgFunc_1DX CustomSet(int base, int maxFac)
 	{
 		Baseline = base;
@@ -113,6 +122,9 @@ class BIO_DmgFunc_XTimesRand : BIO_DamageFunctor
 	protected int Multiplier, MinRandom, MaxRandom;
 
 	override int Invoke() const { return Multiplier * Random(MinRandom, MaxRandom); }
+
+	override int MinOutput() const { return Multiplier * MinRandom; }
+	override int MaxOutput() const { return Multiplier * MaxRandom; }
 
 	override void GetValues(in out Array<int> vals) const
 	{
@@ -161,6 +173,9 @@ class BIO_DmgFunc_Single : BIO_DamageFunctor
 
 	override int Invoke() const { return Value; }
 
+	override int MinOutput() const { return Value; }
+	override int MaxOutput() const { return Value; }
+
 	override void GetValues(in out Array<int> vals) const
 	{
 		vals.PushV(Value);
@@ -192,6 +207,8 @@ class BIO_DmgFunc_Single : BIO_DamageFunctor
 class BIO_DmgFunc_Noop : BIO_DamageFunctor
 {
 	override int Invoke() const { return 0; }
+	override int MinOutput() const { return 0; }
+	override int MaxOutput() const { return 0; }
 	
 	override string ToString(BIO_DamageFunctor def) const
 	{
