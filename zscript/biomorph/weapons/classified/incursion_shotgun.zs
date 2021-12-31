@@ -26,7 +26,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			.BasicBulletPipeline('BIO_ShotPellet', 9, 7, 17, 4.0, 2.0)
 			.FireSound("bio/weap/incursion/fire")
 			.CustomReadout(StringTable.Localize(
-				"$BIO_INCURSIONSHOTGUN_QUAD"))
+				"$BIO_INCURSIONSHOTGUN_ALT"))
 			.Build());
 	}
 
@@ -72,17 +72,17 @@ class BIO_IncursionShotgun : BIO_Weapon
 		TNT1 A 0 A_AutoReload;
 		Goto Ready;
 	AltFire:
-		TNT1 A 0 A_BIO_CheckAmmo(multi: 4, single: true);
+		TNT1 A 0 A_BIO_CheckAmmo(multi: 2, single: true);
 		INCU B 3 Bright
 		{
 			A_SetFireTime(0);
 			invoker.bAltFire = false;
-			A_BIO_Fire(fireFactor: Min(invoker.Magazine1.Amount, 4),
-				spreadFactor: 4.0);
+			A_BIO_Fire(fireFactor: Min(invoker.Magazine1.Amount, 2),
+				spreadFactor: 2.0);
 			A_GunFlash();
-			// TODO: Mix a fatter sound for quad-shot
+			// TODO: Mix a fatter sound for this
 			A_FireSound(CHAN_WEAPON);
-			A_FireSound(CHAN_BODY);
+			A_FireSound(CHAN_7);
 			A_Pushback(2.5, 2.5);
 			A_PresetRecoil('BIO_Recoil_VolleyGun');
 		}
@@ -94,7 +94,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_SetFireTime(4);
 			A_ReFire();
 		}
-		TNT1 A 0 A_AutoReload(multi: 4, single: true);
+		TNT1 A 0 A_AutoReload(multi: 2, single: true);
 		Goto Ready;
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
