@@ -306,9 +306,7 @@ class BIO_Weapon : DoomWeapon abstract
 		if (MaxAmount > 1)
 			return Inventory.HandlePickup(item);
 
-		if (Owner.Player.Cmd.Buttons & BT_RELOAD &&
-			weap.Rarity == BIO_RARITY_COMMON &&
-			weap.Grade == BIO_GRADE_STANDARD)
+		if (Owner.Player.Cmd.Buttons & BT_RELOAD && CanBeScavenged())
 			weap.bPickupGood = weap.PickupForAmmo(self);
 
 		return true;
@@ -317,7 +315,7 @@ class BIO_Weapon : DoomWeapon abstract
 	final override bool TryPickupRestricted(in out Actor toucher)
 	{
 		if (!(BIO_Player(toucher).Player.Cmd.Buttons & BT_RELOAD) ||
-			Rarity != BIO_RARITY_COMMON || Grade != BIO_GRADE_STANDARD)
+			!CanBeScavenged())
 			return false;
 
 		if (AmmoGive1 <= 0 && AmmoGive2 <= 0)
@@ -1064,6 +1062,19 @@ class BIO_Weapon : DoomWeapon abstract
 			AmmoType1 == null && AmmoType2 == null &&
 			AmmoUse1 <= 0 && AmmoUse2 <= 0 &&
 			MagazineType1 == null && MagazineType2 == null;
+	}
+
+	private bool CanBeScavenged() const
+	{
+		if (Grade != BIO_GRADE_STANDARD || Rarity != BIO_RARITY_COMMON)
+			return false;
+
+		if (AmmoType1 != null && AmmoGive1 > 0)
+			return true;
+		else if (AmmoType2 != null && AmmoGive2 > 0)
+			return true;
+		else
+			return false;
 	}
 
 	readOnly<BIO_Weapon> AsConst() const { return self; }
