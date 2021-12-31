@@ -231,12 +231,27 @@ class BIO_Muta_Reroll : BIO_Mutagen
 			return false;
 		}
 
-		// TODO: If no affixes have randomizable values, forbid usage
+		bool anySupportReroll = false;
+
+		for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
+			anySupportReroll |= weap.ImplicitAffixes[i].SupportsReroll();
+
+		for (uint i = 0; i < weap.Affixes.Size(); i++)
+			anySupportReroll |=  weap.Affixes[i].SupportsReroll();
+
+		if (!anySupportReroll)
+		{
+			Owner.A_Print("$BIO_MUTA_FAIL_NOREROLLSUPPORT", 4.0);
+			return false;
+		}
 
 		weap.ResetStats();
 		
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
+		{
+			weap.Affixes[i] = BIO_WeaponAffix(new(weap.Affixes[i].GetClass()));
 			weap.Affixes[i].Init(weap.AsConst());
+		}
 
 		weap.ApplyAllAffixes();
 		weap.OnWeaponChange();
