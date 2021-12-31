@@ -99,44 +99,6 @@ class BIO_Equipment : Inventory abstract
 		return false;
 	}
 
-	final override void Activate(Actor activator)
-	{
-		super.Activate(activator);
-
-		let bioPlayer = BIO_Player(activator);
-		if (bioPlayer == null) return;
-
-		Array<string> readout;
-
-		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-			ImplicitAffixes[i].ToString(readout, AsConst());
-
-		if (Affixes.Size() > 0)
-		{
-			// Blank line between stats/implicit affixes and explicit affixes
-			// readout.Push("");
-
-			for (uint i = 0; i < Affixes.Size(); i++)
-				Affixes[i].ToString(readout, AsConst());
-		}
-
-		string output = GetTag() .. "\n\n";
-
-		for (uint i = 0; i < readout.Size(); i++)
-			output.AppendFormat("%s\n", readout[i]);
-
-		output.DeleteLastCharacter(); // Trim off trailing newline
-		
-		// Scale message uptime off of number of characters in readout
-		float upTime = 2.0;
-
-		for (uint i = 0; i < readout.Size(); i++)
-			upTime += float(readout[i].Length()) * 0.0075;
-		
-		bioPlayer.A_Print(output, upTime);
-		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 0.8);
-	}
-
 	override string PickupMessage()
 	{
 		string ret = StringTable.Localize(PickupMsg);
@@ -301,6 +263,55 @@ class BIO_Armor : BIO_Equipment abstract
 			Affixes[i].PreArmorApply(self, ArmorData);
 	}
 
+	final override void Activate(Actor activator)
+	{
+		super.Activate(activator);
+
+		let bioPlayer = BIO_Player(activator);
+		if (bioPlayer == null) return;
+
+		Array<string> readout;
+
+		string crEsc_saveAmt = "";
+		let statDefs = GetDefaultByType(StatClass);
+
+		if (ArmorData.SaveAmount > statDefs.SaveAmount)
+			crEsc_saveAmt = "\c[Green]";
+		else if (ArmorData.SaveAmount < statDefs.SaveAmount)
+			crEsc_saveAmt = "\c[Tan]";
+		else
+			crEsc_saveAmt = "\c[White]";
+
+		readout.Push(String.Format(
+			StringTable.Localize("$BIO_EQUIPTOSTR_SAVEAMOUNT"),
+			crEsc_saveAmt, ArmorData.SaveAmount));
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].ToString(readout, AsConst());
+		
+		// Blank line between stats/implicit affixes and explicit affixes
+		readout.Push("");
+
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].ToString(readout, AsConst());
+
+		string output = GetTag() .. "\n\n";
+
+		for (uint i = 0; i < readout.Size(); i++)
+			output.AppendFormat("%s\n", readout[i]);
+
+		output.DeleteLastCharacter(); // Trim off trailing newline
+		
+		// Scale message uptime off of number of characters in readout
+		float upTime = 2.0;
+
+		for (uint i = 0; i < readout.Size(); i++)
+			upTime += float(readout[i].Length()) * 0.0075;
+		
+		bioPlayer.A_Print(output, upTime);
+		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 0.8);
+	}
+
 	// Does not check if already in perfect condition.
 	// TODO: Armor grade, intrinsic properties, affixes 
 	// decide if armor can be repaired
@@ -308,7 +319,7 @@ class BIO_Armor : BIO_Equipment abstract
 }
 
 // Intangible items given when a BIO_Armor is used (equipped), which
-// provides the actual damage mitigation to the player.
+// provide the actual damage mitigation to the player.
 class BIO_ArmorStats : BasicArmorPickup abstract
 {
 	final override bool Use(bool pickup)

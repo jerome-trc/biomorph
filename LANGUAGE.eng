@@ -260,6 +260,8 @@
 	BIO_ARMORUNEQUIP = "You strip off your %s.";
 	BIO_ARMORUNEQUIP_FAIL_NOARMOR = "You can't unequip your armour; you aren't wearing any.";
 
+	BIO_EQUIPTOSTR_SAVEAMOUNT = "\c[MidGrey]Durability remaining: %s%d";
+
 // Affixes (tags, details, to-string templates) ================================
 
 	BIO_AFFIXESUNKNOWN = "Affixes unknown";
