@@ -29,7 +29,10 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 				continue;
 			}
 
-			Modifiers.Push(Random[BIO_Afx](vals[0] / 2, vals[0] * 2));
+			int
+				minRand = int(Ceil(float(vals[0]) * 0.4)),
+				maxRand = int(Ceil(float(vals[0]) * 1.6));
+			Modifiers.Push(Random[BIO_Afx](minRand, maxRand));
 		}
 	}
 
