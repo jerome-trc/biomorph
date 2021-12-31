@@ -72,6 +72,8 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_DAMAGE_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_DAMAGE;
@@ -150,6 +152,8 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_DMGMULTI_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_DAMAGE;
@@ -204,9 +208,11 @@ class BIO_WAfx_Crit : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_CRIT_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_DAMAGE | BIO_WAF_CRIT;
+		return BIO_WAF_DAMAGE;
 	}
 }
 
@@ -255,9 +261,11 @@ class BIO_WAfx_SplashForDamage : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_SPLASHFORDAMAGE_TAG");
 	}
 
+	final override bool SupportsReroll() const { return false; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_DAMAGE | BIO_WAF_SPLASH;
+		return BIO_WAF_DAMAGE;
 	}
 }
 
@@ -296,6 +304,8 @@ class BIO_WAfx_ForwardDamage : BIO_WeaponAffix
 	{
 		return StringTable.Localize("$BIO_WAFX_FORWARDDAMAGE_TAG");
 	}
+
+	final override bool SupportsReroll() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -341,6 +351,8 @@ class BIO_WAfx_StrafeDamage : BIO_WeaponAffix
 	{
 		return StringTable.Localize("$BIO_WAFX_STRAFEDAMAGE_TAG");
 	}
+
+	final override bool SupportsReroll() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -406,6 +418,8 @@ class BIO_WAfx_RandDmgMulti : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_RANDDMGMULTI_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_DAMAGE;
@@ -456,6 +470,8 @@ class BIO_WAfx_EnemyHealthDamage : BIO_WeaponAffix
 	{
 		return StringTable.Localize("$BIO_WAFX_ENEMYHEALTHDAMAGE_TAG");
 	}
+
+	final override bool SupportsReroll() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -522,6 +538,8 @@ class BIO_WAfx_DamageInverseHealth : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_DMGINVERSEHEALTH_TAG");
 	}
 
+	final override bool SupportsReroll() const { return false; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_DAMAGE;
@@ -560,6 +578,8 @@ class BIO_WAfx_DemonSlayer : BIO_WeaponAffix
 		Class<Inventory> ldToken_t = ldToken_tn;
 		return ldToken_t != null;
 	}
+
+	final override bool SupportsReroll() const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -665,9 +685,11 @@ class BIO_WAfx_Plasma : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_PLASMA_TAG");
 	}
 
+	final override bool SupportsReroll() const { return false; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_FIRETYPE | BIO_WAF_DAMAGE;
+		return BIO_WAF_DAMAGE;
 	}
 }
 
@@ -729,9 +751,11 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_SLUG_TAG");
 	}
 
+	final override bool SupportsReroll() const { return false; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_FIRETYPE | BIO_WAF_FIRECOUNT | BIO_WAF_DAMAGE;
+		return BIO_WAF_FIRECOUNT | BIO_WAF_DAMAGE;
 	}
 }
 
@@ -789,9 +813,11 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_MINIMISSILE_TAG");
 	}
 
+	final override bool SupportsReroll() const { return false; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_FIRETYPE;
+		return BIO_WAF_NONE;
 	}
 }
 
@@ -844,9 +870,11 @@ class BIO_WAfx_BFGSpray : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_BFGSPRAY_TAG");
 	}
 
+	final override bool SupportsReroll() const { return false; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_FIRETYPE;
+		return BIO_WAF_NONE;
 	}
 }
 
@@ -882,10 +910,12 @@ class BIO_WAfx_ForcePain : BIO_WeaponAffix
 	{
 		return StringTable.Localize("$BIO_WAFX_FORCEPAIN_TAG");
 	}
+
+	final override bool SupportsReroll() const { return false; }
 	
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_ONPROJFIRED;
+		return BIO_WAF_NONE;
 	}
 }
 
@@ -918,11 +948,13 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_FORCERADIUSDMG_TAG");
 	}
 
+	final override bool SupportsReroll() const { return false; }
+
 	final override bool CanGenerate() const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_ONPROJFIRED;
+		return BIO_WAF_NONE;
 	}
 }
 
@@ -950,9 +982,11 @@ class BIO_WAfx_ProjSeek : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_PROJSEEK_TAG");
 	}
 
+	final override bool SupportsReroll() const { return false; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_ONPROJFIRED;
+		return BIO_WAF_ADDSSEEKING;
 	}
 }
 
@@ -997,9 +1031,11 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_PROJGRAVITY_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_ONPROJFIRED | BIO_WAF_DAMAGE;
+		return BIO_WAF_ADDSGRAVITY | BIO_WAF_DAMAGE;
 	}
 }
 
@@ -1039,9 +1075,11 @@ class BIO_WAfx_ProjBounce : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_PROJBOUNCE_TAG");
 	}
 
+	final override bool SupportsReroll() const { return false; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_ONPROJFIRED;
+		return BIO_WAF_ADDSBOUNCE;
 	}
 }
 
@@ -1100,6 +1138,8 @@ class BIO_WAfx_FireTime : BIO_WeaponAffix
 	{
 		return StringTable.Localize("$BIO_WAFX_FIRETIME_TAG");
 	}
+
+	final override bool SupportsReroll() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -1161,6 +1201,8 @@ class BIO_WAfx_ReloadTime : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_RELOADTIME_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_RELOADTIME;
@@ -1207,9 +1249,11 @@ class BIO_WAfx_InfiniteAmmoOnKill : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_INFINITEAMMOONKILL_TAG");	
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_ONKILL;
+		return BIO_WAF_NONE;
 	}
 }
 
@@ -1253,6 +1297,8 @@ class BIO_WAfx_BerserkDamage : BIO_WeaponAffix
 	{
 		return StringTable.Localize("$BIO_WAFX_BERSERKDMG_TAG");
 	}
+
+	final override bool SupportsReroll() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -1324,9 +1370,11 @@ class BIO_WAfx_Lifesteal : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_LIFESTEAL_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_LIFESTEAL;
+		return BIO_WAF_NONE;
 	}
 }
 
@@ -1396,9 +1444,11 @@ class BIO_WAfx_MeleeRange : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_MELEERANGE_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_MELEERANGE;
+		return BIO_WAF_NONE;
 	}
 }
 
@@ -1491,9 +1541,11 @@ class BIO_WAfx_Spread : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_SPREAD_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_ACCURACY;
+		return BIO_WAF_SPREAD;
 	}
 }
 
@@ -1548,9 +1600,11 @@ class BIO_WAfx_SwitchSpeed : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_SWITCHSPEED_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_SWITCHSPEED;
+		return BIO_WAF_NONE;
 	}
 }
 
@@ -1588,8 +1642,10 @@ class BIO_WAfx_Kickback : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_KICKBACK_TAG");
 	}
 
+	final override bool SupportsReroll() const { return true; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
-		return BIO_WAF_KICKBACK;
+		return BIO_WAF_NONE;
 	}
 }

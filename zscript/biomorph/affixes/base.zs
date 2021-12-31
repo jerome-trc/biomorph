@@ -12,35 +12,27 @@ class BIO_Affix play abstract
 enum BIO_WeaponAffixFlags : uint
 {
 	BIO_WAF_NONE = 0,
-	BIO_WAF_FIREFUNC = 1 << 0,
-	BIO_WAF_FIRETYPE = 1 << 1,
-	BIO_WAF_FIRECOUNT = 1 << 2,
-	BIO_WAF_DAMAGE = 1 << 3,
-	BIO_WAF_SPLASH = 1 << 4,
-	BIO_WAF_ACCURACY = 1 << 5,
-	BIO_WAF_ONPROJFIRED = 1 << 6,
-	BIO_WAF_ONPUFFFIRED = 1 << 7,
-	BIO_WAF_PROJSPEED = 1 << 8,
-	BIO_WAF_PROJACCEL = 1 << 9,
-	BIO_WAF_FIRETIME = 1 << 10,
-	BIO_WAF_RELOADTIME = 1 << 11,
-	BIO_WAF_MAGSIZE = 1 << 12,
-	BIO_WAF_MAGAZINE = 1 << 13, // Adds or removes rounds
-	BIO_WAF_ALERT = 1 << 14,
-	BIO_WAF_SWITCHSPEED = 1 << 15,
-	BIO_WAF_KICKBACK = 1 << 16,
-	BIO_WAF_CRIT = 1 << 17,
-	BIO_WAF_LIFESTEAL = 1 << 18,
-	BIO_WAF_MELEERANGE = 1 << 19,
-	BIO_WAF_ONKILL = 1 << 20,
-	BIO_WAF_DEBUFF = 1 << 21,
-	BIO_WAF_ALL = uint.MAX
+	BIO_WAF_ALL = uint.MAX,
+	BIO_WAF_FIRECOUNT = 1 << 0,
+	BIO_WAF_DAMAGE = 1 << 1,
+	BIO_WAF_SPREAD = 1 << 2,
+	BIO_WAF_FIRETIME = 1 << 3,
+	BIO_WAF_RELOADTIME = 1 << 4,
+	BIO_WAF_PROJSPEED = 1 << 5,
+	BIO_WAF_PROJACCEL = 1 << 6,
+	BIO_WAF_MAGSIZE = 1 << 7,
+	BIO_WAF_ADDSGRAVITY = 1 << 8,
+	BIO_WAF_ADDSBOUNCE = 1 << 9,
+	BIO_WAF_ADDSSEEKING = 1 << 10,
+	BIO_WAF_CRITCHANCE = 1 << 11
 }
 
 class BIO_WeaponAffix : BIO_Affix abstract
 {
 	abstract bool Compatible(readOnly<BIO_Weapon> weap) const;
+
 	virtual void Init(readOnly<BIO_Weapon> weap) {}
+
 	virtual void CustomInit(readOnly<BIO_Weapon> weap, Dictionary dict)
 	{
 		Console.Printf(Biomorph.LOGPFX_INFO ..
@@ -64,18 +56,25 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	virtual void OnPuffFired(BIO_Weapon weap,
 		BIO_Puff puff) const {}
 
+	// Be aware that this is called on the readied weapon, which may not be the
+	// weapon which fired the projectile that dealt the kill. Plan accordingly.
 	virtual void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const {}
+
+	// In the baseline mod, this is only applicable to pistols.
+	// Called before the weapon pipeline's firing loop begins.
 	virtual void OnCriticalShot(BIO_Weapon weap, in out BIO_FireData fireData) const {}
 
 	virtual void OnPickup(BIO_Weapon weap) const {}
 	virtual void OnMagLoad(BIO_Weapon weap, bool secondary, in out int diff) const {}
 	virtual void OnDrop(BIO_Weapon weap, BIO_Player dropper) const {}
 
-	virtual bool CanGenerate() const { return true; }
-	virtual bool CanGenerateImplicit() const { return false; }
-
 	abstract void ToString(in out Array<string> strings,
 		readOnly<BIO_Weapon> weap) const;
+	
+	virtual bool CanGenerate() const { return true; }
+	virtual bool CanGenerateImplicit() const { return false; }
+	abstract bool SupportsReroll() const;
+
 	abstract BIO_WeaponAffixFlags GetFlags() const;
 }
 
