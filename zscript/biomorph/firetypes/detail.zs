@@ -191,15 +191,11 @@ class BIO_Puff : BulletPuff abstract
 	States
 	{
 	Melee:
-		TNT1 A 0 { invoker.OnPuffDeath(); }
 		PUFF CD 4;
 		Stop;
 	}
 
 	virtual void ToString(in out Array<string> weapReadout) {}
-
-	// Note that you never need to call `super.OnPuffDeath()`.
-	virtual void OnPuffDeath() {}
 }
 
 class BIO_RailPuff : BIO_Puff abstract
