@@ -22,7 +22,7 @@ class BIO_FireFunctor play abstract
 	}
 
 	// Output is fully localized.
-	protected static string FireTypeTag(Class<Actor> fireType, int count)
+	static string FireTypeTag(Class<Actor> fireType, uint count)
 	{
 		if (fireType is 'BIO_Projectile')
 		{
@@ -88,6 +88,8 @@ class BIO_FireFunctor play abstract
 			default: return StringTable.Localize("$BIO_PROJEXTRA_TAG_BFGRAYS"); 
 			}
 		}
+		else if (fireType == null)
+			return StringTable.Localize("$BIO_NOTHING");
 		else
 			return StringTable.Localize(GetDefaultByType(fireType).GetTag());
 	}

@@ -249,6 +249,12 @@ class BIO_WeaponPipeline play
 		FireCount = fCount;
 	}
 
+	void ModifyFireCount(uint fCount)
+	{
+		if (Mask & BIO_WPM_FIRECOUNT) return;
+		FireCount += fCount;
+	}
+
 	bool DamageFunctorMutable() const
 	{
 		return !(Mask & BIO_WPM_DAMAGEFUNCTOR);
@@ -457,6 +463,7 @@ class BIO_WeaponPipeline play
 	float GetHSpread() const { return HSpread; }
 	float GetVSpread() const { return VSpread; }
 	bool HasAnySpread() const { return HSpread > 0.0 || VSpread > 0.0; }
+
 	bool NonTrivialSpread() const
 	{
 		return HSpread > TRIVIAL_WEAPON_SPREAD || VSpread > TRIVIAL_WEAPON_SPREAD;
@@ -470,21 +477,21 @@ class BIO_WeaponPipeline play
 	void SetSpread(float hSpr, float vSpr)
 	{
 		if (!(Mask & BIO_WPM_HSPREAD))
-			hSpread = hSpr;
+			HSpread = Clamp(hSpr, 0.0, 255.0);
 		if (!(Mask & BIO_WPM_VSPREAD))
-			vSpread = vSpr;
+			VSpread = Clamp(vSpr, 0.0, 255.0);
+	}
+
+	void ModifySpread(float hSpr, float vSpr)
+	{
+		if (!(Mask & BIO_WPM_HSPREAD))
+			HSpread = Clamp(HSpread + hSpr, 0.0, 255.0);
+		if (!(Mask & BIO_WPM_VSPREAD))
+			VSpread = Clamp(VSpread + vSpr, 0.0, 255.0);
 	}
 
 	bool AngleMutable() const { return !(Mask & BIO_WPM_ANGLE); }
 	bool PitchMutable() const { return !(Mask & BIO_WPM_PITCH); }
-
-	void ModifyAngleAndPitch(float ang, float ptch)
-	{
-		if (!(Mask & BIO_WPM_ANGLE))
-			Angle += ang;
-		if (!(Mask & BIO_WPM_PITCH))
-			Pitch += ptch;
-	}
 
 	void SetAngleAndPitch(float ang, float ptch)
 	{
@@ -492,6 +499,14 @@ class BIO_WeaponPipeline play
 			Angle = ang;
 		if (!(Mask & BIO_WPM_PITCH))
 			Pitch = ptch;
+	}
+
+	void ModifyAngleAndPitch(float ang, float ptch)
+	{
+		if (!(Mask & BIO_WPM_ANGLE))
+			Angle += ang;
+		if (!(Mask & BIO_WPM_PITCH))
+			Pitch += ptch;
 	}
 
 	bool UsesSecondaryAmmo() const { return SecondaryAmmo; }
