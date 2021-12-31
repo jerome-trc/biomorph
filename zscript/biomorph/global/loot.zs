@@ -8,8 +8,8 @@ enum BIO_PartyMaxWeaponGrade : uint8
 
 extend class BIO_GlobalData
 {
-	const WEIGHTMULTI_STD = 9;
-	const WEIGHTMULTI_SPEC = 3;
+	const WEIGHTMULTI_STD = 12;
+	const WEIGHTMULTI_SPEC = 4;
 	const WEIGHTMULTI_CLSF = 1;
 
 	private BIO_PartyMaxWeaponGrade MaxWeaponGrade;
@@ -29,20 +29,20 @@ extend class BIO_GlobalData
 
 	Class<BIO_Weapon> LootWeaponType(BIO_WeaponCategory table) const
 	{
-		uint i = int.MAX;
-
 		switch (MaxWeaponGrade)
 		{
 		default:
 		case BIO_PMWG_STANDARD:
-			i = 0; break;
+			return (Class<BIO_Weapon>)(WeaponLootTables[0][table].Result());
 		case BIO_PMWG_SPECIALTY:
-			i = 1; break;
+			return (Class<BIO_Weapon>)(WeaponLootTables[
+				RandomPick(0, 0, 0, 0, 1)
+			][table].Result());
 		case BIO_PMWG_CLASSIFIED:
-			i = 2; break;
+			return (Class<BIO_Weapon>)(WeaponLootTables[
+				RandomPick(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2)
+			][table].Result());
 		}
-
-		return (Class<BIO_Weapon>)(WeaponLootTables[Random(0, i)][table].Result());
 	}
 
 	Class<BIO_Mutagen> RandomMutagenType() const
