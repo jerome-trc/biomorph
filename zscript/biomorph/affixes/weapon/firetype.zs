@@ -93,7 +93,7 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 				if (!weap.Pipelines[i].FireFunctorMutable())
 					continue;
 				else
-					weap.Pipelines[i].SetFireFunctor(new('BIO_FireFunc_Bullet'));
+					weap.Pipelines[i].SetFireFunctor(new('BIO_FireFunc_Bullet').Setup());
 			}
 
 			weap.Pipelines[i].SetFireType('BIO_Slug');

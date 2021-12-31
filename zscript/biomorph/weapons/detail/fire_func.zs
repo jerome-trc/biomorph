@@ -154,6 +154,13 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 	void AlwaysAccurate() { AccuracyType = BULLET_ALWAYS_ACCURATE; }
 	void FirstAccurate() { AccuracyType = BULLET_FIRST_ACCURATE; }
 
+	BIO_FireFunc_Bullet Setup(int accType = BULLET_ALWAYS_SPREAD, int flagArg = 0)
+	{
+		AccuracyType = accType;
+		Flags = flagArg;
+		return self;
+	}
+
 	override void ToString(
 		in out Array<string> readout,
 		readOnly<BIO_WeaponPipeline> ppl,
