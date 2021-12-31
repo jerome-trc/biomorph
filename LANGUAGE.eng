@@ -130,7 +130,7 @@
 
 	BIO_INCURSIONSHOTGUN_TAG = "Incursion Shotgun";
 	BIO_INCURSIONSHOTGUN_PKUP = "Procured an %s.";
-	BIO_INCURSIONSHOTGUN_QUAD = "\cnAlt-fire\cj shoots 4 barrels";
+	BIO_INCURSIONSHOTGUN_ALT = "\cnAlt-fire\cj shoots 2 barrels";
 
 	BIO_BARRAGELAUNCHER_TAG = "Barrage Launcher";
 	BIO_BARRAGELAUNCHER_PKUP = "Procured a %s.";
