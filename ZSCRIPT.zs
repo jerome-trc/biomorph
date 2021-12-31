@@ -47,7 +47,14 @@ class Biomorph abstract
 
 #include "zscript/biomorph/affixes/base.zs"
 #include "zscript/biomorph/affixes/armor.zs"
-#include "zscript/biomorph/affixes/weapon.zs"
+#include "zscript/biomorph/affixes/weapon/crit.zs"
+#include "zscript/biomorph/affixes/weapon/damage.zs"
+#include "zscript/biomorph/affixes/weapon/firetype.zs"
+#include "zscript/biomorph/affixes/weapon/melee.zs"
+#include "zscript/biomorph/affixes/weapon/misc.zs"
+#include "zscript/biomorph/affixes/weapon/onkill.zs"
+#include "zscript/biomorph/affixes/weapon/postfire.zs"
+#include "zscript/biomorph/affixes/weapon/timing.zs"
 
 #include "zscript/biomorph/equip/base.zs"
 #include "zscript/biomorph/equip/armor.zs"
