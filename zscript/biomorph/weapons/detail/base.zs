@@ -394,7 +394,9 @@ class BIO_Weapon : DoomWeapon abstract
 		AmmoGive1 = Default.AmmoGive1;
 		AmmoGive2 = Default.AmmoGive2;
 
-		BIO_GlobalData.Get().OnWeaponAcquired(Grade);
+		let globals = BIO_GlobalData.Get();
+		if (globals != null)
+			globals.OnWeaponAcquired(Grade);
 
 		if (Pipelines.Size() < 1) Init();
 
