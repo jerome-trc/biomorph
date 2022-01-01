@@ -17,7 +17,7 @@ class BIO_Chainsaw : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_MIN;
 		Weapon.UpSound "weapons/sawup";
 
-		BIO_Weapon.AffixMask BIO_WAM_MAGAZINELESS;
+		BIO_Weapon.AffixMask BIO_WAM_AMMOLESS;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.PlayerVisual BIO_PVIS_CHAINSAW;
 	}
