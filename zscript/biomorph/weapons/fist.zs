@@ -13,7 +13,7 @@ class BIO_Fist : BIO_Weapon replaces Fist
 		Weapon.SlotNumber 1;
 		Weapon.SlotPriority 1.0;
 
-		BIO_Weapon.AffixMask BIO_WAM_MAGAZINELESS;
+		BIO_Weapon.AffixMask BIO_WAM_AMMOLESS;
 		BIO_Weapon.PlayerVisual BIO_PVIS_UNARMED;
 	}
 

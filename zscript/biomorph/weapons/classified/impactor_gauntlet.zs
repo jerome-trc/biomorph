@@ -14,7 +14,7 @@ class BIO_ImpactorGauntlet : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 		Weapon.UpSound "bio/weap/impgaunt/raise";
 
-		BIO_Weapon.AffixMask BIO_WAM_MAGAZINELESS;
+		BIO_Weapon.AffixMask BIO_WAM_AMMOLESS;
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.PlayerVisual BIO_PVIS_UNARMED;
 	}
