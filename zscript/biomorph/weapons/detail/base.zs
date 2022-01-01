@@ -1274,9 +1274,9 @@ class BIO_Weapon : DoomWeapon abstract
 			uint idx = 0, minOrMax = 0;
 
 			if (modifier > 0)
-				[idx, minOrMax] = BIO_Utils.IntArrayMin(FireTimeGroups[grp].Times);
+				[minOrMax, idx] = BIO_Utils.IntArrayMin(FireTimeGroups[grp].Times);
 			else
-				[idx, minOrMax] = BIO_Utils.IntArrayMax(FireTimeGroups[grp].Times);
+				[minOrMax, idx] = BIO_Utils.IntArrayMax(FireTimeGroups[grp].Times);
 
 			FireTimeGroups[grp].Times[idx] = modifier > 0 ?
 				FireTimeGroups[grp].Times[idx] + 1 :
@@ -1309,9 +1309,9 @@ class BIO_Weapon : DoomWeapon abstract
 			uint idx = 0, minOrMax = 0;
 
 			if (modifier > 0)
-				[idx, minOrMax] = BIO_Utils.IntArrayMin(ReloadTimeGroups[grp].Times);
+				[minOrMax, idx] = BIO_Utils.IntArrayMin(ReloadTimeGroups[grp].Times);
 			else
-				[idx, minOrMax] = BIO_Utils.IntArrayMax(ReloadTimeGroups[grp].Times);
+				[minOrMax, idx] = BIO_Utils.IntArrayMax(ReloadTimeGroups[grp].Times);
 
 			ReloadTimeGroups[grp].Times[idx] = modifier > 0 ?
 				ReloadTimeGroups[grp].Times[idx] + 1 :
