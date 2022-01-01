@@ -8,15 +8,27 @@ This is a JSON lump for setting characteristics about weapons which aren't suite
 
 This array can contain only objects. Each of these objects must have the following three fields:
 
-- "`input`"; this can be a string with the name of a weapon class, or an array containing multiple names of weapon classes. The player must have this weapon to perform the upgrade. If an array is given, each input is given its own recipe.
-- "`output`"; a string with the name of a different weapon class, or an array containing multiple names of weapon classes. The player receives this weapon if they perform the upgrade. If an array is given, each output is given its own recipe.
-- "`cost`"; this represents how many upgrade mutagens the player will need to consume in order to perform the upgrade. This can be either a number or a string; the number will be interpreted as-is, but strings are resolved to symbolic constants if possible. The allowed constants are as follows:
+##### `input`
 
-	- `"STANDARD_TO_STANDARD"`
-	- `"STANDARD_TO_SPECIALTY"`
-	- `"SPECIALTY_TO_SPECIALTY"`
-	- `"SPECIALTY_TO_CLASSIFIED"`
-	- `"CLASSIFIED_TO_CLASSIFIED"`
+If this is a class name string, that class is the input of the recipe (the weapon the player must be holding to attempt the upgrade).
+If it's a special placeholder token in the format `$GRADE_CATEGORY`, where `GRADE` is one of `STANDARD`, `SPECIALTY`, or `CLASSIFIED`, and `CATEGORY` is one of the categories listed in [upgrades_auto](#upgrades_auto-object).
+If it's an array, then each input is given its own recipe.
+
+##### `output`
+
+If this is a class name string, that class is the output of the recipe (the weapon the player is given if they carry out the upgrade).
+This also supports the same placeholder token syntax as `input`; it can also take an array,
+wherein each output is given its own recipe.
+
+##### `cost`
+
+This represents how many upgrade mutagens the player will need to consume in order to perform the upgrade. This can be either a number or a string; the number will be interpreted as-is, but strings are resolved to symbolic constants if possible. The allowed constants are as follows:
+
+- `"STANDARD_TO_STANDARD"`
+- `"STANDARD_TO_SPECIALTY"`
+- `"SPECIALTY_TO_SPECIALTY"`
+- `"SPECIALTY_TO_CLASSIFIED"`
+- `"CLASSIFIED_TO_CLASSIFIED"`
 
 Note that the set of recipes generated is the square cross of the given input and output classes. This means that if three inputs and three outputs are given, nine recipes will be generated (one for each possible combination of input and output), all of the same cost.
 
