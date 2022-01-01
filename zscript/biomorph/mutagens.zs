@@ -234,10 +234,10 @@ class BIO_Muta_Reroll : BIO_Mutagen
 		bool anySupportReroll = false;
 
 		for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
-			anySupportReroll |= weap.ImplicitAffixes[i].SupportsReroll();
+			anySupportReroll |= weap.ImplicitAffixes[i].SupportsReroll(weap.AsConst());
 
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
-			anySupportReroll |=  weap.Affixes[i].SupportsReroll();
+			anySupportReroll |=  weap.Affixes[i].SupportsReroll(weap.AsConst());
 
 		if (!anySupportReroll)
 		{

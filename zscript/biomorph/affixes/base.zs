@@ -73,7 +73,10 @@ class BIO_WeaponAffix : BIO_Affix abstract
 	
 	virtual bool CanGenerate() const { return true; }
 	virtual bool CanGenerateImplicit() const { return false; }
-	abstract bool SupportsReroll() const;
+
+	// The reroll mutagen can't be used on a weapon if none of its
+	// affixes have any stats which may be different if re-randomized.
+	abstract bool SupportsReroll(readOnly<BIO_Weapon> weap) const;
 
 	abstract BIO_WeaponAffixFlags GetFlags() const;
 }

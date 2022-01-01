@@ -37,7 +37,7 @@ class BIO_WAfx_BerserkDamage : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_BERSERKDMG_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -109,7 +109,7 @@ class BIO_WAfx_Lifesteal : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_LIFESTEAL_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -183,7 +183,7 @@ class BIO_WAfx_MeleeRange : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_MELEERANGE_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{

@@ -29,7 +29,7 @@ class BIO_WAfx_ForcePain : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_FORCEPAIN_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 	
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -66,7 +66,7 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_FORCERADIUSDMG_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override bool CanGenerate() const { return false; }
 
@@ -100,7 +100,7 @@ class BIO_WAfx_ProjSeek : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_PROJSEEK_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -164,7 +164,7 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_PROJGRAVITY_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -208,7 +208,7 @@ class BIO_WAfx_ProjBounce : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_PROJBOUNCE_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{

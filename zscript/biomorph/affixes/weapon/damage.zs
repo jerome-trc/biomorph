@@ -73,7 +73,7 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_DAMAGE_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -153,7 +153,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_DMGMULTI_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -206,7 +206,7 @@ class BIO_WAfx_SplashForDamage : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_SPLASHFORDAMAGE_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -250,7 +250,7 @@ class BIO_WAfx_ForwardDamage : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_FORWARDDAMAGE_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -297,7 +297,7 @@ class BIO_WAfx_StrafeDamage : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_STRAFEDAMAGE_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -363,7 +363,7 @@ class BIO_WAfx_RandDmgMulti : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_RANDDMGMULTI_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -416,7 +416,7 @@ class BIO_WAfx_EnemyHealthDamage : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_ENEMYHEALTHDAMAGE_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -483,7 +483,7 @@ class BIO_WAfx_DamageInverseHealth : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_DMGINVERSEHEALTH_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -524,7 +524,7 @@ class BIO_WAfx_DemonSlayer : BIO_WeaponAffix
 		return ldToken_t != null;
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{

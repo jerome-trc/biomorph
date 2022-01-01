@@ -49,7 +49,7 @@ class BIO_WAfx_Plasma : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_PLASMA_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -115,7 +115,7 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_SLUG_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -177,7 +177,7 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_MINIMISSILE_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -234,7 +234,7 @@ class BIO_WAfx_BFGSpray : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_BFGSPRAY_TAG");
 	}
 
-	final override bool SupportsReroll() const { return false; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{

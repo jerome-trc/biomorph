@@ -36,7 +36,7 @@ class BIO_WAfx_InfiniteAmmoOnKill : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_INFINITEAMMOONKILL_TAG");	
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
