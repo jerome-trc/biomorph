@@ -1,10 +1,10 @@
-enum BIO_FireFunctorType : uint8
+enum BIO_FireFunctorCapabilities : uint8
 {
-	BIO_FFT_NONE = 0,
-	BIO_FFT_PUFF = 1 << 0,
-	BIO_FFT_PROJECTILE = 1 << 1,
-	BIO_FFT_RAIL = 1 << 2,
-	BIO_FFT_ALL = uint8.MAX
+	BIO_FFC_NONE = 0,
+	BIO_FFC_PUFF = 1 << 0,
+	BIO_FFC_PROJECTILE = 1 << 1,
+	BIO_FFC_RAIL = 1 << 2,
+	BIO_FFC_ALL = uint8.MAX
 }
 
 class BIO_FireFunctor play abstract
@@ -101,7 +101,7 @@ class BIO_FireFunctor play abstract
 
 	// If a category of fire type can be handled by this functor, include its
 	// bit. Used by affixes to determine if a new fire type may be compatible.
-	abstract BIO_FireFunctorType GetType() const;
+	abstract BIO_FireFunctorCapabilities Capabilities() const;
 
 	readOnly<BIO_FireFunctor> AsConst() const { return self; }
 }
@@ -130,9 +130,9 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 			FireTypeTag(ft, fc)));
 	}
 
-	override BIO_FireFunctorType GetType() const
+	override BIO_FireFunctorCapabilities Capabilities() const
 	{
-		return BIO_FFT_PROJECTILE;
+		return BIO_FFC_PROJECTILE;
 	}
 }
 
@@ -176,9 +176,9 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 			FireTypeTag(ft, fc)));
 	}
 
-	override BIO_FireFunctorType GetType() const
+	override BIO_FireFunctorCapabilities Capabilities() const
 	{
-		return BIO_FFT_PUFF;
+		return BIO_FFC_PUFF;
 	}
 }
 
@@ -280,9 +280,9 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		readout.Push(output);
 	}
 
-	override BIO_FireFunctorType GetType() const
+	override BIO_FireFunctorCapabilities Capabilities() const
 	{
-		return BIO_FFT_RAIL;
+		return BIO_FFC_RAIL;
 	}
 }
 
@@ -309,9 +309,9 @@ class BIO_FireFunc_Punch : BIO_FireFunc_Melee
 		readout.Push(StringTable.Localize("$BIO_FIREFUNC_PUNCH"));
 	}
 
-	override BIO_FireFunctorType GetType() const
+	override BIO_FireFunctorCapabilities Capabilities() const
 	{
-		return BIO_FFT_PUFF;
+		return BIO_FFC_PUFF;
 	}
 }
 
@@ -335,9 +335,9 @@ class BIO_FireFunc_Saw : BIO_FireFunc_Melee
 		readout.Push(StringTable.Localize("$BIO_FIREFUNC_SAW"));
 	}
 
-	override BIO_FireFunctorType GetType() const
+	override BIO_FireFunctorCapabilities Capabilities() const
 	{
-		return BIO_FFT_PUFF;
+		return BIO_FFC_PUFF;
 	}
 }
 
@@ -361,8 +361,8 @@ class BIO_FireFunc_BFGSpray : BIO_FireFunctor
 			BIO_Utils.StatFontColor(fc, pplDef.GetFireCount()), fc));
 	}
 
-	final override BIO_FireFunctorType GetType() const
+	final override BIO_FireFunctorCapabilities Capabilities() const
 	{
-		return BIO_FFT_NONE;
+		return BIO_FFC_NONE;
 	}
 }

@@ -147,17 +147,17 @@ class BIO_WeaponPipeline play
 
 	bool CanFireProjectiles() const
 	{
-		return FireFunctor != null && (FireFunctor.GetType() & BIO_FFT_PROJECTILE);
+		return FireFunctor != null && (FireFunctor.Capabilities() & BIO_FFC_PROJECTILE);
 	}
 
 	bool CanFirePuffs() const
 	{
-		return FireFunctor != null && (FireFunctor.GetType() & BIO_FFT_PUFF);
+		return FireFunctor != null && (FireFunctor.Capabilities() & BIO_FFC_PUFF);
 	}
 
 	bool CanFireRails() const
 	{
-		return FireFunctor != null && (FireFunctor.GetType() & BIO_FFT_RAIL);
+		return FireFunctor != null && (FireFunctor.Capabilities() & BIO_FFC_RAIL);
 	}
 
 	bool FireFunctorMutable() const
