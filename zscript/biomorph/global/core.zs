@@ -150,4 +150,12 @@ class BIO_GlobalData : Thinker
 		let iter = ThinkerIterator.Create('BIO_GlobalData', STAT_STATIC);
 		return BIO_GlobalData(iter.Next(true));
 	}
+
+	final override void OnDestroy()
+	{
+		if (BIO_debug)
+			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Global data teardown.");
+		
+		super.OnDestroy();
+	}
 }
