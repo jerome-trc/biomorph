@@ -90,7 +90,7 @@ class BIO_WAfx_HighSpreadFireCount : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_HIGHSPREADFIRECOUNT_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -199,7 +199,7 @@ class BIO_WAfx_LowSpreadFireCount : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_LOWSPREADFIRECOUNT_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -241,7 +241,7 @@ class BIO_WAfx_Kickback : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_KICKBACK_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -336,7 +336,7 @@ class BIO_WAfx_Spread : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_SPREAD_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -395,7 +395,7 @@ class BIO_WAfx_SwitchSpeed : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_SWITCHSPEED_TAG");
 	}
 
-	final override bool SupportsReroll() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
