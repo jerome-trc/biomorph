@@ -345,6 +345,10 @@
 	BIO_WAFX_KICKBACK_TAG = "Stopping";
 	BIO_WAFX_KICKBACK_TOSTR = "%s%.1f%% %s\cj knockback";
 	
+	BIO_WAFX_MAGSIZE_TAG = "High-Capacity";
+	BIO_WAFX_MAGSIZE_TOSTR_1 = "%s%s%d \c[White]primary magazine capacity";
+	BIO_WAFX_MAGSIZE_TOSTR_2 = "%s%s%d \c[White]secondary magazine capacity";
+
 	BIO_WAFX_RELOADTIME_TAG = "Ergonomic";
 	BIO_WAFX_RELOADTIME_TOSTR = "Reload time%s: %s%s%.2f seconds";
 

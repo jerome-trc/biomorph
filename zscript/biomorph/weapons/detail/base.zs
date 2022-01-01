@@ -1073,6 +1073,34 @@ class BIO_Weapon : DoomWeapon abstract
 			MagazineType1 == null && MagazineType2 == null;
 	}
 
+	bool MagazineSizeMutable(bool secondary = false) const
+	{
+		if (!secondary)
+		{
+			if (MagazineType1 == null || MagazineType1 == AmmoType1)
+				return false;
+
+			if (MagazineSize1 <= 0)
+				return false;
+
+			if (AffixMask & BIO_WAM_MAGSIZE_1)
+				return false;
+		}
+		else
+		{
+			if (MagazineType2 == null || MagazineType2 == AmmoType2)
+				return false;
+
+			if (MagazineSize2 <= 0)
+				return false;
+
+			if (AffixMask & BIO_WAM_MAGSIZE_2)
+				return false;
+		}
+
+		return true;
+	}
+
 	private bool CanBeScavenged() const
 	{
 		if (Grade != BIO_GRADE_STANDARD || Rarity != BIO_RARITY_COMMON)
@@ -1138,6 +1166,9 @@ class BIO_Weapon : DoomWeapon abstract
 		
 		RaiseSpeed = Default.RaiseSpeed;
 		LowerSpeed = Default.LowerSpeed;
+
+		MagazineSize1 = Default.MagazineSize1;
+		MagazineSize2 = Default.MagazineSize2;
 		
 		ReloadCost1 = Default.ReloadCost1;
 		ReloadOutput1 = Default.ReloadOutput1;
