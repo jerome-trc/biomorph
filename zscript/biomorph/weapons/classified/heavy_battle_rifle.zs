@@ -4,6 +4,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 	{
 		Tag "$BIO_HBR_TAG";
 
+		Inventory.Icon 'HVBRZ0';
 		Inventory.PickupMessage "$BIO_HBR_PKUP";
 
 		Weapon.AmmoType 'Clip';
