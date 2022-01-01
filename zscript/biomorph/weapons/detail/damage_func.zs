@@ -167,6 +167,108 @@ class BIO_DmgFunc_XTimesRand : BIO_DamageFunctor
 	}
 }
 
+class BIO_DmgFunc_XPlus1D3 : BIO_DamageFunctor
+{
+	protected int Baseline;
+
+	override int Invoke() const { return Baseline + Random(1, 3); }
+
+	override int MinOutput() const { return Baseline + 1; }
+	override int MaxOutput() const { return Baseline + 3; }
+
+	override void GetValues(in out Array<int> vals) const
+	{
+		vals.PushV(Baseline);
+	}
+
+	override void SetValues(in out Array<int> vals)
+	{
+		Baseline = vals[0];
+	}
+
+	BIO_DmgFunc_XPlus1D3 CustomSet(int val)
+	{
+		Baseline = val;
+		return self;
+	}
+
+	override string ToString(BIO_DamageFunctor def) const
+	{
+		let myDefs = BIO_DmgFunc_XPlus1D3(def);
+		string crEsc = "";
+
+		if (myDefs != null)
+			crEsc = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
+		else
+			crEsc = CRESC_STATMODIFIED;
+
+		return String.Format(
+			StringTable.Localize("$BIO_DMGFUNC_XPLUS1D3"),
+			crEsc, Baseline);
+	}
+}
+
+class BIO_DmgFunc_RandomPick : BIO_DamageFunctor
+{
+	Array<int> Values;
+
+	override int Invoke() const { return Values[Random(0, Values.Size() - 1)]; }
+
+	override int MinOutput() const { return BIO_Utils.IntArrayMin(Values); }
+	override int MaxOutput() const { return BIO_Utils.IntArrayMax(Values); }
+
+	BIO_DmgFunc_RandomPick Push(int val)
+	{
+		Values.Push(val);
+		return self;
+	}
+
+	override void GetValues(in out Array<int> vals) const
+	{
+		for (uint i = 0; i < Values.Size(); i++)
+			vals.Push(Values[i]);
+	}
+
+	override void SetValues(in out Array<int> vals)
+	{
+		uint s = Values.Size();
+		Values.Clear();
+
+		for (uint i = 0; i < s; i++)
+			Values.Push(vals[i]);
+	}
+
+	int AverageValue() const
+	{
+		return BIO_Utils.IntArraySum(Values) / Values.Size();
+	}
+
+	override string ToString(BIO_DamageFunctor def) const
+	{
+		let myDefs = BIO_DmgFunc_RandomPick(def);
+		string crEsc = "";
+
+		if (myDefs != null)
+			crEsc = BIO_Utils.StatFontColor(AverageValue(), myDefs.AverageValue());
+		else
+			crEsc = CRESC_STATMODIFIED;
+
+		string ret = StringTable.Localize("$BIO_DMGFUNC_RANDOMPICK") .. crEsc;
+
+		for (uint i = 0; i < Values.Size() - 1; i++)
+		{
+			ret.AppendFormat("%d, ", Values[i]);
+		}
+
+		if (Values.Size() > 1)
+			ret.AppendFormat("\c[MidGrey]%s %s",
+				StringTable.Localize("$BIO_OR"), crEsc);
+		
+		ret.AppendFormat("%d\c[MidGrey])", Values[Values.Size() - 1]);
+		return ret;
+	}
+}
+
 class BIO_DmgFunc_Single : BIO_DamageFunctor
 {
 	protected int Value;

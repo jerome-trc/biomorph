@@ -74,6 +74,10 @@
 		"\c[MidGrey]Damage: %s%d\c[MidGrey] x (1 - %d)";
 	BIO_DMGFUNC_XTIMESRAND =
 		"\c[MidGrey]Damage: %s%d \c[MidGrey]x (%s%d \c[MidGrey]- %s%d\c[MidGrey])";
+	BIO_DMGFUNC_XPLUS1D3 =
+		"\c[MidGrey]Damage: %s%d \c[MidGrey]+ (1 - 3)";
+	BIO_DMGFUNC_RANDOMPICK =
+		"\c[MidGrey]Damage: \c[MidGrey](";
 	BIO_DMGFUNC_SINGLE =
 		"\c[MidGrey]Damage: %s%d";
 	BIO_DMGFUNC_NOOP =
@@ -459,6 +463,8 @@
 
 // Miscellaneous ===============================================================
 
+	BIO_AND = "and";
+	BIO_OR = "or";
 	BIO_NONE = "None";
 	BIO_NOTHING = "nothing";
 	BIO_MUTATED = "mutated";

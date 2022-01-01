@@ -32,9 +32,9 @@ class BIO_Utils abstract
 		return input.Left(1).MakeUpper() .. input.Mid(1);
 	}
 
-	// The first return value is the first element in the array to be the max.
-	// The second is the actual max.
-	static uint, int IntArrayMax(Array<int> arr)
+	// The first return value is the actual maximum.
+	// The second is the first element in the array to be the maximum.
+	static int, uint IntArrayMax(Array<int> arr)
 	{
 		uint idx = arr.Size(), max = int.MIN;
 		
@@ -47,12 +47,12 @@ class BIO_Utils abstract
 			}
 		}
 
-		return idx, max;
+		return max, idx;
 	}
 
-	// The first return value is the first element in the array to be the min.
-	// The second is the actual min.
-	static uint, int IntArrayMin(Array<int> arr)
+	// The first return value is the actual minimum.
+	// The second is the first element in the array to be the minimum.
+	static int, uint IntArrayMin(Array<int> arr)
 	{
 		uint idx = arr.Size(), min = int.MAX;
 
@@ -65,7 +65,7 @@ class BIO_Utils abstract
 			}
 		}
 
-		return idx, min;
+		return min, idx;
 	}
 
 	static int IntArraySum(Array<int> arr)
