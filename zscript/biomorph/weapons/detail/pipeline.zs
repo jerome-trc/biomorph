@@ -508,6 +508,13 @@ class BIO_WeaponPipeline play
 		if (!(Mask & BIO_WPM_PITCH))
 			Pitch += ptch;
 	}
+	
+	bool AffectedByGravity() const
+	{
+		if (FireType == null) return false;
+		let ftDefs = GetDefaultByType(FireType);
+		return !ftDefs.bNoGravity;
+	}
 
 	bool UsesSecondaryAmmo() const { return SecondaryAmmo; }
 	void SetToPrimaryAmmo() { SecondaryAmmo = false; }

@@ -119,15 +119,30 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
-		return weap.FiresTrueProjectile();
+		if (weap.AnyAffixesAddGravity())
+			return false;
+
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FiresTrueProjectile())
+				continue;
+
+			if (weap.Pipelines[i].AffectedByGravity())
+				continue;
+			
+			return true;
+		}
+
+		return false;
 	}
 
 	final override void Apply(BIO_Weapon weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (!weap.Pipelines[i].FiresTrueProjectile()) continue;
-			weap.Pipelines[i].MultiplyAllDamage(1.0 + Multi);
+			if (weap.Pipelines[i].FiresTrueProjectile() &&
+				!weap.Pipelines[i].AffectedByGravity())
+				weap.Pipelines[i].MultiplyAllDamage(1.0 + Multi);
 		}
 	}
 

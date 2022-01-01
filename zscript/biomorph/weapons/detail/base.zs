@@ -954,6 +954,15 @@ class BIO_Weapon : DoomWeapon abstract
 		return null;
 	}
 
+	bool AnyAffixesAddGravity() const
+	{
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			if (ImplicitAffixes[i].GetFlags() & BIO_WAF_ADDSGRAVITY)
+				return true;
+
+		return false;
+	}
+
 	// Returns `true` if any of this weapon's pipelines
 	// fires a `BIO_Projectile` or `BIO_FastProjectile`.
 	bool FiresProjectile() const
