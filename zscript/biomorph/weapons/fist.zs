@@ -28,9 +28,16 @@ class BIO_Fist : BIO_Weapon replaces Fist
 			.Tag(BIO_Utils.Capitalize(StringTable.Localize("$BIO_PUNCH")))
 			.Build());
 
+		let kick = new('BIO_FireFunc_Kick');
+		kick.Range = DEFMELEERANGE + 12.0;
+		kick.HitSound = "*fist";
+		kick.MissSound = "";
+		kick.Flags = CPF_NONE;
+
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.FireFunctor(new('BIO_FireFunc_Kick'))
+			.FireFunctor(kick)
 			.FireType('BIO_MeleeHit')
+			.FireCount(1)
 			.BasicDamage(4, 40)
 			.Alert(-1.0, 0)
 			.Tag(BIO_Utils.Capitalize(StringTable.Localize("$BIO_KICK")))
