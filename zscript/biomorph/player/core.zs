@@ -46,7 +46,8 @@ class BIO_Player : DoomPlayer
 
 		if (EquippedArmor != null)
 		{
-			EquippedArmor.ArmorData.SaveAmount = CountInv('BasicArmor');
+			EquippedArmor.ArmorData.SaveAmount = CountInv('BasicArmor') -
+				(ret * EquippedArmor.ArmorData.SavePercent * 0.01);
 
 			if (EquippedArmor.ArmorData.SaveAmount < 1)
 				UnequipArmor(true);
