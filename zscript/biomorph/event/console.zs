@@ -9,6 +9,7 @@ extend class BIO_EventHandler
 		if (ConEvent_Help(event)) return;
 		if (ConEvent_PassiveDiag(event)) return;
 		if (ConEvent_WeapDiag(event)) return;
+		if (ConEvent_EquipDiag(event)) return;
 		if (ConEvent_XPInfo(event)) return;
 		if (ConEvent_WeapAfxCompat(event)) return;
 		if (ConEvent_LootDiag(event)) return;
@@ -30,6 +31,7 @@ extend class BIO_EventHandler
 			"\c[Gold]Console events:\c-\n"
 			"bio_help_\n" ..
 			"bio_weapdiag_\n" ..
+			"bio_equipdiag_\n" ..
 			"bio_pasvdiag_\n" ..
 			"bio_xpinfo_\n" ..
 			"event bio_wafxcompat:Classname\n" ..
@@ -195,6 +197,38 @@ extend class BIO_EventHandler
 		}
 
 		Console.Printf(output);
+		return true;
+	}
+
+	private ui bool ConEvent_EquipDiag(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_equipdiag")) return false;
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Illegal attempt by a script to invoke `bio_equipdiag`.");
+			return true;
+		}
+
+		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
+		if (bioPlayer == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on Biomorph-class players.");
+			return true;
+		}
+
+		string armorStr;
+
+		if (bioPlayer.EquippedArmor != null)
+			armorStr = String.Format("%s, %d remaining",
+				bioPlayer.EquippedArmor.GetClassName(),
+				bioPlayer.EquippedArmor.ArmorData.SaveAmount);
+		else
+			armorStr = "null";
+
+
+		Console.Printf("Equipped armor: %s", armorStr);
 		return true;
 	}
 
