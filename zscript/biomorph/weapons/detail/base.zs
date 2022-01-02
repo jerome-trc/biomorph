@@ -1569,7 +1569,7 @@ class BIO_Weapon : DoomWeapon abstract
 				LineTrace(bAngle, range, bSlope, TRF_NONE, data: ltd);
 				puff = Actor.Spawn('BIO_FakePuff', ltd.HitLocation);
 				puff.DamageType = GetDefaultByType(puff_t).DamageType;
-				puff.Target = t.LineTarget;
+				puff.Tracer = t.LineTarget;
 			}
 
 			puff.SetDamage(realDmg);
@@ -1632,7 +1632,7 @@ class BIO_Weapon : DoomWeapon abstract
 				LineTrace(pAngle, range, slope, TRF_NONE, data: ltd);
 				puff = Actor.Spawn('BIO_FakePuff', ltd.HitLocation);
 				puff.DamageType = GetDefaultByType(puff_t).DamageType;
-				puff.Target = t.LineTarget;
+				puff.Tracer = t.LineTarget;
 			}
 
 			puff.SetDamage(realDmg);
@@ -1752,7 +1752,7 @@ class BIO_Weapon : DoomWeapon abstract
 			ret = Spawn('BIO_FakePuff', t.LineTarget.Pos);
 			ret.SetDamage(actualDmg);
 			ret.DamageType = 'Melee';
-			ret.Target = t.LineTarget;
+			ret.Tracer = t.LineTarget;
 		}
 
 		return ret;
@@ -1867,7 +1867,7 @@ class BIO_Weapon : DoomWeapon abstract
 			dmgFlags | DMG_USEANGLE, t.AngleFromSource);
 		ret.SetDamage(newDam);
 		ret.DamageType = 'BFGSplash';
-		ret.Target = t.LineTarget;
+		ret.Tracer = t.LineTarget;
 		t.TraceBleed(newdam > 0 ? newdam : fireData.Damage, Owner);
 		return ret;
 	}

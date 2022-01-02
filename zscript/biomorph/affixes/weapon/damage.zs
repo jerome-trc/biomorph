@@ -442,10 +442,10 @@ class BIO_HDF_EnemyHealthDamage : BIO_HitDamageFunctor
 
 	final override void InvokePuff(BIO_Puff puff) const
 	{
-		if (puff.Target != null)
+		if (puff.Tracer != null)
 		{
-			int dmg = puff.Target.Health * Factor;
-			puff.Target.DamageMObj(puff, null, dmg, puff.DamageType);
+			int dmg = puff.Tracer.Health * Factor;
+			puff.Tracer.DamageMObj(puff, null, dmg, puff.DamageType);
 			puff.SetDamage(puff.Damage + dmg);
 		}
 	}
@@ -562,11 +562,11 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 
 	final override void InvokePuff(BIO_Puff puff) const
 	{
-		if (puff.Target == null) return;
+		if (puff.Tracer == null) return;
 
-		if (BIO_Utils.TryFindInv(puff.Target, "LDLegendaryMonsterToken"))
+		if (BIO_Utils.TryFindInv(puff.Tracer, "LDLegendaryMonsterToken"))
 		{
-			puff.Target.DamageMObj(puff, null, puff.Damage * 3, 'DemonSlayer');
+			puff.Tracer.DamageMObj(puff, null, puff.Damage * 3, 'DemonSlayer');
 			puff.DamageMultiply = 4.0;
 		}
 	}

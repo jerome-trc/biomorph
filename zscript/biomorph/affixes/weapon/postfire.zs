@@ -14,8 +14,8 @@ class BIO_WAfx_ForcePain : BIO_WeaponAffix
 
 	final override void OnPuffFired(BIO_Weapon weap, BIO_Puff puff) const
 	{
-		if (puff.Target != null)
-			puff.Target.TriggerPainChance(puff.DamageType, true);
+		if (puff.Tracer != null)
+			puff.Tracer.TriggerPainChance(puff.DamageType, true);
 	}
 
 	final override void ToString(in out Array<string> strings,
