@@ -180,6 +180,8 @@ class BIO_Puff : BulletPuff abstract
 	Default
 	{
 		+BLOODSPLATTER
+		+HITTRACER
+		+PUFFGETSOWNER
 		+THRUSPECIES
 		+THRUGHOST
 
