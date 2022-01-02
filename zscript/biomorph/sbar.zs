@@ -129,8 +129,8 @@ class BIO_StatusBar : BaseStatusBar
 		DrawInventoryIcon(armor, (20, -22));
 		DrawString(Font_HUD, FormatNumber(armor.Amount, 3),
 			(44, -36), 0, Font.CR_DARKGREEN);
-		DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3),
-			(18, -30), 0, Font.CR_WHITE);
+		DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3) .. "%",
+			(14, -30), 0, Font.CR_WHITE);
 
 		let bioPlayer = BIO_Player(CPlayer.MO);
 		if (bioPlayer == null) return;
