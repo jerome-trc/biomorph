@@ -36,9 +36,9 @@ class BIO_ImpactorGauntlet : BIO_Weapon
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(StateTimeGroupFrom('Fire', "$BIO_CHARGE"));
-		groups.Push(StateTimeGroupFrom('Cooldown', "$BIO_COOLDOWN"));
-		groups.Push(StateTimeGroupFrom('AltCooldown', "$BIO_COOLDOWN_ALT"));
+		groups.Push(StateTimeGroupFrom('Fire', "$BIO_CHARGE", melee: true));
+		groups.Push(StateTimeGroupFrom('Cooldown', "$BIO_COOLDOWN", melee: true));
+		groups.Push(StateTimeGroupFrom('AltCooldown', "$BIO_COOLDOWN_ALT", melee: true));
 	}
 
 	States

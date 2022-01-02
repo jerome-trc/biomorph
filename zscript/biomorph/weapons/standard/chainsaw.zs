@@ -32,7 +32,7 @@ class BIO_Chainsaw : BIO_Weapon
 
 	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
 	{
-		groups.Push(StateTimeGroupFrom('Fire'));
+		groups.Push(StateTimeGroupFrom('Fire', melee: true));
 	}
 
 	States

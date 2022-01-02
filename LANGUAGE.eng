@@ -55,6 +55,8 @@
 		"\c[MidGrey]Hits %s%d time(s)";
 	BIO_FIREFUNC_PUNCH =
 		"\c[MidGrey]Throws a punch";
+	BIO_FIREFUNC_KICK =
+		"\c[MidGrey]Swing kick";
 	BIO_FIREFUNC_SAW =
 		"\c[MidGrey]Cuts continually";
 	BIO_FIREFUNC_RAIL =
@@ -502,5 +504,7 @@
 	BIO_WINDUP = "windup";
 	BIO_WINDDOWN = "winddown";
 	BIO_RELOAD = "reload";
+	BIO_PUNCH = "punch";
+	BIO_KICK = "kick";
 	BIO_ALL_4 = "all 4";
 	BIO_2 = "2";
