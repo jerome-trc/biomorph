@@ -72,6 +72,15 @@ class BIO_StateTimeGroup
 		}
 	}
 
+	string GetTagAsQualifier(string parenthClr = "\c[White]") const
+	{
+		if (Tag.Length() < 1)
+			return "";
+		else
+			return String.Format("%s(\c[Yellow]%s%s)",
+				parenthClr, StringTable.Localize(Tag), parenthClr);
+	}
+
 	// Add the tic times from all states in a contiguous sequence from `basis`
 	// to this group. Beware that this will skip labels, and treats
 	// `Goto MyState; MyState:` as contiguous. `tag` should be a string ID.
@@ -1361,11 +1370,11 @@ class BIO_Weapon : DoomWeapon abstract
 				BIO_Utils.StatFontColor(total, totalDef, true),
 				float(total) / float(TICRATE));
 
-			string grpTag = StringTable.Localize(FireTimeGroups[i].Tag);
-
-			if (grpTag.Length() > 1)
-				str.AppendFormat(" (\c[Yellow]%s\c[MidGrey])", grpTag);
-
+			string qual = FireTimeGroups[i].GetTagAsQualifier("\c[MidGrey]");
+			
+			if (qual.Length() > 0)
+				str.AppendFormat(" %s", qual);
+			
 			StatReadout.Push(str);
 		}
 
