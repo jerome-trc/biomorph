@@ -85,7 +85,10 @@ class BIO_StatusBar : BaseStatusBar
 			{
 				int yOffs = NotifyLineCount.GetInt() * 16;
 				let powup = Powerup(i);
-				if (powup == null || powup is 'PowerStrength') continue;
+
+				if (powup == null || !powup.Icon || powup is 'PowerStrength')
+					continue;
+
 				DrawInventoryIcon(powup, (20, yOffs + yPos));
 				yPos += 8;
 				int secs = powup.EffectTics / GameTicRate;
