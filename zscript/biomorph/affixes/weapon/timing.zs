@@ -36,12 +36,13 @@ class BIO_WAfx_FireTime : BIO_WeaponAffix
 		{
 			if (Modifiers[i] == 0) continue;
 
-			let grpTag = StringTable.Localize(weap.FireTimeGroups[i].Tag);
-			if (grpTag.Length() > 1)
-				grpTag = " (" .. grpTag .. ") ";
+			let qual = weap.FireTimeGroups[i].GetTagAsQualifier();
+			
+			if (qual.Length() > 1)
+				qual = " " .. qual;
 
 			strings.Push(String.Format(
-				StringTable.Localize("$BIO_WAFX_FIRETIME_TOSTR"), grpTag,
+				StringTable.Localize("$BIO_WAFX_FIRETIME_TOSTR"), qual,
 				BIO_Utils.StatFontColor(Modifiers[i], 0, true),
 				Modifiers[i] >= 0 ? "+" : "", float(Modifiers[i]) / 35.0));
 		}

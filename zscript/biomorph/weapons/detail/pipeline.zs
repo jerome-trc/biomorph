@@ -535,9 +535,9 @@ class BIO_WeaponPipeline play
 	void SetFireSound(sound fireSnd) { FireSound = fireSnd; }
 	sound GetFireSound() const { return FireSound; }
 
-	string GetTagAsQualifier() const
+	string GetTagAsQualifier(string parenthClr = "\c[White]") const
 	{
-		return String.Format("(\c[Yellow]%s\c[White])", Tag);
+		return String.Format("%s(\c[Yellow]%s%s)", parenthClr, Tag, parenthClr);
 	}
 
 	void PushReadoutString(string str)
