@@ -1,6 +1,7 @@
 class BIO_StateTimeGroup
 {
 	string Tag;
+	bool Melee;
 	Array<int> Times, Minimums;
 
 	// Used for checking if fire/reload time affixes are compatible,
@@ -85,20 +86,22 @@ class BIO_StateTimeGroup
 	// to this group. Beware that this will skip labels, and treats
 	// `Goto MyState; MyState:` as contiguous. `tag` should be a string ID.
 	static BIO_StateTimeGroup FromState(
-		state basis, string tag = "")
+		state basis, string tag = "", bool melee = false)
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
+		ret.Melee = melee;
 		ret.Populate(basis);
 		return ret;
 	}
 
 	// `tag` should be a string ID.
 	static BIO_StateTimeGroup FromStates(
-		Array<state> basisArr, string tag = "")
+		Array<state> basisArr, string tag = "", bool melee = false)
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
+		ret.Melee = melee;
 
 		for (uint i = 0; i < basisArr.Size(); i++)
 			ret.Populate(basisArr[i]);
@@ -109,10 +112,11 @@ class BIO_StateTimeGroup
 	// Does the same thing as `FromState()`, but stops adding times 
 	// upon arriving at `to`. `tag` should be a string ID.
 	static BIO_StateTimeGroup FromStateRange(
-		state from, state to, string tag = "")
+		state from, state to, string tag = "", bool melee = false)
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
+		ret.Melee = melee;
 		ret.RangePopulate(from, to);
 		return ret;
 	}
@@ -1362,7 +1366,7 @@ class BIO_Weapon : DoomWeapon abstract
 			int total = BIO_Utils.IntArraySum(FireTimeGroups[i].Times),
 				totalDef = BIO_Utils.IntArraySum(fireTimeDefs[i].Times);
 
-			string template = !bMeleeWeapon ?
+			string template = !FireTimeGroups[i].Melee ?
 				StringTable.Localize("$BIO_WEAPTOSTR_FIRETIME") :
 				StringTable.Localize("$BIO_WEAPTOSTR_ATTACKTIME");
 
@@ -1445,22 +1449,24 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Shortcut for `BIO_StateTimeGroup::FromState()`.
 	protected BIO_StateTimeGroup StateTimeGroupFrom(
-		statelabel lbl, string tag = "") const
+		statelabel lbl, string tag = "", bool melee = false) const
 	{
 		state s = FindState(lbl);
 		if (s == null)
 		{
+			// XXX: This hits a string format exception.
+			// How to convert a state label into a real string?
 			Console.Printf(Biomorph.LOGPFX_ERR ..
 				"`StateTimeGroupFrom()` Failed to find state %s.", lbl);
 			return null;
 		}
 
-		return BIO_StateTimeGroup.FromState(s, tag);
+		return BIO_StateTimeGroup.FromState(s, tag, melee);
 	}
 
 	// Shortcut for `BIO_StateTimeGroup::FromRange()`.
 	protected BIO_StateTimeGroup StateTimeGroupFromRange(
-		statelabel from, statelabel to, string tag = "") const
+		statelabel from, statelabel to, string tag = "", bool melee = false) const
 	{
 		state f = FindState(from);
 		if (f == null)
@@ -1478,12 +1484,12 @@ class BIO_Weapon : DoomWeapon abstract
 			return null;
 		}
 
-		return BIO_StateTimeGroup.FromStateRange(f, t, tag);
+		return BIO_StateTimeGroup.FromStateRange(f, t, tag, melee);
 	}
 
 	// Shortcut for `BIO_StateTimeGroup::FromArray()`.
 	protected BIO_StateTimeGroup StateTimeGroupFromArray(
-		in out Array<statelabel> labels, string tag = "") const
+		in out Array<statelabel> labels, string tag = "", bool melee = false) const
 	{
 		Array<state> arr;
 
@@ -1499,7 +1505,7 @@ class BIO_Weapon : DoomWeapon abstract
 				arr.Push(s);
 		}
 
-		return BIO_StateTimeGroup.FromStates(arr, tag);
+		return BIO_StateTimeGroup.FromStates(arr, tag, melee);
 	}
 
 	// Customised variations on attack actions =================================

@@ -24,6 +24,23 @@ $RANDOM bio/weap/gunswap
 bio/weap/crit CRITDAMG
 bio/weap/rampage RAMPAGE
 
+bio/weap/whoosh_0 WHOOSH0
+bio/weap/whoosh_1 WHOOSH1
+bio/weap/whoosh_2 WHOOSH2
+bio/weap/whoosh_3 WHOOSH3
+bio/weap/whoosh_4 WHOOSH4
+bio/weap/whoosh_5 WHOOSH5
+
+$RANDOM bio/weap/whoosh
+{
+	bio/weap/whoosh_0
+	bio/weap/whoosh_1
+	bio/weap/whoosh_2
+	bio/weap/whoosh_3
+	bio/weap/whoosh_4
+	bio/weap/whoosh_5
+}
+
 bio/weap/pistol/fire_0 PISTFIR0
 bio/weap/pistol/fire_1 PISTFIR1
 bio/weap/pistol/fire_2 PISTFIR2

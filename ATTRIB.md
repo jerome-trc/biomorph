@@ -6,6 +6,8 @@ Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https:
 
 The [ZJSON library](https://github.com/RicardoLuis0/ZJSON) is courtesy of [RicardoLuis0](https://github.com/RicardoLuis0) and used under the MIT license.
 
+The Fist's state machine is derived from code written by Realm667 user That_One_Doom_Mod and Wh1teFang.
+
 The Impactor Gauntlet's state machine is derived from code written by Realm667 user TheDoomedArchvile.
 
 The GLDEFS for the Plasma Globule were devised by Realm667 user Robot J.
@@ -22,6 +24,8 @@ The following sprites are edits of the work of id Software LLC:
 - SUITX0.png
 
 Sprites for players and Doppel are courtesy of Skulltag, id Software LLC, DBJ87, Mark Quinn, Anthony Cole, Xim, CaptainToenail, FuzzballFox, and Alando1.
+
+Fist sprites are courtesy of id Software LLC and Banjo Software, and were edited by Realm667 user That_One_Doom_Mod.
 
 Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as well as id Software LLC.
 
@@ -104,6 +108,8 @@ The following audio files are provided by ZDoom forum user Joblez_I, under no li
 - "trenchgun-2.wav" (SSGFIR1)
 - "trenchgun-3.wav" (SSGFIR2)
 
+["Swoosh.wav"](https://freesound.org/people/Brsjak/sounds/482880/) (WHOOSH0 through WHOOSH5) by freesound user [Brsjak](https://freesound.org/people/Brsjak/) is licensed under Creative Commons Attribution 3.0 Unported.
+
 Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
 
 PLSCIDLE and PLSCRAIS are courtesy of id Software LLC and Midway Software Inc.
@@ -118,7 +124,7 @@ Impactor Gauntlet sounds are courtesy of Capcom Co., Ltd.
 
 ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (replaces DSSECRET) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
 
-["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) (USRINPT0, pitched down for USRINPUT1) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/) is licensed under Creative Commons Attributions 3.0 Unported.
+["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) (USRINPT0, pitched down for USRINPUT1) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/) is licensed under Creative Commons Attribution 3.0 Unported.
 
 AMRSHRD (pickup sound for `BIO_ArmorBonus`) is courtesy of id Software LLC.
 
