@@ -7,12 +7,15 @@ extend class BIO_EventHandler
 
 		// Debugging events
 		if (ConEvent_Help(event)) return;
-		if (ConEvent_PassiveDiag(event)) return;
-		if (ConEvent_WeapDiag(event)) return;
-		if (ConEvent_EquipDiag(event)) return;
-		if (ConEvent_XPInfo(event)) return;
-		if (ConEvent_WeapAfxCompat(event)) return;
-		if (ConEvent_LootDiag(event)) return;
+		
+		if (ConEvent_WeapDiag(event) || ConEvent_EquipDiag(event))
+			return;
+		
+		if (ConEvent_XPInfo(event) || ConEvent_LootDiag(event))
+			return;
+		
+		if (ConEvent_WeapAfxCompat(event))
+			return;
 	}
 
 	private ui bool ConEvent_Help(ConsoleEvent event) const
@@ -32,48 +35,13 @@ extend class BIO_EventHandler
 			"bio_help_\n" ..
 			"bio_weapdiag_\n" ..
 			"bio_equipdiag_\n" ..
-			"bio_pasvdiag_\n" ..
 			"bio_xpinfo_\n" ..
 			"event bio_wafxcompat:Classname\n" ..
 			"\c[Gold]Network events:\c-\n" ..
-			"netevent bio_addpasv:Classname\n" ..
-			"netevent bio_rmpasv:Classname\n" ..
 			"netevent bio_addwafx:Classname\n" ..
 			"netevent bio_rmwafx:Classname\n" ..
 			"bio_recalcweap_ (alias: bio_weaprecalc_)");
 
-		return true;
-	}
-
-	private ui bool ConEvent_PassiveDiag(ConsoleEvent event) const
-	{
-		if (!(event.Name ~== "bio_pasvdiag"))
-			return false;
-		
-		if (!event.IsManual)
-		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"`bio_pasvdiag`");
-			return true;
-		}
-
-		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
-		if (bioPlayer == null)
-		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"This event can only be invoked on Biomorph-class players.");
-			return true;
-		}
-
-		string output = "\c[Gold]Passives:\n";
-
-		for (uint i = 0; i < bioPlayer.Passives.Size(); i++)
-			output.AppendFormat("%s x %d\n",
-				bioPlayer.Passives[i].GetClassName(),
-				bioPlayer.Passives[i].Count);
-
-		output.DeleteLastCharacter();
-		Console.Printf(output);
 		return true;
 	}
 

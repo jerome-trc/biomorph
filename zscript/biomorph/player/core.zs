@@ -1,7 +1,6 @@
 class BIO_Player : DoomPlayer
 {
-	Array<BIO_Passive> Passives;
-	Array<BIO_PlayerFunctor> Functors[FUNCTOR_ARRAY_LENGTH];
+	Array<BIO_PlayerFunctor> Functors[__FANDX_COUNT__];
 
 	uint MaxWeaponsHeld, MaxEquipmentHeld;
 	property MaxWeaponsHeld: MaxWeaponsHeld;
@@ -234,50 +233,17 @@ class BIO_Player : DoomPlayer
 		}
 	}
 
+	protected void Reset()
+	{
+		MaxHealth = Default.MaxHealth;
+		BonusHealth = Default.BonusHealth;
+		JumpZ  = Default.JumpZ;
+
+		for (uint i = 0; i < Functors.Size(); i++)
+			Functors[i].Clear();
+	}
+
 	// Passive/functor manipulation ============================================
-
-	void PushPassive(Class<BIO_Passive> pasv_t, uint count = 1)
-	{
-		for (uint i = 0; i < Passives.Size(); i++)
-		{
-			if (Passives[i].GetClass() == pasv_t)
-			{
-				Passives[i].Count += count;
-				Passives[i].Apply(self);
-				return;
-			}
-		}
-
-		uint e = Passives.Push(BIO_Passive(new(pasv_t)));
-		Passives[e].Count = count;
-		Passives[e].Apply(self);
-	}
-
-	void PopPassive(Class<BIO_Passive> pasv_t, uint count = 1)
-	{
-		bool all = count <= 0;
-
-		for (uint i = 0; i < Passives.Size(); i++)
-		{
-			if (Passives[i].GetClass() != pasv_t) continue;
-
-			if (Passives[i].Count < count)
-			{
-				Console.Printf(Biomorph.LOGPFX_WARN ..
-					"Tried to pop passive %s off player %s %d times, but can only do %d.",
-					pasv_t.GetClassName(), GetTag(), count, Passives[i].Count);
-			}
-
-			Passives[i].Remove(self);
-			Passives[i].Count -= (all ? Passives[i].Count : count);
-			if (Passives[i].Count <= 0) Passives.Delete(i);
-			return;
-		}
-
-		Console.Printf(Biomorph.LOGPFX_ERR ..
-			"Attempted to pop %d times %s, but found none on player %s.",
-			count, pasv_t.GetClassName(), GetTag());
-	}
 
 	enum FunctorArrayIndex : uint
 	{
@@ -288,7 +254,7 @@ class BIO_Player : DoomPlayer
 		FANDX_POWERUP,
 		FANDX_TRANSITION,
 		FANDX_WEAPON,
-		FUNCTOR_ARRAY_LENGTH
+		__FANDX_COUNT__
 	}
 
 	void PushFunctor(Class<BIO_PlayerFunctor> func_t, uint count = 1)

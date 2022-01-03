@@ -435,7 +435,10 @@
 
 	BIO_OPTLBL_QUAKE = "Screen Shake";
 
-	BIO_PERK_UIHELP_PAN = "\cjHold the \cnmouse wheel\cj and \cnmove the mouse\cj to pan";
+	BIO_PERKMENU_HELP_PAN =
+		"\c[White]Hold the \cnmouse wheel"
+		"\c[White] and \cnmove the mouse\cj to pan";
+	BIO_PERKMENU_POINTCOUNT = "\c[White]Perk points: \c[Yellow]%d";
 
 // Keybindings =================================================================
 
@@ -465,6 +468,7 @@
 
 // Miscellaneous ===============================================================
 
+	BIO_APPLY = "apply";
 	BIO_AND = "and";
 	BIO_OR = "or";
 	BIO_NONE = "None";

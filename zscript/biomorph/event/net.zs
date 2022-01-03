@@ -9,9 +9,6 @@ extend class BIO_EventHandler
 
 		// Debugging events
 
-		if (NetEvent_AddPassive(event) || NetEvent_RemovePassive(event))
-			return;
-
 		if (NetEvent_AddWeapAffix(event) || NetEvent_RemoveWeapAffix(event))
 			return;
 
@@ -21,6 +18,7 @@ extend class BIO_EventHandler
 
 	const EVENT_WUPOVERLAY = "bio_wupoverlay";
 	const EVENT_WEAPUPGRADE = "bio_weapupgrade";
+	const EVENT_COMMITPERK = "bio_commitperk";
 
 	private transient BIO_WeaponUpgradeOverlay WeaponUpgradeOverlay;
 
@@ -138,97 +136,55 @@ extend class BIO_EventHandler
 		return true;
 	}
 
-	private bool NetEvent_AddPassive(ConsoleEvent event) const
+	private bool NetEvent_CommitPerk(ConsoleEvent event) const
 	{
-		if (event.Player != ConsolePlayer) return false;
+		if (!(event.Name ~== EVENT_COMMITPERK)) return false;
+		if (event.Player != ConsolePlayer) return true;
 
-		Array<string> nameParts;
-		event.Name.Split(nameParts, ":");
-
-		if (!nameParts[0] || !(nameParts[0] ~== "bio_addpasv"))
-			return false;
-
-		if (!event.IsManual)
+		if (event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"This event can only be invoked manually.");
+				"This event cannot be invoked manually.");
+			return true;
+		}
+
+		if (event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event cannot be invoked manually.");
 			return true;
 		}
 
 		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
 		if (bioPlayer == null)
 		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"This event can only be invoked on Biomorph-class players.");
+			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_COMMITPERK ..
+				" was illegally invoked by a non-Biomorph PlayerPawn.");
 			return true;
 		}
 
-		if (nameParts.Size() < 2 || !nameParts[1])
+		let pGraph = Globals.GetPerkGraph(Players[ConsolePlayer]);
+		let bGraph = Globals.GetBasePerkGraph();
+		Class<BIO_Passive> pasv_t = null;
+
+		if (event.Args[0] >= bGraph.Nodes.Size() ||
+			event.Args[0] <= 0)
 		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"Please provide the class name of a player passive to add.");
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Attempted to commit perk under invalid UUID: %d", event.Args[0]);
 			return true;
 		}
 
-		Class<BIO_Passive> pasv_t = nameParts[1];
-		if (pasv_t == null)
+		if (bGraph.Nodes[event.Args[0]].PerkClass == null)
 		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"%s is not a legal passive class name.", nameParts[1]);
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Attempted to commit invalid perk class, UUID: %d", event.Args[0]);
 			return true;
 		}
 
-		uint count = event.Args[0] != 0 ? Max(event.Args[0], 0) : 1;
-		bioPlayer.PushPassive(pasv_t, count);
-		Console.Printf(Biomorph.LOGPFX_INFO ..
-			"Added passive effect %s x%d.", pasv_t.GetClassName(), count);
-		return true;
-	}
-
-	private bool NetEvent_RemovePassive(ConsoleEvent event) const
-	{
-		if (event.Player != ConsolePlayer) return false;
-
-		Array<string> nameParts;
-		event.Name.Split(nameParts, ":");
-
-		if (!nameParts[0] || !(nameParts[0] ~== "bio_rmpasv"))
-			return false;
-
-		if (!event.IsManual)
-		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"This event can only be invoked manually.");
-			return true;
-		}
-
-		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
-		if (bioPlayer == null)
-		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"This event can only be invoked on Biomorph-class players.");
-			return true;
-		}
-
-		if (nameParts.Size() < 2 || !nameParts[1])
-		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"Please provide the class name of a player passive to remove.");
-			return true;
-		}
-
-		Class<BIO_Passive> pasv_t = nameParts[1];
-		if (pasv_t == null)
-		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"%s is not a legal passive class name.", nameParts[1]);
-			return true;
-		}
-
-		uint count = event.Args[0] != 0 ? Max(event.Args[0], 0) : 1;
-		bioPlayer.PopPassive(pasv_t, count);
-		Console.Printf(Biomorph.LOGPFX_INFO ..
-			"Removed passive effect %s x%d.", pasv_t.GetClassName(), count);
+		let pasv = BIO_Passive(new(bGraph.Nodes[event.Args[0]].PerkClass));
+		pasv.Apply(bioPlayer);
+		pGraph.Points--;
 		return true;
 	}
 
@@ -388,5 +344,12 @@ extend class BIO_EventHandler
 		Console.Printf(Biomorph.LOGPFX_INFO ..
 			"Reset stats and re-applied affixes of your readied weapon.");
 		return true;
+	}
+
+	// =========================================================================
+
+	static clearscope void CommitPerk(uint uuid)
+	{
+		EventHandler.SendNetworkEvent(EVENT_COMMITPERK, uuid);
 	}
 }
