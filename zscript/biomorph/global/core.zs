@@ -81,7 +81,8 @@ class BIO_GlobalData : Thinker
 		{
 			if (Wads.GetLumpNamespace(lump) != Wads.NS_GLOBAL)
 				continue;
-			if (!(Wads.GetLumpFullName(lump).Left(7) ~== LMPNAME_WEAPONS))
+			if (!(Wads.GetLumpFullName(lump).Left(LMPNAME_WEAPONS.Length())
+				~== LMPNAME_WEAPONS))
 				continue;
 
 			BIO_JsonElementOrError fileOpt = BIO_JSON.parse(Wads.ReadLump(lump));

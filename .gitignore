@@ -9,7 +9,7 @@ decorate/*
 .vscode
 .atomignore
 
-# Sprites-in-progress
+# Graphics/sprites-in-progress
 *.xcf
 
 # Audio-in-progress

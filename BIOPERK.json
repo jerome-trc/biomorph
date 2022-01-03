@@ -1,6 +1,26 @@
 {
 	"perks": [
-	],
-	"connections": [
+		{
+			"uuid": "bio_allmap",
+			"class": "BIO_Perk_Allmap",
+			"x": 60,
+			"y": 60,
+			"title": "$BIO_PERK_ALLMAP_TITLE",
+			"desc": "$BIO_PERK_ALLMAP_DESC",
+			"icon": "PMAPA0",
+			"category": "major",
+			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_scannerallmap",
+			"class": "BIO_Perk_ScannerAllmap",
+			"x": 120,
+			"y": 120,
+			"title": "$BIO_PERK_SCANNERALLMAP_TITLE",
+			"desc": "$BIO_PERK_SCANNERALLMAP_DESC",
+			"icon": "graphics/perk/scannerallmap.png",
+			"category": "major",
+			"neighbors": [ "bio_allmap" ]
+		}
 	]
 }

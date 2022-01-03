@@ -6,11 +6,6 @@ class BIO_Perk_PowerupDurationMinor : BIO_Passive
 	{
 		bioPlayer.PushFunctor('BIO_Functor_PowerupDuration');
 	}
-
-	final override void Remove(BIO_Player bioPlayer) const
-	{
-		bioPlayer.PopFunctor('BIO_Functor_PowerupDuration');
-	}
 }
 
 class BIO_Perk_PowerupDurationMajor : BIO_Passive
@@ -18,11 +13,6 @@ class BIO_Perk_PowerupDurationMajor : BIO_Passive
 	final override void Apply(BIO_Player bioPlayer) const
 	{
 		bioPlayer.PushFunctor('BIO_Functor_PowerupDuration', 5);
-	}
-
-	final override void Remove(BIO_Player bioPlayer) const
-	{
-		bioPlayer.PopFunctor('BIO_Functor_PowerupDuration', 5);
 	}
 }
 
@@ -43,11 +33,6 @@ class BIO_Perk_Allmap : BIO_Passive
 	{
 		bioPlayer.PushFunctor('BIO_Functor_Allmap');
 	}
-
-	final override void Remove(BIO_Player bioPlayer) const
-	{
-		bioPlayer.PopFunctor('BIO_Functor_Allmap');
-	}
 }
 
 class BIO_Functor_Allmap : BIO_TransitionFunctor
@@ -67,11 +52,6 @@ class BIO_Perk_ScannerAllmap : BIO_Passive
 	{
 		bioPlayer.PushFunctor('BIO_Functor_ScannerAllmap');
 	}
-
-	final override void Remove(BIO_Player bioPlayer) const
-	{
-		bioPlayer.PopFunctor('BIO_Functor_Scanner');
-	}
 }
 
 class BIO_Functor_ScannerAllmap : BIO_ItemPickupFunctor
@@ -89,11 +69,6 @@ class BIO_Perk_Scanner : BIO_Passive
 	final override void Apply(BIO_Player bioPlayer) const
 	{
 		bioPlayer.PushFunctor('BIO_Functor_Scanner');
-	}
-
-	final override void Remove(BIO_Player bioPlayer) const
-	{
-		bioPlayer.PopFunctor('BIO_Functor_Scanner');
 	}
 }
 
