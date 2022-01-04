@@ -33,6 +33,19 @@ class BIO_Player : DoomPlayer
 
 	// Parent overrides ========================================================
 
+	override void GiveDefaultInventory()
+	{
+		super.GiveDefaultInventory();
+
+		if (BIO_Utils.Eviternity())
+		{
+			A_SelectWeapon('BIO_Fist');
+			TakeInventory('BIO_Pistol', 1);
+			GiveInventory('BIO_EviternityPistol', 1);
+			A_SelectWeapon('BIO_EviternityPistol');
+		}
+	}
+
 	final override int TakeSpecialDamage(Actor inflictor, Actor source, int damage, name dmgType)
 	{
 		int ret = super.TakeSpecialDamage(inflictor, source, damage, dmgType);
