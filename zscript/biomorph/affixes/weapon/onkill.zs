@@ -16,7 +16,7 @@ class BIO_WAfx_InfiniteAmmoOnKill : BIO_WeaponAffix
 
 	final override void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const
 	{
-		if (!weap.Switching() && Random(0, 100) < Chance)
+		if (Random(0, 100) < Chance)
 		{
 			BIO_Utils.GivePowerup(weap.Owner,
 				'BIO_PowerInfiniteAmmo', GameTicRate * Duration);

@@ -856,14 +856,6 @@ class BIO_Weapon : DoomWeapon abstract
 			return String.Format("%s%s\c-", crEsc_g, Default.GetTag());
 	}
 
-	// Is this weapon currently being raised, lowered, or neither?
-	bool Switching() const
-	{
-		return
-			InStateSequence(CurState, ResolveState('Deselect.Loop')) ||
-			InStateSequence(CurState, ResolveState('Select.Loop')); 
-	}
-
 	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
 
 	bool MagazineEmpty(bool secondary = false) const
