@@ -117,4 +117,60 @@ class BIO_Chaingun : BIO_Weapon
 	}
 }
 
+class BIO_ValiantChaingun : BIO_Chaingun
+{
+	Default
+	{
+		Tag "$BIO_VALIANTCHAINGUN_TAG";
+		Inventory.PickupMessage "$BIO_VALIANTCHAINGUN_PKUP";
+		BIO_Weapon.MagazineType 'Clip';
+		BIO_Weapon.MagazineSize 0;
+	}
+
+	final override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
+	{
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
+			.Bullet(accuracyType: BULLET_FIRST_ACCURATE)
+			.X1D3Damage(5)
+			.Spread(5.6, 0.0)
+			.FireSound("bio/weap/chaingun/fire")
+			.Build());
+	}
+
+	States
+	{
+	Fire:
+		CHGG A 0 A_BIO_CheckAmmo;
+		CHGG A 2 Bright
+		{
+			A_SetFireTime(0);
+			A_ChaingunFire();
+		}
+		CHGG B 2 Bright
+		{
+			A_SetFireTime(1);
+			A_ChaingunFire();
+		}
+	Winddown:
+		CHGG A 3 A_ReFire;
+		CHGG B 3 A_ReFire;
+		CHGG A 6 A_ReFire;
+		CHGG B 6 A_ReFire;
+		Goto Ready;
+	Flash:
+		CHGF A 2 Bright
+		{
+			A_SetFireTime(0);
+			A_Light(1);
+		}
+		Goto LightDone;
+		CHGF B 2 Bright
+		{
+			A_SetFireTime(1);
+			A_Light(2);
+		}
+		Goto LightDone;
+	}
+}
+
 class BIO_MAG_Chaingun : Ammo { mixin BIO_Magazine; }

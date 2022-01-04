@@ -114,4 +114,71 @@ class BIO_Pistol : BIO_Weapon
 	}
 }
 
+class BIO_EviternityPistol : BIO_Pistol
+{
+	final override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
+	{
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
+			.Bullet()
+			.X1D3Damage(5)
+			.Spread(0.0, 0.0)
+			.FireSound("bio/weap/pistol/fire")
+			.Build());
+	}
+
+	States
+	{
+	Fire:
+		TNT1 A 0 A_BIO_CheckAmmo;
+		PISG A 1 A_SetFireTime(0);
+		PISG B 3 Bright
+		{
+			A_SetFireTime(1);
+			A_BIO_Fire();
+			A_GunFlash();
+			A_FireSound();
+			A_PresetRecoil('BIO_Recoil_Handgun');
+		}
+		PISG C 3 A_SetFireTime(2);
+		PISG B 3 A_SetFireTime(3);
+		TNT1 A 0 A_ReFire;
+		PISG A 4 A_SetFireTime(4);
+		TNT1 A 0 A_AutoReload;
+		Goto Ready;
+	}
+}
+
+class BIO_ValiantPistol : BIO_Pistol
+{
+	final override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
+	{
+		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
+			.Bullet()
+			.X1D3Damage(5)
+			.Spread(5.6, 0.0)
+			.FireSound("bio/weap/pistol/fire")
+			.Build());
+	}
+
+	States
+	{
+	Fire:
+		TNT1 A 0 A_BIO_CheckAmmo;
+		PISG C 3 A_SetFireTime(0);
+		PISG D 3
+		{
+			A_SetFireTime(1);
+			A_BIO_Fire();
+			A_GunFlash();
+			A_FireSound();
+			A_PresetRecoil('BIO_Recoil_Handgun');
+		}
+		PISG E 3 A_SetFireTime(2);
+		TNT1 A 0 A_ReFire();
+		PISG B 2 Bright A_SetFireTime(3);
+		TNT1 A 0 A_AutoReload;
+		Goto Ready;
+	}
+}
+
 class BIO_Mag_Pistol : Ammo { mixin BIO_Magazine; }
