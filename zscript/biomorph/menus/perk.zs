@@ -281,14 +281,16 @@ class BIO_PerkMenu : GenericMenu
 			NodeState[i].ScreenPos = Screen.VirtualToRealCoords( 
 				NodeState[i].DrawPos, scrSz, Size);
 
+			double nodeW = double(TexMan.GetSize(Tex_Node));
+
 			Vector2
 				realTL = Screen.VirtualToRealCoords(
-					(NodeState[i].DrawPos.X - 32.0,
-					NodeState[i].DrawPos.Y - 32.0),
+					(NodeState[i].DrawPos.X - nodeW,
+					NodeState[i].DrawPos.Y - nodeW),
 					scrSz, Size),
 				realBR = Screen.VirtualToRealCoords(
-					(NodeState[i].DrawPos.X + 32.0,
-					NodeState[i].DrawPos.Y + 32.0),
+					(NodeState[i].DrawPos.X + nodeW,
+					NodeState[i].DrawPos.Y + nodeW),
 					scrSz, Size);
 
 			if (MousePos.X > realTL.X && MousePos.X < realBR.X &&
