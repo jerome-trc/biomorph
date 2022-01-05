@@ -7,6 +7,9 @@ extend class BIO_EventHandler
 		if (NetEvent_WUpOverlay(event) || NetEvent_WeaponUpgrade(event))
 			return;
 
+		if (NetEvent_CommitPerk(event))
+			return;
+
 		// Debugging events
 
 		if (NetEvent_AddWeapAffix(event) || NetEvent_RemoveWeapAffix(event))
@@ -148,18 +151,11 @@ extend class BIO_EventHandler
 			return true;
 		}
 
-		if (event.IsManual)
-		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"This event cannot be invoked manually.");
-			return true;
-		}
-
 		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
 		if (bioPlayer == null)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_COMMITPERK ..
-				" was illegally invoked by a non-Biomorph PlayerPawn.");
+				" was illegally invoked by a non-Biomorph `PlayerPawn`.");
 			return true;
 		}
 
@@ -184,6 +180,7 @@ extend class BIO_EventHandler
 
 		let pasv = BIO_Passive(new(bGraph.Nodes[event.Args[0]].PerkClass));
 		pasv.Apply(bioPlayer);
+		pGraph.PerkActive[event.Args[0]] = true;
 		pGraph.Points--;
 		return true;
 	}

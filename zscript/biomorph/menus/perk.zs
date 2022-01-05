@@ -1,6 +1,6 @@
 class BIO_PerkMenuNode
 {
-	Vector2 DrawPos;
+	Vector2 DrawPos, ScreenPos;
 	bool Selected;
 }
 
@@ -16,7 +16,7 @@ class BIO_PerkMenu : GenericMenu
 	private readOnly<BIO_PlayerPerkGraph> PlayerPerkGraph;
 
 	private string Txt_HelpPan, Txt_Apply;
-	private TextureID Tex_Node, Tex_NodeActive;
+	private TextureID Tex_Node, Tex_NodeRing;
 
 	private BIO_NamedKey Key_Confirm;
 
@@ -42,8 +42,8 @@ class BIO_PerkMenu : GenericMenu
 		// Acquire graphical resources
 		Tex_Node = TexMan.CheckForTexture(
 			"graphics/perknode.png", TexMan.TYPE_ANY);
-		Tex_NodeActive = TexMan.CheckForTexture(
-			"graphics/perknode_active.png", TexMan.TYPE_ANY);
+		Tex_NodeRing = TexMan.CheckForTexture(
+			"graphics/perknode_ring.png", TexMan.TYPE_ANY);
 
 		Key_Confirm = BIO_NamedKey.Create("+use");
 
@@ -149,7 +149,8 @@ class BIO_PerkMenu : GenericMenu
 			Pan = false;
 			break;
 		case UIEvent.Type_KeyUp:
-			if (Key_Confirm.Matches(event.KeyChar))
+			// TODO: Get this to check against player's defined "Use" key
+			if (event.KeyString ~== "e")
 				CommitSelection();
 			break;
 		default: break;
@@ -161,6 +162,8 @@ class BIO_PerkMenu : GenericMenu
 	final override void Drawer()
 	{
 		super.Drawer(); // Draw the back button
+
+		Vector2 scrSz = (Screen.GetWidth(), Screen.GetHeight());
 
 		// Help text at menu's top
 
@@ -184,10 +187,26 @@ class BIO_PerkMenu : GenericMenu
 
 		for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
 		{
-			Screen.DrawTexture(
-				!NodeState[i].Selected && !PlayerPerkGraph.PerkActive[i] ?
-					Tex_Node : Tex_NodeActive,
-				false, NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
+			let ni = BasePerkGraph.Nodes[i];
+
+			for (uint j = 0; j < BasePerkGraph.Nodes[i].Neighbors.Size(); j++)
+			{
+				let uuidJ = BasePerkGraph.Nodes[ni.Neighbors[j]].UUID;
+
+				if (i == uuidJ)
+					continue;
+
+				Screen.DrawThickLine(
+					NodeState[i].ScreenPos.X, NodeState[i].ScreenPos.Y,
+					NodeState[uuidJ].ScreenPos.X, NodeState[uuidJ].ScreenPos.Y,
+					4.0, COLOR_HOVERED);
+			}
+		}
+
+		for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
+		{
+			Screen.DrawTexture(Tex_Node, false,
+				NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
 				DTA_VIRTUALWIDTH, int(Size.X), DTA_VIRTUALHEIGHT, int(Size.Y),
 				DTA_CENTEROFFSET, true,
 				DTA_COLOROVERLAY, HoveredNode == i ? COLOR_HOVERED : COLOR_NONE);
@@ -196,6 +215,22 @@ class BIO_PerkMenu : GenericMenu
 				NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
 				DTA_VIRTUALWIDTH, int(Size.X), DTA_VIRTUALHEIGHT, int(Size.Y),
 				DTA_CENTEROFFSET, true);
+
+			if (PlayerPerkGraph.PerkActive[i])
+			{
+				Screen.DrawTexture(Tex_NodeRing, false,
+					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
+					DTA_VIRTUALWIDTH, int(Size.X), DTA_VIRTUALHEIGHT, int(Size.Y),
+					DTA_CENTEROFFSET, true);
+			}
+			else if (NodeState[i].Selected)
+			{
+				Screen.DrawTexture(Tex_NodeRing, false,
+					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
+					DTA_VIRTUALWIDTH, int(Size.X), DTA_VIRTUALHEIGHT, int(Size.Y),
+					DTA_CENTEROFFSET, true,
+					DTA_ALPHA, 1.0 + (Sin((MenuTime() << 16 / 4) * 0.75)));
+			}
 		}
 	}
 
@@ -225,7 +260,7 @@ class BIO_PerkMenu : GenericMenu
 				(Size.Y / 2) + node.Position.Y + ViewPosition.Y
 			);
 
-			Vector2 realPos = Screen.VirtualToRealCoords( 
+			NodeState[i].ScreenPos = Screen.VirtualToRealCoords( 
 				NodeState[i].DrawPos, scrSz, Size);
 
 			Vector2
@@ -259,11 +294,37 @@ class BIO_PerkMenu : GenericMenu
 		if (SelectionSize >= PlayerPerkGraph.Points)
 			return;
 
+		Array<uint> active;
+		
+		for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
+		{
+			if (NodeState[i].Selected || PlayerPerkGraph.PerkActive[i])
+				active.Push(i);
+		}
+
 		// Have the hovered node's dependencies been satisfied
 		// by already being active or selected?
+		if (!BasePerkGraph.IsAccessible(HoveredNode, active))
+			return;
 
 		// Would deselecting the hovered node leave
 		// another selected node orphaned?
+		if (NodeState[HoveredNode].Selected)
+		{
+			active.Delete(active.Find(HoveredNode));
+			
+			for (uint i = 1; i < BasePerkGraph.Nodes.Size(); i++)
+			{
+				if (i == HoveredNode)
+					continue;
+				
+				if (!NodeState[i].Selected)
+					continue;
+				
+				if (!BasePerkGraph.IsAccessible(i, active))
+					return;
+			}
+		}
 
 		MenuSound("bio/ui/beep");
 
@@ -282,7 +343,12 @@ class BIO_PerkMenu : GenericMenu
 		MenuSound("bio/ui/beep");
 
 		for (uint i = 0; i < NodeState.Size(); i++)
+		{
 			if (NodeState[i].Selected)
+			{
 				BIO_EventHandler.CommitPerk(i);
+				NodeState[i].Selected = false;
+			}
+		}
 	}
 }
