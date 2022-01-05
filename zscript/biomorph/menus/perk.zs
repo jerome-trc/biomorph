@@ -6,7 +6,7 @@ class BIO_PerkMenuNode
 
 class BIO_PerkMenu : GenericMenu
 {
-	const VIRT_W = 640.0; const VIRT_H = 480.0;
+	const VIRT_W = 640.0; const VIRT_H = 360.0;
 
 	const COLOR_HOVERED = Color(127, 127, 127, 127);
 	const COLOR_NONE = Color(0, 0, 0, 0);
@@ -130,13 +130,13 @@ class BIO_PerkMenu : GenericMenu
 			}
 			break;
 		case UIEvent.Type_WheelDown:
-			Size.X = Min(Size.X + 32.0, 1920.0);
-			Size.Y = Min(Size.Y + 24.0, 1440.0);
+			Size.X = Min(Size.X + 32.0, VIRT_W * 3.0);
+			Size.Y = Min(Size.Y + 18.0, VIRT_H * 3.0);
 			UpdateNodeState();
 			break;
 		case UIEvent.Type_WheelUp:
 			Size.X = Max(Size.X - 32.0, VIRT_W);
-			Size.Y = Max(Size.Y - 24.0, VIRT_H);
+			Size.Y = Max(Size.Y - 18.0, VIRT_H);
 			UpdateNodeState();
 			break;
 		case UIEvent.Type_MButtonDown:
@@ -168,7 +168,7 @@ class BIO_PerkMenu : GenericMenu
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
 			VIRT_W * 0.5 - (SmallFont.StringWidth(Txt_HelpPan) / 2),
-			VIRT_H * 0.025, Txt_HelpPan,
+			VIRT_H * 0.025, Txt_HelpPan, DTA_KEEPRATIO, true,
 			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
 
 		// Counters for perk and refund points
@@ -179,7 +179,7 @@ class BIO_PerkMenu : GenericMenu
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
 			VIRT_W * 0.5 - (SmallFont.StringWidth(ptStr) / 2),
-			VIRT_H * 0.05, ptStr,
+			VIRT_H * 0.05, ptStr, DTA_KEEPRATIO, true,
 			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
 
 		// Node connections
@@ -198,7 +198,7 @@ class BIO_PerkMenu : GenericMenu
 				Screen.DrawThickLine(
 					NodeState[i].ScreenPos.X, NodeState[i].ScreenPos.Y,
 					NodeState[uuidJ].ScreenPos.X, NodeState[uuidJ].ScreenPos.Y,
-					4.0, COLOR_HOVERED);
+					Size.X / (Size.X * 0.25), COLOR_HOVERED);
 			}
 		}
 
@@ -209,27 +209,27 @@ class BIO_PerkMenu : GenericMenu
 			Screen.DrawTexture(Tex_Node, false,
 				NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
 				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
-				DTA_CENTEROFFSET, true,
+				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
 				DTA_COLOROVERLAY, HoveredNode == i ? COLOR_HOVERED : COLOR_NONE);
 
 			Screen.DrawTexture(BasePerkGraph.Nodes[i].Icon, false,
 				NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
-				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
-				DTA_CENTEROFFSET, true);
+				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
+				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
 
 			if (PlayerPerkGraph.PerkActive[i])
 			{
 				Screen.DrawTexture(Tex_NodeRing, false,
 					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
-					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
-					DTA_CENTEROFFSET, true);
+					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
+					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
 			}
 			else if (NodeState[i].Selected)
 			{
 				Screen.DrawTexture(Tex_NodeRing, false,
 					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
 					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
-					DTA_CENTEROFFSET, true,
+					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
 					DTA_ALPHA, 1.0 + (Sin((MenuTime() << 16 / 4) * 0.75)));
 			}
 		}
@@ -247,8 +247,9 @@ class BIO_PerkMenu : GenericMenu
 			tt.AppendFormat("%s\n", desc.StringAt(i));
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
-			(MousePos.X / 3.0) + 8, (MousePos.Y / 2.25) + 8, tt,
-			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
+			(MousePos.X / CleanXFac) + 8, (MousePos.Y / CleanYFac) + 8, tt,
+			DTA_VIRTUALWIDTHF, CleanWidth, DTA_VIRTUALHEIGHTF, CleanHeight,
+			DTA_KEEPRATIO, true);
 	}
 
 	final override void Ticker()
@@ -279,7 +280,7 @@ class BIO_PerkMenu : GenericMenu
 			);
 
 			NodeState[i].ScreenPos = Screen.VirtualToRealCoords( 
-				NodeState[i].DrawPos, scrSz, Size);
+				NodeState[i].DrawPos, scrSz, Size, handleAspect: false);
 
 			double nodeW = double(TexMan.GetSize(Tex_Node));
 
