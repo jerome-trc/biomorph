@@ -131,6 +131,14 @@ class BIO_Invulnerability : InvulnerabilitySphere replaces InvulnerabilitySphere
 		if (bioPlayer == null) return;
 		bioPlayer.OnPowerupPickup(self);
 	}
+
+	final override void BeginPlay()
+	{
+		super.BeginPlay();
+
+		if (BIO_Utils.Eviternity())
+			BlendColor = Color(0, 182, 0, 3);
+	}
 }
 
 class BIO_PowerInvulnerable : PowerInvulnerable
