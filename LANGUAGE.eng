@@ -411,6 +411,34 @@
 
 	BIO_MEGASPHERE_ARMORREPAIR = "Your %s\c- is repaired to perfect condition.";
 
+// Perks =======================================================================
+
+	BIO_PERK_STARTINGALLMAP_TITLE =
+		"\c[Green]Echolocation";
+	BIO_PERK_STARTINGALLMAP_DESC =
+		"\c[White]You receive a complete map at the start of each level.";
+
+	BIO_PERK_ARMORBONUSX2_TITLE =
+		"\c[Green]Resourceful Repairs";
+	BIO_PERK_ARMORBONUSX2_DESC =
+		"\c[White]Armour Shards have double their normal effect.";
+
+	BIO_PERK_BONUSCROSSOVER_TITLE =
+		"\c[Green]Subdermal Plating";
+	BIO_PERK_BONUSCROSSOVER_DESC =
+		"\c[White]Health Bonuses repair 1 point of armour, and Armour Shards "
+		"give 1 point of health.";
+
+	BIO_PERK_HEALTHBONUSX2_TITLE =
+		"\c[Green]Nanite Medicine";
+	BIO_PERK_HEALTHBONUSX2_DESC =
+		"\c[White]Health Bonuses have double their normal effect.";
+
+	BIO_PERK_SCANNERALLMAP_TITLE =
+		"\c[Green]Neural Uplink";
+	BIO_PERK_SCANNERALLMAP_DESC =
+		"\c[White]Picking up a Computer Area Map reveals and tracks entity locations.";
+
 // Dropping and digestion ======================================================
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";

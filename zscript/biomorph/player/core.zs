@@ -201,6 +201,15 @@ class BIO_Player : DoomPlayer
 		}
 	}
 
+	void OnArmorBonusPickup(BIO_ArmorBonus bonus)
+	{
+		for (uint i = 0; i < Functors[FANDX_ITEMPKUP].Size(); i++)
+		{
+			BIO_ItemPickupFunctor(Functors[FANDX_ITEMPKUP][i])
+				.OnArmorBonusPickup(self, bonus);
+		}
+	}
+
 	void OnBackpackPickup(BIO_Backpack bkpk)
 	{
 		for (uint i = 0; i < Functors[FANDX_ITEMPKUP].Size(); i++)

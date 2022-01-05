@@ -11,7 +11,7 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 
 		Inventory.MaxAmount 0;
 		Inventory.PickupMessage "";
-		Inventory.PickupSound "bio/item/armorshard/pkup";
+		Inventory.PickupSound "bio/item/armorbonus/pkup";
 	}
 
 	States
@@ -19,6 +19,16 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 	Spawn:
 		ARSD ABCDCB 6;
 		Loop;
+	}
+
+	final override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+
+		let bioPlayer = BIO_Player(toucher);
+		if (bioPlayer == null) return;
+
+		bioPlayer.OnArmorBonusPickup(self);
 	}
 
 	final override bool Use(bool pickup)
@@ -39,6 +49,7 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 		PrintPickupMessage(Owner.CheckLocalView(), String.Format(
 			StringTable.Localize("$BIO_ARMORBONUS_PICKUP"),
 			bioPlayer.EquippedArmor.GetTag()));
+
 		return true;
 	}
 }
