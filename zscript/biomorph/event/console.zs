@@ -42,7 +42,7 @@ extend class BIO_EventHandler
 			"netevent bio_addwafx:Classname\n" ..
 			"netevent bio_rmwafx:Classname\n" ..
 			"bio_recalcweap_ (alias: bio_weaprecalc_)" ..
-			"bio_levelup_ (alias: bio_lvlup_)");
+			"bio_lvlup_ (also: bio_lvlup_5 and bio_lvlup_10)");
 	}
 
 	private ui void ConEvent_PerkMenu(ConsoleEvent event) const
