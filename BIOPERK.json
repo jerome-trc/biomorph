@@ -2,11 +2,11 @@
 	"perks": [
 		{
 			"uuid": "bio_allmap",
-			"class": "BIO_Perk_Allmap",
+			"class": "BIO_Perk_StartingAllmap",
 			"x": 60,
 			"y": 60,
-			"title": "$BIO_PERK_ALLMAP_TITLE",
-			"desc": "$BIO_PERK_ALLMAP_DESC",
+			"title": "$BIO_PERK_STARTINGALLMAP_TITLE",
+			"desc": "$BIO_PERK_STARTINGALLMAP_DESC",
 			"icon": "PMAPA0",
 			"category": "major",
 			"neighbors": [ "bio_start" ]
@@ -21,6 +21,39 @@
 			"icon": "graphics/perk/scannerallmap.png",
 			"category": "major",
 			"neighbors": [ "bio_allmap" ]
+		},
+		{
+			"uuid": "bio_healthbonusx2",
+			"class": "BIO_Perk_HealthBonusX2",
+			"x": 60,
+			"y": -60,
+			"title": "$BIO_PERK_HEALTHBONUSX2_TITLE",
+			"desc": "$BIO_PERK_HEALTHBONUSX2_DESC",
+			"icon": "graphics/perk/healthbonus_x2.png",
+			"category": "major",
+			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_armorbonusx2",
+			"class": "BIO_Perk_ArmorBonusX2",
+			"x": -60,
+			"y": -60,
+			"title": "$BIO_PERK_ARMORBONUSX2_TITLE",
+			"desc": "$BIO_PERK_ARMORBONUSX2_DESC",
+			"icon": "graphics/perk/armorbonus_x2.png",
+			"category": "major",
+			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_bonuscrossover",
+			"class": "BIO_Perk_BonusCrossover",
+			"x": 0,
+			"y": -60,
+			"title": "$BIO_PERK_BONUSCROSSOVER_TITLE",
+			"desc": "$BIO_PERK_BONUSCROSSOVER_DESC",
+			"icon": "graphics/perk/bonuscrossover.png",
+			"category": "major",
+			"neighbors": [ "bio_start" ]
 		}
 	]
 }

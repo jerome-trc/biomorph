@@ -2,7 +2,7 @@
 
 bio/item/weapupgrade/use WEAPUPGR
 
-bio/item/armorshard/pkup AMRSHRD
+bio/item/armorbonus/pkup AMRSHRD
 
 // Weapons (fire, raise, lower, idle) ==========================================
 

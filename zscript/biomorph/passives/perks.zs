@@ -4,7 +4,7 @@ class BIO_Perk_PowerupDurationMinor : BIO_Passive
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor('BIO_Functor_PowerupDuration');
+		bioPlayer.PushFunctor('BIO_PUpFunc_PowerupDuration');
 	}
 }
 
@@ -12,12 +12,12 @@ class BIO_Perk_PowerupDurationMajor : BIO_Passive
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor('BIO_Functor_PowerupDuration', 5);
+		bioPlayer.PushFunctor('BIO_PUpFunc_PowerupDuration', 5);
 	}
 }
 
 // Give the powerup extra duration based on 5% of its default duration.
-class BIO_Functor_PowerupDuration : BIO_PowerupFunctor
+class BIO_PUpFunc_PowerupDuration : BIO_PowerupFunctor
 {
 	final override void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const
 	{
@@ -27,15 +27,15 @@ class BIO_Functor_PowerupDuration : BIO_PowerupFunctor
 
 // Player gets allmap at start of level ========================================
 
-class BIO_Perk_Allmap : BIO_Passive
+class BIO_Perk_StartingAllmap : BIO_Passive
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor('BIO_Functor_Allmap');
+		bioPlayer.PushFunctor('BIO_TransFunc_StartingAllmap');
 	}
 }
 
-class BIO_Functor_Allmap : BIO_TransitionFunctor
+class BIO_TransFunc_StartingAllmap : BIO_TransitionFunctor
 {
 	final override void WorldLoaded(BIO_Player bioPlayer, bool saveGame, bool reopen) const
 	{
@@ -50,11 +50,11 @@ class BIO_Perk_ScannerAllmap : BIO_Passive
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor('BIO_Functor_ScannerAllmap');
+		bioPlayer.PushFunctor('BIO_PkupFunc_ScannerAllmap');
 	}
 }
 
-class BIO_Functor_ScannerAllmap : BIO_ItemPickupFunctor
+class BIO_PkupFunc_ScannerAllmap : BIO_ItemPickupFunctor
 {
 	final override void OnMapPickup(BIO_Player bioPlayer, Allmap map) const
 	{
@@ -62,21 +62,71 @@ class BIO_Functor_ScannerAllmap : BIO_ItemPickupFunctor
 	}
 }
 
-// Player gets scanner at start of level =======================================
+// Doubled effect of Health Bonuses ============================================
 
-class BIO_Perk_Scanner : BIO_Passive
+class BIO_Perk_HealthBonusX2 : BIO_Passive
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.PushFunctor('BIO_Functor_Scanner');
+		bioPlayer.PushFunctor('BIO_PkupFunc_HealthBonusX2');
 	}
 }
 
-class BIO_Functor_Scanner : BIO_TransitionFunctor
+class BIO_PkupFunc_HealthBonusX2 : BIO_ItemPickupFunctor
 {
-	final override void WorldLoaded(BIO_Player bioPlayer, bool saveGame, bool reopen) const
+	final override void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const
 	{
-		if (saveGame || reopen) return;
-		bioPlayer.GiveInventory('BIO_PowerScanner', 1);
+		if (item.GetClass() != 'BIO_HealthBonus') return;
+		bioPlayer.GiveBody(1, bioPlayer.GetMaxHealth(true) + 100);
+	}
+}
+
+// Doubled effect of Armor Bonuses =============================================
+
+class BIO_Perk_ArmorBonusX2 : BIO_Passive
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PkupFunc_ArmorBonusX2');
+	}
+}
+
+class BIO_PkupFunc_ArmorBonusX2 : BIO_ItemPickupFunctor
+{
+	final override void OnArmorBonusPickup(BIO_Player bioPlayer,
+		BIO_ArmorBonus bonus) const
+	{
+		let armor = bioPlayer.FindInventory('BasicArmor');
+		armor.Amount = Min(armor.Amount + 1, armor.MaxAmount);
+	}
+}
+
+// Health Bonuses also fix armor; Armor Bonuses also grant 1 HP ================
+
+class BIO_Perk_BonusCrossover : BIO_Passive
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PkupFunc_BonusCrossover');
+	}
+}
+
+class BIO_PkupFunc_BonusCrossover : BIO_ItemPickupFunctor
+{
+	final override void OnHealthPickup(BIO_Player bioPlayer,
+		Inventory item) const
+	{
+		let armor = bioPlayer.FindInventory('BasicArmor');
+		
+		if (armor.MaxAmount <= 1 || bioPlayer.EquippedArmor == null)
+			return;
+		
+		armor.Amount = Min(armor.Amount + 1, armor.MaxAmount);
+	}
+
+	final override void OnArmorBonusPickup(BIO_Player bioPlayer,
+		BIO_ArmorBonus bonus) const
+	{
+		bioPlayer.GiveBody(1, bioPlayer.GetMaxHealth(true) + 100);
 	}
 }
