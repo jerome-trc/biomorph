@@ -15,7 +15,9 @@ class BIO_PerkMenu : GenericMenu
 	private readOnly<BIO_PlayerPerkGraph> PlayerPerkGraph;
 
 	private string Txt_HelpPan, Txt_Apply;
-	private TextureID Tex_Node, Tex_NodeRing;
+	private TextureID
+		Tex_Node_Minor, Tex_NodeRing_Minor,
+		Tex_Node_Major, Tex_NodeRing_Major;
 
 	private BIO_NamedKey Key_Confirm;
 
@@ -39,10 +41,14 @@ class BIO_PerkMenu : GenericMenu
 		Txt_Apply = BIO_Utils.Capitalize(StringTable.Localize("$BIO_APPLY"));
 
 		// Acquire graphical resources
-		Tex_Node = TexMan.CheckForTexture(
-			"graphics/perknode.png", TexMan.TYPE_ANY);
-		Tex_NodeRing = TexMan.CheckForTexture(
-			"graphics/perknode_ring.png", TexMan.TYPE_ANY);
+		Tex_Node_Minor = TexMan.CheckForTexture(
+			"graphics/perknode_minor.png", TexMan.TYPE_ANY);
+		Tex_NodeRing_Minor = TexMan.CheckForTexture(
+			"graphics/perknode_ring_minor.png", TexMan.TYPE_ANY);
+		Tex_Node_Major = TexMan.CheckForTexture(
+			"graphics/perknode_major.png", TexMan.TYPE_ANY);
+		Tex_NodeRing_Major = TexMan.CheckForTexture(
+			"graphics/perknode_ring_major.png", TexMan.TYPE_ANY);
 
 		Key_Confirm = BIO_NamedKey.Create("+use");
 
@@ -206,7 +212,22 @@ class BIO_PerkMenu : GenericMenu
 
 		for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
 		{
-			Screen.DrawTexture(Tex_Node, false,
+			TextureID frame, ring;
+			
+			switch (BasePerkGraph.Nodes[i].Category)
+			{
+			default:
+			case BIO_PRKCAT_MINOR:
+				frame = Tex_Node_Minor;
+				ring = Tex_NodeRing_Minor;
+				break;
+			case BIO_PRKCAT_MAJOR:
+				frame = Tex_Node_Major;
+				ring = Tex_NodeRing_Major;
+				break;
+			}
+
+			Screen.DrawTexture(frame, false,
 				NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
 				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
@@ -219,14 +240,14 @@ class BIO_PerkMenu : GenericMenu
 
 			if (PlayerPerkGraph.PerkActive[i])
 			{
-				Screen.DrawTexture(Tex_NodeRing, false,
+				Screen.DrawTexture(ring, false,
 					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
 					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
 					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
 			}
 			else if (NodeState[i].Selected)
 			{
-				Screen.DrawTexture(Tex_NodeRing, false,
+				Screen.DrawTexture(ring, false,
 					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
 					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
@@ -282,17 +303,31 @@ class BIO_PerkMenu : GenericMenu
 			NodeState[i].ScreenPos = Screen.VirtualToRealCoords( 
 				NodeState[i].DrawPos, scrSz, Size, handleAspect: false);
 
-			double nodeW = double(TexMan.GetSize(Tex_Node));
+			TextureID frame;
+
+			switch (BasePerkGraph.Nodes[i].Category)
+			{
+			default:
+			case BIO_PRKCAT_MINOR:
+				frame = Tex_Node_Minor;
+				break;
+			case BIO_PRKCAT_MAJOR:
+				frame = Tex_Node_Major;
+				break;
+			}
+
+			Vector2 nodeSz;
+			[nodeSz.X, nodeSz.Y] = TexMan.GetSize(frame);
 
 			Vector2
 				realTL = Screen.VirtualToRealCoords(
-					(NodeState[i].DrawPos.X - nodeW,
-					NodeState[i].DrawPos.Y - nodeW),
-					scrSz, Size),
+					(NodeState[i].DrawPos.X - (nodeSz.X * 0.5),
+					NodeState[i].DrawPos.Y - (nodeSz.Y * 0.5)),
+					scrSz, Size, handleAspect: false),
 				realBR = Screen.VirtualToRealCoords(
-					(NodeState[i].DrawPos.X + nodeW,
-					NodeState[i].DrawPos.Y + nodeW),
-					scrSz, Size);
+					(NodeState[i].DrawPos.X + (nodeSz.X * 0.5),
+					NodeState[i].DrawPos.Y + (nodeSz.Y * 0.5)),
+					scrSz, Size, handleAspect: false);
 
 			if (MousePos.X > realTL.X && MousePos.X < realBR.X &&
 				MousePos.Y > realTL.Y && MousePos.Y < realBR.Y &&
