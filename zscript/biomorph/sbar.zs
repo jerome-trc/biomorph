@@ -79,25 +79,6 @@ class BIO_StatusBar : BaseStatusBar
 		if (isInventoryBarVisible())
 			DrawInventoryBar(InvBarState, (0, 0), 7, DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
 
-		{ // Draw powerup icons and their durations in seconds
-			int yPos = 0;
-			for (Inventory i = CPlayer.MO.Inv; i != null; i = i.Inv)
-			{
-				int yOffs = NotifyLineCount.GetInt() * 16;
-				let powup = Powerup(i);
-
-				if (powup == null || !powup.Icon || powup is 'PowerStrength')
-					continue;
-
-				DrawInventoryIcon(powup, (20, yOffs + yPos));
-				yPos += 8;
-				int secs = powup.EffectTics / GameTicRate;
-				DrawString(Font_Small, FormatNumber(secs, 1, 2),
-					(19, yOffs + yPos), DI_TEXT_ALIGN_CENTER, Font.CR_WHITE);
-				yPos += 32;
-			}
-		}
-
 		int invY = -20;
 		DrawWeaponAndAmmoDetails(invY);
 
@@ -124,7 +105,29 @@ class BIO_StatusBar : BaseStatusBar
 			hec < bioPlayer.MaxEquipmentHeld ? Font.CR_WHITE : Font.CR_YELLOW);
 	}
 
-	private void DrawArmorDetails()
+	// Draw powerup icons at top left, along with the 
+	// durations remaining on their effects in seconds.
+	final override void DrawPowerups()
+	{
+		int yPos = 0;
+		for (Inventory i = CPlayer.MO.Inv; i != null; i = i.Inv)
+		{
+			int yOffs = NotifyLineCount.GetInt() * 16;
+			let powup = Powerup(i);
+
+			if (powup == null || !powup.Icon || powup is 'PowerStrength')
+				continue;
+
+			DrawInventoryIcon(powup, (20, yOffs + yPos));
+			yPos += 8;
+			int secs = powup.EffectTics / GameTicRate;
+			DrawString(Font_Small, FormatNumber(secs, 1, 2),
+				(19, yOffs + yPos), DI_TEXT_ALIGN_CENTER, Font.CR_WHITE);
+			yPos += 32;
+		}
+	}
+
+	private void DrawArmorDetails() const
 	{
 		let armor = CPlayer.MO.FindInventory('BasicArmor');
 		if (armor == null || armor.Amount <= 0) return;
@@ -162,7 +165,7 @@ class BIO_StatusBar : BaseStatusBar
 		}
 	}
 
-	private void DrawWeaponAndAmmoDetails(in out int invY)
+	private void DrawWeaponAndAmmoDetails(in out int invY) const
 	{
 		BIO_Weapon weap = BIO_Weapon(CPlayer.ReadyWeapon);
 		if (weap == null) return;

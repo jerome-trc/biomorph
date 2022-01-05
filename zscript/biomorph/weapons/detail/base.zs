@@ -602,7 +602,7 @@ class BIO_Weapon : DoomWeapon abstract
 	virtual bool, bool OnCorrupt() { return true, true; }
 
 	// Called after all other weapon details have been drawn.
-	virtual ui void DrawToHUD(BIO_StatusBar sbar) const {}
+	virtual ui void DrawToHUD(readOnly<BIO_StatusBar> sbar) const {}
 
 	// Actions =================================================================
 
