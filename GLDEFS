@@ -1,3 +1,11 @@
+// Electric puff
+
+pointlight BIO_L_ElecPuff
+{
+    color 0.8 0.95 1.0
+    size 15
+}
+
 // Plasma Globule
 
 pointlight BIO_PlasmaGlob_A
@@ -30,7 +38,7 @@ flickerlight BIO_PlasmaGlob_D
 	chance 0.4
 }
 
-Object BIO_PlasmaGlobule
+object BIO_PlasmaGlobule
 {
 	frame GLOBA { light BIO_PlasmaGlob_A }
 	frame GLOBB { light BIO_PlasmaGlob_A }

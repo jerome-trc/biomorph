@@ -249,5 +249,6 @@ const BFGF_NONE = 0; // EBFGSprayFlags
 const CPF_NONE = 0; // ECustomPunchFlags
 const FBF_NONE = 0; // EFireBulletsFlags
 const LAF_NONE = 0; // ELineAttackFlags
+const RGF_NONE = 0; // ERailFlags
 const TRF_NONE = 0; // ELineTraceFlags
 const XF_NONE = 0; // EExplodeFlags

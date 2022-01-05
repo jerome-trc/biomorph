@@ -31,7 +31,8 @@
 		],
 		"energy": [
 			"BIO_PlasmaRifle",
-			"BIO_PlasmaCannon"
+			"BIO_PlasmaCannon",
+			"BIO_ArcCaster"
 		],
 		"super": [
 			"BIO_BFG9000"
@@ -73,7 +74,8 @@
 		],
 		"energy": [
 			"BIO_PlasmaRifle",
-			"BIO_PlasmaCannon"
+			"BIO_PlasmaCannon",
+			"BIO_ArcCaster"
 		],
 		"super": [
 			"BIO_BFG9000"

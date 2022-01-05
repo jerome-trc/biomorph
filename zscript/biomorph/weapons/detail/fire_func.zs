@@ -184,8 +184,10 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 
 class BIO_FireFunc_Rail : BIO_FireFunctor
 {
-	int Flags;
 	color Color1, Color2;
+	ERailFlags Flags;
+	int ParticleDuration, SpiralOffset, PierceLimit;
+	double MaxDiff, ParticleSparsity, ParticleDriftSpeed;
 
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
@@ -204,20 +206,39 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 				(Class<BIO_RailSpawn>)(fireData.FireType)).PuffType;
 		}
 
-		weap.A_RailAttack(fireData.Damage,
-			spawnOfs_xy: fireData.Angle,
-			useAmmo: false,
+		weap.BIO_RailAttack(fireData.Damage,
+			spawnOffs_xy: fireData.Angle,
 			color1: Color1,
 			color2: Color2,
 			flags: Flags,
-			puffType: puff_t,
+			maxDiff: MaxDiff,
+			puff_t: puff_t,
 			spread_xy: fireData.HSpread,
 			spread_z: fireData.VSpread,
+			duration: ParticleDuration,
+			sparsity: ParticleSparsity,
+			driftSpeed: ParticleDriftSpeed,
 			spawnClass: spawnClass,
-			spawnOfs_z: fireData.Pitch
+			spawnOffs_z: fireData.Pitch
 		);
 
 		return null;
+	}
+
+	BIO_FireFunc_Rail Setup(color color1 = 0, color color2 = 0,
+		ERailFlags flags = RGF_NONE, double maxDiff = 0.0, int duration = 0,
+		double sparsity = 1.0, double driftSpeed = 1.0, int spiralOffs = 270)
+	{
+		self.Color1 = color1;
+		self.Color2 = color2;
+		self.Flags = flags;
+		self.MaxDiff = maxDiff;
+		self.ParticleDuration = duration;
+		self.ParticleSparsity = sparsity;
+		self.ParticleDriftSpeed = driftSpeed;
+		self.SpiralOffset = spiralOffs;
+
+		return self;
 	}
 
 	override void ToString(

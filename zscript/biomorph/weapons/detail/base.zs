@@ -1698,7 +1698,7 @@ class BIO_Weapon : DoomWeapon abstract
 		p.Color1 = color1;
 		p.Color2 = color2;
 		p.MaxDiff = maxDiff;
-		p.Flags = flags;
+		p.Flags = flags | RGF_SILENT;
 		p.Puff = puff_t;
 		p.AngleOffset = spread_xy;
 		p.PitchOffset = spread_z;
