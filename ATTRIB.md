@@ -126,7 +126,7 @@ PROXBEEP, PROXFIRE, and PROXHIT are courtesy of id Software LLC.
 
 VOLLFIRE is courtesy of EA Digital Illusions CE AB.
 
-ARCAREDY is courtesy of YouTube user [The Sound Channel](https://www.youtube.com/channel/UCB9HQvoKSfE1_06rUyNV6yg), provided under no license. No credit to a source is given by the uploader.
+ARCAREDY is courtesy of YouTube user [The Sound Channel](https://www.youtube.com/watch?v=5JUDxCWnWRM), provided under no license. No credit to a source is given by the uploader.
 
 "m60-1.wav" (HVBRFIRE) and "deagle.wav" (HANDCANN) are courtesy of ZDoom forum user Joblez_I. 
 
