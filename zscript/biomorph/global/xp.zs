@@ -2,7 +2,8 @@ enum BIO_PerkCategory : uint8
 {
 	BIO_PRKCAT_MINOR,
 	BIO_PRKCAT_MAJOR,
-	BIO_PRKCAT_KEYSTONE
+	BIO_PRKCAT_KEYSTONE,
+	BIO_PRKCAT_START
 }
 
 class BIO_PerkGraphNode
@@ -32,6 +33,75 @@ class BIO_PlayerPerkGraph
 class BIO_BasePerkGraph
 {
 	Array<BIO_PerkGraphNode> Nodes;
+
+	private void ResolveDistImpl(uint node, uint distance, in out Array<uint> visited)
+	{
+		visited.Push(node);
+		Nodes[node].DistanceFromStart = distance;
+
+		for (uint i = 0; i < Nodes[node].Neighbors.Size(); i++)
+		{
+			let n = Nodes[node].Neighbors[i];
+
+			if (visited.Find(n) != visited.Size())
+				continue;
+			
+			ResolveDistImpl(n, distance + 1, visited);
+		}
+	}
+
+	void ResolveDistances()
+	{
+		Array<uint> visited;
+		ResolveDistImpl(0, 0, visited);
+	}
+
+	private bool IsAccessibleImpl(uint tgt, uint cur, in out Array<uint> active) const
+	{
+		for (uint i = 0; i < Nodes[cur].Neighbors.Size(); i++)
+		{
+			uint ndx = Nodes[cur].Neighbors[i];
+			
+			if (Nodes[ndx].DistanceFromStart <= Nodes[cur].DistanceFromStart)
+				continue;
+
+			if (ndx == tgt)
+				return true;
+			else if (active.Find(ndx) != active.Size())
+				return IsAccessibleImpl(tgt, ndx, active);
+		}
+
+		return false;
+	}
+
+	bool IsAccessible(uint node, in out Array<uint> active) const
+	{
+		if (node >= Nodes.Size())
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Queried accessibility of illegal node %d.", node);
+			return false;
+		}
+
+		if (node == 0)
+			return true;
+
+		// Completely unconnected nodes are permanently accessible
+		if (Nodes[node].Neighbors.Size() < 1)
+			return true;
+
+		return IsAccessibleImpl(node, 0, active);
+	}
+
+	void DebugPrint() const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			Console.Printf("Node %d has neigbors:", i);
+			for (uint j = 0; j < Nodes[i].Neighbors.Size(); j++)
+				Console.Printf("\t%d", Nodes[i].Neighbors[j]);
+		}
+	}
 
 	readOnly<BIO_BasePerkGraph> AsConst() const { return self; }
 }
@@ -102,7 +172,8 @@ extend class BIO_GlobalData
 		Array<string> stringIDs;
 		
 		// Create the starter node
-		BasePerkGraph.Nodes.Push(new('BIO_PerkGraphNode'));
+		uint sn = BasePerkGraph.Nodes.Push(new('BIO_PerkGraphNode'));
+		BasePerkGraph.Nodes[sn].Category = BIO_PRKCAT_START;
 		stringIDs.Push("bio_start");
 
 		for (int lump = 0; lump < Wads.GetNumLumps(); lump++)
@@ -273,14 +344,25 @@ extend class BIO_GlobalData
 					continue;
 				}
 
+				// `stringIDs` and `BasePerkGraph.Nodes` are parallel,
+				// so `k` is a node index/UUID here
 				for (uint k = 0; k < stringIDs.Size(); k++)
 				{
 					if (!(stringIDs[k] ~== strID))
 						continue;
 
-					BasePerkGraph.Nodes[i + 1].Neighbors.Push(k);
+					// `ni` is the node which defined neighbor(s)
+					// `nk` is the node requested for neighboring by `ni`
+					let ni = BasePerkGraph.Nodes[i + 1], nk = BasePerkGraph.Nodes[k];
+
+					if (ni.Neighbors.Find(nk.UUID) == ni.Neighbors.Size())
+						ni.Neighbors.Push(nk.UUID);
+					if (nk.Neighbors.Find(i + 1) == nk.Neighbors.Size())
+						nk.Neighbors.Push(i + 1);
 				}
 			}
 		}
+
+		BasePerkGraph.ResolveDistances();
 	}
 }
