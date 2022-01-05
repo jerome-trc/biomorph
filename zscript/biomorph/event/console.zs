@@ -2,32 +2,33 @@ extend class BIO_EventHandler
 {
 	final override void ConsoleProcess(ConsoleEvent event)
 	{
+		if (event.Name.Length() < 5 || !(event.Name.Left(4) ~== "bio_"))
+			return;
+
 		// Normal gameplay events
-		if (ConEvent_PerkMenu(event)) return;
+		
+		ConEvent_PerkMenu(event);
 
 		// Debugging events
-		if (ConEvent_Help(event)) return;
 		
-		if (ConEvent_WeapDiag(event) || ConEvent_EquipDiag(event))
-			return;
-		
-		if (ConEvent_XPInfo(event) || ConEvent_LootDiag(event))
-			return;
-		
-		if (ConEvent_WeapAfxCompat(event))
-			return;
+		ConEvent_Help(event);
+		ConEvent_WeapDiag(event);
+		ConEvent_EquipDiag(event);
+		ConEvent_XPInfo(event);
+		ConEvent_LootDiag(event);
+		ConEvent_WeapAfxCompat(event);
 	}
 
-	private ui bool ConEvent_Help(ConsoleEvent event) const
+	private ui void ConEvent_Help(ConsoleEvent event) const
 	{
 		if (!(event.Name ~== "bio_help"))
-			return false;
+			return;
 		
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
 				"Illegal attempt by a script to invoke `bio_help`.");
-			return true;
+			return;
 		}
 
 		Console.Printf(
@@ -40,43 +41,41 @@ extend class BIO_EventHandler
 			"\c[Gold]Network events:\c-\n" ..
 			"netevent bio_addwafx:Classname\n" ..
 			"netevent bio_rmwafx:Classname\n" ..
-			"bio_recalcweap_ (alias: bio_weaprecalc_)");
-
-		return true;
+			"bio_recalcweap_ (alias: bio_weaprecalc_)" ..
+			"bio_levelup_ (alias: bio_lvlup_)");
 	}
 
-	private ui bool ConEvent_PerkMenu(ConsoleEvent event) const
+	private ui void ConEvent_PerkMenu(ConsoleEvent event) const
 	{
-		if (!(event.Name ~== "bio_perkmenu")) return false;
+		if (!(event.Name ~== "bio_perkmenu")) return;
 
-		if (GameState != GS_LEVEL) return true;
-		if (Players[ConsolePlayer].Health <= 0) return true;
-		if (!(Players[ConsolePlayer].MO is 'BIO_Player')) return true;
-		if (Menu.GetCurrentMenu() is 'BIO_PerkMenu') return true;
+		if (GameState != GS_LEVEL) return;
+		if (Players[ConsolePlayer].Health <= 0) return;
+		if (!(Players[ConsolePlayer].MO is 'BIO_Player')) return;
+		if (Menu.GetCurrentMenu() is 'BIO_PerkMenu') return;
 
 		Menu.SetMenu('BIO_PerkMenu');
-		return true;
 	}
 
-	private ui bool ConEvent_WeapDiag(ConsoleEvent event) const
+	private ui void ConEvent_WeapDiag(ConsoleEvent event) const
 	{
-		if (!(event.Name ~== "bio_weapdiag")) return false;
+		if (!(event.Name ~== "bio_weapdiag")) return;
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"Illegal attempt by a script to invoke `bio_weapdiag`.");
-			return true;
+			return;
 		}
 
 		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
-		if (bioPlayer == null) return true;
+		if (bioPlayer == null) return;
 
 		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
 		if (weap == null)
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"This event can only be invoked on a Biomorph weapon.");
-			return true;
+			return;
 		}
 
 		string output = Biomorph.LOGPFX_INFO;
@@ -165,17 +164,16 @@ extend class BIO_EventHandler
 		}
 
 		Console.Printf(output);
-		return true;
 	}
 
-	private ui bool ConEvent_EquipDiag(ConsoleEvent event) const
+	private ui void ConEvent_EquipDiag(ConsoleEvent event) const
 	{
-		if (!(event.Name ~== "bio_equipdiag")) return false;
+		if (!(event.Name ~== "bio_equipdiag")) return;
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"Illegal attempt by a script to invoke `bio_equipdiag`.");
-			return true;
+			return;
 		}
 
 		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
@@ -183,7 +181,7 @@ extend class BIO_EventHandler
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"This event can only be invoked on Biomorph-class players.");
-			return true;
+			return;
 		}
 
 		string armorStr;
@@ -197,22 +195,21 @@ extend class BIO_EventHandler
 
 
 		Console.Printf("Equipped armor: %s", armorStr);
-		return true;
 	}
 
-	private ui bool ConEvent_WeapAfxCompat(ConsoleEvent event) const
+	private ui void ConEvent_WeapAfxCompat(ConsoleEvent event) const
 	{
 		Array<string> nameParts;
 		event.Name.Split(nameParts, ":");
 
 		if (!nameParts[0] || !(nameParts[0] ~== "bio_wafxcompat"))
-			return false;
+			return;
 
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"Illegal attempt by a script to invoke `bio_wafxcompat`.");
-			return true;
+			return;
 		}
 
 		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
@@ -220,14 +217,14 @@ extend class BIO_EventHandler
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"This event can only be invoked on a Biomorph weapon.");
-			return true;
+			return;
 		}
 
 		if (nameParts.Size() < 2 || !nameParts[1])
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"Please provide a weapon affix class name.");
-			return true;
+			return;
 		}
 	
 		Class<BIO_WeaponAffix> afx_t = nameParts[1];
@@ -235,7 +232,7 @@ extend class BIO_EventHandler
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"%s is not a valid weapon affix class name.", nameParts[1]);
-			return true;
+			return;
 		}
 
 		bool compat = BIO_WeaponAffix(new(afx_t)).Compatible(weap.AsConst());
@@ -249,40 +246,36 @@ extend class BIO_EventHandler
 				afx_t.GetClassName());
 		
 		Console.Printf(Biomorph.LOGPFX_INFO .. output);
-		return true;
 	}
 
-	private ui bool ConEvent_XPInfo(ConsoleEvent event) const
+	private ui void ConEvent_XPInfo(ConsoleEvent event) const
 	{
-		if (!(event.Name ~== "bio_xp")) return false;
+		if (!(event.Name ~== "bio_xp")) return;
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
 				"Illegal attempt by a script to invoke `bio_xp`.");
-			return true;
+			return;
 		}
 
 		Console.Printf(Biomorph.LOGPFX_INFO .. "Party XP and levelling info:\n");
 		Console.Printf("Party level: %d", Globals.GetPartyLevel());
 		Console.Printf("Current party XP: %d", Globals.GetPartyXP());
 		Console.Printf("XP to next level: %d", Globals.XPToNextLevel());
-		return true;
 	}
 
-	private ui bool ConEvent_LootDiag(ConsoleEvent event) const
+	private ui void ConEvent_LootDiag(ConsoleEvent event) const
 	{
-		if (!(event.Name ~== "bio_lootdiag")) return false;
+		if (!(event.Name ~== "bio_lootdiag")) return;
 
 		if (!event.IsManual)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
 				"Illegal attempt by a script to invoke `bio_lootdiag`.");
-			return true;
+			return;
 		}
 
 		Console.Printf(Biomorph.LOGPFX_INFO .. "All loot tables:");
 		Globals.PrintLootDiag();
-
-		return true;
 	}
 }

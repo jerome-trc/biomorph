@@ -124,14 +124,24 @@ extend class BIO_GlobalData
 		while (PartyXP >= XPToNextLevel())
 		{
 			PartyLevel++;
-
-			for (uint i = 0; i < PerkGraphs.Size(); i++)
-				PerkGraphs[i].Points++;
+			AddPerkPoint();
 
 			if (BIO_debug)
 				Console.Printf(Biomorph.LOGPFX_DEBUG ..
 					"Party leveled up to %d.", PartyLevel);
 		}
+	}
+
+	void LevelUp()
+	{
+		PartyXP = XPToNextLevel();
+		AddPartyXP(0);
+	}
+
+	void AddPerkPoint()
+	{
+		for (uint i = 0; i < PerkGraphs.Size(); i++)
+			PerkGraphs[i].Points++;
 	}
 
 	BIO_PlayerPerkGraph GetPerkGraph(PlayerInfo pInfo) const
