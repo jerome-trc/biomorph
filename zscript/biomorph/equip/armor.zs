@@ -21,6 +21,21 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 		Loop;
 	}
 
+	static void TryRepairArmor(BIO_Player bioPlayer, int modifier = 1)
+	{
+		if (bioPlayer.EquippedArmor == null)
+			return;
+
+		// Is the currently-equipped armor already in perfect condition?
+		let armor = BasicArmor(bioPlayer.FindInventory('BasicArmor'));
+
+		if (armor.MaxAmount <= 1)
+			return;
+
+		armor.Amount = Min(armor.Amount + modifier, armor.MaxAmount);
+		bioPlayer.EquippedArmor.ArmorData.SaveAmount = armor.Amount;
+	}
+
 	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
@@ -42,10 +57,12 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 
 		// Is the currently-equipped armor already in perfect condition?
 		let armor = BasicArmor(bioPlayer.FindInventory('BasicArmor'));
+		
 		if (armor.Amount >= armor.MaxAmount)
 			return false;
 
-		armor.Amount = Min(armor.Amount + 1, armor.MaxAmount);
+		TryRepairArmor(bioPlayer);
+
 		PrintPickupMessage(Owner.CheckLocalView(), String.Format(
 			StringTable.Localize("$BIO_ARMORBONUS_PICKUP"),
 			bioPlayer.EquippedArmor.GetTag()));

@@ -96,8 +96,7 @@ class BIO_PkupFunc_ArmorBonusX2 : BIO_ItemPickupFunctor
 	final override void OnArmorBonusPickup(BIO_Player bioPlayer,
 		BIO_ArmorBonus bonus) const
 	{
-		let armor = bioPlayer.FindInventory('BasicArmor');
-		armor.Amount = Min(armor.Amount + 1, armor.MaxAmount);
+		BIO_ArmorBonus.TryRepairArmor(bioPlayer);
 	}
 }
 
@@ -116,12 +115,8 @@ class BIO_PkupFunc_BonusCrossover : BIO_ItemPickupFunctor
 	final override void OnHealthPickup(BIO_Player bioPlayer,
 		Inventory item) const
 	{
-		let armor = bioPlayer.FindInventory('BasicArmor');
-		
-		if (armor.MaxAmount <= 1 || bioPlayer.EquippedArmor == null)
-			return;
-		
-		armor.Amount = Min(armor.Amount + 1, armor.MaxAmount);
+		if (item.GetClass() != 'BIO_HealthBonus') return;
+		BIO_ArmorBonus.TryRepairArmor(bioPlayer);
 	}
 
 	final override void OnArmorBonusPickup(BIO_Player bioPlayer,
