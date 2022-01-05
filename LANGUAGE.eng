@@ -60,11 +60,11 @@
 	BIO_FIREFUNC_SAW =
 		"\c[MidGrey]Cuts continually";
 	BIO_FIREFUNC_RAIL =
-		"\c[MidGrey]Fires %s%d \c[MidGrey]rail %s%s, spawning %s%s \c[MidGrey]on impact";
+		"\c[MidGrey]Fires %s%d \c[MidGrey] %s%s, spawning %s%s \c[MidGrey]on impact";
 	BIO_FIREFUNC_RAIL_NOPUFF =
 		"\c[MidGrey]Fires %s%d \c[MidGrey]rail shots, spawning %s%s \c[MidGrey]on impact";
 	BIO_FIREFUNC_RAIL_NOSPAWN =
-		"\c[MidGrey]Fires %s%d \c[MidGrey]rail %s%s"
+		"\c[MidGrey]Fires %s%d \c[MidGrey] %s%s";
 	BIO_FIREFUNC_RAIL_NOTHING =
 		"\c[MidGrey]Fires %s%d \c[MidGrey]rail shots";
 	BIO_FIREFUNC_BFGSPRAY =
@@ -123,6 +123,9 @@
 	BIO_VOLLEYGUN_TAG = "Volley Gun";
 	BIO_VOLLEYGUN_PKUP = "Obtained a %s.";
 
+	BIO_ARCCASTER_TAG = "Arc Caster";
+	BIO_ARCCASTER_PKUP = "Procured an %s.";
+
 	BIO_MINIVULCAN_TAG = "Minivulcan";
 	BIO_MINIVULCAN_PKUP = "Procured an %s.";
 
@@ -166,6 +169,9 @@
 
 	BIO_SLUG_TAG = "slug";
 	BIO_SLUG_TAG_PLURAL = "slugs";
+
+	BIO_ELECTRICPUFF_TAG = "electric arc";
+	BIO_ELECTRICPUFF_TAG_PLURAL = "electric arcs";
 
 	BIO_ROCKET_TAG = "rocket";
 	BIO_ROCKET_TAG_PLURAL = "rockets";

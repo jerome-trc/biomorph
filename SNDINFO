@@ -96,6 +96,20 @@ bio/weap/precrifle/fire PRECFIRE
 bio/weap/proxlauncher/fire PROXFIRE
 bio/weap/volley/fire VOLLFIRE
 
+bio/weap/arccaster/ready ARCAREDY
+bio/weap/arccaster/fire_0 ARCAFIR0
+bio/weap/arccaster/fire_1 ARCAFIR1
+bio/weap/arccaster/fire_2 ARCAFIR2
+
+$RANDOM bio/weap/arccaster/fire
+{
+	bio/weap/arccaster/fire_0
+	bio/weap/arccaster/fire_1
+	bio/weap/arccaster/fire_2
+}
+
+$LIMIT bio/weap/arccaster/fire 1
+
 bio/weap/minivulcan/fire_0 VULCFIR0
 bio/weap/minivulcan/fire_1 VULCFIR1
 bio/weap/minivulcan/fire_2 VULCFIR2
@@ -132,6 +146,8 @@ $RANDOM bio/weap/incursion/fire
 }
 
 bio/weap/incursion/reload INCURELO
+
+bio/puff/lightning/hit ELECPUFF
 
 bio/proj/proximity/beep PROXBEEP
 bio/proj/proximity/hit PROXHIT

@@ -35,6 +35,9 @@ Nailgun and Nail sprites are courtesy of ZDoom forum user osjclatchford, with fi
 
 Plasma Cannon sprites (as well as those of the Plasma Globule) are courtesy of id Software LLC and Midway Games Inc., and were edited by Realm667 user Robot J.
 
+Arc Caster HUD sprites are courtesy of ZDoom forum user VriskaSerket.
+The Arc Caster pickup sprite is courtesy of the Librequake Project, id Software LLC, and Banjo Software, with edits by Realm667 user KILLA DIO.
+
 Minivulcan and Heavy Battle Rifle HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
 Hand Cannon sprites are courtesy of Realm667 user Mor'ladim, id Software, and Legend of the Monster Hunter.
@@ -62,6 +65,9 @@ Any graphical asset which is not mentioned here is custom-made by RatCircus.
 ## Audio
 
 The following audio files are provided by CturiX Kemilon, under no license:
+- "elec1.wav" (ARCAFIR0)
+- "elec2.wav" (ARCAFIR1)
+- "elec3.wav" (ARCAFIR2)
 - "energyscreem.wav" (MUTACORR)
 - "gunbirth1.wav" (MUTAUSE0)
 - "gunbirth2.wav" (MUTAUSE1)
@@ -118,9 +124,13 @@ PROXBEEP, PROXFIRE, and PROXHIT are courtesy of id Software LLC.
 
 VOLLFIRE is courtesy of EA Digital Illusions CE AB.
 
+ARCAREDY is courtesy of YouTube user [The Sound Channel](https://www.youtube.com/channel/UCB9HQvoKSfE1_06rUyNV6yg), provided under no license. No credit to a source is given by the uploader.
+
 "m60-1.wav" (HVBRFIRE) and "deagle.wav" (HANDCANN) are courtesy of ZDoom forum user Joblez_I. 
 
 Impactor Gauntlet sounds are courtesy of Capcom Co., Ltd.
+
+ELECPUFF is courtesy of the Librequake Project.
 
 ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (replaces DSSECRET) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
 

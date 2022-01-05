@@ -126,7 +126,7 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Projectile(Class<Actor> fireType, int fireCount = 1)
+	BIO_WeaponPipelineBuilder Projectile(Class<Actor> fireType, uint fireCount = 1)
 	{
 		CheckFireFunctorRestricted();
 		CheckFireTypeRestricted();
@@ -170,6 +170,26 @@ class BIO_WeaponPipelineBuilder play
 			break;
 		}
 		
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Rail(Class<Actor> fireType, uint fireCount = 1,
+		color color1 = 0, color color2 = 0, ERailFlags flags = RGF_NONE,
+		double maxDiff = 0.0, int duration = 0, double sparsity = 1.0,
+		double driftSpeed = 1.0, int spiralOffset = 270)
+	{
+		CheckFireFunctorRestricted();
+		CheckFireTypeRestricted();
+		CheckFireCountRestricted();
+
+		let firefunc = new('BIO_FireFunc_Rail');
+		fireFunc.Setup(color1, color2, flags, maxDiff,
+			duration, sparsity, driftSpeed, spiralOffset);
+
+		Pipeline.SetFireFunctor(fireFunc);
+		Pipeline.SetFireType(fireType);
+		Pipeline.SetFireCount(fireCount);
+
 		return self;
 	}
 

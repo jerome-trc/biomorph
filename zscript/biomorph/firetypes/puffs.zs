@@ -40,6 +40,34 @@ class BIO_MeleeHit : BIO_Puff
 	}
 }
 
+class BIO_ElectricPuff : BIO_RailPuff
+{
+	Default
+	{
+		+ALWAYSPUFF
+		+PUFFONACTORS
+		
+		Decal 'PlasmaScorchLower1';
+		RenderStyle 'Add';
+		Tag "$BIO_ELECTRICPUFF_TAG_PLURAL";
+		VSpeed 0.0;
+		BIO_Puff.PluralTag "$BIO_ELECTRICPUFF_TAG_PLURAL";
+	}
+
+	States
+	{
+	Spawn:
+		RZAP A 2 Bright Light("BIO_L_ElecPuff");
+		RZAP B 2 Bright Light("BIO_L_ElecPuff")
+			A_StartSound("bio/puff/lightning/hit",
+				Random(0, 1) == 0 ? CHAN_6 : CHAN_7, volume: 0.5);
+		RZAP CDEFGHI 2 Bright Light("BIO_L_ElecPuff");
+		Stop;
+	Melee:
+		Goto Spawn;
+	}
+}
+
 class BIO_Shrapnel : BulletPuff
 {
 	Default
