@@ -312,7 +312,8 @@ class BIO_PerkMenu : GenericMenu
 		if (PlayerPerkGraph.PerkActive[HoveredNode])
 			return;
 
-		if (SelectionSize >= PlayerPerkGraph.Points)
+		if (!NodeState[HoveredNode].Selected &&
+			SelectionSize >= PlayerPerkGraph.Points)
 			return;
 
 		Array<uint> active;

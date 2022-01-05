@@ -62,13 +62,15 @@ class BIO_BasePerkGraph
 		{
 			uint ndx = Nodes[cur].Neighbors[i];
 			
+			if (ndx == tgt)
+				return true;
+			
 			if (Nodes[ndx].DistanceFromStart <= Nodes[cur].DistanceFromStart)
 				continue;
 
-			if (ndx == tgt)
+			if (active.Find(ndx) != active.Size() &&
+				IsAccessibleImpl(tgt, ndx, active))
 				return true;
-			else if (active.Find(ndx) != active.Size())
-				return IsAccessibleImpl(tgt, ndx, active);
 		}
 
 		return false;
