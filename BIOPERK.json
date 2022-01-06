@@ -76,6 +76,17 @@
 			"icon": "graphics/perk/bonuscrossover.png",
 			"category": "major",
 			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_scaledpistoldamage",
+			"class": "BIO_Perk_ScaledPistolDamage",
+			"x": -60,
+			"y": 60,
+			"title": "$BIO_PERK_SCALEDPISTOLDAMAGE_TITLE",
+			"desc": "$BIO_PERK_SCALEDPISTOLDAMAGE_DESC",
+			"icon": "PISTA0",
+			"category": "major",
+			"neighbors": [ "bio_start" ]
 		}
 	]
 }

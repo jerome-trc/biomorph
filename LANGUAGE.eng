@@ -423,6 +423,11 @@
 	BIO_PERK_HEALTHBONUSX2_DESC =
 		"\c[White]Health Bonuses have double their normal effect.";
 
+	BIO_PERK_SCALEDPISTOLDAMAGE_TITLE =
+		"\c[Green]Scout Tactics";
+	BIO_PERK_SCALEDPISTOLDAMAGE_DESC =
+		"\c[White]Pistols gain damage inversely proportional to their fire rate.";
+
 	BIO_PERK_STARTINGALLMAP_TITLE =
 		"\c[Green]Echolocation";
 	BIO_PERK_STARTINGALLMAP_DESC =

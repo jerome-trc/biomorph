@@ -188,6 +188,15 @@ class BIO_Player : DoomPlayer
 		}
 	}
 
+	void BeforeEachFire(in out BIO_FireData fireData)
+	{
+		for (uint i = 0; i < Functors[FANDX_WEAPON].Size(); i++)
+		{
+			BIO_WeaponFunctor(Functors[FANDX_WEAPON][i])
+				.BeforeEachFire(self, fireData);
+		}
+	}
+
 	void OnHealthPickup(Inventory item)
 	{
 		for (uint i = 0; i < Functors[FANDX_ITEMPKUP].Size(); i++)
