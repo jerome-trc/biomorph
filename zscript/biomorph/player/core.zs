@@ -36,6 +36,11 @@ class BIO_Player : DoomPlayer
 	override void GiveDefaultInventory()
 	{
 		super.GiveDefaultInventory();
+		
+		// If the default inventory has been given, it's either a new game
+		// or the player likely went through a death exit and had their
+		// inventory cleared
+		BIO_GlobalData.Get().ResetWeaponGradePrecedent();
 
 		if (BIO_Utils.Eviternity())
 		{

@@ -111,6 +111,15 @@ extend class BIO_GlobalData
 		}
 	}
 
+	void ResetWeaponGradePrecedent()
+	{
+		if (BIO_debug)
+			Console.Printf(Biomorph.LOGPFX_DEBUG ..
+				"Resetting weapon grade precedent.");
+
+		MaxWeaponGrade = BIO_PMWG_SURPLUS;
+	}
+
 	private void TryReadWeaponLootArray(int lump, BIO_JsonObject loot,
 		string arrName, BIO_WeaponCategory targetTables)
 	{
