@@ -413,6 +413,16 @@
 
 // Perks =======================================================================
 
+	BIO_PERK_MAXBONUSHEALTH_MINOR_TITLE =
+		"\c[Green]Vigour";
+	BIO_PERK_MAXBONUSHEALTH_MINOR_DESC =
+		"\c[White]+2 maximum health\n+2 maximum bonus health";
+
+	BIO_PERK_HEALTHBONUSX2_TITLE =
+		"\c[Green]Nanite Medicine";
+	BIO_PERK_HEALTHBONUSX2_DESC =
+		"\c[White]Health Bonuses have double their normal effect.";
+
 	BIO_PERK_STARTINGALLMAP_TITLE =
 		"\c[Green]Echolocation";
 	BIO_PERK_STARTINGALLMAP_DESC =
@@ -428,11 +438,6 @@
 	BIO_PERK_BONUSCROSSOVER_DESC =
 		"\c[White]Health Bonuses repair 1 point of armour, and Armour Shards "
 		"give 1 point of health.";
-
-	BIO_PERK_HEALTHBONUSX2_TITLE =
-		"\c[Green]Nanite Medicine";
-	BIO_PERK_HEALTHBONUSX2_DESC =
-		"\c[White]Health Bonuses have double their normal effect.";
 
 	BIO_PERK_SCANNERALLMAP_TITLE =
 		"\c[Green]Neural Uplink";

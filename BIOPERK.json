@@ -1,6 +1,39 @@
 {
 	"perks": [
 		{
+			"uuid": "bio_maxbonushealth_0",
+			"class": "BIO_Perk_MaxBonusHealth",
+			"x": 60,
+			"y": -60,
+			"title": "$BIO_PERK_MAXBONUSHEALTH_MINOR_TITLE",
+			"desc": "$BIO_PERK_MAXBONUSHEALTH_MINOR_DESC",
+			"icon": "BON1A0",
+			"category": "minor",
+			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_maxbonushealth_1",
+			"class": "BIO_Perk_MaxBonusHealth",
+			"x": 120,
+			"y": -120,
+			"title": "$BIO_PERK_MAXBONUSHEALTH_MINOR_TITLE",
+			"desc": "$BIO_PERK_MAXBONUSHEALTH_MINOR_DESC",
+			"icon": "BON1A0",
+			"category": "minor",
+			"neighbors": [ "bio_maxbonushealth_0" ]
+		},
+		{
+			"uuid": "bio_healthbonusx2",
+			"class": "BIO_Perk_HealthBonusX2",
+			"x": 180,
+			"y": -180,
+			"title": "$BIO_PERK_HEALTHBONUSX2_TITLE",
+			"desc": "$BIO_PERK_HEALTHBONUSX2_DESC",
+			"icon": "graphics/perk/healthbonus_x2.png",
+			"category": "major",
+			"neighbors": [ "bio_maxbonushealth_1" ]
+		},
+		{
 			"uuid": "bio_allmap",
 			"class": "BIO_Perk_StartingAllmap",
 			"x": 60,
@@ -21,17 +54,6 @@
 			"icon": "graphics/perk/scannerallmap.png",
 			"category": "major",
 			"neighbors": [ "bio_allmap" ]
-		},
-		{
-			"uuid": "bio_healthbonusx2",
-			"class": "BIO_Perk_HealthBonusX2",
-			"x": 60,
-			"y": -60,
-			"title": "$BIO_PERK_HEALTHBONUSX2_TITLE",
-			"desc": "$BIO_PERK_HEALTHBONUSX2_DESC",
-			"icon": "graphics/perk/healthbonus_x2.png",
-			"category": "major",
-			"neighbors": [ "bio_start" ]
 		},
 		{
 			"uuid": "bio_armorbonusx2",

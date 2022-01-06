@@ -1,3 +1,11 @@
+class BIO_Perk_MaxBonusHealth : BIO_Passive
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.BonusHealth += 2;
+	}
+}
+
 // More duration from any supported powerup ====================================
 
 class BIO_Perk_PowerupDurationMinor : BIO_Passive
