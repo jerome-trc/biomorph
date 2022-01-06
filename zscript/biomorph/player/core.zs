@@ -257,9 +257,28 @@ class BIO_Player : DoomPlayer
 
 	protected void Reset()
 	{
+		Height = Default.Height;
+		Gravity = Default.Gravity;
+		Friction = Default.Friction;
+		Mass = Default.Mass;
+		MaxStepHeight = Default.MaxStepHeight;
+		MaxSlopeSteepness = Default.MaxSlopeSteepness;
+
 		MaxHealth = Default.MaxHealth;
 		BonusHealth = Default.BonusHealth;
-		JumpZ  = Default.JumpZ;
+		Stamina = Default.Stamina;
+
+		ForwardMove1 = Default.ForwardMove1;
+		ForwardMove2 = Default.ForwardMove2;
+		SideMove1 = Default.SideMove1;
+		SideMove2 = Default.SideMove2;
+		JumpZ = Default.JumpZ;
+		UseRange = Default.UseRange;
+		
+		RadiusDamageFactor = Default.RadiusDamageFactor;
+		SelfDamageFactor = Default.SelfDamageFactor;
+		
+		AirCapacity = Default.AirCapacity;
 
 		for (uint i = 0; i < Functors.Size(); i++)
 			Functors[i].Clear();
