@@ -414,40 +414,40 @@
 // Perks =======================================================================
 
 	BIO_PERK_MAXBONUSHEALTH_MINOR_TAG =
-		"\c[Green]Vigour";
+		"\c[White]Vigour";
 	BIO_PERK_MAXBONUSHEALTH_MINOR_DESC =
-		"\c[White]+2 maximum health\n+2 maximum bonus health";
+		"\c[Green]+2 maximum health\n+2 maximum bonus health";
 
 	BIO_PERK_HEALTHBONUSX2_TAG =
-		"\c[Green]Nanite Medicine";
+		"\c[White]Nanite Medicine";
 	BIO_PERK_HEALTHBONUSX2_DESC =
-		"\c[White]Health Bonuses have double their normal effect.";
+		"\c[Green]Health Bonuses have double their normal effect.";
 
 	BIO_PERK_SCALEDPISTOLDAMAGE_TAG =
-		"\c[Green]Scout Tactics";
+		"\c[White]Scout Tactics";
 	BIO_PERK_SCALEDPISTOLDAMAGE_DESC =
-		"\c[White]Pistols gain damage inversely proportional to their fire rate.";
+		"\c[Green]Pistols gain damage inversely proportional to their fire rate.";
 
 	BIO_PERK_STARTINGALLMAP_TAG =
-		"\c[Green]Echolocation";
+		"\c[White]Echolocation";
 	BIO_PERK_STARTINGALLMAP_DESC =
-		"\c[White]You receive a complete map at the start of each level.";
+		"\c[Green]You receive a complete map at the start of each level.";
 
 	BIO_PERK_ARMORBONUSX2_TAG =
-		"\c[Green]Resourceful Repairs";
+		"\c[White]Resourceful Repairs";
 	BIO_PERK_ARMORBONUSX2_DESC =
-		"\c[White]Armour Shards have double their normal effect.";
+		"\c[Green]Armour Shards have double their normal effect.";
 
 	BIO_PERK_BONUSCROSSOVER_TAG =
-		"\c[Green]Subdermal Plating";
+		"\c[White]Subdermal Plating";
 	BIO_PERK_BONUSCROSSOVER_DESC =
-		"\c[White]Health Bonuses repair 1 point of armour, and Armour Shards "
+		"\c[Green]Health Bonuses repair 1 point of armour, and Armour Shards "
 		"give 1 point of health.";
 
 	BIO_PERK_SCANNERALLMAP_TAG =
-		"\c[Green]Neural Uplink";
+		"\c[White]Neural Uplink";
 	BIO_PERK_SCANNERALLMAP_DESC =
-		"\c[White]Picking up a Computer Area Map reveals and tracks entity locations.";
+		"\c[Green]Picking up a Computer Area Map reveals and tracks entity locations.";
 
 // Dropping and digestion ======================================================
 
