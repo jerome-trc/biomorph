@@ -260,7 +260,7 @@ class BIO_PerkMenu : GenericMenu
 		if (HoveredNode == NodeState.Size())
 			return;
 
-		string tt = BasePerkGraph.Nodes[HoveredNode].Title .. "\n\n";
+		string tt = BasePerkGraph.Nodes[HoveredNode].Tag .. "\n\n";
 		let desc = SmallFont.BreakLines(
 			BasePerkGraph.Nodes[HoveredNode].Description, 240); 
 		
