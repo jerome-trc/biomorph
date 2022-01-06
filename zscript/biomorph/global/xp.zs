@@ -9,7 +9,7 @@ enum BIO_PerkCategory : uint8
 class BIO_PerkGraphNode
 {
 	uint UUID;
-	string Title, Description, VerboseDesc, FlavorText;
+	string Tag, Description, VerboseDesc, FlavorText;
 	TextureID Icon;
 	Vector2 Position;
 	BIO_PerkCategory Category;
@@ -293,7 +293,7 @@ extend class BIO_GlobalData
 				continue;
 			}
 
-			let title = BIO_Utils.StringFromJson(perk.get("title"));
+			let tag = BIO_Utils.StringFromJson(perk.get("tag"));
 			let desc = BIO_Utils.StringFromJson(perk.get("desc"));
 			let descV = BIO_Utils.StringFromJson(
 				perk.get("desc_verbose"), errMsg: false);
@@ -328,7 +328,7 @@ extend class BIO_GlobalData
 			BasePerkGraph.Nodes[e].UUID = e;
 			BasePerkGraph.Nodes[e].PerkClass = perk_t;
 			BasePerkGraph.Nodes[e].Position = (posX_json.i, posY_json.i);
-			BasePerkGraph.Nodes[e].Title = StringTable.Localize(title);
+			BasePerkGraph.Nodes[e].Tag = StringTable.Localize(tag);
 			BasePerkGraph.Nodes[e].Description = StringTable.Localize(desc);
 			BasePerkGraph.Nodes[e].VerboseDesc = StringTable.Localize(descV);
 			BasePerkGraph.Nodes[e].Icon = icon;
