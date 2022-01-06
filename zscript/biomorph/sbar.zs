@@ -1,9 +1,12 @@
 class BIO_StatusBar : BaseStatusBar
 {
+	private BIO_PlayerPerkGraph PerkGraph;
 	private CVar NotifyLineCount;
 
-	HUDFont Font_HUD, Font_Index, Font_Amount, Font_Small;
+	private HUDFont Font_HUD, Font_Index, Font_Amount, Font_Small;
 	private InventoryBarState InvBarState;
+
+	private string PerkPointString, PerkPointPluralString;
 
 	const WEAPINFO_X = -22; // Leave room for keys at top-right corner
 	const ARMORINFO_X = 4;
@@ -24,6 +27,9 @@ class BIO_StatusBar : BaseStatusBar
 		Font_Small = HUDFont.Create('SMALLFONT');
 		InvBarState = InventoryBarState.Create();
 
+		PerkPointString = StringTable.Localize("$BIO_PERK_POINT_AVAILABLE");
+		PerkPointPluralString = StringTable.Localize("$BIO_PERK_POINTS_AVAILABLE");
+
 		NotifyLineCount = CVar.GetCvar("con_notifylines");
 	}
 
@@ -31,6 +37,9 @@ class BIO_StatusBar : BaseStatusBar
 	{
 		super.Draw(state, ticFrac);
 		BeginHUD();
+
+		if (PerkGraph == null)
+			PerkGraph = BIO_GlobalData.Get().GetPerkGraph(CPlayer);
 
 		Vector2 iconbox = (40, 20);
 
@@ -78,6 +87,17 @@ class BIO_StatusBar : BaseStatusBar
 		
 		if (isInventoryBarVisible())
 			DrawInventoryBar(InvBarState, (0, 0), 7, DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
+
+		if (PerkGraph.Points > 0)
+		{
+			int realTic = double(GameTic) + ticFrac;
+
+			DrawString(Font_Small, String.Format(
+				PerkGraph.Points == 1 ? PerkPointString : PerkPointPluralString,
+				FormatNumber(PerkGraph.Points, 1, 3)),
+				(200, -16), 0, Font.CR_UNTRANSLATED,
+				1.0 + (Sin(((realTic) << 16 / 4) * 0.75)));
+		}
 
 		int invY = -20;
 		DrawWeaponAndAmmoDetails(invY);
