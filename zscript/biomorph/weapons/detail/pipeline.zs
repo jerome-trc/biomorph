@@ -47,6 +47,7 @@ class BIO_WeaponPipeline play
 	private BIO_WeaponPipelineMask Mask;
 
 	private bool SecondaryAmmo;
+	private uint8 FireTimeBits; // Maps to `BIO_Weapon::FireTimeGroups` indices
 
 	private BIO_FireFunctor FireFunctor;
 	private Class<Actor> FireType;
@@ -88,6 +89,8 @@ class BIO_WeaponPipeline play
 			fireData.VSpread = VSpread * spreadFactor;
 			fireData.Angle = Angle;
 			fireData.Pitch = Pitch;
+
+			BIO_Player(weap.Owner).BeforeEachFire(fireData);
 
 			for (uint i = 0; i < weap.ImplicitAffixes.Size(); i++)
 				weap.ImplicitAffixes[i].BeforeEachFire(weap, fireData);
@@ -534,6 +537,9 @@ class BIO_WeaponPipeline play
 
 	void SetFireSound(sound fireSnd) { FireSound = fireSnd; }
 	sound GetFireSound() const { return FireSound; }
+
+	void AssociateFireTimes(uint bits) { FireTimeBits = bits; }
+	uint GetFireTimeBits() const { return FireTimeBits; }
 
 	string GetTagAsQualifier(string parenthClr = "\c[White]") const
 	{

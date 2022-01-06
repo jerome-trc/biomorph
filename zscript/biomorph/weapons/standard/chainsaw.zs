@@ -27,6 +27,7 @@ class BIO_Chainsaw : BIO_Weapon
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.Saw()
 			.BasicDamage(2, 20)
+			.AssociateFirstFireTime()
 			.Build());
 	}
 

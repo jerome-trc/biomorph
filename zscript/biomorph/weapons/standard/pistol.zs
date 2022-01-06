@@ -29,6 +29,7 @@ class BIO_Pistol : BIO_Weapon
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_Bullet', 1, 5, 15, 4.0, 2.0)
 			.FireSound("bio/weap/pistol/fire")
+			.AssociateFirstFireTime()
 			.Build());
 	}
 

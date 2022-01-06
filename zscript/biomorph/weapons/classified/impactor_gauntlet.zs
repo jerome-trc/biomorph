@@ -25,11 +25,13 @@ class BIO_ImpactorGauntlet : BIO_Weapon
 			.Punch('BIO_ImpactorPuff', range: 92.0, CPF_NOTURN,
 				"bio/weap/impgaunt/hit", "bio/weap/impgaunt/miss")
 			.XTimesRandomDamage(10, 10, 55)
+			.Associate2FireTimes(0, 1)
 			.Build());
 
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.Punch('BIO_ImpactorPuff', range: 92.0, CPF_NOTURN, 0, "")
 			.X1D3Damage(8)
+			.Associate2FireTimes(0, 2)
 			.CustomReadout(StringTable.Localize("$BIO_IMPACTORGAUNTLET_THRUST"))
 			.Build());
 	}

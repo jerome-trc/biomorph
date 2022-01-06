@@ -26,6 +26,7 @@ class BIO_PrecisionRifle : BIO_Weapon
 			.Bullet()
 			.BasicDamage(60, 65)
 			.FireSound("bio/weap/precrifle/fire")
+			.AssociateFirstFireTime()
 			.Build());
 	}
 

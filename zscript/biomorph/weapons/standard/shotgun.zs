@@ -28,6 +28,7 @@ class BIO_Shotgun : BIO_Weapon
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_ShotPellet', 7, 5, 15, 4.0, 2.0)
 			.FireSound("bio/weap/shotgun/fire")
+			.AssociateFirstFireTime()
 			.Build());
 	}
 

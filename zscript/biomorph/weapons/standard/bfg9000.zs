@@ -31,6 +31,7 @@ class BIO_BFG9000 : BIO_Weapon
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BFGPipeline()
 			.FireSound("weapons/bfgf")
+			.AssociateFirstFireTime()
 			.Build());
 	}
 

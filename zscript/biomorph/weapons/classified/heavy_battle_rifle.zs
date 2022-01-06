@@ -26,6 +26,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 			.BasicDamage(60, 65)
 			.Spread(0.6, 0.6)
 			.FireSound("bio/weap/hbr/fire")
+			.AssociateFirstFireTime()
 			.CustomReadout(StringTable.Localize("$BIO_HBR_INFO"))
 			.Build());
 	}

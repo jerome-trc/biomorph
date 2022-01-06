@@ -25,6 +25,7 @@ class BIO_Megaton : BIO_IncursionShotgun
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_ShotPellet', 9, 8, 18, 3.8, 1.9)
 			.FireSound("bio/weap/incursion/fire")
+			.AssociateFirstFireTime()
 			.CustomReadout(StringTable.Localize(
 				"$BIO_INCURSIONSHOTGUN_ALT"))
 			.CustomReadout(StringTable.Localize(

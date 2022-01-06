@@ -327,6 +327,68 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
+	BIO_WeaponPipelineBuilder AssociateFirstFireTime()
+	{
+		Pipeline.AssociateFireTimes(1 << 0);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder AssociateFireTime(uint index)
+	{
+		if (index >= 8)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Attempted to associate invalid fire time %d with a pipeline.",
+				index);
+		}
+		else
+			Pipeline.AssociateFireTimes(1 << index);
+		
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Associate2FireTimes(uint i1, uint i2)
+	{
+		if (i1 >= 8 || i2 >= 8)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Attempted to associate one or more invalid fire times "
+				"with a pipeline: %d, %d", i1, i2);
+		}
+		else
+			Pipeline.AssociateFireTimes(1 << i1 | 1 << i2);
+
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Associate3FireTimes(uint i1, uint i2, uint i3)
+	{
+		if (i1 >= 8 || i2 >= 8 || i3 >= 8)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Attempted to associate one or more invalid fire times "
+				"with a pipeline: %d, %d, %d", i1, i2, i3);
+		}
+		else
+			Pipeline.AssociateFireTimes(1 << i1 | 1 << i2 | 1 << i3);
+
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Associate4FireTimes(uint i1, uint i2, uint i3, uint i4)
+	{
+		if (i1 >= 8 || i2 >= 8 || i3 >= 8 || i4)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Attempted to associate one or more invalid fire times "
+				"with a pipeline: %d, %d, %d, %d", i1, i2, i3, i4);
+		}
+		else
+			Pipeline.AssociateFireTimes(1 << i1 | 1 << i2 | 1 << i3 | 1 << i4);
+
+		return self;
+	}
+
 	// Argument should be fully localized.
 	BIO_WeaponPipelineBuilder AppendToFireFunctorString(string str)
 	{

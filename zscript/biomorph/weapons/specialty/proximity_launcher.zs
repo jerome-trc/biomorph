@@ -27,6 +27,7 @@ class BIO_ProximityLauncher : BIO_Weapon
 			.NoDamage()
 			.Splash(176, 176)
 			.FireSound("bio/weap/proxlauncher/fire")
+			.AssociateFirstFireTime()
 			.CustomReadout(StringTable.Localize("$BIO_PROXLAUNCHER_DETONATE"))
 			.Build());
 	}
