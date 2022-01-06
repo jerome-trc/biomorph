@@ -1,3 +1,15 @@
+pointlight BIO_L_MutatedLoot
+{
+	color 0.0 1.0 1.0
+	size 30
+}
+
+pointlight BIO_L_UniqueLoot
+{
+	color 1.0 0.5 0.0
+	size 30
+}
+
 // Electric puff
 
 pointlight BIO_L_ElecPuff
