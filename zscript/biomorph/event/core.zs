@@ -77,7 +77,8 @@ class BIO_EventHandler : EventHandler
 	{
 		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
-				"Handling PlayerEntered (player %d)...", event.PlayerNumber);
+				"Handling PlayerEntered for %s...",
+				Players[event.PlayerNumber].GetUserName());
 
 		// Discarding retrieval to ensure this player's perk graph gets created
 		Globals.GetPerkGraph(Players[event.PlayerNumber]);
@@ -87,7 +88,8 @@ class BIO_EventHandler : EventHandler
 	{
 		if (BIO_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
-				"Handling PlayerSpawned (player %d)...", event.PlayerNumber);
+				"Handling PlayerSpawned for %s...",
+				Players[event.PlayerNumber].GetUserName());
 
 		super.PlayerSpawned(event);
 	}
