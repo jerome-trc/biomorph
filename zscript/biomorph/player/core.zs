@@ -270,6 +270,9 @@ class BIO_Player : DoomPlayer
 
 	protected void Reset()
 	{
+		bDontThrust = Default.bDontThrust;
+		bCantSeek = Default.bCantSeek;
+
 		Height = Default.Height;
 		Gravity = Default.Gravity;
 		Friction = Default.Friction;

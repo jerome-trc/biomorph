@@ -413,6 +413,16 @@
 
 // Perks =======================================================================
 
+	BIO_PERK_CANTSEEK_TAG =
+		"\c[White]Electronic Countermeasures";
+	BIO_PERK_CANTSEEK_DESC =
+		"\c[Green]Homing projectiles cannot lock on to you";
+
+	BIO_PERK_DONTTHRUST_TAG =
+		"\c[White]Shockwave Absorption";
+	BIO_PERK_DONTTHRUST_DESC =
+		"\c[Green]Splash damage does not push you";
+
 	BIO_PERK_MAXBONUSHEALTH_MINOR_TAG =
 		"\c[White]Vigour";
 	BIO_PERK_MAXBONUSHEALTH_MINOR_DESC =
