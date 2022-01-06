@@ -138,6 +138,8 @@ ELECPUFF is courtesy of the Librequake Project.
 
 ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) (USRINPT0, pitched down for USRINPUT1) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/) is licensed under Creative Commons Attribution 3.0 Unported.
 
+["Gong 001.wav"](https://freesound.org/people/tec_studio/sounds/361495/) (LEVELUP) by freesound user [tec_studio](https://freesound.org/people/tec_studio/) is licensed under Creative Commons 0.
+
 AMRSHRD (pickup sound for `BIO_ArmorBonus`) is courtesy of id Software LLC.
 
 CLSARMUS (on-equip sound for classified armour) is courtesy of id Software LLC and the Raven Software Corporation.

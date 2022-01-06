@@ -130,10 +130,12 @@ extend class BIO_GlobalData
 
 	void AddPartyXP(uint xp)
 	{
+		bool anylevelup = false;
 		PartyXP += xp;
 
 		while (PartyXP >= XPToNextLevel())
 		{
+			anylevelup = true;
 			PartyLevel++;
 			AddPerkPoint();
 
@@ -141,6 +143,9 @@ extend class BIO_GlobalData
 				Console.Printf(Biomorph.LOGPFX_DEBUG ..
 					"Party leveled up to %d.", PartyLevel);
 		}
+
+		if (anylevelup)
+			S_StartSound("bio/levelup", CHAN_AUTO);
 	}
 
 	void LevelUp()
@@ -161,8 +166,8 @@ extend class BIO_GlobalData
 
 		for (uint i = 0; i < PerkGraphs.Size(); i++)
 		{
-			if (PerkGraphs[i].Player != pInfo) continue;
-			return PerkGraphs[i];
+			if (PerkGraphs[i].Player == pInfo)
+				return PerkGraphs[i];
 		}
 
 		// This player has no perk graph yet. Create it

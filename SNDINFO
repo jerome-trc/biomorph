@@ -182,3 +182,7 @@ bio/muta/use/corrupt MUTACORR
 
 bio/ui/beep USRINPT0
 bio/ui/cancel USRINPT1 // Same as above, but pitched down
+
+// Miscellaneous ===============================================================
+
+bio/levelup LEVELUP

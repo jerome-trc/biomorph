@@ -515,6 +515,9 @@
 
 // Miscellaneous ===============================================================
 
+	BIO_PERK_POINT_AVAILABLE = "\c[Yellow]%s\c[White] perk point available";
+	BIO_PERK_POINTS_AVAILABLE = "\c[Yellow]%s\c[White] perk points available";
+
 	BIO_APPLY = "apply";
 	BIO_AND = "and";
 	BIO_OR = "or";
