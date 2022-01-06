@@ -95,6 +95,15 @@ class BIO_BasePerkGraph
 		return IsAccessibleImpl(node, 0, active);
 	}
 
+	bool HasNode(uint uuid) const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+			if (Nodes[i].UUID == uuid)
+				return true;
+
+		return false;
+	}
+
 	void DebugPrint() const
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)
@@ -246,6 +255,13 @@ extend class BIO_GlobalData
 			if (stringID == "")
 			{
 				Console.Printf(errpfx .. "malformed or missing UUID.");
+				continue;
+			}
+
+			if (stringIDs.Find(stringID) != stringIDs.Size())
+			{
+				Console.Printf(errpfx .. "UUID `%s` has already been defined.",
+					stringID);
 				continue;
 			}
 
