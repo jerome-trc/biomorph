@@ -36,6 +36,7 @@ class BIO_ArcCaster : BIO_Weapon
 			.BasicDamage(1, 80)
 			.Spread(3.0, 3.0)
 			.FireSound("bio/weap/arccaster/fire")
+			.AssociateFirstFireTime()
 			.Build());
 	}
 

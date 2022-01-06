@@ -24,6 +24,7 @@ class BIO_Minivulcan : BIO_Weapon
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_Bullet', 1, 30, 36, 3.5, 1.5)
 			.FireSound("bio/weap/minivulc/fire")
+			.AssociateFireTime(1)
 			.Build());
 	}
 

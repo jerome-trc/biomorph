@@ -27,9 +27,10 @@ class BIO_SuperShotgun : BIO_Weapon
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_ShotPellet', 7, 5, 15, 12.0, 7.5)
+			.FireSound("bio/weap/ssg/fire")
+			.AssociateFirstFireTime()
 			.AppendToFireFunctorString(" \c[Yellow]" ..
 				StringTable.Localize("$BIO_PER_BARREL"))
-			.FireSound("bio/weap/ssg/fire")
 			.Build());
 	}
 

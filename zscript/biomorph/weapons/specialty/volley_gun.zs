@@ -29,6 +29,7 @@ class BIO_VolleyGun : BIO_Weapon
 				StringTable.Localize("$BIO_PER_BARREL"))
 			.Spread(12.0, 7.5)
 			.FireSound("bio/weap/volley/fire")
+			.AssociateFirstFireTime()
 			.Build());
 	}
 

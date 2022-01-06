@@ -4,6 +4,16 @@ class BIO_StateTimeGroup
 	bool Melee;
 	Array<int> Times, Minimums;
 
+	int TotalTime() const
+	{
+		int ret = 0;
+
+		for (uint i = 0; i < Times.Size(); i++)
+			ret += Times[i];
+
+		return ret;
+	}
+
 	// Used for checking if fire/reload time affixes are compatible,
 	// and the allowances on the reductions they impart.
 	int PossibleReduction() const
@@ -181,7 +191,7 @@ class BIO_Weapon : DoomWeapon abstract
 	
 	protected Ammo Magazine1, Magazine2;
 	protected bool Zoomed;
-	private uint LastPipeline;
+	private uint8 LastPipeline;
 
 	Array<BIO_WeaponAffix> ImplicitAffixes, Affixes;
 	Array<string> StatReadout, AffixReadout;
@@ -917,6 +927,20 @@ class BIO_Weapon : DoomWeapon abstract
 			return false;
 
 		return true;
+	}
+
+	int LastFireTime() const
+	{
+		int ret = 0;
+		uint mask = Pipelines[LastPipeline].GetFireTimeBits();
+
+		for (uint i = 0; i < 8; i++)
+		{
+			if (mask & (1 << i))
+				ret += FireTimeGroups[i].TotalTime();
+		}
+
+		return ret;
 	}
 
 	bool NoImplicitAffixes() const { return ImplicitAffixes.Size() < 1; }

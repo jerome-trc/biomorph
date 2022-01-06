@@ -27,6 +27,7 @@ class BIO_HandCannon : BIO_Weapon
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.BasicBulletPipeline('BIO_Bullet', 1, 50, 70, 1.0, 1.0)
 			.FireSound("bio/weap/handcannon/fire")
+			.AssociateFirstFireTime()
 			.Build());
 	}
 
