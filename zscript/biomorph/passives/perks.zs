@@ -6,6 +6,22 @@ class BIO_Perk_MaxBonusHealth : BIO_Passive
 	}
 }
 
+class BIO_Perk_CantSeek : BIO_Passive
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.bCantSeek = true;
+	}
+}
+
+class BIO_Perk_DontThrust : BIO_Passive
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.bDontThrust = true;
+	}
+}
+
 // Pistol-specific perks =======================================================
 
 class BIO_Perk_ScaledPistolDamage : BIO_Passive
