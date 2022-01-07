@@ -104,12 +104,47 @@ extend class BIO_EventHandler
 
 		Console.Printf(Biomorph.LOGPFX_INFO .. "All functors:");
 
-		for (uint i = 0; i < bioPlayer.Functors.Size(); i++)
+		for (uint i = 0; i < bioPlayer.DamageTakenFunctors.Size(); i++)
 		{
-			for (uint j = 0; j < bioPlayer.Functors[i].Size(); j++)
-				Console.Printf("\t%s x %d",
-					bioPlayer.Functors[i][j].GetClassName(),
-					bioPlayer.Functors[i][j].Count);
+			Console.Printf("\t%s x %d",
+				bioPlayer.DamageTakenFunctors[i].GetClassName(),
+				bioPlayer.DamageTakenFunctors[i].Count);
+		}
+		for (uint i = 0; i < bioPlayer.EquipmentFunctors.Size(); i++)
+		{
+			Console.Printf("\t%s x %d",
+				bioPlayer.EquipmentFunctors[i].GetClassName(),
+				bioPlayer.EquipmentFunctors[i].Count);
+		}
+		for (uint i = 0; i < bioPlayer.ItemPickupFunctors.Size(); i++)
+		{
+			Console.Printf("\t%s x %d",
+				bioPlayer.ItemPickupFunctors[i].GetClassName(),
+				bioPlayer.ItemPickupFunctors[i].Count);
+		}
+		for (uint i = 0; i < bioPlayer.KillFunctors.Size(); i++)
+		{
+			Console.Printf("\t%s x %d",
+				bioPlayer.KillFunctors[i].GetClassName(),
+				bioPlayer.KillFunctors[i].Count);
+		}
+		for (uint i = 0; i < bioPlayer.PowerupFunctors.Size(); i++)
+		{
+			Console.Printf("\t%s x %d",
+				bioPlayer.PowerupFunctors[i].GetClassName(),
+				bioPlayer.PowerupFunctors[i].Count);
+		}
+		for (uint i = 0; i < bioPlayer.TransitionFunctors.Size(); i++)
+		{
+			Console.Printf("\t%s x %d",
+				bioPlayer.TransitionFunctors[i].GetClassName(),
+				bioPlayer.TransitionFunctors[i].Count);
+		}
+		for (uint i = 0; i < bioPlayer.WeaponFunctors.Size(); i++)
+		{
+			Console.Printf("\t%s x %d",
+				bioPlayer.WeaponFunctors[i].GetClassName(),
+				bioPlayer.WeaponFunctors[i].Count);
 		}
 	}
 
