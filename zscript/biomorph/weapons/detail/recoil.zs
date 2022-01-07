@@ -145,6 +145,15 @@ class BIO_Recoil_Reload : BIO_RecoilThinker
 	mixin BIO_Recoil_Impl;
 }
 
+class BIO_Recoil_ReloadSSG : BIO_RecoilThinker
+{
+	static const float[] PITCH_VALUES = {
+		0.25, 0.1, 0.05, -0.25, -0.1, -0.05
+	};
+
+	mixin BIO_Recoil_Impl;
+}
+
 class BIO_Recoil_HeavyReload : BIO_RecoilThinker
 {
 	static const float[] PITCH_VALUES = {
