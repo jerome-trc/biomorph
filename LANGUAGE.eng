@@ -459,6 +459,16 @@
 	BIO_PERK_SCANNERALLMAP_DESC =
 		"\c[Green]Picking up a Computer Area Map reveals and tracks entity locations.";
 
+	BIO_PERK_SLIMERESIST_MINOR_TAG =
+		"\c[White]Ironfoot";
+	BIO_PERK_SLIMERESIST_MINOR_DESC =
+		"\c[Green]+5% resistance to damaging floors";
+
+	BIO_PERK_SLIMERESIST_MAJOR_TAG =
+		"\c[White]Ironfoot Optimisation";
+	BIO_PERK_SLIMERESIST_MAJOR_DESC =
+		"\c[Green]+15% resistance to damaging floors";
+
 // Dropping and digestion ======================================================
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";

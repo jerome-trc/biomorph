@@ -41,3 +41,19 @@ class BIO_Perk_DontThrust : BIO_Perk
 		bioPlayer.bDontThrust = true;
 	}
 }
+
+class BIO_Perk_SlimeResistMinor : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.SlimeDamageFactor = Max(bioPlayer.SlimeDamageFactor - 0.05, 0.0);
+	}
+}
+
+class BIO_Perk_SlimeResistMajor : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.SlimeDamageFactor = Max(bioPlayer.SlimeDamageFactor - 0.15, 0.0);
+	}
+}
