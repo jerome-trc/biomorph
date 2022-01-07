@@ -246,7 +246,7 @@ class BIO_Armor : BIO_Equipment abstract
 		{
 			Array<BIO_EquipmentAffix> eligibles;
 			BIO_GlobalData.Get().AllEligibleEquipmentAffixes(eligibles, AsConst());
-			if (eligibles.Size() < 1) return;
+			if (eligibles.Size() < 1) continue;
 			uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
 			Affixes[e].Init(AsConst());
 		}
