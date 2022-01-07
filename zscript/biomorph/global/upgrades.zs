@@ -53,6 +53,17 @@ extend class BIO_GlobalData
 			options.Push(WeaponUpgrades[i]);
 		}
 	}
+
+	// If the given type is found in an upgrade, it's purged from the array.
+	private void RemoveWeaponUpgrades(Class<BIO_Weapon> type)
+	{
+		for (uint i = WeaponUpgrades.Size() - 1; i >= 0; i--)
+		{
+			if (WeaponUpgrades[i].Input == type ||
+				WeaponUpgrades[i].Output == type)
+				WeaponUpgrades.Delete(i);
+		}
+	}
 	
 	// Initialisation: auto-generation =========================================
 

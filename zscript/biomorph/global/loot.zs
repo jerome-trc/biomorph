@@ -120,6 +120,13 @@ extend class BIO_GlobalData
 		MaxWeaponGrade = BIO_PMWG_SURPLUS;
 	}
 
+	private void RemoveWeaponLootEntries(Class<BIO_Weapon> type)
+	{
+		for (uint i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
+			for (uint j = 0; j < 3; j++)
+				WeaponLootTables[j][i].RemoveByType(type);
+	}
+
 	private void TryReadWeaponLootArray(int lump, BIO_JsonObject loot,
 		string arrName, BIO_WeaponCategory targetTables)
 	{
