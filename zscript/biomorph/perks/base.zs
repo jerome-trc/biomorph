@@ -31,12 +31,20 @@ class BIO_EquipmentFunctor : BIO_PlayerFunctor abstract
 
 class BIO_ItemPickupFunctor : BIO_PlayerFunctor abstract
 {
-	virtual void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const {}
-	virtual void OnAmmoPickup(BIO_Player bioPlayer, Inventory item) const {}
-	virtual void OnArmorBonusPickup(BIO_Player bioPlayer, BIO_ArmorBonus bonus) const {}
-	virtual void OnBackpackPickup(BIO_Player bioPlayer, BIO_Backpack bkpk) const {}
-	virtual void OnPowerupPickup(BIO_Player bioPlayer, Inventory item) const {}
-	virtual void OnMapPickup(BIO_Player bioPlayer, Allmap map) const {}
+	virtual void OnHealthPickup(
+		BIO_Player bioPlayer, Inventory item) const {}
+	virtual void OnAmmoPickup(
+		BIO_Player bioPlayer, Inventory item) const {}
+	virtual void OnArmorBonusPickup(
+		BIO_Player bioPlayer, BIO_ArmorBonus bonus) const {}
+	virtual void OnFirstBackpackPickup(
+		BIO_Player bioPlayer, BIO_Backpack bkpk) const {}
+	virtual void OnSubsequentBackpackPickup(
+		BIO_Player bioPlayer, BIO_Backpack bkpk) const {}
+	virtual void OnPowerupPickup(
+		BIO_Player bioPlayer, Inventory item) const {}
+	virtual void OnMapPickup(
+		BIO_Player bioPlayer, Allmap map) const {}
 }
 
 class BIO_KillFunctor : BIO_PlayerFunctor abstract

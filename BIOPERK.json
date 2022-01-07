@@ -21,21 +21,21 @@
 		{
 			"uuid": "bio_maxbonushealth_0",
 			"template": "bio_maxbonushealth_minor",
-			"x": 60,
+			"x": 0,
 			"y": -60,
 			"neighbors": [ "bio_start" ]
 		},
 		{
 			"uuid": "bio_maxbonushealth_1",
 			"template": "bio_maxbonushealth_minor",
-			"x": 120,
+			"x": 0,
 			"y": -120,
 			"neighbors": [ "bio_maxbonushealth_0" ]
 		},
 		{
 			"uuid": "bio_healthbonusx2",
 			"class": "BIO_Perk_HealthBonusX2",
-			"x": 180,
+			"x": 0,
 			"y": -180,
 			"tag": "$BIO_PERK_HEALTHBONUSX2_TAG",
 			"desc": "$BIO_PERK_HEALTHBONUSX2_DESC",
@@ -44,10 +44,65 @@
 			"neighbors": [ "bio_maxbonushealth_1" ]
 		},
 		{
-			"uuid": "bio_cantseek",
-			"class": "BIO_Perk_CantSeek",
+			"uuid": "bio_clipcapacity",
+			"class": "BIO_Perk_ClipCapacityMinor",
 			"x": 0,
 			"y": 60,
+			"tag": "$BIO_PERK_CLIPCAPACITY_MINOR_TAG",
+			"desc": "$BIO_PERK_CLIPCAPACITY_MINOR_DESC",
+			"icon": "CLIPA0",
+			"category": "minor",
+			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_shellcapacity",
+			"class": "BIO_Perk_ShellCapacityMinor",
+			"x": 30,
+			"y": 120,
+			"tag": "$BIO_PERK_SHELLCAPACITY_MINOR_TAG",
+			"desc": "$BIO_PERK_SHELLCAPACITY_MINOR_DESC",
+			"icon": "SHELA0",
+			"category": "minor",
+			"neighbors": [ "bio_clipcapacity" ]
+		},
+		{
+			"uuid": "bio_rocketammocapacity",
+			"class": "BIO_Perk_RocketAmmoCapacityMinor",
+			"x": -30,
+			"y": 120,
+			"tag": "$BIO_PERK_ROCKETAMMOCAPACITY_MINOR_TAG",
+			"desc": "$BIO_PERK_ROCKETAMMOCAPACITY_MINOR_DESC",
+			"icon": "ROCKA0",
+			"category": "minor",
+			"neighbors": [ "bio_clipcapacity" ]
+		},
+		{
+			"uuid": "bio_cellcapacity",
+			"class": "BIO_Perk_CellCapacityMinor",
+			"x": 0,
+			"y": 180,
+			"tag": "$BIO_PERK_CELLCAPACITY_MINOR_TAG",
+			"desc": "$BIO_PERK_CELLCAPACITY_MINOR_DESC",
+			"icon": "CELLA0",
+			"category": "minor",
+			"neighbors": [ "bio_shellcapacity", "bio_rocketammocapacity" ]
+		},
+		{
+			"uuid": "bio_additivebackpacks",
+			"class": "BIO_Perk_AdditiveBackpacks",
+			"x": 0,
+			"y": 240,
+			"tag": "$BIO_PERK_ADDITIVEBACKPACKS_TAG",
+			"desc": "$BIO_PERK_ADDITIVEBACKPACKS_DESC",
+			"icon": "BPAKA0",
+			"category": "major",
+			"neighbors": [ "bio_cellcapacity" ]
+		},
+		{
+			"uuid": "bio_cantseek",
+			"class": "BIO_Perk_CantSeek",
+			"x": 60,
+			"y": -60,
 			"tag": "$BIO_PERK_CANTSEEK_TAG",
 			"desc": "$BIO_PERK_CANTSEEK_DESC",
 			"icon": "graphics/perk/cantseek.png",
@@ -133,8 +188,8 @@
 		{
 			"uuid": "bio_bonuscrossover",
 			"class": "BIO_Perk_BonusCrossover",
-			"x": 0,
-			"y": -60,
+			"x": -60,
+			"y": -120,
 			"tag": "$BIO_PERK_BONUSCROSSOVER_TAG",
 			"desc": "$BIO_PERK_BONUSCROSSOVER_DESC",
 			"icon": "graphics/perk/bonuscrossover.png",

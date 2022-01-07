@@ -433,6 +433,31 @@
 	BIO_PERK_HEALTHBONUSX2_DESC =
 		"\c[Green]Health Bonuses have double their normal effect.";
 
+	BIO_PERK_CLIPCAPACITY_MINOR_TAG =
+		"\c[White]Packrat";
+	BIO_PERK_CLIPCAPACITY_MINOR_DESC =
+		"\c[Green]+10 bullet capacity";
+
+	BIO_PERK_SHELLCAPACITY_MINOR_TAG =
+		"\c[White]Packrat";
+	BIO_PERK_SHELLCAPACITY_MINOR_DESC =
+		"\c[Green]+4 shell capacity";
+
+	BIO_PERK_ROCKETAMMOCAPACITY_MINOR_TAG =
+		"\c[White]Packrat";
+	BIO_PERK_ROCKETAMMOCAPACITY_MINOR_DESC =
+		"\c[Green]+1 rocket capacity";
+
+	BIO_PERK_CELLCAPACITY_MINOR_TAG =
+		"\c[White]Packrat";
+	BIO_PERK_CELLCAPACITY_MINOR_DESC =
+		"\c[Green]+20 cell capacity";
+
+	BIO_PERK_ADDITIVEBACKPACKS_TAG =
+		"\c[White]\"Burdenbeast\" System";
+	BIO_PERK_ADDITIVEBACKPACKS_DESC =
+		"\c[Green]Every backpack after the first adds some extra ammo capacity";
+
 	BIO_PERK_SCALEDPISTOLDAMAGE_TAG =
 		"\c[White]Scout Tactics";
 	BIO_PERK_SCALEDPISTOLDAMAGE_DESC =

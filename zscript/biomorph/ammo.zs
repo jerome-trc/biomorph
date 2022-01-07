@@ -124,6 +124,17 @@ class BIO_Backpack : BackpackItem replaces Backpack
 		Stop;
 	}
 
+	final override bool HandlePickup(Inventory item)
+	{
+		let ret = super.HandlePickup(item);
+		let bioPlayer = BIO_Player(Owner);
+		
+		if (ret && item.bPickupGood && bioPlayer != null)
+			bioPlayer.OnSubsequentBackpackPickup(self);
+
+		return ret;
+	}
+
 	final override Inventory CreateCopy(Actor other)
 	{
 		let bioPlayer = BIO_Player(other);
@@ -136,10 +147,15 @@ class BIO_Backpack : BackpackItem replaces Backpack
 				let ammo_t = DOOM_AMMO_TYPES[i];
 				let defs = GetDefaultByType(ammo_t);
 				let ammoItem = bioPlayer.FindInventory(ammo_t);
-				ammoItem.MaxAmount = defs.BackpackMaxAmount;
+
+				if (ammoItem.MaxAmount > ammoItem.Default.MaxAmount)
+					ammoItem.MaxAmount += (defs.BackpackMaxAmount / 2);
+				else
+					ammoItem.MaxAmount = defs.BackpackMaxAmount;
+
 				bioPlayer.GiveInventory(ammo_t, defs.BackpackAmount);
 			}
-			bioPlayer.OnBackpackPickup(self);
+			bioPlayer.OnFirstBackpackPickup(self);
 		}
 
 		return Inventory.CreateCopy(other);
