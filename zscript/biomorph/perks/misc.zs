@@ -24,7 +24,17 @@ class BIO_PkupFunc_BonusCrossover : BIO_ItemPickupFunctor
 	}
 }
 
-// =============================================================================
+// Weapon/equipment capacity ===================================================
+
+class BIO_Perk_WeaponCapacity : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.MaxWeaponsHeld++;
+	}
+}
+
+// The miscellaneous of the miscellaneous ======================================
 
 class BIO_Perk_CantSeek : BIO_Perk
 {

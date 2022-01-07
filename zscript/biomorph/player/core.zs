@@ -281,6 +281,9 @@ class BIO_Player : DoomPlayer
 			i.MaxAmount = i.Default.MaxAmount;
 		}
 
+		MaxWeaponsHeld = Default.MaxWeaponsHeld;
+		MaxEquipmentHeld = Default.MaxEquipmentHeld;
+
 		DamageTakenFunctors.Clear();
 		EquipmentFunctors.Clear();
 		ItemPickupFunctors.Clear();
