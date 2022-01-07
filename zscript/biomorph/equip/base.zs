@@ -32,10 +32,7 @@ class BIO_Equipment : Inventory abstract
 		+INVENTORY.BIGPOWERUP
 		+INVENTORY.INVBAR
 		+NOBLOCKMONST
-		+USESPECIAL
 
-		Activation
-			THINGSPEC_ThingActs | THINGSPEC_ThingTargets | THINGSPEC_Switch;
 		Radius 20;
 		Height 16;
 
@@ -263,12 +260,10 @@ class BIO_Armor : BIO_Equipment abstract
 			Affixes[i].PreArmorApply(self, ArmorData);
 	}
 
-	final override void Activate(Actor activator)
+	final override bool Used(Actor user)
 	{
-		super.Activate(activator);
-
-		let bioPlayer = BIO_Player(activator);
-		if (bioPlayer == null) return;
+		let bioPlayer = BIO_Player(user);
+		if (bioPlayer == null) return false;
 
 		Array<string> readout;
 
@@ -309,7 +304,9 @@ class BIO_Armor : BIO_Equipment abstract
 			upTime += float(readout[i].Length()) * 0.0075;
 		
 		bioPlayer.A_Print(output, upTime);
-		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 0.8);
+		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 1.2);
+
+		return true;
 	}
 
 	// Does not check if already in perfect condition.
