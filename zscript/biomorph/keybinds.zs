@@ -1,30 +1,8 @@
 // Inventory items as proxies for key bindings to act upon the player.
 
-class BIO_Keybind : Inventory abstract
+class BIO_Keybind : BIO_PermanentInventory abstract
 {
 	protected bool Primed;
-
-	Default
-	{
-		Inventory.Icon 'TNT1A0';
-		Inventory.InterHubAmount 1;
-		Inventory.MaxAmount 1;
-		Inventory.PickupMessage
-			"If you're seeing this message, things might break.";
-
-		-COUNTITEM
-		+INVENTORY.KEEPDEPLETED
-		+INVENTORY.PERSISTENTPOWER
-		+INVENTORY.UNDROPPABLE
-		+INVENTORY.UNTOSSABLE
-	}
-
-	States
-	{
-	Spawn:
-		TNT1 A -1;
-		Loop;
-	}
 
 	bool IsPrimed() const { return Primed; }
 	void Disarm() { Primed = false; }

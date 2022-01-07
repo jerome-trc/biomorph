@@ -157,6 +157,31 @@ class BIO_Utils abstract
 	}
 }
 
+class BIO_PermanentInventory : Inventory abstract
+{
+	Default
+	{
+		Inventory.Icon 'TNT1A0';
+		Inventory.InterHubAmount 1;
+		Inventory.MaxAmount 1;
+		Inventory.PickupMessage
+			"If you're seeing this message, things might break.";
+
+		-COUNTITEM
+		+INVENTORY.KEEPDEPLETED
+		+INVENTORY.PERSISTENTPOWER
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A -1;
+		Loop;
+	}
+}
+
 class BIO_FakePuff : BIO_Puff
 {
 	Default
