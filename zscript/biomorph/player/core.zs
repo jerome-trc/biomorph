@@ -6,6 +6,8 @@ class BIO_Player : DoomPlayer
 	property MaxWeaponsHeld: MaxWeaponsHeld;
 	property MaxEquipmentHeld: MaxEquipmentHeld;
 
+	double SlimeDamageFactor; property SlimeDamageFactor: SlimeDamageFactor;
+
 	BIO_Armor EquippedArmor;
 
 	BIO_PlayerVisual WeaponVisual;
@@ -29,6 +31,7 @@ class BIO_Player : DoomPlayer
 
 		BIO_Player.MaxWeaponsHeld 6;
 		BIO_Player.MaxEquipmentHeld 3;
+		BIO_Player.SlimeDamageFactor 1.0;
 	}
 
 	// Parent overrides ========================================================
@@ -53,6 +56,9 @@ class BIO_Player : DoomPlayer
 	final override int TakeSpecialDamage(Actor inflictor, Actor source, int damage, name dmgType)
 	{
 		int ret = super.TakeSpecialDamage(inflictor, source, damage, dmgType);
+
+		if (dmgType == 'Slime')
+			ret *= SlimeDamageFactor;
 
 		for (uint i = 0; i < Functors[FANDX_DAMAGETAKEN].Size(); i++)
 		{
@@ -172,7 +178,7 @@ class BIO_Player : DoomPlayer
 	}
 
 	// Used to apply armor's affixes to BasicArmor, as well as
-	// opening it up to modification by passives.
+	// opening it up to modification by perks.
 	void PreArmorApply(BIO_ArmorStats armor)
 	{
 		armor.SavePercent = EquippedArmor.ArmorData.SavePercent;
@@ -293,6 +299,7 @@ class BIO_Player : DoomPlayer
 		
 		RadiusDamageFactor = Default.RadiusDamageFactor;
 		SelfDamageFactor = Default.SelfDamageFactor;
+		SlimeDamageFactor = Default.SlimeDamageFactor;
 		
 		AirCapacity = Default.AirCapacity;
 
@@ -300,7 +307,7 @@ class BIO_Player : DoomPlayer
 			Functors[i].Clear();
 	}
 
-	// Passive/functor manipulation ============================================
+	// Perk/functor manipulation ===============================================
 
 	enum FunctorArrayIndex : uint
 	{

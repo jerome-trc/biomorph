@@ -7,6 +7,14 @@
 			"desc": "$BIO_PERK_MAXBONUSHEALTH_MINOR_DESC",
 			"icon": "BON1A0",
 			"category": "minor"
+		},
+		{
+			"id": "bio_slimeresist_minor",
+			"class": "BIO_Perk_SlimeResistMinor",
+			"tag": "$BIO_PERK_SLIMERESIST_MINOR_TAG",
+			"desc": "$BIO_PERK_SLIMERESIST_MINOR_DESC",
+			"icon": "SUITX0",
+			"category": "minor"
 		}
 	],
 	"perks": [
@@ -56,6 +64,38 @@
 			"icon": "graphics/perk/dontthrust.png",
 			"category": "major",
 			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_slimeresist_0",
+			"template": "bio_slimeresist_minor",
+			"x": 60,
+			"y": 0,
+			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_slimeresist_1",
+			"template": "bio_slimeresist_minor",
+			"x": 120,
+			"y": 0,
+			"neighbors": [ "bio_slimeresist_0" ]
+		},
+		{
+			"uuid": "bio_slimeresist_2",
+			"template": "bio_slimeresist_minor",
+			"x": 180,
+			"y": 0,
+			"neighbors": [ "bio_slimeresist_1" ]
+		},
+		{
+			"uuid": "bio_slimeresist_major",
+			"class": "BIO_Perk_SlimeResistMajor",
+			"x": 240,
+			"y": 0,
+			"tag": "$BIO_PERK_SLIMERESIST_MAJOR_TAG",
+			"desc": "$BIO_PERK_SLIMERESIST_MAJOR_DESC",
+			"icon": "SUITX0",
+			"category": "major",
+			"neighbors": [ "bio_slimeresist_2" ]
 		},
 		{
 			"uuid": "bio_allmap",
