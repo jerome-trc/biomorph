@@ -329,7 +329,7 @@ class BIO_Weapon : DoomWeapon abstract
 		if (MaxAmount > 1)
 			return Inventory.HandlePickup(item);
 
-		if (Owner.Player.Cmd.Buttons & BT_RELOAD && CanBeScavenged())
+		if (Owner.Player.Cmd.Buttons & BT_RELOAD && weap.CanBeScavenged())
 			weap.bPickupGood = weap.PickupForAmmo(self);
 
 		return true;
