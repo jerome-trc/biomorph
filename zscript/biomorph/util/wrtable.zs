@@ -116,7 +116,19 @@ class WeightedRandomTable
 			"Failed to make a weighted random choice after 10000 tries (`%s`).",
 			Label.Length() > 0 ? Label : String.Format("%p", self));
 		return null;
-	}		
+	}
+
+	void RemoveByType(Class<Actor> type)
+	{
+		for (uint i = Entries.Size() - 1; i >= 0; i--)
+		{
+			if (Entries[i].SubTable != null)
+				Entries[i].SubTable.RemoveByType(type);
+			
+			if (Entries[i].Type == type)
+				Entries.Delete(i);
+		}
+	}
 
 	void Clear()
 	{

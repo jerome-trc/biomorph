@@ -56,6 +56,25 @@ class BIO_GlobalData : Thinker
 		ret.WeaponLootMetaTable = new('WeightedRandomTable');
 		ret.WeaponLootMetaTable.Label = "weap_loot_meta";
 
+		// If playing with DOOM.wad, the Super Shotgun's requisite resources
+		// will not exist, and it must be removed from the upgrade list and
+		// loot tables
+		static const name SSG_SPRITES[] = {
+			'SHT2A0', 'SHT2B0', 'SHT2C0', 'SHT2D0', 'SHT2E0',
+			'SHT2F0', 'SHT2G0', 'SHT2H0', 'SHT2I0', 'SHT2J0', 'SGN2A0'
+		};
+
+		for (uint i = 0; i < SSG_SPRITES.Size(); i++)
+		{
+			let id = TexMan.CheckForTexture(SSG_SPRITES[i]);
+			
+			if (id.Exists())
+				continue;
+		
+			ret.RemoveWeaponUpgrades('BIO_SuperShotgun');
+			ret.RemoveWeaponLootEntries('BIO_SuperShotgun');
+		}
+
 		if (BIO_debug)
 		{
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
