@@ -21,8 +21,10 @@ extend class BIO_EventHandler
 		if (ReplaceWeapon(event) || ReplaceArmor(event))
 			return;
 
-		if (TrySpawnSupplyBox(event))
+		if (ContextFlags & BIO_EHCF_NOSUPPLYBOXES)
 			return;
+
+		TrySpawnSupplyBox(event);
 	}
 
 	private void FinalizeSpawn(Class<Actor> toSpawn, Actor eventThing) const
