@@ -4,7 +4,7 @@ class BIO_WAfx_Plasma : BIO_WeaponAffix
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_PlasmaBall'))
+			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_PlasmaBall', true))
 				continue;
 			if (!weap.Pipelines[i].CanFireProjectiles() &&
 				!weap.Pipelines[i].FireFunctorMutable())
@@ -20,7 +20,7 @@ class BIO_WAfx_Plasma : BIO_WeaponAffix
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_PlasmaBall'))
+			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_PlasmaBall', true))
 				continue;
 
 			bool cfp = weap.Pipelines[i].CanFireProjectiles();
@@ -64,7 +64,7 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (!weap.Pipelines[i].FireTypeMutableFrom('BIO_ShotPellet'))
+			if (!weap.Pipelines[i].FireTypeMutableFrom('BIO_ShotPellet', true))
 				continue;
 			if (!weap.Pipelines[i].DamageMutable() ||
 				!weap.Pipelines[i].SpreadMutable())
@@ -83,7 +83,7 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (!weap.Pipelines[i].FireTypeMutableFrom('BIO_ShotPellet'))
+			if (!weap.Pipelines[i].FireTypeMutableFrom('BIO_ShotPellet', true))
 				continue;
 
 			bool cfp = weap.Pipelines[i].CanFirePuffs();
@@ -129,7 +129,7 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_MiniMissile'))
+			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_MiniMissile', true))
 				continue;
 			if (!weap.Pipelines[i].SplashMutable())
 				continue;
@@ -147,8 +147,8 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_MiniMissile') ||
-				!weap.Pipelines[i].SplashMutable())
+			if (!weap.Pipelines[i].SplashMutable() ||
+				!weap.Pipelines[i].FireTypeMutableTo('BIO_MiniMissile', true))
 				continue;
 
 			bool cfp = weap.Pipelines[i].CanFireProjectiles();
@@ -201,7 +201,7 @@ class BIO_WAfx_BFGSpray : BIO_WeaponAffix
 	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
 	{
 		return
-			ppl.FireTypeMutableTo('BIO_BFGExtra') && ppl.FireFunctorMutable() &&
+			ppl.FireTypeMutableTo('BIO_BFGExtra', true) && ppl.FireFunctorMutable() &&
 			ppl.FireCountMutable() && ppl.DamageMutable() && ppl.AngleMutable();
 	}
 
