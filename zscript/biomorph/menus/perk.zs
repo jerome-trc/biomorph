@@ -215,11 +215,6 @@ class BIO_PerkMenu : GenericMenu
 				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
 				DTA_COLOROVERLAY, HoveredNode == i ? COLOR_HOVERED : COLOR_NONE);
 
-			Screen.DrawTexture(BasePerkGraph.Nodes[i].Icon, false,
-				NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
-				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
-				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
-
 			if (PlayerPerkGraph.PerkActive[i])
 			{
 				Screen.DrawTexture(ring, false,
@@ -235,6 +230,11 @@ class BIO_PerkMenu : GenericMenu
 					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
 					DTA_ALPHA, 1.0 + (Sin((MenuTime() << 16 / 4) * 0.75)));
 			}
+
+			Screen.DrawTexture(BasePerkGraph.Nodes[i].Icon, false,
+				NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
+				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
+				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
 		}
 
 		// Help text at menu's top
