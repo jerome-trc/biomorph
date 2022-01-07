@@ -13,7 +13,7 @@ class BIO_PerkGraphNode
 	TextureID Icon;
 	Vector2 Position;
 	BIO_PerkCategory Category;
-	Class<BIO_Passive> PerkClass;
+	Class<BIO_Perk> PerkClass;
 	Array<uint> Neighbors;
 	uint DistanceFromStart;
 }
@@ -276,7 +276,7 @@ extend class BIO_GlobalData
 				continue;
 			}
 
-			let perk_t = (Class<BIO_Passive>)
+			let perk_t = (Class<BIO_Perk>)
 				(BIO_Utils.TryGetJsonClassName(perk.get("class")));
 			if (perk_t == null)
 			{

@@ -74,8 +74,12 @@ class Biomorph abstract
 #include "zscript/biomorph/overlays/modal_base.zs"
 #include "zscript/biomorph/overlays/weapon_upgrade.zs"
 
-#include "zscript/biomorph/passives/base.zs"
-#include "zscript/biomorph/passives/perks.zs"
+#include "zscript/biomorph/perks/base.zs"
+#include "zscript/biomorph/perks/armor.zs"
+#include "zscript/biomorph/perks/health.zs"
+#include "zscript/biomorph/perks/misc.zs"
+#include "zscript/biomorph/perks/pistol.zs"
+#include "zscript/biomorph/perks/powerup.zs"
 
 #include "zscript/biomorph/player/core.zs"
 #include "zscript/biomorph/player/states.zs"

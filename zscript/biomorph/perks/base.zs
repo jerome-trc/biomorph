@@ -1,4 +1,4 @@
-class BIO_Passive play abstract
+class BIO_Perk play abstract
 {
 	virtual void Apply(BIO_Player bioPlayer) const {}
 }
