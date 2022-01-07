@@ -1,25 +1,27 @@
 {
-	"perks": [
+	"templates": [
 		{
-			"uuid": "bio_maxbonushealth_0",
+			"id": "bio_maxbonushealth_minor",
 			"class": "BIO_Perk_MaxBonusHealth",
-			"x": 60,
-			"y": -60,
 			"tag": "$BIO_PERK_MAXBONUSHEALTH_MINOR_TAG",
 			"desc": "$BIO_PERK_MAXBONUSHEALTH_MINOR_DESC",
 			"icon": "BON1A0",
-			"category": "minor",
+			"category": "minor"
+		}
+	],
+	"perks": [
+		{
+			"uuid": "bio_maxbonushealth_0",
+			"template": "bio_maxbonushealth_minor",
+			"x": 60,
+			"y": -60,
 			"neighbors": [ "bio_start" ]
 		},
 		{
 			"uuid": "bio_maxbonushealth_1",
-			"class": "BIO_Perk_MaxBonusHealth",
+			"template": "bio_maxbonushealth_minor",
 			"x": 120,
 			"y": -120,
-			"tag": "$BIO_PERK_MAXBONUSHEALTH_MINOR_TAG",
-			"desc": "$BIO_PERK_MAXBONUSHEALTH_MINOR_DESC",
-			"icon": "BON1A0",
-			"category": "minor",
 			"neighbors": [ "bio_maxbonushealth_0" ]
 		},
 		{

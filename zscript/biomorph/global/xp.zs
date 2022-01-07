@@ -9,13 +9,22 @@ enum BIO_PerkCategory : uint8
 class BIO_PerkGraphNode
 {
 	uint UUID;
-	string Tag, Description, VerboseDesc, FlavorText;
+	string Tag, Description, VerboseDesc, FlavorText; // Pre-localized
 	TextureID Icon;
 	Vector2 Position;
 	BIO_PerkCategory Category;
 	Class<BIO_Perk> PerkClass;
 	Array<uint> Neighbors;
 	uint DistanceFromStart;
+}
+
+class BIO_PerkTemplate
+{
+	string ID;
+	string Tag, Description, VerboseDesc, FlavorText; // Un-localized
+	TextureID Icon;
+	Class<BIO_Perk> PerkClass;
+	BIO_PerkCategory Category;
 }
 
 // Information about what nodes on the perk graph
@@ -194,6 +203,8 @@ extend class BIO_GlobalData
 		// the object relative to that lump, for better error messaging
 		Array<int> perkObjLump, perkObjIndex;
 
+		Array<BIO_PerkTemplate> templates;
+
 		BasePerkGraph = new('BIO_BasePerkGraph');
 		Array<string> stringIDs;
 		
@@ -227,6 +238,12 @@ extend class BIO_GlobalData
 				continue;
 			}
 
+			let templateJSON = BIO_Utils.TryGetJsonArray(
+				obj.get("templates"), errMsg: false);
+			
+			if (templateJSON != null)
+				ReadPerkTemplateJSON(lump, templateJSON, templates);
+
 			let perks = BIO_Utils.TryGetJsonArray(obj.get("perks"), errMsg: false);
 			if (perks == null) continue;
 			
@@ -257,7 +274,7 @@ extend class BIO_GlobalData
 			let perk = perkObjs[i];
 
 			let stringID = BIO_Utils.StringFromJson(perk.get("uuid"));
-			if (stringID == "")
+			if (stringID.Length() < 1)
 			{
 				Console.Printf(errpfx .. "malformed or missing UUID.");
 				continue;
@@ -276,14 +293,6 @@ extend class BIO_GlobalData
 				continue;
 			}
 
-			let perk_t = (Class<BIO_Perk>)
-				(BIO_Utils.TryGetJsonClassName(perk.get("class")));
-			if (perk_t == null)
-			{
-				Console.Printf(errpfx .. "malformed or invalid class name.");
-				continue;
-			}
-
 			let posX_json = BIO_Utils.TryGetJsonInt(perk.get("x"));
 			if (posX_json == null)
 			{
@@ -295,6 +304,27 @@ extend class BIO_GlobalData
 			if (posY_json == null)
 			{
 				Console.Printf(errpfx .. "malformed or missing y-position.");
+				continue;
+			}
+
+			let template = BIO_Utils.StringFromJson(
+				perk.get("template"), errMsg: false);
+			if (template.Length() > 0)
+			{
+				let node = new('BIO_PerkGraphNode');
+				node.Position = (posX_json.i, posY_json.i);
+	
+				if (TryCreatePerkFromTemplate(templates, template, node, errpfx))
+					stringIDs.Push(stringID);
+
+				continue;
+			}
+
+			let perk_t = (Class<BIO_Perk>)
+				(BIO_Utils.TryGetJsonClassName(perk.get("class")));
+			if (perk_t == null)
+			{
+				Console.Printf(errpfx .. "malformed or invalid class name.");
 				continue;
 			}
 
@@ -397,5 +427,128 @@ extend class BIO_GlobalData
 		}
 
 		BasePerkGraph.ResolveDistances();
+	}
+
+	private static void ReadPerkTemplateJSON(int lump,
+		BIO_JsonArray templateJSON, in out Array<BIO_PerkTemplate> templates)
+	{
+		for (uint i = 0; i < templateJSON.arr.Size(); i++)
+		{
+			string errpfx = String.Format(Biomorph.LOGPFX_ERR ..
+				LMPNAME_PERKS .. " lump %d, perk template object %d; ", lump, i);
+
+			let obj = BIO_Utils.TryGetJsonObject(templateJSON.arr[i]);
+			if (obj == null)
+			{
+				Console.Printf(errpfx .. "skipping it.");
+				continue;
+			}
+
+			let id = BIO_Utils.StringFromJson(obj.get("id"));
+			if (id.Length() < 1)
+			{
+				Console.Printf(errpfx .. "malformed or missing ID.");
+				continue;
+			}
+
+			bool nameOverlap = false;
+
+			for (uint j = 0; j < templates.Size(); j++)
+			{
+				if (templates[j].ID ~== id)
+				{
+					nameOverlap = true;
+					break;	
+				}
+			}
+
+			if (nameOverlap)
+			{
+				Console.Printf(errpfx ..
+					"name %s overlaps with an existing template.",
+					id);
+				continue;
+			}
+
+			let perk_t = (Class<BIO_Perk>)
+				(BIO_Utils.TryGetJsonClassName(obj.get("class")));
+			if (perk_t == null)
+			{
+				Console.Printf(errpfx .. "malformed or invalid class name.");
+				continue;
+			}
+
+			let tag = BIO_Utils.StringFromJson(obj.get("tag"));
+			let desc = BIO_Utils.StringFromJson(obj.get("desc"));
+			let descV = BIO_Utils.StringFromJson(
+				obj.get("desc_verbose"), errMsg: false);
+			let flavor = BIO_Utils.StringFromJson(
+				obj.get("flavor"), errMsg: false);
+			let icon = Texman.CheckForTexture(
+				BIO_Utils.StringFromJson(obj.get("icon")), TexMan.TYPE_ANY);
+
+			let catStr = BIO_Utils.StringFromJson(obj.get("category"));
+			BIO_PerkCategory cat = BIO_PRKCAT_MINOR;
+
+			if (catStr ~== "minor")
+				cat = BIO_PRKCAT_MINOR;
+			else if (catStr ~== "major")
+				cat = BIO_PRKCAT_MAJOR;
+			else if (catStr ~== "keystone")
+				cat = BIO_PRKCAT_KEYSTONE;
+			else if (catStr.Length() < 1)
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR ..
+					errpfx .. "missing category field.");
+				continue;
+			}
+			else
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR ..
+					errpfx .. "invalid perk category: %s", catStr);
+				continue;
+			}
+
+			uint e = templates.Push(new('BIO_PerkTemplate'));
+			templates[e].ID = id;
+			templates[e].PerkClass = perk_t;
+			templates[e].Tag = tag;
+			templates[e].Description = desc;
+			templates[e].VerboseDesc = descV;
+			templates[e].Icon = icon;
+			templates[e].Category = cat;
+		}
+	}
+
+	bool TryCreatePerkFromTemplate(in out Array<BIO_PerkTemplate> templates,
+		string templID, BIO_PerkGraphNode node, string errpfx)
+	{
+		BIO_PerkTemplate template = null;
+
+		for (uint i = 0; i < templates.Size(); i++)
+		{
+			if (templates[i].ID ~== templID)
+			{
+				template = templates[i];
+				break;
+			}
+		}
+
+		if (template == null)
+		{
+			Console.Printf(errpfx .. "invalid template ID: %s", templID);
+			return false;
+		}
+
+		uint e = BasePerkGraph.Nodes.Push(node);
+		BasePerkGraph.Nodes[e].UUID = e;
+		BasePerkGraph.Nodes[e].PerkClass = template.PerkClass;
+		// Position should have been pre-filled by caller
+		BasePerkGraph.Nodes[e].Tag = StringTable.Localize(template.Tag);
+		BasePerkGraph.Nodes[e].Description = StringTable.Localize(template.Description);
+		BasePerkGraph.Nodes[e].VerboseDesc = StringTable.Localize(template.VerboseDesc);
+		BasePerkGraph.Nodes[e].Icon = template.Icon;
+		BasePerkGraph.Nodes[e].Category = template.Category;
+		return true;
 	}
 }
