@@ -159,7 +159,6 @@ extend class BIO_EventHandler
 
 		let pGraph = Globals.GetPerkGraph(Players[ConsolePlayer]);
 		let bGraph = Globals.GetBasePerkGraph();
-		Class<BIO_Passive> pasv_t = null;
 
 		if (event.Args[0] >= bGraph.Nodes.Size() ||
 			event.Args[0] <= 0)
@@ -176,8 +175,8 @@ extend class BIO_EventHandler
 			return;
 		}
 
-		let pasv = BIO_Passive(new(bGraph.Nodes[event.Args[0]].PerkClass));
-		pasv.Apply(bioPlayer);
+		let perk = BIO_Perk(new(bGraph.Nodes[event.Args[0]].PerkClass));
+		perk.Apply(bioPlayer);
 		pGraph.PerkActive[event.Args[0]] = true;
 		pGraph.Points--;
 	}
