@@ -273,9 +273,9 @@ class BIO_Player : DoomPlayer
 		bDontThrust = Default.bDontThrust;
 		bCantSeek = Default.bCantSeek;
 
-		Height = Default.Height;
-		Gravity = Default.Gravity;
 		Friction = Default.Friction;
+		Gravity = Default.Gravity;
+		Height = Default.Height;
 		Mass = Default.Mass;
 		MaxStepHeight = Default.MaxStepHeight;
 		MaxSlopeSteepness = Default.MaxSlopeSteepness;

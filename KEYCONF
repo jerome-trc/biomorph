@@ -13,6 +13,7 @@ defaultbind P "event bio_perkmenu"
 
 alias bio_help_ "event bio_help"
 
+alias bio_playerdiag_ "event bio_playerdiag"
 alias bio_weapdiag_ "event bio_weapdiag"
 alias bio_equipdiag_ "event bio_equipdiag"
 alias bio_pasvdiag_ "event bio_pasvdiag"
