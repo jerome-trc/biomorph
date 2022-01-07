@@ -209,10 +209,16 @@ class BIO_Player : DoomPlayer
 			ItemPickupFunctors[i].OnArmorBonusPickup(self, bonus);
 	}
 
-	void OnBackpackPickup(BIO_Backpack bkpk)
+	void OnFirstBackpackPickup(BIO_Backpack bkpk)
 	{
 		for (uint i = 0; i < ItemPickupFunctors.Size(); i++)
-			ItemPickupFunctors[i].OnBackpackPickup(self, bkpk);
+			ItemPickupFunctors[i].OnFirstBackpackPickup(self, bkpk);
+	}
+
+	void OnSubsequentBackpackPickup(BIO_Backpack bkpk)
+	{
+		for (uint i = 0; i < ItemPickupFunctors.Size(); i++)
+			ItemPickupFunctors[i].OnSubsequentBackpackPickup(self, bkpk);
 	}
 
 	void OnPowerupPickup(Inventory item)
@@ -267,6 +273,13 @@ class BIO_Player : DoomPlayer
 		SlimeDamageFactor = Default.SlimeDamageFactor;
 		
 		AirCapacity = Default.AirCapacity;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+		{
+			if (!(i is 'Ammo')) continue;
+
+			i.MaxAmount = i.Default.MaxAmount;
+		}
 
 		DamageTakenFunctors.Clear();
 		EquipmentFunctors.Clear();
