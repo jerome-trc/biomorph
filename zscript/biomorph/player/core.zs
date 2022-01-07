@@ -48,7 +48,8 @@ class BIO_Player : DoomPlayer
 		
 		// If the default inventory has been given, it's either a new game
 		// or the inventory was cleared by a death exit
-		BIO_GlobalData.Get().ResetWeaponGradePrecedent();
+		let globals = BIO_GlobalData.Get();
+		if (globals != null) globals.ResetWeaponGradePrecedent();
 
 		if (BIO_Utils.Eviternity())
 		{
