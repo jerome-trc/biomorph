@@ -116,6 +116,7 @@ class BIO_VolleyGun : BIO_Weapon
 		{
 			A_SetReloadTime(2);
 			A_OpenShotgun2();
+			A_PresetRecoil('BIO_Recoil_ReloadSSG');
 		}
 		VOLL U 5 A_SetReloadTime(3);
 		VOLL V 4 A_SetReloadTime(4);
@@ -131,6 +132,7 @@ class BIO_VolleyGun : BIO_Weapon
 		{
 			A_SetReloadTime(9);
 			A_CloseShotgun2();
+			A_PresetRecoil('BIO_Recoil_ReloadSSG', invert: true);
 		}
 		Goto Ready;
 	Reload.Two:
@@ -140,6 +142,7 @@ class BIO_VolleyGun : BIO_Weapon
 		{
 			A_SetReloadTime(2, 1);
 			A_OpenShotgun2();
+			A_PresetRecoil('BIO_Recoil_ReloadSSG');
 		}
 		VOLL O 5 A_SetReloadTime(3, 1);
 		VOLL P 4 A_SetReloadTime(4, 1);
@@ -154,6 +157,7 @@ class BIO_VolleyGun : BIO_Weapon
 		{
 			A_SetReloadTime(8, 1);
 			A_CloseShotgun2();
+			A_PresetRecoil('BIO_Recoil_ReloadSSG', invert: true);
 		}
 		Goto Ready;
 	Flash.Quad:
