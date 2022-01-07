@@ -15,7 +15,6 @@ class BIO_PerkGraphNode
 	BIO_PerkCategory Category;
 	Class<BIO_Perk> PerkClass;
 	Array<uint> Neighbors;
-	uint DistanceFromStart;
 }
 
 class BIO_PerkTemplate
@@ -43,43 +42,26 @@ class BIO_BasePerkGraph
 {
 	Array<BIO_PerkGraphNode> Nodes;
 
-	private void ResolveDistImpl(uint node, uint distance, in out Array<uint> visited)
+	private bool IsAccessibleImpl(uint tgt, uint cur,
+		in out Array<uint> active, in out Array<uint> visited) const
 	{
-		visited.Push(node);
-		Nodes[node].DistanceFromStart = distance;
+		if (cur == tgt) return true;
+		visited.Push(cur);
 
-		for (uint i = 0; i < Nodes[node].Neighbors.Size(); i++)
-		{
-			let n = Nodes[node].Neighbors[i];
-
-			if (visited.Find(n) != visited.Size())
-				continue;
-			
-			ResolveDistImpl(n, distance + 1, visited);
-		}
-	}
-
-	void ResolveDistances()
-	{
-		Array<uint> visited;
-		ResolveDistImpl(0, 0, visited);
-	}
-
-	private bool IsAccessibleImpl(uint tgt, uint cur, in out Array<uint> active) const
-	{
 		for (uint i = 0; i < Nodes[cur].Neighbors.Size(); i++)
 		{
 			uint ndx = Nodes[cur].Neighbors[i];
-			
-			if (ndx == tgt)
-				return true;
-			
-			if (Nodes[ndx].DistanceFromStart <= Nodes[cur].DistanceFromStart)
-				continue;
 
-			if (active.Find(ndx) != active.Size() &&
-				IsAccessibleImpl(tgt, ndx, active))
-				return true;
+			if (visited.Find(ndx) != visited.Size())
+				continue;
+			
+			for (uint j = 0; j < Nodes[ndx].Neighbors.Size(); j++)
+			{
+				let nb = Nodes[ndx].Neighbors[j];
+				if (active.Find(nb) != active.Size() &&
+					IsAccessibleImpl(tgt, ndx, active, visited))
+					return true;
+			}
 		}
 
 		return false;
@@ -101,7 +83,8 @@ class BIO_BasePerkGraph
 		if (Nodes[node].Neighbors.Size() < 1)
 			return true;
 
-		return IsAccessibleImpl(node, 0, active);
+		Array<uint> visited;
+		return IsAccessibleImpl(node, 0, active, visited);
 	}
 
 	bool HasNode(uint uuid) const
@@ -425,8 +408,6 @@ extend class BIO_GlobalData
 				}
 			}
 		}
-
-		BasePerkGraph.ResolveDistances();
 	}
 
 	private static void ReadPerkTemplateJSON(int lump,
