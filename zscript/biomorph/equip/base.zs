@@ -94,7 +94,7 @@ class BIO_Equipment : Inventory abstract
 
 		bioPlayer.A_Print(String.Format(
 			StringTable.Localize(EquipMessage), FullTag()), 2.5);
-		bioPlayer.A_StartSound(self.UseSound, CHAN_ITEM);
+		bioPlayer.A_StartSound(UseSound, CHAN_AUTO);
 
 		return false;
 	}
