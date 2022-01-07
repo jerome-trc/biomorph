@@ -329,7 +329,7 @@ class BIO_Weapon : DoomWeapon abstract
 		if (MaxAmount > 1)
 			return Inventory.HandlePickup(item);
 
-		if (Owner.Player.Cmd.Buttons & BT_RELOAD && weap.CanBeScavenged())
+		if (Owner.Player.Cmd.Buttons & BT_RELOAD && weap.CanBeScavenged(Owner))
 			weap.bPickupGood = weap.PickupForAmmo(self);
 
 		return true;
@@ -337,8 +337,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 	final override bool TryPickupRestricted(in out Actor toucher)
 	{
-		if (!(BIO_Player(toucher).Player.Cmd.Buttons & BT_RELOAD) ||
-			!CanBeScavenged())
+		if (!(toucher.Player.Cmd.Buttons & BT_RELOAD) ||
+			!CanBeScavenged(toucher))
 			return false;
 
 		if (AmmoGive1 <= 0 && AmmoGive2 <= 0)
@@ -479,12 +479,9 @@ class BIO_Weapon : DoomWeapon abstract
 	final override Inventory CreateTossable(int amt)
 	{
 		int ag1 = AmmoGive1, ag2 = AmmoGive2;
-
 		let ret = Weapon(super.CreateTossable(amt));
-		
 		ret.AmmoGive1 = ag1;
 		ret.AmmoGive2 = ag2;
-		
 		return ret;
 	}
 
@@ -1132,9 +1129,16 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
-	private bool CanBeScavenged() const
+	private bool CanBeScavenged(Actor toucher) const
 	{
-		if (Grade != BIO_GRADE_STANDARD || Rarity != BIO_RARITY_COMMON)
+		if (Rarity != BIO_RARITY_COMMON)
+			return false;
+
+		let bioPlayer = BIO_Player(toucher);
+		
+		if (bioPlayer != null)
+			return Grade <= BIO_CVar.MaxScavengeGrade(bioPlayer.Player);
+		else if (Grade != BIO_GRADE_STANDARD)
 			return false;
 
 		if (AmmoType1 != null && AmmoGive1 > 0)
