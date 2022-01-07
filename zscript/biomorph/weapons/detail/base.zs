@@ -202,13 +202,10 @@ class BIO_Weapon : DoomWeapon abstract
 		+DONTGIB
 		+NOBLOCKMONST
 		+THRUACTORS
-		+USESPECIAL
 		+WEAPON.ALT_AMMO_OPTIONAL
 		+WEAPON.AMMO_OPTIONAL
 		+WEAPON.NOALERT
 
-		Activation
-			THINGSPEC_ThingActs | THINGSPEC_ThingTargets | THINGSPEC_Switch;
 		Height 8;
 		Radius 16;
 
@@ -485,13 +482,12 @@ class BIO_Weapon : DoomWeapon abstract
 		return ret;
 	}
 
-	final override void Activate(Actor activator)
+	final override bool Used(Actor user)
 	{
-		super.Activate(activator);
-		
-		let bioPlayer = BIO_Player(activator);
-		if (bioPlayer == null) return;
+		let bioPlayer = BIO_Player(user);
 
+		if (bioPlayer == null) return false;
+		
 		if (Pipelines.Size() < 1) Init();
 
 		string output = GetTag() .. "\n\n";
@@ -512,7 +508,9 @@ class BIO_Weapon : DoomWeapon abstract
 
 		output.DeleteLastCharacter(); // Trim off trailing newline
 		bioPlayer.A_Print(output, upTime);
-		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 0.8);
+		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 1.2);
+
+		return true;
 	}
 
 	final override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)

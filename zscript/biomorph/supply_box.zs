@@ -4,10 +4,6 @@ class BIO_SupplyBox : Actor
     {
         +DONTGIB
         +NOBLOCKMONST
-        +USESPECIAL
-    
-        Activation
-			THINGSPEC_ThingActs | THINGSPEC_ThingTargets | THINGSPEC_Switch;
 
         Height 8;
         Scale 0.75;
@@ -21,11 +17,9 @@ class BIO_SupplyBox : Actor
         Stop;
     }
     
-    final override void Activate(Actor activator)
+    final override bool Used(Actor user)
 	{
-		super.Activate(activator);
-        
-        if (!(activator is 'BIO_Player')) return;
+        if (!(user is 'BIO_Player')) return false;
 
         bool success = false;
         Actor spawned = null;
@@ -43,7 +37,8 @@ class BIO_SupplyBox : Actor
             weap.SetState(weap.FindState("Spawn"));
         }
 
-		Die(activator, null);
+		Die(user, null);
+        return true;
 	}
 }
 
