@@ -170,24 +170,6 @@ class BIO_PerkMenu : GenericMenu
 
 		Vector2 scrSz = (Screen.GetWidth(), Screen.GetHeight());
 
-		// Help text at menu's top
-
-		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
-			VIRT_W * 0.5 - (SmallFont.StringWidth(Txt_HelpPan) / 2),
-			VIRT_H * 0.025, Txt_HelpPan, DTA_KEEPRATIO, true,
-			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
-
-		// Counters for perk and refund points
-
-		string ptStr = String.Format(
-			StringTable.Localize("$BIO_PERKMENU_POINTCOUNT"),
-			PlayerPerkGraph.Points);
-
-		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
-			VIRT_W * 0.5 - (SmallFont.StringWidth(ptStr) / 2),
-			VIRT_H * 0.05, ptStr, DTA_KEEPRATIO, true,
-			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
-
 		// Node connections
 
 		for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
@@ -254,6 +236,24 @@ class BIO_PerkMenu : GenericMenu
 					DTA_ALPHA, 1.0 + (Sin((MenuTime() << 16 / 4) * 0.75)));
 			}
 		}
+
+		// Help text at menu's top
+
+		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+			VIRT_W * 0.5 - (SmallFont.StringWidth(Txt_HelpPan) / 2),
+			VIRT_H * 0.025, Txt_HelpPan, DTA_KEEPRATIO, true,
+			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
+
+		// Counters for perk and refund points
+
+		string ptStr = String.Format(
+			StringTable.Localize("$BIO_PERKMENU_POINTCOUNT"),
+			PlayerPerkGraph.Points);
+
+		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+			VIRT_W * 0.5 - (SmallFont.StringWidth(ptStr) / 2),
+			VIRT_H * 0.05, ptStr, DTA_KEEPRATIO, true,
+			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
 
 		// Tooltip
 
