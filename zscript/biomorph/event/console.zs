@@ -12,11 +12,24 @@ extend class BIO_EventHandler
 		// Debugging events
 		
 		ConEvent_Help(event);
+		ConEvent_PlayerDiag(event);
 		ConEvent_WeapDiag(event);
 		ConEvent_EquipDiag(event);
 		ConEvent_XPInfo(event);
 		ConEvent_LootDiag(event);
 		ConEvent_WeapAfxCompat(event);
+	}
+
+	private ui void ConEvent_PerkMenu(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_perkmenu")) return;
+
+		if (GameState != GS_LEVEL) return;
+		if (Players[ConsolePlayer].Health <= 0) return;
+		if (!(Players[ConsolePlayer].MO is 'BIO_Player')) return;
+		if (Menu.GetCurrentMenu() is 'BIO_PerkMenu') return;
+
+		Menu.SetMenu('BIO_PerkMenu');
 	}
 
 	private ui void ConEvent_Help(ConsoleEvent event) const
@@ -34,6 +47,7 @@ extend class BIO_EventHandler
 		Console.Printf(
 			"\c[Gold]Console events:\c-\n"
 			"bio_help_\n" ..
+			"bio_playerdiag_\n" ..
 			"bio_weapdiag_\n" ..
 			"bio_equipdiag_\n" ..
 			"bio_xpinfo_\n" ..
@@ -45,16 +59,58 @@ extend class BIO_EventHandler
 			"bio_lvlup_ (also: bio_lvlup_5 and bio_lvlup_10)");
 	}
 
-	private ui void ConEvent_PerkMenu(ConsoleEvent event) const
+	private ui void ConEvent_PlayerDiag(ConsoleEvent event) const
 	{
-		if (!(event.Name ~== "bio_perkmenu")) return;
+		if (!(event.Name ~== "bio_playerdiag")) return;
 
-		if (GameState != GS_LEVEL) return;
-		if (Players[ConsolePlayer].Health <= 0) return;
-		if (!(Players[ConsolePlayer].MO is 'BIO_Player')) return;
-		if (Menu.GetCurrentMenu() is 'BIO_PerkMenu') return;
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Illegal attempt by a script to invoke `bio_playerdiag`.");
+			return;
+		}
 
-		Menu.SetMenu('BIO_PerkMenu');
+		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
+		if (bioPlayer == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on Biomorph-class players.");
+			return;
+		}
+
+		Console.Printf(Biomorph.LOGPFX_INFO .. "Mutable stats:\n"
+			"\tFriction: %.2f\n"
+			"\tGravity: %.2f\n"
+			"\tHeight: %.2f\n"
+			"\tMass: %.2f\n"
+			"\tMax step height: %.2f\n"
+			"\tMax slope steepness: %.2f\n"
+			"\tMaximum health: %d\n"
+			"\tBonus health: %d\n"
+			"\tStamina: %d\n"
+			"\tForward move: %.2f/%.2f\n"
+			"\tSideways move: %.2f/%.2f\n"
+			"\tJump Z: %.2f\n"
+			"\tUse range: %.2f\n"
+			"\tRadius damage factor: %.2f\n"
+			"\tSelf-damage factor: %.2f\n"
+			"\tAir capacity: %.2f\n",
+			bioPlayer.Friction, bioPlayer.Gravity, bioPlayer.Height, bioPlayer.Mass,
+			bioPlayer.MaxStepHeight, bioPlayer.MaxSlopeSteepness, bioPlayer.MaxHealth,
+			bioPlayer.BonusHealth, bioPlayer.Stamina, bioPlayer.ForwardMove1,
+			bioPlayer.ForwardMove2, bioPlayer.SideMove1, bioPlayer.SideMove2,
+			bioPlayer.JumpZ, bioPlayer.UseRange, bioPlayer.RadiusDamageFactor,
+			bioPlayer.SelfDamageFactor, bioPlayer.AirCapacity);
+
+		Console.Printf(Biomorph.LOGPFX_INFO .. "All functors:");
+
+		for (uint i = 0; i < bioPlayer.Functors.Size(); i++)
+		{
+			for (uint j = 0; j < bioPlayer.Functors[i].Size(); j++)
+				Console.Printf("\t%s x %d",
+					bioPlayer.Functors[i][j].GetClassName(),
+					bioPlayer.Functors[i][j].Count);
+		}
 	}
 
 	private ui void ConEvent_WeapDiag(ConsoleEvent event) const
@@ -68,7 +124,12 @@ extend class BIO_EventHandler
 		}
 
 		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
-		if (bioPlayer == null) return;
+		if (bioPlayer == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on Biomorph-class players.");
+			return;
+		}
 
 		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
 		if (weap == null)
