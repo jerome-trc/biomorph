@@ -454,9 +454,13 @@
 		"\c[Green]+20 cell capacity";
 
 	BIO_PERK_ADDITIVEBACKPACKS_TAG =
-		"\c[White]\"Burdenbeast\" System";
+		"\c[White]\"Hammerspace\" System";
 	BIO_PERK_ADDITIVEBACKPACKS_DESC =
 		"\c[Green]Every backpack after the first adds some extra ammo capacity";
+
+	BIO_PERK_WEAPONCAPACITY_0_TAG = "\c[White]\"Burdenbeast\" System";
+	BIO_PERK_WEAPONCAPACITY_1_TAG = "\c[White]\"Burdenbeast\" V2";
+	BIO_PERK_WEAPONCAPACITY_DESC = "\c[Green]+1 weapon capacity";
 
 	BIO_PERK_SCALEDPISTOLDAMAGE_TAG =
 		"\c[White]Scout Tactics";

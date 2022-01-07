@@ -99,6 +99,28 @@
 			"neighbors": [ "bio_cellcapacity" ]
 		},
 		{
+			"uuid": "bio_weapcap_0",
+			"class": "BIO_Perk_WeaponCapacity",
+			"x": 60,
+			"y": -120,
+			"tag": "$BIO_PERK_WEAPONCAPACITY_0_TAG",
+			"desc": "$BIO_PERK_WEAPONCAPACITY_DESC",
+			"icon": "graphics/perk/weaponcap.png",
+			"category": "major",
+			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_weapcap_1",
+			"class": "BIO_Perk_WeaponCapacity",
+			"x": 120,
+			"y": -120,
+			"tag": "$BIO_PERK_WEAPONCAPACITY_1_TAG",
+			"desc": "$BIO_PERK_WEAPONCAPACITY_DESC",
+			"icon": "graphics/perk/weaponcap.png",
+			"category": "major",
+			"neighbors": [ "bio_weapcap_0" ]
+		},
+		{
 			"uuid": "bio_cantseek",
 			"class": "BIO_Perk_CantSeek",
 			"x": 60,
