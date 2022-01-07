@@ -131,7 +131,7 @@ extend class BIO_EventHandler
 		bioPlayer.TakeInventory(bioPlayer.Player.ReadyWeapon.GetClass(), 1);
 		bioPlayer.GiveInventory(outputChoice, 1);
 		bioPlayer.A_SelectWeapon(outputChoice);
-		bioPlayer.A_StartSound("bio/item/weapupgrade/use", CHAN_ITEM);
+		bioPlayer.A_StartSound("bio/item/weapupgrade/use", CHAN_AUTO);
 		bioPlayer.A_StartSound("bio/muta/use/general", CHAN_7);
 		bioPlayer.TakeInventory('BIO_Muta_Upgrade', event.Args[0]);
 		WeaponUpgradeOverlay.Destroy();
