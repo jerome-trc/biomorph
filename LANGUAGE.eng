@@ -409,6 +409,7 @@
 
 // Powerups ====================================================================
 
+	BIO_LIGHTAMP_PKUP = "Obtained a light amplification visor.";
 	BIO_MEGASPHERE_ARMORREPAIR = "Your %s\c- is repaired to perfect condition.";
 
 // Perks =======================================================================
