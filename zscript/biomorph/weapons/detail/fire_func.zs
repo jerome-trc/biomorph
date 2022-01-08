@@ -108,11 +108,22 @@ class BIO_FireFunctor play abstract
 
 class BIO_FireFunc_Projectile : BIO_FireFunctor
 {
+	double SpawnOffsXY;
+	int SpawnHeight;
+
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
 		return weap.BIO_FireProjectile(fireData.FireType,
 			angle: fireData.Angle + FRandom(-fireData.HSpread, fireData.HSpread),
+			spawnOfs_xy: SpawnOffsXY, spawnHeight: SpawnHeight,
 			pitch: fireData.Pitch + FRandom(-fireData.VSpread, fireData.VSpread));
+	}
+
+	BIO_FireFunc_Projectile CustomSet(double spawnOffs_xy, int spawnH)
+	{
+		SpawnOffsXY = spawnOffs_xy;
+		SpawnHeight = spawnH;
+		return self;
 	}
 
 	override void ToString(
