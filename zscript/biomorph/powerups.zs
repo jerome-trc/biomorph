@@ -93,6 +93,7 @@ class BIO_Infrared : Infrared replaces Infrared
 {
 	Default
 	{
+		Inventory.PickupMessage "$BIO_LIGHTAMP_PKUP";
 		Powerup.Type 'BIO_PowerLightAmp';
 	}
 
