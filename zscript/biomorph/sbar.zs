@@ -141,7 +141,7 @@ class BIO_StatusBar : BaseStatusBar
 			DrawInventoryIcon(powup, (20, yOffs + yPos));
 			yPos += 8;
 			int secs = powup.EffectTics / GameTicRate;
-			DrawString(Font_Small, FormatNumber(secs, 1, 2),
+			DrawString(Font_Small, FormatNumber(secs, 1, 3),
 				(19, yOffs + yPos), DI_TEXT_ALIGN_CENTER, Font.CR_WHITE);
 			yPos += 32;
 		}
