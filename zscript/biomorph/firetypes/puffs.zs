@@ -57,11 +57,11 @@ class BIO_ElectricPuff : BIO_RailPuff
 	States
 	{
 	Spawn:
-		RZAP A 2 Bright Light("BIO_L_ElecPuff");
-		RZAP B 2 Bright Light("BIO_L_ElecPuff")
+		RZAP A 2 Bright Light("BIO_ElecPuff");
+		RZAP B 2 Bright Light("BIO_ElecPuff")
 			A_StartSound("bio/puff/lightning/hit",
 				Random(0, 1) == 0 ? CHAN_6 : CHAN_7, volume: 0.5);
-		RZAP CDEFGHI 2 Bright Light("BIO_L_ElecPuff");
+		RZAP CDEFGHI 2 Bright Light("BIO_ElecPuff");
 		Stop;
 	Melee:
 		Goto Spawn;
