@@ -250,12 +250,12 @@ class BIO_Weapon : DoomWeapon abstract
 			A_SetTranslation('');
 		}
 		#### ##### 1 A_GroundHit;
-		#### # 1 Bright Light("BIO_L_MutatedLoot")
+		#### # 1 Bright Light("BIO_MutatedLoot")
 		{
 			A_GroundHit();
 			A_SetTranslation(invoker.MUTATED_SPAWN_TRANS[invoker.Affixes.Size()]);
 		}
-		#### ##### 1 Bright Light("BIO_L_MutatedLoot") A_GroundHit;
+		#### ##### 1 Bright Light("BIO_MutatedLoot") A_GroundHit;
 		Goto Spawn.Mutated + 1;
 	Spawn.Unique:
 		#### # 10;
@@ -265,12 +265,12 @@ class BIO_Weapon : DoomWeapon abstract
 			A_SetTranslation('');
 		}
 		#### ##### 1 A_GroundHit;
-		#### # 1 Bright Light("BIO_L_UniqueLoot")
+		#### # 1 Bright Light("BIO_UniqueLoot")
 		{
 			A_GroundHit();
 			A_SetTranslation('BIO_Unique');
 		}
-		#### ##### 1 Bright Light("BIO_L_UniqueLoot") A_GroundHit;
+		#### ##### 1 Bright Light("BIO_UniqueLoot") A_GroundHit;
 		Goto Spawn.Unique + 1;
 	}
 
