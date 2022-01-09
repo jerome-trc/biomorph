@@ -32,12 +32,6 @@
 
 // Weapons (tags, pickup messages, obituaries, stat readouts) ==================
 
-	BIO_WEAPTOSTR_HEADER_DEFAULT = "\c[Gold]Fire mode %d:";
-	BIO_WEAPTOSTR_HEADER_0 = "\c[Gold]Primary fire:";
-	BIO_WEAPTOSTR_HEADER_1 = "\c[Gold]Secondary fire:";
-	BIO_WEAPTOSTR_HEADER_2 = "\c[Gold]Tertiary fire:";
-	BIO_WEAPTOSTR_HEADER_3 = "\c[Gold]Quaternary fire:";
-
 	BIO_WEAPTOSTR_HSPREAD =
 		"\c[MidGrey]Horizontal spread: %s%.2f \c[MidGrey]degree(s)";
 	BIO_WEAPTOSTR_VSPREAD =
