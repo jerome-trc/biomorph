@@ -262,6 +262,9 @@
 	BIO_RECOMBGENES_FAIL_INCOMPAT =
 		"The recombinant genetic sludge violently rejects this weapon.\n"
 		"Maybe try a different one?";
+	BIO_RECOMBGENES_FAIL_OVERLAP =
+		"The recombinant genetic sludge rejects this weapon;\n"
+		"there's a similar affix on it already.";
 
 	BIO_MUTA_CORRUPT_TAG = "\c[DarkRed]R.O.T.\c[White] Mutagen\c-";
 	BIO_MUTA_CORRUPT_PKUP = "Acquired a sample of \c[DarkRed]R.O.T. Mutagen\c-.";

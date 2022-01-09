@@ -464,6 +464,12 @@ class BIO_RecombinantGenes : Inventory
 			return false;
 		}
 
+		if (weap.HasAffixOfType(Affix.GetClass()))
+		{
+			Owner.A_Print("$BIO_RECOMBGENES_FAIL_OVERLAP", 5.0);
+			return false;
+		}
+
 		if (!Affix.Compatible(weap.AsConst()))
 		{
 			Owner.A_Print("$BIO_RECOMBGENES_FAIL_INCOMPAT", 5.0);
