@@ -13,6 +13,6 @@ class BIO_PkupFunc_ArmorBonusX2 : BIO_ItemPickupFunctor
 	final override void OnArmorBonusPickup(BIO_Player bioPlayer,
 		BIO_ArmorBonus bonus) const
 	{
-		BIO_ArmorBonus.TryRepairArmor(bioPlayer);
+		BIO_ArmorBonus.TryRepairArmor(bioPlayer, Count);
 	}
 }
