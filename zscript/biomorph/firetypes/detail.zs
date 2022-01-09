@@ -35,7 +35,7 @@ mixin class BIO_ProjectileCommon
 	Default
 	{
 		+FORCEXYBILLBOARD
-		Gravity 0.3;
+		Gravity 0.25;
 	}
 
 	protected int, int GetSplashData() const
@@ -121,6 +121,8 @@ class BIO_Projectile : Actor abstract
 	action void A_ProjectileDeath()
 	{
 		invoker.OnProjectileDeath();
+
+		bNoGravity = true;
 
 		for (uint i = 0; i < invoker.FTDeathFunctors.Size(); i++)
 			invoker.FTDeathFunctors[i].InvokeTrue(BIO_Projectile(self));
