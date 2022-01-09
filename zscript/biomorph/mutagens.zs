@@ -351,7 +351,7 @@ class BIO_Muta_Recycle : BIO_Mutagen
 				return false;
 			}
 
-			afx = weap.ImplicitAffixes[Random(0, weap.ImplicitAffixes.Size() - 1)];
+			afx = weap.ImplicitAffixes[Random[BIO_Afx](0, weap.ImplicitAffixes.Size() - 1)];
 		}
 		else if (weap.Rarity == BIO_RARITY_MUTATED)
 		{
@@ -361,7 +361,7 @@ class BIO_Muta_Recycle : BIO_Mutagen
 				return false;
 			}
 
-			afx = weap.Affixes[Random(0, weap.Affixes.Size() - 1)];
+			afx = weap.Affixes[Random[BIO_Afx](0, weap.Affixes.Size() - 1)];
 		}
 		else
 		{
