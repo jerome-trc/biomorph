@@ -217,6 +217,11 @@ class BIO_PowerInfiniteAmmo : PowerInfiniteAmmo
 
 class BIO_Megasphere : Megasphere replaces Megasphere
 {
+	Default
+	{
+		Inventory.PickupMessage "$BIO_MEGASPHERE_PKUP";
+	}
+
 	States
 	{
 	Pickup:

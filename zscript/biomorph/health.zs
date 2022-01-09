@@ -6,6 +6,11 @@
 
 class BIO_HealthBonus : HealthBonus replaces HealthBonus
 {
+	Default
+	{
+		Inventory.PickupMessage "$BIO_HEALTHBONUS_PKUP";
+	}
+
 	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
@@ -36,14 +41,32 @@ mixin class BIO_Health
 class BIO_Stimpack : Stimpack replaces Stimpack
 {
 	mixin BIO_Health;
+
+	Default
+	{
+		Inventory.PickupMessage "$BIO_STIMPACK_PKUP";
+		Health.LowMessage 25, "$BIO_STIMPACK_PKUPLOW";
+	}
 }
 
 class BIO_Medikit : Medikit replaces Medikit
 {
 	mixin BIO_Health;
+
+	Default
+	{
+		Inventory.PickupMessage "$BIO_MEDIKIT_PKUP";
+		Health.LowMessage 25, "$BIO_MEDIKIT_PKUPLOW";
+	}
 }
 
 class BIO_Soulsphere : Soulsphere replaces Soulsphere
 {
 	mixin BIO_Health;
+
+	Default
+	{
+		Inventory.PickupMessage "$BIO_SOULSPHERE_PKUP";
+		Health.LowMessage 25, "$BIO_SOULSPHERE_PKUPLOW";
+	}
 }
