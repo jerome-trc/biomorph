@@ -379,7 +379,7 @@ class BIO_Muta_Recycle : BIO_Mutagen
 			return false;
 		}
 
-		genes.Affix = afx;
+		genes.AffixType = afx.GetClass();
 		genes.AttachToOwner(Owner);
 		Owner.TakeInventory(weap.GetClass(), 1);
 		Owner.A_Print("$BIO_MUTA_RECYCLE_USE");
@@ -389,7 +389,8 @@ class BIO_Muta_Recycle : BIO_Mutagen
 
 class BIO_RecombinantGenes : Inventory
 {
-	BIO_WeaponAffix Affix;
+	Class<BIO_WeaponAffix> AffixType;
+	private BIO_WeaponAffix Affix;
 
 	Default
 	{
@@ -421,14 +422,15 @@ class BIO_RecombinantGenes : Inventory
 	{
 		super.PostBeginPlay();
 
-		if (Affix == null)
+		if (AffixType == null)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Recombinant genes failed to acquire an affix.");
+				"Recombinant genes failed to acquire an affix type.");
 			return;
 		}
 
 		string newTag = Default.GetTag();
+		Affix = BIO_WeaponAffix(new(AffixType));
 		newTag.AppendFormat("\n\n\c[White]%s\c-", Affix.GetTag());
 		SetTag(newTag);
 	}
@@ -477,6 +479,7 @@ class BIO_RecombinantGenes : Inventory
 		}
 		
 		uint e = weap.Affixes.Push(Affix);
+		weap.Affixes[e].Init(weap.AsConst());
 		weap.Affixes[e].Apply(weap);
 		weap.OnWeaponChange();
 		BIO_Utils.DRLMDangerLevel(AsConst(), 10);
