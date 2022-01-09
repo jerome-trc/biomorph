@@ -35,7 +35,7 @@ class BIO_Berserk : Berserk replaces Berserk
 	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
-		HealThing(100, 0);
+		toucher.GiveBody(100, toucher.GetMaxHealth());
 
 		let bioPlayer = BIO_Player(toucher);
 		if (bioPlayer == null) return;
