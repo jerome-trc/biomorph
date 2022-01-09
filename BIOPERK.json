@@ -88,6 +88,17 @@
 			"neighbors": [ "bio_shellcapacity", "bio_rocketammocapacity" ]
 		},
 		{
+			"uuid": "bio_largeammobonus",
+			"class": "BIO_Perk_LargeAmmoBonus",
+			"x": -100,
+			"y": 120,
+			"tag": "$BIO_PERK_LARGEAMMOBONUS_TAG",
+			"desc": "$BIO_PERK_LARGEAMMOBONUS_DESC",
+			"icon": "graphics/perk/largeammobonus.png",
+			"category": "major",
+			"neighbors": [ "bio_rocketammocapacity" ]
+		},
+		{
 			"uuid": "bio_additivebackpacks",
 			"class": "BIO_Perk_AdditiveBackpacks",
 			"x": 0,
