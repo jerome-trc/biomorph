@@ -1,18 +1,18 @@
 class BIO_WeightedRandomTableEntry
 {
-	Class<Actor> Type;
+	Class<Object> Type;
 	BIO_WeightedRandomTable Subtable;
 	uint Weight;
 }
 
-// Simple running-sum weighted random Actor class picker with nesting support.
+// Simple running-sum weighted random class picker with nesting support.
 class BIO_WeightedRandomTable
 {
 	string Label;
 	private Array<BIO_WeightedRandomTableEntry> Entries;
 	private uint WeightSum;
 
-	void Push(Class<Actor> type, uint weight)
+	void Push(Class<Object> type, uint weight)
 	{
 		if (type == null)
 		{
@@ -78,7 +78,7 @@ class BIO_WeightedRandomTable
 		WeightSUm += weight;
 	}
 
-	Class<Actor> Result() const
+	Class<Object> Result() const
 	{
 		if (Entries.Size() < 1)
 		{
@@ -88,7 +88,7 @@ class BIO_WeightedRandomTable
 			return null;
 		}
 
-		Class<Actor> ret = null;
+		Class<Object> ret = null;
 		uint iters = 0;
 
 		while (ret == null && iters < 10000)
@@ -118,7 +118,7 @@ class BIO_WeightedRandomTable
 		return null;
 	}
 
-	void RemoveByType(Class<Actor> type)
+	void RemoveByType(Class<Object> type)
 	{
 		for (uint i = Entries.Size() - 1; i >= 0; i--)
 		{
