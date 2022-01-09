@@ -632,5 +632,6 @@
 	BIO_RELOAD = "reload";
 	BIO_PUNCH = "punch";
 	BIO_KICK = "kick";
+	BIO_LUNGE = "lunge";
 	BIO_ALL_4 = "all 4";
 	BIO_2 = "2";
