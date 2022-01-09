@@ -16,18 +16,6 @@ class BIO_CVar abstract
 		return CVar.GetCVar('BIO_berserkswitch', pInfo).GetInt();
 	}
 
-	static BIO_Grade MaxScavengeGrade(PlayerInfo pInfo)
-	{
-		switch (CVar.GetCVar('BIO_scavengegrade', pInfo).GetInt())
-		{
-		case BIO_CV_MAXSCAVGRADE_SURP: return BIO_GRADE_SURPLUS;
-		default:
-		case BIO_CV_MAXSCAVGRADE_STD: return BIO_GRADE_STANDARD;
-		case BIO_CV_MAXSCAVGRADE_SPEC: return BIO_GRADE_SPECIALTY;
-		case BIO_CV_MAXSCAVGRADE_CLSF: return BIO_GRADE_CLASSIFIED;
-		}
-	}
-
 	static bool MultiBarrelPrimary(PlayerInfo pInfo)
 	{
 		return CVar.GetCVar('BIO_multibarrelfire', pInfo)
@@ -58,14 +46,6 @@ enum BIO_CVar_BerserkSwitch : int
 	BIO_CV_BSKS_NO = 0,
 	BIO_CV_BSKS_MELEE = 1,
 	BIO_CV_BSKS_ONLYFIRST = 2
-}
-
-enum BIO_CVar_MaxScavengeGrade : int
-{
-	BIO_CV_MAXSCAVGRADE_SURP = 0,
-	BIO_CV_MAXSCAVGRADE_STD = 1,
-	BIO_CV_MAXSCAVGRADE_SPEC = 2,
-	BIO_CV_MAXSCAVGRADE_CLSF = 3
 }
 
 // For the Super Shotgun and similar weapons, does primary fire multiple barrels

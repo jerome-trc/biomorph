@@ -185,6 +185,10 @@ class BIO_Weapon : DoomWeapon abstract
 	property MinAmmoReserve2: MinAmmoReserve2;
 	property MinAmmoReserves: MinAmmoReserve1, MinAmmoReserve2;
 
+	// If this weapon is standard grade and this field is true, it won't be
+	// destroyed if the players drains both its `AmmoGive` values.
+	meta bool ScavengePersist; property ScavengePersist: ScavengePersist;
+
 	Array<BIO_WeaponPipeline> Pipelines;
 	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
 	Dictionary Userdata; // Your derived weapon must instantiate this itself.
@@ -326,32 +330,40 @@ class BIO_Weapon : DoomWeapon abstract
 		if (MaxAmount > 1)
 			return Inventory.HandlePickup(item);
 
-		if (Owner.Player.Cmd.Buttons & BT_RELOAD && weap.CanBeScavenged(Owner))
+		if (AmmoType1 != null || AmmoType2 != null)
+		{
+			int amt1 = Owner.CountInv(AmmoType1), amt2 = Owner.CountInv(AmmoType2);
 			weap.bPickupGood = weap.PickupForAmmo(self);
+			int given1 = Owner.CountInv(AmmoType1) - amt1,
+				given2 = Owner.CountInv(AmmoType2) - amt2;
+			weap.AmmoGive1 -= given1;
+			weap.AmmoGive2 -= given2;
+			weap.bPickupGood &= weap.ScavengingDestroys();
+			if (!bQuiet && (given1 > 0 || given2 > 0))
+			{
+				PrintPickupMessage(Owner.CheckLocalView(), PickupMessage());
+				PlayPickupSound(Owner.Player.MO);
+			}
+		}
 
 		return true;
 	}
 
 	final override bool TryPickupRestricted(in out Actor toucher)
 	{
-		if (!(toucher.Player.Cmd.Buttons & BT_RELOAD) ||
-			!CanBeScavenged(toucher))
+		if (AmmoType1 == null && AmmoType2 == null)
 			return false;
 
-		if (AmmoGive1 <= 0 && AmmoGive2 <= 0)
-		{
-			GoAwayAndDie();
-			return true;
-		}
-
 		bool gotAnything = false;
+		int given1 = 0, given2 = 0;
 
 		if (AmmoType1 != null)
 		{
 			int amt = toucher.CountInv(AmmoType1);
 			toucher.GiveInventory(AmmoType1,
 				AmmoGive1 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR));
-			gotAnything |= toucher.CountInv(AmmoType1) > amt;
+			given1 = toucher.CountInv(AmmoType1) - amt;
+			AmmoGive1 -= given1;
 		}
 
 		if (AmmoType2 != null)
@@ -359,12 +371,17 @@ class BIO_Weapon : DoomWeapon abstract
 			int amt = toucher.CountInv(AmmoType2);
 			toucher.GiveInventory(AmmoType2,
 				AmmoGive2 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR));
-			gotAnything |= toucher.CountInv(AmmoType2) > amt;
+			given2 = toucher.CountInv(AmmoType2) - amt;
+			AmmoGive2 -= given2;
 		}
 
-		if (gotAnything) GoAwayAndDie();
+		if (ScavengingDestroys())
+		{
+			GoAwayAndDie();
+			return true;
+		}
 
-		return gotAnything;
+		return given1 > 0 || given2 > 0;
 	}
 
 	override void DoPickupSpecial(Actor toucher)
@@ -379,6 +396,10 @@ class BIO_Weapon : DoomWeapon abstract
 
 	override string PickupMessage()
 	{
+		// Is this weapon being scavenged for ammo?
+		if (InStateSequence(CurState, FindState('HoldAndDestroy')) || Owner == null)
+			return String.Format(StringTable.Localize("$BIO_SCAVENGED"), GetTag());
+
 		string ret = "";
 
 		if (Rarity == BIO_RARITY_UNIQUE)
@@ -407,12 +428,13 @@ class BIO_Weapon : DoomWeapon abstract
 		if (!PreviouslyPickedUp) RLMDangerLevel();
 		PreviouslyPickedUp = true;
 
-		// `Weapon::AttachToOwner()` calls `AddAmmo()` for both types, and we
-		// want both of the items given to have an amount of 0
-		AmmoGive1 = AmmoGive2 = 0;
+		int 
+			prevAmmo1 = newOwner.CountInv(AmmoType1),
+			prevAmmo2 = newOwner.CountInv(AmmoType2);
+
 		super.AttachToOwner(newOwner);
-		AmmoGive1 = Default.AmmoGive1;
-		AmmoGive2 = Default.AmmoGive2;
+		AmmoGive1 -= (newOwner.CountInv(AmmoType1) - prevAmmo1);
+		AmmoGive2 -= (newOwner.CountInv(AmmoType2) - prevAmmo2);
 
 		let globals = BIO_GlobalData.Get();
 		if (globals != null)
@@ -470,9 +492,8 @@ class BIO_Weapon : DoomWeapon abstract
 	}
 
 	// The parent variant of this function clears both `AmmoGive` fields to
-	// prevent exploitation; this is not Biomorph's problem because ammo isn't
-	// given to the player until the weapon is scavenged. This overrides fixes
-	// dropped weapons being impossible to scavenge as such.
+	// prevent exploitation; Biomorph solves this problem differently.
+	// This overrides fixes dropped weapons being impossible to scavenge as such.
 	final override Inventory CreateTossable(int amt)
 	{
 		int ag1 = AmmoGive1, ag2 = AmmoGive2;
@@ -1127,24 +1148,10 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
-	private bool CanBeScavenged(Actor toucher) const
+	private bool ScavengingDestroys() const
 	{
-		if (Rarity != BIO_RARITY_COMMON)
-			return false;
-
-		let bioPlayer = BIO_Player(toucher);
-		
-		if (bioPlayer != null)
-			return Grade <= BIO_CVar.MaxScavengeGrade(bioPlayer.Player);
-		else if (Grade != BIO_GRADE_STANDARD)
-			return false;
-
-		if (AmmoType1 != null && AmmoGive1 > 0)
-			return true;
-		else if (AmmoType2 != null && AmmoGive2 > 0)
-			return true;
-		else
-			return false;
+		return AmmoGive1 <= 0 && AmmoGive2 <= 0 && !ScavengePersist &&
+			Grade == BIO_GRADE_STANDARD && Rarity == BIO_RARITY_COMMON;
 	}
 
 	readOnly<BIO_Weapon> AsConst() const { return self; }

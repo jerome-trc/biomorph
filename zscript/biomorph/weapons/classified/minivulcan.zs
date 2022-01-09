@@ -7,6 +7,7 @@ class BIO_Minivulcan : BIO_Weapon
 		Inventory.Icon 'VULCZ0';
 		Inventory.PickupMessage "$BIO_MINIVULCAN_PKUP";
 
+		Weapon.AmmoGive 100;
 		Weapon.AmmoType 'Clip';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_CHAINGUN_CLSF;
