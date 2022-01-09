@@ -9,8 +9,8 @@ class BIO_WeightedRandomTableEntry
 class BIO_WeightedRandomTable
 {
 	string Label;
-	private Array<BIO_WeightedRandomTableEntry> Entries;
-	private uint WeightSum;
+	protected Array<BIO_WeightedRandomTableEntry> Entries;
+	protected uint WeightSum;
 
 	void Push(Class<Object> type, uint weight)
 	{
@@ -126,7 +126,10 @@ class BIO_WeightedRandomTable
 				Entries[i].SubTable.RemoveByType(type);
 			
 			if (Entries[i].Type == type)
+			{
+				WeightSum -= Entries[i].Weight;
 				Entries.Delete(i);
+			}
 		}
 	}
 
