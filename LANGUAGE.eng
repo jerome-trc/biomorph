@@ -450,6 +450,11 @@
 	BIO_PERK_CELLCAPACITY_MINOR_DESC =
 		"\c[Green]+20 cell capacity";
 
+	BIO_PERK_LARGEAMMOBONUS_TAG
+		= "\c[White]Scrounger";	
+	BIO_PERK_LARGEAMMOBONUS_DESC
+		= "\c[Green]Large ammo pickups come with an extra small ammo pickup";
+
 	BIO_PERK_ADDITIVEBACKPACKS_TAG =
 		"\c[White]\"Hammerspace\" System";
 	BIO_PERK_ADDITIVEBACKPACKS_DESC =

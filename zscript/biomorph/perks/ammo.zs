@@ -34,6 +34,31 @@ class BIO_Perk_CellCapacityMinor : BIO_Perk
 	}
 }
 
+// Large ammo pickups also grant a small pickup ================================
+
+class BIO_Perk_LargeAmmoBonus : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PkupFunc_LargeAmmoBonus');
+	}
+}
+
+class BIO_PkupFunc_LargeAmmoBonus : BIO_ItemPickupFunctor
+{
+	final override void OnAmmoPickup(BIO_Player bioPlayer, Inventory item) const
+	{
+		let ammoItem = Ammo(item);
+
+		// Hopelessly un-sophisticated (but still dynamic) check
+		if (ammoItem.Default.Amount > ammoItem.Default.BackpackAmount)
+		{
+			bioPlayer.GiveInventory(ammoItem.GetClass(), ammoItem.Default.BackpackAmount);
+		}
+	}
+}
+
+// =============================================================================
 // Every backpack after the first adds `BackpackAmount` to all capacities
 
 class BIO_Perk_AdditiveBackpacks : BIO_Perk
