@@ -127,7 +127,7 @@
 	BIO_ARCCASTER_PKUP = "Procured an %s.";
 
 	BIO_MINIVULCAN_TAG = "Minivulcan";
-	BIO_MINIVULCAN_PKUP = "Procured an %s.";
+	BIO_MINIVULCAN_PKUP = "Procured a %s.";
 
 	BIO_HANDCANNON_TAG = "Hand Cannon";
 	BIO_HANDCANNON_PKUP = "Procured a %s.";
