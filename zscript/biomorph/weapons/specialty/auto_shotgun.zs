@@ -7,6 +7,7 @@ class BIO_AutoShotgun : BIO_Weapon
 		Inventory.Icon 'AUSGZ0';
 		Inventory.PickupMessage "$BIO_AUTOSHOTGUN_PKUP";
 
+		Weapon.AmmoGive 15;
 		Weapon.AmmoType 'Shell';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_SHOTGUN_SPEC;

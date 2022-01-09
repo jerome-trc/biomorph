@@ -21,6 +21,7 @@ class BIO_RocketLauncher : BIO_Weapon
 		BIO_Weapon.MagazineSize 1;
 		BIO_Weapon.MagazineType 'BIO_MAG_RocketLauncher';
 		BIO_Weapon.PlayerVisual BIO_PVIS_ROCKETLAUNCHER;
+		BIO_Weapon.ScavengePersist true;
 	}
 
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const

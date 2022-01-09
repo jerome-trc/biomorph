@@ -7,6 +7,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 		Inventory.Icon 'INCUZ0';
 		Inventory.PickupMessage "$BIO_INCURSIONSHOTGUN_PKUP";
 
+		Weapon.AmmoGive 4;
 		Weapon.AmmoType 'Shell';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_SSG_CLSF;

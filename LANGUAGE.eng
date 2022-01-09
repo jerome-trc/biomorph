@@ -32,6 +32,8 @@
 
 // Weapons (tags, pickup messages, obituaries, stat readouts) ==================
 
+	BIO_SCAVENGED = "Scavenged ammo from a dropped %s.";
+
 	BIO_WEAPTOSTR_HSPREAD =
 		"\c[MidGrey]Horizontal spread: %s%.2f \c[MidGrey]degree(s)";
 	BIO_WEAPTOSTR_VSPREAD =

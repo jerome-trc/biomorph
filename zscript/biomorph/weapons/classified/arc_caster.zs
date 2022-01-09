@@ -14,6 +14,7 @@ class BIO_ArcCaster : BIO_Weapon
 		Inventory.Icon 'ARCAZ0';
 		Inventory.PickupMessage "$BIO_ARCCASTER_PKUP";
 
+		Weapon.AmmoGive 40;
 		Weapon.AmmoType 'Cell';
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_PLASRIFLE_CLSF;
