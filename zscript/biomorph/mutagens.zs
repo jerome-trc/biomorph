@@ -10,7 +10,7 @@ class BIO_Mutagen : Inventory abstract
 	const DROPWT_REROLL = 10;
 	const DROPWT_REMOVE = 24;
 	const DROPWT_UPGRADE = 25;
-	const DROPWT_CORR = 1;
+	const DROPWT_CORR = 3;
 
 	meta uint DropWeight; property DropWeight: DropWeight;
 	meta bool WorksOnUniques; property WorksOnUniques: WorksOnUniques;
