@@ -421,7 +421,7 @@ class BIO_WeaponPipeline play
 		return func != null && func.Damage > 0 && func.Radius > 0;
 	}
 
-	bool SplashMutable() const { return Mask & BIO_WPM_SPLASH; }
+	bool SplashMutable() const { return !(Mask & BIO_WPM_SPLASH); }
 
 	void SetSplash(int damage, int radius,
 		EExplodeFlags flags = XF_HURTSOURCE, int fullDmgDistance = 0)
