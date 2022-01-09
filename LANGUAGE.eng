@@ -413,12 +413,17 @@
 // Health ======================================================================
 	
 	BIO_HEALTHBONUS_PKUP = "Drank a health bonus.";
-	BIO_STIMPACK_PKUP = "Picked up a stimpack.";
-	BIO_MEDKIT_PKUP = "Picked up a first-aid kit.";
+	BIO_STIMPACK_PKUP = "Took a stimpack.";
+	BIO_STIMPACK_PKUPLOW = "Took a badly-needed stimpack.";
+	BIO_MEDIKIT_PKUP = "Used a first-aid kit.";
+	BIO_MEDIKIT_PKUPLOW = "Used a badly-needed first-aid kit.";
+	BIO_SOULSPHERE_PKUP = "Absorbed a Soulsphere.";
+	BIO_SOULSPHERE_PKUPLOW = "Absorbed a much-needed Soulsphere.";
 
 // Powerups ====================================================================
 
 	BIO_LIGHTAMP_PKUP = "Obtained a light amplification visor.";
+	BIO_MEGASPHERE_PKUP = "Absorbed a Megasphere!";
 	BIO_MEGASPHERE_ARMORREPAIR = "Your %s\c- is repaired to perfect condition.";
 
 // Perks =======================================================================
