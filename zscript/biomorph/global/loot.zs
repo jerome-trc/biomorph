@@ -11,12 +11,12 @@ extend class BIO_GlobalData
 	private BIO_PartyMaxWeaponGrade MaxWeaponGrade;
 
 	// 0 is Standard, 1 is Specialty, 2 is Classified.
-	private WeightedRandomTable[__BIO_WEAPCAT_COUNT__][3] WeaponLootTables;
+	private BIO_WeightedRandomTable[__BIO_WEAPCAT_COUNT__][3] WeaponLootTables;
 	
 	// Contains all tables in `WeaponLootTables`.
-	private WeightedRandomTable WeaponLootMetaTable;
+	private BIO_WeightedRandomTable WeaponLootMetaTable;
 	
-	private WeightedRandomTable WRT_Mutagens;
+	private BIO_WeightedRandomTable WRT_Mutagens;
 
 	Class<BIO_Weapon> AnyLootWeaponType() const
 	{

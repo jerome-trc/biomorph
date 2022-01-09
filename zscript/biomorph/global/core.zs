@@ -20,12 +20,12 @@ class BIO_GlobalData : Thinker
 			for (uint j = 0; j < 3; j++)
 			{
 				string category = BIO_Weapon.CATEGORY_IDS[i];
-				ret.WeaponLootTables[j][i] = new('WeightedRandomTable');
+				ret.WeaponLootTables[j][i] = new('BIO_WeightedRandomTable');
 				ret.WeaponLootTables[j][i].Label = String.Format(
 					"weap_loot_%s_%s", BIO_Utils.GradeToString(j + 2), category);
 			}
 
-		ret.WRT_Mutagens = new('WeightedRandomTable');
+		ret.WRT_Mutagens = new('BIO_WeightedRandomTable');
 
 		for (uint i = 0; i < AllClasses.Size(); i++)
 		{
@@ -53,7 +53,7 @@ class BIO_GlobalData : Thinker
 		ret.CreateBasePerkGraph();
 		ret.ReadWeaponLumps();
 
-		ret.WeaponLootMetaTable = new('WeightedRandomTable');
+		ret.WeaponLootMetaTable = new('BIO_WeightedRandomTable');
 		ret.WeaponLootMetaTable.Label = "weap_loot_meta";
 
 		// If playing with DOOM.wad, the Super Shotgun's requisite resources

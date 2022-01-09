@@ -1,15 +1,15 @@
-class WeightedRandomTableEntry
+class BIO_WeightedRandomTableEntry
 {
 	Class<Actor> Type;
-	WeightedRandomTable Subtable;
+	BIO_WeightedRandomTable Subtable;
 	uint Weight;
 }
 
 // Simple running-sum weighted random Actor class picker with nesting support.
-class WeightedRandomTable
+class BIO_WeightedRandomTable
 {
 	string Label;
-	private Array<WeightedRandomTableEntry> Entries;
+	private Array<BIO_WeightedRandomTableEntry> Entries;
 	private uint WeightSum;
 
 	void Push(Class<Actor> type, uint weight)
@@ -31,13 +31,13 @@ class WeightedRandomTable
 			return;
 		}
 
-		uint end = Entries.Push(new('WeightedRandomTableEntry'));
+		uint end = Entries.Push(new('BIO_WeightedRandomTableEntry'));
 		Entries[end].Type = type;
 		Entries[end].Weight = weight;
 		WeightSum += weight;
 	}
 
-	WeightedRandomTable EmplaceLayer(uint weight)
+	BIO_WeightedRandomTable EmplaceLayer(uint weight)
 	{
 		if (weight <= 0)
 		{
@@ -47,14 +47,14 @@ class WeightedRandomTable
 			return null;
 		}
 		
-		uint end = Entries.Push(new('WeightedRandomTableEntry'));
-		Entries[end].SubTable = new('WeightedRandomTable');
+		uint end = Entries.Push(new('BIO_WeightedRandomTableEntry'));
+		Entries[end].SubTable = new('BIO_WeightedRandomTable');
 		Entries[end].Weight = weight;
 		WeightSum += weight;
 		return Entries[end].SubTable;
 	}
 
-	void PushLayer(WeightedRandomTable wrt, uint weight)
+	void PushLayer(BIO_WeightedRandomTable wrt, uint weight)
 	{
 		if (wrt == self)
 		{
@@ -72,7 +72,7 @@ class WeightedRandomTable
 			return;
 		}
 
-		uint end  = Entries.Push(new('WeightedRandomTableEntry'));
+		uint end  = Entries.Push(new('BIO_WeightedRandomTableEntry'));
 		Entries[end].SubTable = wrt;
 		Entries[end].Weight = weight;
 		WeightSUm += weight;
