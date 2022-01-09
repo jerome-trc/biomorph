@@ -29,7 +29,10 @@ extend class BIO_EventHandler
 		if (!(Players[ConsolePlayer].MO is 'BIO_Player')) return;
 		if (Menu.GetCurrentMenu() is 'BIO_PerkMenu') return;
 
-		Menu.SetMenu('BIO_PerkMenu');
+		if (BIO_debug)
+			Menu.SetMenu('BIO_PerkDebugMenu');
+		else
+			Menu.SetMenu('BIO_PerkMenu');
 	}
 
 	private ui void ConEvent_Help(ConsoleEvent event) const

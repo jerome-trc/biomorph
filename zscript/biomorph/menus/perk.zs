@@ -11,7 +11,7 @@ class BIO_PerkMenu : GenericMenu
 	const COLOR_HOVERED = Color(127, 127, 127, 127);
 	const COLOR_NONE = Color(0, 0, 0, 0);
 	
-	private readOnly<BIO_BasePerkGraph> BasePerkGraph;
+	protected readOnly<BIO_BasePerkGraph> BasePerkGraph;
 	private readOnly<BIO_PlayerPerkGraph> PlayerPerkGraph;
 
 	private string Txt_HelpPan, Txt_Apply;
@@ -24,15 +24,15 @@ class BIO_PerkMenu : GenericMenu
 	private bool Pan;
 	private Vector2 Size; // Used as virtual width/height to provide zoom.
 	private Vector2 ViewPosition; // Where on the whole graph is the user looking?
-	private Vector2 MousePos, LMP; // Last mouse position, used for panning
+	protected Vector2 MousePos, LMP; // Last mouse position, used for panning
 
-	private Array<BIO_PerkMenuNode> NodeState;
-	private uint HoveredNode; // Defaults to `NodeState.Size()` if nothing hovered
+	protected Array<BIO_PerkMenuNode> NodeState;
+	protected uint HoveredNode; // Defaults to `NodeState.Size()` if nothing hovered
 	private uint SelectionSize; // How many perks selected for application/removal?
 
 	// Parent overrides ========================================================
 
-	final override void Init(Menu parent)
+	override void Init(Menu parent)
 	{
 		super.Init(parent);
 
@@ -93,7 +93,7 @@ class BIO_PerkMenu : GenericMenu
 		return true;
 	}
 
-	final override bool OnUIEvent(UIEvent event)
+	override bool OnUIEvent(UIEvent event)
 	{
 		int y = event.MouseY;
 		bool res = false;
@@ -109,10 +109,10 @@ class BIO_PerkMenu : GenericMenu
 				
 				MouseEvent(MOUSE_Move, event.MouseX, y);
 			}
-			MousePos.X = event.MouseX;
-			MousePos.Y = event.MouseY;
 			LMP.X = MousePos.X;
 			LMP.Y = MousePos.Y;
+			MousePos.X = event.MouseX;
+			MousePos.Y = event.MouseY;
 			UpdateNodeState();
 			break;
 		case UIEvent.Type_LButtonDown:
@@ -164,7 +164,7 @@ class BIO_PerkMenu : GenericMenu
 		return false;
 	}
 
-	final override void Drawer()
+	override void Drawer()
 	{
 		super.Drawer(); // Draw the back button
 
@@ -285,7 +285,7 @@ class BIO_PerkMenu : GenericMenu
 	// Private implementation details ==========================================
 
 	// Called whenever the mouse moves or the zoom level changes.
-	private void UpdateNodeState()
+	protected void UpdateNodeState()
 	{
 		Vector2 scrSz = (Screen.GetWidth(), Screen.GetHeight());
 
@@ -407,5 +407,58 @@ class BIO_PerkMenu : GenericMenu
 				NodeState[i].Selected = false;
 			}
 		}
+	}
+}
+
+class BIO_PerkDebugMenu : BIO_PerkMenu
+{
+	private uint AttachedNode;
+
+	final override void Init(Menu parent)
+	{
+		super.Init(parent);
+		AttachedNode = NodeState.Size();
+	}
+
+	final override void Drawer()
+	{
+		super.Drawer();
+
+		for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
+		{
+			Screen.DrawText(SmallFont, Font.CR_WHITE,
+				NodeState[i].ScreenPos.X, NodeState[i].ScreenPos.Y,
+				String.Format("%d, %d",
+					BasePerkGraph.Nodes[i].Position.X,
+					BasePerkGraph.Nodes[i].Position.Y));
+		}
+	}
+
+	final override bool OnUIEvent(UIEvent event)
+	{
+		bool ret = super.OnUIEvent(event);
+
+		switch (event.Type)
+		{
+		case UIEvent.Type_MouseMove:
+			if (AttachedNode != NodeState.Size())
+			{
+				BasePerkGraph.Nodes[AttachedNode].Position +=
+					(MousePos.X - LMP.X, MousePos.Y - LMP.Y);
+			}
+			break;
+		case UIEvent.Type_RButtonDown:
+			if (HoveredNode != NodeState.Size())
+				AttachedNode = HoveredNode;
+
+			break;
+		case UIEvent.Type_RButtonUp:
+			AttachedNode = NodeState.Size();
+			break;
+		default: break;
+		}
+
+		UpdateNodeState();
+		return ret;
 	}
 }
