@@ -10,6 +10,7 @@ class BIO_Mutagen : Inventory abstract
 	const DROPWT_REROLL = 10;
 	const DROPWT_REMOVE = 24;
 	const DROPWT_UPGRADE = 25;
+	const DROPWT_RECYCLE = 12;
 	const DROPWT_CORR = 3;
 
 	meta uint DropWeight; property DropWeight: DropWeight;
@@ -58,23 +59,7 @@ class BIO_Mutagen : Inventory abstract
 		return true;
 	}
 
-	protected void RLMDangerLevel(uint danger) const
-	{
-		// If the DoomRL Arsenal Monster Pack is loaded, use
-		// of certain mutagens increases its danger level
-		name mpt_tn = 'RLMonsterpackThingo';
-		Class<Actor> mpt_t = mpt_tn;
-
-		if (mpt_t != null)
-		{
-			if (BIO_debug && danger > 0)
-				Console.Printf(Biomorph.LOGPFX_DEBUG ..
-					"Increasing DRLA danger level by %d.", danger);
-
-			name rldl_tn = 'RLDangerLevel';
-			A_GiveInventory(rldl_tn, danger, AAPTR_PLAYER1);
-		}
-	}
+	readOnly<BIO_Mutagen> AsConst() const { return self; }
 }
 
 class BIO_Muta_Reset : BIO_Mutagen
@@ -156,7 +141,7 @@ class BIO_Muta_Add : BIO_Mutagen
 		weap.ApplyAllAffixes();
 		weap.OnWeaponChange();
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
-		RLMDangerLevel(5);
+		BIO_Utils.DRLMDangerLevel(AsConst(), 5);
 		return true;
 	}
 }
@@ -194,7 +179,7 @@ class BIO_Muta_Random : BIO_Mutagen
 		weap.RandomizeAffixes();
 		weap.OnWeaponChange();
 		Owner.A_Print("$BIO_MUTA_RANDOM_USE");
-		RLMDangerLevel(5);
+		BIO_Utils.DRLMDangerLevel(AsConst(), 5);
 		return true;
 	}
 }
@@ -257,7 +242,7 @@ class BIO_Muta_Reroll : BIO_Mutagen
 		weap.OnWeaponChange();
 
 		Owner.A_Print("$BIO_MUTA_REROLL_USE");
-		RLMDangerLevel(1);
+		BIO_Utils.DRLMDangerLevel(AsConst(), 1);
 		return true;
 	}
 }
@@ -331,6 +316,171 @@ class BIO_Muta_Upgrade : BIO_Mutagen
 	}
 }
 
+class BIO_Muta_Recycle : BIO_Mutagen
+{
+	Default
+	{
+		Tag "$BIO_MUTA_RECYCLE_TAG";
+		Inventory.Icon 'MURCA0';
+		Inventory.PickupMessage "$BIO_MUTA_RECYCLE_PKUP";
+		Inventory.UseSound "bio/muta/use/undo";
+		BIO_Mutagen.DropWeight DROPWT_RECYCLE;
+		BIO_Mutagen.WorksOnUniques true;
+	}
+
+	States
+	{
+	Spawn:
+		MURC A 6;
+		---- A 6 Bright;
+		Loop;
+	}
+
+	final override bool Use(bool pickup)
+	{
+		if (!super.Use(pickup)) return false;
+		
+		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
+		BIO_WeaponAffix afx = null;
+
+		if (weap.Rarity == BIO_RARITY_UNIQUE)
+		{
+			if (weap.NoImplicitAffixes())
+			{
+				Owner.A_Print("$BIO_MUTA_FAIL_NOIMPLICITS");
+				return false;
+			}
+
+			afx = weap.ImplicitAffixes[Random(0, weap.ImplicitAffixes.Size() - 1)];
+		}
+		else if (weap.Rarity == BIO_RARITY_MUTATED)
+		{
+			if (weap.NoExplicitAffixes())
+			{
+				Owner.A_Print("$BIO_MUTA_FAIL_NOEXPLICITS");
+				return false;
+			}
+
+			afx = weap.Affixes[Random(0, weap.Affixes.Size() - 1)];
+		}
+		else
+		{
+			Owner.A_Print("$BIO_MUTA_FAIL_COMMON");
+			return false;
+		}
+
+		let genes = BIO_RecombinantGenes(
+			Actor.Spawn('BIO_RecombinantGenes', Owner.Pos));
+
+		if (genes == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Failed to spawn recombinant gene item.");
+			return false;
+		}
+
+		genes.Affix = afx;
+		genes.AttachToOwner(Owner);
+		Owner.TakeInventory(weap.GetClass(), 1);
+		Owner.A_Print("$BIO_MUTA_RECYCLE_USE");
+		return true;
+	}
+}
+
+class BIO_RecombinantGenes : Inventory
+{
+	BIO_WeaponAffix Affix;
+
+	Default
+	{
+		-COUNTITEM
+		+DONTGIB
+		+INVENTORY.INVBAR
+		+NOBLOCKMONST
+	
+		Height 16;
+		Radius 20;
+		Tag "$BIO_RECOMBGENES_TAG";
+
+		Inventory.Icon 'RECOA0';
+		Inventory.InterHubAmount 1;
+		Inventory.MaxAmount 1;
+		Inventory.PickupMessage "$BIO_RECOMBGENES_PKUP";
+		Inventory.UseSound "bio/muta/use/general";
+	}
+
+	States
+	{
+	Spawn:
+		RECO A 6;
+		---- A 6 Bright;
+		Loop;
+	}
+
+	final override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+
+		if (Affix == null)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Recombinant genes failed to acquire an affix.");
+			return;
+		}
+
+		string newTag = Default.GetTag();
+		newTag.AppendFormat("\n\n\c[White]%s\c-", Affix.GetTag());
+		SetTag(newTag);
+	}
+
+	// Prevent pickups from being folded together.
+	final override bool HandlePickup(Inventory item) { return false; }
+
+	final override bool Use(bool pickup)
+	{
+		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
+
+		if (weap == null)
+		{
+			Owner.A_Print("$BIO_MUTA_FAIL_NULLWEAP", 4.0);
+			return false;
+		}
+
+		if (weap.BIOFlags & BIO_WF_CORRUPTED)
+		{
+			Owner.A_Print("$BIO_MUTA_FAIL_CORRUPTED");
+			return false;
+		}
+
+		if (weap.Rarity == BIO_RARITY_UNIQUE)
+		{
+			Owner.A_Print("$BIO_MUTA_FAIL_UNIQUE", 4.0);
+			return false;
+		}
+
+		if (weap.FullOnAffixes())
+		{
+			Owner.A_Print("$BIO_MUTA_FAIL_MAXAFFIXES");
+			return false;
+		}
+
+		if (!Affix.Compatible(weap.AsConst()))
+		{
+			Owner.A_Print("$BIO_RECOMBGENES_FAIL_INCOMPAT", 5.0);
+			return false;
+		}
+		
+		uint e = weap.Affixes.Push(Affix);
+		weap.Affixes[e].Apply(weap);
+		weap.OnWeaponChange();
+		BIO_Utils.DRLMDangerLevel(AsConst(), 10);
+		Owner.A_Print("$BIO_MUTA_ADD_USE");
+		return true;
+	}
+
+	readOnly<BIO_RecombinantGenes> AsConst() const { return self; }
+}
+
 class BIO_Muta_Corrupting : BIO_Mutagen
 {
 	Default
@@ -386,7 +536,7 @@ class BIO_Muta_Corrupting : BIO_Mutagen
 		weap.ApplyExplicitAffixes();
 		weap.BIOFlags |= BIO_WF_CORRUPTED;
 		weap.OnWeaponChange();
-		RLMDangerLevel(25);
+		BIO_Utils.DRLMDangerLevel(AsConst(), 25);
 		return true;
 	}
 }

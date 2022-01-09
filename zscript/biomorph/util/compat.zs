@@ -77,6 +77,24 @@ extend class BIO_Utils
 		return a.CheckInventory(t, amt, owner);
 	}
 
+	static play void DRLMDangerLevel(readOnly<Actor> dummy, uint danger)
+	{
+		// If the DoomRL Arsenal Monster Pack is loaded, use
+		// of certain mutagens increases its danger level
+		name mpt_tn = 'RLMonsterpackThingo';
+		Class<Actor> mpt_t = mpt_tn;
+	
+		if (mpt_t != null)
+		{
+			if (BIO_debug && danger > 0)
+				Console.Printf(Biomorph.LOGPFX_DEBUG ..
+					"Increasing DRLA danger level by %d.", danger);
+
+			name rldl_tn = 'RLDangerLevel';
+			dummy.A_GiveInventory(rldl_tn, danger, AAPTR_PLAYER1);
+		}
+	}
+
 	// Checks if the player is in a level from Valiant, its Vaccinated Edition,
 	// or the Valiant levels bundled with the Sentinel's Lexicon.
 	static bool Valiant()

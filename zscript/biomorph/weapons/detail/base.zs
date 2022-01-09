@@ -425,7 +425,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	final override void AttachToOwner(Actor newOwner)
 	{
-		if (!PreviouslyPickedUp) RLMDangerLevel();
+		if (!PreviouslyPickedUp) DRLMDangerLevel();
 		PreviouslyPickedUp = true;
 
 		int 

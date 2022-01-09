@@ -211,6 +211,9 @@
 	BIO_MUTA_FAIL_UNIQUE = "This weapon is unique; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_MAXAFFIXES = "This weapon has evolved to its limits; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_MAX0 = "This weapon cannot have any affixes; it can't be mutated in this way.";
+	BIO_MUTA_FAIL_NOIMPLICITS = "This weapon has no implicit affixes; it can't be recycled.";	
+	BIO_MUTA_FAIL_NOEXPLICITS = "This weapon has no explicit affixes; it can't be recycled.";
+	BIO_MUTA_FAIL_COMMON = "This weapon isn't mutated or unique; it can't be recycled.";
 	BIO_MUTA_FAIL_NOAFFIXES = "This weapon has no affixes; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_NOCOMPATIBLEAFFIXES = "No affixes are compatible with this weapon; it can't be mutated in this way.";
 	BIO_MUTA_FAIL_NOREROLLSUPPORT = "None of this weapon's affixes can be rerolled; it can't be mutated in this way.";
@@ -249,6 +252,16 @@
 	BIO_WUP_UIHELP_1 = "Press %s to confirm or %s to cancel.";
 	BIO_WUP_UICOST = "Requires \cj%d\c- sample of \c[Green]E.V.O. mutagen\c-.";
 	BIO_WUP_UICOST_PLURAL = "Requires \cj%d\c- samples of \c[Green]E.V.O. mutagen\c-.";
+
+	BIO_MUTA_RECYCLE_TAG = "\c[Gold]R.E.C.Y.C.L.E. Mutagen";
+	BIO_MUTA_RECYCLE_PKUP = "Acquired a sample of \c[Gold]R.E.C.Y.C.L.E. Mutagen\c-.";
+	BIO_MUTA_RECYCLE_USE = "\c[Gold]Your weapon melts away, leaving a rich genetic sludge.";
+
+	BIO_RECOMBGENES_TAG = "Recombinant Genes";
+	BIO_RECOMBGENES_PKUP = "Acquired a sample of recombinant genes.";
+	BIO_RECOMBGENES_FAIL_INCOMPAT =
+		"The recombinant genetic sludge violently rejects this weapon.\n"
+		"Maybe try a different one?";
 
 	BIO_MUTA_CORRUPT_TAG = "\c[DarkRed]R.O.T.\c[White] Mutagen\c-";
 	BIO_MUTA_CORRUPT_PKUP = "Acquired a sample of \c[DarkRed]R.O.T. Mutagen\c-.";
