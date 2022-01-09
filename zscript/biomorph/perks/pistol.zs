@@ -18,6 +18,7 @@ class BIO_WeapFunc_ScaledPistolDamage : BIO_WeaponFunctor
 		if (weap == null) return;
 		if (!(weap.BIOFlags & BIO_WF_PISTOL)) return;
 
-		fireData.Damage *= (weap.LastFireTime() * 0.125);
+		for (uint i = 0; i < Count; i++)
+			fireData.Damage *= (weap.LastFireTime() * 0.125);
 	}
 }

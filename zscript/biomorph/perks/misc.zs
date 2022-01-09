@@ -14,13 +14,16 @@ class BIO_PkupFunc_BonusCrossover : BIO_ItemPickupFunctor
 		Inventory item) const
 	{
 		if (item.GetClass() != 'BIO_HealthBonus') return;
-		BIO_ArmorBonus.TryRepairArmor(bioPlayer);
+
+		for (uint i = 0; i < Count; i++)
+			BIO_ArmorBonus.TryRepairArmor(bioPlayer);
 	}
 
 	final override void OnArmorBonusPickup(BIO_Player bioPlayer,
 		BIO_ArmorBonus bonus) const
 	{
-		bioPlayer.GiveBody(1, bioPlayer.GetMaxHealth(true) + 100);
+		for (uint i = 0; i < Count; i++)
+			bioPlayer.GiveBody(1, bioPlayer.GetMaxHealth(true) + 100);
 	}
 }
 

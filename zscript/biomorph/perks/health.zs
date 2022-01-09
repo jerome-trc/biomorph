@@ -13,7 +13,9 @@ class BIO_PkupFunc_HealthBonusX2 : BIO_ItemPickupFunctor
 	final override void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const
 	{
 		if (item.GetClass() != 'BIO_HealthBonus') return;
-		bioPlayer.GiveBody(1, bioPlayer.GetMaxHealth(true) + 100);
+
+		for (uint i = 0; i < Count; i++)
+			bioPlayer.GiveBody(1, bioPlayer.GetMaxHealth(true) + 100);
 	}
 }
 

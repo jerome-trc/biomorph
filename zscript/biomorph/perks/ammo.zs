@@ -53,7 +53,11 @@ class BIO_PkupFunc_LargeAmmoBonus : BIO_ItemPickupFunctor
 		// Hopelessly un-sophisticated (but still dynamic) check
 		if (ammoItem.Default.Amount > ammoItem.Default.BackpackAmount)
 		{
-			bioPlayer.GiveInventory(ammoItem.GetClass(), ammoItem.Default.BackpackAmount);
+			for (uint i = 0; i < Count; i++)
+			{
+				bioPlayer.GiveInventory(ammoItem.GetClass(),
+					ammoItem.Default.BackpackAmount);
+			}
 		}
 	}
 }
@@ -79,7 +83,9 @@ class BIO_PkupFunc_AdditiveBackpacks : BIO_ItemPickupFunctor
 			let ammo_t = BIO_Backpack.DOOM_AMMO_TYPES[i];
 			let defs = GetDefaultByType(ammo_t);
 			let ammoItem = bioPlayer.FindInventory(ammo_t);
-			ammoItem.MaxAmount += defs.BackpackAmount;
+
+			for (uint i = 0; i < Count; i++)
+				ammoItem.MaxAmount += defs.BackpackAmount;
 		}
 	}
 }
