@@ -390,6 +390,13 @@ extend class BIO_GlobalData
 					continue;
 				}
 
+				if (strID ~== BIO_Utils.StringFromJson(perk.get("uuid")))
+				{
+					Console.Printf(errpfx ..
+						"illegal self-reference by node `%s`.", strID);
+					continue;
+				}
+
 				// `stringIDs` and `BasePerkGraph.Nodes` are parallel,
 				// so `k` is a node index/UUID here
 				for (uint k = 0; k < stringIDs.Size(); k++)
