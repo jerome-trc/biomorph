@@ -35,37 +35,24 @@ mixin class BIO_Gear
 
 	private bool HitGround, PreviouslyPickedUp;
 
-	void RLMDangerLevel() const
+	void DRLMDangerLevel() const
 	{
-		// If the DoomRL Arsenal Monster Pack is loaded, rare 
-		// gear pickups increase its danger level
-		name mpt_tn = 'RLMonsterpackThingo';
-		Class<Actor> mpt_t = mpt_tn;
+		uint danger = 0;
 
-		if (mpt_t != null)
+		switch (Rarity)
 		{
-			uint danger = 0;
-
-			switch (Rarity)
-			{
-			case BIO_RARITY_MUTATED: danger += 25; break;
-			case BIO_RARITY_UNIQUE: danger += 50; break;
-			default: break;
-			}
-
-			switch (Grade)
-			{
-			case BIO_GRADE_SPECIALTY: danger += 10; break;
-			case BIO_GRADE_CLASSIFIED: danger += 20; break;
-			default: break;
-			}
-
-			if (BIO_debug && danger > 0)
-				Console.Printf(Biomorph.LOGPFX_DEBUG ..
-					"Increasing DRLA danger level by %d.", danger);
-
-			name rldl_tn = 'RLDangerLevel';
-			A_GiveInventory(rldl_tn, danger, AAPTR_PLAYER1);
+		case BIO_RARITY_MUTATED: danger += 25; break;
+		case BIO_RARITY_UNIQUE: danger += 50; break;
+		default: break;
 		}
+
+		switch (Grade)
+		{
+		case BIO_GRADE_SPECIALTY: danger += 10; break;
+		case BIO_GRADE_CLASSIFIED: danger += 20; break;
+		default: break;
+		}
+
+		BIO_Utils.DRLMDangerLevel(self, danger);
 	}
 }
