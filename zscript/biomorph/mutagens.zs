@@ -588,28 +588,31 @@ class BIO_CorrFunc_RandomizeHide : BIO_CorruptionFunctor
 // Add either one or two implicit affixes.
 class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
 {
-	Array<BIO_WeaponAffix> Eligibles;
+	Array<Class<BIO_WeaponAffix> > Eligibles;
 
 	final override void Invoke(BIO_Weapon weap) const
 	{
 		if (Eligibles.Size() == 1)
 		{
 			uint r = Random[BIO_Afx](0, Eligibles.Size() - 1);
-			uint e = weap.ImplicitAffixes.Push(Eligibles[r]);
+			let afx = BIO_WeaponAffix(new(Eligibles[r]));
+			uint e = weap.ImplicitAffixes.Push(afx);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
 			weap.ImplicitAffixes[e].Apply(weap);
 		}
 		else
 		{
 			uint r = Random[BIO_Afx](0, Eligibles.Size() - 1);
-			uint e = weap.ImplicitAffixes.Push(Eligibles[r]);
+			let afx1 = BIO_WeaponAffix(new(Eligibles[r]));
+			uint e = weap.ImplicitAffixes.Push(afx1);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
 			weap.ImplicitAffixes[e].Apply(weap);
 
 			Eligibles.Delete(r);
 
 			r = Random[BIO_Afx](0, Eligibles.Size() - 1);
-			e = weap.ImplicitAffixes.Push(Eligibles[r]);
+			let afx2 = BIO_WeaponAffix(new(Eligibles[r]));
+			e = weap.ImplicitAffixes.Push(afx2);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
 			weap.ImplicitAffixes[e].Apply(weap);
 		}
