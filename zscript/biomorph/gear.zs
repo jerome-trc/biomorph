@@ -35,6 +35,10 @@ mixin class BIO_Gear
 
 	private bool HitGround, PreviouslyPickedUp;
 
+	bool NoImplicitAffixes() const { return ImplicitAffixes.Size() < 1; }
+	bool NoExplicitAffixes() const { return Affixes.Size() < 1; }
+	bool NoAffixes() const { return NoImplicitAffixes() && NoExplicitAffixes(); }
+
 	void DRLMDangerLevel() const
 	{
 		uint danger = 0;

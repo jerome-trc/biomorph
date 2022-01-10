@@ -118,6 +118,21 @@ class BIO_WeightedRandomTable
 		return null;
 	}
 
+	void FromArray(
+		in out Array<Class<Object> > arr, in out Array<uint> weights)
+	{
+		if (arr.Size() != weights.Size())
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"WeightedRandomTable::FromArray() received unequal-sized "
+				"parallel arrays.");
+			return;
+		}
+
+		for (uint i = 0; i < arr.Size(); i++)
+			Push(arr[i], weights[i]);
+	}
+
 	void RemoveByType(Class<Object> type)
 	{
 		for (uint i = Entries.Size() - 1; i >= 0; i--)

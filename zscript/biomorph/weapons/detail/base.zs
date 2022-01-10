@@ -959,9 +959,8 @@ class BIO_Weapon : DoomWeapon abstract
 		return ret;
 	}
 
-	bool NoImplicitAffixes() const { return ImplicitAffixes.Size() < 1; }
-	bool NoExplicitAffixes() const { return Affixes.Size() < 1; }
-	bool NoAffixes() const { return NoImplicitAffixes() && NoExplicitAffixes(); }
+	// See biomorph/gear.zs for more affix checking functions
+
 	bool FullOnAffixes() const { return Affixes.Size() >= MaxAffixes; }
 
 	bool HasAffixOfType(Class<BIO_WeaponAffix> t, bool implicit = false) const
@@ -1248,12 +1247,13 @@ class BIO_Weapon : DoomWeapon abstract
 	// Returns `false` if there are no compatible affixes to add.
 	bool AddRandomAffix()
 	{
-		Array<BIO_WeaponAffix> eligibles;
+		Array<Class<BIO_WeaponAffix> > eligibles;
 
 		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, AsConst()))
 			return false;
 
-		uint e = Affixes.Push(eligibles[Random[BIO_Afx](0, eligibles.Size() - 1)]);
+		uint r = Random[BIO_Afx](0, eligibles.Size() - 1);
+		uint e = Affixes.Push(BIO_WeaponAffix(new(eligibles[r])));
 		Affixes[e].Init(AsConst());
 		return true;
 	}
@@ -1276,10 +1276,26 @@ class BIO_Weapon : DoomWeapon abstract
 		uint c = Random[BIO_Afx](fl, MaxAffixes);
 		c = Random[BIO_Afx](fl, c);
 
+		let globals = BIO_GlobalData.Get();
+		Array<Class<BIO_WeaponAffix> > eligibles;
+		globals.AllEligibleWeaponAffixes(eligibles, AsConst());
+
 		for (uint i = 0; i < c; i++)
 		{
-			if (AddRandomAffix())
-				Affixes[Affixes.Size() - 1].Apply(self);
+			if (eligibles.Size() < 1)
+				break;
+
+			for (uint j = eligibles.Size() - 1; j >= 0; j--)
+			{
+				if (!globals.WeaponAffixCompatible(eligibles[j], AsConst()))
+					eligibles.Delete(j);
+			}
+
+			uint r = Random[BIO_Afx](0, eligibles.Size() - 1);
+			let afx = BIO_WeaponAffix(new(eligibles[r]));
+			afx.Init(AsConst());
+			Affixes.Push(afx);
+			afx.Apply(self);
 		}
 	}
 

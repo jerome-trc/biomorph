@@ -239,13 +239,25 @@ class BIO_Armor : BIO_Equipment abstract
 		default: return;
 		}
 
+		let globals = BIO_GlobalData.Get();
+		Array<Class<BIO_EquipmentAffix> > eligibles;
+		globals.AllEligibleEquipmentAffixes(eligibles, AsConst());
+
 		for (uint i = 0; i < c; i++)
 		{
-			Array<BIO_EquipmentAffix> eligibles;
-			BIO_GlobalData.Get().AllEligibleEquipmentAffixes(eligibles, AsConst());
-			if (eligibles.Size() < 1) continue;
-			uint e = Affixes.Push(eligibles[Random(0, eligibles.Size() - 1)]);
-			Affixes[e].Init(AsConst());
+			if (eligibles.Size() < 1)
+				break;
+			
+			for (uint j = eligibles.Size() - 1; j >= 0; j--)
+			{
+				if (!globals.EquipmentAffixCompatible(eligibles[j], AsConst()))
+					eligibles.Delete(j);
+			}
+
+			uint r = Random[BIO_Afx](0, eligibles.Size() - 1);
+			let afx = BIO_EquipmentAffix(new(eligibles[r]));
+			afx.Init(AsConst());
+			Affixes.Push(afx);
 		}
 
 		let statDefs = GetDefaultByType(StatClass);
