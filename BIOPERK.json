@@ -44,6 +44,26 @@
 			"neighbors": [ "bio_maxbonushealth_1" ]
 		},
 		{
+			"uuid": "bio_betterstimpacks",
+			"class": "BIO_Perk_BetterStimpacks",
+			"x": 200,
+			"y": 200,
+			"tag": "$BIO_PERK_BETTERSTIMPACKS_TAG",
+			"desc": "$BIO_PERK_BETTERSTIMPACKS_DESC",
+			"icon": "STIMA0",
+			"category": "major"
+		},
+		{
+			"uuid": "bio_bettermedkits",
+			"class": "BIO_Perk_BetterMedikits",
+			"x": 200,
+			"y": 260,
+			"tag": "$BIO_PERK_BETTERMEDIKITS_TAG",
+			"desc": "$BIO_PERK_BETTERMEDIKITS_DESC",
+			"icon": "MEDIA0",
+			"category": "major"
+		},
+		{
 			"uuid": "bio_clipcapacity",
 			"class": "BIO_Perk_ClipCapacity_Minor",
 			"x": 0,

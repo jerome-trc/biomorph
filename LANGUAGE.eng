@@ -451,6 +451,16 @@
 	BIO_PERK_HEALTHBONUSX2_DESC =
 		"\c[Green]Health Bonuses have double their normal effect";
 
+	BIO_PERK_BETTERSTIMPACKS_TAG =
+		"\c[White]Alpha/Beta Enhancers";
+	BIO_PERK_BETTERSTIMPACKS_DESC =
+		"\c[Green]10% improved effect of Stimpacks";
+
+	BIO_PERK_BETTERMEDIKITS_TAG =
+		"\c[White]Resourceful First-Aid";
+	BIO_PERK_BETTERMEDIKITS_DESC =
+		"\c[Green]10% improved effect of Medikits";
+
 	BIO_PERK_CLIPCAPACITY_MINOR_TAG =
 		"\c[White]Packrat";
 	BIO_PERK_CLIPCAPACITY_MINOR_DESC =
