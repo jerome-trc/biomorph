@@ -79,8 +79,6 @@ extend class BIO_Utils
 
 	static play void DRLMDangerLevel(readOnly<Actor> dummy, uint danger)
 	{
-		// If the DoomRL Arsenal Monster Pack is loaded, use
-		// of certain mutagens increases its danger level
 		name mpt_tn = 'RLMonsterpackThingo';
 		Class<Actor> mpt_t = mpt_tn;
 	

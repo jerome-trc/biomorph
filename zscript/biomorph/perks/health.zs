@@ -19,9 +19,9 @@ class BIO_PkupFunc_HealthBonusX2 : BIO_ItemPickupFunctor
 	}
 }
 
-// `BonusHealth` increases (all minor nodes) ===================================
+// `BonusHealth` increases =====================================================
 
-class BIO_Perk_MaxBonusHealth : BIO_Perk
+class BIO_Perk_MaxBonusHealth_Minor : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{

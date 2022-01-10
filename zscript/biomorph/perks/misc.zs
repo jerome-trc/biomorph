@@ -55,7 +55,7 @@ class BIO_Perk_DontThrust : BIO_Perk
 	}
 }
 
-class BIO_Perk_SlimeResistMinor : BIO_Perk
+class BIO_Perk_SlimeResist_Minor : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
@@ -63,7 +63,7 @@ class BIO_Perk_SlimeResistMinor : BIO_Perk
 	}
 }
 
-class BIO_Perk_SlimeResistMajor : BIO_Perk
+class BIO_Perk_SlimeResist_Major : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
