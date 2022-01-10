@@ -2,7 +2,7 @@
 	"templates": [
 		{
 			"id": "bio_maxbonushealth_minor",
-			"class": "BIO_Perk_MaxBonusHealth",
+			"class": "BIO_Perk_MaxBonusHealth_Minor",
 			"tag": "$BIO_PERK_MAXBONUSHEALTH_MINOR_TAG",
 			"desc": "$BIO_PERK_MAXBONUSHEALTH_MINOR_DESC",
 			"icon": "BON1A0",
@@ -10,7 +10,7 @@
 		},
 		{
 			"id": "bio_slimeresist_minor",
-			"class": "BIO_Perk_SlimeResistMinor",
+			"class": "BIO_Perk_SlimeResist_Minor",
 			"tag": "$BIO_PERK_SLIMERESIST_MINOR_TAG",
 			"desc": "$BIO_PERK_SLIMERESIST_MINOR_DESC",
 			"icon": "SUITX0",
@@ -45,7 +45,7 @@
 		},
 		{
 			"uuid": "bio_clipcapacity",
-			"class": "BIO_Perk_ClipCapacityMinor",
+			"class": "BIO_Perk_ClipCapacity_Minor",
 			"x": 0,
 			"y": 60,
 			"tag": "$BIO_PERK_CLIPCAPACITY_MINOR_TAG",
@@ -56,7 +56,7 @@
 		},
 		{
 			"uuid": "bio_shellcapacity",
-			"class": "BIO_Perk_ShellCapacityMinor",
+			"class": "BIO_Perk_ShellCapacity_Minor",
 			"x": 30,
 			"y": 120,
 			"tag": "$BIO_PERK_SHELLCAPACITY_MINOR_TAG",
@@ -67,7 +67,7 @@
 		},
 		{
 			"uuid": "bio_rocketammocapacity",
-			"class": "BIO_Perk_RocketAmmoCapacityMinor",
+			"class": "BIO_Perk_RocketAmmoCapacity_Minor",
 			"x": -30,
 			"y": 120,
 			"tag": "$BIO_PERK_ROCKETAMMOCAPACITY_MINOR_TAG",
@@ -78,7 +78,7 @@
 		},
 		{
 			"uuid": "bio_cellcapacity",
-			"class": "BIO_Perk_CellCapacityMinor",
+			"class": "BIO_Perk_CellCapacity_Minor",
 			"x": 0,
 			"y": 180,
 			"tag": "$BIO_PERK_CELLCAPACITY_MINOR_TAG",
@@ -176,7 +176,7 @@
 		},
 		{
 			"uuid": "bio_slimeresist_major",
-			"class": "BIO_Perk_SlimeResistMajor",
+			"class": "BIO_Perk_SlimeResist_Major",
 			"x": 240,
 			"y": 0,
 			"tag": "$BIO_PERK_SLIMERESIST_MAJOR_TAG",

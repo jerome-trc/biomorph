@@ -1,6 +1,6 @@
 // More duration from any supported powerup ====================================
 
-class BIO_Perk_PowerupDurationMinor : BIO_Perk
+class BIO_Perk_PowerupDuration_Minor : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
@@ -8,7 +8,7 @@ class BIO_Perk_PowerupDurationMinor : BIO_Perk
 	}
 }
 
-class BIO_Perk_PowerupDurationMajor : BIO_Perk
+class BIO_Perk_PowerupDuration_Major : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{

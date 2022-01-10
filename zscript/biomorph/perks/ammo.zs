@@ -1,4 +1,4 @@
-class BIO_Perk_ClipCapacityMinor : BIO_Perk
+class BIO_Perk_ClipCapacity_Minor : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
@@ -7,7 +7,7 @@ class BIO_Perk_ClipCapacityMinor : BIO_Perk
 	}
 }
 
-class BIO_Perk_ShellCapacityMinor : BIO_Perk
+class BIO_Perk_ShellCapacity_Minor : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
@@ -16,7 +16,7 @@ class BIO_Perk_ShellCapacityMinor : BIO_Perk
 	}
 }
 
-class BIO_Perk_RocketAmmoCapacityMinor : BIO_Perk
+class BIO_Perk_RocketAmmoCapacity_Minor : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
@@ -25,7 +25,7 @@ class BIO_Perk_RocketAmmoCapacityMinor : BIO_Perk
 	}
 }
 
-class BIO_Perk_CellCapacityMinor : BIO_Perk
+class BIO_Perk_CellCapacity_Minor : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
