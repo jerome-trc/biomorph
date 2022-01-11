@@ -309,8 +309,8 @@
 	BIO_WAFX_CRIT_TAG = "Express Rounds";
 	BIO_WAFX_CRIT_TOSTR = "%d%% chance of %s%s%.0f%% damage";
 	
-	BIO_WAFX_SPLASHFORDAMAGE_TAG = "Sabot";
-	BIO_WAFX_SPLASHFORDAMAGE_TOSTR = "All splash damage converted into direct hit damage";
+	BIO_WAFX_SPLASHTODAMAGE_TAG = "Sabot";
+	BIO_WAFX_SPLASHTODAMAGE_TOSTR = "All splash damage converted into direct hit damage";
 	
 	BIO_WAFX_FORWARDDAMAGE_TAG = "Vanguard";
 	BIO_WAFX_FORWARDDAMAGE_TOSTR = "%s%.1f%% %s damage when moving forward";
