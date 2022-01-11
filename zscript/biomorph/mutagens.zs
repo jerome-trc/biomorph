@@ -94,7 +94,6 @@ class BIO_Muta_Reset : BIO_Mutagen
 
 		weap.ResetStats();
 		weap.ClearAffixes();
-		weap.ApplyImplicitAffixes();
 		weap.OnWeaponChange();
 		Owner.A_Print("$BIO_MUTA_RESET_USE");
 		return true;
