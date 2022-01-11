@@ -572,6 +572,9 @@ class BIO_WAfx_DamageForAmmoUse : BIO_WeaponAffix
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
+			if (!weap.Pipelines[i].DealsAnyDamage())
+				continue;
+
 			if (!weap.Pipelines[i].UsesSecondaryAmmo() &&
 				weap.ShotsPerMagazine(false) > 1)
 				return true;
