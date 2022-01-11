@@ -1,3 +1,5 @@
+// Weapon pickups
+
 pointlight BIO_MutatedLoot
 {
 	color 0.0 1.0 1.0
@@ -8,6 +10,62 @@ pointlight BIO_UniqueLoot
 {
 	color 1.0 0.5 0.0
 	size 30
+}
+
+// Mutagen and recombinant gene pickups
+
+pointlight BIO_Muta_Reset
+{
+	color 1.0 1.0 1.0
+	size 24
+}
+
+pointlight BIO_Muta_Add
+{
+	color 0.67 0.67 1.0
+	size 24
+}
+
+pointlight BIO_Muta_Random
+{
+	color 1.0 0.48 1.0
+	size 24
+}
+
+pointlight BIO_Muta_Reroll
+{
+	color 1.0 0.63 0.65
+	size 24
+}
+
+pointlight BIO_Muta_Remove
+{
+	color 0.74 0.65 0.56
+	size 24
+}
+
+pointlight BIO_Muta_Upgrade
+{
+	color 0.46 1.0 0.43
+	size 24
+}
+
+pointlight BIO_Muta_Recycle
+{
+	color 1.0 1.0 0.45
+	size 24
+}
+
+pointlight BIO_RecombinantGenes
+{
+	color 0.37 0.81 0.34
+	size 20
+}
+
+pointlight BIO_Muta_Corrupting
+{
+	color 1.0 0.0 0.0
+	size 24
 }
 
 // Electric puff

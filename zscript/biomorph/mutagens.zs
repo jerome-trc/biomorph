@@ -77,7 +77,7 @@ class BIO_Muta_Reset : BIO_Mutagen
 	{
 	Spawn:
 		MURE A 6;
-		---- A 6 Bright;
+		---- A 6 Bright Light("BIO_Muta_Reset");
 		Loop;
 	}
 
@@ -116,7 +116,7 @@ class BIO_Muta_Add : BIO_Mutagen
 	{
 	Spawn:
 		MUAD A 6;
-		---- A 6 Bright;
+		---- A 6 Bright Light("BIO_Muta_Add");
 		Loop;
 	}
 
@@ -161,7 +161,7 @@ class BIO_Muta_Random : BIO_Mutagen
 	{
 	Spawn:
 		MURA A 6;
-		---- A 6 Bright;
+		---- A 6 Bright Light("BIO_Muta_Random");
 		Loop;
 	}
 
@@ -201,7 +201,7 @@ class BIO_Muta_Reroll : BIO_Mutagen
 	{
 	Spawn:
 		MURR A 6;
-		---- A 6 Bright;
+		---- A 6 Bright Light("BIO_Muta_Reroll");
 		Loop;
 	}
 
@@ -263,7 +263,7 @@ class BIO_Muta_Remove : BIO_Mutagen
 	{
 	Spawn:
 		MURM A 6;
-		---- A 6 Bright;
+		---- A 6 Bright Light("BIO_Muta_Remove");
 		Loop;
 	}
 
@@ -303,7 +303,7 @@ class BIO_Muta_Upgrade : BIO_Mutagen
 	{
 	Spawn:
 		MUUP A 6;
-		---- A 6 Bright;
+		---- A 6 Bright Light("BIO_Muta_Upgrade");
 		Loop;
 	}
 
@@ -332,7 +332,7 @@ class BIO_Muta_Recycle : BIO_Mutagen
 	{
 	Spawn:
 		MURC A 6;
-		---- A 6 Bright;
+		---- A 6 Bright Light("BIO_Muta_Recycle");
 		Loop;
 	}
 
@@ -414,7 +414,7 @@ class BIO_RecombinantGenes : Inventory
 	{
 	Spawn:
 		RECO A 6;
-		---- A 6 Bright;
+		---- A 6 Bright Light("BIO_RecombinantGenes");
 		Loop;
 	}
 
@@ -506,7 +506,7 @@ class BIO_Muta_Corrupting : BIO_Mutagen
 	{
 	Spawn:
 		MUCO A 6;
-		---- A 6 Bright;
+		---- A 6 Bright Light("BIO_Muta_Corrupting");
 		Loop;
 	}
 
