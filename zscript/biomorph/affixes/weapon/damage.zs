@@ -30,7 +30,7 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 			int
 				minRand = int(Ceil(float(vals[0]) * 0.4)),
 				maxRand = int(Ceil(float(vals[0]) * 1.6));
-			Modifiers.Push(Random[BIO_Afx](minRand, maxRand));
+			Modifiers.Push(Max(0, Random[BIO_Afx](minRand, maxRand)));
 		}
 	}
 
