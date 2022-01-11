@@ -18,6 +18,9 @@ class BIO_Player : DoomPlayer
 
 	BIO_PlayerVisual WeaponVisual;
 
+	BIO_Weapon ExaminedWeapon;
+	private uint16 ExamineTimer;
+
 	Default
 	{
 		Species 'Player';
@@ -57,6 +60,17 @@ class BIO_Player : DoomPlayer
 			TakeInventory('BIO_Pistol', 1);
 			GiveInventory('BIO_EviternityPistol', 1);
 			A_SelectWeapon('BIO_EviternityPistol');
+		}
+	}
+
+	override void Tick()
+	{
+		super.Tick();
+
+		if (ExaminedWeapon != null && --ExamineTimer <= 0)
+		{
+			ExaminedWeapon = null;
+			ExamineTimer = 0;
 		}
 	}
 
@@ -571,5 +585,14 @@ class BIO_Player : DoomPlayer
 				func_t.GetClassName(), GetTag());
 			return;
 		}
+	}
+
+	// Miscellaneous ===========================================================
+
+	void ExamineWeapon(BIO_Weapon weap, uint upTime)
+	{
+		ExaminedWeapon = weap;
+		ExamineTimer = upTime;
+		A_StartSound("bio/ui/beep", attenuation: 1.2);
 	}
 }

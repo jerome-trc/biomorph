@@ -9,6 +9,7 @@ class BIO_StatusBar : BaseStatusBar
 	private string PerkPointString, PerkPointPluralString;
 
 	const WEAPINFO_X = -22; // Leave room for keys at top-right corner
+	const WEAPINFO_EXAMINE_X = -WEAPINFO_X;
 	const ARMORINFO_X = 4;
 
 	final override void Init()
@@ -33,13 +34,20 @@ class BIO_StatusBar : BaseStatusBar
 		NotifyLineCount = CVar.GetCvar("con_notifylines");
 	}
 
+	final override void AttachToPlayer(PlayerInfo player)
+	{
+		super.AttachToPlayer(player);
+
+		let globals = BIO_GlobalData.Get();
+
+		if (globals != null)
+			PerkGraph = globals.GetPerkGraph(CPlayer);
+	}
+
 	final override void Draw(int state, double ticFrac)
 	{
 		super.Draw(state, ticFrac);
 		BeginHUD();
-
-		if (PerkGraph == null)
-			PerkGraph = BIO_GlobalData.Get().GetPerkGraph(CPlayer);
 
 		Vector2 iconbox = (40, 20);
 
@@ -100,11 +108,24 @@ class BIO_StatusBar : BaseStatusBar
 		}
 
 		int invY = -20;
-		DrawWeaponAndAmmoDetails(invY);
+		DrawAmmoDetails(invY);
 
-		// Held weapon/equipment counts vs. maximums
+		if (!isInventoryBarVisible() && !Level.NoInventoryBar && CPlayer.MO.InvSel != null)
+		{
+			DrawInventoryIcon(CPlayer.MO.InvSel, (-22, invY + 12));
+			DrawString(Font_HUD, FormatNumber(CPlayer.MO.InvSel.Amount, 3),
+				(-40, invY - 10), DI_TEXT_ALIGN_RIGHT);
+			
+			invY -= 40;
+		}
 
 		let bioPlayer = BIO_Player(CPlayer.MO);
+		DrawWeaponDetails(BIO_Weapon(CPlayer.ReadyWeapon), false);
+
+		if (bioPlayer.ExaminedWeapon != null)
+			DrawWeaponDetails(bioPlayer.ExaminedWeapon, true);
+
+		// Held weapon/equipment counts vs. maximums
 
 		let hwc = bioPlayer.HeldWeaponCount();
 
@@ -185,7 +206,7 @@ class BIO_StatusBar : BaseStatusBar
 		}
 	}
 
-	private void DrawWeaponAndAmmoDetails(in out int invY) const
+	private void DrawAmmoDetails(in out int invY) const
 	{
 		BIO_Weapon weap = BIO_Weapon(CPlayer.ReadyWeapon);
 		if (weap == null) return;
@@ -225,7 +246,7 @@ class BIO_StatusBar : BaseStatusBar
 			
 			invY -= 20;
 		}
-		
+
 		if (ammoItem2 != null && ammoItem2 != ammoItem1)
 		{
 			DrawInventoryIcon(ammoItem2, (-14, -24));
@@ -256,34 +277,45 @@ class BIO_StatusBar : BaseStatusBar
 
 			invY -= 20;
 		}
+	}
 
-		if (!isInventoryBarVisible() && !Level.NoInventoryBar && CPlayer.MO.InvSel != null)
+	private void DrawWeaponDetails(BIO_Weapon weap, bool leftSide) const
+	{
+		if (weap == null) return;
+
+		int align, xPos;
+
+		if (!leftSide)
 		{
-			DrawInventoryIcon(CPlayer.MO.InvSel, (-22, invY + 12));
-			DrawString(Font_HUD, FormatNumber(CPlayer.MO.InvSel.Amount, 3),
-				(-40, invY - 10), DI_TEXT_ALIGN_RIGHT);
-			
-			invY -= 40;
+			align = DI_TEXT_ALIGN_RIGHT;
+			xPos = WEAPINFO_X;
+		}
+		else
+		{
+			align = DI_TEXT_ALIGN_LEFT;
+			xPos = WEAPINFO_EXAMINE_X;
 		}
 
 		// Leave room for automap timers
 		int weapInfoY = 18;
 
-		DrawInventoryIcon(weap, (WEAPINFO_X, weapInfoY),
-			DI_SCREEN_RIGHT_TOP | DI_ITEM_RIGHT_TOP);
+		DrawInventoryIcon(weap, (xPos, weapInfoY),
+			!leftSide ?
+				DI_SCREEN_RIGHT_TOP | DI_ITEM_RIGHT_TOP :
+				DI_SCREEN_LEFT_TOP | DI_ITEM_LEFT_TOP);
 
 		weapInfoY += 32;
 
-		DrawString(Font_Small, weap.GetTag(), (WEAPINFO_X, weapInfoY),
-			DI_TEXT_ALIGN_RIGHT, BIO_Utils.RarityFontColor(weap.Rarity));
+		DrawString(Font_Small, weap.GetTag(), (xPos, weapInfoY),
+			align, BIO_Utils.RarityFontColor(weap.Rarity));
 
 		// Blank line between weapon's tag and its stats
 		weapInfoY += 16;
 
 		for (uint i = 0; i < weap.StatReadout.Size(); i++)
 		{
-			DrawString(Font_Small, weap.StatReadout[i], (WEAPINFO_X, weapInfoY),
-				DI_TEXT_ALIGN_RIGHT, Font.CR_UNTRANSLATED);
+			DrawString(Font_Small, weap.StatReadout[i], (xPos, weapInfoY),
+				align, Font.CR_UNTRANSLATED);
 
 			weapInfoY += 8;
 		}
@@ -291,7 +323,7 @@ class BIO_StatusBar : BaseStatusBar
 		if (weap.BIOFlags & BIO_WF_CORRUPTED)
 		{
 			DrawString(Font_Small, StringTable.Localize("$BIO_CORRUPTED"),
-				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT, Font.CR_RED);
+				(xPos, weapInfoY), align, Font.CR_RED);
 			
 			weapInfoY += 8;
 		}
@@ -299,8 +331,7 @@ class BIO_StatusBar : BaseStatusBar
 		for (uint i = 0; i < weap.AffixReadout.Size(); i++)
 		{
 			DrawString(Font_Small, weap.AffixReadout[i],
-				(WEAPINFO_X, weapInfoY), DI_TEXT_ALIGN_RIGHT,
-				Font.CR_WHITE);
+				(xPos, weapInfoY), align, Font.CR_WHITE);
 			weapInfoY += 8;
 		}
 
