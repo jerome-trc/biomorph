@@ -561,6 +561,88 @@ class BIO_WAfx_MaxDamageOnly : BIO_WeaponAffix
 	}
 }
 
+// 200% ammo use, but more than double damage.
+class BIO_WAfx_DamageForAmmoUse : BIO_WeaponAffix
+{
+	// One per pipeline; if pipeline is incompatible, value will be 0.0;
+	// value + 1.0 is passed to `BIO_WeaponPipeline::MultiplyAllDamage()`
+	Array<float> Modifiers;
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].UsesSecondaryAmmo() &&
+				weap.ShotsPerMagazine(false) > 1)
+				return true;
+			else if (weap.Pipelines[i].UsesSecondaryAmmo() &&
+				weap.ShotsPerMagazine(true) > 1)
+				return true;
+		}
+
+		return false;
+	}
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		bool
+			prim = weap.ShotsPerMagazine(false) > 1,
+			sec = weap.ShotsPerMagazine(true) > 1;
+
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].UsesSecondaryAmmo() && prim)
+				Modifiers.Push(FRandom[BIO_Afx](1.5, 2.0));
+			else if (weap.Pipelines[i].UsesSecondaryAmmo() && sec)
+				Modifiers.Push(FRandom[BIO_Afx](1.5, 2.0));
+			else
+				Modifiers.Push(0.0);
+		}
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		if (weap.ShotsPerMagazine(false) > 1)
+			weap.AmmoUse1 *= 2;
+		if (weap.ShotsPerMagazine(true) > 1)
+			weap.AmmoUse2 *= 2;
+
+		for (uint i = 0; i < Modifiers.Size(); i++)
+			weap.Pipelines[i].MultiplyAllDamage(1.0 + Modifiers[i]);
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < Modifiers.Size(); i++)
+		{
+			if (Modifiers[i] == 0.0) continue;
+
+			string qual = "";
+
+			if (Modifiers.Size() > 1)
+				qual = " " .. weap.Pipelines[i].GetTagAsQualifier();
+
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_WAFX_DAMAGEFORAMMOUSE_TOSTR"),
+				BIO_Utils.StatFontColorF(Modifiers[i], 0.0),
+				Modifiers[i] >= 0.0 ? "+" : "", 1.0 + Modifiers[i] * 100.0, qual));
+		}
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_DAMAGEFORAMMOUSE_TAG");
+	}
+
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE;
+	}
+}
+
 // LegenDoom(Lite) exclusive. 400% damage to Legendary enemies.
 class BIO_WAfx_DemonSlayer : BIO_WeaponAffix
 {

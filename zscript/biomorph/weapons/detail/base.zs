@@ -1113,6 +1113,17 @@ class BIO_Weapon : DoomWeapon abstract
 
 		return false;
 	}
+	
+	// Returns 0 for magazineless or ammoless weapons.
+	uint ShotsPerMagazine(bool secondary = false) const
+	{
+		if (!secondary && AmmoType1 != null && AmmoUse1 > 0 && MagazineType1 != null)
+			return Floor(float(MagazineSize1) / float(AmmoUse1));
+		else if (secondary && AmmoType2 != null && AmmoUse2 > 0 && MagazineType2 != null)
+			return Floor(float(MagazineSize2) / float(AmmoUse2));
+		else
+			return 0;
+	}
 
 	bool Ammoless() const
 	{
