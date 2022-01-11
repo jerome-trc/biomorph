@@ -181,7 +181,6 @@ extend class BIO_EventHandler
 		output.AppendFormat("%s (%s)\n", weap.GetClassName(), weap.GetTag());
 		output.AppendFormat("\c[Yellow]Grade\c-: %s\n\c-", BIO_Utils.GradeToString(weap.Grade));
 		output.AppendFormat("\c[Yellow]Rarity\c-: %s\n\c-", BIO_Utils.RarityToString(weap.Rarity));
-		output.AppendFormat("\c[Yellow]Pipelines\c-:\n");
 
 		string ammo1_tn = "null", ammo2_tn = "null";
 
@@ -211,6 +210,8 @@ extend class BIO_EventHandler
 					iter.Key(), iter.Value());
 			}
 		}
+
+		output.AppendFormat("\c[Yellow]Pipelines\c-:\n");
 
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
