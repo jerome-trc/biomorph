@@ -1177,9 +1177,7 @@ class BIO_Weapon : DoomWeapon abstract
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
 		InitImplicitAffixes(ImplicitAffixes);
-
-		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-			ImplicitAffixes[i].Apply(self);
+		ApplyImplicitAffixes();
 
 		Array<BIO_WeaponPipeline> pplDefs;
 		InitPipelines(pplDefs);
@@ -1191,6 +1189,7 @@ class BIO_Weapon : DoomWeapon abstract
 		OnWeaponChange();
 	}
 
+	// Does not apply any affixes.
 	void ResetStats()
 	{
 		Pipelines.Clear();
@@ -1200,6 +1199,7 @@ class BIO_Weapon : DoomWeapon abstract
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
+		InitImplicitAffixes(ImplicitAffixes);
 
 		bNoAutoFire = Default.bNoAutoFire;
 		bNoAlert = Default.bNoAlert;
