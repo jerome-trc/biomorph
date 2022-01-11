@@ -162,7 +162,7 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 }
 
 // All splash damage on the fired thing is converted into direct hit damage.
-class BIO_WAfx_SplashForDamage : BIO_WeaponAffix
+class BIO_WAfx_SplashToDamage : BIO_WeaponAffix
 {
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
@@ -198,12 +198,12 @@ class BIO_WAfx_SplashForDamage : BIO_WeaponAffix
 		readOnly<BIO_Weapon> weap) const
 	{
 		strings.Push(CRESC_MIXED .. StringTable.Localize(
-			"$BIO_WAFX_SPLASHFORDAMAGE_TOSTR"));
+			"$BIO_WAFX_SPLASHTODAMAGE_TOSTR"));
 	}
 
 	final override string GetTag() const
 	{
-		return StringTable.Localize("$BIO_WAFX_SPLASHFORDAMAGE_TAG");
+		return StringTable.Localize("$BIO_WAFX_SPLASHTODAMAGE_TAG");
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
