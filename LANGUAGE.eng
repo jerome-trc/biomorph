@@ -326,6 +326,9 @@
 	BIO_WAFX_DMGINVERSEHEALTH_TAG = "Adrenaline";
 	BIO_WAFX_DMGINVERSEHEALTH_TOSTR = "\c[Green]Damage increases as you lose health";
 
+	BIO_WAFX_MAXDAMAGEONLY_TAG = "Six-Sigma";
+	BIO_WAFX_MAXDAMAGEONLY_TOSTR = "\c[Green]Always deals maximum potential damage";
+
 	BIO_WAFX_DEMONSLAYER_TAG = "Demonslayer";
 	BIO_WAFX_DEMONSLAYER_TOSTR = "\c[Green]400% damage to Legendary enemies";
 

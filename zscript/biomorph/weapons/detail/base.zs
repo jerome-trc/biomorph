@@ -945,6 +945,9 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
+	BIO_WeaponPipeline LastPipelineFired() const { return Pipelines[LastPipeline]; }
+	uint LastPipelineFiredIndex() const { return LastPipeline; }
+
 	int LastFireTime() const
 	{
 		int ret = 0;

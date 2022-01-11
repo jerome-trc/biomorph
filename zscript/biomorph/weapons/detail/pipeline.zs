@@ -306,6 +306,9 @@ class BIO_WeaponPipeline play
 			FTDeathFunctors[i].GetDamageValues(damages);
 	}
 
+	int GetMinDamage() const { return Damage.MinOutput(); }
+	int GetMaxDamage() const { return Damage.MaxOutput(); }
+
 	void SetDamageValues(in out Array<int> damages)
 	{
 		if (Mask & BIO_WPM_DAMAGEVALS) return;

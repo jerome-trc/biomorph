@@ -491,6 +491,76 @@ class BIO_WAfx_DamageInverseHealth : BIO_WeaponAffix
 	}
 }
 
+// Constrains pipeline damage to only its maximum possible value.
+class BIO_WAfx_MaxDamageOnly : BIO_WeaponAffix
+{
+	Array<bool> Applicability;
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+			if (CompatibleWithPipeline(weap.Pipelines[i].AsConst()))
+				return true;
+
+		return false;
+	}
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+			Applicability.Push(CompatibleWithPipeline(
+				weap.Pipelines[i].AsConst()));
+	}
+
+	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
+	{
+		let minDmg = float(ppl.GetMinDamage()), maxDmg = float(ppl.GetMaxDamage());
+	
+		if (minDmg ~== maxDmg)
+			return false;
+
+		if (maxDmg > (maxDmg * 4.0))
+			return false;
+
+		return true;
+	}
+
+	final override void BeforeEachFire(BIO_Weapon weap, in out BIO_FireData fireData) const
+	{
+		if (Applicability[weap.LastPipelineFiredIndex()])
+			fireData.Damage = weap.LastPipelineFired().GetMaxDamage();
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap)
+	{
+		for (uint i = 0; i < Applicability.Size(); i++)
+		{
+			if (!Applicability[i]) continue;
+
+			string qual = "";
+
+			if (Applicability.Size() > 1)
+				qual = " " .. weap.Pipelines[i].GetTagAsQualifier();
+
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_WAFX_MAXDAMAGEONLY_TOSTR"), qual));
+		}
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_MAXDAMAGEONLY_TAG");
+	}
+
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_DAMAGE;
+	}
+}
+
 // LegenDoom(Lite) exclusive. 400% damage to Legendary enemies.
 class BIO_WAfx_DemonSlayer : BIO_WeaponAffix
 {
