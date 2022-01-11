@@ -309,6 +309,8 @@ extend class BIO_EventHandler
 			"Removed %s from your current weapon.", wafx_t.GetClassName());
 	}
 
+	// If the first argument is greater than 0, a
+	// full affix re-initialisation is also performed.
 	private void NetEvent_RecalcWeap(ConsoleEvent event) const
 	{
 		if (!(event.Name ~== "bio_recalcweap"))
@@ -330,6 +332,16 @@ extend class BIO_EventHandler
 		}
 
 		weap.ResetStats();
+
+		if (event.Args[0] > 0)
+		{
+			for (uint i = 0; i < weap.Affixes.Size(); i++)
+			{
+				weap.Affixes[i] = BIO_WeaponAffix(new(weap.Affixes[i].GetClass()));
+				weap.Affixes[i].Init(weap.AsConst());
+			}
+		}
+
 		weap.ApplyAllAffixes();
 		weap.OnWeaponChange();
 		Console.Printf(Biomorph.LOGPFX_INFO ..
