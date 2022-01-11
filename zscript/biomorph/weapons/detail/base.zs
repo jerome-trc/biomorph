@@ -1296,14 +1296,14 @@ class BIO_Weapon : DoomWeapon abstract
 
 		for (uint i = 0; i < c; i++)
 		{
-			if (eligibles.Size() < 1)
-				break;
-
 			for (uint j = eligibles.Size() - 1; j >= 0; j--)
 			{
 				if (!globals.WeaponAffixCompatible(eligibles[j], AsConst()))
 					eligibles.Delete(j);
 			}
+
+			if (eligibles.Size() < 1)
+				break;
 
 			uint r = Random[BIO_Afx](0, eligibles.Size() - 1);
 			let afx = BIO_WeaponAffix(new(eligibles[r]));
