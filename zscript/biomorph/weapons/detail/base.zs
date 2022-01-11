@@ -440,7 +440,7 @@ class BIO_Weapon : DoomWeapon abstract
 		if (globals != null)
 			globals.OnWeaponAcquired(Grade);
 
-		if (Pipelines.Size() < 1) Init();
+		Init();
 
 		// Get a pointer to primary ammo (which is either `AmmoType1` or
 		// `MagazineType1`). If it isn't found, generate and attach it
@@ -506,32 +506,21 @@ class BIO_Weapon : DoomWeapon abstract
 	final override bool Used(Actor user)
 	{
 		let bioPlayer = BIO_Player(user);
-
 		if (bioPlayer == null) return false;
-		
-		if (Pipelines.Size() < 1) Init();
-
-		string output = GetTag() .. "\n\n";
-
-		for (uint i = 0; i < StatReadout.Size(); i++)
-			output.AppendFormat("%s\n", StatReadout[i]);
-
-		for (uint i = 0; i < AffixReadout.Size(); i++)
-			output.AppendFormat("\cj%s\n", AffixReadout[i]);
+		Init();
 
 		// Scale message uptime off of number of characters in both readouts
-		float upTime = 2.0;
+		int upTime = TICRATE;
 
 		for (uint i = 0; i < StatReadout.Size(); i++)
-			upTime += float(StatReadout[i].Length()) * 0.0075;
+			upTime += StatReadout[i].Length();
 		for (uint i = 0; i < AffixReadout.Size(); i++)
-			upTime += float(AffixReadout[i].Length()) * 0.0075;
+			upTime += AffixReadout[i].Length();
 
-		output.DeleteLastCharacter(); // Trim off trailing newline
-		bioPlayer.A_Print(output, upTime);
-		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 1.2);
+		bioPlayer.ExamineWeapon(self, upTime * 0.33);
 
-		return true;
+		// Don't consume the interaction so players can open doors and so on
+		return false;
 	}
 
 	final override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
@@ -1171,8 +1160,13 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Modifying ===============================================================
 
-	protected void Init()
+	// Latching; will never re-initialise.
+	void Init()
 	{
+		if (Pipelines.Size() > 0 || FireTimeGroups.Size() > 0 ||
+			ReloadTimeGroups.Size() > 0 || ImplicitAffixes.Size() > 0)
+			return;
+
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
