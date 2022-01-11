@@ -1152,7 +1152,10 @@ class BIO_Weapon : DoomWeapon abstract
 
 	private bool ScavengingDestroys() const
 	{
-		return AmmoGive1 <= 0 && AmmoGive2 <= 0 && !ScavengePersist &&
+		return
+			!Ammoless() &&
+			AmmoGive1 <= 0 && AmmoGive2 <= 0 &&
+			!ScavengePersist &&
 			Grade == BIO_GRADE_STANDARD && Rarity == BIO_RARITY_COMMON;
 	}
 
