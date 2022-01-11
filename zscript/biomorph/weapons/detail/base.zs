@@ -1192,11 +1192,13 @@ class BIO_Weapon : DoomWeapon abstract
 		Pipelines.Clear();
 		FireTimeGroups.Clear();
 		ReloadTimeGroups.Clear();
+		ImplicitAffixes.Clear();
 
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
 		InitImplicitAffixes(ImplicitAffixes);
+		ApplyImplicitAffixes();
 
 		bNoAutoFire = Default.bNoAutoFire;
 		bNoAlert = Default.bNoAlert;
@@ -1281,7 +1283,6 @@ class BIO_Weapon : DoomWeapon abstract
 
 		ClearAffixes();
 		ResetStats();
-		ApplyImplicitAffixes();
 
 		uint fl = Min(2, MaxAffixes);
 		uint c = Random[BIO_Afx](fl, MaxAffixes);
