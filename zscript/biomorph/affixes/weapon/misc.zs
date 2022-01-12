@@ -48,10 +48,10 @@ class BIO_WAfx_HighSpreadFireCount : BIO_WeaponAffix
 		if (!ppl.FireCountMutable())
 			return false;
 
-		float h = 0.0, v = 0.0;
-		[h, v] = ppl.GetSpread();
-		
-		if ((h + v) >= 5.99)
+		if (ppl.IsMelee())
+			return false;
+
+		if (ppl.GetCombinedSpread() >= 5.99)
 			return true;
 		else
 			return false;
@@ -154,10 +154,10 @@ class BIO_WAfx_LowSpreadFireCount : BIO_WeaponAffix
 		if (!ppl.SpreadMutable())
 			return false;
 
-		float h = 0.0, v = 0.0;
-		[h, v] = ppl.GetSpread();
-		
-		if ((h + v) < 5.0)
+		if (ppl.IsMelee())
+			return false;
+
+		if (ppl.GetCombinedSpread() < 5.0)
 			return true;
 		else
 			return false;
@@ -340,12 +340,22 @@ class BIO_WAfx_Spread : BIO_WeaponAffix
 {
 	Array<float> HorizModifiers, VertModifiers;
 
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (CompatibleWithPipeline(weap.Pipelines[i].AsConst()))
+				return true;
+		}
+
+		return false;
+	}
+
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (!weap.Pipelines[i].SpreadMutable() ||
-				!weap.Pipelines[i].NonTrivialSpread())
+			if (!CompatibleWithPipeline(weap.Pipelines[i].AsConst()))
 			{
 				HorizModifiers.Push(0.0);
 				VertModifiers.Push(0.0);	
@@ -362,16 +372,18 @@ class BIO_WAfx_Spread : BIO_WeaponAffix
 		}
 	}
 
-	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
 	{
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
-		{
-			if (weap.Pipelines[i].SpreadMutable() &&
-				weap.Pipelines[i].NonTrivialSpread())
-				return true;
-		}
+		if (!ppl.SpreadMutable())
+			return false;
 
-		return false;
+		if (!ppl.NonTrivialSpread())
+			return false;
+
+		if (ppl.IsMelee())
+			return false;
+
+		return true;
 	}
 
 	final override void Apply(BIO_Weapon weap) const
