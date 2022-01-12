@@ -16,7 +16,6 @@ class BIO_SuperShotgun : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_STANDARD;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.Flags BIO_WF_SHOTGUN;
 		BIO_Weapon.Grade BIO_GRADE_STANDARD;
 		BIO_Weapon.MagazineSize 2;
 		BIO_Weapon.MagazineType 'BIO_MAG_SuperShotgun';

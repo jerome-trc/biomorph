@@ -15,7 +15,6 @@ class BIO_VolleyGun : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.Flags BIO_WF_SHOTGUN;
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.MagazineSize 4;
 		BIO_Weapon.MagazineType 'BIO_Mag_VolleyGun';

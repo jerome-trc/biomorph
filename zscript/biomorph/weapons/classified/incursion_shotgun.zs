@@ -14,7 +14,6 @@ class BIO_IncursionShotgun : BIO_Weapon
 		Weapon.SlotNumber 3;
 		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
 
-		BIO_Weapon.Flags BIO_WF_SHOTGUN;
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.MagazineSize 4;
 		BIO_Weapon.MagazineType 'BIO_MAG_IncursionShotgun';
