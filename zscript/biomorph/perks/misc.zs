@@ -37,13 +37,21 @@ class BIO_Perk_WeaponCapacity : BIO_Perk
 	}
 }
 
-// The miscellaneous of the miscellaneous ======================================
+// Splash resist and `DONTTHRUST` ==============================================
 
-class BIO_Perk_CantSeek : BIO_Perk
+class BIO_Perk_SplashResist_Minor : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.bCantSeek = true;
+		bioPlayer.RadiusDamageFactor = Max(bioPlayer.RadiusDamageFactor - 0.1, 0.0);
+	}
+}
+
+class BIO_Perk_SplashResist_Major : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.RadiusDamageFactor = Max(bioPlayer.RadiusDamageFactor - 0.2, 0.0);
 	}
 }
 
@@ -52,6 +60,16 @@ class BIO_Perk_DontThrust : BIO_Perk
 	final override void Apply(BIO_Player bioPlayer) const
 	{
 		bioPlayer.bDontThrust = true;
+	}
+}
+
+// The miscellaneous of the miscellaneous ======================================
+
+class BIO_Perk_CantSeek : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.bCantSeek = true;
 	}
 }
 

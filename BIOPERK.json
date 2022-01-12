@@ -15,6 +15,14 @@
 			"desc": "$BIO_PERK_SLIMERESIST_MINOR_DESC",
 			"icon": "SUITX0",
 			"category": "minor"
+		},
+		{
+			"id": "bio_splashresist_minor",
+			"class": "BIO_Perk_SplashResist_Minor",
+			"tag": "$BIO_PERK_SPLASHRESIST_MINOR_TAG",
+			"desc": "$BIO_PERK_SPLASHRESIST_MINOR_DESC",
+			"icon": "graphics/perk/splashresist_minor.png",
+			"category": "minor"
 		}
 	],
 	"perks": [
@@ -54,7 +62,6 @@
 			"category": "major",
 			"neighbors": [ "bio_maxbonushealth_1" ]
 		},
-
 		{
 			"uuid": "bio_bonuscrossover",
 			"class": "BIO_Perk_BonusCrossover",
@@ -83,6 +90,49 @@
 			"icon": "MEDIA0",
 			"category": "major",
 			"neighbors": [ "bio_maxbonushealth_2" ]
+		},
+		{
+			"uuid": "bio_splashresist_0",
+			"template": "bio_splashresist_minor",
+			"x": -50,
+			"y": 0,
+			"neighbors": [ "bio_start" ]
+		},
+		{
+			"uuid": "bio_splashresist_1",
+			"template": "bio_splashresist_minor",
+			"x": -120,
+			"y": 0,
+			"neighbors": [ "bio_splashresist_0" ]
+		},
+		{
+			"uuid": "bio_splashresist_2",
+			"template": "bio_splashresist_minor",
+			"x": -200,
+			"y": -70,
+			"neighbors": [ "bio_splashresist_1" ]
+		},
+		{
+			"uuid": "bio_splashresist_major",
+			"class": "BIO_Perk_SplashResist_Major",
+			"x": -300,
+			"y": -70,
+			"tag": "$BIO_PERK_SPLASHRESIST_MAJOR_TAG",
+			"desc": "$BIO_PERK_SPLASHRESIST_MAJOR_DESC",
+			"icon": "graphics/perk/splashresist_major.png",
+			"category": "major",
+			"neighbors": [ "bio_splashresist_2" ]
+		},
+		{
+			"uuid": "bio_dontthrust",
+			"class": "BIO_Perk_DontThrust",
+			"x": -200,
+			"y": -170,
+			"tag": "$BIO_PERK_DONTTHRUST_TAG",
+			"desc": "$BIO_PERK_DONTTHRUST_DESC",
+			"icon": "graphics/perk/dontthrust.png",
+			"category": "major",
+			"neighbors": [ "bio_splashresist_2" ]
 		},
 		{
 			"uuid": "bio_clipcapacity",
@@ -180,17 +230,6 @@
 			"tag": "$BIO_PERK_CANTSEEK_TAG",
 			"desc": "$BIO_PERK_CANTSEEK_DESC",
 			"icon": "graphics/perk/cantseek.png",
-			"category": "major",
-			"neighbors": [ "bio_start" ]
-		},
-		{
-			"uuid": "bio_dontthrust",
-			"class": "BIO_Perk_DontThrust",
-			"x": -80,
-			"y": 0,
-			"tag": "$BIO_PERK_DONTTHRUST_TAG",
-			"desc": "$BIO_PERK_DONTTHRUST_DESC",
-			"icon": "graphics/perk/dontthrust.png",
 			"category": "major",
 			"neighbors": [ "bio_start" ]
 		},
