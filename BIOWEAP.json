@@ -27,7 +27,8 @@
 		],
 		"launcher": [
 			"BIO_RocketLauncher",
-			"BIO_ProximityLauncher"
+			"BIO_ProximityLauncher",
+			"BIO_BarrageLauncher"
 		],
 		"energy": [
 			"BIO_PlasmaRifle",
