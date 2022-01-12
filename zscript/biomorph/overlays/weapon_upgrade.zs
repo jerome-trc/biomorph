@@ -29,13 +29,21 @@ class BIO_WeaponUpgradeOverlay : BIO_ModalOverlay
 
 	final override void OnKeyPressed_Left()
 	{
-		SelectedWeapon = Max(SelectedWeapon - 1, 0);
+		if (SelectedWeapon == 0)
+			SelectedWeapon = Choices.Size() - 1;
+		else
+			SelectedWeapon = Max(SelectedWeapon - 1, 0);
+
 		S_StartSound("bio/ui/beep", CHAN_AUTO);
 	}
 	
 	final override void OnKeyPressed_Right()
 	{
-		SelectedWeapon = Min(SelectedWeapon + 1, Choices.Size() - 1);
+		if (SelectedWeapon == Choices.Size() - 1)
+			SelectedWeapon = 0;
+		else
+			SelectedWeapon = Min(SelectedWeapon + 1, Choices.Size() - 1);
+
 		S_StartSound("bio/ui/beep", CHAN_AUTO);
 	}
 
