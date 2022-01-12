@@ -229,16 +229,9 @@ class BIO_StatusBar : BaseStatusBar
 						FormatNumber(ammoItem1.MaxAmount, 3, 6)),
 					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 			}
-			else if (ammoItem1.bIgnoreSkill) // No reserve ammo; only magazine
+			else // No magazine; feeds directly from reserve
 			{
-				DrawString(Font_HUD, String.Format(
-					"%s", FormatNumber(ammoItem1.Amount, 3, 6)),
-					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
-			}
-			else // Magazine with reserve ammo
-			{
-				DrawString(Font_HUD,
-					String.Format("%s / %s",
+				DrawString(Font_HUD, String.Format("%s / %s",
 						FormatNumber(ammoItem1.Amount, 3, 6),
 						FormatNumber(ammoItem1.MaxAmount, 3, 6)),
 					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
@@ -260,13 +253,7 @@ class BIO_StatusBar : BaseStatusBar
 						FormatNumber(ammoItem2.MaxAmount, 3, 6)),
 					(-30, -36), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 			}
-			else if (ammoItem2.bIgnoreSkill) // No reserve ammo; only magazine
-			{
-				DrawString(Font_HUD, String.Format(
-					"%s", FormatNumber(ammoItem2.Amount, 3, 6)),
-					(-30, -36), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
-			}
-			else // Magazine with reserve ammo
+			else // No magazine; feeds directly from reserve
 			{
 				DrawString(Font_HUD,
 					String.Format("%s / %s",
