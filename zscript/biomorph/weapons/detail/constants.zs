@@ -5,7 +5,6 @@ enum BIO_WeaponFlags : uint16
 	BIO_WF_AFFIXESHIDDEN = 1 << 1, // Caused by corruption
 	BIO_WF_ONEHANDED = 1 << 2,
 	BIO_WF_PISTOL = 1 << 3,
-	BIO_WF_SHOTGUN = 1 << 4,
 	// The following 3 are applicable only to dual-wielded weapons
 	BIO_WF_NOAUTOPRIMARY = 1 << 13,
 	BIO_WF_NOAUTOSECONDARY = 1 << 14,

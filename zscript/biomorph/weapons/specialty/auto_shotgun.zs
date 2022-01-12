@@ -15,7 +15,6 @@ class BIO_AutoShotgun : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.Flags BIO_WF_SHOTGUN;
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
 		BIO_Weapon.MagazineType 'BIO_MAG_AutoShotgun';
 		BIO_Weapon.MagazineSize 15;

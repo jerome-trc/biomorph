@@ -1068,6 +1068,18 @@ class BIO_Weapon : DoomWeapon abstract
 		return false;
 	}
 
+	bool HasScatteringPipeline() const
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+		{
+			if (Pipelines[i].GetCombinedSpread() >= 5.5 &&
+				Pipelines[i].GetFireCount() > 3)
+				return true;
+		}
+
+		return false;
+	}
+
 	int GetFireTime(uint ndx, uint grp = 0) const
 	{
 		return FireTimeGroups[grp].Times[ndx];

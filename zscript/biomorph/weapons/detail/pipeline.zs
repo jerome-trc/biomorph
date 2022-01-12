@@ -468,6 +468,7 @@ class BIO_WeaponPipeline play
 	float, float GetSpread() const { return HSpread, VSpread; }
 	float GetHSpread() const { return HSpread; }
 	float GetVSpread() const { return VSpread; }
+	float GetCombinedSpread() const { return HSpread + VSpread; }
 	bool HasAnySpread() const { return HSpread > 0.0 || VSpread > 0.0; }
 
 	bool NonTrivialSpread() const
