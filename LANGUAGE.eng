@@ -445,7 +445,7 @@
 		"\c[Green]Homing projectiles cannot lock on to you";
 
 	BIO_PERK_DONTTHRUST_TAG =
-		"\c[White]Shockwave Absorption";
+		"\c[White]Balance Regulators";
 	BIO_PERK_DONTTHRUST_DESC =
 		"\c[Green]Splash damage does not push you";
 
@@ -528,6 +528,16 @@
 		"\c[White]Neural Uplink";
 	BIO_PERK_SCANNERALLMAP_DESC =
 		"\c[Green]Picking up a Computer Area Map reveals and tracks entity locations";
+
+	BIO_PERK_SPLASHRESIST_MINOR_TAG =
+		"\c[White]Shockwave Absorption";
+	BIO_PERK_SPLASHRESIST_MINOR_DESC =
+		"\c[Green]+10% resistance to splash damage";
+
+	BIO_PERK_SPLASHRESIST_MAJOR_TAG =
+		"\c[White]P.I.L.L.O. System";
+	BIO_PERK_SPLASHRESIST_MAJOR_DESC =
+		"\c[Green]+20% resistance to splash damage";
 
 	BIO_PERK_SLIMERESIST_MINOR_TAG =
 		"\c[White]Ironfoot";
