@@ -56,13 +56,13 @@
 	BIO_FIREFUNC_SAW =
 		"\c[MidGrey]Cuts continually";
 	BIO_FIREFUNC_RAIL =
-		"\c[MidGrey]Fires %s%d \c[MidGrey] %s%s, spawning %s%s \c[MidGrey]on impact";
+		"\c[MidGrey]Fires %s%d\c[MidGrey] %s%s, spawning %s%s \c[MidGrey]on impact";
 	BIO_FIREFUNC_RAIL_NOPUFF =
-		"\c[MidGrey]Fires %s%d \c[MidGrey]rail shots, spawning %s%s \c[MidGrey]on impact";
+		"\c[MidGrey]Fires %s%d\c[MidGrey] rail shots, spawning %s%s \c[MidGrey]on impact";
 	BIO_FIREFUNC_RAIL_NOSPAWN =
-		"\c[MidGrey]Fires %s%d \c[MidGrey] %s%s";
+		"\c[MidGrey]Fires %s%d\c[MidGrey] %s%s";
 	BIO_FIREFUNC_RAIL_NOTHING =
-		"\c[MidGrey]Fires %s%d \c[MidGrey]rail shots";
+		"\c[MidGrey]Fires %s%d\c[MidGrey] rail shots";
 	BIO_FIREFUNC_BFGSPRAY =
 		"\c[MidGrey]Fires %s%d \c[MidGrey]BFG rays";
 	
