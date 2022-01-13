@@ -348,10 +348,10 @@
 	BIO_WAFX_BFGSPRAY_TOSTR = "Fires BFG rays";
 
 	BIO_WAFX_FORCEPAIN_TAG = "Neurotoxic Payload";
-	BIO_WAFX_FORCEPAIN_TOSTR = "Always causes monsters to flinch";
+	BIO_WAFX_FORCEPAIN_TOSTR = "\c[Green]Always causes monsters to flinch";
 
 	BIO_WAFX_FORCERADIUSDMG_TAG = "Shaped Charge";
-	BIO_WAFX_FORCERADIUSDMG_TOSTR = "Ignores splash damage immunity";
+	BIO_WAFX_FORCERADIUSDMG_TOSTR = "\c[Green]Ignores splash damage immunity";
 
 	BIO_WAFX_PROJGRAVITY_TAG = "Dense Payload";
 	BIO_WAFX_PROJGRAVITY_TOSTR =

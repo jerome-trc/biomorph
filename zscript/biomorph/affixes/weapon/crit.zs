@@ -49,6 +49,7 @@ class BIO_WAfx_Crit : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{

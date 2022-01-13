@@ -619,6 +619,6 @@ class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
-		return BIO_GlobalData.Get().EligibleImplicitWeaponAffixes(Eligibles, weap);
+		return BIO_GlobalData.Get().EligibleWeaponAffixes(Eligibles, weap, true);
 	}
 }

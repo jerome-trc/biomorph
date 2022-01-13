@@ -50,6 +50,7 @@ class BIO_WAfx_Plasma : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -116,6 +117,7 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -178,6 +180,7 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -235,6 +238,7 @@ class BIO_WAfx_BFGSpray : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{

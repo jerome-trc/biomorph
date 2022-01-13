@@ -241,7 +241,7 @@ class BIO_Armor : BIO_Equipment abstract
 
 		let globals = BIO_GlobalData.Get();
 		Array<Class<BIO_EquipmentAffix> > eligibles;
-		globals.AllEligibleEquipmentAffixes(eligibles, AsConst());
+		globals.EligibleEquipmentAffixes(eligibles, AsConst());
 
 		for (uint i = 0; i < c; i++)
 		{

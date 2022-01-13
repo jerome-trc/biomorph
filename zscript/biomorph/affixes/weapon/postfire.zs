@@ -30,6 +30,7 @@ class BIO_WAfx_ForcePain : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 	
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -67,8 +68,7 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
-
-	final override bool CanGenerate() const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -101,6 +101,7 @@ class BIO_WAfx_ProjSeek : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -165,6 +166,7 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -209,6 +211,7 @@ class BIO_WAfx_ProjBounce : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{

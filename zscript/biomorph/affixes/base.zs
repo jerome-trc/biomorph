@@ -5,8 +5,17 @@ class BIO_Affix play abstract
 	const CRESC_NEUTRAL = "\cc"; // Grey
 	const CRESC_MIXED = "\cf"; // Gold
 
+	// If returning `true`, this affix can be added to a loot item's explicit
+	// array, or rolled from a randomizer or adder mutagen.
 	virtual bool CanGenerate() const { return true; }
+
+	// If returning `true`, this affix can be added to a corrupted loot item's
+	// implicit array, or rolled as a possible outcome by a corrupting mutagen.
 	virtual bool CanGenerateImplicit() const { return false; }
+
+	// If returning `true`, mutagens and the loot generator can not add this affix
+	// to an item explicitly if it already has the affix implicitly, and vice-versa.
+	virtual bool ImplicitExplicitExclusive() const { return false; }
 
 	// Output should be fully localized.
 	abstract string GetTag() const;
