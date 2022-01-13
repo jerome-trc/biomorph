@@ -9,10 +9,9 @@ class BIO_WAfx_BerserkDamage : BIO_WeaponAffix
 		Multiplier = FRandom[BIO_Afx](1.5, 3.5);
 	}
 
-	// This can't generate on weapons with implicit berserk damage.
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
-		return weap.HasMeleePipeline() && !weap.HasAffixOfType(GetClass(), true);
+		return weap.HasMeleePipeline();
 	}
 
 	final override void BeforeEachFire(BIO_Weapon weap,
@@ -38,6 +37,7 @@ class BIO_WAfx_BerserkDamage : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{

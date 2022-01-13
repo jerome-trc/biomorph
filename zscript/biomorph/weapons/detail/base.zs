@@ -1274,7 +1274,7 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		Array<Class<BIO_WeaponAffix> > eligibles;
 
-		if (!BIO_GlobalData.Get().AllEligibleWeaponAffixes(eligibles, AsConst()))
+		if (!BIO_GlobalData.Get().EligibleWeaponAffixes(eligibles, AsConst()))
 			return false;
 
 		uint r = Random[BIO_Afx](0, eligibles.Size() - 1);
@@ -1302,7 +1302,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 		let globals = BIO_GlobalData.Get();
 		Array<Class<BIO_WeaponAffix> > eligibles;
-		globals.AllEligibleWeaponAffixes(eligibles, AsConst());
+		globals.EligibleWeaponAffixes(eligibles, AsConst());
 
 		for (uint i = 0; i < c; i++)
 		{

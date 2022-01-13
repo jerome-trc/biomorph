@@ -554,6 +554,7 @@ class BIO_WAfx_MaxDamageOnly : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -680,6 +681,7 @@ class BIO_WAfx_DemonSlayer : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
