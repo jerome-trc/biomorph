@@ -23,10 +23,10 @@ class BIO_WAfx_HighSpreadFireCount : BIO_WeaponAffix
 				break;
 			case 3:
 			case 4:
-				m = Random(1, 2);
+				m = Random[BIO_Afx](1, 2);
 				break;
 			default:
-				m = Ceil(float(b) * FRandom(0.33, 0.55));
+				m = Ceil(float(b) * FRandom[BIO_Afx](0.33, 0.55));
 				break;
 			}
 
@@ -125,15 +125,15 @@ class BIO_WAfx_LowSpreadFireCount : BIO_WeaponAffix
 				break;
 			case 3:
 			case 4:
-				m = Random(1, 2);
+				m = Random[BIO_Afx](1, 2);
 				break;
 			default:
-				m = Ceil(float(b) * FRandom(0.33, 0.55));
+				m = Ceil(float(b) * FRandom[BIO_Afx](0.33, 0.55));
 				break;
 			}
 
 			Modifiers.Push(m);
-			Spreads.Push(FRandom(1.6, 2.4));
+			Spreads.Push(FRandom[BIO_Afx](1.6, 2.4));
 		}
 	}
 
@@ -265,10 +265,10 @@ class BIO_WAfx_MagSize : BIO_WeaponAffix
 				break;
 			case 3:
 			case 4:
-				Modifier1 = Random(1, 2);
+				Modifier1 = Random[BIO_Afx](1, 2);
 				break;
 			default:
-				Modifier1 = Ceil(float(weap.MagazineSize1) * FRandom(0.33, 0.55));
+				Modifier1 = Ceil(float(weap.MagazineSize1) * FRandom[BIO_Afx](0.33, 0.55));
 				break;
 			}
 		}
@@ -283,10 +283,10 @@ class BIO_WAfx_MagSize : BIO_WeaponAffix
 				break;
 			case 3:
 			case 4:
-				Modifier2 = Random(1, 2);
+				Modifier2 = Random[BIO_Afx](1, 2);
 				break;
 			default:
-				Modifier2 = Ceil(float(weap.MagazineSize2) * FRandom(0.33, 0.55));
+				Modifier2 = Ceil(float(weap.MagazineSize2) * FRandom[BIO_Afx](0.33, 0.55));
 				break;
 			}
 		}
