@@ -34,6 +34,42 @@ class BIO_Perk_CellCapacity_Minor : BIO_Perk
 	}
 }
 
+class BIO_Perk_ClipCapacity_Major : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.FindInventory('Clip').MaxAmount +=
+			GetDefaultByType('Clip').BackpackAmount * 5;
+	}
+}
+
+class BIO_Perk_ShellCapacity_Major : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.FindInventory('Shell').MaxAmount +=
+			GetDefaultByType('Shell').BackpackAmount * 5;
+	}
+}
+
+class BIO_Perk_RocketAmmoCapacity_Major : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.FindInventory('RocketAmmo').MaxAmount +=
+			GetDefaultByType('RocketAmmo').BackpackAmount * 5;
+	}
+}
+
+class BIO_Perk_CellCapacity_Major : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.FindInventory('Cell').MaxAmount +=
+			GetDefaultByType('Cell').BackpackAmount * 5;
+	}
+}
+
 // Large ammo pickups also grant a small pickup ================================
 
 class BIO_Perk_LargeAmmoBonus : BIO_Perk

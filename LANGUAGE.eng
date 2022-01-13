@@ -489,6 +489,26 @@
 	BIO_PERK_CELLCAPACITY_MINOR_DESC =
 		"\c[Green]+20 cell capacity";
 
+	BIO_PERK_CLIPCAPACITY_MAJOR_TAG =
+		"\c[White]Packrat Supreme: Bullets";
+	BIO_PERK_CLIPCAPACITY_MAJOR_DESC =
+		"\c[Green]+50 bullet capacity";
+
+	BIO_PERK_SHELLCAPACITY_MAJOR_TAG =
+		"\c[White]Packrat Supreme: Shells";
+	BIO_PERK_SHELLCAPACITY_MAJOR_DESC =
+		"\c[Green]+20 shell capacity";
+
+	BIO_PERK_ROCKETAMMOCAPACITY_MAJOR_TAG =
+		"\c[White]Packrat Supreme: Rockets";
+	BIO_PERK_ROCKETAMMOCAPACITY_MAJOR_DESC =
+		"\c[Green]+5 rocket capacity";
+
+	BIO_PERK_CELLCAPACITY_MAJOR_TAG =
+		"\c[White]Packrat Supreme: Cells";
+	BIO_PERK_CELLCAPACITY_MAJOR_DESC =
+		"\c[Green]+100 cell capacity";
+
 	BIO_PERK_LARGEAMMOBONUS_TAG
 		= "\c[White]Scrounger";	
 	BIO_PERK_LARGEAMMOBONUS_DESC
