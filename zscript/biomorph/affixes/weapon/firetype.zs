@@ -163,8 +163,10 @@ class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 					weap.Pipelines[i].SetFireFunctor(new('BIO_FireFunc_Projectile'));
 			}
 
+
 			weap.Pipelines[i].SetFireType('BIO_MiniMissile');
-			weap.Pipelines[i].SetSplash(48, 48);
+			int avgDmg = weap.Pipelines[i].GetAverageDamage();
+			weap.Pipelines[i].SetSplash(avgDmg, avgDmg);
 		}
 	}
 
