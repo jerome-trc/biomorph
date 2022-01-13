@@ -517,7 +517,7 @@ class BIO_Weapon : DoomWeapon abstract
 		for (uint i = 0; i < AffixReadout.Size(); i++)
 			upTime += AffixReadout[i].Length();
 
-		bioPlayer.ExamineWeapon(self, upTime * 0.33);
+		bioPlayer.ExamineWeapon(self, Max(TICRATE, upTime * 0.33));
 
 		// Don't consume the interaction so players can open doors and so on
 		return false;
