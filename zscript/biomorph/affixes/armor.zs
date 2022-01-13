@@ -1,4 +1,4 @@
-class BIO_ArmorAffix_SaveAmount : BIO_EquipmentAffix
+class BIO_EAfx_SaveAmount : BIO_EquipmentAffix
 {
 	int Modifier;
 
@@ -35,7 +35,7 @@ class BIO_ArmorAffix_SaveAmount : BIO_EquipmentAffix
 	}
 }
 
-class BIO_ArmorAffix_SavePercent : BIO_EquipmentAffix
+class BIO_EAfx_SavePercent : BIO_EquipmentAffix
 {
 	int Modifier;
 
