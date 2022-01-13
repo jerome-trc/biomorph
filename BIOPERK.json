@@ -23,6 +23,70 @@
 			"desc": "$BIO_PERK_SPLASHRESIST_MINOR_DESC",
 			"icon": "graphics/perk/splashresist_minor.png",
 			"category": "minor"
+		},
+		{
+			"id": "bio_clipcapacity_minor",
+			"class": "BIO_Perk_ClipCapacity_Minor",
+			"tag": "$BIO_PERK_CLIPCAPACITY_MINOR_TAG",
+			"desc": "$BIO_PERK_CLIPCAPACITY_MINOR_DESC",
+			"icon": "CLIPA0",
+			"category": "minor"
+		},
+		{
+			"id": "bio_shellcapacity_minor",
+			"class": "BIO_Perk_ShellCapacity_Minor",
+			"tag": "$BIO_PERK_SHELLCAPACITY_MINOR_TAG",
+			"desc": "$BIO_PERK_SHELLCAPACITY_MINOR_DESC",
+			"icon": "SHELA0",
+			"category": "minor"
+		},
+		{
+			"id": "bio_rocketammocapacity_minor",
+			"class": "BIO_Perk_RocketAmmoCapacity_Minor",
+			"tag": "$BIO_PERK_ROCKETAMMOCAPACITY_MINOR_TAG",
+			"desc": "$BIO_PERK_ROCKETAMMOCAPACITY_MINOR_DESC",
+			"icon": "ROCKA0",
+			"category": "minor"
+		},
+		{
+			"id": "bio_cellcapacity_minor",
+			"class": "BIO_Perk_CellCapacity_Minor",
+			"tag": "$BIO_PERK_CELLCAPACITY_MINOR_TAG",
+			"desc": "$BIO_PERK_CELLCAPACITY_MINOR_DESC",
+			"icon": "CELLA0",
+			"category": "minor"
+		},
+		{
+			"id": "bio_clipcapacity_major",
+			"class": "BIO_Perk_ClipCapacity_Major",
+			"tag": "$BIO_PERK_CLIPCAPACITY_MAJOR_TAG",
+			"desc": "$BIO_PERK_CLIPCAPACITY_MAJOR_DESC",
+			"icon": "AMMOA0",
+			"category": "major"
+		},
+		{
+			"id": "bio_shellcapacity_major",
+			"class": "BIO_Perk_ShellCapacity_Major",
+			"tag": "$BIO_PERK_SHELLCAPACITY_MAJOR_TAG",
+			"desc": "$BIO_PERK_SHELLCAPACITY_MAJOR_DESC",
+			"icon": "SBOXA0",
+			"category": "major"
+		},
+		{
+			"id": "bio_rocketammocapacity_major",
+			"class": "BIO_Perk_RocketAmmoCapacity_Major",
+			"tag": "$BIO_PERK_ROCKETAMMOCAPACITY_MAJOR_TAG",
+			"desc": "$BIO_PERK_ROCKETAMMOCAPACITY_MAJOR_DESC",
+			"icon": "BROKA0",
+			"category": "major"
+		},
+		{
+			"id": "bio_cellcapacity_major",
+			"class": "BIO_Perk_CellCapacity_Major",
+			"tag": "$BIO_PERK_CELLCAPACITY_MAJOR_TAG",
+			"desc": "$BIO_PERK_CELLCAPACITY_MAJOR_DESC",
+			"icon": "CELPA0",
+			"category": "major"
 		}
 	],
 	"perks": [
@@ -135,48 +199,35 @@
 			"neighbors": [ "bio_splashresist_2" ]
 		},
 		{
-			"uuid": "bio_clipcapacity",
-			"class": "BIO_Perk_ClipCapacity_Minor",
+			"uuid": "bio_clipcapacity_minor_0",
+			"template": "bio_clipcapacity_minor",
 			"x": 0,
 			"y": 60,
-			"tag": "$BIO_PERK_CLIPCAPACITY_MINOR_TAG",
-			"desc": "$BIO_PERK_CLIPCAPACITY_MINOR_DESC",
-			"icon": "CLIPA0",
-			"category": "minor",
 			"neighbors": [ "bio_start" ]
 		},
 		{
-			"uuid": "bio_shellcapacity",
-			"class": "BIO_Perk_ShellCapacity_Minor",
+			"uuid": "bio_shellcapacity_minor_0",
+			"template": "bio_shellcapacity_minor",
 			"x": 30,
 			"y": 120,
-			"tag": "$BIO_PERK_SHELLCAPACITY_MINOR_TAG",
-			"desc": "$BIO_PERK_SHELLCAPACITY_MINOR_DESC",
-			"icon": "SHELA0",
-			"category": "minor",
-			"neighbors": [ "bio_clipcapacity" ]
+			"neighbors": [ "bio_clipcapacity_minor_0" ]
 		},
 		{
-			"uuid": "bio_rocketammocapacity",
-			"class": "BIO_Perk_RocketAmmoCapacity_Minor",
+			"uuid": "bio_rocketammocapacity_minor_0",
+			"template": "bio_rocketammocapacity_minor",
 			"x": -30,
 			"y": 120,
-			"tag": "$BIO_PERK_ROCKETAMMOCAPACITY_MINOR_TAG",
-			"desc": "$BIO_PERK_ROCKETAMMOCAPACITY_MINOR_DESC",
-			"icon": "ROCKA0",
-			"category": "minor",
-			"neighbors": [ "bio_clipcapacity" ]
+			"neighbors": [ "bio_clipcapacity_minor_0" ]
 		},
 		{
-			"uuid": "bio_cellcapacity",
-			"class": "BIO_Perk_CellCapacity_Minor",
+			"uuid": "bio_cellcapacity_minor_0",
+			"template": "bio_cellcapacity_minor",
 			"x": 0,
 			"y": 180,
-			"tag": "$BIO_PERK_CELLCAPACITY_MINOR_TAG",
-			"desc": "$BIO_PERK_CELLCAPACITY_MINOR_DESC",
-			"icon": "CELLA0",
-			"category": "minor",
-			"neighbors": [ "bio_shellcapacity", "bio_rocketammocapacity" ]
+			"neighbors": [
+				"bio_shellcapacity_minor_0",
+				"bio_rocketammocapacity_minor_0"
+			]
 		},
 		{
 			"uuid": "bio_largeammobonus",
@@ -187,7 +238,7 @@
 			"desc": "$BIO_PERK_LARGEAMMOBONUS_DESC",
 			"icon": "graphics/perk/largeammobonus.png",
 			"category": "major",
-			"neighbors": [ "bio_rocketammocapacity" ]
+			"neighbors": [ "bio_rocketammocapacity_minor_0" ]
 		},
 		{
 			"uuid": "bio_additivebackpacks",
@@ -198,7 +249,63 @@
 			"desc": "$BIO_PERK_ADDITIVEBACKPACKS_DESC",
 			"icon": "BPAKA0",
 			"category": "major",
-			"neighbors": [ "bio_cellcapacity" ]
+			"neighbors": [ "bio_cellcapacity_minor_0" ]
+		},
+		{
+			"uuid": "bio_clipcapacity_minor_1",
+			"template": "bio_clipcapacity_minor",
+			"x": -100,
+			"y": 300,
+			"neighbors": [ "bio_additivebackpacks" ]
+		},
+		{
+			"uuid": "bio_shellcapacity_minor_1",
+			"template": "bio_shellcapacity_minor",
+			"x": -40,
+			"y": 330,
+			"neighbors": [ "bio_additivebackpacks" ]
+		},
+		{
+			"uuid": "bio_rocketammocapacity_minor_1",
+			"template": "bio_rocketammocapacity_minor",
+			"x": 40,
+			"y": 330,
+			"neighbors": [ "bio_additivebackpacks" ]
+		},
+		{
+			"uuid": "bio_cellcapacity_minor_1",
+			"template": "bio_cellcapacity_minor",
+			"x": 100,
+			"y": 300,
+			"neighbors": [ "bio_additivebackpacks" ]
+		},
+		{
+			"uuid": "bio_clipcapacity_major_1",
+			"template": "bio_clipcapacity_major",
+			"x": -200,
+			"y": 360,
+			"neighbors": [ "bio_clipcapacity_minor_1" ]
+		},
+		{
+			"uuid": "bio_shellcapacity_major_1",
+			"template": "bio_shellcapacity_major",
+			"x": -70,
+			"y": 400,
+			"neighbors": [ "bio_shellcapacity_minor_1" ]
+		},
+		{
+			"uuid": "bio_rocketammocapacity_major_1",
+			"template": "bio_rocketammocapacity_major",
+			"x": 70,
+			"y": 400,
+			"neighbors": [ "bio_rocketammocapacity_minor_1" ]
+		},
+		{
+			"uuid": "bio_cellcapacity_major_1",
+			"template": "bio_cellcapacity_major",
+			"x": 200,
+			"y": 360,
+			"neighbors": [ "bio_cellcapacity_minor_1" ]
 		},
 		{
 			"uuid": "bio_weapcap_0",
