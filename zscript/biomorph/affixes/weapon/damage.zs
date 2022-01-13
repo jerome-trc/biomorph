@@ -74,6 +74,8 @@ class BIO_WAfx_Damage : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
+	final override bool CanGenerate() const { return false; }
+	final override bool CanGenerateImplicit() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
@@ -154,6 +156,8 @@ class BIO_WAfx_DamageMulti : BIO_WeaponAffix
 	}
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
+	final override bool CanGenerate() const { return false; }
+	final override bool CanGenerateImplicit() const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
