@@ -433,6 +433,8 @@
 
 // Powerups ====================================================================
 
+	BIO_ALLMAP_PKUP = "Obtained a computer area map; your surroundings become clear.";
+	BIO_BLURSPHERE_PKUP = "Absorbed a blursphere.";
 	BIO_LIGHTAMP_PKUP = "Obtained a light amplification visor.";
 	BIO_MEGASPHERE_PKUP = "Absorbed a Megasphere!";
 	BIO_MEGASPHERE_ARMORREPAIR = "Your %s\c- is repaired to perfect condition.";

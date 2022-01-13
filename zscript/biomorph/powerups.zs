@@ -65,6 +65,7 @@ class BIO_BlurSphere : BlurSphere replaces BlurSphere
 {
 	Default
 	{
+		Inventory.PickupMessage "$BIO_BLURSPHERE_PKUP";
 		Powerup.Type 'BIO_PowerInvisibility';
 	}
 
@@ -184,6 +185,11 @@ class BIO_PowerIronFeet : PowerIronFeet
 
 class BIO_Allmap : Allmap replaces Allmap
 {
+	Default
+	{
+		Inventory.PickupMessage "$BIO_ALLMAP_PKUP";
+	}
+
 	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
