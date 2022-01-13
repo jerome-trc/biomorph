@@ -17,7 +17,7 @@ class BIO_WAfx_BerserkDamage : BIO_WeaponAffix
 	final override void BeforeEachFire(BIO_Weapon weap,
 		in out BIO_FireData fireData) const
 	{
-		if (fireData.FireType is 'BIO_MeleeHit' &&
+		if (weap.LastPipelineFired().IsMelee() &&
 			weap.Owner.FindInventory('PowerStrength', true))
 			fireData.Damage *= Multiplier;
 	}
