@@ -42,7 +42,7 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 {
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
 	{
-		return weap.FiresProjectile();
+		return weap.FiresProjectile() && weap.DealsAnySplashDamage();
 	}
 
 	final override void OnTrueProjectileFired(
