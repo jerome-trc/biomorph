@@ -1399,20 +1399,44 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	// Recomputes rarity, recolors the tag, and rewrites readouts.
+	private void ReorderAffixes(in out Array<BIO_WeaponAffix> arr)
+	{
+		Array<BIO_WeaponAffix> temp;
+		temp.Move(arr);
+
+		while (temp.Size() > 0)
+		{
+			int highest = int.MIN;
+			uint highest_idx = uint.MAX;
+
+			for (uint i = 0; i < temp.Size(); i++)
+			{
+				int prio = temp[i].OrderPriority();
+
+				if (prio > highest)
+				{
+					highest = prio;
+					highest_idx = i;
+				}
+			}
+
+			arr.Push(temp[highest_idx]);
+			temp.Delete(highest_idx);
+		}
+	}
+
+	// Recomputes rarity, re-orders affixes, recolors tag, and rewrites readouts.
 	void OnWeaponChange()
 	{
-		Array<BIO_StateTimeGroup> fireTimeDefs, reloadTimeDefs;
-
-		InitFireTimes(fireTimeDefs);
-		InitReloadTimes(reloadTimeDefs);
-
 		if (Default.Rarity == BIO_RARITY_UNIQUE)
 			Rarity = BIO_RARITY_UNIQUE;
 		else if (Affixes.Size() > 0)
 			Rarity = BIO_RARITY_MUTATED;
 		else
 			Rarity = BIO_RARITY_COMMON;
+
+		ReorderAffixes(ImplicitAffixes);
+		ReorderAffixes(Affixes);
 
 		SetTag(FullTag());
 
@@ -1425,6 +1449,11 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 
 		// Incidental blank line between pipeline readouts and fire time readouts
+
+		Array<BIO_StateTimeGroup> fireTimeDefs, reloadTimeDefs;
+
+		InitFireTimes(fireTimeDefs);
+		InitReloadTimes(reloadTimeDefs);
 
 		for (uint i = 0; i < FireTimeGroups.Size(); i++)
 		{
