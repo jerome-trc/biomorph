@@ -159,6 +159,7 @@ class BIO_Player : DoomPlayer
 			EquippedArmor.Equipped = true;
 			let armor_t = (Class<BIO_Armor>)(equippable.GetClass());
 			GiveInventory(GetDefaultByType(armor_t).StatClass, 1);
+			FindInventory('BasicArmor').MaxAmount = EquippedArmor.ArmorData.MaxAmount;
 		}
 	}
 

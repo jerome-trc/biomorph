@@ -31,8 +31,15 @@ class BIO_ArmorBonus : Inventory replaces ArmorBonus
 
 		if (armor.MaxAmount <= 1)
 			return;
+		
+		// Like GiveInventory, fill up to max if modifier is 0
+		if (modifier == 0)
+			modifier = bioPlayer.EquippedArmor.ArmorData.MaxAmount;
 
-		armor.Amount = Min(armor.Amount + modifier, armor.MaxAmount);
+		armor.Amount = Min(
+			armor.Amount + modifier,
+			bioPlayer.EquippedArmor.ArmorData.MaxAmount);
+		
 		bioPlayer.EquippedArmor.ArmorData.SaveAmount = armor.Amount;
 	}
 

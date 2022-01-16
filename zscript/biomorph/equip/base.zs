@@ -209,7 +209,7 @@ class BIO_Equipment : Inventory abstract
 struct BIO_ArmorData
 {
 	double SavePercent;
-	int MaxAbsorb, MaxFullAbsorb, SaveAmount;
+	int MaxAbsorb, MaxFullAbsorb, SaveAmount, MaxAmount;
 }
 
 class BIO_Armor : BIO_Equipment abstract
@@ -270,6 +270,8 @@ class BIO_Armor : BIO_Equipment abstract
 			ImplicitAffixes[i].PreArmorApply(self, ArmorData);
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].PreArmorApply(self, ArmorData);
+
+		ArmorData.MaxAmount = ArmorData.SaveAmount;
 	}
 
 	final override bool Used(Actor user)

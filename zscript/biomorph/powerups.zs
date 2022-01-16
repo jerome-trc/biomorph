@@ -245,8 +245,8 @@ class BIO_Megasphere : Megasphere replaces Megasphere
 		
 		if (bioPlayer.EquippedArmor != null && bioPlayer.EquippedArmor.Reparable())
 		{
-			let armor = BasicArmor(bioPlayer.FindInventory('BasicArmor'));
-			armor.Amount = armor.MaxAmount;
+			BIO_ArmorBonus.TryRepairArmor(bioPlayer, 0);
+
 			PrintPickupMessage(toucher.CheckLocalView(), String.Format(
 				StringTable.Localize("$BIO_MEGASPHERE_ARMORREPAIR"),
 				bioPlayer.EquippedArmor.GetTag()));
