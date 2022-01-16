@@ -29,6 +29,7 @@ class BIO_Player : DoomPlayer
 	
 		Player.StartItem 'BIO_WeaponDrop';
 		Player.StartItem 'BIO_UnequipArmor';
+		Player.StartItem 'BIO_PickupHandler';
 
 		Player.StartItem 'Clip', 50;
 		Player.StartItem 'Shell', 0;
@@ -594,5 +595,37 @@ class BIO_Player : DoomPlayer
 		ExaminedWeapon = weap;
 		ExamineTimer = upTime;
 		A_StartSound("bio/ui/beep", attenuation: 1.2);
+	}
+}
+
+class BIO_PickupHandler : BIO_PermanentInventory
+{
+	// DEHACKED sometimes causes creates proxies for vanilla weapons which
+	// the event handler doesn't replace, allowing pickups which shouldn't
+	// technically be possible (see Ancient Aliens' SSG for an example).
+	final override bool HandlePickup(Inventory item)
+	{
+		static const Class<Weapon> VANILLA_WEAPS[] = {
+			'Pistol',
+			'Shotgun',
+			'SuperShotgun',
+			'Chaingun',
+			'RocketLauncher',
+			'PlasmaRifle',
+			'BFG9000'
+		};
+
+		for (uint i = 0; i < VANILLA_WEAPS.Size(); i++)
+		{
+			if (item.GetClass() != VANILLA_WEAPS[i]) continue;
+
+			string bioEquiv_tn = "BIO_" .. VANILLA_WEAPS[i].GetClassName();
+			Actor.Spawn(bioEquiv_tn, item.Pos);
+			item.bPickupGood = true;
+			item.GoAwayAndDie();
+			return true;
+		}
+
+		return false;
 	}
 }
