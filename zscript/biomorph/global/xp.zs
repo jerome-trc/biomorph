@@ -128,8 +128,9 @@ extend class BIO_GlobalData
 		while (PartyXP >= XPToNextLevel())
 		{
 			anylevelup = true;
-			PartyLevel++;
-			AddPerkPoint();
+
+			if (++PartyLevel < BasePerkGraph.Nodes.Size())
+				AddPerkPoint();
 
 			if (BIO_debug)
 				Console.Printf(Biomorph.LOGPFX_DEBUG ..
