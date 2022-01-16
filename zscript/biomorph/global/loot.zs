@@ -11,12 +11,17 @@ extend class BIO_GlobalData
 	private BIO_PartyMaxWeaponGrade MaxWeaponGrade;
 
 	// 0 is Standard, 1 is Specialty, 2 is Classified.
-	private BIO_WeightedRandomTable[__BIO_WEAPCAT_COUNT__][3] WeaponLootTables;
+	private BIO_WeaponLootTable[__BIO_WEAPCAT_COUNT__][3] WeaponLootTables;
 	
 	// Contains all tables in `WeaponLootTables`.
-	private BIO_WeightedRandomTable WeaponLootMetaTable;
+	private BIO_WeaponLootTable WeaponLootMetaTable;
 	
-	private BIO_WeightedRandomTable WRT_Mutagens;
+	private BIO_WeaponLootTable WRT_Mutagens;
+
+	Class<BIO_Mutagen> RandomMutagenType() const
+	{
+		return (Class<BIO_Mutagen>)(WRT_Mutagens.Result());
+	}
 
 	Class<BIO_Weapon> AnyLootWeaponType() const
 	{
@@ -27,23 +32,37 @@ extend class BIO_GlobalData
 	{
 		switch (MaxWeaponGrade)
 		{
+		case BIO_PMWG_CLASSIFIED:
+			if (table <= BIO_WEAPCAT_AUTOGUN)
+			{
+				return (Class<BIO_Weapon>)(WeaponLootTables[
+					RandomPick[BIO_Loot](
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2)
+				][table].Result());
+			}
+			else
+			{
+				return (Class<BIO_Weapon>)(WeaponLootTables[
+					RandomPick[BIO_Loot](0, 0, 0, 1, 1, 2)
+				][table].Result());
+			}
+		case BIO_PMWG_SPECIALTY:
+			if (table <= BIO_WEAPCAT_AUTOGUN)
+			{
+				return (Class<BIO_Weapon>)(WeaponLootTables[
+					RandomPick[BIO_Loot](0, 0, 0, 0, 1)
+				][table].Result());
+			}
+			else
+			{
+				return (Class<BIO_Weapon>)(WeaponLootTables[
+					RandomPick[BIO_Loot](0, 0, 0, 1, 1)
+				][table].Result());
+			}
 		default:
 		case BIO_PMWG_STANDARD:
 			return (Class<BIO_Weapon>)(WeaponLootTables[0][table].Result());
-		case BIO_PMWG_SPECIALTY:
-			return (Class<BIO_Weapon>)(WeaponLootTables[
-				RandomPick(0, 0, 0, 0, 1)
-			][table].Result());
-		case BIO_PMWG_CLASSIFIED:
-			return (Class<BIO_Weapon>)(WeaponLootTables[
-				RandomPick(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2)
-			][table].Result());
 		}
-	}
-
-	Class<BIO_Mutagen> RandomMutagenType() const
-	{
-		return (Class<BIO_Mutagen>)(WRT_Mutagens.Result());
 	}
 
 	void OnWeaponAcquired(BIO_Grade grade)
@@ -80,9 +99,9 @@ extend class BIO_GlobalData
 
 		switch (MaxWeaponGrade)
 		{
-		case BIO_PMWG_STANDARD: g = 0; m = 12; break;
-		case BIO_PMWG_SPECIALTY: g = 1; m = 4; break;
-		case BIO_PMWG_CLASSIFIED: g = 2; m = 1; break;
+		case BIO_PMWG_STANDARD: g = 0; break;
+		case BIO_PMWG_SPECIALTY: g = 1; break;
+		case BIO_PMWG_CLASSIFIED: g = 2; break;
 		default: return;
 		}
 
@@ -101,6 +120,27 @@ extend class BIO_GlobalData
 			case BIO_WEAPCAT_LAUNCHER: weight = 6; break;
 			case BIO_WEAPCAT_ENERGY: weight = 4; break;
 			case BIO_WEAPCAT_SUPER: weight = 1; break;
+			}
+
+			if (i <= BIO_WEAPCAT_AUTOGUN)
+			{
+				switch (MaxWeaponGrade)
+				{
+				case BIO_PMWG_STANDARD: m = 12; break;
+				case BIO_PMWG_SPECIALTY: m = 4; break;
+				case BIO_PMWG_CLASSIFIED: m = 1; break;
+				default: break;
+				}
+			}
+			else
+			{
+				switch (MaxWeaponGrade)
+				{
+				case BIO_PMWG_STANDARD: m = 3; break;
+				case BIO_PMWG_SPECIALTY: m = 2; break;
+				case BIO_PMWG_CLASSIFIED: m = 1; break;
+				default: break;
+				}
 			}
 
 			WeaponLootMetaTable.PushLayer(WeaponLootTables[g][i], weight * m);
