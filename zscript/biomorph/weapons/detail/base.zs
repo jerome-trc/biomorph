@@ -1968,6 +1968,6 @@ mixin class BIO_Magazine
 	{
 		+INVENTORY.IGNORESKILL
 		Inventory.Icon '';
-		Inventory.MaxAmount 10000;
+		Inventory.MaxAmount BIO_Weapon.MAGAZINE_MAXAMOUNT;
 	}
 }
