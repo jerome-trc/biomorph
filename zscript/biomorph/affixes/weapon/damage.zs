@@ -560,6 +560,9 @@ class BIO_WAfx_MaxDamageOnly : BIO_WeaponAffix
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
 	final override bool ImplicitExplicitExclusive() const { return true; }
 
+	// High priority so modified damage isn't clobbered
+	final override int OrderPriority() const { return 255; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_DAMAGE;

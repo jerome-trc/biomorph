@@ -17,6 +17,9 @@ class BIO_Affix play abstract
 	// to an item explicitly if it already has the affix implicitly, and vice-versa.
 	virtual bool ImplicitExplicitExclusive() const { return false; }
 
+	// Higher return value = higher priority = nearer to array front.
+	virtual int OrderPriority() const { return 0; }
+
 	// Output should be fully localized.
 	abstract string GetTag() const;
 }
