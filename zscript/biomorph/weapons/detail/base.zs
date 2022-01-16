@@ -1477,7 +1477,7 @@ class BIO_Weapon : DoomWeapon abstract
 		AffixReadout.Push("");
 
 		if (BIOFlags & BIO_WF_AFFIXESHIDDEN)
-			AffixReadout.Push("\cg" .. StringTable.Localize("$BIO_AFFIXESUNKNOWN"));
+			AffixReadout.Push("\c[DarkRed]" .. StringTable.Localize("$BIO_AFFIXESUNKNOWN"));
 		else
 		{
 			for (uint i = 0; i < Affixes.Size(); i++)

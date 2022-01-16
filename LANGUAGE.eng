@@ -632,7 +632,7 @@
 		"\cjLifesteal, like Health Bonuses, gives health up to your maximum + 100.";
 	BIO_QUITMSG_MULTIBARREL = "\cjMulti-barrelled weapons like the Super Shotgun "
 		"always allow firing only one barrel (try your \cnalt-fire\cj button).";
-	BIO_QUITMSG_MUTACORR = "\cjThe effects of \cgR.O.T. Mutagen\cj "
+	BIO_QUITMSG_MUTACORR = "\cjThe effects of \c[DarkRed]R.O.T. Mutagen\cj "
 		"are unpredictable and irreversible, but potentially very powerful.";
 
 // Miscellaneous ===============================================================
