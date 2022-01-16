@@ -181,6 +181,8 @@ extend class BIO_EventHandler
 		pGraph.Points--;
 	}
 
+	// If first argument is non-zero, force adding the affix.
+	// If second argument is non-zero, add the affix as implicit.
 	private void NetEvent_AddWeapAffix(ConsoleEvent event) const
 	{
 		if (event.Player != ConsolePlayer) return;
@@ -222,9 +224,50 @@ extend class BIO_EventHandler
 			return;
 		}
 
-		uint e = weap.Affixes.Push(BIO_WeaponAffix(new(wafx_t)));
-		weap.Affixes[e].Init(weap.AsConst());
-		weap.Affixes[e].Apply(weap);
+		bool force = event.Args[0] != 0;
+		bool implicit = event.Args[1] != 0;
+
+		if (weap.HasAffixOfType(wafx_t, implicit: implicit) && !force)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Weapon already has affix of type `%s` "
+				"(give non-zero as second argument to force).",
+				wafx_t.GetClassName());
+			return;
+		}
+
+		if (weap.HasAffixOfType(wafx_t, implicit: implicit) && !force)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Weapon already has affix of type `%s` "
+				"(give non-zero as second argument to force).",
+				wafx_t.GetClassName());
+			return;
+		}
+
+		if (!Globals.WeaponAffixCompatible(
+			wafx_t, weap.AsConst(), implicit: implicit) && !force)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Weapon incompatible with affix of type `%s` "
+				"(give non-zero as arg. 2 to force).",
+				wafx_t.GetClassName());
+			return;
+		}
+
+		if (!implicit)
+		{
+			uint e = weap.Affixes.Push(BIO_WeaponAffix(new(wafx_t)));
+			weap.Affixes[e].Init(weap.AsConst());
+			weap.Affixes[e].Apply(weap);
+		}
+		else
+		{
+			uint e = weap.ImplicitAffixes.Push(BIO_WeaponAffix(new(wafx_t)));
+			weap.ImplicitAffixes[e].Init(weap.AsConst());
+			weap.ImplicitAffixes[e].Apply(weap);
+		}
+
 		weap.OnWeaponChange();
 		Console.Printf(Biomorph.LOGPFX_INFO ..
 			"Applied %s to your current weapon.", wafx_t.GetClassName());
