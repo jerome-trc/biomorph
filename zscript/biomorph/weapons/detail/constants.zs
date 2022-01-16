@@ -52,6 +52,7 @@ enum BIO_WeaponAffixMask : uint
 
 extend class BIO_Weapon
 {
+	const MAGAZINE_MAXAMOUNT = uint16.MAX;
 	const DEFAULT_MAX_AFFIXES = 6;
 
 	// `SelectionOrder` is for when ammo runs out; lower number, higher priority

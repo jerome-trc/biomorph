@@ -220,8 +220,9 @@ class BIO_StatusBar : BaseStatusBar
 		{
 			DrawInventoryIcon(ammoItem1, (-14, -4));
 
-			if (mag1 != ammoItem1) // Weapon with disparate magazine
+			if (mag1 != ammoItem1)
 			{
+				// Weapon with disparate magazine
 				DrawString(Font_HUD,
 					String.Format("%s / %s / %s",
 						FormatNumber(mag1.Amount, 3, 6),
@@ -229,11 +230,19 @@ class BIO_StatusBar : BaseStatusBar
 						FormatNumber(ammoItem1.MaxAmount, 3, 6)),
 					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 			}
-			else // No magazine; feeds directly from reserve
+			else if (mag1.MaxAmount != BIO_Weapon.MAGAZINE_MAXAMOUNT)
 			{
+				// No magazine; feeds directly from reserve
 				DrawString(Font_HUD, String.Format("%s / %s",
 						FormatNumber(ammoItem1.Amount, 3, 6),
 						FormatNumber(ammoItem1.MaxAmount, 3, 6)),
+					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+			}
+			else
+			{
+				// Weapon has magazine which does not feed from reserve
+				DrawString(Font_HUD,
+					String.Format("%s", FormatNumber(ammoItem1.Amount, 3, 6)),
 					(-30, -16), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 			}
 			
@@ -244,8 +253,9 @@ class BIO_StatusBar : BaseStatusBar
 		{
 			DrawInventoryIcon(ammoItem2, (-14, -24));
 
-			if (mag2 != ammoItem2) // Weapon with disparate magazine
+			if (mag2 != ammoItem2) 
 			{
+				// Weapon with disparate magazine
 				DrawString(Font_HUD,
 					String.Format("%s / %s / %s",
 						FormatNumber(mag2.Amount, 3, 6),
@@ -253,12 +263,20 @@ class BIO_StatusBar : BaseStatusBar
 						FormatNumber(ammoItem2.MaxAmount, 3, 6)),
 					(-30, -36), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 			}
-			else // No magazine; feeds directly from reserve
+			else if (mag2.MaxAmount != BIO_Weapon.MAGAZINE_MAXAMOUNT)
 			{
+				// No magazine; feeds directly from reserve
 				DrawString(Font_HUD,
 					String.Format("%s / %s",
 						FormatNumber(ammoItem2.Amount, 3, 6),
 						FormatNumber(ammoItem2.MaxAmount, 3, 6)),
+					(-30, -36), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
+			}
+			else
+			{
+				// Weapon has magazine which does not feed from reserve
+				DrawString(Font_HUD,
+					String.Format("%s", FormatNumber(ammoItem2.Amount, 3, 6)),
 					(-30, -36), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD);
 			}
 
