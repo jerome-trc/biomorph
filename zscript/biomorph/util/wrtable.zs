@@ -12,6 +12,8 @@ class BIO_WeightedRandomTable
 	protected Array<BIO_WeightedRandomTableEntry> Entries;
 	protected uint WeightSum;
 
+	virtual protected uint RandomImpl() const { return Random(1, WeightSum); }
+
 	void Push(Class<Object> type, uint weight)
 	{
 		if (type == null)
@@ -46,9 +48,9 @@ class BIO_WeightedRandomTable
 				Label.Length() > 0 ? Label : String.Format("%p", self));
 			return null;
 		}
-		
+
 		uint end = Entries.Push(new('BIO_WeightedRandomTableEntry'));
-		Entries[end].SubTable = new('BIO_WeightedRandomTable');
+		Entries[end].SubTable = BIO_WeightedRandomTable(new(GetClass()));
 		Entries[end].Weight = weight;
 		WeightSum += weight;
 		return Entries[end].SubTable;
@@ -75,7 +77,7 @@ class BIO_WeightedRandomTable
 		uint end  = Entries.Push(new('BIO_WeightedRandomTableEntry'));
 		Entries[end].SubTable = wrt;
 		Entries[end].Weight = weight;
-		WeightSUm += weight;
+		WeightSum += weight;
 	}
 
 	Class<Object> Result() const
@@ -93,7 +95,7 @@ class BIO_WeightedRandomTable
 
 		while (ret == null && iters < 10000)
 		{
-			readOnly<uint> chance = Random[BIO_WRT](1, WeightSum);
+			uint chance = RandomImpl();
 			uint runningSum = 0, choice = 0;
 
 			for (uint i = 0; i < Entries.Size(); i++)
@@ -198,5 +200,13 @@ class BIO_WeightedRandomTable
 				Console.Printf(prefix .. "%s: %d",
 					Entries[i].Type.GetClassName(), Entries[i].Weight);
 		}
+	}
+}
+
+class BIO_WeaponLootTable : BIO_WeightedRandomTable
+{
+	final override uint RandomImpl() const
+	{
+		return Random[BIO_Loot](1, WeightSum);
 	}
 }
