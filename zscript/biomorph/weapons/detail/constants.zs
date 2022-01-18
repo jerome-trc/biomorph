@@ -130,12 +130,12 @@ extend class BIO_Weapon
 	};
 
 	static const string CATEGORY_IDS[] = {
-		"melee",
-		"pistol",
 		"shotgun",
-		"ssg",
 		"rifle",
 		"autogun",
+		"melee",
+		"pistol",
+		"ssg",
 		"launcher",
 		"energy",
 		"super"
