@@ -138,6 +138,11 @@ class BIO_ValiantChaingun : BIO_Chaingun
 			.Build());
 	}
 
+	override void InitFireTimes(in out Array<BIO_StateTimeGroup> groups) const
+	{
+		groups.Push(StateTimeGroupFromRange('Fire', 'Winddown'));
+	}
+
 	States
 	{
 	Fire:
