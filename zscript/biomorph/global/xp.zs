@@ -118,7 +118,7 @@ extend class BIO_GlobalData
 
 	uint GetPartyXP() const { return PartyXP; }
 	uint GetPartyLevel() const { return PartyLevel; }
-	uint XPToNextLevel() const { return 1000 * (PartyLevel ** 1.4); }
+	uint XPToNextLevel() const { return 1000 * (PartyLevel ** 1.7); }
 
 	void AddPartyXP(uint xp)
 	{
