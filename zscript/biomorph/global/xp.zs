@@ -177,6 +177,23 @@ extend class BIO_GlobalData
 		return BasePerkGraph.AsConst();
 	}
 
+	void XPReset()
+	{
+		PartyXP = 0;
+		PartyLevel = 0;
+
+		for (uint i = 0; i < PerkGraphs.Size(); i++)
+		{
+			PerkGraphs[i].Points = 0;
+			PerkGraphs[i].Refunds = 0;
+			
+			for (uint j = 1; j < PerkGraphs[i].PerkActive.Size(); j++)
+				PerkGraphs[i].PerkActive[j] = false;
+		}
+	}
+
+	// Initialization ==========================================================
+
 	const LMPNAME_PERKS = "BIOPERK";
 
 	private void CreateBasePerkGraph()

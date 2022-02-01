@@ -601,11 +601,12 @@ class BIO_Player : DoomPlayer
 
 class BIO_PickupHandler : BIO_PermanentInventory
 {
-	// DEHACKED sometimes causes creates proxies for vanilla weapons which
-	// the event handler doesn't replace, allowing pickups which shouldn't
-	// technically be possible (see Ancient Aliens' SSG for an example).
 	final override bool HandlePickup(Inventory item)
 	{
+		// DEHACKED sometimes creates proxies for vanilla weapons which
+		// the event handler doesn't replace, allowing pickups which shouldn't
+		// technically be possible (see Ancient Aliens' SSG for an example).
+
 		static const Class<Weapon> VANILLA_WEAPS[] = {
 			'Pistol',
 			'Shotgun',

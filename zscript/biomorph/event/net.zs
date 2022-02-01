@@ -17,6 +17,7 @@ extend class BIO_EventHandler
 		NetEvent_RemoveWeapAffix(event);
 		NetEvent_RecalcWeap(event);
 		NetEvent_LevelUp(event);
+		NetEvent_XPReset(event);
 	}
 
 	const EVENT_WUPOVERLAY = "bio_wupoverlay";
@@ -405,6 +406,28 @@ extend class BIO_EventHandler
 
 		for (uint i = 0; i < Max(event.Args[0], 1); i++)
 			Globals.LevelUp();
+	}
+
+	private void NetEvent_XPReset(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_xpreset"))
+			return;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Net event `bio_xpreset` can only be manually invoked.");
+			return;
+		}
+
+		if (!(Players[event.Player].MO is 'BIO_Player'))
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on Biomorph-class players.");
+			return;
+		}
+
+		Globals.XPReset();
 	}
 
 	// =========================================================================
