@@ -49,17 +49,18 @@ extend class BIO_EventHandler
 
 		Console.Printf(
 			"\c[Gold]Console events:\c-\n"
-			"bio_help_\n" ..
-			"bio_playerdiag_\n" ..
-			"bio_weapdiag_\n" ..
-			"bio_equipdiag_\n" ..
-			"bio_xpinfo_\n" ..
-			"event bio_wafxcompat:Classname\n" ..
-			"\c[Gold]Network events:\c-\n" ..
-			"netevent bio_addwafx:Classname\n" ..
-			"netevent bio_rmwafx:Classname\n" ..
-			"bio_recalcweap_ (alias: bio_weaprecalc_)" ..
-			"bio_lvlup_ (also: bio_lvlup_5 and bio_lvlup_10)");
+			"\tbio_help_\n"
+			"\tbio_playerdiag_\n"
+			"\tbio_weapdiag_\n"
+			"\tbio_equipdiag_\n"
+			"\tbio_xpinfo_\n"
+			"\tevent bio_wafxcompat:Classname\n"
+			"\c[Gold]Network events:\c-\n"
+			"\tnetevent bio_addwafx:Classname\n"
+			"\tnetevent bio_rmwafx:Classname\n"
+			"\tbio_recalcweap_ (alias: bio_weaprecalc_)"
+			"\tbio_lvlup_ (also: bio_lvlup_5 and bio_lvlup_10)"
+			"\tbio_xpreset_");
 	}
 
 	private ui void ConEvent_PlayerDiag(ConsoleEvent event) const
