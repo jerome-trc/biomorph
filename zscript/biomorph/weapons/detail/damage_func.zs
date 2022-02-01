@@ -8,6 +8,16 @@ class BIO_DamageFunctor play abstract
 	virtual void GetValues(in out Array<int> vals) const {}
 	virtual void SetValues(in out Array<int> vals) {}
 
+	int AverageOutput(uint sampleSize = 1000)
+	{
+		int total = 0;
+
+		for (uint i = 0; i < sampleSize; i++)
+			total += Invoke();
+
+		return total / int(sampleSize);
+	}
+
 	uint ValueCount() const
 	{
 		Array<int> vals;
@@ -15,7 +25,7 @@ class BIO_DamageFunctor play abstract
 		return vals.Size();
 	}
 
-	// Output should be full localized.
+	// Output should be fully localized.
 	abstract string ToString(BIO_DamageFunctor def) const;
 
 	readOnly<BIO_DamageFunctor> AsConst() const { return self; }
