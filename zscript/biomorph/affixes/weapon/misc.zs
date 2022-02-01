@@ -449,7 +449,7 @@ class BIO_WAfx_SwitchSpeed : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Modifier = Random[BIO_Afx](5, 9);
+		Modifier = Random[BIO_Afx](10, 18);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
