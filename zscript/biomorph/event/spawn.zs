@@ -148,6 +148,8 @@ extend class BIO_EventHandler
 						FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_AUTOGUN), event.Thing);
 				}
 			}
+			else
+				return false;
 		}
 		else
 			return false;
