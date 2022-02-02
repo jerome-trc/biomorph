@@ -94,10 +94,20 @@ extend class BIO_EventHandler
 
 		for (int i = 0; i < (val / LOOT_RNG_THRESHOLD); i++)
 		{
-			event.Thing.A_SpawnItemEx(Globals.RandomMutagenType(),
-				0.0, 0.0, 32.0,
-				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
-				FRandom(0.0, 360.0));
+			if (Random(1, 60) == 1)
+			{
+				event.Thing.A_SpawnItemEx('BIO_Antigen',
+					0.0, 0.0, 32.0,
+					FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
+					FRandom(0.0, 360.0));
+			}
+			else
+			{
+				event.Thing.A_SpawnItemEx(Globals.RandomMutagenType(),
+					0.0, 0.0, 32.0,
+					FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
+					FRandom(0.0, 360.0));
+			}
 		}
 	}
 }

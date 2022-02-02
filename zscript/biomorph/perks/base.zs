@@ -1,10 +1,13 @@
 class BIO_Perk play abstract
 {
 	virtual void Apply(BIO_Player bioPlayer) const {}
+
+	// Higher return value = higher priority = nearer to array front.
+	virtual int OrderPriority() const { return 0; }
 }
 
-// Functor invocations never consider `Count`. The callbacks have the
-// responsibility to read and use or ignore it as they see fit.
+// Functor callers never consider `Count`. The callbacks have the
+// responsibility to read and use it, or ignore it as they see fit.
 
 class BIO_PlayerFunctor play abstract { uint Count; }
 

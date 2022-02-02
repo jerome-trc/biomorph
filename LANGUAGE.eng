@@ -571,7 +571,14 @@
 	BIO_PERK_SLIMERESIST_MAJOR_DESC =
 		"\c[Green]+15% resistance to damaging floors";
 
-// Dropping and digestion ======================================================
+// Antigen =====================================================================
+
+	BIO_ANTIGEN_TAG = "\c[Tan]Antigen";
+	BIO_ANTIGEN_PKUP = "Acquired an \c[Tan]antigen sample\c-.";
+	BIO_ANTIGEN_USE = "\c[Tan]You absorb the antigen, and feel some normalcy return to your genes.";
+	BIO_ANTIGEN_FAIL_NONBIOMORPH = "You're not a Biomorph; you can't use this.";
+
+// Dropping ====================================================================
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";
 
@@ -581,7 +588,7 @@
 	BIO_DOPPEL_OB = "%o met %p doppelganger.";
 	BIO_DOPPEL_SPAWNED = "Something's approaching, and it's a lot like you.";
 
-// Menus =======================================================================
+// Options menu ================================================================
 
 	BIO_OPTLBL_AUTORELOAD_PRE = "Firing an empty weapon reloads it";
 	BIO_OPTLBL_AUTORELOAD_POST = "Auto-reload after emptying magazine";
@@ -604,10 +611,14 @@
 
 	BIO_OPTLBL_QUAKE = "Screen Shake";
 
+// Perk menu ===================================================================
+
 	BIO_PERKMENU_HELP_PAN =
 		"\c[White]Hold the \cnmouse wheel"
 		"\c[White] and \cnmove the mouse\cj to pan";
+	BIO_PERKMENU_HELP_REFUND = "\c[Tan]Click an active perk to prepare it for refund";
 	BIO_PERKMENU_POINTCOUNT = "\c[White]Perk points: \c[Yellow]%d";
+	BIO_PERKMENU_REFUNDCOUNT = "\c[White]Refund points: \c[Tan]%d";
 
 // Keybindings =================================================================
 

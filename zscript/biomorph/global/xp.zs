@@ -13,7 +13,7 @@ class BIO_PerkGraphNode
 	TextureID Icon;
 	Vector2 Position;
 	BIO_PerkCategory Category;
-	Class<BIO_Perk> PerkClass;
+	BIO_Perk Perk;
 	Array<uint> Neighbors;
 }
 
@@ -175,6 +175,27 @@ extend class BIO_GlobalData
 	readOnly<BIO_BasePerkGraph> GetBasePerkGraph() const
 	{
 		return BasePerkGraph.AsConst();
+	}
+
+	void GetPlayerPerkObjects(PlayerInfo pInfo, in out Array<BIO_Perk> output) const
+	{
+		if (output.Size() > 0)
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Illegally passed non-empty array to `GetPlayerPerkObjects()`.");
+			return;
+		}
+
+		let pGraph = GetPerkGraph(pInfo);
+
+		for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
+		{
+			if (BasePerkGraph.Nodes[i].Perk == null)
+				continue;
+
+			if (pGraph.PerkActive[i])
+				output.Push(BasePerkGraph.Nodes[i].Perk);
+		}
 	}
 
 	void XPReset()
@@ -362,7 +383,7 @@ extend class BIO_GlobalData
 
 			uint e = BasePerkGraph.Nodes.Push(new('BIO_PerkGraphNode'));
 			BasePerkGraph.Nodes[e].UUID = e;
-			BasePerkGraph.Nodes[e].PerkClass = perk_t;
+			BasePerkGraph.Nodes[e].Perk = BIO_Perk(new(perk_t));
 			BasePerkGraph.Nodes[e].Position = (posX_json.i, posY_json.i);
 			BasePerkGraph.Nodes[e].Tag = StringTable.Localize(tag);
 			BasePerkGraph.Nodes[e].Description = StringTable.Localize(desc);
@@ -548,7 +569,7 @@ extend class BIO_GlobalData
 
 		uint e = BasePerkGraph.Nodes.Push(node);
 		BasePerkGraph.Nodes[e].UUID = e;
-		BasePerkGraph.Nodes[e].PerkClass = template.PerkClass;
+		BasePerkGraph.Nodes[e].Perk = BIO_Perk(new(template.PerkClass));
 		// Position should have been pre-filled by caller
 		BasePerkGraph.Nodes[e].Tag = StringTable.Localize(template.Tag);
 		BasePerkGraph.Nodes[e].Description = StringTable.Localize(template.Description);
