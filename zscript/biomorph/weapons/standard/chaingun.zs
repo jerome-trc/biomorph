@@ -124,6 +124,7 @@ class BIO_ValiantChaingun : BIO_Chaingun
 	{
 		Tag "$BIO_VALIANTCHAINGUN_TAG";
 		Inventory.PickupMessage "$BIO_VALIANTCHAINGUN_PKUP";
+		BIO_Weapon.AffixMask BIO_WAM_MAGAZINELESS;
 		BIO_Weapon.MagazineType 'Clip';
 		BIO_Weapon.MagazineSize 0;
 	}
@@ -142,6 +143,8 @@ class BIO_ValiantChaingun : BIO_Chaingun
 	{
 		groups.Push(StateTimeGroupFromRange('Fire', 'Winddown'));
 	}
+
+	override void InitReloadTimes(in out Array<BIO_StateTimeGroup> groups) const {}
 
 	States
 	{
