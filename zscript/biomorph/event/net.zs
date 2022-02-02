@@ -329,16 +329,14 @@ extend class BIO_EventHandler
 		{
 			uint e = weap.Affixes.Push(BIO_WeaponAffix(new(wafx_t)));
 			weap.Affixes[e].Init(weap.AsConst());
-			weap.Affixes[e].Apply(weap);
 		}
 		else
 		{
 			uint e = weap.ImplicitAffixes.Push(BIO_WeaponAffix(new(wafx_t)));
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
-			weap.ImplicitAffixes[e].Apply(weap);
 		}
 
-		weap.OnWeaponChange();
+		weap.OnChange();
 		Console.Printf(Biomorph.LOGPFX_INFO ..
 			"Applied %s to your current weapon.", wafx_t.GetClassName());
 	}
@@ -414,9 +412,7 @@ extend class BIO_EventHandler
 			return;
 		}
 
-		weap.ResetStats();
-		weap.ApplyAllAffixes();
-		weap.OnWeaponChange();
+		weap.OnChange();
 
 		Console.Printf(Biomorph.LOGPFX_INFO ..
 			"Removed %s from your current weapon.", wafx_t.GetClassName());
@@ -444,8 +440,6 @@ extend class BIO_EventHandler
 			return;
 		}
 
-		weap.ResetStats();
-
 		if (event.Args[0] > 0)
 		{
 			for (uint i = 0; i < weap.Affixes.Size(); i++)
@@ -455,8 +449,7 @@ extend class BIO_EventHandler
 			}
 		}
 
-		weap.ApplyAllAffixes();
-		weap.OnWeaponChange();
+		weap.OnChange();
 		Console.Printf(Biomorph.LOGPFX_INFO ..
 			"Reset stats and re-applied affixes of your readied weapon.");
 	}

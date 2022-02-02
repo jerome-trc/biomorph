@@ -92,9 +92,8 @@ class BIO_Muta_Reset : BIO_Mutagen
 			return false;
 		}
 
-		weap.ResetStats();
 		weap.ClearAffixes();
-		weap.OnWeaponChange();
+		weap.OnChange();
 		Owner.A_Print("$BIO_MUTA_RESET_USE");
 		return true;
 	}
@@ -136,9 +135,7 @@ class BIO_Muta_Add : BIO_Mutagen
 			return false;
 		}
 
-		weap.ResetStats();
-		weap.ApplyAllAffixes();
-		weap.OnWeaponChange();
+		weap.OnChange();
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
 		BIO_Utils.DRLMDangerLevel(AsConst(), 5);
 		return true;
@@ -176,7 +173,7 @@ class BIO_Muta_Random : BIO_Mutagen
 		}
 
 		weap.RandomizeAffixes();
-		weap.OnWeaponChange();
+		weap.OnChange();
 		Owner.A_Print("$BIO_MUTA_RANDOM_USE");
 		BIO_Utils.DRLMDangerLevel(AsConst(), 5);
 		return true;
@@ -229,16 +226,13 @@ class BIO_Muta_Reroll : BIO_Mutagen
 			return false;
 		}
 
-		weap.ResetStats();
-		
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
 		{
 			weap.Affixes[i] = BIO_WeaponAffix(new(weap.Affixes[i].GetClass()));
 			weap.Affixes[i].Init(weap.AsConst());
 		}
 
-		weap.ApplyAllAffixes();
-		weap.OnWeaponChange();
+		weap.OnChange();
 
 		Owner.A_Print("$BIO_MUTA_REROLL_USE");
 		BIO_Utils.DRLMDangerLevel(AsConst(), 1);
@@ -277,10 +271,8 @@ class BIO_Muta_Remove : BIO_Mutagen
 			return false;
 		}
 
-		weap.ResetStats();
 		weap.Affixes.Delete(Random[BIO_Afx](0, weap.Affixes.Size() - 1));
-		weap.ApplyAllAffixes();
-		weap.OnWeaponChange();
+		weap.OnChange();
 
 		Owner.A_Print("$BIO_MUTA_REMOVE_USE");
 		return true;
@@ -479,8 +471,7 @@ class BIO_RecombinantGenes : Inventory
 		
 		uint e = weap.Affixes.Push(Affix);
 		weap.Affixes[e].Init(weap.AsConst());
-		weap.Affixes[e].Apply(weap);
-		weap.OnWeaponChange();
+		weap.OnChange();
 		BIO_Utils.DRLMDangerLevel(AsConst(), 10);
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
 		return true;
@@ -518,8 +509,7 @@ class BIO_Muta_Corrupting : BIO_Mutagen
 		[proceed, consumed] = weap.OnCorrupt();
 
 		if (!proceed) return consumed;
-		
-		weap.ResetStats();
+
 		Array<BIO_CorruptionFunctor> funcs;
 		
 		for (uint i = 0; i < AllClasses.Size(); i++)
@@ -531,19 +521,9 @@ class BIO_Muta_Corrupting : BIO_Mutagen
 			funcs.Push(func);
 		}
 
-		weap.ApplyImplicitAffixes();
 		funcs[Random[BIO_Afx](0, funcs.Size() - 1)].Invoke(weap);
-
-		// Prune explicit affixes which are no longer compatible post-corruption
-		for (uint i = weap.Affixes.Size() - 1; i >= 0; i--)
-		{
-			if (!weap.Affixes[i].Compatible(weap.AsConst()))
-				weap.Affixes.Delete(i);
-		}
-
-		weap.ApplyExplicitAffixes();
 		weap.BIOFlags |= BIO_WF_CORRUPTED;
-		weap.OnWeaponChange();
+		weap.OnChange();
 		BIO_Utils.DRLMDangerLevel(AsConst(), 25);
 		return true;
 	}
@@ -597,7 +577,6 @@ class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
 			let afx = BIO_WeaponAffix(new(Eligibles[r]));
 			uint e = weap.ImplicitAffixes.Push(afx);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
-			weap.ImplicitAffixes[e].Apply(weap);
 		}
 		else
 		{
@@ -605,7 +584,6 @@ class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
 			let afx1 = BIO_WeaponAffix(new(Eligibles[r]));
 			uint e = weap.ImplicitAffixes.Push(afx1);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
-			weap.ImplicitAffixes[e].Apply(weap);
 
 			Eligibles.Delete(r);
 
@@ -613,7 +591,6 @@ class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
 			let afx2 = BIO_WeaponAffix(new(Eligibles[r]));
 			e = weap.ImplicitAffixes.Push(afx2);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
-			weap.ImplicitAffixes[e].Apply(weap);
 		}
 	}
 

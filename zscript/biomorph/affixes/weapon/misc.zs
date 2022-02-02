@@ -199,6 +199,9 @@ class BIO_WAfx_LowSpreadFireCount : BIO_WeaponAffix
 		return StringTable.Localize("$BIO_WAFX_LOWSPREADFIRECOUNT_TAG");
 	}
 
+	// Low priority so as not to clobber `WAfx_Slug` effects and the like
+	final override int OrderPriority() const { return -255; }
+
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const

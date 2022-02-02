@@ -83,7 +83,7 @@ class BIO_WeaponFountain : Actor
 			{
 				let bioWeap = BIO_Weapon(weap);
 				bioWeap.RandomizeAffixes();
-				bioWeap.OnWeaponChange();
+				bioWeap.OnChange();
 			}
 		}
 		Loop;
@@ -135,7 +135,7 @@ class BIO_WeaponLootFountain : Actor
 			{
 				let bioWeap = BIO_Weapon(weap);
 				bioWeap.RandomizeAffixes();
-				bioWeap.OnWeaponChange();
+				bioWeap.OnChange();
 			}
 		}
 		Loop;
@@ -187,7 +187,7 @@ class BIO_Muta_RandomDebug : BIO_Muta_Random
 			Console.Printf("%d: %d", i, results[i]);
 		}
 
-		weap.OnWeaponChange();
+		weap.OnChange();
 		Owner.A_Print("$BIO_MUTA_RANDOM_USE");
 		return true;
 	}

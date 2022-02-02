@@ -33,7 +33,7 @@ class BIO_SupplyBox : Actor
         {
             let weap = BIO_Weapon(spawned);
             weap.RandomizeAffixes();
-            weap.OnWeaponChange();
+            weap.OnChange();
             weap.SetState(weap.FindState("Spawn"));
         }
 

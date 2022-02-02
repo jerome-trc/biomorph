@@ -1175,6 +1175,9 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Modifying ===============================================================
 
+	// Any time you make a change to a weapon, ensure you call `OnChange()`
+	// afterwards. Note that this does not apply to `BIO_WeaponAffix::Apply()`.
+
 	// Latching; will never re-initialise.
 	void Init()
 	{
@@ -1186,20 +1189,12 @@ class BIO_Weapon : DoomWeapon abstract
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
 		InitImplicitAffixes(ImplicitAffixes);
-		ApplyImplicitAffixes();
 
-		Array<BIO_WeaponPipeline> pplDefs;
-		InitPipelines(pplDefs);
-
-		// Inform pipelines of their defaults
-		for (uint i = 0; i < Pipelines.Size(); i++)
-			Pipelines[i].Defaults = pplDefs[i].AsConst();
-
-		OnWeaponChange();
+		OnChange();
 	}
 
-	// Does not apply any affixes.
-	void ResetStats()
+	// Does not apply any affixes, or affect rarity.
+	void Reset()
 	{
 		Pipelines.Clear();
 		FireTimeGroups.Clear();
@@ -1210,7 +1205,6 @@ class BIO_Weapon : DoomWeapon abstract
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
 		InitImplicitAffixes(ImplicitAffixes);
-		ApplyImplicitAffixes();
 
 		bNoAutoFire = Default.bNoAutoFire;
 		bNoAlert = Default.bNoAlert;
@@ -1225,8 +1219,6 @@ class BIO_Weapon : DoomWeapon abstract
 		BobSpeed = Default.BobSpeed;
 		BobStyle = Default.BobStyle;
 		KickBack = Default.KickBack;
-
-		BIOFlags = Default.BIOFlags;
 		
 		RaiseSpeed = Default.RaiseSpeed;
 		LowerSpeed = Default.LowerSpeed;
@@ -1250,24 +1242,6 @@ class BIO_Weapon : DoomWeapon abstract
 			Pipelines[i].Defaults = pplDefs[i].AsConst();
 	}
 
-	void ApplyImplicitAffixes()
-	{
-		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-			ImplicitAffixes[i].Apply(self);
-	}
-
-	void ApplyExplicitAffixes()
-	{
-		for (uint i = 0; i < Affixes.Size(); i++)
-			Affixes[i].Apply(self);
-	}
-
-	void ApplyAllAffixes()
-	{
-		ApplyImplicitAffixes();
-		ApplyExplicitAffixes();
-	}
-
 	// Does not alter stats, and does not apply the newly-added affixes.
 	// Returns `false` if there are no compatible affixes to add.
 	bool AddRandomAffix()
@@ -1283,7 +1257,7 @@ class BIO_Weapon : DoomWeapon abstract
 		return true;
 	}
 
-	// Affects explicit affixes only.
+	// Affects explicit affixes only. Note that this does not alter stats.
 	void RandomizeAffixes()
 	{
 		if (MaxAffixes < 1)
@@ -1294,7 +1268,6 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 
 		ClearAffixes();
-		ResetStats();
 
 		uint fl = Min(2, MaxAffixes);
 		uint c = Random[BIO_Afx](fl, MaxAffixes);
@@ -1319,7 +1292,6 @@ class BIO_Weapon : DoomWeapon abstract
 			let afx = BIO_WeaponAffix(new(eligibles[r]));
 			afx.Init(AsConst());
 			Affixes.Push(afx);
-			afx.Apply(self);
 		}
 	}
 
@@ -1426,8 +1398,10 @@ class BIO_Weapon : DoomWeapon abstract
 	}
 
 	// Recomputes rarity, re-orders affixes, recolors tag, and rewrites readouts.
-	void OnWeaponChange()
+	void OnChange()
 	{
+		Reset();
+
 		if (Default.Rarity == BIO_RARITY_UNIQUE)
 			Rarity = BIO_RARITY_UNIQUE;
 		else if (Affixes.Size() > 0)
@@ -1437,6 +1411,28 @@ class BIO_Weapon : DoomWeapon abstract
 
 		ReorderAffixes(ImplicitAffixes);
 		ReorderAffixes(Affixes);
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+			ImplicitAffixes[i].Apply(self);
+
+		// If a corruption effect or something similar has modified implicits
+		// in a way that causes an explicit to become incompatible, cull it
+
+		Array<bool> incompatibleExplicits;
+
+		for (uint i = 0; i < Affixes.Size(); i++)
+		{
+			incompatibleExplicits.Push(!Affixes[i].Compatible(AsConst()));
+
+			if (!incompatibleExplicits[i])
+				Affixes[i].Apply(self);
+		}
+
+		for (uint i = Affixes.Size() - 1; i >= 0; i--)
+		{
+			if (incompatibleExplicits[i])
+				Affixes.Delete(i);
+		}
 
 		SetTag(FullTag());
 

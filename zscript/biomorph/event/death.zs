@@ -64,7 +64,7 @@ extend class BIO_EventHandler
 				if (weap.Rarity != BIO_RARITY_UNIQUE)
 					weap.RandomizeAffixes();
 				
-				weap.OnWeaponChange();
+				weap.OnChange();
 				weap.SetState(weap.FindState("Spawn"));
 			}
 		}
