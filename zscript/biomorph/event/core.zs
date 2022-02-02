@@ -64,24 +64,7 @@ class BIO_EventHandler : EventHandler
 			
 			if (bioPlayer == null) continue;
 			bioPlayer.WorldLoaded(event.IsSaveGame, event.IsReopen);
-			
-			if (!(ContextFlags & BIO_EHCF_VALIANT)) continue;
-			let clipItem = Ammo(bioPlayer.FindInventory('Clip'));
-			
-			if (clipItem.MaxAmount < 300)
-				clipItem.MaxAmount = 300;
-
-			if (clipItem.BackpackMaxAmount < (clipItem.MaxAmount * 2))
-				clipItem.BackpackMaxAmount = clipItem.MaxAmount * 2;
-		
-			let pistol = bioPlayer.FindInventory('BIO_Pistol');
-			if (pistol != null)
-			{
-				bioPlayer.A_SelectWeapon('BIO_Fist');
-				bioPlayer.TakeInventory('BIO_Pistol', 1);
-				bioPlayer.GiveInventory('BIO_ValiantPistol', 1);
-				bioPlayer.A_SelectWeapon('BIO_ValiantPistol');
-			}
+			bioPlayer.SetMapSensitiveDefaults(ContextFlags);
 		}
 	}
 
@@ -128,5 +111,10 @@ class BIO_EventHandler : EventHandler
 			else if (event.Replacee == 'Pistol' || event.Replacee == 'BIO_Pistol')
 				event.Replacement = 'BIO_ValiantPistol';
 		}
+	}
+
+	BIO_EventHandlerContextFlags GetContextFlags() const
+	{
+		return ContextFlags;
 	}
 }

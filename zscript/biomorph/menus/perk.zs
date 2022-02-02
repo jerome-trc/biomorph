@@ -28,7 +28,8 @@ class BIO_PerkMenu : GenericMenu
 
 	protected Array<BIO_PerkMenuNode> NodeState;
 	protected uint HoveredNode; // Defaults to `NodeState.Size()` if nothing hovered
-	private uint SelectionSize; // How many perks selected for application/removal?
+	bool RefundMode;
+	private uint SelectionSize; // How many perks selected for application/refund?
 
 	// Parent overrides ========================================================
 
@@ -85,7 +86,10 @@ class BIO_PerkMenu : GenericMenu
 			}
 			break;
 		case MOUSE_Click:
-			TryToggleHoveredNode();
+			if (!RefundMode)
+				TryToggleHoveredNode();
+			else
+				TryToggleHoveredNode_Refund();
 			break;
 		default: break;
 		}
@@ -157,6 +161,8 @@ class BIO_PerkMenu : GenericMenu
 			// TODO: Get this to check against player's defined "Use" key
 			if (event.KeyString ~== "e")
 				CommitSelection();
+			else if (event.KeyString ~== "r")
+				ToggleRefundMode();
 			break;
 		default: break;
 		}
@@ -215,20 +221,20 @@ class BIO_PerkMenu : GenericMenu
 				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
 				DTA_COLOROVERLAY, HoveredNode == i ? COLOR_HOVERED : COLOR_NONE);
 
-			if (PlayerPerkGraph.PerkActive[i])
-			{
-				Screen.DrawTexture(ring, false,
-					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
-					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
-					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
-			}
-			else if (NodeState[i].Selected)
+			if (NodeState[i].Selected)
 			{
 				Screen.DrawTexture(ring, false,
 					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
 					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
 					DTA_ALPHA, 1.0 + (Sin((MenuTime() << 16 / 4) * 0.75)));
+			}
+			else if (PlayerPerkGraph.PerkActive[i])
+			{
+				Screen.DrawTexture(ring, false,
+					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
+					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
+					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
 			}
 
 			Screen.DrawTexture(BasePerkGraph.Nodes[i].Icon, false,
@@ -254,6 +260,25 @@ class BIO_PerkMenu : GenericMenu
 			VIRT_W * 0.5 - (SmallFont.StringWidth(ptStr) / 2),
 			VIRT_H * 0.05, ptStr, DTA_KEEPRATIO, true,
 			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
+
+		string refundStr = String.Format(
+			StringTable.Localize("$BIO_PERKMENU_REFUNDCOUNT"),
+			PlayerPerkGraph.Refunds);
+
+		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+			VIRT_W * 0.5 - (SmallFont.StringWidth(refundStr) / 2),
+			VIRT_H * 0.075, refundStr, DTA_KEEPRATIO, true,
+			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
+
+		if (RefundMode)
+		{
+			string refundHelp = StringTable.Localize("$BIO_PERKMENU_HELP_REFUND");
+
+			Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+				VIRT_W * 0.5 - (SmallFont.StringWidth(refundHelp) / 2),
+				VIRT_H * 0.1, refundHelp, DTA_KEEPRATIO, true,
+				DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H);
+		}
 
 		// Tooltip
 
@@ -283,6 +308,18 @@ class BIO_PerkMenu : GenericMenu
 	}
 
 	// Private implementation details ==========================================
+
+	private void ToggleRefundMode()
+	{
+		MenuSound("bio/ui/beep");
+
+		RefundMode = !RefundMode;
+
+		for (uint i = 0; i < NodeState.Size(); i++)
+			NodeState[i].Selected = false;
+
+		SelectionSize = 0;
+	}
 
 	// Called whenever the mouse moves or the zoom level changes.
 	protected void UpdateNodeState()
@@ -364,8 +401,7 @@ class BIO_PerkMenu : GenericMenu
 		if (!BasePerkGraph.IsAccessible(HoveredNode, active))
 			return;
 
-		// Would deselecting the hovered node leave
-		// another selected node orphaned?
+		// Would deselecting the hovered node leave another selected node orphaned?
 		if (NodeState[HoveredNode].Selected)
 		{
 			active.Delete(active.Find(HoveredNode));
@@ -393,20 +429,77 @@ class BIO_PerkMenu : GenericMenu
 			SelectionSize--;
 	}
 
+	private void TryToggleHoveredNode_Refund()
+	{
+		if (HoveredNode == NodeState.Size())
+			return;
+		
+		// Has the player unlocked this perk?
+		if (!PlayerPerkGraph.PerkActive[HoveredNode])
+			return;
+
+		if (!NodeState[HoveredNode].Selected &&
+			SelectionSize >= PlayerPerkGraph.Refunds)
+			return;
+		
+		Array<uint> active;
+		
+		for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
+		{
+			if (!NodeState[i].Selected || PlayerPerkGraph.PerkActive[i])
+				active.Push(i);
+		}
+
+		// Would refunding the hovered node leave another active node orphaned?
+		if (!NodeState[HoveredNode].Selected)
+		{
+			active.Delete(active.Find(HoveredNode));
+
+			for (uint i = 1; i < BasePerkGraph.Nodes.Size(); i++)
+			{
+				if (i == HoveredNode)
+					continue;
+				
+				if (NodeState[i].Selected)
+					continue;
+				
+				if (!BasePerkGraph.IsAccessible(i, active))
+					return;
+			}
+		}
+
+		MenuSound("bio/ui/beep");
+
+		NodeState[HoveredNode].Selected = !NodeState[HoveredNode].Selected;
+	
+		if (NodeState[HoveredNode].Selected)
+			SelectionSize++;
+		else
+			SelectionSize--;
+	}
+
 	private void CommitSelection()
 	{
 		if (SelectionSize < 1) return;
 
 		MenuSound("bio/ui/beep");
 
+		BIO_EventHandler.ResetPlayer();
+
 		for (uint i = 0; i < NodeState.Size(); i++)
 		{
 			if (NodeState[i].Selected)
 			{
-				BIO_EventHandler.CommitPerk(i);
+				if (!RefundMode)
+					BIO_EventHandler.AddPerk(i);
+				else
+					BIO_EventHandler.RefundPerk(i);
+
 				NodeState[i].Selected = false;
 			}
 		}
+
+		BIO_EventHandler.CommitPerks();
 	}
 }
 

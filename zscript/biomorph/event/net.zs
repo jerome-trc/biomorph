@@ -9,7 +9,7 @@ extend class BIO_EventHandler
 
 		NetEvent_WUpOverlay(event);
 		NetEvent_WeaponUpgrade(event);
-		NetEvent_CommitPerk(event);
+		NetEvent_PerkOp(event);
 
 		// Debugging events
 
@@ -22,7 +22,15 @@ extend class BIO_EventHandler
 
 	const EVENT_WUPOVERLAY = "bio_wupoverlay";
 	const EVENT_WEAPUPGRADE = "bio_weapupgrade";
-	const EVENT_COMMITPERK = "bio_commitperk";
+	const EVENT_PERKOP = "bio_perkop";
+
+	enum BIO_PerkOp : uint8
+	{
+		PERKOPARG_RESET,
+		PERKOPARG_ADD,
+		PERKOPARG_REFUND,
+		PERKOPARG_COMMIT
+	}
 
 	private transient BIO_WeaponUpgradeOverlay WeaponUpgradeOverlay;
 
@@ -138,9 +146,9 @@ extend class BIO_EventHandler
 		WeaponUpgradeOverlay.Destroy();
 	}
 
-	private void NetEvent_CommitPerk(ConsoleEvent event) const
+	private void NetEvent_PerkOp(ConsoleEvent event) const
 	{
-		if (!(event.Name ~== EVENT_COMMITPERK)) return;
+		if (!(event.Name ~== EVENT_PERKOP)) return;
 		if (event.Player != ConsolePlayer) return;
 
 		if (event.IsManual)
@@ -153,33 +161,88 @@ extend class BIO_EventHandler
 		let bioPlayer = BIO_Player(Players[ConsolePlayer].MO);
 		if (bioPlayer == null)
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_COMMITPERK ..
+			Console.Printf(Biomorph.LOGPFX_ERR .. EVENT_PERKOP ..
 				" was illegally invoked by a non-Biomorph `PlayerPawn`.");
 			return;
 		}
 
+		switch (event.Args[0])
+		{
+		case PERKOPARG_RESET:
+			bioPlayer.Reset();
+			return;
+		case PERKOPARG_ADD:
+			PerkOp_Add(bioPlayer, event.Args[1]);
+			return;
+		case PERKOPARG_REFUND:
+			PerkOp_Refund(bioPlayer, event.Args[1]);
+			return;
+		case PERKOPARG_COMMIT:
+			bioPlayer.ApplyPerks();
+			return;
+		default:
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Invalid perk operation requested: %d (player %s)",
+				event.Args[0], Players[ConsolePlayer].GetUserName());
+		}
+	}
+
+	private void PerkOp_Add(BIO_Player bioPlayer, uint uuid) const
+	{
 		let pGraph = Globals.GetPerkGraph(Players[ConsolePlayer]);
 		let bGraph = Globals.GetBasePerkGraph();
 
-		if (event.Args[0] >= bGraph.Nodes.Size() ||
-			event.Args[0] <= 0)
+		if (uuid >= bGraph.Nodes.Size())
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Attempted to commit perk under invalid UUID: %d", event.Args[0]);
+				"Attempted to add perk under invalid UUID %d to player %s",
+				uuid, Players[ConsolePlayer].GetUserName());
 			return;
 		}
 
-		if (bGraph.Nodes[event.Args[0]].PerkClass == null)
+		if (bGraph.Nodes[uuid].Perk == null)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Attempted to commit invalid perk class, UUID: %d", event.Args[0]);
+				"Attempted to add null perk (UUID %d) to player %s",
+				uuid, Players[ConsolePlayer].GetUserName());
 			return;
 		}
 
-		let perk = BIO_Perk(new(bGraph.Nodes[event.Args[0]].PerkClass));
-		perk.Apply(bioPlayer);
-		pGraph.PerkActive[event.Args[0]] = true;
+		if (pGraph.PerkActive[uuid])
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Attempted to add already-active perk, UUID: %d", uuid);
+			return;
+		}
+
+		pGraph.PerkActive[uuid] = true;
 		pGraph.Points--;
+	}
+
+	private void PerkOp_Refund(BIO_Player bioPlayer, uint uuid) const
+	{
+		let pGraph = Globals.GetPerkGraph(Players[ConsolePlayer]);
+		let bGraph = Globals.GetBasePerkGraph();
+
+		if (uuid >= bGraph.Nodes.Size())
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Attempted to refund perk under invalid UUID %d for player %s",
+				uuid, Players[ConsolePlayer].GetUserName());
+			return;
+		}
+
+		if (!pGraph.PerkActive[uuid])
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Attempted to refund inactive perk (UUID %d) for player %s",
+				uuid, Players[ConsolePlayer].GetUserName());
+			return;
+		}
+
+		pGraph.PerkActive[uuid] = false;
+		pGraph.Points++;
+		pGraph.Refunds--;
 	}
 
 	// If first argument is non-zero, force adding the affix.
@@ -432,8 +495,23 @@ extend class BIO_EventHandler
 
 	// =========================================================================
 
-	static clearscope void CommitPerk(uint uuid)
+	static clearscope void ResetPlayer()
 	{
-		EventHandler.SendNetworkEvent(EVENT_COMMITPERK, uuid);
+		EventHandler.SendNetworkEvent(EVENT_PERKOP, PERKOPARG_RESET);
+	}
+
+	static clearscope void AddPerk(uint uuid)
+	{
+		EventHandler.SendNetworkEvent(EVENT_PERKOP, PERKOPARG_ADD, uuid);
+	}
+
+	static clearscope void RefundPerk(uint uuid)
+	{
+		EventHandler.SendNetworkEvent(EVENT_PERKOP, PERKOPARG_REFUND, uuid);
+	}
+
+	static clearscope void CommitPerks()
+	{
+		EventHandler.SendNetworkEvent(EVENT_PERKOP, PERKOPARG_COMMIT);
 	}
 }

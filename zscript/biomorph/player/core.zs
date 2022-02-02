@@ -261,7 +261,7 @@ class BIO_Player : DoomPlayer
 			PowerupFunctors[i].OnPowerupDetach(self, power);
 	}
 
-	protected void Reset()
+	void Reset()
 	{
 		bDontThrust = Default.bDontThrust;
 		bCantSeek = Default.bCantSeek;
@@ -307,6 +307,90 @@ class BIO_Player : DoomPlayer
 		PowerupFunctors.Clear();
 		TransitionFunctors.Clear();
 		WeaponFunctors.Clear();
+
+		let evh = BIO_EventHandler(EventHandler.Find('BIO_EventHandler'));
+		SetMapSensitiveDefaults(evh.GetContextFlags());
+	}
+
+	void SetMapSensitiveDefaults(BIO_EventHandlerContextFlags ctxtFlags)
+	{
+		if (ctxtFlags & BIO_EHCF_VALIANT)
+		{
+			let clipItem = Ammo(FindInventory('Clip'));
+				
+			if (clipItem.MaxAmount < 300)
+				clipItem.MaxAmount = 300;
+
+			if (clipItem.BackpackMaxAmount < (clipItem.MaxAmount * 2))
+				clipItem.BackpackMaxAmount = clipItem.MaxAmount * 2;
+		
+			let pistol = FindInventory('BIO_Pistol');
+			if (pistol != null)
+			{
+				A_SelectWeapon('BIO_Fist');
+				TakeInventory('BIO_Pistol', 1);
+				GiveInventory('BIO_ValiantPistol', 1);
+				A_SelectWeapon('BIO_ValiantPistol');
+			}
+		}
+	}
+
+	void ApplyPerks()
+	{
+		Array<BIO_Perk> arr, temp;
+		BIO_GlobalData.Get().GetPlayerPerkObjects(Player, arr);		
+		temp.Move(arr);
+
+		while (temp.Size() > 0)
+		{
+			int highest = int.MIN;
+			uint highest_idx = uint.MAX;
+
+			for (uint i = 0; i < temp.Size(); i++)
+			{
+				int prio = temp[i].OrderPriority();
+
+				if (prio > highest)
+				{
+					highest = prio;
+					highest_idx = i;
+				}
+			}
+
+			arr.Push(temp[highest_idx]);
+			temp.Delete(highest_idx);
+		}
+
+		for (uint i = 0; i < arr.Size(); i++)
+			arr[i].Apply(self);
+
+		// Deal with possible consequences of perk refunds
+
+		int
+			hwc = HeldWeaponCount() - MaxWeaponsHeld,
+			hec = HeldEquipmentCount() - MaxEquipmentHeld;
+
+		Array<Inventory> toDrop;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+		{
+			if (i is 'BIO_Weapon' && !(i is 'BIO_Fist') && hwc > 0)
+			{
+				toDrop.Push(i);
+				hwc--;
+			}
+			else if (i is 'BIO_Equipment' && hec > 0)
+			{
+				toDrop.Push(i);
+				hec--;
+			}
+
+			if (hwc <= 0 && hec <= 0)
+				break;
+		}
+
+		for (uint i = 0; i < toDrop.Size(); i++)
+			DropInventory(toDrop[i], 1);
 	}
 
 	// Perk/functor manipulation ===============================================
@@ -629,5 +713,48 @@ class BIO_PickupHandler : BIO_PermanentInventory
 		}
 
 		return false;
+	}
+}
+
+class BIO_Antigen : Inventory
+{
+	Default
+    {
+		-COUNTITEM
+		+DONTGIB
+		+INVENTORY.INVBAR
+
+		Height 16;
+        Radius 20;
+		Tag "$BIO_ANTIGEN_TAG";
+
+		Inventory.Icon 'ANTGB0';
+		Inventory.InterHubAmount 9999;
+        Inventory.MaxAmount 9999;
+		Inventory.PickupMessage "$BIO_ANTIGEN_PKUP";
+		Inventory.UseSound "bio/muta/use/undo";
+    }
+
+	States
+	{
+	Spawn:
+		ANTG A 6;
+		ANTG B 6 Bright Light("BIO_Muta_Reset");
+		Loop;
+	}
+
+	final override bool Use(bool pickup)
+	{
+		let bioPlayer = BIO_Player(Owner);
+
+		if (bioPlayer == null)
+		{
+			Owner.A_Print("$BIO_ANTIGEN_FAIL_NONBIOMORPH", 4.0);
+			return false;
+		}
+
+		BIO_GlobalData.Get().GetPerkGraph(Owner.Player).Refunds++;
+		Owner.A_Print("$BIO_ANTIGEN_USE");
+		return true;
 	}
 }
