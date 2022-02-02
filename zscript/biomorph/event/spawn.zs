@@ -82,9 +82,14 @@ extend class BIO_EventHandler
 		return true;
 	}
 
+	// Initialized dynamically for fast checks
+	private Class<Weapon> ValiantShotgun_T, ValiantSSG_T, ValiantChaingun_T;
+
 	private bool ReplaceWeapon(WorldEvent event) const
 	{
-		if (event.Thing.GetClass() == 'Shotgun')
+		Class<Actor> t = event.Thing.GetClass();
+
+		if (t == 'Shotgun')
 		{
 			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_SHOTGUN), event.Thing);
 		}
@@ -95,29 +100,50 @@ extend class BIO_EventHandler
 			else
 				FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_AUTOGUN), event.Thing);
 		}
-		else if (event.Thing.GetClass() == 'SuperShotgun')
+		else if (t == 'SuperShotgun')
 		{
 			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_SSG), event.Thing);
 		}
-		else if (event.Thing.GetClass() == 'RocketLauncher')
+		else if (t == 'RocketLauncher')
 		{
 			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_LAUNCHER), event.Thing);
 		}
-		else if (event.Thing.GetClass() == 'PlasmaRifle')
+		else if (t == 'PlasmaRifle')
 		{
 			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_ENERGY), event.Thing);
 		}
-		else if (event.Thing.GetClass() == 'BFG9000')
+		else if (t == 'BFG9000')
 		{
 			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_SUPER), event.Thing);
 		}
-		else if (event.Thing.GetClass() == 'Chainsaw')
+		else if (t == 'Chainsaw')
 		{
 			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_MELEE), event.Thing);
 		}
-		else if (event.Thing.GetClass() == 'Pistol')
+		else if (t == 'Pistol')
 		{
 			FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_PISTOL), event.Thing);
+		}
+		else if (ContextFlags & BIO_EHCF_VALIANT)
+		{
+			if (t == ValiantShotgun_T)
+				FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_SHOTGUN), event.Thing);
+			else if (t == ValiantSSG_T)
+				FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_SSG), event.Thing);
+			else if (t == ValiantChaingun_T)
+			{
+				if (Level.MapTime < 1)
+				{
+					FinalizeSpawn('BIO_ValiantChaingun', event.Thing);
+				}
+				else
+				{
+					if (Random(0, 1) == 0)
+						FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_RIFLE), event.Thing);
+					else
+						FinalizeSpawn(Globals.LootWeaponType(BIO_WEAPCAT_AUTOGUN), event.Thing);
+				}
+			}
 		}
 		else
 			return false;
