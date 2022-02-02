@@ -104,6 +104,9 @@ class BIO_EventHandler : EventHandler
 
 	final override void CheckReplacement(ReplaceEvent event)
 	{
+		if (!(event.Replacee is 'Weapon'))
+			return;
+
 		if (ContextFlags & BIO_EHCF_VALIANT)
 		{
 			if (event.Replacee == 'Chaingun' || event.Replacee == 'BIO_Chaingun')
