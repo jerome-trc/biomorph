@@ -93,6 +93,13 @@ extend class BIO_Utils
 		}
 	}
 
+	static bool Lexicon()
+	{
+		name lxvg_tn = 'Lexicon_VoteGun';
+		Class<Weapon> lxvg_t = lxvg_tn;
+		return lxvg_t != null;
+	}
+
 	// Checks if the player is in a level from Valiant, its Vaccinated Edition,
 	// or the Valiant levels bundled with the Sentinel's Lexicon.
 	static bool Valiant()
