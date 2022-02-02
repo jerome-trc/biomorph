@@ -60,7 +60,8 @@ extend class BIO_EventHandler
 			"\tnetevent bio_rmwafx:Classname\n"
 			"\tbio_recalcweap_ (alias: bio_weaprecalc_)"
 			"\tbio_lvlup_ (also: bio_lvlup_5 and bio_lvlup_10)"
-			"\tbio_xpreset_");
+			"\tbio_xpreset_"
+			"\tbio_regenupgrades_");
 	}
 
 	private ui void ConEvent_PlayerDiag(ConsoleEvent event) const

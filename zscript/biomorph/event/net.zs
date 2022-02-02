@@ -18,18 +18,24 @@ extend class BIO_EventHandler
 		NetEvent_RecalcWeap(event);
 		NetEvent_LevelUp(event);
 		NetEvent_XPReset(event);
+		NetEvent_GlobalRegen(event);
 	}
 
 	const EVENT_WUPOVERLAY = "bio_wupoverlay";
 	const EVENT_WEAPUPGRADE = "bio_weapupgrade";
 	const EVENT_PERKOP = "bio_perkop";
 
-	enum BIO_PerkOp : uint8
+	enum PerkOp : uint8
 	{
 		PERKOPARG_RESET,
 		PERKOPARG_ADD,
 		PERKOPARG_REFUND,
 		PERKOPARG_COMMIT
+	}
+
+	enum GlobalRegen : uint8
+	{
+		GLOBALREGEN_UPGRADES = 0
 	}
 
 	private transient BIO_WeaponUpgradeOverlay WeaponUpgradeOverlay;
@@ -491,6 +497,29 @@ extend class BIO_EventHandler
 		}
 
 		Globals.XPReset();
+	}
+
+	private void NetEvent_GlobalRegen(ConsoleEvent event)
+	{
+		if (!(event.Name ~== "bio_globalregen"))
+			return;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Net event `bio_globalregen` can only be manually invoked.");
+			return;
+		}
+
+		switch (event.Args[0])
+		{
+		case GLOBALREGEN_UPGRADES:
+			Globals.RegenUpgrades();
+			return;
+		default:
+			Console.Printf(Biomorph.LOGPFX_INFO ..
+				"Invalid global regen requested: %d", event.Args[0]);
+		}
 	}
 
 	// =========================================================================
