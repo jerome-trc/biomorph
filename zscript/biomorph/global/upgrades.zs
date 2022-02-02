@@ -65,7 +65,7 @@ extend class BIO_GlobalData
 		}
 	}
 	
-	// Initialisation: auto-generation =========================================
+	// Initialization: auto-generation =========================================
 
 	private void ReadWeaponAutoUpgradeJSON(
 		BIO_JsonObject autoups, int lump, BIO_WeaponCategory cat,
@@ -244,7 +244,7 @@ extend class BIO_GlobalData
 		}
 	}
 
-	// Initialisation: Parsing JSON upgrade definitions ========================
+	// Initialization: Parsing JSON upgrade definitions ========================
 
 	private static bool ReadWeaponUpgradeInput(
 		in out Array<Class<BIO_Weapon> > inputs,
@@ -710,5 +710,33 @@ extend class BIO_GlobalData
 		}
 
 		return 0;
+	}
+
+	// Initialization: Miscellaneous ===========================================
+
+	private void SortWeaponUpgrades()
+	{
+		Array<BIO_WeaponUpgrade> temp;
+		temp.Move(WeaponUpgrades);
+
+		while (temp.Size() > 0)
+		{
+			int lowest = int.MAX;
+			uint lowest_idx = uint.MAX;
+
+			for (uint i = 0; i < temp.Size(); i++)
+			{
+				int prio = temp[i].Cost;
+
+				if (prio < lowest)
+				{
+					lowest = prio;
+					lowest_idx = i;
+				}
+			}
+
+			WeaponUpgrades.Push(temp[lowest_idx]);
+			temp.Delete(lowest_idx);
+		}
 	}
 }

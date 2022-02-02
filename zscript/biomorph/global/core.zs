@@ -163,6 +163,8 @@ class BIO_GlobalData : Thinker
 
 		for (uint i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
 			AutogenWeaponUpgradeRecipes(i, agwuStd[i], agwuSpec[i], agwuClsf[i]);
+	
+		SortWeaponUpgrades();
 	}
 
 	static clearscope BIO_GlobalData Get()
