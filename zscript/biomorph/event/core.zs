@@ -24,6 +24,9 @@ class BIO_EventHandler : EventHandler
 
 		name ldtoken_tn = 'LDLegendaryMonsterToken';
 		LDToken = ldtoken_tn;
+
+		name thriftyclip_tn = 'BIO_ThriftyClip';
+		ThriftyClip_T = thriftyclip_tn;
 	}
 
 	final override void OnUnregister()
