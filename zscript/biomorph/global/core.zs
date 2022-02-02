@@ -167,6 +167,73 @@ class BIO_GlobalData : Thinker
 		SortWeaponUpgrades();
 	}
 
+	// Clear the weapon upgrade recipe array and then re-run
+	// `ReadWeaponLumps()`, except without loot table population.
+	void RegenUpgrades()
+	{
+		WeaponUpgrades.Clear();
+
+		Array<Class<BIO_Weapon> >
+			agwuStd[__BIO_WEAPCAT_COUNT__],
+			agwuSpec[__BIO_WEAPCAT_COUNT__],
+			agwuClsf[__BIO_WEAPCAT_COUNT__];
+
+		for (int lump = 0; lump < Wads.GetNumLumps(); lump++)
+		{
+			if (Wads.GetLumpNamespace(lump) != Wads.NS_GLOBAL)
+				continue;
+			if (!(Wads.GetLumpFullName(lump).Left(LMPNAME_WEAPONS.Length())
+				~== LMPNAME_WEAPONS))
+				continue;
+
+			BIO_JsonElementOrError fileOpt = BIO_JSON.parse(Wads.ReadLump(lump));
+			if (fileOpt is 'BIO_JsonError')
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. 
+					"Skipping malformed %s lump %d. Details: %s", LMPNAME_WEAPONS,
+					lump, BIO_JsonError(fileOpt).what);
+				continue;
+			}
+
+			let obj = BIO_Utils.TryGetJsonObject(BIO_JsonElement(fileOpt));
+			if (obj == null)
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+					" lump %d has malformed contents.", lump);
+				continue;
+			}
+
+			// If the user gives a compatibility class name here, only parse
+			// this lump if that class exists in the current setup.
+			let compatJson = BIO_JsonString(obj.get("compat"));
+			if (compatJson != null)
+			{
+				let compat_t = BIO_Utils.TryGetJsonClassName(
+					compatJson, errMsg: false);
+				if (compat_t == null) continue;
+			}
+
+			let autoup = BIO_Utils.TryGetJsonObject(
+				obj.get("upgrades_auto"), errMsg: false);
+			if (autoup != null)
+			{
+				for (BIO_WeaponCategory i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
+					ReadWeaponAutoUpgradeJSON(autoup, lump, i,
+						agwuStd[i], agwuSpec[i], agwuClsf[i]);
+			}
+
+			let upgrades = BIO_Utils.TryGetJsonArray(
+				obj.get("upgrades"), errMsg: false);
+			if (upgrades != null)
+				ReadWeaponUpgradeJSON(upgrades, lump);
+		}
+
+		for (uint i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
+			AutogenWeaponUpgradeRecipes(i, agwuStd[i], agwuSpec[i], agwuClsf[i]);
+		
+		SortWeaponUpgrades();
+	}
+
 	static clearscope BIO_GlobalData Get()
 	{
 		let iter = ThinkerIterator.Create('BIO_GlobalData', STAT_STATIC);
