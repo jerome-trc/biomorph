@@ -51,7 +51,18 @@ class BIO_EventHandler : EventHandler
 		super.WorldLoaded(event);
 
 		if (BIO_Utils.Valiant())
+		{
 			ContextFlags |= BIO_EHCF_VALIANT;
+
+			name
+				valiant_sg_tn = 'ValiantShotgun',
+				valiant_ssg_tn = 'ValiantSSG',
+				valiant_cg_tn = 'ValiantChaingun';
+			
+			ValiantShotgun_T = valiant_sg_tn;
+			ValiantSSG_T = valiant_ssg_tn;
+			ValiantChaingun_T = valiant_cg_tn;
+		}
 
 		// Prevent RAMP's hub from spawning a supply box
 		if (Level.GetChecksum() ~== "8e1d1b012a817bb8828d7096dd1ecc28")
