@@ -2,7 +2,8 @@ extend class BIO_EventHandler
 {
 	final override void WorldThingSpawned(WorldEvent event)
 	{
-		if (event.Thing == null || event.Thing.bMissile || event.Thing.bIsMonster)
+		if (event.Thing == null || event.Thing.bMissile || event.Thing.bIsMonster ||
+			event.Thing is 'TeleportFog')
 			return;
 
 		if (event.Thing is 'Inventory')
