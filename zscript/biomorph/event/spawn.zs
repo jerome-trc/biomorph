@@ -41,9 +41,12 @@ extend class BIO_EventHandler
 		}
 	}
 
+	private Class<Ammo> ThriftyClip_T; // Initialized dynamically for fast checks
+
 	private bool ReplaceSmallAmmo(WorldEvent event) const
 	{
-		if (event.Thing.GetClass() == 'Clip')
+		if (event.Thing.GetClass() == 'Clip' ||
+			event.Thing.GetClass() == ThriftyClip_T)
 		{
 			if (Random(1, 10) == 1)
 				FinalizeSpawn(Globals.LootWeaponType(
