@@ -1,4 +1,6 @@
-AddKeySection "$BIO_MODTITLE" BIO_Section
+addplayerclass "BIO_Player" // For WADs which call `clearplayerclasses`
+
+addkeysection "$BIO_MODTITLE" BIO_Section
 
 addmenukey "$BIO_KB_DROPWEAP" "use BIO_WeaponDrop"
 defaultbind Y "use BIO_WeaponDrop"
