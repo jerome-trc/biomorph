@@ -146,15 +146,16 @@ class BIO_Backpack : BackpackItem replaces Backpack
 			{
 				let ammo_t = DOOM_AMMO_TYPES[i];
 				let defs = GetDefaultByType(ammo_t);
-				let ammoItem = bioPlayer.FindInventory(ammo_t);
+				let ammoItem = Ammo(bioPlayer.FindInventory(ammo_t));
 
 				if (ammoItem.MaxAmount > ammoItem.Default.MaxAmount)
-					ammoItem.MaxAmount += (defs.BackpackMaxAmount / 2);
+					ammoItem.MaxAmount += (ammoItem.BackpackMaxAmount / 2);
 				else
-					ammoItem.MaxAmount = defs.BackpackMaxAmount;
+					ammoItem.MaxAmount = ammoItem.BackpackMaxAmount;
 
 				bioPlayer.GiveInventory(ammo_t, defs.BackpackAmount);
 			}
+
 			bioPlayer.OnFirstBackpackPickup(self);
 		}
 
