@@ -226,6 +226,7 @@ extend class BIO_GlobalData
 		Array<uint> perkObjIndices;
 		uint currentPerk = 0;
 		Array<BIO_PerkCategory> perkObjCats;
+		Array<bool> perkObjValid;
 
 		Array<BIO_PerkTemplate> templates;
 
@@ -302,6 +303,8 @@ extend class BIO_GlobalData
 			}
 		}
 
+		perkObjValid.Resize(perkObjs.Size());
+
 		for (uint i = 0; i < perkObjs.Size(); i++)
 		{
 			string errpfx = String.Format(Biomorph.LOGPFX_ERR ..
@@ -353,7 +356,10 @@ extend class BIO_GlobalData
 				node.Category = perkObjCats[i];
 
 				if (TryCreatePerkFromTemplate(templates, template, node, errpfx))
+				{
 					stringIDs.Push(stringID);
+					perkObjValid[i] = true;
+				}
 				
 				continue;
 			}
@@ -384,8 +390,16 @@ extend class BIO_GlobalData
 			BasePerkGraph.Nodes[e].VerboseDesc = StringTable.Localize(descV);
 			BasePerkGraph.Nodes[e].Icon = icon;
 			BasePerkGraph.Nodes[e].Category = perkObjCats[i];
+			perkObjValid[i] = true;
 			stringIDs.Push(stringID);
 		}
+
+		for (uint i = perkObjs.Size() - 1; i >= 0; i--)
+		{
+			if (!perkObjValid[i]) perkObjs.Delete(i);
+		}
+
+		perkObjValid.Clear();
 
 		// This time, map strings in neighbour arrays to numeric UUIDs
 		for (uint i = 0; i < perkObjs.Size(); i++)
