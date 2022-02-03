@@ -290,11 +290,13 @@ class BIO_Player : DoomPlayer
 		
 		AirCapacity = Default.AirCapacity;
 
+		bool hasBackpack = FindInventory('BIO_Backpack', true) != null;
+
 		for (Inventory i = Inv; i != null; i = i.Inv)
 		{
 			if (!(i is 'Ammo')) continue;
 
-			i.MaxAmount = i.Default.MaxAmount;
+			i.MaxAmount = !hasBackpack ? i.Default.MaxAmount : Ammo(i).BackpackMaxAmount;
 		}
 
 		MaxWeaponsHeld = Default.MaxWeaponsHeld;
@@ -317,12 +319,14 @@ class BIO_Player : DoomPlayer
 		if (ctxtFlags & BIO_EHCF_VALIANT)
 		{
 			let clipItem = Ammo(FindInventory('Clip'));
-				
+
 			if (clipItem.MaxAmount < 300)
 				clipItem.MaxAmount = 300;
+			else
+				return;
 
-			if (clipItem.BackpackMaxAmount < (clipItem.MaxAmount * 2))
-				clipItem.BackpackMaxAmount = clipItem.MaxAmount * 2;
+			if (clipItem.BackpackMaxAmount < 600)
+				clipItem.BackpackMaxAmount = 600;
 		
 			let pistol = FindInventory('BIO_Pistol');
 			if (pistol != null)
@@ -384,9 +388,17 @@ class BIO_Player : DoomPlayer
 				toDrop.Push(i);
 				hec--;
 			}
+			else if (i is 'Ammo')
+			{
+				let ammoItem = Ammo(i);
+				int diff = ammoItem.Amount - ammoItem.MaxAmount;
 
-			if (hwc <= 0 && hec <= 0)
-				break;
+				while (diff > 0)
+				{
+					DropInventory(ammoItem, ammoItem.Default.Amount);
+					diff -= ammoItem.Default.Amount;
+				}
+			}
 		}
 
 		for (uint i = 0; i < toDrop.Size(); i++)

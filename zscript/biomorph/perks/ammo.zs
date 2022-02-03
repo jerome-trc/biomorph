@@ -118,10 +118,13 @@ class BIO_PkupFunc_AdditiveBackpacks : BIO_ItemPickupFunctor
 		{
 			let ammo_t = BIO_Backpack.DOOM_AMMO_TYPES[i];
 			let defs = GetDefaultByType(ammo_t);
-			let ammoItem = bioPlayer.FindInventory(ammo_t);
+			let ammoItem = Ammo(bioPlayer.FindInventory(ammo_t));
 
 			for (uint i = 0; i < Count; i++)
+			{
 				ammoItem.MaxAmount += defs.BackpackAmount;
+				ammoItem.BackpackMaxAmount += defs.BackpackAmount;
+			}
 		}
 	}
 }
