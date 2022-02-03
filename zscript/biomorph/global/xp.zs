@@ -444,12 +444,16 @@ extend class BIO_GlobalData
 					continue;
 				}
 
+				bool found = false;
+
 				// `stringIDs` and `BasePerkGraph.Nodes` are parallel,
 				// so `k` is a node index/UUID here
 				for (uint k = 0; k < stringIDs.Size(); k++)
 				{
 					if (!(stringIDs[k] ~== strID))
 						continue;
+
+					found = true;
 
 					// `ni` is the node which defined neighbor(s)
 					// `nk` is the node requested for neighboring by `ni`
@@ -459,6 +463,12 @@ extend class BIO_GlobalData
 						ni.Neighbors.Push(nk.UUID);
 					if (nk.Neighbors.Find(i + 1) == nk.Neighbors.Size())
 						nk.Neighbors.Push(i + 1);
+				}
+
+				if (!found)
+				{
+					Console.Printf(errpfx ..
+						"failed to find node %s for neighboring.");
 				}
 			}
 		}
