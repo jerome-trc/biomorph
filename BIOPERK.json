@@ -5,416 +5,356 @@
 			"class": "BIO_Perk_MaxBonusHealth_Minor",
 			"tag": "$BIO_PERK_MAXBONUSHEALTH_MINOR_TAG",
 			"desc": "$BIO_PERK_MAXBONUSHEALTH_MINOR_DESC",
-			"icon": "BON1A0",
-			"category": "minor"
+			"icon": "BON1A0"
 		},
 		{
 			"id": "bio_slimeresist_minor",
 			"class": "BIO_Perk_SlimeResist_Minor",
 			"tag": "$BIO_PERK_SLIMERESIST_MINOR_TAG",
 			"desc": "$BIO_PERK_SLIMERESIST_MINOR_DESC",
-			"icon": "SUITX0",
-			"category": "minor"
+			"icon": "SUITX0"
 		},
 		{
 			"id": "bio_splashresist_minor",
 			"class": "BIO_Perk_SplashResist_Minor",
 			"tag": "$BIO_PERK_SPLASHRESIST_MINOR_TAG",
 			"desc": "$BIO_PERK_SPLASHRESIST_MINOR_DESC",
-			"icon": "graphics/perk/splashresist_minor.png",
-			"category": "minor"
+			"icon": "graphics/perk/splashresist_minor.png"
 		},
 		{
 			"id": "bio_clipcapacity_minor",
 			"class": "BIO_Perk_ClipCapacity_Minor",
 			"tag": "$BIO_PERK_CLIPCAPACITY_MINOR_TAG",
 			"desc": "$BIO_PERK_CLIPCAPACITY_MINOR_DESC",
-			"icon": "CLIPA0",
-			"category": "minor"
+			"icon": "CLIPA0"
 		},
 		{
 			"id": "bio_shellcapacity_minor",
 			"class": "BIO_Perk_ShellCapacity_Minor",
 			"tag": "$BIO_PERK_SHELLCAPACITY_MINOR_TAG",
 			"desc": "$BIO_PERK_SHELLCAPACITY_MINOR_DESC",
-			"icon": "SHELA0",
-			"category": "minor"
+			"icon": "SHELA0"
 		},
 		{
 			"id": "bio_rocketammocapacity_minor",
 			"class": "BIO_Perk_RocketAmmoCapacity_Minor",
 			"tag": "$BIO_PERK_ROCKETAMMOCAPACITY_MINOR_TAG",
 			"desc": "$BIO_PERK_ROCKETAMMOCAPACITY_MINOR_DESC",
-			"icon": "ROCKA0",
-			"category": "minor"
+			"icon": "ROCKA0"
 		},
 		{
 			"id": "bio_cellcapacity_minor",
 			"class": "BIO_Perk_CellCapacity_Minor",
 			"tag": "$BIO_PERK_CELLCAPACITY_MINOR_TAG",
 			"desc": "$BIO_PERK_CELLCAPACITY_MINOR_DESC",
-			"icon": "CELLA0",
-			"category": "minor"
+			"icon": "CELLA0"
 		},
 		{
 			"id": "bio_clipcapacity_major",
 			"class": "BIO_Perk_ClipCapacity_Major",
 			"tag": "$BIO_PERK_CLIPCAPACITY_MAJOR_TAG",
 			"desc": "$BIO_PERK_CLIPCAPACITY_MAJOR_DESC",
-			"icon": "AMMOA0",
-			"category": "major"
+			"icon": "AMMOA0"
 		},
 		{
 			"id": "bio_shellcapacity_major",
 			"class": "BIO_Perk_ShellCapacity_Major",
 			"tag": "$BIO_PERK_SHELLCAPACITY_MAJOR_TAG",
 			"desc": "$BIO_PERK_SHELLCAPACITY_MAJOR_DESC",
-			"icon": "SBOXA0",
-			"category": "major"
+			"icon": "SBOXA0"
 		},
 		{
 			"id": "bio_rocketammocapacity_major",
 			"class": "BIO_Perk_RocketAmmoCapacity_Major",
 			"tag": "$BIO_PERK_ROCKETAMMOCAPACITY_MAJOR_TAG",
 			"desc": "$BIO_PERK_ROCKETAMMOCAPACITY_MAJOR_DESC",
-			"icon": "BROKA0",
-			"category": "major"
+			"icon": "BROKA0"
 		},
 		{
 			"id": "bio_cellcapacity_major",
 			"class": "BIO_Perk_CellCapacity_Major",
 			"tag": "$BIO_PERK_CELLCAPACITY_MAJOR_TAG",
 			"desc": "$BIO_PERK_CELLCAPACITY_MAJOR_DESC",
-			"icon": "CELPA0",
-			"category": "major"
+			"icon": "CELPA0"
 		}
 	],
-	"perks": [
-		{
-			"uuid": "bio_maxbonushealth_0",
-			"template": "bio_maxbonushealth_minor",
-			"x": 0,
-			"y": -60,
-			"neighbors": [ "bio_start" ]
-		},
-		{
-			"uuid": "bio_healthbonusx2",
-			"class": "BIO_Perk_HealthBonusX2",
-			"x": 0,
-			"y": -120,
-			"tag": "$BIO_PERK_HEALTHBONUSX2_TAG",
-			"desc": "$BIO_PERK_HEALTHBONUSX2_DESC",
-			"icon": "graphics/perk/healthbonus_x2.png",
-			"category": "major",
-			"neighbors": [ "bio_maxbonushealth_0" ]
-		},
-		{
-			"uuid": "bio_maxbonushealth_1",
-			"template": "bio_maxbonushealth_minor",
-			"x": 0,
-			"y": -180,
-			"neighbors": [ "bio_healthbonusx2" ]
-		},
-		{
-			"uuid": "bio_betterstimpacks",
-			"class": "BIO_Perk_BetterStimpacks",
-			"x": 0,
-			"y": -240,
-			"tag": "$BIO_PERK_BETTERSTIMPACKS_TAG",
-			"desc": "$BIO_PERK_BETTERSTIMPACKS_DESC",
-			"icon": "STIMA0",
-			"category": "major",
-			"neighbors": [ "bio_maxbonushealth_1" ]
-		},
-		{
-			"uuid": "bio_bonuscrossover",
-			"class": "BIO_Perk_BonusCrossover",
-			"x": 90,
-			"y": -180,
-			"tag": "$BIO_PERK_BONUSCROSSOVER_TAG",
-			"desc": "$BIO_PERK_BONUSCROSSOVER_DESC",
-			"icon": "graphics/perk/bonuscrossover.png",
-			"category": "major",
-			"neighbors": [ "bio_maxbonushealth_1" ]
-		},
-		{
-			"uuid": "bio_maxbonushealth_2",
-			"template": "bio_maxbonushealth_minor",
-			"x": 0,
-			"y": -300,
-			"neighbors": [ "bio_betterstimpacks" ]
-		},
-		{
-			"uuid": "bio_bettermedkits",
-			"class": "BIO_Perk_BetterMedikits",
-			"x": 0,
-			"y": -360,
-			"tag": "$BIO_PERK_BETTERMEDIKITS_TAG",
-			"desc": "$BIO_PERK_BETTERMEDIKITS_DESC",
-			"icon": "MEDIA0",
-			"category": "major",
-			"neighbors": [ "bio_maxbonushealth_2" ]
-		},
-		{
-			"uuid": "bio_splashresist_0",
-			"template": "bio_splashresist_minor",
-			"x": -50,
-			"y": 0,
-			"neighbors": [ "bio_start" ]
-		},
-		{
-			"uuid": "bio_splashresist_1",
-			"template": "bio_splashresist_minor",
-			"x": -120,
-			"y": 0,
-			"neighbors": [ "bio_splashresist_0" ]
-		},
-		{
-			"uuid": "bio_splashresist_2",
-			"template": "bio_splashresist_minor",
-			"x": -200,
-			"y": -70,
-			"neighbors": [ "bio_splashresist_1" ]
-		},
-		{
-			"uuid": "bio_splashresist_major",
-			"class": "BIO_Perk_SplashResist_Major",
-			"x": -300,
-			"y": -70,
-			"tag": "$BIO_PERK_SPLASHRESIST_MAJOR_TAG",
-			"desc": "$BIO_PERK_SPLASHRESIST_MAJOR_DESC",
-			"icon": "graphics/perk/splashresist_major.png",
-			"category": "major",
-			"neighbors": [ "bio_splashresist_2" ]
-		},
-		{
-			"uuid": "bio_dontthrust",
-			"class": "BIO_Perk_DontThrust",
-			"x": -200,
-			"y": -170,
-			"tag": "$BIO_PERK_DONTTHRUST_TAG",
-			"desc": "$BIO_PERK_DONTTHRUST_DESC",
-			"icon": "graphics/perk/dontthrust.png",
-			"category": "major",
-			"neighbors": [ "bio_splashresist_2" ]
-		},
-		{
-			"uuid": "bio_clipcapacity_minor_0",
-			"template": "bio_clipcapacity_minor",
-			"x": 0,
-			"y": 60,
-			"neighbors": [ "bio_start" ]
-		},
-		{
-			"uuid": "bio_shellcapacity_minor_0",
-			"template": "bio_shellcapacity_minor",
-			"x": 30,
-			"y": 120,
-			"neighbors": [ "bio_clipcapacity_minor_0" ]
-		},
-		{
-			"uuid": "bio_rocketammocapacity_minor_0",
-			"template": "bio_rocketammocapacity_minor",
-			"x": -30,
-			"y": 120,
-			"neighbors": [ "bio_clipcapacity_minor_0" ]
-		},
-		{
-			"uuid": "bio_cellcapacity_minor_0",
-			"template": "bio_cellcapacity_minor",
-			"x": 0,
-			"y": 180,
-			"neighbors": [
-				"bio_shellcapacity_minor_0",
-				"bio_rocketammocapacity_minor_0"
-			]
-		},
-		{
-			"uuid": "bio_largeammobonus",
-			"class": "BIO_Perk_LargeAmmoBonus",
-			"x": -100,
-			"y": 120,
-			"tag": "$BIO_PERK_LARGEAMMOBONUS_TAG",
-			"desc": "$BIO_PERK_LARGEAMMOBONUS_DESC",
-			"icon": "graphics/perk/largeammobonus.png",
-			"category": "major",
-			"neighbors": [ "bio_rocketammocapacity_minor_0" ]
-		},
-		{
-			"uuid": "bio_additivebackpacks",
-			"class": "BIO_Perk_AdditiveBackpacks",
-			"x": 0,
-			"y": 240,
-			"tag": "$BIO_PERK_ADDITIVEBACKPACKS_TAG",
-			"desc": "$BIO_PERK_ADDITIVEBACKPACKS_DESC",
-			"icon": "BPAKA0",
-			"category": "major",
-			"neighbors": [ "bio_cellcapacity_minor_0" ]
-		},
-		{
-			"uuid": "bio_clipcapacity_minor_1",
-			"template": "bio_clipcapacity_minor",
-			"x": -100,
-			"y": 300,
-			"neighbors": [ "bio_additivebackpacks" ]
-		},
-		{
-			"uuid": "bio_shellcapacity_minor_1",
-			"template": "bio_shellcapacity_minor",
-			"x": -40,
-			"y": 330,
-			"neighbors": [ "bio_additivebackpacks" ]
-		},
-		{
-			"uuid": "bio_rocketammocapacity_minor_1",
-			"template": "bio_rocketammocapacity_minor",
-			"x": 40,
-			"y": 330,
-			"neighbors": [ "bio_additivebackpacks" ]
-		},
-		{
-			"uuid": "bio_cellcapacity_minor_1",
-			"template": "bio_cellcapacity_minor",
-			"x": 100,
-			"y": 300,
-			"neighbors": [ "bio_additivebackpacks" ]
-		},
-		{
-			"uuid": "bio_clipcapacity_major_1",
-			"template": "bio_clipcapacity_major",
-			"x": -200,
-			"y": 360,
-			"neighbors": [ "bio_clipcapacity_minor_1" ]
-		},
-		{
-			"uuid": "bio_shellcapacity_major_1",
-			"template": "bio_shellcapacity_major",
-			"x": -70,
-			"y": 400,
-			"neighbors": [ "bio_shellcapacity_minor_1" ]
-		},
-		{
-			"uuid": "bio_rocketammocapacity_major_1",
-			"template": "bio_rocketammocapacity_major",
-			"x": 70,
-			"y": 400,
-			"neighbors": [ "bio_rocketammocapacity_minor_1" ]
-		},
-		{
-			"uuid": "bio_cellcapacity_major_1",
-			"template": "bio_cellcapacity_major",
-			"x": 200,
-			"y": 360,
-			"neighbors": [ "bio_cellcapacity_minor_1" ]
-		},
-		{
-			"uuid": "bio_weapcap_0",
-			"class": "BIO_Perk_WeaponCapacity",
-			"x": -50,
-			"y": 70,
-			"tag": "$BIO_PERK_WEAPONCAPACITY_0_TAG",
-			"desc": "$BIO_PERK_WEAPONCAPACITY_DESC",
-			"icon": "graphics/perk/weaponcap.png",
-			"category": "major",
-			"neighbors": [ "bio_start" ]
-		},
-		{
-			"uuid": "bio_weapcap_1",
-			"class": "BIO_Perk_WeaponCapacity",
-			"x": -170,
-			"y": 70,
-			"tag": "$BIO_PERK_WEAPONCAPACITY_1_TAG",
-			"desc": "$BIO_PERK_WEAPONCAPACITY_DESC",
-			"icon": "graphics/perk/weaponcap.png",
-			"category": "major",
-			"neighbors": [ "bio_weapcap_0" ]
-		},
-		{
-			"uuid": "bio_cantseek",
-			"class": "BIO_Perk_CantSeek",
-			"x": 60,
-			"y": -60,
-			"tag": "$BIO_PERK_CANTSEEK_TAG",
-			"desc": "$BIO_PERK_CANTSEEK_DESC",
-			"icon": "graphics/perk/cantseek.png",
-			"category": "major",
-			"neighbors": [ "bio_start" ]
-		},
-		{
-			"uuid": "bio_slimeresist_0",
-			"template": "bio_slimeresist_minor",
-			"x": 60,
-			"y": 0,
-			"neighbors": [ "bio_start" ]
-		},
-		{
-			"uuid": "bio_slimeresist_1",
-			"template": "bio_slimeresist_minor",
-			"x": 120,
-			"y": 0,
-			"neighbors": [ "bio_slimeresist_0" ]
-		},
-		{
-			"uuid": "bio_slimeresist_2",
-			"template": "bio_slimeresist_minor",
-			"x": 180,
-			"y": 0,
-			"neighbors": [ "bio_slimeresist_1" ]
-		},
-		{
-			"uuid": "bio_slimeresist_major",
-			"class": "BIO_Perk_SlimeResist_Major",
-			"x": 240,
-			"y": 0,
-			"tag": "$BIO_PERK_SLIMERESIST_MAJOR_TAG",
-			"desc": "$BIO_PERK_SLIMERESIST_MAJOR_DESC",
-			"icon": "SUITX0",
-			"category": "major",
-			"neighbors": [ "bio_slimeresist_2" ]
-		},
-		{
-			"uuid": "bio_armorbonusx2",
-			"class": "BIO_Perk_ArmorBonusX2",
-			"x": -80,
-			"y": -70,
-			"tag": "$BIO_PERK_ARMORBONUSX2_TAG",
-			"desc": "$BIO_PERK_ARMORBONUSX2_DESC",
-			"icon": "graphics/perk/armorbonus_x2.png",
-			"category": "major",
-			"neighbors": [ "bio_start" ]
-		},
-		{
-			"uuid": "bio_scaledpistoldamage",
-			"class": "BIO_Perk_ScaledPistolDamage",
-			"x": 50,
-			"y": 50,
-			"tag": "$BIO_PERK_SCALEDPISTOLDAMAGE_TAG",
-			"desc": "$BIO_PERK_SCALEDPISTOLDAMAGE_DESC",
-			"icon": "PISTA0",
-			"category": "major",
-			"neighbors": [ "bio_start" ]
-		},
-		{
-			"uuid": "bio_allmap",
-			"class": "BIO_Perk_StartingAllmap",
-			"x": 120,
-			"y": 110,
-			"tag": "$BIO_PERK_STARTINGALLMAP_TAG",
-			"desc": "$BIO_PERK_STARTINGALLMAP_DESC",
-			"icon": "PMAPA0",
-			"category": "major",
-			"neighbors": [ "bio_scaledpistoldamage" ]
-		},
-		{
-			"uuid": "bio_scannerallmap",
-			"class": "BIO_Perk_ScannerAllmap",
-			"x": 200,
-			"y": 150,
-			"tag": "$BIO_PERK_SCANNERALLMAP_TAG",
-			"desc": "$BIO_PERK_SCANNERALLMAP_DESC",
-			"icon": "graphics/perk/scannerallmap.png",
-			"category": "major",
-			"neighbors": [ "bio_allmap" ]
-		}
-	]
+	"perks": {
+		"minor": [
+			{
+				"uuid": "bio_maxbonushealth_0",
+				"template": "bio_maxbonushealth_minor",
+				"x": 0, "y": -60,
+				"neighbors": [ "bio_start" ]
+			},
+			{
+				"uuid": "bio_maxbonushealth_1",
+				"template": "bio_maxbonushealth_minor",
+				"x": 0, "y": -180,
+				"neighbors": [ "bio_healthbonusx2" ]
+			},
+			{
+				"uuid": "bio_maxbonushealth_2",
+				"template": "bio_maxbonushealth_minor",
+				"x": 0, "y": -300,
+				"neighbors": [ "bio_betterstimpacks" ]
+			},
+			{
+				"uuid": "bio_splashresist_0",
+				"template": "bio_splashresist_minor",
+				"x": -50, "y": 0,
+				"neighbors": [ "bio_start" ]
+			},
+			{
+				"uuid": "bio_splashresist_1",
+				"template": "bio_splashresist_minor",
+				"x": -120, "y": 0,
+				"neighbors": [ "bio_splashresist_0" ]
+			},
+			{
+				"uuid": "bio_splashresist_2",
+				"template": "bio_splashresist_minor",
+				"x": -200, "y": -70,
+				"neighbors": [ "bio_splashresist_1" ]
+			},
+			{
+				"uuid": "bio_clipcapacity_minor_0",
+				"template": "bio_clipcapacity_minor",
+				"x": 0, "y": 60,
+				"neighbors": [ "bio_start" ]
+			},
+			{
+				"uuid": "bio_shellcapacity_minor_0",
+				"template": "bio_shellcapacity_minor",
+				"x": 30, "y": 120,
+				"neighbors": [ "bio_clipcapacity_minor_0" ]
+			},
+			{
+				"uuid": "bio_rocketammocapacity_minor_0",
+				"template": "bio_rocketammocapacity_minor",
+				"x": -30, "y": 120,
+				"neighbors": [ "bio_clipcapacity_minor_0" ]
+			},
+			{
+				"uuid": "bio_cellcapacity_minor_0",
+				"template": "bio_cellcapacity_minor",
+				"x": 0, "y": 180,
+				"neighbors": [
+					"bio_shellcapacity_minor_0",
+					"bio_rocketammocapacity_minor_0"
+				]
+			},
+			{
+				"uuid": "bio_clipcapacity_minor_1",
+				"template": "bio_clipcapacity_minor",
+				"x": -100, "y": 300,
+				"neighbors": [ "bio_additivebackpacks" ]
+			},
+			{
+				"uuid": "bio_shellcapacity_minor_1",
+				"template": "bio_shellcapacity_minor",
+				"x": -40, "y": 330,
+				"neighbors": [ "bio_additivebackpacks" ]
+			},
+			{
+				"uuid": "bio_rocketammocapacity_minor_1",
+				"template": "bio_rocketammocapacity_minor",
+				"x": 40, "y": 330,
+				"neighbors": [ "bio_additivebackpacks" ]
+			},
+			{
+				"uuid": "bio_cellcapacity_minor_1",
+				"template": "bio_cellcapacity_minor",
+				"x": 100, "y": 300,
+				"neighbors": [ "bio_additivebackpacks" ]
+			},
+			{
+				"uuid": "bio_clipcapacity_major_1",
+				"template": "bio_clipcapacity_major",
+				"x": -200, "y": 360,
+				"neighbors": [ "bio_clipcapacity_minor_1" ]
+			},
+			{
+				"uuid": "bio_shellcapacity_major_1",
+				"template": "bio_shellcapacity_major",
+				"x": -70, "y": 400,
+				"neighbors": [ "bio_shellcapacity_minor_1" ]
+			},
+			{
+				"uuid": "bio_rocketammocapacity_major_1",
+				"template": "bio_rocketammocapacity_major",
+				"x": 70, "y": 400,
+				"neighbors": [ "bio_rocketammocapacity_minor_1" ]
+			},
+			{
+				"uuid": "bio_cellcapacity_major_1",
+				"template": "bio_cellcapacity_major",
+				"x": 200, "y": 360,
+				"neighbors": [ "bio_cellcapacity_minor_1" ]
+			},
+			{
+				"uuid": "bio_slimeresist_0",
+				"template": "bio_slimeresist_minor",
+				"x": 60, "y": 0,
+				"neighbors": [ "bio_start" ]
+			},
+			{
+				"uuid": "bio_slimeresist_1",
+				"template": "bio_slimeresist_minor",
+				"x": 120, "y": 0,
+				"neighbors": [ "bio_slimeresist_0" ]
+			},
+			{
+				"uuid": "bio_slimeresist_2",
+				"template": "bio_slimeresist_minor",
+				"x": 180, "y": 0,
+				"neighbors": [ "bio_slimeresist_1" ]
+			}
+		],
+		"major": [
+			{
+				"uuid": "bio_healthbonusx2",
+				"class": "BIO_Perk_HealthBonusX2",
+				"x": 0, "y": -120,
+				"tag": "$BIO_PERK_HEALTHBONUSX2_TAG",
+				"desc": "$BIO_PERK_HEALTHBONUSX2_DESC",
+				"icon": "graphics/perk/healthbonus_x2.png",
+				"neighbors": [ "bio_maxbonushealth_0" ]
+			},
+			{
+				"uuid": "bio_betterstimpacks",
+				"class": "BIO_Perk_BetterStimpacks",
+				"x": 0, "y": -240,
+				"tag": "$BIO_PERK_BETTERSTIMPACKS_TAG",
+				"desc": "$BIO_PERK_BETTERSTIMPACKS_DESC",
+				"icon": "STIMA0",
+				"neighbors": [ "bio_maxbonushealth_1" ]
+			},
+			{
+				"uuid": "bio_bonuscrossover",
+				"class": "BIO_Perk_BonusCrossover",
+				"x": 90, "y": -180,
+				"tag": "$BIO_PERK_BONUSCROSSOVER_TAG",
+				"desc": "$BIO_PERK_BONUSCROSSOVER_DESC",
+				"icon": "graphics/perk/bonuscrossover.png",
+				"neighbors": [ "bio_maxbonushealth_1" ]
+			},
+			{
+				"uuid": "bio_bettermedkits",
+				"class": "BIO_Perk_BetterMedikits",
+				"x": 0, "y": -360,
+				"tag": "$BIO_PERK_BETTERMEDIKITS_TAG",
+				"desc": "$BIO_PERK_BETTERMEDIKITS_DESC",
+				"icon": "MEDIA0",
+				"neighbors": [ "bio_maxbonushealth_2" ]
+			},
+			{
+				"uuid": "bio_splashresist_major",
+				"class": "BIO_Perk_SplashResist_Major",
+				"x": -300, "y": -70,
+				"tag": "$BIO_PERK_SPLASHRESIST_MAJOR_TAG",
+				"desc": "$BIO_PERK_SPLASHRESIST_MAJOR_DESC",
+				"icon": "graphics/perk/splashresist_major.png",
+				"neighbors": [ "bio_splashresist_2" ]
+			},
+			{
+				"uuid": "bio_dontthrust",
+				"class": "BIO_Perk_DontThrust",
+				"x": -200, "y": -170,
+				"tag": "$BIO_PERK_DONTTHRUST_TAG",
+				"desc": "$BIO_PERK_DONTTHRUST_DESC",
+				"icon": "graphics/perk/dontthrust.png",
+				"neighbors": [ "bio_splashresist_2" ]
+			},
+			{
+				"uuid": "bio_largeammobonus",
+				"class": "BIO_Perk_LargeAmmoBonus",
+				"x": -100, "y": 120,
+				"tag": "$BIO_PERK_LARGEAMMOBONUS_TAG",
+				"desc": "$BIO_PERK_LARGEAMMOBONUS_DESC",
+				"icon": "graphics/perk/largeammobonus.png",
+				"neighbors": [ "bio_rocketammocapacity_minor_0" ]
+			},
+			{
+				"uuid": "bio_additivebackpacks",
+				"class": "BIO_Perk_AdditiveBackpacks",
+				"x": 0, "y": 240,
+				"tag": "$BIO_PERK_ADDITIVEBACKPACKS_TAG",
+				"desc": "$BIO_PERK_ADDITIVEBACKPACKS_DESC",
+				"icon": "BPAKA0",
+				"neighbors": [ "bio_cellcapacity_minor_0" ]
+			},
+			{
+				"uuid": "bio_weapcap_0",
+				"class": "BIO_Perk_WeaponCapacity",
+				"x": -50, "y": 70,
+				"tag": "$BIO_PERK_WEAPONCAPACITY_0_TAG",
+				"desc": "$BIO_PERK_WEAPONCAPACITY_DESC",
+				"icon": "graphics/perk/weaponcap.png",
+				"neighbors": [ "bio_start" ]
+			},
+			{
+				"uuid": "bio_weapcap_1",
+				"class": "BIO_Perk_WeaponCapacity",
+				"x": -170, "y": 70,
+				"tag": "$BIO_PERK_WEAPONCAPACITY_1_TAG",
+				"desc": "$BIO_PERK_WEAPONCAPACITY_DESC",
+				"icon": "graphics/perk/weaponcap.png",
+				"neighbors": [ "bio_weapcap_0" ]
+			},
+			{
+				"uuid": "bio_cantseek",
+				"class": "BIO_Perk_CantSeek",
+				"x": 60, "y": -60,
+				"tag": "$BIO_PERK_CANTSEEK_TAG",
+				"desc": "$BIO_PERK_CANTSEEK_DESC",
+				"icon": "graphics/perk/cantseek.png",
+				"neighbors": [ "bio_start" ]
+			},
+			{
+				"uuid": "bio_slimeresist_major",
+				"class": "BIO_Perk_SlimeResist_Major",
+				"x": 240, "y": 0,
+				"tag": "$BIO_PERK_SLIMERESIST_MAJOR_TAG",
+				"desc": "$BIO_PERK_SLIMERESIST_MAJOR_DESC",
+				"icon": "SUITX0",
+				"neighbors": [ "bio_slimeresist_2" ]
+			},
+			{
+				"uuid": "bio_armorbonusx2",
+				"class": "BIO_Perk_ArmorBonusX2",
+				"x": -80, "y": -70,
+				"tag": "$BIO_PERK_ARMORBONUSX2_TAG",
+				"desc": "$BIO_PERK_ARMORBONUSX2_DESC",
+				"icon": "graphics/perk/armorbonus_x2.png",
+				"neighbors": [ "bio_start" ]
+			},
+			{
+				"uuid": "bio_scaledpistoldamage",
+				"class": "BIO_Perk_ScaledPistolDamage",
+				"x": 50, "y": 50,
+				"tag": "$BIO_PERK_SCALEDPISTOLDAMAGE_TAG",
+				"desc": "$BIO_PERK_SCALEDPISTOLDAMAGE_DESC",
+				"icon": "PISTA0",
+				"neighbors": [ "bio_start" ]
+			},
+			{
+				"uuid": "bio_allmap",
+				"class": "BIO_Perk_StartingAllmap",
+				"x": 120, "y": 110,
+				"tag": "$BIO_PERK_STARTINGALLMAP_TAG",
+				"desc": "$BIO_PERK_STARTINGALLMAP_DESC",
+				"icon": "PMAPA0",
+				"neighbors": [ "bio_scaledpistoldamage" ]
+			},
+			{
+				"uuid": "bio_scannerallmap",
+				"class": "BIO_Perk_ScannerAllmap",
+				"x": 200, "y": 150,
+				"tag": "$BIO_PERK_SCANNERALLMAP_TAG",
+				"desc": "$BIO_PERK_SCANNERALLMAP_DESC",
+				"icon": "graphics/perk/scannerallmap.png",
+				"neighbors": [ "bio_allmap" ]
+			}
+		]
+	}
 }
