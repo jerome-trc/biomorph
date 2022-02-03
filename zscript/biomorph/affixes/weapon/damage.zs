@@ -561,7 +561,7 @@ class BIO_WAfx_MaxDamageOnly : BIO_WeaponAffix
 	final override bool ImplicitExplicitExclusive() const { return true; }
 
 	// High priority so modified damage isn't clobbered
-	final override int OrderPriority() const { return 255; }
+	final override int OrderPriority() const { return 256; }
 
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
