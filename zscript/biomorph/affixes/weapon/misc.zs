@@ -200,7 +200,7 @@ class BIO_WAfx_LowSpreadFireCount : BIO_WeaponAffix
 	}
 
 	// Low priority so as not to clobber `WAfx_Slug` effects and the like
-	final override int OrderPriority() const { return -255; }
+	final override int OrderPriority() const { return -256; }
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
@@ -437,6 +437,8 @@ class BIO_WAfx_Spread : BIO_WeaponAffix
 	{
 		return StringTable.Localize("$BIO_WAFX_SPREAD_TAG");
 	}
+
+	final override int OrderPriority() const { return -512; }
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
