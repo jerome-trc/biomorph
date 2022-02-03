@@ -8,7 +8,10 @@ class BIO_PerkMenu : GenericMenu
 {
 	const VIRT_W = 640.0; const VIRT_H = 360.0;
 
+	// Note to self: color constructor takes A, R, G, B
 	const COLOR_HOVERED = Color(127, 127, 127, 127);
+	const COLOR_FULLCONN_OUTER = Color(127, 130, 239, 255);
+	const COLOR_FULLCONN_INNER = Color(127, 65, 255, 240);
 	const COLOR_NONE = Color(0, 0, 0, 0);
 	
 	protected readOnly<BIO_BasePerkGraph> BasePerkGraph;
@@ -189,10 +192,26 @@ class BIO_PerkMenu : GenericMenu
 				if (i == uuidJ)
 					continue;
 
-				Screen.DrawThickLine(
-					NodeState[i].ScreenPos.X, NodeState[i].ScreenPos.Y,
-					NodeState[uuidJ].ScreenPos.X, NodeState[uuidJ].ScreenPos.Y,
-					Size.X / (Size.X * 0.25), COLOR_HOVERED);
+				if ((PlayerPerkGraph.PerkActive[i] || NodeState[i].Selected) &&
+					(PlayerPerkGraph.PerkActive[uuidJ] || NodeState[uuidJ].Selected))
+				{
+					Screen.DrawThickLine(
+						NodeState[i].ScreenPos.X, NodeState[i].ScreenPos.Y,
+						NodeState[uuidJ].ScreenPos.X, NodeState[uuidJ].ScreenPos.Y,
+						Size.X / (Size.X * 0.15), COLOR_FULLCONN_OUTER);
+					
+					Screen.DrawThickLine(
+						NodeState[i].ScreenPos.X, NodeState[i].ScreenPos.Y,
+						NodeState[uuidJ].ScreenPos.X, NodeState[uuidJ].ScreenPos.Y,
+						Size.X / (Size.X * 0.35), COLOR_FULLCONN_INNER);
+				}
+				else
+				{
+					Screen.DrawThickLine(
+						NodeState[i].ScreenPos.X, NodeState[i].ScreenPos.Y,
+						NodeState[uuidJ].ScreenPos.X, NodeState[uuidJ].ScreenPos.Y,
+						Size.X / (Size.X * 0.25), COLOR_HOVERED);
+				}
 			}
 		}
 
