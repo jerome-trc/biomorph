@@ -62,9 +62,9 @@ Each of these arrays can contain strings corresponding to weapon class names; th
 
 This is a JSON lump for defining the perk node graph. The top-level item in this lump must be an object. Its supported contents are as follows.
 
-#### `perks` (array)
+#### `perks` (object)
 
-This array can contain only objects. Each of these objects must have the following fields:
+This object can contain only a selection of three arrays: `minor`, `major`, and `keystone`. Each of these arrays can only contain objects - each defining a perk - and each object must contain the following fields:
 
 ##### `uuid`
 
@@ -95,10 +95,6 @@ This is a string which gets appended to the description of the perk's tooltip de
 
 This is a string corresponding to a sprite's name (e.g. `"BON1A0"`) or a path in the virtual filesystem leading to a graphic (e.g. `"graphics/perk/healthbonus_x2"`). This texture is drawn on the perk's node in the menu.
 
-##### `category`
-
-This is a string selected from one of 3 values: `"minor"`, `"major"`, or `"keystone"`. This only affects the frame with which the node is presented in the menu.
-
 ##### `neighbors`
 
 This is an array containing UUIDs of other nodes. Every UUID given here will create a two-way connection between the defined node and the node belonging to that UUID. If you want to connect the node to the start point, add `"bio_start"` to the array. If you want the node to be accessible forever, regardless of what other perks the player has activated, leave this field undefined.
@@ -107,4 +103,4 @@ As you probably expect, it's illegal for a node to add its own UUID to its neigh
 
 #### `templates` (array)
 
-As an alternative to defining perks using the fields above, one can also predefine perk node templates. A template needs to have a unique `id` field that sets it apart from all other templates, and must also have a `class` and `category`. You can then define a node in the `perks` array, assign it a template using the `"template"` key, and then give it a UUID, position, and neighbour array.
+As an alternative to defining perks using the fields above, one can also predefine perk node templates. A template needs to have a unique `id` field that sets it apart from all other templates, and must also have a `class`. You can then define a node in the `perks` array, assign it a template using the `"template"` key, and then give it a UUID, position, and neighbour array.

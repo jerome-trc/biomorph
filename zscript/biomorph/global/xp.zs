@@ -23,7 +23,6 @@ class BIO_PerkTemplate
 	string Tag, Description, VerboseDesc, FlavorText; // Un-localized
 	TextureID Icon;
 	Class<BIO_Perk> PerkClass;
-	BIO_PerkCategory Category;
 }
 
 // Information about what nodes on the perk graph
@@ -223,7 +222,10 @@ extend class BIO_GlobalData
 		Array<BIO_JsonObject> perkObjs;
 		// Also cache the lumps corresponding to each object, and the index of 
 		// the object relative to that lump, for better error messaging
-		Array<int> perkObjLump, perkObjIndex;
+		Array<int> perkObjLumps;
+		Array<uint> perkObjIndices;
+		uint currentPerk = 0;
+		Array<BIO_PerkCategory> perkObjCats;
 
 		Array<BIO_PerkTemplate> templates;
 
@@ -266,24 +268,37 @@ extend class BIO_GlobalData
 			if (templateJSON != null)
 				ReadPerkTemplateJSON(lump, templateJSON, templates);
 
-			let perks = BIO_Utils.TryGetJsonArray(obj.get("perks"), errMsg: false);
+			let perks = BIO_Utils.TryGetJsonObject(obj.get("perks"), errMsg: false);
 			if (perks == null) continue;
-			
-			for (uint i = 0; i < perks.size(); i++)
+
+			let arrMinor = BIO_Utils.TryGetJsonArray(perks.get("minor"), errMsg: false);
+			if (arrMinor != null)
 			{
-				string errpfx = String.Format(Biomorph.LOGPFX_ERR ..
-					LMPNAME_PERKS .. " lump %d, perk object %d; ", lump, i);
+				ReadPerkArrayJSON(arrMinor, perkObjs,
+					perkObjLumps, perkObjIndices, currentPerk, lump);
 
-				let perk = BIO_Utils.TryGetJsonObject(perks.get(i));
-				if (perk == null)
-				{
-					Console.Printf(errpfx .. "skipping it.");
-					continue;
-				}
+				while (perkObjCats.Size() < perkObjs.Size())
+					perkObjCats.Push(BIO_PRKCAT_MINOR);
+			}
 
-				perkObjs.Push(perk);
-				perkObjIndex.Push(i);
-				perkObjLump.Push(lump);
+			let arrMajor = BIO_Utils.TryGetJsonArray(perks.get("major"), errMsg: false);
+			if (arrMajor != null)
+			{
+				ReadPerkArrayJSON(arrMajor, perkObjs,
+					perkObjLumps, perkObjIndices, currentPerk, lump);
+
+				while (perkObjCats.Size() < perkObjs.Size())
+					perkObjCats.Push(BIO_PRKCAT_MAJOR);
+			}
+
+			let arrKeystone = BIO_Utils.TryGetJsonArray(perks.get("keystone"), errMsg: false);
+			if (arrKeystone != null)
+			{
+				ReadPerkArrayJSON(arrKeystone, perkObjs,
+					perkObjLumps, perkObjIndices, currentPerk, lump);
+
+				while (perkObjCats.Size() < perkObjs.Size())
+					perkObjCats.Push(BIO_PRKCAT_KEYSTONE);
 			}
 		}
 
@@ -291,7 +306,7 @@ extend class BIO_GlobalData
 		{
 			string errpfx = String.Format(Biomorph.LOGPFX_ERR ..
 				LMPNAME_PERKS .. " lump %d, perk object %d; ",
-				perkObjLump[i], perkObjIndex[i]);
+				perkObjLumps[i], perkObjIndices[i]);
 
 			let perk = perkObjs[i];
 
@@ -335,10 +350,11 @@ extend class BIO_GlobalData
 			{
 				let node = new('BIO_PerkGraphNode');
 				node.Position = (posX_json.i, posY_json.i);
-	
+				node.Category = perkObjCats[i];
+
 				if (TryCreatePerkFromTemplate(templates, template, node, errpfx))
 					stringIDs.Push(stringID);
-
+				
 				continue;
 			}
 
@@ -359,28 +375,6 @@ extend class BIO_GlobalData
 			let icon = Texman.CheckForTexture(
 				BIO_Utils.StringFromJson(perk.get("icon")), TexMan.TYPE_ANY);
 
-			let catStr = BIO_Utils.StringFromJson(perk.get("category"));
-			BIO_PerkCategory cat = BIO_PRKCAT_MINOR;
-
-			if (catStr ~== "minor")
-				cat = BIO_PRKCAT_MINOR;
-			else if (catStr ~== "major")
-				cat = BIO_PRKCAT_MAJOR;
-			else if (catStr ~== "keystone")
-				cat = BIO_PRKCAT_KEYSTONE;
-			else if (catStr.Length() < 1)
-			{
-				Console.Printf(Biomorph.LOGPFX_ERR ..
-					errpfx .. "missing category field.");
-				continue;
-			}
-			else
-			{
-				Console.Printf(Biomorph.LOGPFX_ERR ..
-					errpfx .. "invalid perk category: %s", catStr);
-				continue;
-			}
-
 			uint e = BasePerkGraph.Nodes.Push(new('BIO_PerkGraphNode'));
 			BasePerkGraph.Nodes[e].UUID = e;
 			BasePerkGraph.Nodes[e].Perk = BIO_Perk(new(perk_t));
@@ -389,7 +383,7 @@ extend class BIO_GlobalData
 			BasePerkGraph.Nodes[e].Description = StringTable.Localize(desc);
 			BasePerkGraph.Nodes[e].VerboseDesc = StringTable.Localize(descV);
 			BasePerkGraph.Nodes[e].Icon = icon;
-			BasePerkGraph.Nodes[e].Category = cat;
+			BasePerkGraph.Nodes[e].Category = perkObjCats[i];
 			stringIDs.Push(stringID);
 		}
 
@@ -398,10 +392,10 @@ extend class BIO_GlobalData
 		{
 			string warnpfx = String.Format(Biomorph.LOGPFX_WARN ..
 				LMPNAME_PERKS .. " lump %d, perk object %d; ",
-				perkObjLump[i], perkObjIndex[i]);
+				perkObjLumps[i], perkObjIndices[i]);
 			string errpfx = String.Format(Biomorph.LOGPFX_ERR ..
 				LMPNAME_PERKS .. " lump %d, perk object %d; ",
-				perkObjLump[i], perkObjIndex[i]);
+				perkObjLumps[i], perkObjIndices[i]);
 
 			let perk = perkObjs[i];
 
@@ -453,6 +447,30 @@ extend class BIO_GlobalData
 						nk.Neighbors.Push(i + 1);
 				}
 			}
+		}
+	}
+
+	private static void ReadPerkArrayJSON(BIO_JsonArray perks,
+		in out Array<BIO_JsonObject> perkObjs,
+		in out Array<int> perkObjLumps,
+		in out Array<uint> perkObjIndices,
+		in out uint currentPerk, int lump)
+	{
+		for (uint i = 0; i < perks.arr.Size(); i++)
+		{
+			string errpfx = String.Format(Biomorph.LOGPFX_ERR ..
+				LMPNAME_PERKS .. " lump %d, perk object %d; ", lump, i);
+
+			let perk = BIO_Utils.TryGetJsonObject(perks.get(i));
+			if (perk == null)
+			{
+				Console.Printf(errpfx .. "skipping it.");
+				continue;
+			}
+
+			perkObjs.Push(perk);
+			perkObjIndices.Push(currentPerk);
+			perkObjLumps.Push(lump);
 		}
 	}
 
@@ -514,28 +532,6 @@ extend class BIO_GlobalData
 			let icon = Texman.CheckForTexture(
 				BIO_Utils.StringFromJson(obj.get("icon")), TexMan.TYPE_ANY);
 
-			let catStr = BIO_Utils.StringFromJson(obj.get("category"));
-			BIO_PerkCategory cat = BIO_PRKCAT_MINOR;
-
-			if (catStr ~== "minor")
-				cat = BIO_PRKCAT_MINOR;
-			else if (catStr ~== "major")
-				cat = BIO_PRKCAT_MAJOR;
-			else if (catStr ~== "keystone")
-				cat = BIO_PRKCAT_KEYSTONE;
-			else if (catStr.Length() < 1)
-			{
-				Console.Printf(Biomorph.LOGPFX_ERR ..
-					errpfx .. "missing category field.");
-				continue;
-			}
-			else
-			{
-				Console.Printf(Biomorph.LOGPFX_ERR ..
-					errpfx .. "invalid perk category: %s", catStr);
-				continue;
-			}
-
 			uint e = templates.Push(new('BIO_PerkTemplate'));
 			templates[e].ID = id;
 			templates[e].PerkClass = perk_t;
@@ -543,7 +539,6 @@ extend class BIO_GlobalData
 			templates[e].Description = desc;
 			templates[e].VerboseDesc = descV;
 			templates[e].Icon = icon;
-			templates[e].Category = cat;
 		}
 	}
 
@@ -575,7 +570,6 @@ extend class BIO_GlobalData
 		BasePerkGraph.Nodes[e].Description = StringTable.Localize(template.Description);
 		BasePerkGraph.Nodes[e].VerboseDesc = StringTable.Localize(template.VerboseDesc);
 		BasePerkGraph.Nodes[e].Icon = template.Icon;
-		BasePerkGraph.Nodes[e].Category = template.Category;
 		return true;
 	}
 }
