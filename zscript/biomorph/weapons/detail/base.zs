@@ -1258,7 +1258,9 @@ class BIO_Weapon : DoomWeapon abstract
 	}
 
 	// Affects explicit affixes only. Note that this does not alter stats.
-	void RandomizeAffixes()
+	// If given `false`, output will fall into a normal distribution between
+	// minimum and maximum affixes.
+	void RandomizeAffixes(bool rerandomize = true)
 	{
 		if (MaxAffixes < 1)
 		{
@@ -1271,7 +1273,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 		uint fl = Min(2, MaxAffixes);
 		uint c = Random[BIO_Afx](fl, MaxAffixes);
-		c = Random[BIO_Afx](fl, c);
+
+		if (rerandomize) c = Random[BIO_Afx](fl, c);
 
 		let globals = BIO_GlobalData.Get();
 		Array<Class<BIO_WeaponAffix> > eligibles;
