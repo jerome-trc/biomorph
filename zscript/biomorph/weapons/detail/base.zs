@@ -353,8 +353,11 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		if (AmmoType1 == null && AmmoType2 == null)
 			return false;
+		
+		// Weapon has ammo types but default ammogives are both 0
+		if (AmmoGive1 <= 0 && AmmoGive1 <= 0)
+			return false;
 
-		bool gotAnything = false;
 		int given1 = 0, given2 = 0;
 
 		if (AmmoType1 != null)
@@ -1165,7 +1168,7 @@ class BIO_Weapon : DoomWeapon abstract
 	private bool ScavengingDestroys() const
 	{
 		return
-			!Ammoless() &&
+			(AmmoType1 != null || AmmoType2 != null) &&
 			AmmoGive1 <= 0 && AmmoGive2 <= 0 &&
 			!ScavengePersist &&
 			Grade == BIO_GRADE_STANDARD && Rarity == BIO_RARITY_COMMON;
