@@ -309,7 +309,7 @@ class BIO_Weapon : DoomWeapon abstract
 		// is at weapon capacity) then that weapon can't be displayed
 		if (Level == null) return true;
 
-		if (bioPlayer.IsFullOnWeapons())
+		if (!bioPlayer.CanCarryWeapon(self))
 		{
 			if (!BIO_Utils.IntelligentSupplies())
 				return false;

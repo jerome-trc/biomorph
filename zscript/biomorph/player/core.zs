@@ -1,5 +1,16 @@
+enum BIO_PlayerPawnFlags : uint8
+{
+	BIO_PPF_NONE = 0,
+	BIO_PPF_3XNONPISTOLWEIGHT = 1 << 0,
+	BIO_PPF_3XNONMELEEWEIGHT = 1 << 1,
+	BIO_PPF_ALL = uint8.MAX
+}
+
 class BIO_Player : DoomPlayer
 {
+	BIO_PlayerPawnFlags BIOFlags;
+	property Flags: BIOFlags;
+
 	Array<BIO_DamageTakenFunctor> DamageTakenFunctors;
 	Array<BIO_EquipmentFunctor> EquipmentFunctors;
 	Array<BIO_ItemPickupFunctor> ItemPickupFunctors;
@@ -118,7 +129,18 @@ class BIO_Player : DoomPlayer
 		uint ret = 0;
 
 		for (Inventory i = Inv; i != null; i = i.Inv)
-			if (i is 'BIO_Weapon' && !(i is 'BIO_Fist')) ret++; 
+		{
+			let weap = BIO_Weapon(i);
+
+			if (weap == null || weap is 'BIO_Fist') continue;
+
+			if (BIOFlags & BIO_PPF_3XNONPISTOLWEIGHT && !(weap.BIOFlags & BIO_WF_PISTOL))
+				ret += 3;
+			else if (BIOFlags & BIO_PPF_3XNONMELEEWEIGHT && !(weap.bMeleeWeapon))
+				ret += 3;
+			else
+				ret++;
+		}
 
 		return ret;
 	}
@@ -135,6 +157,16 @@ class BIO_Player : DoomPlayer
 
 	bool IsFullOnWeapons() const { return HeldWeaponCount() >= MaxWeaponsHeld; }
 	bool IsFullOnEquipment() const { return HeldEquipmentCount() >= MaxEquipmentHeld; }
+
+	bool CanCarryWeapon(BIO_Weapon weap) const
+	{
+		if (BIOFlags & BIO_PPF_3XNONPISTOLWEIGHT && !(weap.BIOFlags & BIO_WF_PISTOL))
+			return HeldWeaponCount() < (MaxWeaponsHeld - 3);
+		else if (BIOFlags & BIO_PPF_3XNONMELEEWEIGHT && !(weap.bMeleeWeapon))
+			return HeldWeaponCount() < (MaxWeaponsHeld - 3);
+		else
+			return HeldWeaponCount() < MaxWeaponsHeld;
+	}
 
 	// Setters =================================================================
 
