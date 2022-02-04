@@ -1,44 +1,4 @@
 {
-	"upgrades_auto": {
-		"melee": [ "BIO_Chainsaw" ],
-		"pistol": [
-			"BIO_Pistol",
-			"BIO_AssaultHandgun",
-			"BIO_HandCannon"
-		],
-		"shotgun": [
-			"BIO_Shotgun",
-			"BIO_AutoShotgun",
-			"BIO_IncursionShotgun"
-		],
-		"ssg": [
-			"BIO_SuperShotgun",
-			"BIO_VolleyGun",
-			"BIO_IncursionShotgun"
-		],
-		"rifle": [
-			"BIO_PrecisionRifle",
-			"BIO_HeavyBattleRifle"
-		],
-		"autogun": [
-			"BIO_Chaingun",
-			"BIO_Nailgun",
-			"BIO_Minivulcan"
-		],
-		"launcher": [
-			"BIO_RocketLauncher",
-			"BIO_ProximityLauncher",
-			"BIO_BarrageLauncher"
-		],
-		"energy": [
-			"BIO_PlasmaRifle",
-			"BIO_PlasmaCannon",
-			"BIO_ArcCaster"
-		],
-		"super": [
-			"BIO_BFG9000"
-		]
-	},
 	"loot": {
 		"melee": [
 			"BIO_Chainsaw",
@@ -81,5 +41,57 @@
 		"super": [
 			"BIO_BFG9000"
 		]
-	}
+	},
+	"upgrades_auto": {
+		"melee": [ "BIO_Chainsaw" ],
+		"pistol": [
+			"BIO_Pistol",
+			"BIO_AssaultHandgun",
+			"BIO_HandCannon"
+		],
+		"shotgun": [
+			"BIO_Shotgun",
+			"BIO_AutoShotgun",
+			"BIO_IncursionShotgun"
+		],
+		"ssg": [
+			"BIO_SuperShotgun",
+			"BIO_VolleyGun",
+			"BIO_IncursionShotgun"
+		],
+		"rifle": [
+			"BIO_PrecisionRifle",
+			"BIO_HeavyBattleRifle"
+		],
+		"autogun": [
+			"BIO_Chaingun",
+			"BIO_Nailgun",
+			"BIO_Minivulcan"
+		],
+		"launcher": [
+			"BIO_RocketLauncher",
+			"BIO_ProximityLauncher",
+			"BIO_BarrageLauncher"
+		],
+		"energy": [
+			"BIO_PlasmaRifle",
+			"BIO_PlasmaCannon",
+			"BIO_ArcCaster"
+		],
+		"super": [
+			"BIO_BFG9000"
+		]
+	},
+	"upgrades": [
+		{
+			"input": "BIO_ValiantPistol",
+			"output": "$SPECIALTY_PISTOL",
+			"cost": "STANDARD_TO_SPECIALTY"
+		},
+		{
+			"input": "BIO_ValiantChaingun",
+			"output": "$SPECIALTY_AUTOGUN",
+			"cost": "STANDARD_TO_SPECIALTY"
+		}
+	]
 }
