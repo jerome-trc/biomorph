@@ -256,10 +256,36 @@ class BIO_PerkMenu : GenericMenu
 					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
 			}
 
-			Screen.DrawTexture(BasePerkGraph.Nodes[i].Icon, false,
-				NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
-				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
-				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
+			// Draw node icon at half alpha if it isn't currently accessible
+
+			bool accessible = false;
+
+			for (uint j = 0; j < BasePerkGraph.Nodes[i].Neighbors.Size(); j++)
+			{
+				let nid = BasePerkGraph.Nodes[i].Neighbors[j];
+				
+				if (PlayerPerkGraph.PerkActive[nid] || NodeState[nid].Selected)
+				{
+					accessible = true;
+					break;
+				}
+			}
+
+			if (accessible)
+			{
+				Screen.DrawTexture(BasePerkGraph.Nodes[i].Icon, false,
+					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
+					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
+					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y);
+			}
+			else
+			{
+				Screen.DrawTexture(BasePerkGraph.Nodes[i].Icon, false,
+					NodeState[i].DrawPos.X, NodeState[i].DrawPos.Y,
+					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
+					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
+					DTA_ALPHA, 0.3);
+			}
 		}
 
 		// Help text at menu's top
