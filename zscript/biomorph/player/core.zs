@@ -62,6 +62,13 @@ class BIO_Player : DoomPlayer
 			GiveInventory('BIO_EviternityPistol', 1);
 			A_SelectWeapon('BIO_EviternityPistol');
 		}
+		else if (BIO_Utils.Valiant())
+		{
+			A_SelectWeapon('BIO_Fist');
+			TakeInventory('BIO_Pistol', 1);
+			GiveInventory('BIO_ValiantPistol', 1);
+			A_SelectWeapon('BIO_ValiantPistol');
+		}
 	}
 
 	override void Tick()
@@ -327,15 +334,6 @@ class BIO_Player : DoomPlayer
 
 			if (clipItem.BackpackMaxAmount < 600)
 				clipItem.BackpackMaxAmount = 600;
-		
-			let pistol = FindInventory('BIO_Pistol');
-			if (pistol != null)
-			{
-				A_SelectWeapon('BIO_Fist');
-				TakeInventory('BIO_Pistol', 1);
-				GiveInventory('BIO_ValiantPistol', 1);
-				A_SelectWeapon('BIO_ValiantPistol');
-			}
 		}
 	}
 
