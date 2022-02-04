@@ -567,6 +567,22 @@ class BIO_PerkDebugMenu : BIO_PerkMenu
 		case UIEvent.Type_RButtonUp:
 			AttachedNode = NodeState.Size();
 			break;
+		case UIEvent.Type_KeyUp:
+			if (event.KeyString ~== "l")
+			{
+				string output = Biomorph.LOGPFX_DEBUG .. "Node names and positions:";
+				
+				for (uint i = 1; i < NodeState.Size(); i++)
+				{
+					output.AppendFormat("\n\t%s (%d, %d)",
+						BasePerkGraph.Nodes[i].Tag,
+						BasePerkGraph.Nodes[i].Position.X,
+						BasePerkGraph.Nodes[i].Position.Y);
+				}
+
+				Console.Printf(output);
+			}
+			break;
 		default: break;
 		}
 
