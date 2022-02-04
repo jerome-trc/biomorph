@@ -451,10 +451,44 @@
 	BIO_PERK_DONTTHRUST_DESC =
 		"\c[Green]Splash damage does not push you";
 
-	BIO_PERK_MAXBONUSHEALTH_MINOR_TAG =
+	BIO_PERK_BONUSHEALTH_MINOR_TAG =
 		"\c[White]Vigour";
-	BIO_PERK_MAXBONUSHEALTH_MINOR_DESC =
+	BIO_PERK_BONUSHEALTH_MAJOR_TAG =
+		"\c[White]Constitution";
+	BIO_PERK_BONUSHEALTH1_DESC =
+		"\c[Green]+1 maximum health\n+1 maximum bonus health";
+	BIO_PERK_BONUSHEALTH2_DESC =
 		"\c[Green]+2 maximum health\n+2 maximum bonus health";
+	BIO_PERK_BONUSHEALTH5_DESC =
+		"\c[Green]+5 maximum health\n+5 maximum bonus health";
+	BIO_PERK_BONUSHEALTH10_DESC =
+		"\c[Green]+10 maximum health\n+10 maximum bonus health";
+
+	BIO_PERK_SLIMERESIST_MINOR_TAG =
+		"\c[White]Ironfoot";
+	BIO_PERK_SLIMERESIST_MAJOR_TAG =
+		"\c[White]Ironfoot Optimisation";
+	BIO_PERK_SLIMERESIST1_DESC =
+		"\c[Green]+1% resistance to damaging floors";
+	BIO_PERK_SLIMERESIST2_DESC =
+		"\c[Green]+2% resistance to damaging floors";
+	BIO_PERK_SLIMERESIST5_DESC =
+		"\c[Green]+5% resistance to damaging floors";
+	BIO_PERK_SLIMERESIST10_DESC =
+		"\c[Green]+10% resistance to damaging floors";
+
+	BIO_PERK_SPLASHRESIST_MINOR_TAG =
+		"\c[White]Shockwave Absorption";
+	BIO_PERK_SPLASHRESIST_MAJOR_TAG =
+		"\c[White]P.I.L.L.O. Blast Shield";
+	BIO_PERK_SPLASHRESIST1_DESC =
+		"\c[Green]-1% radius at which any explosion hurts you";
+	BIO_PERK_SPLASHRESIST2_DESC =
+		"\c[Green]-2% radius at which any explosion hurts you";
+	BIO_PERK_SPLASHRESIST5_DESC =
+		"\c[Green]-5% radius at which any explosion hurts you";
+	BIO_PERK_SPLASHRESIST10_DESC =
+		"\c[Green]-10% radius at which any explosion hurts you";
 
 	BIO_PERK_HEALTHBONUSX2_TAG =
 		"\c[White]Nanite Medicine";
@@ -550,26 +584,6 @@
 		"\c[White]Neural Uplink";
 	BIO_PERK_SCANNERALLMAP_DESC =
 		"\c[Green]Picking up a Computer Area Map reveals and tracks entity locations";
-
-	BIO_PERK_SPLASHRESIST_MINOR_TAG =
-		"\c[White]Shockwave Absorption";
-	BIO_PERK_SPLASHRESIST_MINOR_DESC =
-		"\c[Green]+10% resistance to splash damage";
-
-	BIO_PERK_SPLASHRESIST_MAJOR_TAG =
-		"\c[White]P.I.L.L.O. System";
-	BIO_PERK_SPLASHRESIST_MAJOR_DESC =
-		"\c[Green]+20% resistance to splash damage";
-
-	BIO_PERK_SLIMERESIST_MINOR_TAG =
-		"\c[White]Ironfoot";
-	BIO_PERK_SLIMERESIST_MINOR_DESC =
-		"\c[Green]+5% resistance to damaging floors";
-
-	BIO_PERK_SLIMERESIST_MAJOR_TAG =
-		"\c[White]Ironfoot Optimisation";
-	BIO_PERK_SLIMERESIST_MAJOR_DESC =
-		"\c[Green]+15% resistance to damaging floors";
 
 // Antigen =====================================================================
 
