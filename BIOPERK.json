@@ -537,15 +537,18 @@
 			]
 		},
 		"scout_tactics": {
-			"major": [
+			"keystone": [
 				{
 					"uuid": "bio_scaledpistoldamage",
 					"class": "BIO_Perk_ScaledPistolDamage",
 					"x": 100, "y": -150,
 					"tag": "$BIO_PERK_SCALEDPISTOLDAMAGE_TAG",
 					"desc": "$BIO_PERK_SCALEDPISTOLDAMAGE_DESC",
-					"icon": "PISTA0"
-				},
+					"icon": "PISTA0",
+					"neighbors": [ "bio_start" ]
+				}
+			],
+			"major": [
 				{
 					"uuid": "bio_allmap",
 					"class": "BIO_Perk_StartingAllmap",
@@ -566,6 +569,38 @@
 				}
 			]
 		},
+		"melee": {
+			"keystone": [
+				{
+					"uuid": "bio_startingberserk",
+					"class": "BIO_Perk_StartingBerserk",
+					"x": -100, "y": -100,
+					"tag": "$BIO_PERK_STARTINGBERSERK_TAG",
+					"desc": "$BIO_PERK_STARTINGBERSERK_DESC",
+					"icon": "PSTRA0",
+					"neighbors": [ "bio_start" ]
+				}
+			],
+			"minor": [
+				{
+					"uuid": "bio_bonushealth_minor_melee_00",
+					"template": "bio_bonushealth5",
+					"x": -160, "y": -100,
+					"neighbors": [ "bio_startingberserk" ]
+				}
+			],
+			"major": [
+				{
+					"uuid": "bio_cantseek",
+					"class": "BIO_Perk_CantSeek",
+					"x": -220, "y": -100,
+					"tag": "$BIO_PERK_CANTSEEK_TAG",
+					"desc": "$BIO_PERK_CANTSEEK_DESC",
+					"icon": "graphics/perk/cantseek.png",
+					"neighbors": [ "bio_bonushealth_minor_melee_00" ]
+				}
+			]
+		},
 		"misc": {
 			"major": [
 				{
@@ -576,15 +611,6 @@
 					"desc": "$BIO_PERK_ARMORBONUSX2_DESC",
 					"icon": "graphics/perk/armorbonus_x2.png",
 					"neighbors": [ "bio_start" ]
-				},
-				{
-					"uuid": "bio_cantseek",
-					"class": "BIO_Perk_CantSeek",
-					"x": -180, "y": -60,
-					"tag": "$BIO_PERK_CANTSEEK_TAG",
-					"desc": "$BIO_PERK_CANTSEEK_DESC",
-					"icon": "graphics/perk/cantseek.png",
-					"neighbors": [ ]
 				}
 			]
 		}

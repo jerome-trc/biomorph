@@ -333,6 +333,7 @@ class BIO_Player : DoomPlayer
 	{
 		bDontThrust = Default.bDontThrust;
 		bCantSeek = Default.bCantSeek;
+		BIOFlags = Default.BIOFlags;
 
 		Friction = Default.Friction;
 		Gravity = Default.Gravity;

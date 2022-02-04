@@ -1,10 +1,11 @@
-// Pistol damage gained as fire rate goes down =================================
+// Lower fire rate means more pistol damage (but non-pistols take 300% capacity)
 
 class BIO_Perk_ScaledPistolDamage : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer)
 	{
 		bioPlayer.PushFunctor('BIO_WeapFunc_ScaledPistolDamage');
+		bioPlayer.BIOFlags |= BIO_PPF_3XNONPISTOLWEIGHT;
 	}
 }
 
