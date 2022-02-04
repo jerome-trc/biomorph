@@ -1,3 +1,37 @@
+// `BonusHealth` increases =====================================================
+
+class BIO_Perk_BonusHealth1 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.BonusHealth += 1;
+	}
+}
+
+class BIO_Perk_BonusHealth2 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.BonusHealth += 2;
+	}
+}
+
+class BIO_Perk_BonusHealth5 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.BonusHealth += 5;
+	}
+}
+
+class BIO_Perk_BonusHealth10 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.BonusHealth += 10;
+	}
+}
+
 // Doubled effect of Health Bonuses ============================================
 
 class BIO_Perk_HealthBonusX2 : BIO_Perk
@@ -56,15 +90,5 @@ class BIO_PkupFunc_BetterMedikits : BIO_ItemPickupFunctor
 
 		for (uint i = 0; i < Count; i++)
 			bioPlayer.GiveBody(5, bioPlayer.GetMaxHealth());
-	}
-}
-
-// `BonusHealth` increases =====================================================
-
-class BIO_Perk_MaxBonusHealth_Minor : BIO_Perk
-{
-	final override void Apply(BIO_Player bioPlayer) const
-	{
-		bioPlayer.BonusHealth += 2;
 	}
 }

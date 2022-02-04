@@ -81,6 +81,9 @@ class BIO_GlobalData : Thinker
 				"%d weapon upgrade(s) generated.", ret.WeaponUpgrades.Size());
 
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
+				"%d perk(s) constructed.", ret.BasePerkGraph.Nodes.Size());
+
+			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Global init done (took %d ms).", MsTime() - ms);
 		}
 

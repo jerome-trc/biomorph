@@ -272,34 +272,53 @@ extend class BIO_GlobalData
 			let perks = BIO_Utils.TryGetJsonObject(obj.get("perks"), errMsg: false);
 			if (perks == null) continue;
 
-			let arrMinor = BIO_Utils.TryGetJsonArray(perks.get("minor"), errMsg: false);
-			if (arrMinor != null)
+			let keys = perks.getKeys();
+			for (uint i = 0; i < keys.keys.Size(); i++)
 			{
-				ReadPerkArrayJSON(arrMinor, perkObjs,
-					perkObjLumps, perkObjIndices, currentPerk, lump);
+				let semantic = BIO_Utils.TryGetJsonObject(perks.get(keys.keys[i]));
+				if (semantic == null)
+				{
+					Console.Printf(Biomorph.LOGPFX_ERR .. 
+						"%s lump %d has malformed key-value-pair `%s` (must be an object).",
+						LMPNAME_PERKS, lump, keys.keys[i]);
+					continue;
+				}
 
-				while (perkObjCats.Size() < perkObjs.Size())
-					perkObjCats.Push(BIO_PRKCAT_MINOR);
-			}
+				let arrMinor = BIO_Utils.TryGetJsonArray(
+					semantic.get("minor"), errMsg: false);
 
-			let arrMajor = BIO_Utils.TryGetJsonArray(perks.get("major"), errMsg: false);
-			if (arrMajor != null)
-			{
-				ReadPerkArrayJSON(arrMajor, perkObjs,
-					perkObjLumps, perkObjIndices, currentPerk, lump);
+				if (arrMinor != null)
+				{
+					ReadPerkArrayJSON(arrMinor, perkObjs,
+						perkObjLumps, perkObjIndices, currentPerk, lump);
 
-				while (perkObjCats.Size() < perkObjs.Size())
-					perkObjCats.Push(BIO_PRKCAT_MAJOR);
-			}
+					while (perkObjCats.Size() < perkObjs.Size())
+						perkObjCats.Push(BIO_PRKCAT_MINOR);
+				}
 
-			let arrKeystone = BIO_Utils.TryGetJsonArray(perks.get("keystone"), errMsg: false);
-			if (arrKeystone != null)
-			{
-				ReadPerkArrayJSON(arrKeystone, perkObjs,
-					perkObjLumps, perkObjIndices, currentPerk, lump);
+				let arrMajor = BIO_Utils.TryGetJsonArray(
+					semantic.get("major"), errMsg: false);
 
-				while (perkObjCats.Size() < perkObjs.Size())
-					perkObjCats.Push(BIO_PRKCAT_KEYSTONE);
+				if (arrMajor != null)
+				{
+					ReadPerkArrayJSON(arrMajor, perkObjs,
+						perkObjLumps, perkObjIndices, currentPerk, lump);
+
+					while (perkObjCats.Size() < perkObjs.Size())
+						perkObjCats.Push(BIO_PRKCAT_MAJOR);
+				}
+
+				let arrKeystone = BIO_Utils.TryGetJsonArray(
+					semantic.get("keystone"), errMsg: false);
+
+				if (arrKeystone != null)
+				{
+					ReadPerkArrayJSON(arrKeystone, perkObjs,
+						perkObjLumps, perkObjIndices, currentPerk, lump);
+
+					while (perkObjCats.Size() < perkObjs.Size())
+						perkObjCats.Push(BIO_PRKCAT_KEYSTONE);
+				}
 			}
 		}
 

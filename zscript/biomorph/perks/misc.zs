@@ -39,19 +39,35 @@ class BIO_Perk_WeaponCapacity : BIO_Perk
 
 // Splash resist and `DONTTHRUST` ==============================================
 
-class BIO_Perk_SplashResist_Minor : BIO_Perk
+class BIO_Perk_SplashResist1 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.RadiusDamageFactor = Max(bioPlayer.RadiusDamageFactor - 0.01, 0.0);
+	}
+}
+
+class BIO_Perk_SplashResist2 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.RadiusDamageFactor = Max(bioPlayer.RadiusDamageFactor - 0.02, 0.0);
+	}
+}
+
+class BIO_Perk_SplashResist5 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.RadiusDamageFactor = Max(bioPlayer.RadiusDamageFactor - 0.05, 0.0);
+	}
+}
+
+class BIO_Perk_SplashResist10 : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
 		bioPlayer.RadiusDamageFactor = Max(bioPlayer.RadiusDamageFactor - 0.1, 0.0);
-	}
-}
-
-class BIO_Perk_SplashResist_Major : BIO_Perk
-{
-	final override void Apply(BIO_Player bioPlayer) const
-	{
-		bioPlayer.RadiusDamageFactor = Max(bioPlayer.RadiusDamageFactor - 0.2, 0.0);
 	}
 }
 
@@ -63,17 +79,25 @@ class BIO_Perk_DontThrust : BIO_Perk
 	}
 }
 
-// The miscellaneous of the miscellaneous ======================================
+// Slime (i.e. damaging floor) resistance ======================================
 
-class BIO_Perk_CantSeek : BIO_Perk
+class BIO_Perk_SlimeResist1 : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.bCantSeek = true;
+		bioPlayer.SlimeDamageFactor = Max(bioPlayer.SlimeDamageFactor - 0.01, 0.0);
 	}
 }
 
-class BIO_Perk_SlimeResist_Minor : BIO_Perk
+class BIO_Perk_SlimeResist2 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.SlimeDamageFactor = Max(bioPlayer.SlimeDamageFactor - 0.02, 0.0);
+	}
+}
+
+class BIO_Perk_SlimeResist5 : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
@@ -81,10 +105,20 @@ class BIO_Perk_SlimeResist_Minor : BIO_Perk
 	}
 }
 
-class BIO_Perk_SlimeResist_Major : BIO_Perk
+class BIO_Perk_SlimeResist10 : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
-		bioPlayer.SlimeDamageFactor = Max(bioPlayer.SlimeDamageFactor - 0.15, 0.0);
+		bioPlayer.SlimeDamageFactor = Max(bioPlayer.SlimeDamageFactor - 0.1, 0.0);
+	}
+}
+
+// The miscellaneous of the miscellaneous ======================================
+
+class BIO_Perk_CantSeek : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.bCantSeek = true;
 	}
 }
