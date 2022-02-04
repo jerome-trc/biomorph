@@ -143,8 +143,18 @@ extend class BIO_EventHandler
 		
 		Globals.OnWeaponAcquired(GetDefaultByType(outputChoice).Grade);
 		bioPlayer.A_SelectWeapon('BIO_Fist');
-		bioPlayer.TakeInventory(bioPlayer.Player.ReadyWeapon.GetClass(), 1);
+		let oldWeap = BIO_Weapon(bioPlayer.Player.ReadyWeapon);
+		bool mut = oldWeap.Rarity == BIO_RARITY_MUTATED;
+		bioPlayer.TakeInventory(oldWeap.GetClass(), 1);
 		bioPlayer.GiveInventory(outputChoice, 1);
+
+		if (mut)
+		{
+			let newWeap = BIO_Weapon(bioPlayer.FindInventory(outputChoice));
+			newWeap.RandomizeAffixes();
+			newWeap.OnChange();
+		}
+
 		bioPlayer.A_SelectWeapon(outputChoice);
 		bioPlayer.A_StartSound("bio/item/weapupgrade/use", CHAN_AUTO);
 		bioPlayer.A_StartSound("bio/muta/use/general", CHAN_7);
