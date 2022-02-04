@@ -1,6 +1,7 @@
 class BIO_StatusBar : BaseStatusBar
 {
 	private BIO_PlayerPerkGraph PerkGraph;
+	private BIO_Player BIOPlayer;
 	private CVar NotifyLineCount;
 
 	private HUDFont Font_HUD, Font_Index, Font_Amount, Font_Small;
@@ -42,6 +43,8 @@ class BIO_StatusBar : BaseStatusBar
 
 		if (globals != null)
 			PerkGraph = globals.GetPerkGraph(CPlayer);
+
+		BIOPlayer = BIO_Player(CPlayer.MO);
 	}
 
 	final override void Draw(int state, double ticFrac)
@@ -119,31 +122,29 @@ class BIO_StatusBar : BaseStatusBar
 			invY -= 40;
 		}
 
-		let bioPlayer = BIO_Player(CPlayer.MO);
 		DrawWeaponDetails(BIO_Weapon(CPlayer.ReadyWeapon), false);
 
-		if (bioPlayer.ExaminedWeapon != null)
-			DrawWeaponDetails(bioPlayer.ExaminedWeapon, true);
+		if (BIOPlayer.ExaminedWeapon != null)
+			DrawWeaponDetails(BIOPlayer.ExaminedWeapon, true);
 
 		// Held weapon/equipment counts vs. maximums
 
-		let hwc = bioPlayer.HeldWeaponCount();
+		uint hwc = 0, hec = 0;
+		[hwc, hec] = BIOPlayer.HeldWeaponAndEquipmentCounts();
 
 		DrawImage('PISTA0', (-24, invY + 12));
 		DrawString(Font_Small,
-			String.Format("%d / %d", hwc, bioPlayer.MaxWeaponsHeld),
+			String.Format("%d / %d", hwc, BIOPlayer.MaxWeaponsHeld),
 			(-44, invY), DI_TEXT_ALIGN_RIGHT,
-			hwc < bioPlayer.MaxWeaponsHeld ? Font.CR_WHITE : Font.CR_YELLOW);
+			hwc < BIOPlayer.MaxWeaponsHeld ? Font.CR_WHITE : Font.CR_YELLOW);
 
 		invY -= 8;
-
-		let hec = bioPlayer.HeldEquipmentCount();
 		
 		DrawImage('ARM1A0', (-24, invY));
 		DrawString(Font_Small,
-			String.Format("%d / %d", hec, bioPlayer.MaxEquipmentHeld),
+			String.Format("%d / %d", hec, BIOPlayer.MaxEquipmentHeld),
 			(-44, invY - 12), DI_TEXT_ALIGN_RIGHT,
-			hec < bioPlayer.MaxEquipmentHeld ? Font.CR_WHITE : Font.CR_YELLOW);
+			hec < BIOPlayer.MaxEquipmentHeld ? Font.CR_WHITE : Font.CR_YELLOW);
 	}
 
 	// Draw powerup icons at top left, along with the 
@@ -179,10 +180,7 @@ class BIO_StatusBar : BaseStatusBar
 		DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3) .. "%",
 			(14, -30), 0, Font.CR_WHITE);
 
-		let bioPlayer = BIO_Player(CPlayer.MO);
-		if (bioPlayer == null) return;
-
-		let bioArmor = bioPlayer.EquippedArmor;
+		let bioArmor = BIOPlayer.EquippedArmor;
 		if (bioArmor == null) return;
 
 		int affixY = -54;
