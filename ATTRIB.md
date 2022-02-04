@@ -60,6 +60,8 @@ Classified Armour sprites are courtesy of id Software LLC, and edited by Realm66
 
 The Supply Box sprite is courtesy of id Software LLC, and edited by Realm667 user Dreadopp.
 
+The sprite used as graphics/perk/startingallmap.png (also a component in graphics/perk/scannerallmap.png) is courtesy of id Software LLC.
+
 The red computer area map sprite used in graphics/perk/scannerallmap.png is courtesy of Realm667 user Captain Toenail.
 
 Any graphical asset which is not mentioned here is custom-made by RatCircus.

@@ -555,7 +555,7 @@
 					"x": 200, "y": -180,
 					"tag": "$BIO_PERK_STARTINGALLMAP_TAG",
 					"desc": "$BIO_PERK_STARTINGALLMAP_DESC",
-					"icon": "PMAPA0",
+					"icon": "graphics/perk/startingallmap.png",
 					"neighbors": [ "bio_scaledpistoldamage" ]
 				},
 				{
