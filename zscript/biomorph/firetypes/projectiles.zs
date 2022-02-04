@@ -337,6 +337,8 @@ class BIO_PlasmaGlobule : BIO_PlasmaBall
 {
 	Default
 	{
+		+RIPPER
+
 		Tag "$BIO_PLASMAGLOBULE_TAG";
 		Scale 0.4;
 
