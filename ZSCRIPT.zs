@@ -78,6 +78,7 @@ class Biomorph abstract
 #include "zscript/biomorph/perks/ammo.zs"
 #include "zscript/biomorph/perks/armor.zs"
 #include "zscript/biomorph/perks/health.zs"
+#include "zscript/biomorph/perks/melee.zs"
 #include "zscript/biomorph/perks/misc.zs"
 #include "zscript/biomorph/perks/pistol.zs"
 #include "zscript/biomorph/perks/powerup.zs"
