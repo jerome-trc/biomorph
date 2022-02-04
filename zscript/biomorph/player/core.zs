@@ -150,9 +150,38 @@ class BIO_Player : DoomPlayer
 		uint ret = 0;
 
 		for (Inventory i = Inv; i != null; i = i.Inv)
-			if (i is 'BIO_Equipment') ret += i.Amount;
+			if (i is 'BIO_Equipment') ret++;
 		
 		return ret;
+	}
+
+	// Allows the HUD to retrieve both values by iterating
+	// through the inventory linked list only once.
+	uint, uint HeldWeaponAndEquipmentCounts() const
+	{
+		uint retW = 0, retE = 0;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+		{
+			if (i is 'BIO_Equipment')
+			{
+				retE++;
+				continue;
+			}
+
+			let weap = BIO_Weapon(i);
+
+			if (weap == null || weap is 'BIO_Fist') continue;
+
+			if (BIOFlags & BIO_PPF_3XNONPISTOLWEIGHT && !(weap.BIOFlags & BIO_WF_PISTOL))
+				retW += 3;
+			else if (BIOFlags & BIO_PPF_3XNONMELEEWEIGHT && !(weap.bMeleeWeapon))
+				retW += 3;
+			else
+				retW++;
+		}
+
+		return retW, retE;
 	}
 
 	bool IsFullOnWeapons() const { return HeldWeaponCount() >= MaxWeaponsHeld; }
