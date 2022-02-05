@@ -1389,7 +1389,7 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	private void ReorderAffixes(in out Array<BIO_WeaponAffix> arr)
+	private static void ReorderAffixes(in out Array<BIO_WeaponAffix> arr)
 	{
 		Array<BIO_WeaponAffix> temp;
 		temp.Move(arr);
