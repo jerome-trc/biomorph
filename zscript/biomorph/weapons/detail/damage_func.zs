@@ -8,7 +8,7 @@ class BIO_DamageFunctor play abstract
 	virtual void GetValues(in out Array<int> vals) const {}
 	virtual void SetValues(in out Array<int> vals) {}
 
-	int AverageOutput(uint sampleSize = 1000)
+	int AverageOutput(uint sampleSize = 500)
 	{
 		int total = 0;
 

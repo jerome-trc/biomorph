@@ -107,3 +107,14 @@ class BIO_NullPuff : BulletPuff
 		Stop;
 	}
 }
+
+class BIO_ForceBlast : BIO_Bullet
+{
+	Default
+	{
+		+EXTREMEDEATH
+		+PUFFONACTORS
+		-ALLOWPARTICLES
+		Alpha 0.0;
+	}
+}

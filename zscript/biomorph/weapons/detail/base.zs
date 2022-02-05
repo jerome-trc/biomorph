@@ -1648,7 +1648,7 @@ class BIO_Weapon : DoomWeapon abstract
 		stand-in will be spawned in its place. This fake puff lasts 2 tics, has
 		the hit thing in its `Target` field, the real damage dealt in its `Damage` field,
 		and `puff_t`'s default damage type.
-	*/ 
+	*/
 	Actor BIO_FireBullet(double spread_xy, double spread_z, int numBullets,
 		int bulletDmg, Class<Actor> puff_t, EFireBulletsFlags flags = FBF_NONE,
 		double range = 0.0, Class<Actor> missile = null,
