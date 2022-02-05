@@ -308,9 +308,9 @@ class BIO_WeaponPipeline play
 
 	int GetMinDamage() const { return Damage.MinOutput(); }
 	int GetMaxDamage() const { return Damage.MaxOutput(); }
-	int GetAverageDamage() const
+	int GetAverageDamage(uint sampleSize = 500) const
 	{
-		return (Damage.MinOutput() + Damage.MaxOutput()) / 2;
+		return Damage.AverageOutput(sampleSize);
 	}
 
 	void SetDamageValues(in out Array<int> damages)

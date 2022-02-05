@@ -398,6 +398,18 @@
 	BIO_WAFX_SWITCHSPEED_TOSTR_LOWER = "%s%d%% %s\cj lower speed";
 	BIO_WAFX_SWITCHSPEED_TOSTR = "%s%.1f%% %s\cj switch speed";
 
+	BIO_WAFX_EXTRABULLET_TAG = "Synergy: Bullet";
+	BIO_WAFX_EXTRABULLET_TOSTR =
+		"\c[Green]Each shot also fires a bullet\c[White] (%d damage)%s";
+
+	BIO_WAFX_EXTRASHOTPELLETS_TAG = "Synergy: Scattershot";
+	BIO_WAFX_EXTRASHOTPELLETS_TOSTR =
+		"\c[Green]Each shot also fires %d shot pellets\c[White] (%d damage each)%s";
+
+	BIO_WAFX_EXTRABLAST_TAG = "Synergy: Force Blast";
+	BIO_WAFX_EXTRABLAST_TOSTR =
+		"\c[Green]Each shot also fires a short-range force blast\c[White] (%d damage)%s";
+
 	BIO_WAFX_INFINITEAMMOONKILL_TAG = "Rampaging";
 	BIO_WAFX_INFINITEAMMOONKILL_TOSTR =
 		"\c[Green]%d%% chance of infinite ammo for %d seconds on kill";
