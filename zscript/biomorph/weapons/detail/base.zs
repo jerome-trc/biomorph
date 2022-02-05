@@ -646,7 +646,7 @@ class BIO_Weapon : DoomWeapon abstract
 			invoker.Affixes[i].OnMagLoad(invoker, secondary, diff);
 
 		int subtract = diff * cost;
-		magItem.Amount += (diff * output);
+		magItem.Amount = Min(magItem.Amount + diff * output, magSize);
 		reserveAmmo.Amount -= subtract;
 	}
 
