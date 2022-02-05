@@ -27,7 +27,7 @@ class BIO_WAfx_ExtraBullet : BIO_WeaponAffix
 
 	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
 	{
-		return !(ppl.GetFireType() is 'BIO_Bullet');
+		return !ppl.IsMelee() && !(ppl.GetFireType() is 'BIO_Bullet');
 	}
 
 	final override void BeforeAllFire(BIO_Weapon weap, in out BIO_FireData fireData)
@@ -103,7 +103,7 @@ class BIO_WAfx_ExtraShotPellets : BIO_WeaponAffix
 
 	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
 	{
-		return !(ppl.GetFireType() is 'BIO_ShotPellet');
+		return !ppl.IsMelee() && !(ppl.GetFireType() is 'BIO_ShotPellet');
 	}
 
 	final override void BeforeAllFire(BIO_Weapon weap, in out BIO_FireData fireData)
