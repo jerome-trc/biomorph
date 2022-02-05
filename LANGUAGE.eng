@@ -294,6 +294,12 @@
 
 	BIO_AFFIXESUNKNOWN = "Affixes unknown";
 
+	BIO_WAFX_AMMOLESS_TAG = "Ammo Apparition";
+	BIO_WAFX_AMMOLESS_TOSTR = "\c[Green]Consumes no ammo to fire";
+
+	BIO_WAFX_RESERVEFEED_TAG = "Ammochain";
+	BIO_WAFX_RESERVEFEED_TOSTR = "\c[Green]Feeds from reserve instead of magazine";
+
 	BIO_WAFX_BERSERKDMG_TAG = "Frenzy";
 	BIO_WAFX_BERSERKDMG_TOSTR = "%s%d%% damage from berserk";
 
