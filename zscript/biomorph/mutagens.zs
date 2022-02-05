@@ -1,10 +1,8 @@
 // Inventory bar items for modifying the affixes on gear (primarily weapons).
 
-// TODO: Pickup and on-use sounds for all of these
-
 class BIO_Mutagen : Inventory abstract
 {
-	const DROPWT_RESET = 30;
+	const DROPWT_RESET = 24;
 	const DROPWT_ADD = 12;
 	const DROPWT_RANDOM = 50;
 	const DROPWT_REROLL = 10;
