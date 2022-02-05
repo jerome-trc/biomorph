@@ -268,7 +268,9 @@
 
 	BIO_MUTA_CORRUPT_TAG = "\c[DarkRed]R.O.T.\c[White] Mutagen\c-";
 	BIO_MUTA_CORRUPT_PKUP = "Acquired a sample of \c[DarkRed]R.O.T. Mutagen\c-.";
-	BIO_MUTA_CORRUPT_HIDDENRAND = "\c[DarkRed]Your weapon mutates in ways you cannot understand.";
+	BIO_MUTA_CORRUPT_USE_NOOP = "\c[DarkRed]...nothing seems to happen.";
+	BIO_MUTA_CORRUPT_USE_HIDDENRAND = "\c[DarkRed]Your weapon mutates in ways you cannot understand.";
+	BIO_MUTA_CORRUPT_USE_IMPLICIT = "\c[DarkRed]Your weapon gains bizarre new properties.";
 
 // Equipment (tags, UI messaging) ==============================================
 

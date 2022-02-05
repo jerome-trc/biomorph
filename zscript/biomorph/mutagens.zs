@@ -538,7 +538,11 @@ class BIO_CorruptionFunctor play abstract
 // The corruption flag gets set but nothing else happens. Congratulations!
 class BIO_CorrFunc_Noop : BIO_CorruptionFunctor
 {
-	final override void Invoke(BIO_Weapon weap) const { }
+	final override void Invoke(BIO_Weapon weap) const
+	{
+		weap.Owner.A_Print("$BIO_MUTA_CORRUPT_USE_NOOP");
+	}
+
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const { return true; }
 }
 
@@ -555,7 +559,7 @@ class BIO_CorrFunc_RandomizeHide : BIO_CorruptionFunctor
 			weap.AddRandomAffix();
 		
 		weap.BIOFlags |= BIO_WF_AFFIXESHIDDEN;
-		weap.Owner.A_Print("$BIO_MUTA_CORRUPT_HIDDENRAND");
+		weap.Owner.A_Print("$BIO_MUTA_CORRUPT_USE_HIDDENRAND", 3.5);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
@@ -592,6 +596,8 @@ class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
 			e = weap.ImplicitAffixes.Push(afx2);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
 		}
+
+		weap.Owner.A_Print("$BIO_MUTA_CORRUPT_USE_IMPLICIT", 3.5);
 	}
 
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
