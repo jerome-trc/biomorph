@@ -50,7 +50,7 @@ class BIO_WAfx_ReserveFeed : BIO_WeaponAffix
 		return
 			weap.AmmoType1 != null && weap.MagazineType1 != null &&
 			weap.MagazineType1 != weap.AmmoType1 && weap.MagazineSize1 > 0 &&
-			weap.ReloadCost1 > 0;
+			weap.ReloadCost1 > 0 && weap.ShotsPerMagazine(false) >= 15;
 	}
 
 	private static bool SecondaryCompatible(readOnly<BIO_Weapon> weap)
@@ -58,7 +58,7 @@ class BIO_WAfx_ReserveFeed : BIO_WeaponAffix
 		return
 			weap.AmmoType2 != null && weap.MagazineType2 != null &&
 			weap.MagazineType2 != weap.AmmoType2 && weap.MagazineSize2 > 0 &&
-			weap.ReloadCost2 > 0;	
+			weap.ReloadCost2 > 0 && weap.ShotsPerMagazine(true) >= 15;	
 	}
 
 	final override void Apply(BIO_Weapon weap) const
