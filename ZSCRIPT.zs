@@ -47,6 +47,7 @@ class Biomorph abstract
 
 #include "zscript/biomorph/affixes/base.zs"
 #include "zscript/biomorph/affixes/armor.zs"
+#include "zscript/biomorph/affixes/weapon/ammo.zs"
 #include "zscript/biomorph/affixes/weapon/crit.zs"
 #include "zscript/biomorph/affixes/weapon/damage.zs"
 #include "zscript/biomorph/affixes/weapon/firetype.zs"

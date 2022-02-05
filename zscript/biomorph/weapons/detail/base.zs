@@ -147,7 +147,7 @@ class BIO_Weapon : DoomWeapon abstract
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
 
-	meta Class<Ammo> MagazineType1, MagazineType2;
+	Class<Ammo> MagazineType1, MagazineType2;
 	property MagazineType: MagazineType1;
 	property MagazineType1: MagazineType1;
 	property MagazineType2: MagazineType2;
@@ -444,43 +444,7 @@ class BIO_Weapon : DoomWeapon abstract
 			globals.OnWeaponAcquired(Grade);
 
 		Init();
-
-		// Get a pointer to primary ammo (which is either `AmmoType1` or
-		// `MagazineType1`). If it isn't found, generate and attach it
-		if (Magazine1 == null && AmmoType1 != null)
-		{
-			Magazine1 = MagazineType1 != null ?
-				Ammo(newOwner.FindInventory(MagazineType1)) :
-				Ammo(newOwner.FindInventory(AmmoType1));
-
-			if (Magazine1 == null)
-			{
-				Magazine1 = Ammo(Actor.Spawn(MagazineType1));
-				Magazine1.AttachToOwner(newOwner);
-			}
-
-			if (Default.MagazineSize1 != 0)
-				Magazine1.Amount = Max(Default.MagazineSize1, 0);
-		}
-
-		// Same for secondary:
-		if (Magazine2 == null && AmmoType2 != null)
-		{
-			Magazine2 = MagazineType2 != null ?
-				Ammo(newOwner.FindInventory(MagazineType2)) :
-				Ammo(newOwner.FindInventory(AmmoType2));
-
-			if (Magazine2 == null)
-			{
-				Magazine2 = Ammo(Actor.Spawn(MagazineType2));
-				Magazine2.AttachToOwner(newOwner);
-			}
-
-			if (Default.MagazineSize2 != 0)
-				Magazine2.Amount = Max(Default.MagazineSize2, 0);
-		}
-
-		if (MagazineType1 == MagazineType2) Magazine2 = Magazine1;
+		AcquireMagazines();
 	}
 
 	override void OnDrop(Actor dropper)
@@ -1200,6 +1164,46 @@ class BIO_Weapon : DoomWeapon abstract
 		OnChange();
 	}
 
+	private void AcquireMagazines()
+	{
+		// Get a pointer to primary ammo (which is either `AmmoType1` or
+		// `MagazineType1`). If it isn't found, generate and attach it
+		if (Magazine1 == null && AmmoType1 != null)
+		{
+			Magazine1 = MagazineType1 != null ?
+				Ammo(Owner.FindInventory(MagazineType1)) :
+				Ammo(Owner.FindInventory(AmmoType1));
+
+			if (Magazine1 == null)
+			{
+				Magazine1 = Ammo(Actor.Spawn(MagazineType1));
+				Magazine1.AttachToOwner(Owner);
+			}
+
+			if (Default.MagazineSize1 != 0)
+				Magazine1.Amount = Max(Default.MagazineSize1, 0);
+		}
+
+		// Same for secondary:
+		if (Magazine2 == null && AmmoType2 != null)
+		{
+			Magazine2 = MagazineType2 != null ?
+				Ammo(Owner.FindInventory(MagazineType2)) :
+				Ammo(Owner.FindInventory(AmmoType2));
+
+			if (Magazine2 == null)
+			{
+				Magazine2 = Ammo(Actor.Spawn(MagazineType2));
+				Magazine2.AttachToOwner(Owner);
+			}
+
+			if (Default.MagazineSize2 != 0)
+				Magazine2.Amount = Max(Default.MagazineSize2, 0);
+		}
+
+		if (MagazineType1 == MagazineType2) Magazine2 = Magazine1;
+	}
+
 	// Does not apply any affixes, or affect rarity.
 	void Reset()
 	{
@@ -1230,6 +1234,8 @@ class BIO_Weapon : DoomWeapon abstract
 		RaiseSpeed = Default.RaiseSpeed;
 		LowerSpeed = Default.LowerSpeed;
 
+		MagazineType1 = Default.MagazineType1;
+		MagazineType2 = Default.MagazineType2;
 		MagazineSize1 = Default.MagazineSize1;
 		MagazineSize2 = Default.MagazineSize2;
 		
@@ -1240,6 +1246,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 		MinAmmoReserve1 = Default.MinAmmoReserve1;
 		MinAmmoReserve2 = Default.MinAmmoReserve2;
+
+		Magazine1 = Magazine2 = null;
 
 		Array<BIO_WeaponPipeline> pplDefs;
 		InitPipelines(pplDefs);
@@ -1407,7 +1415,8 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	// Recomputes rarity, re-orders affixes, recolors tag, and rewrites readouts.
+	// Recomputes rarity, re-orders and then applies affixes, recolors tag,
+	// re-acquires magazine if possible, and rewrites readouts.
 	void OnChange()
 	{
 		Reset();
@@ -1443,6 +1452,9 @@ class BIO_Weapon : DoomWeapon abstract
 			if (incompatibleExplicits[i])
 				Affixes.Delete(i);
 		}
+
+		Magazine1 = Magazine2 = null;
+		if (Owner != null) AcquireMagazines();
 
 		SetTag(FullTag());
 
