@@ -1001,6 +1001,10 @@ class BIO_Weapon : DoomWeapon abstract
 			if (ImplicitAffixes[i].GetFlags() & BIO_WAF_ADDSGRAVITY)
 				return true;
 
+		for (uint i = 0; i < Affixes.Size(); i++)
+			if (Affixes[i].GetFlags() & BIO_WAF_ADDSGRAVITY)
+				return true;
+
 		return false;
 	}
 
