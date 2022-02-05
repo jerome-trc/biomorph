@@ -1170,34 +1170,40 @@ class BIO_Weapon : DoomWeapon abstract
 		// `MagazineType1`). If it isn't found, generate and attach it
 		if (Magazine1 == null && AmmoType1 != null)
 		{
+			bool previouslyOwned = true;
+
 			Magazine1 = MagazineType1 != null ?
 				Ammo(Owner.FindInventory(MagazineType1)) :
 				Ammo(Owner.FindInventory(AmmoType1));
 
 			if (Magazine1 == null)
 			{
+				previouslyOwned = false;
 				Magazine1 = Ammo(Actor.Spawn(MagazineType1));
 				Magazine1.AttachToOwner(Owner);
 			}
 
-			if (Default.MagazineSize1 != 0)
+			if (!previouslyOwned && Default.MagazineSize1 != 0)
 				Magazine1.Amount = Max(Default.MagazineSize1, 0);
 		}
 
 		// Same for secondary:
 		if (Magazine2 == null && AmmoType2 != null)
 		{
+			bool previouslyOwned = true;
+
 			Magazine2 = MagazineType2 != null ?
 				Ammo(Owner.FindInventory(MagazineType2)) :
 				Ammo(Owner.FindInventory(AmmoType2));
 
 			if (Magazine2 == null)
 			{
+				previouslyOwned = false;
 				Magazine2 = Ammo(Actor.Spawn(MagazineType2));
 				Magazine2.AttachToOwner(Owner);
 			}
 
-			if (Default.MagazineSize2 != 0)
+			if (!previouslyOwned && Default.MagazineSize2 != 0)
 				Magazine2.Amount = Max(Default.MagazineSize2, 0);
 		}
 
