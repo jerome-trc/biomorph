@@ -58,9 +58,9 @@ extend class BIO_EventHandler
 			"\c[Gold]Network events:\c-\n"
 			"\tnetevent bio_addwafx:Classname\n"
 			"\tnetevent bio_rmwafx:Classname\n"
-			"\tbio_recalcweap_ (alias: bio_weaprecalc_)"
-			"\tbio_lvlup_ (also: bio_lvlup_5 and bio_lvlup_10)"
-			"\tbio_xpreset_"
+			"\tbio_recalcweap_ (alias: bio_weaprecalc_)\n"
+			"\tbio_lvlup_ (also: bio_lvlup_5 and bio_lvlup_10)\n"
+			"\tbio_xpreset_\n"
 			"\tbio_regenupgrades_");
 	}
 
