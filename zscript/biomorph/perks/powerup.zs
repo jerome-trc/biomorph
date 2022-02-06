@@ -1,6 +1,6 @@
 // More duration from any supported powerup ====================================
 
-class BIO_Perk_PowerupDuration_Minor : BIO_Perk
+class BIO_Perk_PowerupDuration1 : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
@@ -8,7 +8,15 @@ class BIO_Perk_PowerupDuration_Minor : BIO_Perk
 	}
 }
 
-class BIO_Perk_PowerupDuration_Major : BIO_Perk
+class BIO_Perk_PowerupDuration2 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PUpFunc_PowerupDuration', 2);
+	}
+}
+
+class BIO_Perk_PowerupDuration5 : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
 	{
@@ -16,13 +24,21 @@ class BIO_Perk_PowerupDuration_Major : BIO_Perk
 	}
 }
 
-// Give the powerup extra duration based on 5% of its default duration.
+class BIO_Perk_PowerupDuration10 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PUpFunc_PowerupDuration', 10);
+	}
+}
+
+// Give the powerup extra duration based on 1% of its default duration.
 class BIO_PUpFunc_PowerupDuration : BIO_PowerupFunctor
 {
 	final override void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const
 	{
 		for (uint i = 0; i < Count; i++)
-			power.EffectTics += ((power.Default.EffectTics * 0.05) * Count);
+			power.EffectTics += ((power.Default.EffectTics * 0.01) * Count);
 	}
 }
 

@@ -34,6 +34,47 @@ class BIO_Perk_CellCapacity_Minor : BIO_Perk
 	}
 }
 
+class BIO_Perk_AmmoCapacity_Small : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		for (Inventory i = bioPlayer.Inv; i != null; i = i.Inv)
+		{
+			Ammo cl = Clip(i);
+
+			if (cl != null)
+			{
+				cl.MaxAmount += cl.Default.BackpackAmount;
+				continue;
+			}
+
+			Ammo shl = Shell(i);
+
+			if (shl != null)
+			{
+				shl.MaxAmount += shl.Default.BackpackAmount;
+				continue;
+			}
+
+			Ammo rkt = RocketAmmo(i);
+
+			if (rkt != null)
+			{
+				rkt.MaxAmount += rkt.Default.BackpackAmount;
+				continue;
+			}
+
+			Ammo cll = Cell(i);
+
+			if (cll != null)
+			{
+				cll.MaxAmount += cll.Default.BackpackAmount;
+				continue;
+			}
+		}
+	}
+}
+
 class BIO_Perk_ClipCapacity_Major : BIO_Perk
 {
 	final override void Apply(BIO_Player bioPlayer) const
