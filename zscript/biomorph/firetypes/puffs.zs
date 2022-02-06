@@ -75,6 +75,8 @@ class BIO_Shrapnel : BulletPuff
 		+ALLOWTHRUFLAGS
 		+MTHRUSPECIES
 		+THRUGHOST
+
+		Species 'Player';
 	}
 
 	final override void PostBeginPlay()
