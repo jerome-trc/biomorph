@@ -42,7 +42,7 @@ class BIO_Player : DoomPlayer
 		Player.StartItem 'BIO_UnequipArmor';
 		Player.StartItem 'BIO_PickupHandler';
 
-		Player.StartItem 'Clip', 50;
+		Player.StartItem 'Clip', 35;
 		Player.StartItem 'Shell', 0;
 		Player.StartItem 'RocketAmmo', 0;
 		Player.StartItem 'Cell', 0;
