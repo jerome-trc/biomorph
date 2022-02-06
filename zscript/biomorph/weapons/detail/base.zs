@@ -500,31 +500,35 @@ class BIO_Weapon : DoomWeapon abstract
 
 		if (!altFire)
 		{
+			if (ammoUse < 0) ammoUse = AmmoUse1;
+
+			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+				Affixes[i].BeforeDeplete(self, ammoUse, altFire);
+			for (uint i = 0; i < Affixes.Size(); i++)
+				Affixes[i].BeforeDeplete(self, ammoUse, altFire);
+
 			if (Magazine1 != null)
-			{
-				if (ammoUse >= 0)
-					Magazine1.Amount -= ammoUse;
-				else
-					Magazine1.Amount -= AmmoUse1;
-			}
+				Magazine1.Amount = Max(Magazine1.Amount - ammoUse, 0);
 
 			if (bPRIMARY_USES_BOTH && Magazine2 != null)
-				Magazine2.Amount -= AmmoUse2;
+				Magazine2.Amount = Max(Magazine2.Amount - AmmoUse2, 0);
 		}
 		else
 		{
+			if (ammoUse < 0) ammoUse = AmmoUse2;
+
+			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+				Affixes[i].BeforeDeplete(self, ammoUse, altFire);
+			for (uint i = 0; i < Affixes.Size(); i++)
+				Affixes[i].BeforeDeplete(self, ammoUse, altFire);
+
 			if (Magazine2 != null)
-				Magazine2.Amount -= AmmoUse2;
+				Magazine2.Amount = Max(Magazine2.Amount - ammoUse, 0);
+
 			if (bALT_USES_BOTH && Magazine1 != null)
-				Magazine1.Amount -= AmmoUse1;
+				Magazine1.Amount = Max(Magazine1.Amount - AmmoUse1, 0);
 		}
 
-		if (Magazine1 != null && Magazine1.Amount < 0)
-			Magazine1.Amount = 0;
-
-		if (Magazine2 != null && Magazine2.Amount < 0)
-			Magazine2.Amount = 0;
-		
 		return true;
 	}
 
