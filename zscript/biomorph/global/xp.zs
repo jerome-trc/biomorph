@@ -14,6 +14,7 @@ class BIO_PerkGraphNode
 	Vector2 Position;
 	BIO_PerkCategory Category;
 	BIO_Perk Perk;
+	bool FreeAccess;
 	Array<uint> Neighbors;
 }
 
@@ -79,7 +80,7 @@ class BIO_BasePerkGraph
 			return true;
 
 		// Completely unconnected nodes are permanently accessible
-		if (Nodes[node].Neighbors.Size() < 1)
+		if (Nodes[node].Neighbors.Size() < 1 || Nodes[node].FreeAccess)
 			return true;
 
 		Array<uint> visited;
@@ -409,6 +410,12 @@ extend class BIO_GlobalData
 			BasePerkGraph.Nodes[e].VerboseDesc = StringTable.Localize(descV);
 			BasePerkGraph.Nodes[e].Icon = icon;
 			BasePerkGraph.Nodes[e].Category = perkObjCats[i];
+
+			let freeAccess = BIO_Utils.TryGetJsonBool(perk.get("free_access"),
+				errMsg: false);
+			if (freeAccess != null)
+				BasePerkGraph.Nodes[e].FreeAccess = freeAccess.b;
+
 			perkObjValid[i] = true;
 			stringIDs.Push(stringID);
 		}

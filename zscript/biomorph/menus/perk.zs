@@ -271,6 +271,8 @@ class BIO_PerkMenu : GenericMenu
 				}
 			}
 
+			if (BasePerkGraph.Nodes[i].FreeAccess) accessible = true;
+
 			if (accessible)
 			{
 				Screen.DrawTexture(BasePerkGraph.Nodes[i].Icon, false,
