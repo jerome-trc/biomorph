@@ -503,7 +503,7 @@ class BIO_Weapon : DoomWeapon abstract
 			if (ammoUse < 0) ammoUse = AmmoUse1;
 
 			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-				Affixes[i].BeforeDeplete(self, ammoUse, altFire);
+				ImplicitAffixes[i].BeforeDeplete(self, ammoUse, altFire);
 			for (uint i = 0; i < Affixes.Size(); i++)
 				Affixes[i].BeforeDeplete(self, ammoUse, altFire);
 
@@ -518,7 +518,7 @@ class BIO_Weapon : DoomWeapon abstract
 			if (ammoUse < 0) ammoUse = AmmoUse2;
 
 			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-				Affixes[i].BeforeDeplete(self, ammoUse, altFire);
+				ImplicitAffixes[i].BeforeDeplete(self, ammoUse, altFire);
 			for (uint i = 0; i < Affixes.Size(); i++)
 				Affixes[i].BeforeDeplete(self, ammoUse, altFire);
 
