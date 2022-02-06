@@ -57,10 +57,14 @@ class BIO_WeaponAffix : BIO_Affix abstract
 
 	virtual void OnTick(BIO_Weapon weap) {}
 
+	// Only gets called if enough ammo is present.
+	virtual void BeforeDeplete(BIO_Weapon weap,
+		in out int ammoUse, bool altFire) const {}
+
 	// Modify only the fire count or the critical flag here;
 	// everything else gets overwritten afterwards.
 	virtual void BeforeAllFire(BIO_Weapon weap, in out BIO_FireData fireData) const {}
-	
+
 	// Modifying `FireCount` here does nothing, since it is overwritten afterwards.
 	virtual void BeforeEachFire(BIO_Weapon weap, in out BIO_FireData fireData) const {}
 
@@ -72,7 +76,7 @@ class BIO_WeaponAffix : BIO_Affix abstract
 		BIO_Puff puff) const {}
 
 	// Be aware that this is called on the readied weapon, which may not be the
-	// weapon which fired the projectile that dealt the kill. Plan accordingly.
+	// weapon which was actually used to cause the kill. Plan accordingly.
 	virtual void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const {}
 
 	// In the baseline mod, this is only applicable to pistols.

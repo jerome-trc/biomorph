@@ -575,7 +575,7 @@ class BIO_Weapon : DoomWeapon abstract
 			dropper.Disarm();
 		}
 	}
-	
+
 	virtual void OnSelect()
 	{
 		BIO_Player(Owner).WeaponVisual = PlayerVisual;
