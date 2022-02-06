@@ -94,3 +94,63 @@ class BIO_WAfx_ReserveFeed : BIO_WeaponAffix
 		return BIO_WAF_NONE;
 	}
 }
+
+class BIO_WAfx_NthRoundCost : BIO_WeaponAffix
+{
+	uint8 Interval;
+	int CostModifier1, CostModifier2;
+
+	private uint8 Counter1, Counter2;
+
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return !weap.Ammoless();
+	}
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		Interval = Random(3, 5);
+		CostModifier1 = -weap.AmmoUse1;
+		CostModifier2 = -weap.AmmoUse2;
+	}
+
+	final override void BeforeDeplete(BIO_Weapon weap,
+		in out int ammoUse, bool altFire) const
+	{
+		if (!altFire)
+		{
+			if (++Counter1 >= Interval)
+			{
+				ammoUse += CostModifier1;
+				Counter1 = 0;
+			}
+		}
+		else
+		{
+			if (++Counter2 >= Interval)
+			{
+				ammoUse += CostModifier2;
+				Counter2 = 0;
+			}
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_WAFX_NTHROUNDCOST_TOSTR"), Interval));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_NTHROUNDCOST_TAG");
+	}
+
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_NONE;
+	}
+}

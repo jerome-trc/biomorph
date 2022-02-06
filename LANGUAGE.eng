@@ -302,6 +302,9 @@
 	BIO_WAFX_RESERVEFEED_TAG = "Ammochain";
 	BIO_WAFX_RESERVEFEED_TOSTR = "\c[Green]Feeds from reserve instead of magazine";
 
+	BIO_WAFX_NTHROUNDCOST_TAG = "Ammo Thrift";
+	BIO_WAFX_NTHROUNDCOST_TOSTR = "\c[Green]Free shot every %d rounds";
+
 	BIO_WAFX_BERSERKDMG_TAG = "Frenzy";
 	BIO_WAFX_BERSERKDMG_TOSTR = "%s%d%% damage from berserk";
 
@@ -421,6 +424,12 @@
 	BIO_WAFX_INFINITEAMMOONKILL_TAG = "Rampaging";
 	BIO_WAFX_INFINITEAMMOONKILL_TOSTR =
 		"\c[Green]%d%% chance of infinite ammo for %d seconds on kill";
+
+	BIO_WAFX_RADIALSTUNONKILL_TAG = "Telepathic Burst";
+	BIO_WAFX_RADIALSTUNONKILL_TOSTR = "\c[Green]Stun nearby enemies on kill";
+
+	BIO_WAFX_SHRAPNELONKILL_TAG = "Bone Fragmentation";
+	BIO_WAFX_SHRAPNELONKILL_TOSTR = "\c[Green]Killed enemies release bone shrapnel";
 
 	BIO_EAFX_SAVEAMOUNT_TAG = "Reinforced";
 	BIO_EAFX_SAVEAMOUNT_TOSTR = "\c[White]Durability: %s%s%d";

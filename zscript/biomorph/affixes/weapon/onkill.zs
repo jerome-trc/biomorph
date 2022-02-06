@@ -38,6 +38,67 @@ class BIO_WAfx_InfiniteAmmoOnKill : BIO_WeaponAffix
 
 	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
 
+	final override BIO_WeaponAffixFlags GetFlags() const { return BIO_WAF_NONE; }
+}
+
+class BIO_WAfx_RadialStunOnKill : BIO_WeaponAffix
+{
+	final override bool Compatible(readOnly<BIO_Weapon> _) const { return true; }
+
+	final override void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const
+	{
+		let bli = BlockThingsIterator.Create(killed, 96.0);
+
+		while (bli.Next())
+		{
+			if (bli.Thing.bIsMonster && bli.Thing.Species != 'Player')
+				bli.Thing.TriggerPainChance('None', true);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_RADIALSTUNONKILL_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_RADIALSTUNONKILL_TAG");
+	}
+
+	final override bool ImplicitExplicitExclusive() const { return true; }
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override BIO_WeaponAffixFlags GetFlags() const { return BIO_WAF_NONE; }
+}
+
+class BIO_WAfx_ShrapnelOnKill : BIO_WeaponAffix
+{
+	final override bool Compatible(readOnly<BIO_Weapon> _) const { return true; }
+
+	const FLAGS =
+		XF_HURTSOURCE | XF_NOTMISSILE | XF_EXPLICITDAMAGETYPE | XF_NOSPLASH;
+
+	final override void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const
+	{
+		int mhp = Max(1, killed.GetMaxHealth() * 0.8), count = Random(8, 12);
+
+		killed.A_Explode(0, 0, FLAGS, true, nails: count, mhp / count, 'BIO_Shrapnel');
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_SHRAPNELONKILL_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_SHRAPNELONKILL_TAG");
+	}
+
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+
 	final override BIO_WeaponAffixFlags GetFlags() const
 	{
 		return BIO_WAF_NONE;
