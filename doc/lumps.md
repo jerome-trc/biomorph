@@ -101,6 +101,10 @@ This is an array containing UUIDs of other nodes. Every UUID given here will cre
 
 As you probably expect, it's illegal for a node to add its own UUID to its neighbours array.
 
+##### `free_access`
+
+This is an optional boolean field; if set to true, the node will always be accessible, regardless of the state of the rest of the graph.
+
 #### `templates` (array)
 
 As an alternative to defining perks using the fields above, one can also predefine perk node templates. A template needs to have a unique `id` field that sets it apart from all other templates, and must also have a `class`. You can then define a node in the `perks` array, assign it a template using the `"template"` key, and then give it a UUID, position, and neighbour array.

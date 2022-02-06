@@ -634,7 +634,7 @@
 					"tag": "$BIO_PERK_SCALEDPISTOLDAMAGE_TAG",
 					"desc": "$BIO_PERK_SCALEDPISTOLDAMAGE_DESC",
 					"icon": "PISTA0",
-					"neighbors": [ "bio_start" ]
+					"free_access": true
 				}
 			],
 			"major": [
@@ -667,7 +667,7 @@
 					"tag": "$BIO_PERK_STARTINGBERSERK_TAG",
 					"desc": "$BIO_PERK_STARTINGBERSERK_DESC",
 					"icon": "PSTRA0",
-					"neighbors": [ "bio_start" ]
+					"free_access": true
 				}
 			],
 			"minor": [
