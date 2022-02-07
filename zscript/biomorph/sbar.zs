@@ -7,7 +7,7 @@ class BIO_StatusBar : BaseStatusBar
 	private HUDFont Font_HUD, Font_Index, Font_Amount, Font_Small;
 	private InventoryBarState InvBarState;
 
-	private string PerkPointString, PerkPointPluralString;
+	private string String_Equipped, String_PerkPoint, String_PerkPoints;
 
 	const WEAPINFO_X = -22; // Leave room for keys at top-right corner
 	const WEAPINFO_EXAMINE_X = -WEAPINFO_X;
@@ -29,8 +29,10 @@ class BIO_StatusBar : BaseStatusBar
 		Font_Small = HUDFont.Create('SMALLFONT');
 		InvBarState = InventoryBarState.Create();
 
-		PerkPointString = StringTable.Localize("$BIO_PERK_POINT_AVAILABLE");
-		PerkPointPluralString = StringTable.Localize("$BIO_PERK_POINTS_AVAILABLE");
+		String_Equipped = String.Format("\c[White](\c[Yellow]%s\c[White])",
+			StringTable.Localize("$BIO_EQUIPPED"));
+		String_PerkPoint = StringTable.Localize("$BIO_PERK_POINT_AVAILABLE");
+		String_PerkPoints = StringTable.Localize("$BIO_PERK_POINTS_AVAILABLE");
 
 		NotifyLineCount = CVar.GetCvar("con_notifylines");
 	}
@@ -97,14 +99,22 @@ class BIO_StatusBar : BaseStatusBar
 		}
 		
 		if (isInventoryBarVisible())
+		{
 			DrawInventoryBar(InvBarState, (0, 0), 7, DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
+
+			if (CPlayer.MO.InvSel == BIOPlayer.EquippedArmor)
+			{
+				DrawString(Font_Small, String_Equipped, (0, 180),
+					DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER);
+			}
+		}
 
 		if (PerkGraph.Points > 0)
 		{
 			int realTic = double(GameTic) + ticFrac;
 
 			DrawString(Font_Small, String.Format(
-				PerkGraph.Points == 1 ? PerkPointString : PerkPointPluralString,
+				PerkGraph.Points == 1 ? String_PerkPoint : String_PerkPoints,
 				FormatNumber(PerkGraph.Points, 1, 3)),
 				(200, -16), 0, Font.CR_UNTRANSLATED,
 				1.0 + (Sin(((realTic) << 16 / 4) * 0.75)));
@@ -118,7 +128,7 @@ class BIO_StatusBar : BaseStatusBar
 			DrawInventoryIcon(CPlayer.MO.InvSel, (-22, invY + 12));
 			DrawString(Font_HUD, FormatNumber(CPlayer.MO.InvSel.Amount, 3),
 				(-40, invY - 10), DI_TEXT_ALIGN_RIGHT);
-			
+
 			invY -= 40;
 		}
 
