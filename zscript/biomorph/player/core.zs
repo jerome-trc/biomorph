@@ -448,7 +448,7 @@ class BIO_Player : DoomPlayer
 				toDrop.Push(i);
 				hec--;
 			}
-			else if (i is 'Ammo')
+			else if (i is 'Ammo' && !i.bIgnoreSkill)
 			{
 				let ammoItem = Ammo(i);
 				int diff = ammoItem.Amount - ammoItem.MaxAmount;
