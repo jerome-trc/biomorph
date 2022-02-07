@@ -74,6 +74,7 @@ class BIO_Shrapnel : BulletPuff
 	{
 		+ALLOWTHRUFLAGS
 		+MTHRUSPECIES
+		+THRUSPECIES
 		+THRUGHOST
 
 		Species 'Player';
