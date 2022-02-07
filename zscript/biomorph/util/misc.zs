@@ -191,7 +191,7 @@ class BIO_FakePuff : BIO_Puff
 		+NOINTERACTION
 		+NOTIMEFREEZE
 		+NOTONAUTOMAP
-		
+
 		Height 6.0;
 		Radius 6.0;
 	}
