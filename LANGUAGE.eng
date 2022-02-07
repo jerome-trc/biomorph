@@ -726,6 +726,7 @@
 	BIO_CORRUPTED = "Corrupted";
 	BIO_MAXIMUM = "maximum";
 	BIO_EMPTY = "empty";
+	BIO_EQUIPPED = "equipped";
 
 	BIO_MORE = "more";
 	BIO_LESS = "less";
