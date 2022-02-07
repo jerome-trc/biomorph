@@ -301,8 +301,6 @@ class BIO_ProxMineProj : BIO_Projectile
 // TODO: Needs extra fanciness. Definitely a `DeathSound`, maybe a `SeeSound`.
 class BIO_Nail : BIO_Projectile
 {
-	protected Actor Stickee;
-
 	Default
 	{
 		Tag "$BIO_NAIL_TAG";
