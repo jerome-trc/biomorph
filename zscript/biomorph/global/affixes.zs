@@ -62,7 +62,7 @@ extend class BIO_GlobalData
 				continue;
 
 			if (!implicit && !WeaponAffixDefaults[i].CanGenerate() ||
-				implicit && WeaponAffixDefaults[i].CanGenerateImplicit())
+				implicit && !WeaponAffixDefaults[i].CanGenerateImplicit())
 				continue;
 
 			eligibles.Push(afx_t);
@@ -179,7 +179,7 @@ extend class BIO_GlobalData
 				continue;
 
 			if (!implicit && !EquipmentAffixDefaults[i].CanGenerate() ||
-				implicit && EquipmentAffixDefaults[i].CanGenerateImplicit())
+				implicit && !EquipmentAffixDefaults[i].CanGenerateImplicit())
 				continue;
 
 			eligibles.Push(afx_t);
