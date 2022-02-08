@@ -491,32 +491,27 @@ class BIO_PerkMenu : GenericMenu
 		if (!PlayerPerkGraph.PerkActive[HoveredNode])
 			return;
 
-		if (!NodeState[HoveredNode].Selected &&
-			SelectionSize >= PlayerPerkGraph.Refunds)
-			return;
-		
-		Array<uint> active;
-		
-		for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
-		{
-			if (!NodeState[i].Selected || PlayerPerkGraph.PerkActive[i])
-				active.Push(i);
-		}
-
-		// Would refunding the hovered node leave another active node orphaned?
 		if (!NodeState[HoveredNode].Selected)
 		{
-			active.Delete(active.Find(HoveredNode));
+			if (SelectionSize >= PlayerPerkGraph.Refunds)
+				return;
 
-			for (uint i = 1; i < BasePerkGraph.Nodes.Size(); i++)
+			// Would refunding the hovered node leave another active node orphaned?
+
+			Array<uint> active;
+
+			for (uint i = 0; i < BasePerkGraph.Nodes.Size(); i++)
 			{
 				if (i == HoveredNode)
 					continue;
-				
-				if (NodeState[i].Selected)
-					continue;
-				
-				if (!BasePerkGraph.IsAccessible(i, active))
+
+				if (PlayerPerkGraph.PerkActive[i] && !NodeState[i].Selected)
+					active.Push(i);
+			}
+
+			for (uint i = 1; i < active.Size(); i++)
+			{
+				if (!BasePerkGraph.IsAccessible(active[i], active))
 					return;
 			}
 		}

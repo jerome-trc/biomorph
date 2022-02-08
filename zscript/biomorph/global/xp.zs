@@ -48,18 +48,40 @@ class BIO_BasePerkGraph
 		if (cur == tgt) return true;
 		visited.Push(cur);
 
+		bool curActive = active.Find(cur) != active.Size();
+
 		for (uint i = 0; i < Nodes[cur].Neighbors.Size(); i++)
 		{
 			uint ndx = Nodes[cur].Neighbors[i];
 
 			if (visited.Find(ndx) != visited.Size())
 				continue;
-			
+
 			for (uint j = 0; j < Nodes[ndx].Neighbors.Size(); j++)
 			{
 				let nb = Nodes[ndx].Neighbors[j];
-				if (active.Find(nb) != active.Size() &&
+
+				if (active.Find(nb) != active.Size() && curActive &&
 					IsAccessibleImpl(tgt, ndx, active, visited))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	private bool IsAccessibleThruFreeAccess(uint tgt,
+		in out Array<uint> active, in out Array<uint> visited) const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			if (!Nodes[i].FreeAccess) continue;
+
+			for (uint j = 0; j < Nodes[i].Neighbors.Size(); j++)
+			{
+				let nb = Nodes[i].Neighbors[j];
+
+				if (IsAccessibleImpl(tgt, i, active, visited))
 					return true;
 			}
 		}
@@ -84,6 +106,10 @@ class BIO_BasePerkGraph
 			return true;
 
 		Array<uint> visited;
+
+		if (IsAccessibleThruFreeAccess(node, active, visited))
+			return true;
+
 		return IsAccessibleImpl(node, 0, active, visited);
 	}
 
