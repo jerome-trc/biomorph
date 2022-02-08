@@ -1,3 +1,90 @@
+class BIO_WAfx_MagSize : BIO_WeaponAffix
+{
+	int Modifier1, Modifier2;
+
+	override void Init(readOnly<BIO_Weapon> weap)
+	{
+		if (weap.MagazineSizeMutable(false))
+		{
+			switch (weap.MagazineSize1)
+			{
+			case 1:
+			case 2:
+				Modifier1 = 1;
+				break;
+			case 3:
+			case 4:
+				Modifier1 = Random[BIO_Afx](1, 2);
+				break;
+			default:
+				Modifier1 = Ceil(float(weap.MagazineSize1) * FRandom[BIO_Afx](0.33, 0.55));
+				break;
+			}
+		}
+
+		if (weap.MagazineSizeMutable(true))
+		{
+			switch (weap.MagazineSize2)
+			{
+			case 1:
+			case 2:
+				Modifier2 = 1;
+				break;
+			case 3:
+			case 4:
+				Modifier2 = Random[BIO_Afx](1, 2);
+				break;
+			default:
+				Modifier2 = Ceil(float(weap.MagazineSize2) * FRandom[BIO_Afx](0.33, 0.55));
+				break;
+			}
+		}
+	}
+
+	override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		return weap.MagazineSizeMutable(false) || weap.MagazineSizeMutable(true);
+	}
+
+	override void Apply(BIO_Weapon weap) const
+	{
+		weap.MagazineSize1 += Modifier1;
+		weap.MagazineSize2 += Modifier2;
+	}
+
+	override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		if (Modifier1 != 0)
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_WAFX_MAGSIZE_TOSTR_1"),
+				BIO_Utils.StatFontColor(Modifier1, 0),
+				Modifier1 >= 0 ? "+" : "", Modifier1));
+		}
+
+		if (Modifier2 != 0)
+		{
+			strings.Push(String.Format(
+				StringTable.Localize("$BIO_WAFX_MAGSIZE_TOSTR_2"),
+				BIO_Utils.StatFontColor(Modifier2, 0),
+				Modifier2 >= 0 ? "+" : "", Modifier2));
+		}
+	}
+
+	override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_MAGSIZE_TAG");
+	}
+
+	override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return true; }
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_MAGSIZE;
+	}
+}
+
 class BIO_WAfx_Ammoless : BIO_WeaponAffix // Implicit only
 {
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
