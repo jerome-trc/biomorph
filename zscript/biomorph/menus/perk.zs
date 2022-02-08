@@ -20,7 +20,8 @@ class BIO_PerkMenu : GenericMenu
 	private string Txt_HelpPan, Txt_Apply;
 	private TextureID
 		Tex_Node_Minor, Tex_NodeRing_Minor,
-		Tex_Node_Major, Tex_NodeRing_Major;
+		Tex_Node_Major, Tex_NodeRing_Major,
+		Tex_Node_Keystone, Tex_NodeRing_Keystone;
 
 	private BIO_NamedKey Key_Confirm;
 
@@ -53,6 +54,10 @@ class BIO_PerkMenu : GenericMenu
 			"graphics/perknode_major.png", TexMan.TYPE_ANY);
 		Tex_NodeRing_Major = TexMan.CheckForTexture(
 			"graphics/perknode_ring_major.png", TexMan.TYPE_ANY);
+		Tex_Node_Keystone = TexMan.CheckForTexture(
+			"graphics/perknode_keystone.png", TexMan.TYPE_ANY);
+		Tex_NodeRing_Keystone = TexMan.CheckForTexture(
+			"graphics/perknode_ring_keystone.png", TexMan.TYPE_ANY);
 
 		Key_Confirm = BIO_NamedKey.Create("+use");
 
@@ -231,6 +236,10 @@ class BIO_PerkMenu : GenericMenu
 			case BIO_PRKCAT_MAJOR:
 				frame = Tex_Node_Major;
 				ring = Tex_NodeRing_Major;
+				break;
+			case BIO_PRKCAT_KEYSTONE:
+				frame = Tex_Node_Keystone;
+				ring = Tex_NodeRing_Keystone;
 				break;
 			}
 
