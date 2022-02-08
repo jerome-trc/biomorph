@@ -425,8 +425,11 @@
 	BIO_WAFX_INFINITEAMMOONKILL_TOSTR =
 		"\c[Green]%d%% chance of infinite ammo for %d seconds on kill";
 
-	BIO_WAFX_RADIALSTUNONKILL_TAG = "Telepathic Burst";
-	BIO_WAFX_RADIALSTUNONKILL_TOSTR = "\c[Green]Stun nearby enemies on kill";
+	BIO_WAFX_USERRADIALSTUNONKILL_TAG = "Telepathic Burst";
+	BIO_WAFX_USERRADIALSTUNONKILL_TOSTR = "\c[Green]Stun nearby enemies on kill";
+
+	BIO_WAFX_VICTIMRADIALSTUNONKILL_TAG = "Telepathic Sting";
+	BIO_WAFX_VICTIMRADIALSTUNONKILL_TOSTR = "\c[Green]Killing an enemy stuns its neigbours";
 
 	BIO_WAFX_SHRAPNELONKILL_TAG = "Bone Fragmentation";
 	BIO_WAFX_SHRAPNELONKILL_TOSTR = "\c[Green]Killed enemies release bone shrapnel";
