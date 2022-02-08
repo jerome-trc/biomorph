@@ -303,6 +303,9 @@ class BIO_PerkMenu : GenericMenu
 			StringTable.Localize("$BIO_PERKMENU_POINTCOUNT"),
 			PlayerPerkGraph.Points);
 
+		if (!RefundMode && SelectionSize > 0)
+			ptStr.AppendFormat("\c[MidGrey] - \c[White]%d", SelectionSize);
+
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
 			VIRT_W * 0.5 - (SmallFont.StringWidth(ptStr) / 2),
 			VIRT_H * 0.05, ptStr, DTA_KEEPRATIO, true,
@@ -311,6 +314,9 @@ class BIO_PerkMenu : GenericMenu
 		string refundStr = String.Format(
 			StringTable.Localize("$BIO_PERKMENU_REFUNDCOUNT"),
 			PlayerPerkGraph.Refunds);
+
+		if (RefundMode && SelectionSize > 0)
+			refundStr.AppendFormat("\c[MidGrey] - \c[White]%d", SelectionSize);
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
 			VIRT_W * 0.5 - (SmallFont.StringWidth(refundStr) / 2),
