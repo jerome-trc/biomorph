@@ -1220,12 +1220,10 @@ class BIO_Weapon : DoomWeapon abstract
 		Pipelines.Clear();
 		FireTimeGroups.Clear();
 		ReloadTimeGroups.Clear();
-		ImplicitAffixes.Clear();
 
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
-		InitImplicitAffixes(ImplicitAffixes);
 
 		bNoAutoFire = Default.bNoAutoFire;
 		bNoAlert = Default.bNoAlert;
