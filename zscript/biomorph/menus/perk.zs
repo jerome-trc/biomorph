@@ -552,6 +552,7 @@ class BIO_PerkMenu : GenericMenu
 			}
 		}
 
+		SelectionSize = 0;
 		BIO_EventHandler.CommitPerks();
 	}
 }
