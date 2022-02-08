@@ -75,6 +75,7 @@ class BIO_ImpactorGauntlet : BIO_Weapon
 		IMPA J 1
 		{
 			A_BIO_Fire();
+			A_FireSound();
 
 			A_Blast(BF_DONTWARN | BF_NOIMPACTDAMAGE | BF_AFFECTBOSSES,
 				25.0, 60.0, 20.0, 'BIO_ImpactorGauntletBlast');
@@ -120,6 +121,7 @@ class BIO_ImpactorGauntlet : BIO_Weapon
 			ThrustThing(Angle * 256.0 / 360.0, 30, 1, 0);
 			A_StartSound("bio/weap/impgaunt/thrust", CHAN_AUTO);
 			A_BIO_Fire(pipeline: 1);
+			A_FireSound(pipeline: 1);
 		}
 		IMPA J 1 A_BIO_Fire(pipeline: 1);
 		IMPA J 1 A_BIO_Fire(pipeline: 1);

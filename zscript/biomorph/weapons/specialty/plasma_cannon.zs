@@ -74,6 +74,7 @@ class BIO_PlasmaCannon : BIO_Weapon
 		{
 			A_SetFireTime(5);
 			A_BIO_Fire();
+			A_FireSound();
 		}
 		PLSC L 1
 		{

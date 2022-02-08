@@ -58,6 +58,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 		{
 			A_SetFireTime(0);
 			A_BIO_Fire();
+			A_FireSound();
 			Player.SetSafeFlash(invoker, ResolveState('Flash'), Random(0, 1));
 			A_PresetRecoil('BIO_Recoil_Autogun');
 		}
