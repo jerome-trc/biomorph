@@ -30,7 +30,7 @@ This represents how many upgrade mutagens the player will need to consume in ord
 - `"SPECIALTY_TO_CLASSIFIED"`
 - `"CLASSIFIED_TO_CLASSIFIED"`
 
-Note that the set of recipes generated is the square cross of the given input and output classes. This means that if three inputs and three outputs are given, nine recipes will be generated (one for each possible combination of input and output), all of the same cost.
+You can also append `_X2` or `_X3` to any of these names to get the same cost but multiplied by 2 or 3 respectively. Note that the set of recipes generated is the square cross of the given input and output classes. This means that if three inputs and three outputs are given, nine recipes will be generated (one for each possible combination of input and output), all of the same cost.
 
 Each weapon upgrade recipe object also supports the following optional fields:
 
