@@ -554,7 +554,10 @@ class BIO_CorrFunc_RandomizeHide : BIO_CorruptionFunctor
 		uint c = Random[BIO_Afx](2, weap.MaxAffixes);
 
 		for (uint i = 0; i < c; i++)
+		{
 			weap.AddRandomAffix();
+			weap.OnChange();
+		}
 		
 		weap.BIOFlags |= BIO_WF_AFFIXESHIDDEN;
 		weap.Owner.A_Print("$BIO_MUTA_CORRUPT_USE_HIDDENRAND", 3.5);
@@ -586,6 +589,7 @@ class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
 			let afx1 = BIO_WeaponAffix(new(Eligibles[r]));
 			uint e = weap.ImplicitAffixes.Push(afx1);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
+			weap.OnChange();
 
 			Eligibles.Delete(r);
 
