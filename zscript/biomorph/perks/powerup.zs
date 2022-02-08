@@ -37,8 +37,7 @@ class BIO_PUpFunc_PowerupDuration : BIO_PowerupFunctor
 {
 	final override void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const
 	{
-		for (uint i = 0; i < Count; i++)
-			power.EffectTics += ((power.Default.EffectTics * 0.01) * Count);
+		power.EffectTics += (power.Default.EffectTics * 0.01 * Count);
 	}
 }
 
