@@ -1295,6 +1295,7 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 
 		ClearAffixes();
+		OnChange();
 
 		uint fl = Min(2, MaxAffixes);
 		uint c = Random[BIO_Afx](fl, MaxAffixes);
@@ -1320,6 +1321,7 @@ class BIO_Weapon : DoomWeapon abstract
 			let afx = BIO_WeaponAffix(new(eligibles[r]));
 			afx.Init(AsConst());
 			Affixes.Push(afx);
+			OnChange();
 		}
 	}
 
