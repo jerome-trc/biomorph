@@ -37,7 +37,7 @@ extend class BIO_GlobalData
 			{
 				return (Class<BIO_Weapon>)(WeaponLootTables[
 					RandomPick[BIO_Loot](
-						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2)
+						0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2)
 				][table].Result());
 			}
 			else
@@ -50,7 +50,7 @@ extend class BIO_GlobalData
 			if (table <= BIO_WEAPCAT_AUTOGUN)
 			{
 				return (Class<BIO_Weapon>)(WeaponLootTables[
-					RandomPick[BIO_Loot](0, 0, 0, 0, 1)
+					RandomPick[BIO_Loot](0, 0, 0, 0, 0, 0, 0, 1, 1, 1)
 				][table].Result());
 			}
 			else
@@ -126,8 +126,8 @@ extend class BIO_GlobalData
 			{
 				switch (MaxWeaponGrade)
 				{
-				case BIO_PMWG_STANDARD: m = 12; break;
-				case BIO_PMWG_SPECIALTY: m = 4; break;
+				case BIO_PMWG_STANDARD: m = 7; break;
+				case BIO_PMWG_SPECIALTY: m = 3; break;
 				case BIO_PMWG_CLASSIFIED: m = 1; break;
 				default: break;
 				}
@@ -199,13 +199,13 @@ extend class BIO_GlobalData
 			}
 
 			let defs = GetDefaultByType(weap_t);
-			uint g = uint.MAX;
+			uint g = uint.MAX, u = 1;
 
 			switch (defs.Grade)
 			{
-			case BIO_GRADE_STANDARD: g = 0; break;
-			case BIO_GRADE_SPECIALTY: g = 1; break;
-			case BIO_GRADE_CLASSIFIED: g = 2; break;
+			case BIO_GRADE_STANDARD: g = 0; u = 64; break;
+			case BIO_GRADE_SPECIALTY: g = 1; u = 32; break;
+			case BIO_GRADE_CLASSIFIED: g = 2; u = 4; break;
 			default:
 				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
 					" lump %d, loot object, %s weapon %d has invalid grade %s.",
@@ -214,7 +214,7 @@ extend class BIO_GlobalData
 			}
 
 			WeaponLootTables[g][targetTables].Push(weap_t,
-				defs.Rarity != BIO_RARITY_UNIQUE ? 75 : 1);
+				defs.Rarity != BIO_RARITY_UNIQUE ? u : 1);
 		}
 	}
 
