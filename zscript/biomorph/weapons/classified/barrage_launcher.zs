@@ -61,6 +61,7 @@ class BIO_BarrageLauncher : BIO_Weapon
 		{
 			A_SetFireTime(1);
 			A_BIO_Fire();
+			A_FireSound();
 			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		BARR C 1 Offset(0, 32 + 9) A_SetFireTime(2);
@@ -73,6 +74,7 @@ class BIO_BarrageLauncher : BIO_Weapon
 		{
 			A_SetFireTime(1);
 			A_BIO_Fire();
+			A_FireSound();
 			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		BARR C 1 Offset(0, 32 + 9) A_SetFireTime(6);
@@ -85,6 +87,7 @@ class BIO_BarrageLauncher : BIO_Weapon
 		{
 			A_SetFireTime(1);
 			A_BIO_Fire();
+			A_FireSound();
 			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		BARR C 1 Offset(0, 32 + 9) A_SetFireTime(11);
@@ -101,6 +104,7 @@ class BIO_BarrageLauncher : BIO_Weapon
 			A_SetFireTime(0, 1);
 			invoker.bAltFire = false;
 			A_BIO_Fire();
+			A_FireSound();
 			A_PresetRecoil('BIO_Recoil_Shotgun');
 		}
 		BARR C 3 Offset(0, 32 + 9) A_SetFireTime(1, 1);

@@ -65,6 +65,7 @@ class BIO_RocketLauncher : BIO_Weapon
 		{
 			A_SetFireTime(1);
 			A_BIO_Fire();
+			A_FireSound();
 			A_PresetRecoil('BIO_Recoil_RocketLauncher');
 		}
 		MISG B 0 A_ReFire;
