@@ -1425,18 +1425,11 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
-	// Recomputes rarity, re-orders and then applies affixes, recolors tag,
-	// re-acquires magazine if possible, and rewrites readouts.
+	// Re-orders and then applies affixes, recomputes rarity,
+	// re-acquires magazine if possible, recolors tag, and rewrites readouts.
 	void OnChange()
 	{
 		Reset();
-
-		if (Default.Rarity == BIO_RARITY_UNIQUE)
-			Rarity = BIO_RARITY_UNIQUE;
-		else if (Affixes.Size() > 0)
-			Rarity = BIO_RARITY_MUTATED;
-		else
-			Rarity = BIO_RARITY_COMMON;
 
 		ReorderAffixes(ImplicitAffixes);
 		ReorderAffixes(Affixes);
@@ -1444,6 +1437,10 @@ class BIO_Weapon : DoomWeapon abstract
 		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 			ImplicitAffixes[i].Apply(self);
 
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].Apply(self);
+
+/*
 		// If a corruption effect or something similar has modified implicits
 		// in a way that causes an explicit to become incompatible, cull it
 
@@ -1459,9 +1456,25 @@ class BIO_Weapon : DoomWeapon abstract
 
 		for (uint i = Affixes.Size() - 1; i >= 0; i--)
 		{
-			if (incompatibleExplicits[i])
-				Affixes.Delete(i);
+			if (!incompatibleExplicits[i]) continue;
+			
+			if (BIO_debug)
+			{
+				Console.Printf(Biomorph.LOGPFX_DEBUG ..
+					"Culling incompatible affix: %s (%d)",
+					Affixes[i].GetClassName(), i);	
+			}
+
+			Affixes.Delete(i);
 		}
+ */
+
+		if (Default.Rarity == BIO_RARITY_UNIQUE)
+			Rarity = BIO_RARITY_UNIQUE;
+		else if (Affixes.Size() > 0)
+			Rarity = BIO_RARITY_MUTATED;
+		else
+			Rarity = BIO_RARITY_COMMON;
 
 		Magazine1 = Magazine2 = null;
 		if (Owner != null) AcquireMagazines();
