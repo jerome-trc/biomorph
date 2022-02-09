@@ -507,6 +507,16 @@
 	BIO_PERK_BONUSHEALTH10_DESC =
 		"\c[Green]+10 maximum health\n+10 maximum bonus health";
 
+	BIO_PERK_BETTERSOULSPHERES_TAG =
+		"\c[White]Pneuma";
+	BIO_PERK_BETTERSOULSPHERES_DESC =
+		"\c[Green]+10 health gained from each Soulsphere";
+
+	BIO_PERK_SOULSPHEREBONUSHEALTH_TAG =
+		"\c[White]Spiritual Inoculum";
+	BIO_PERK_SOULSPHEREBONUSHEALTH_DESC =
+		"\c[Green]+10 maximum health and +10 maximum bonus health from each Soulsphere";
+
 	BIO_PERK_SLIMERESIST_MINOR_TAG =
 		"\c[White]Ironfoot";
 	BIO_PERK_SLIMERESIST_MAJOR_TAG =

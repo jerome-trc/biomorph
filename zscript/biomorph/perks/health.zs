@@ -92,3 +92,45 @@ class BIO_PkupFunc_BetterMedikits : BIO_ItemPickupFunctor
 			bioPlayer.GiveBody(5, bioPlayer.GetMaxHealth());
 	}
 }
+
+// +10 effect of Soulspheres ===================================================
+
+class BIO_Perk_BetterSoulspheres : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PkupFunc_BetterSoulspheres');
+	}
+}
+
+class BIO_PkupFunc_BetterSoulspheres : BIO_ItemPickupFunctor
+{
+	final override void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const
+	{
+		if (!(item is 'Soulsphere')) return;
+
+		for (uint i = 0; i < Count; i++)
+			bioPlayer.GiveBody(10, bioPlayer.GetMaxHealth(true));
+	}
+}
+
+// +10 increase to `BonusHealth` from each Soulsphere ==========================
+
+class BIO_Perk_SoulsphereBonusHealth : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PkupFunc_SoulsphereBonusHealth');
+	}
+}
+
+class BIO_PkupFunc_SoulsphereBonusHealth : BIO_ItemPickupFunctor
+{
+	final override void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const
+	{
+		if (!(item is 'Soulsphere')) return;
+
+		for (uint i = 0; i < Count; i++)
+			bioPlayer.BonusHealth += 10;
+	}
+}
