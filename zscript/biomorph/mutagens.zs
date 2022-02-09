@@ -296,10 +296,54 @@ class BIO_Muta_Upgrade : BIO_Mutagen
 		Loop;
 	}
 
+	private bool RandomUpgrade()
+	{
+		Array<BIO_WeaponUpgrade> options;
+
+		BIO_GlobalData.Get().PossibleWeaponUpgrades(
+			options, BIO_Weapon(Owner.Player.ReadyWeapon).GetClass());
+
+		if (options.Size() < 1)
+		{
+			Owner.A_Print("$BIO_WUP_FAIL_NOOPTIONS");
+			return false;
+		}
+
+		let oldWeap = BIO_Weapon(Owner.Player.ReadyWeapon);
+		bool mut = oldWeap.Rarity == BIO_RARITY_MUTATED;
+
+		// Don't try to give the user a weapon they already have;
+		// don't try to give the user a weapon of lesser or equal grade
+		for (uint i = options.Size() - 1; i >= 0; i--)
+		{
+			if (Owner.FindInventory(options[i].Output) ||
+				GetDefaultByType(options[i].Output).Grade <= oldWeap.Grade)
+				options.Delete(i);
+		}
+
+		let recipe = options[Random[BIO_Afx](0, options.Size() - 1)];
+		Class<BIO_Weapon> output = recipe.Output;
+		Owner.A_SelectWeapon('BIO_Fist');
+		Owner.TakeInventory(oldWeap.GetClass(), 1);
+		Owner.GiveInventory(output, 1);
+
+		if (mut)
+		{
+			let newWeap = BIO_Weapon(Owner.FindInventory(output));
+			newWeap.RandomizeAffixes();
+			newWeap.OnChange();
+		}
+
+		Owner.A_SelectWeapon(output);
+		Owner.A_StartSound("bio/item/weapupgrade/use", CHAN_AUTO);
+		Owner.A_StartSound("bio/muta/use/general", CHAN_7);
+
+		return true;
+	}
+
 	final override bool Use(bool pickup)
 	{
 		if (!super.Use(pickup)) return false;
-		let weap = BIO_Weapon(Owner.Player.ReadyWeapon);
 		EventHandler.SendNetworkEvent(BIO_EventHandler.EVENT_WUPOVERLAY);
 		return false;
 	}
