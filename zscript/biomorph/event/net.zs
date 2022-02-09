@@ -140,7 +140,7 @@ extend class BIO_EventHandler
 			bioPlayer.A_Print("$BIO_WUP_FAIL_INSUFFICIENT", 4.0);
 			return;
 		}
-		
+
 		Globals.OnWeaponAcquired(GetDefaultByType(outputChoice).Grade);
 		bioPlayer.A_SelectWeapon('BIO_Fist');
 		let oldWeap = BIO_Weapon(bioPlayer.Player.ReadyWeapon);
