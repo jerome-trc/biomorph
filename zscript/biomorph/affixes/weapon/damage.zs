@@ -471,8 +471,8 @@ class BIO_WAfx_DamageInverseHealth : BIO_WeaponAffix
 
 	final override void BeforeEachFire(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
-		fireData.Damage *= (1.0 + Log(
-			float(weap.Owner.GetMaxHealth() /
+		fireData.Damage *= (1.0 + Max(0.0, Log(
+			float(weap.Owner.GetMaxHealth()) /
 			float(weap.Owner.Health))));
 	}
 
