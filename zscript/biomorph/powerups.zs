@@ -159,6 +159,7 @@ class BIO_RadSuit : RadSuit replaces RadSuit
 {
 	Default
 	{
+		Inventory.PickupMessage "$BIO_RADSUIT_PKUP";
 		Powerup.Type 'BIO_PowerIronFeet';
 	}
 

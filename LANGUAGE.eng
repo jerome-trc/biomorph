@@ -470,6 +470,7 @@
 	BIO_LIGHTAMP_PKUP = "Obtained a light amplification visor.";
 	BIO_MEGASPHERE_PKUP = "Absorbed a Megasphere!";
 	BIO_MEGASPHERE_ARMORREPAIR = "Your %s\c- is repaired to perfect condition.";
+	BIO_RADSUIT_PKUP = "Obtained and donned an N.B.C. suit.";
 
 // Perks =======================================================================
 
