@@ -186,7 +186,10 @@ extend class BIO_EventHandler
 	{
 		for (uint i = 0; i < SUPPLY_BOX_SPAWNSPOTS.Size(); i++)
 		{
-			if (!(event.Thing is SUPPLY_BOX_SPAWNSPOTS[i])) continue;
+			if (!(event.Thing is SUPPLY_BOX_SPAWNSPOTS[i]) ||
+				event.Thing is 'BIO_PowerupGiver')
+				continue;
+
 			Actor.Spawn('BIO_SupplyBoxSpawner', event.Thing.Pos);
 		}
 
