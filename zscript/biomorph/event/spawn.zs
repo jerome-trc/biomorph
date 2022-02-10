@@ -182,17 +182,21 @@ extend class BIO_EventHandler
 		'Soulsphere'
 	};
 
-	private bool TrySpawnSupplyBox(WorldEvent event) const
+	private Class<PowerupGiver> DRLMP_PowerupGiver_T;
+
+	private void TrySpawnSupplyBox(WorldEvent event) const
 	{
+		if (event.Thing is 'BIO_PowerupGiver' ||
+			event.Thing is DRLMP_PowerupGiver_T)
+			return;
+
 		for (uint i = 0; i < SUPPLY_BOX_SPAWNSPOTS.Size(); i++)
 		{
-			if (!(event.Thing is SUPPLY_BOX_SPAWNSPOTS[i]) ||
-				event.Thing is 'BIO_PowerupGiver')
+			if (!(event.Thing is SUPPLY_BOX_SPAWNSPOTS[i]))
 				continue;
 
 			Actor.Spawn('BIO_SupplyBoxSpawner', event.Thing.Pos);
+			return;
 		}
-
-		return false;
 	}
 }

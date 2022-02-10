@@ -25,8 +25,13 @@ class BIO_EventHandler : EventHandler
 		name ldtoken_tn = 'LDLegendaryMonsterToken';
 		LDToken = ldtoken_tn;
 
+		// Must be checked when replacing pistols if ThriftyAmmo is loaded
 		name thriftyclip_tn = 'BIO_ThriftyClip';
 		ThriftyClip_T = thriftyclip_tn;
+
+		// Must be excluded when choosing to spawn a Supply Box
+		name drlmp_powerupgiver_tn = 'RLMPPowerupGiver';
+		DRLMP_PowerupGiver_T = drlmp_powerupgiver_tn;
 	}
 
 	final override void OnUnregister()
