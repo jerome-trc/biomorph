@@ -47,7 +47,7 @@ class BIO_WAfx_UserRadialStunOnKill : BIO_WeaponAffix
 
 	final override void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const
 	{
-		let bli = BlockThingsIterator.Create(weap.Owner, 512.0);
+		let bli = BlockThingsIterator.Create(weap.Owner, 256.0);
 
 		while (bli.Next())
 		{
@@ -78,7 +78,7 @@ class BIO_WAfx_VictimRadialStunOnKill : BIO_WeaponAffix
 
 	final override void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) const
 	{
-		let bli = BlockThingsIterator.Create(killed, 512.0);
+		let bli = BlockThingsIterator.Create(killed, 256.0);
 
 		while (bli.Next())
 		{
