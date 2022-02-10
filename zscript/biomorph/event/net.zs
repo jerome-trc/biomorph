@@ -148,7 +148,7 @@ extend class BIO_EventHandler
 		bioPlayer.TakeInventory(oldWeap.GetClass(), 1);
 		bioPlayer.GiveInventory(outputChoice, 1);
 
-		if (mut)
+		if (mut && GetDefaultByType(outputChoice).Rarity != BIO_RARITY_UNIQUE)
 		{
 			let newWeap = BIO_Weapon(bioPlayer.FindInventory(outputChoice));
 			newWeap.RandomizeAffixes();
