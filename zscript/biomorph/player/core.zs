@@ -57,14 +57,26 @@ class BIO_Player : DoomPlayer
 
 	// Parent overrides ========================================================
 
+	final override void ClearInventory()
+	{
+		super.ClearInventory();
+		EquippedArmor = null;
+	}
+
 	override void GiveDefaultInventory()
 	{
 		super.GiveDefaultInventory();
+
+		WeaponVisual = BIO_PVIS_PISTOL;
 		
 		// If the default inventory has been given, it's either a new game
 		// or the inventory was cleared by a death exit
 		let globals = BIO_GlobalData.Get();
-		if (globals != null) globals.ResetWeaponGradePrecedent();
+		if (globals != null)
+		{
+			globals.ResetWeaponGradePrecedent();
+			ApplyPerks();
+		}
 
 		if (BIO_Utils.Eviternity())
 		{
