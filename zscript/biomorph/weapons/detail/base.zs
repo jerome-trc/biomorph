@@ -1220,10 +1220,12 @@ class BIO_Weapon : DoomWeapon abstract
 		Pipelines.Clear();
 		FireTimeGroups.Clear();
 		ReloadTimeGroups.Clear();
+		ImplicitAffixes.Clear();
 
 		InitPipelines(Pipelines);
 		InitFireTimes(FireTimeGroups);
 		InitReloadTimes(ReloadTimeGroups);
+		InitImplicitAffixes(ImplicitAffixes);
 
 		bNoAutoFire = Default.bNoAutoFire;
 		bNoAlert = Default.bNoAlert;
@@ -1429,7 +1431,23 @@ class BIO_Weapon : DoomWeapon abstract
 	// re-acquires magazine if possible, recolors tag, and rewrites readouts.
 	void OnChange()
 	{
+		Array<BIO_WeaponAffix> implicits;
+		implicits.Move(ImplicitAffixes);
 		Reset();
+	
+		for (uint i = implicits.Size() - 1; i >= 0; i--)
+		{
+			for (uint j = 0; j < ImplicitAffixes.Size(); j++)
+			{
+				if (implicits[i].GetClass() ==  ImplicitAffixes[j].GetClass())
+				{
+					implicits.Delete(i);
+					break;
+				}
+			}
+		}
+
+		ImplicitAffixes.Append(implicits);
 
 		ReorderAffixes(ImplicitAffixes);
 		ReorderAffixes(Affixes);
@@ -1440,34 +1458,34 @@ class BIO_Weapon : DoomWeapon abstract
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].Apply(self);
 
-/*
-		// If a corruption effect or something similar has modified implicits
-		// in a way that causes an explicit to become incompatible, cull it
+		/*
+			// If a corruption effect or something similar has modified implicits
+			// in a way that causes an explicit to become incompatible, cull it
 
-		Array<bool> incompatibleExplicits;
+			Array<bool> incompatibleExplicits;
 
-		for (uint i = 0; i < Affixes.Size(); i++)
-		{
-			incompatibleExplicits.Push(!Affixes[i].Compatible(AsConst()));
-
-			if (!incompatibleExplicits[i])
-				Affixes[i].Apply(self);
-		}
-
-		for (uint i = Affixes.Size() - 1; i >= 0; i--)
-		{
-			if (!incompatibleExplicits[i]) continue;
-			
-			if (BIO_debug)
+			for (uint i = 0; i < Affixes.Size(); i++)
 			{
-				Console.Printf(Biomorph.LOGPFX_DEBUG ..
-					"Culling incompatible affix: %s (%d)",
-					Affixes[i].GetClassName(), i);	
+				incompatibleExplicits.Push(!Affixes[i].Compatible(AsConst()));
+
+				if (!incompatibleExplicits[i])
+					Affixes[i].Apply(self);
 			}
 
-			Affixes.Delete(i);
-		}
- */
+			for (uint i = Affixes.Size() - 1; i >= 0; i--)
+			{
+				if (!incompatibleExplicits[i]) continue;
+				
+				if (BIO_debug)
+				{
+					Console.Printf(Biomorph.LOGPFX_DEBUG ..
+						"Culling incompatible affix: %s (%d)",
+						Affixes[i].GetClassName(), i);	
+				}
+
+				Affixes.Delete(i);
+			}
+		*/
 
 		if (Default.Rarity == BIO_RARITY_UNIQUE)
 			Rarity = BIO_RARITY_UNIQUE;

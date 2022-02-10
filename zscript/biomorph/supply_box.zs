@@ -32,7 +32,13 @@ class BIO_SupplyBox : Actor
         if (success) 
         {
             let weap = BIO_Weapon(spawned);
-            weap.RandomizeAffixes();
+
+            if (weap.Rarity != BIO_RARITY_UNIQUE)
+            {
+                weap.Init();
+                weap.RandomizeAffixes();
+            }
+
             weap.OnChange();
             weap.SetState(weap.FindState("Spawn"));
         }

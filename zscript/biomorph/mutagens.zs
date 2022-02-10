@@ -224,6 +224,8 @@ class BIO_Muta_Reroll : BIO_Mutagen
 			return false;
 		}
 
+		weap.Reset();
+
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
 		{
 			weap.Affixes[i] = BIO_WeaponAffix(new(weap.Affixes[i].GetClass()));
