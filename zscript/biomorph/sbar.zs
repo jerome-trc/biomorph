@@ -1,8 +1,9 @@
 class BIO_StatusBar : BaseStatusBar
 {
+	private CVar InvBarSlots, NotifyLineCount;
+
 	private BIO_PlayerPerkGraph PerkGraph;
 	private BIO_Player BIOPlayer;
-	private CVar NotifyLineCount;
 
 	private HUDFont Font_HUD, Font_Index, Font_Amount, Font_Small;
 	private InventoryBarState InvBarState;
@@ -33,13 +34,14 @@ class BIO_StatusBar : BaseStatusBar
 			StringTable.Localize("$BIO_EQUIPPED"));
 		String_PerkPoint = StringTable.Localize("$BIO_PERK_POINT_AVAILABLE");
 		String_PerkPoints = StringTable.Localize("$BIO_PERK_POINTS_AVAILABLE");
-
-		NotifyLineCount = CVar.GetCvar("con_notifylines");
 	}
 
 	final override void AttachToPlayer(PlayerInfo player)
 	{
 		super.AttachToPlayer(player);
+
+		NotifyLineCount = CVar.GetCVar("con_notifylines", CPlayer);
+		InvBarSlots = CVar.GetCVar("BIO_invbarslots", CPlayer);
 
 		let globals = BIO_GlobalData.Get();
 
@@ -100,7 +102,8 @@ class BIO_StatusBar : BaseStatusBar
 		
 		if (isInventoryBarVisible())
 		{
-			DrawInventoryBar(InvBarState, (0, 0), 7, DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
+			DrawInventoryBar(InvBarState, (0, 0), InvBarSlots.GetInt(),
+				DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
 
 			if (CPlayer.MO.InvSel == BIOPlayer.EquippedArmor)
 			{
