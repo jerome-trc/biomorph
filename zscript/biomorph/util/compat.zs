@@ -77,7 +77,7 @@ extend class BIO_Utils
 		return a.CheckInventory(t, amt, owner);
 	}
 
-	static play void DRLMDangerLevel(readOnly<Actor> dummy, uint danger)
+	static play void DRLMDangerLevel(uint danger)
 	{
 		name mpt_tn = 'RLMonsterpackThingo';
 		Class<Actor> mpt_t = mpt_tn;
@@ -89,7 +89,8 @@ extend class BIO_Utils
 					"Increasing DRLA danger level by %d.", danger);
 
 			name rldl_tn = 'RLDangerLevel';
-			dummy.A_GiveInventory(rldl_tn, danger, AAPTR_PLAYER1);
+			if (Players[0].MO != null)
+				Players[0].MO.GiveInventory(rldl_tn, danger);
 		}
 	}
 
