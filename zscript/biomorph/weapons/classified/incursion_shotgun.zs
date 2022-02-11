@@ -83,7 +83,7 @@ class BIO_IncursionShotgun : BIO_Weapon
 			A_GunFlash();
 			// TODO: Mix a fatter sound for this
 			A_FireSound(CHAN_WEAPON);
-			A_FireSound(CHAN_7);
+			A_FireSound(CHAN_7, volume: 0.75);
 			A_Pushback(2.5, 2.5);
 			A_PresetRecoil('BIO_Recoil_VolleyGun');
 		}
