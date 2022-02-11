@@ -59,6 +59,7 @@ class BIO_AssaultRifle : BIO_Weapon
 		{
 			A_SetFireTime(0);
 			A_BIO_Fire();
+			A_GunFlash();
 			A_PresetRecoil('BIO_Recoil_Autogun');
 			A_FireSound();
 		}
