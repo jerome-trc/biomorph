@@ -99,11 +99,43 @@ $RANDOM bio/weap/ssg/fire
 }
 
 bio/weap/assaulthandgun/fire ASHGFIRE
-bio/weap/autoshotgun/fire AUSGFIRE
-bio/weap/nailgun/fire NLGNFIRE
+
+bio/weap/autoshotgun/fire_0 AUSGFIR0
+bio/weap/autoshotgun/fire_1 AUSGFIR1
+bio/weap/autoshotgun/fire_2 AUSGFIR2
+
+$RANDOM bio/weap/autoshotgun/fire
+{
+	bio/weap/autoshotgun/fire_0
+	bio/weap/autoshotgun/fire_1
+	bio/weap/autoshotgun/fire_2
+}
+
+bio/weap/nailgun/fire_0 NLGNFIR0
+bio/weap/nailgun/fire_1 NLGNFIR1
+bio/weap/nailgun/fire_2 NLGNFIR2
+
+$RANDOM bio/weap/nailgun/fire
+{
+	bio/weap/nailgun/fire_0
+	bio/weap/nailgun/fire_1
+	bio/weap/nailgun/fire_2
+}
+
 bio/weap/plascannon/idle PLSCIDLE
 bio/weap/plascannon/raise PLSCRAIS
-bio/weap/precrifle/fire PRECFIRE
+
+bio/weap/precrifle/fire_0 PRECFIR0
+bio/weap/precrifle/fire_1 PRECFIR1
+bio/weap/precrifle/fire_2 PRECFIR2
+
+$RANDOM bio/weap/precrifle/fire
+{
+	bio/weap/precrifle/fire_0
+	bio/weap/precrifle/fire_1
+	bio/weap/precrifle/fire_2
+}
+
 bio/weap/proxlauncher/fire PROXFIRE
 bio/weap/volley/fire VOLLFIRE
 
@@ -144,7 +176,17 @@ $RANDOM bio/weap/minivulc/fire
 }
 
 bio/weap/handcannon/fire HANDCANN
-bio/weap/hbr/fire HVBRFIRE
+
+bio/weap/hbr/fire_0 HVBRFIR0
+bio/weap/hbr/fire_1 HVBRFIR1
+bio/weap/hbr/fire_2 HVBRFIR2
+
+$RANDOM bio/weap/hbr/fire
+{
+	bio/weap/hbr/fire_0
+	bio/weap/hbr/fire_1
+	bio/weap/hbr/fire_2
+}
 
 bio/weap/impgaunt/raise IMGARAIS
 bio/weap/impgaunt/prep IMGAPREP
