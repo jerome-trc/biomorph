@@ -76,9 +76,11 @@ extend class BIO_GlobalData
 			break;
 		case BIO_GRADE_SPECIALTY:
 			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_SPECIALTY);
+			BIO_Utils.DRLMDangerLevel(2);
 			break;
 		case BIO_GRADE_CLASSIFIED:
 			MaxWeaponGrade = Max(MaxWeaponGrade, BIO_PMWG_CLASSIFIED);
+			BIO_Utils.DRLMDangerLevel(2);
 			break;
 		default:
 			return;

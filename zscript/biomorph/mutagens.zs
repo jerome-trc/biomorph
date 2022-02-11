@@ -135,7 +135,6 @@ class BIO_Muta_Add : BIO_Mutagen
 
 		weap.OnChange();
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
-		BIO_Utils.DRLMDangerLevel(AsConst(), 5);
 		return true;
 	}
 }
@@ -173,7 +172,6 @@ class BIO_Muta_Random : BIO_Mutagen
 		weap.RandomizeAffixes();
 		weap.OnChange();
 		Owner.A_Print("$BIO_MUTA_RANDOM_USE");
-		BIO_Utils.DRLMDangerLevel(AsConst(), 5);
 		return true;
 	}
 }
@@ -235,7 +233,6 @@ class BIO_Muta_Reroll : BIO_Mutagen
 		weap.OnChange();
 
 		Owner.A_Print("$BIO_MUTA_REROLL_USE");
-		BIO_Utils.DRLMDangerLevel(AsConst(), 1);
 		return true;
 	}
 }
@@ -516,7 +513,6 @@ class BIO_RecombinantGenes : Inventory
 		uint e = weap.Affixes.Push(Affix);
 		weap.Affixes[e].Init(weap.AsConst());
 		weap.OnChange();
-		BIO_Utils.DRLMDangerLevel(AsConst(), 10);
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
 		return true;
 	}
@@ -568,7 +564,7 @@ class BIO_Muta_Corrupting : BIO_Mutagen
 		funcs[Random[BIO_Afx](0, funcs.Size() - 1)].Invoke(weap);
 		weap.BIOFlags |= BIO_WF_CORRUPTED;
 		weap.OnChange();
-		BIO_Utils.DRLMDangerLevel(AsConst(), 25);
+		BIO_Utils.DRLMDangerLevel(1);
 		return true;
 	}
 }

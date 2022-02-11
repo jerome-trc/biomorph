@@ -41,22 +41,7 @@ mixin class BIO_Gear
 
 	void DRLMDangerLevel() const
 	{
-		uint danger = 0;
-
-		switch (Rarity)
-		{
-		case BIO_RARITY_MUTATED: danger += 25; break;
-		case BIO_RARITY_UNIQUE: danger += 50; break;
-		default: break;
-		}
-
-		switch (Grade)
-		{
-		case BIO_GRADE_SPECIALTY: danger += 10; break;
-		case BIO_GRADE_CLASSIFIED: danger += 20; break;
-		default: break;
-		}
-
-		BIO_Utils.DRLMDangerLevel(self, danger);
+		if (Rarity == BIO_RARITY_UNIQUE)
+			BIO_Utils.DRLMDangerLevel(1);
 	}
 }
