@@ -24,7 +24,9 @@ class BIO_AutoShotgun : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.BasicBulletPipeline('BIO_ShotPellet', 8, 6, 16, 3.8, 1.9)
+			.Bullet('BIO_ShotPellet', 7)
+			.BasicDamage(8, 16)
+			.Spread(4.0, 2.0)
 			.FireSound("bio/weap/autoshotgun/fire")
 			.AssociateFirstFireTime()
 			.Build());

@@ -198,7 +198,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 	color Color1, Color2;
 	ERailFlags Flags;
 	int ParticleDuration, SpiralOffset, PierceLimit;
-	double MaxDiff, ParticleSparsity, ParticleDriftSpeed;
+	double MaxDiff, Range, ParticleSparsity, ParticleDriftSpeed;
 
 	override Actor Invoke(BIO_Weapon weap, in out BIO_FireData fireData) const
 	{
@@ -226,6 +226,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 			puff_t: puff_t,
 			spread_xy: fireData.HSpread,
 			spread_z: fireData.VSpread,
+			range: Range,
 			duration: ParticleDuration,
 			sparsity: ParticleSparsity,
 			driftSpeed: ParticleDriftSpeed,
@@ -237,13 +238,15 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 	}
 
 	BIO_FireFunc_Rail Setup(color color1 = 0, color color2 = 0,
-		ERailFlags flags = RGF_NONE, double maxDiff = 0.0, int duration = 0,
-		double sparsity = 1.0, double driftSpeed = 1.0, int spiralOffs = 270)
+		ERailFlags flags = RGF_NONE, double maxDiff = 0.0, double range = 0.0,
+		int duration = 0, double sparsity = 1.0, double driftSpeed = 1.0,
+		int spiralOffs = 270)
 	{
 		self.Color1 = color1;
 		self.Color2 = color2;
 		self.Flags = flags;
 		self.MaxDiff = maxDiff;
+		self.Range = range;
 		self.ParticleDuration = duration;
 		self.ParticleSparsity = sparsity;
 		self.ParticleDriftSpeed = driftSpeed;

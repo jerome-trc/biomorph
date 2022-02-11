@@ -32,8 +32,8 @@ class BIO_ArcCaster : BIO_Weapon
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.Rail('BIO_ElectricPuff',
-				color2: "LightSteelBlue", flags: RGF_FULLBRIGHT,
-				maxDiff: 30.0, duration: 1, sparsity: 0.1, driftSpeed: 0.0)
+				color2: "LightSteelBlue", flags: RGF_FULLBRIGHT, maxDiff: 30.0,
+				range: 1024.0, duration: 1, sparsity: 0.1, driftSpeed: 0.0)
 			.BasicDamage(1, 80)
 			.Spread(3.0, 3.0)
 			.FireSound("bio/weap/arccaster/fire")

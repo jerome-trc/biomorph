@@ -26,7 +26,9 @@ class BIO_BarrageLauncher : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.BasicProjectilePipeline('BIO_Rocket', 1, 30, 180, 0.4, 0.4)
+			.Projectile('BIO_Rocket')
+			.XTimesRandomDamage(40, 1, 3)
+			.Spread(0.4, 0.4)
 			.Splash(128, 128)
 			.Associate2FireTimes(0, 1)
 			.Build());

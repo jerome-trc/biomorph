@@ -23,8 +23,8 @@ class BIO_VolleyGun : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.Bullet('BIO_Shotpellet', 7)
-			.X1D3Damage(6)
+			.Bullet('BIO_Shotpellet', 9) // Per barrel
+			.X1D3Damage(7)
 			.AppendToFireFunctorString(" \c[Yellow]" ..
 				StringTable.Localize("$BIO_PER_BARREL"))
 			.Spread(12.0, 7.5)

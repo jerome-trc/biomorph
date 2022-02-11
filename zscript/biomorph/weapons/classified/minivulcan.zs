@@ -23,7 +23,9 @@ class BIO_Minivulcan : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.BasicBulletPipeline('BIO_Bullet', 1, 30, 36, 3.5, 1.5)
+			.Bullet()
+			.BasicDamage(30, 36)
+			.Spread(3.5, 1.5)
 			.FireSound("bio/weap/minivulc/fire")
 			.AssociateFireTime(1)
 			.Build());
