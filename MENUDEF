@@ -12,6 +12,7 @@ OptionMenu "BIO_Options"
 	Option "$BIO_OPTLBL_AUTORELOAD_PRE", "BIO_autoreload_pre", "BIO_AutoReload"
 	Option "$BIO_OPTLBL_AUTORELOAD_POST", "BIO_autoreload_post", "BIO_AutoReload"
 	Option "$BIO_OPTLBL_BERSERKSWITCH", "BIO_berserkswitch", "BIO_BerserkSwitch"
+	Slider "$BIO_OPTLBL_INVBARSLOTS", "BIO_invbarslots", 1, 32, 1, 0
 	Option "$BIO_OPTLBL_MULTIBARRELFIRE", "BIO_multibarrelfire", "BIO_MultiBarrelFire"
 	Option "$BIO_OPTLBL_MULTIRELOADMODE", "BIO_multireload", "BIO_MultiReloadMode"
 	Option "$BIO_OPTLBL_QUAKE", "BIO_quake", "OnOff"

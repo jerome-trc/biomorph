@@ -8,6 +8,7 @@ server bool BIO_quake = true;
 user int BIO_autoreload_pre = 0;
 user int BIO_autoreload_post = 0;
 user int BIO_berserkswitch = 1;
+user int BIO_invbarslots = 7;
 user int BIO_multibarrelfire = 0;
 user int BIO_multireload = 0;
 user bool BIO_postreloadzoom = false;
