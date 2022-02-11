@@ -201,8 +201,7 @@ class BIO_WAfx_SplashToDamage : BIO_WeaponAffix
 	final override void ToString(in out Array<string> strings,
 		readOnly<BIO_Weapon> weap) const
 	{
-		strings.Push(CRESC_MIXED .. StringTable.Localize(
-			"$BIO_WAFX_SPLASHTODAMAGE_TOSTR"));
+		strings.Push(StringTable.Localize("$BIO_WAFX_SPLASHTODAMAGE_TOSTR"));
 	}
 
 	final override string GetTag() const

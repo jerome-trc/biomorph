@@ -253,7 +253,7 @@
 	BIO_WUP_UICOST = "Requires \cj%d\c- sample of \c[Green]E.V.O. mutagen\c-.";
 	BIO_WUP_UICOST_PLURAL = "Requires \cj%d\c- samples of \c[Green]E.V.O. mutagen\c-.";
 
-	BIO_MUTA_RECYCLE_TAG = "\c[Gold]R.E.C.Y.C.L.E. Mutagen";
+	BIO_MUTA_RECYCLE_TAG = "\c[Gold]R.E.C.Y.C.L.E.\c[White] Mutagen";
 	BIO_MUTA_RECYCLE_PKUP = "Acquired a sample of \c[Gold]R.E.C.Y.C.L.E. Mutagen\c-.";
 	BIO_MUTA_RECYCLE_USE = "\c[Gold]Your weapon melts away, leaving a rich genetic sludge.";
 
@@ -274,9 +274,9 @@
 
 // Equipment (tags, UI messaging) ==============================================
 
-	BIO_ARMOR_TAG_STD = "Standard Armour";
-	BIO_ARMOR_TAG_SPEC = "Specialty Armour";
-	BIO_ARMOR_TAG_CLSF = "Classified Armour";
+	BIO_ARMOR_TAG_STD = "Standard \c[White]Armour";
+	BIO_ARMOR_TAG_SPEC = "\c[Spec]Specialty \c[White]Armour";
+	BIO_ARMOR_TAG_CLSF = "\c[Clsf]Classified \c[White]Armour";
 	BIO_ARMORBONUS_TAG = "Armour Shard";
 
 	BIO_PKUP_TEMPLATE_ARMORDEFAULT = "%s a set of %s.";
@@ -292,7 +292,7 @@
 
 	BIO_EQUIPTOSTR_SAVEAMOUNT = "\c[MidGrey]Durability remaining: %s%d";
 
-// Affixes (tags, details, to-string templates) ================================
+// Weapon affixes (tags, details, to-string templates) =========================
 
 	BIO_AFFIXESUNKNOWN = "Affixes unknown";
 
@@ -313,19 +313,19 @@
 
 	BIO_WAFX_DMGMULTI_TAG = "Assault Variant";
 	BIO_WAFX_DMGMULTI_TOSTR = "Damage%s: %s%s%.1f%%";
-	
+
 	BIO_WAFX_ENEMYHEALTHDAMAGE_TAG = "Viral Payload";
 	BIO_WAFX_ENEMYHEALTHDAMAGE_TOSTR = "%s%.1f%% of enemy's health %s damage";
-	
+
 	BIO_WAFX_CRIT_TAG = "Express Rounds";
 	BIO_WAFX_CRIT_TOSTR = "%d%% chance of %s%s%.0f%% damage";
-	
-	BIO_WAFX_SPLASHTODAMAGE_TAG = "Sabot";
+
+	BIO_WAFX_SPLASHTODAMAGE_TAG = "Shaped Charge";
 	BIO_WAFX_SPLASHTODAMAGE_TOSTR = "All splash damage converted into direct hit damage";
-	
+
 	BIO_WAFX_FORWARDDAMAGE_TAG = "Vanguard";
 	BIO_WAFX_FORWARDDAMAGE_TOSTR = "%s%.1f%% %s damage when moving forward";
-	
+
 	BIO_WAFX_STRAFEDAMAGE_TAG = "Flanking";
 	BIO_WAFX_STRAFEDAMAGE_TOSTR = "%s%.1f%% %s damage when strafing";
 
@@ -348,10 +348,10 @@
 
 	BIO_WAFX_PLASMA_TAG = "Plasmatic";
 	BIO_WAFX_PLASMA_TOSTR = "Fires balls of plasma with a wide damage range";
-	
+
 	BIO_WAFX_SLUG_TAG = "Slug Retrofit";
 	BIO_WAFX_SLUG_TOSTR = "Fires highly-accurate solid slugs";
-	
+
 	BIO_WAFX_MINIMISSILE_TAG = "Gyrojet";
 	BIO_WAFX_MINIMISSILE_TOSTR = "Fires fast mini-missiles";
 
@@ -361,8 +361,8 @@
 	BIO_WAFX_FORCEPAIN_TAG = "Neurotoxic Payload";
 	BIO_WAFX_FORCEPAIN_TOSTR = "\c[Green]Always causes monsters to flinch";
 
-	BIO_WAFX_FORCERADIUSDMG_TAG = "Shaped Charge";
-	BIO_WAFX_FORCERADIUSDMG_TOSTR = "\c[Green]Ignores splash damage immunity";
+	BIO_WAFX_FORCERADIUSDMG_TAG = "Squash Head";
+	BIO_WAFX_FORCERADIUSDMG_TOSTR = "\c[Green]Ignores monster splash damage immunity";
 
 	BIO_WAFX_PROJGRAVITY_TAG = "Dense Payload";
 	BIO_WAFX_PROJGRAVITY_TOSTR =
@@ -390,7 +390,7 @@
 
 	BIO_WAFX_KICKBACK_TAG = "Stopping";
 	BIO_WAFX_KICKBACK_TOSTR = "%s%.1f%% %s\cj knockback";
-	
+
 	BIO_WAFX_MAGSIZE_TAG = "High-Capacity";
 	BIO_WAFX_MAGSIZE_TOSTR_1 = "%s%s%d \c[White]primary magazine capacity";
 	BIO_WAFX_MAGSIZE_TOSTR_2 = "%s%s%d \c[White]secondary magazine capacity";
@@ -426,13 +426,15 @@
 		"\c[Green]%d%% chance of infinite ammo for %d seconds on kill";
 
 	BIO_WAFX_USERRADIALSTUNONKILL_TAG = "Telepathic Burst";
-	BIO_WAFX_USERRADIALSTUNONKILL_TOSTR = "\c[Green]Stun nearby enemies on kill";
+	BIO_WAFX_USERRADIALSTUNONKILL_TOSTR = "\c[Green]Killing an enemy stuns enemies near you";
 
 	BIO_WAFX_VICTIMRADIALSTUNONKILL_TAG = "Telepathic Sting";
 	BIO_WAFX_VICTIMRADIALSTUNONKILL_TOSTR = "\c[Green]Killing an enemy stuns its neigbours";
 
 	BIO_WAFX_SHRAPNELONKILL_TAG = "Bone Fragmentation";
 	BIO_WAFX_SHRAPNELONKILL_TOSTR = "\c[Green]Killed enemies release bone shrapnel";
+
+// Equipment affixes (tags, details, to-string templates) ======================
 
 	BIO_EAFX_SAVEAMOUNT_TAG = "Reinforced";
 	BIO_EAFX_SAVEAMOUNT_TOSTR = "\c[White]Durability: %s%s%d";
