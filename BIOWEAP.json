@@ -40,7 +40,8 @@
 			"BIO_ArcCaster"
 		],
 		"super": [
-			"BIO_BFG9000"
+			"BIO_BFG9000",
+			"BIO_BlackHoleDynamo"
 		]
 	},
 	"upgrades_auto": {
@@ -81,7 +82,8 @@
 			"BIO_ArcCaster"
 		],
 		"super": [
-			"BIO_BFG9000"
+			"BIO_BFG9000",
+			"BIO_BlackHoleDynamo"
 		]
 	},
 	"upgrades": [

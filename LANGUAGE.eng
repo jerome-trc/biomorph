@@ -125,6 +125,13 @@
 	BIO_ARCCASTER_TAG = "Arc Caster";
 	BIO_ARCCASTER_PKUP = "Procured an %s.";
 
+	BIO_BARRAGELAUNCHER_TAG = "Barrage Launcher";
+	BIO_BARRAGELAUNCHER_PKUP = "Procured a %s.";
+
+	BIO_BLACKHOLEDYNAMO_TAG = "Black Hole Dynamo";
+	BIO_BLACKHOLEDYNAMO_PKUP = "Procured a %s.";
+	BIO_BLACKHOLEDYNAMO_STATS = "\c[MidGrey]Event horizon damage/second: %s%d";
+
 	BIO_MINIVULCAN_TAG = "Minivulcan";
 	BIO_MINIVULCAN_PKUP = "Procured a %s.";
 
@@ -143,9 +150,6 @@
 	BIO_INCURSIONSHOTGUN_PKUP = "Procured an %s.";
 	BIO_INCURSIONSHOTGUN_ALT = "\cnAlt-fire\cj shoots 2 barrels";
 
-	BIO_BARRAGELAUNCHER_TAG = "Barrage Launcher";
-	BIO_BARRAGELAUNCHER_PKUP = "Procured a %s.";
-	
 	BIO_MEGATON_TAG = "Megaton";
 	BIO_MEGATON_PKUP = "Procured %s, a unique %s.";
 	BIO_MEGATON_DETAIL = "\c[Orange]Can load shells or bullets";
@@ -198,6 +202,9 @@
 
 	BIO_PLASMAGLOBULE_TAG = "plasma globule";
 	BIO_PLASMAGLOBULE_TAG_PLURAL = "plasma globules";
+
+	BIO_BLACKHOLE_TAG = "black hole";
+	BIO_BLACKHOLE_PKUP = "black holes";
 
 	BIO_HDF_ENEMYHEALTHDMG = "\c[White]%.1f%%\c[MidGrey] of enemy health added to damage";
 
