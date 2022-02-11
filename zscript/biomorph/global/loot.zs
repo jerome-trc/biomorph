@@ -203,8 +203,8 @@ extend class BIO_GlobalData
 
 			switch (defs.Grade)
 			{
-			case BIO_GRADE_STANDARD: g = 0; u = 64; break;
-			case BIO_GRADE_SPECIALTY: g = 1; u = 32; break;
+			case BIO_GRADE_STANDARD: g = 0; u = 100; break;
+			case BIO_GRADE_SPECIALTY: g = 1; u = 50; break;
 			case BIO_GRADE_CLASSIFIED: g = 2; u = 4; break;
 			default:
 				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
