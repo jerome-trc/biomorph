@@ -355,7 +355,7 @@ class BIO_Weapon : DoomWeapon abstract
 			return false;
 		
 		// Weapon has ammo types but default ammogives are both 0
-		if (AmmoGive1 <= 0 && AmmoGive1 <= 0)
+		if (Default.AmmoGive1 <= 0 && Default.AmmoGive1 <= 0)
 			return false;
 
 		int given1 = 0, given2 = 0;
