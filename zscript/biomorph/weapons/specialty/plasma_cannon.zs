@@ -24,7 +24,9 @@ class BIO_PlasmaCannon : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.BasicProjectilePipeline('BIO_PlasmaGlobule', 1, 10, 80, 0.4, 0.4)
+			.Projectile('BIO_PlasmaGlobule')
+			.X1D8Damage(10)
+			.Spread(0.4, 0.4)
 			.AssociateFirstFireTime()
 			.Build());
 	}

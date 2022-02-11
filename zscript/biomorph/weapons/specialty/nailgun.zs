@@ -24,7 +24,9 @@ class BIO_Nailgun : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.BasicProjectilePipeline('BIO_Nail', 1, 7, 20, 3.6, 1.8)
+			.Projectile('BIO_Nail')
+			.BasicDamage(14, 16)
+			.Spread(3.6, 1.8)
 			.Shrapnel(2, 4)
 			.FireSound("bio/weap/nailgun/fire")
 			.AssociateFirstFireTime()

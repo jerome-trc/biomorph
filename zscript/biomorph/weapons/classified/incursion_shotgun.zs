@@ -23,7 +23,9 @@ class BIO_IncursionShotgun : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.BasicBulletPipeline('BIO_ShotPellet', 9, 7, 17, 4.0, 2.0)
+			.Bullet('BIO_ShotPellet', 8)
+			.BasicDamage(12, 16)
+			.Spread(4.0, 2.0)
 			.FireSound("bio/weap/incursion/fire")
 			.AssociateFirstFireTime()
 			.CustomReadout(StringTable.Localize(
@@ -100,9 +102,9 @@ class BIO_IncursionShotgun : BIO_Weapon
 	Reload:
 		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
 		INCU A 3 Offset(0, 32 + 3) A_SetReloadTime(0);
-		INCU A 3 Offset(0, 32 + 6) A_SetReloadTime(1);
+		INCU A 2 Offset(0, 32 + 6) A_SetReloadTime(1);
 		INCU A 2 Offset(0, 32 + 9) A_SetReloadTime(2);
-		INCU A 3 Offset(0, 32 + 6)
+		INCU A 2 Offset(0, 32 + 6)
 		{
 			A_SetReloadTime(3);
 			A_LoadMag();

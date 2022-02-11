@@ -26,7 +26,9 @@ class BIO_SuperShotgun : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.BasicBulletPipeline('BIO_ShotPellet', 7, 5, 15, 12.0, 7.5)
+			.Bullet('BIO_ShotPellet', 7) // Per barrel
+			.X1D3Damage(5)
+			.Spread(12.0, 7.5)
 			.FireSound("bio/weap/ssg/fire")
 			.AssociateFirstFireTime()
 			.AppendToFireFunctorString(" \c[Yellow]" ..

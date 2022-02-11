@@ -10,56 +10,6 @@ class BIO_WeaponPipelineBuilder play
 		return ret;
 	}
 
-	BIO_WeaponPipelineBuilder BasicProjectilePipeline(Class<Actor> fireType,
-		uint fireCount, int minDamage, int maxDamage, float hSpread, float vSpread)
-	{
-		if (fireType is 'BIO_Puff')
-			Console.Printf(Biomorph.LOGPFX_WARN ..
-				"Fire type class %s is a puff, but was passed to "
-				"`BasicProjectilePipeline()`. (%s)",
-				fireType.GetClassName(), WeaponType.GetClassName());
-
-		CheckFireFunctorRestricted();
-		CheckFireTypeRestricted();
-		CheckFireCountRestricted();
-		CheckDamageFunctorRestricted();
-		CheckSpreadRestricted();
-
-		Pipeline.SetFireFunctor(new('BIO_FireFunc_Projectile'));
-		Pipeline.SetFireType(fireType);
-		Pipeline.SetFireCount(fireCount);
-
-		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Rand')
-			.CustomSet(minDamage, maxDamage));
-
-		Pipeline.SetSpread(hSpread, vSpread);
-		return self;
-	}
-
-	BIO_WeaponPipelineBuilder BasicBulletPipeline(Class<Actor> fireType,
-		uint fireCount, int minDamage, int maxDamage, float hSpread, float vSpread,
-		int accuracyType = BULLET_ALWAYS_SPREAD)
-	{
-		CheckFireFunctorRestricted();
-		CheckFireTypeRestricted();
-		CheckFireCountRestricted();
-		CheckDamageFunctorRestricted();
-		CheckSpreadRestricted();
-
-		let fireFunc = new('BIO_FireFunc_Bullet');
-		fireFunc.AlwaysSpread();
-
-		Pipeline.SetFireFunctor(fireFunc);
-		Pipeline.SetFireType(fireType);
-		Pipeline.SetFireCount(fireCount);
-
-		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_Rand')
-			.CustomSet(minDamage, maxDamage));
-
-		Pipeline.SetSpread(hSpread, vSpread);
-		return self;
-	}
-
 	BIO_WeaponPipelineBuilder Punch(Class<Actor> fireType = 'BIO_MeleeHit',
 		uint hitCount = 1, float range = DEFMELEERANGE,
 		ECustomPunchFlags flags = CPF_NONE, sound hitSound = "*fist",
@@ -175,18 +125,16 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder Rail(Class<Actor> fireType, uint fireCount = 1,
 		color color1 = 0, color color2 = 0, ERailFlags flags = RGF_NONE,
-		double maxDiff = 0.0, int duration = 0, double sparsity = 1.0,
-		double driftSpeed = 1.0, int spiralOffset = 270)
+		double maxDiff = 0.0, double range = 0.0, int duration = 0,
+		double sparsity = 1.0, double driftSpeed = 1.0, int spiralOffset = 270)
 	{
 		CheckFireFunctorRestricted();
 		CheckFireTypeRestricted();
 		CheckFireCountRestricted();
 
-		let firefunc = new('BIO_FireFunc_Rail');
-		fireFunc.Setup(color1, color2, flags, maxDiff,
-			duration, sparsity, driftSpeed, spiralOffset);
-
-		Pipeline.SetFireFunctor(fireFunc);
+		Pipeline.SetFireFunctor(new('BIO_FireFunc_Rail').Setup(
+			color1, color2, flags, maxDiff, range,
+			duration, sparsity, driftSpeed, spiralOffset));
 		Pipeline.SetFireType(fireType);
 		Pipeline.SetFireCount(fireCount);
 
