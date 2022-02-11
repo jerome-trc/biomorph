@@ -555,10 +555,19 @@
 			],
 			"major": [
 				{
+					"uuid": "bio_additivebackpacks",
+					"class": "BIO_Perk_AdditiveBackpacks",
+					"x": 300, "y": 300,
+					"tag": "$BIO_PERK_ADDITIVEBACKPACKS_TAG",
+					"desc": "$BIO_PERK_ADDITIVEBACKPACKS_DESC",
+					"icon": "BPAKA0",
+					"neighbors": [ "bio_cellcapacity_minor_00" ]
+				},
+				{
 					"uuid": "bio_ammocapacity_small_00",
 					"template": "bio_ammocapacity_small",
-					"x": 300, "y": 300,
-					"neighbors": [ "bio_cellcapacity_minor_00" ]
+					"x": 600, "y": 600,
+					"neighbors": [ "bio_cellcapacity_minor_01" ]
 				},
 				{
 					"uuid": "bio_largeammobonus",
@@ -568,15 +577,6 @@
 					"desc": "$BIO_PERK_LARGEAMMOBONUS_DESC",
 					"icon": "graphics/perk/largeammobonus.png",
 					"neighbors": [ "bio_rocketammocapacity_minor_01" ]
-				},
-				{
-					"uuid": "bio_additivebackpacks",
-					"class": "BIO_Perk_AdditiveBackpacks",
-					"x": 600, "y": 600,
-					"tag": "$BIO_PERK_ADDITIVEBACKPACKS_TAG",
-					"desc": "$BIO_PERK_ADDITIVEBACKPACKS_DESC",
-					"icon": "BPAKA0",
-					"neighbors": [ "bio_cellcapacity_minor_01" ]
 				}
 			]
 		},
