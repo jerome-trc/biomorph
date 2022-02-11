@@ -20,6 +20,7 @@
 			"BIO_IncursionShotgun"
 		],
 		"rifle": [
+			"BIO_AssaultRifle",
 			"BIO_PrecisionRifle",
 			"BIO_HeavyBattleRifle"
 		],
@@ -60,6 +61,7 @@
 			"BIO_IncursionShotgun"
 		],
 		"rifle": [
+			"BIO_AssaultRifle",
 			"BIO_PrecisionRifle",
 			"BIO_HeavyBattleRifle"
 		],

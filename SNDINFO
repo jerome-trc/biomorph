@@ -41,6 +41,17 @@ $RANDOM bio/weap/whoosh
 	bio/weap/whoosh_5
 }
 
+bio/weap/assaultrifle/fire_0 ASRFFIR0
+bio/weap/assaultrifle/fire_1 ASRFFIR1
+bio/weap/assaultrifle/fire_2 ASRFFIR2
+
+$RANDOM bio/weap/assaultrifle/fire
+{
+	bio/weap/assaultrifle/fire_0
+	bio/weap/assaultrifle/fire_1
+	bio/weap/assaultrifle/fire_2
+}
+
 bio/weap/pistol/fire_0 PISTFIR0
 bio/weap/pistol/fire_1 PISTFIR1
 bio/weap/pistol/fire_2 PISTFIR2

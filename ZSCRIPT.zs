@@ -99,6 +99,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/detail/pipeline.zs"
 #include "zscript/biomorph/weapons/detail/recoil.zs"
 
+#include "zscript/biomorph/weapons/standard/assault_rifle.zs"
 #include "zscript/biomorph/weapons/standard/bfg9000.zs"
 #include "zscript/biomorph/weapons/standard/chaingun.zs"
 #include "zscript/biomorph/weapons/standard/chainsaw.zs"

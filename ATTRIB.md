@@ -27,6 +27,8 @@ Sprites for players and Doppel are courtesy of Skulltag, id Software LLC, DBJ87,
 
 Fist sprites are courtesy of id Software LLC and Banjo Software, and were edited by Realm667 user That_One_Doom_Mod.
 
+Assault Rifle sprites are courtesy of Terminator Rampage.
+
 Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as well as id Software LLC.
 
 Auto Shotgun sprites are courtesy of id Software LLC, Infinity Ward, Inc., and were edited by Realm667 user Captain Toenail. 
@@ -110,6 +112,9 @@ The following audio files are provided by ZDoom forum user Joblez_I, under no li
 - "ak47-2.wav" (CHGNFIR1)
 - "ak47-3.wav" (CHGNFIR2)
 - "m14-1.wav" (NLGNFIRE)
+- "m16-1.wav" (ASRFFIR0)
+- "m16-2.wav" (ASRFFIR1)
+- "m16-3.wav" (ASRFFIR2)
 - "m60-1.wav" (HVBRFIRE)
 - "madsenm47-1.wav" (PRECFIRE)
 - "shotpumpback" (SHOTBACK)
