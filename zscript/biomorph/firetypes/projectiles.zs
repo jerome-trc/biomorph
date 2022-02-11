@@ -359,6 +359,90 @@ class BIO_PlasmaGlobule : BIO_PlasmaBall
 	}
 }
 
+class BIO_BlackHoleProj : BIO_Projectile
+{
+	int SpaghettifyDamage, SpaghettifyRadius;
+
+	Default
+	{
+		+FORCERADIUSDMG
+		+FORCEXYBILLBOARD
+		+NODAMAGETHRUST
+		+RIPPER
+
+		Alpha 0.75;
+		DeathSound "bio/proj/bhole/death";
+		Decal 'BIO_BlackHole';
+		Height 8;
+		Radius 13;
+		Renderstyle 'Translucent';
+		Scale 0.5;
+		Speed 22;
+		Tag "$BIO_BLACKHOLE_TAG";
+		BIO_Projectile.PluralTag "$BIO_BLACKHOLE_TAG_PLURAL";
+	}
+
+	States
+	{
+	Spawn:
+		VOIP AA 1 Bright A_RadiusThrust(-240, 200, 0);
+		TNT1 A 0
+		{
+			A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius, XF_NONE);
+			A_SpawnItemEx('BIO_BlackHoleTrail');
+		}
+		VOIP BB 1 Bright A_RadiusThrust(-240, 200, 0);
+		TNT1 A 0
+		{
+			A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius, XF_NONE);
+			A_SpawnItemEx('BIO_BlackHoleTrail');
+		}
+		VOIP CC 1 Bright A_RadiusThrust(-240, 200, 0);
+		TNT1 A 0
+		{
+			A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius, XF_NONE);
+			A_SpawnItemEx('BIO_BlackHoleTrail');
+		}
+		VOIP DD 1 Bright A_RadiusThrust(-240, 200, 0);
+		TNT1 A 0
+		{
+			A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius, XF_NONE);
+			A_SpawnItemEx('BIO_BlackHoleTrail');
+		}
+		VOIP EE 1 Bright A_RadiusThrust(-240, 200, 0);
+		TNT1 A 0
+		{
+			A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius, XF_NONE);
+			A_SpawnItemEx('BIO_BlackHoleTrail');
+		}
+		VOIP FF 1 Bright A_RadiusThrust(-240, 200, 0);
+		TNT1 A 0
+		{
+			A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius, XF_NONE);
+			A_SpawnItemEx('BIO_BlackHoleTrail');
+		}
+		Loop;
+	Death:
+		TNT1 A 0
+		{
+			bool success = false;
+			Actor spawned = null;
+			[success, spawned] = A_SpawnItemEx('BIO_BlackHole');
+
+			if (success)
+			{
+				let bhole = BIO_BlackHole(spawned);
+				bhole.SpaghettifyDamage = invoker.SpaghettifyDamage * 1.25;
+				bhole.SpaghettifyRadius = invoker.SpaghettifyRadius * 2;
+			}
+
+			A_SetScale(1.2);
+		}
+		VORX ABCDEFGH 2 Bright;
+		Stop;
+	}
+}
+
 // Projectile-adjacent actors ==================================================
 
 class BIO_BFGExtra : BFGExtra
@@ -444,6 +528,91 @@ class BIO_ProxMine : Actor
 	}
 }
 
+class BIO_BlackHole : Actor
+{
+	int SpaghettifyDamage, SpaghettifyRadius;
+
+	Default
+	{
+		Projectile;
+
+		+EXTREMEDEATH
+		+FORCERADIUSDMG
+		+FORCEXYBILLBOARD
+		+NOCLIP
+		+NODAMAGETHRUST
+
+		Radius 6;
+		Height 40;
+		Speed 0;
+		RenderStyle 'Translucent';
+		Alpha 0.85;
+		ReactionTime 30;
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_CountDown;
+		TNT1 A 0 A_StartSound("bio/proj/bhole/pull", CHAN_7);
+		BHOL A 1 Bright Light("BIO_BlackHole_1")
+			A_RadiusThrust(-360, 340, RTF_AFFECTSOURCE | RTF_NOIMPACTDAMAGE);
+		TNT1 A 0 A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius,
+			XF_HURTSOURCE, false, 10);
+		BHOL B 1 Bright Light("BIO_BlackHole_1")
+			A_RadiusThrust(-360, 340, RTF_AFFECTSOURCE | RTF_NOIMPACTDAMAGE);
+		TNT1 A 0 A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius,
+			XF_HURTSOURCE, false, 10);
+		BHOL C 1 Bright Light("BIO_BlackHole_1")
+			A_RadiusThrust(-360, 340, RTF_AFFECTSOURCE | RTF_NOIMPACTDAMAGE);
+		TNT1 A 0 A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius,
+			XF_HURTSOURCE, false, 10);
+		BHOL D 1 Bright Light("BIO_BlackHole_1")
+			A_RadiusThrust(-360, 340, RTF_AFFECTSOURCE | RTF_NOIMPACTDAMAGE);
+		TNT1 A 0 A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius,
+			XF_HURTSOURCE, false, 10);
+		BHOL E 1 Bright Light("BIO_BlackHole_1")
+			A_RadiusThrust(-360, 340, RTF_AFFECTSOURCE | RTF_NOIMPACTDAMAGE);
+		TNT1 A 0 A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius,
+			XF_HURTSOURCE, false, 10);
+		BHOL F 1 Bright Light("BIO_BlackHole_1")
+			A_RadiusThrust(-360, 340, RTF_AFFECTSOURCE | RTF_NOIMPACTDAMAGE);
+		TNT1 A 0 A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius,
+			XF_HURTSOURCE, false, 10);
+		BHOL G 1 Bright Light("BIO_BlackHole_1")
+			A_RadiusThrust(-360, 340, RTF_AFFECTSOURCE | RTF_NOIMPACTDAMAGE);
+		TNT1 A 0 A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius,
+			XF_HURTSOURCE, false, 10);
+		BHOL H 1 Bright Light("BIO_BlackHole_1")
+			A_RadiusThrust(-360, 340, RTF_AFFECTSOURCE | RTF_NOIMPACTDAMAGE);
+		TNT1 A 0 A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius,
+			XF_HURTSOURCE, false, 10);
+		BHOL I 1 Bright Light("BIO_BlackHole_1")
+			A_RadiusThrust(-360, 340, RTF_AFFECTSOURCE | RTF_NOIMPACTDAMAGE);
+		TNT1 A 0 A_Explode(invoker.SpaghettifyDamage, invoker.SpaghettifyRadius,
+			XF_HURTSOURCE, false, 10);
+		Loop;
+	Death:
+		TNT1 A 0
+		{
+			A_StopSound(CHAN_7);
+			A_SpawnItemEx('BIO_BlackHoleSmoke');
+			A_SpawnItemEx('BIO_BlackHoleExplosion');
+			A_StartSound("bio/proj/bhole/explode", CHAN_7);
+		}
+		BHOL A 1 Bright Light("BIO_BlackHole_2") A_FadeOut(0.08);
+		BHOL B 1 Bright Light("BIO_BlackHole_3") A_FadeOut(0.08);
+		BHOL C 1 Bright Light("BIO_BlackHole_4") A_FadeOut(0.08);
+		BHOL D 1 Bright Light("BIO_BlackHole_5") A_FadeOut(0.08);
+		BHOL E 1 Bright Light("BIO_BlackHole_6") A_FadeOut(0.08);
+		BHOL F 1 Bright Light("BIO_BlackHole_7") A_FadeOut(0.08);
+		BHOL G 1 Bright Light("BIO_BlackHole_8") A_FadeOut(0.08);
+		BHOL H 1 Bright Light("BIO_BlackHole_9") A_FadeOut(0.08);
+		BHOL I 1 Bright Light("BIO_BlackHole_10") A_FadeOut(0.08);
+		Stop;
+	}
+}
+
 // Visual effects ==============================================================
 
 class BIO_PlasmaGlobuleTrail : Actor
@@ -463,6 +632,87 @@ class BIO_PlasmaGlobuleTrail : Actor
 		GLOT A 6 Bright;
 		GLOT B 4 Bright;
 		GLOT C 2 Bright;
+		Stop;
+	}
+}
+
+class BIO_BlackHoleExplosion : Actor
+{
+	Default
+	{
+		+FORCEXYBILLBOARD
+		+NOINTERACTION
+	}
+
+	States
+	{
+	Spawn:
+		DBX3 A 1 Light("BIO_BlackHoleExpl_1") Bright A_SetScale(1.25);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Light("BIO_BlackHoleExpl_2") Bright A_SetScale(1.50);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Light("BIO_BlackHoleExpl_3") Bright A_SetScale(1.75);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Light("BIO_BlackHoleExpl_4") Bright A_SetScale(2.0);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Light("BIO_BlackHoleExpl_5") Bright A_SetScale(2.25);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Light("BIO_BlackHoleExpl_6") Bright A_SetScale(2.50);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Light("BIO_BlackHoleExpl_7") Bright A_SetScale(2.75);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Bright A_SetScale(3.0);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Bright A_SetScale(3.25);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Bright A_SetScale(3.50);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Bright A_SetScale(3.75);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Bright A_SetScale(4.0);
+		TNT1 A 0 A_FadeOut(0.09);
+		DBX3 A 1 Bright A_SetScale(4.25);
+		TNT1 A 0 A_FadeOut(0.09);
+		Stop;
+	}
+}
+
+class BIO_BlackHoleSmoke : Actor
+{
+	Default
+	{
+		+FORCEXYBILLBOARD
+		+NOINTERACTION
+
+		RenderStyle 'Translucent';
+		Alpha 0.70;
+		Scale 2.2;
+	}
+
+	States
+	{
+	Spawn:
+		BHXP ABCDEFGHIJKLMNO 2 A_FadeOut(0.03);
+		Stop;
+	}
+}
+
+class BIO_BlackHoleTrail : Actor
+{
+	Default
+	{
+		+FORCEXYBILLBOARD
+		+NOINTERACTION
+
+		RenderStyle 'Translucent';
+		Alpha 0.70;
+		Scale 0.7;
+	}
+
+	States
+	{
+	Spawn:
+		VORX ABCDEFGH 2 Bright A_FadeOut(0.1);
 		Stop;
 	}
 }

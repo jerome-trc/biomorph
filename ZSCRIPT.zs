@@ -119,6 +119,7 @@ class Biomorph abstract
 
 #include "zscript/biomorph/weapons/classified/arc_caster.zs"
 #include "zscript/biomorph/weapons/classified/barrage_launcher.zs"
+#include "zscript/biomorph/weapons/classified/black_hole_dynamo.zs"
 #include "zscript/biomorph/weapons/classified/hand_cannon.zs"
 #include "zscript/biomorph/weapons/classified/heavy_battle_rifle.zs"
 #include "zscript/biomorph/weapons/classified/impactor_gauntlet.zs"

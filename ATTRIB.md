@@ -14,6 +14,8 @@ The GLDEFS for the Plasma Globule were devised by Realm667 user Robot J.
 
 The GLDEFS and state machines for the Proximity Mine were devised by MG_Man, Hidon, Theshooter7, Jimmy91, Arachnotron II, and Blzut3.
 
+The GLDEFS and state machines for the Black Hole Dynamo and related classes were devised by Realm667 user Gothic.
+
 The GLDEFS for the Armor Bonus were devised by Realm667 user Infirnex.
 
 ## Graphics
@@ -55,6 +57,8 @@ Proximity Mine Launcher sprites, as well as those of its projectiles, are courte
 Volley Gun sprites are courtesy of Superdave, Sonik.o.fan, 1337spy, Bgraybr, Warhawk, DBJ87, and id Software LLC.
 
 Barrage Launcher sprites are courtesy of ZDoom forum user LossForWords, alongside zrrion the insect, id Software LLC, and Apogee Entertainment.
+
+All sprites related to the Black Hole Dynamo are courtesy of NMN, Zero Prophet, Reactor, Kronos, and Midway, with edits by Realm667 user Gothic.
 
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
@@ -140,6 +144,8 @@ ARCAREDY is courtesy of YouTube user [The Sound Channel](https://www.youtube.com
 Impactor Gauntlet sounds are courtesy of Capcom Co., Ltd.
 
 ELECPUFF is courtesy of the Librequake Project.
+
+All sounds related to the Black Hole Dynamo are courtesy of the Raven Software Corporation (Quake 4) and Epic Games, Inc. (Unreal Tournament 2004).
 
 ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (replaces DSSECRET) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
 

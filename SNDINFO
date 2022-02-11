@@ -121,6 +121,15 @@ $RANDOM bio/weap/arccaster/fire
 
 $LIMIT bio/weap/arccaster/fire 1
 
+bio/weap/bholedyn/charge BHDNCHRG
+bio/weap/bholedyn/fire BHDNFIRE
+bio/proj/bhole/death BHOLIMPX
+bio/proj/bhole/pull BHOLPULL
+bio/proj/bhole/expl BHOLXPLD
+$limit bio/proj/bhole/death 0
+$limit bio/proj/bhole/pull 0
+$limit bio/proj/bhole/expl 0
+
 bio/weap/minivulcan/fire_0 VULCFIR0
 bio/weap/minivulcan/fire_1 VULCFIR1
 bio/weap/minivulcan/fire_2 VULCFIR2

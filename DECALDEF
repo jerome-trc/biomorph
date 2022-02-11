@@ -1,0 +1,24 @@
+fader BIO_LongFader
+{
+	decaystart 9.0
+	decaytime 3.0
+}
+
+decal BIO_BigScorch
+{
+	pic SCORCH1
+	shade "00 00 00"
+	x-scale 1.0
+	y-scale 1.0
+}
+
+decal BIO_BlackHole
+{
+	pic TWIRL
+	shade "25 05 40"
+	fullbright
+	animator BIO_LongFader
+	lowerdecal BIO_BigScorch
+	x-scale 0.75
+	y-scale 0.75
+}
