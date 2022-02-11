@@ -26,6 +26,7 @@ class BIO_PrecisionRifle : BIO_Weapon
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.Bullet()
 			.BasicDamage(60, 65)
+			.Spread(0.8, 0.8)
 			.FireSound("bio/weap/precrifle/fire")
 			.AssociateFirstFireTime()
 			.Build());
