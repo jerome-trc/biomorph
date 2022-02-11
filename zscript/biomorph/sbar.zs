@@ -105,7 +105,8 @@ class BIO_StatusBar : BaseStatusBar
 			DrawInventoryBar(InvBarState, (0, 0), InvBarSlots.GetInt(),
 				DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
 
-			if (CPlayer.MO.InvSel == BIOPlayer.EquippedArmor)
+			if (CPlayer.MO.InvSel == BIOPlayer.EquippedArmor &&
+				BIOPlayer.EquippedArmor != null)
 			{
 				DrawString(Font_Small, String_Equipped, (0, 180),
 					DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER);
