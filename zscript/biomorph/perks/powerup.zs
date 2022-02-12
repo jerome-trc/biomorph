@@ -35,9 +35,64 @@ class BIO_Perk_PowerupDuration10 : BIO_Perk
 // Give the powerup extra duration based on 1% of its default duration.
 class BIO_PUpFunc_PowerupDuration : BIO_PowerupFunctor
 {
-	final override void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const
+	final override void PrePowerupHandlePickup(BIO_Player bioPlayer,
+		Powerup handler, Powerup other) const
+	{
+		if (handler.GetClass() == other.GetClass())
+			other.EffectTics += (other.Default.EffectTics * 0.01 * Count);
+	}
+
+	final override void PrePowerupAttach(BIO_Player bioPlayer, Powerup power) const
 	{
 		power.EffectTics += (power.Default.EffectTics * 0.01 * Count);
+	}
+}
+
+// Extra duration for specific powerup types ===================================
+
+// (Each of the following adds one second of duration/count, not one percent)
+
+class BIO_Perk_RadsuitDuration1 : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PUpFunc_RadsuitDuration');
+	}
+}
+
+class BIO_PUpFunc_RadsuitDuration : BIO_PowerupFunctor
+{
+	final override void PrePowerupHandlePickup(BIO_Player bioPlayer,
+		Powerup handler, Powerup other) const
+	{
+		if (handler is 'PowerIronFeet' && other is 'PowerIronFeet')
+			other.EffectTics += TICRATE * Count;
+	}
+
+	final override void PrePowerupAttach(BIO_Player bioPlayer, Powerup power) const
+	{
+		if (power is 'PowerIronFeet')
+			power.EffectTics += TICRATE * Count;
+	}
+}
+
+// Radsuits are time-additive ==================================================
+
+class BIO_Perk_AdditiveRadsuits : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PUpFunc_AdditiveRadsuits');
+	}
+}
+
+class BIO_PUpFunc_AdditiveRadsuits : BIO_PowerupFunctor
+{
+	final override void PrePowerupHandlePickup(BIO_Player bioPlayer,
+		Powerup handler, Powerup other) const
+	{
+		if (handler is 'PowerIronFeet' && other is 'PowerIronFeet')
+			other.bAdditiveTime = true;
 	}
 }
 

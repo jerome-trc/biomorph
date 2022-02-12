@@ -329,16 +329,22 @@ class BIO_Player : DoomPlayer
 			ItemPickupFunctors[i].OnMapPickup(self, map);
 	}
 
-	void OnPowerupAttach(Powerup power)
+	void PrePowerupHandlePickup(Powerup handler, Powerup other)
 	{
 		for (uint i = 0; i < PowerupFunctors.Size(); i++)
-			PowerupFunctors[i].OnPowerupAttach(self, power);
+			PowerupFunctors[i].PrePowerupHandlePickup(self, handler, other);
 	}
 
-	void OnPowerupDetach(Powerup power)
+	void PrePowerupAttach(Powerup power)
 	{
 		for (uint i = 0; i < PowerupFunctors.Size(); i++)
-			PowerupFunctors[i].OnPowerupDetach(self, power);
+			PowerupFunctors[i].PrePowerupAttach(self, power);
+	}
+
+	void PrePowerupDetach(Powerup power)
+	{
+		for (uint i = 0; i < PowerupFunctors.Size(); i++)
+			PowerupFunctors[i].PrePowerupDetach(self, power);
 	}
 
 	void Reset()

@@ -181,6 +181,13 @@
 			"tag": "$BIO_PERK_POWERUPDURATION_MAJOR_TAG",
 			"desc": "$BIO_PERK_POWERUPDURATION10_DESC",
 			"icon": "graphics/perk/powerup_duration.png"
+		},
+		{
+			"id": "bio_radsuitduration1",
+			"class": "BIO_Perk_RadsuitDuration1",
+			"tag": "$BIO_PERK_RADSUITDURATION_MINOR_TAG",
+			"desc": "$BIO_PERK_RADSUITDURATION1_DESC",
+			"icon": "SUITX0"
 		}
 	],
 	"perks": {
@@ -769,6 +776,46 @@
 					"template": "bio_cellcapacity_major",
 					"x": 480, "y": 240,
 					"neighbors": [ "bio_cellcapacity_minor_04" ]
+				}
+			]
+		},
+		"powerupbranch_radsuit": {
+			"minor": [
+				{
+					"uuid": "bio_radsuitduration_00",
+					"template": "bio_radsuitduration1",
+					"x": -249, "y": 372,
+					"neighbors": [ "bio_powerupduration_minor_04" ]
+				},
+				{
+					"uuid": "bio_radsuitduration_01",
+					"template": "bio_radsuitduration1",
+					"x": -169, "y": 417,
+					"neighbors": [ "bio_radsuitduration_00" ]
+				},
+				{
+					"uuid": "bio_radsuitduration_02",
+					"template": "bio_radsuitduration1",
+					"x": -109, "y": 361,
+					"neighbors": [ "bio_radsuitduration_01" ]
+				},
+				{
+					"uuid": "bio_radsuitduration_03",
+					"template": "bio_radsuitduration1",
+					"x": -143, "y": 294,
+					"neighbors": [ "bio_radsuitduration_02" ]
+				}
+			],
+			"major": [
+				{
+					"uuid": "bio_additiveradsuits",
+					"class": "BIO_Perk_AdditiveRadsuits",
+					"x": -208, "y": 301,
+					"tag": "$BIO_PERK_ADDITIVERADSUITS_TAG",
+					"desc": "$BIO_PERK_ADDITIVERADSUITS_DESC",
+					"icon": "SUITA0",
+					"free_access": true,
+					"neighbors": [ "bio_radsuitduration_03" ]
 				}
 			]
 		},
