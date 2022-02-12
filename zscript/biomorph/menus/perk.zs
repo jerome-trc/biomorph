@@ -88,9 +88,9 @@ class BIO_PerkMenu : GenericMenu
 			if (Pan)
 			{
 				ViewPosition.X = Clamp(ViewPosition.X + (LMP.X - mX),
-					-(Size.X / 2), Size.X / 2);
+					-(VIRT_W * 2), VIRT_W * 2);
 				ViewPosition.Y = Clamp(ViewPosition.Y + (LMP.Y - mY),
-					-(Size.Y / 2), Size.Y / 2);
+					-(VIRT_H * 2), VIRT_H * 3);
 			}
 			break;
 		case MOUSE_Click:
