@@ -532,7 +532,7 @@
 					"uuid": "bio_clipcapacity_minor_01",
 					"template": "bio_clipcapacity_minor",
 					"x": 360, "y": 360,
-					"neighbors": [ "bio_ammocapacity_small_00" ]
+					"neighbors": [ "bio_additivebackpacks" ]
 				},
 				{
 					"uuid": "bio_shellcapacity_minor_01",
@@ -649,6 +649,126 @@
 					"template": "bio_powerupduration10",
 					"x": -660, "y": 660,
 					"neighbors": [ "bio_powerupduration_minor_09" ]
+				}
+			]
+		},
+		"ammobranch_clip": {
+			"minor": [
+				{
+					"uuid": "bio_clipcapacity_minor_02",
+					"template": "bio_clipcapacity_minor",
+					"x": 60, "y": 120,
+					"neighbors": [ "bio_clipcapacity_minor_00" ]
+				},
+				{
+					"uuid": "bio_clipcapacity_minor_03",
+					"template": "bio_clipcapacity_minor",
+					"x": 60, "y": 180,
+					"neighbors": [ "bio_clipcapacity_minor_02" ]
+				},
+				{
+					"uuid": "bio_clipcapacity_minor_04",
+					"template": "bio_clipcapacity_minor",
+					"x": 60, "y": 240,
+					"neighbors": [ "bio_clipcapacity_minor_03" ]
+				}
+			],
+			"major": [
+				{
+					"uuid": "bio_clipcapacity_major_00",
+					"template": "bio_clipcapacity_major",
+					"x": 60, "y": 300,
+					"neighbors": [ "bio_clipcapacity_minor_04" ]
+				}
+			]
+		},
+		"ammobranch_shell": {
+			"minor": [
+				{
+					"uuid": "bio_shellcapacity_minor_02",
+					"template": "bio_shellcapacity_minor",
+					"x": 180, "y": 120,
+					"neighbors": [ "bio_shellcapacity_minor_00" ]
+				},
+				{
+					"uuid": "bio_shellcapacity_minor_03",
+					"template": "bio_shellcapacity_minor",
+					"x": 240, "y": 120,
+					"neighbors": [ "bio_shellcapacity_minor_02" ]
+				},
+				{
+					"uuid": "bio_shellcapacity_minor_04",
+					"template": "bio_shellcapacity_minor",
+					"x": 300, "y": 120,
+					"neighbors": [ "bio_shellcapacity_minor_03" ]
+				}
+			],
+			"major": [
+				{
+					"uuid": "bio_shellcapacity_major_00",
+					"template": "bio_shellcapacity_major",
+					"x": 360, "y": 120,
+					"neighbors": [ "bio_shellcapacity_minor_04" ]
+				}
+			]
+		},
+		"ammobranch_rocketammo": {
+			"minor": [
+				{
+					"uuid": "bio_rocketammocapacity_minor_02",
+					"template": "bio_rocketammocapacity_minor",
+					"x": 180, "y": 240,
+					"neighbors": [ "bio_rocketammocapacity_minor_00" ]
+				},
+				{
+					"uuid": "bio_rocketammocapacity_minor_03",
+					"template": "bio_rocketammocapacity_minor",
+					"x": 180, "y": 300,
+					"neighbors": [ "bio_rocketammocapacity_minor_02" ]
+				},
+				{
+					"uuid": "bio_rocketammocapacity_minor_04",
+					"template": "bio_rocketammocapacity_minor",
+					"x": 180, "y": 360,
+					"neighbors": [ "bio_rocketammocapacity_minor_03" ]
+				}
+			],
+			"major": [
+				{
+					"uuid": "bio_rocketammocapacity_major_00",
+					"template": "bio_rocketammocapacity_major",
+					"x": 180, "y": 420,
+					"neighbors": [ "bio_rocketammocapacity_minor_04" ]
+				}
+			]
+		},
+		"ammobranch_cell": {
+			"minor": [
+				{
+					"uuid": "bio_cellcapacity_minor_02",
+					"template": "bio_cellcapacity_minor",
+					"x": 300, "y": 240,
+					"neighbors": [ "bio_cellcapacity_minor_00" ]
+				},
+				{
+					"uuid": "bio_cellcapacity_minor_03",
+					"template": "bio_cellcapacity_minor",
+					"x": 360, "y": 240,
+					"neighbors": [ "bio_cellcapacity_minor_02" ]
+				},
+				{
+					"uuid": "bio_cellcapacity_minor_04",
+					"template": "bio_cellcapacity_minor",
+					"x": 420, "y": 240,
+					"neighbors": [ "bio_cellcapacity_minor_03" ]
+				}
+			],
+			"major": [
+				{
+					"uuid": "bio_cellcapacity_major_00",
+					"template": "bio_cellcapacity_major",
+					"x": 480, "y": 240,
+					"neighbors": [ "bio_cellcapacity_minor_04" ]
 				}
 			]
 		},
