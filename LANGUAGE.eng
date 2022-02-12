@@ -628,6 +628,14 @@
 	BIO_PERK_POWERUPDURATION5_DESC = "\c[Green]+5% powerup duration";
 	BIO_PERK_POWERUPDURATION10_DESC = "\c[Green]+10% powerup duration";
 
+	BIO_PERK_RADSUITDURATION_MINOR_TAG = "\c[White]NBC Training";
+	BIO_PERK_RADSUITDURATION1_DESC = "\c[Green]+1 second to radsuit duration";
+
+	BIO_PERK_ADDITIVERADSUITS_TAG =
+		"\c[White]Environmental Applique";
+	BIO_PERK_ADDITIVERADSUITS_DESC =
+		"\c[Green]NBC suits add duration instead of resetting it";
+
 	BIO_PERK_LARGEAMMOBONUS_TAG
 		= "\c[White]Scrounger";	
 	BIO_PERK_LARGEAMMOBONUS_DESC

@@ -57,8 +57,12 @@ class BIO_KillFunctor : BIO_PlayerFunctor abstract
 
 class BIO_PowerupFunctor : BIO_PlayerFunctor abstract
 {
-	virtual void OnPowerupAttach(BIO_Player bioPlayer, Powerup power) const {}
-	virtual void OnPowerupDetach(BIO_Player bioPlayer, Powerup power) const {}
+	virtual void PrePowerupHandlePickup(BIO_Player bioPlayer,
+		Powerup handler, Powerup other) const {}
+	virtual void PrePowerupAttach(BIO_Player bioPlayer,
+		Powerup power) const {}
+	virtual void PrePowerupDetach(BIO_Player bioPlayer,
+		Powerup power) const {}
 }
 
 class BIO_TransitionFunctor : BIO_PlayerFunctor abstract

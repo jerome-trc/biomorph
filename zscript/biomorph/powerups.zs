@@ -1,19 +1,38 @@
 mixin class BIO_Powerup
 {
+	override bool HandlePickup(Inventory item)
+	{
+		let bioPlayer = BIO_Player(Owner);
+		if (bioPlayer != null && item is 'Powerup')
+			bioPlayer.PrePowerupHandlePickup(Powerup(self), Powerup(item));
+		return super.HandlePickup(item);
+	}
+
 	final override void AttachToOwner(Actor other)
 	{
-		super.AttachToOwner(other);
 		let bioPlayer = BIO_Player(other);
-		if (bioPlayer == null) return;
-		bioPlayer.OnPowerupAttach(self);
+		if (bioPlayer != null)
+			bioPlayer.PrePowerupAttach(self);
+		super.AttachToOwner(other);
 	}
 
 	final override void DetachFromOwner()
 	{
-		super.DetachFromOwner();
 		let bioPlayer = BIO_Player(Owner);
+		if (bioPlayer != null)
+			bioPlayer.PrePowerupDetach(self);
+		super.DetachFromOwner();
+	}
+}
+
+mixin class BIO_Mixin_PowerupGiver
+{
+	final override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+		let bioPlayer = BIO_Player(toucher);
 		if (bioPlayer == null) return;
-		bioPlayer.OnPowerupDetach(self);
+		bioPlayer.OnPowerupPickup(self);
 	}
 }
 
@@ -63,18 +82,12 @@ class BIO_PowerStrength : PowerStrength
 
 class BIO_BlurSphere : BlurSphere replaces BlurSphere
 {
+	mixin BIO_Mixin_PowerupGiver;
+
 	Default
 	{
 		Inventory.PickupMessage "$BIO_BLURSPHERE_PKUP";
 		Powerup.Type 'BIO_PowerInvisibility';
-	}
-
-	final override void DoPickupSpecial(Actor toucher)
-	{
-		super.DoPickupSpecial(toucher);
-		let bioPlayer = BIO_Player(toucher);
-		if (bioPlayer == null) return;
-		bioPlayer.OnPowerupPickup(self);
 	}
 }
 
@@ -92,18 +105,12 @@ class BIO_PowerInvisibility : PowerInvisibility
 
 class BIO_Infrared : Infrared replaces Infrared
 {
+	mixin BIO_Mixin_PowerupGiver;
+
 	Default
 	{
 		Inventory.PickupMessage "$BIO_LIGHTAMP_PKUP";
 		Powerup.Type 'BIO_PowerLightAmp';
-	}
-
-	final override void DoPickupSpecial(Actor toucher)
-	{
-		super.DoPickupSpecial(toucher);
-		let bioPlayer = BIO_Player(toucher);
-		if (bioPlayer == null) return;
-		bioPlayer.OnPowerupPickup(self);
 	}
 }
 
@@ -121,17 +128,11 @@ class BIO_PowerLightAmp : PowerLightAmp
 
 class BIO_Invulnerability : InvulnerabilitySphere replaces InvulnerabilitySphere
 {
+	mixin BIO_Mixin_PowerupGiver;
+
 	Default
 	{
 		Powerup.Type 'BIO_PowerInvulnerable';
-	}
-
-	final override void DoPickupSpecial(Actor toucher)
-	{
-		super.DoPickupSpecial(toucher);
-		let bioPlayer = BIO_Player(toucher);
-		if (bioPlayer == null) return;
-		bioPlayer.OnPowerupPickup(self);
 	}
 
 	final override void BeginPlay()
@@ -157,18 +158,12 @@ class BIO_PowerInvulnerable : PowerInvulnerable
 
 class BIO_RadSuit : RadSuit replaces RadSuit
 {
+	mixin BIO_Mixin_PowerupGiver;
+
 	Default
 	{
 		Inventory.PickupMessage "$BIO_RADSUIT_PKUP";
 		Powerup.Type 'BIO_PowerIronFeet';
-	}
-
-	final override void DoPickupSpecial(Actor toucher)
-	{
-		super.DoPickupSpecial(toucher);
-		let bioPlayer = BIO_Player(toucher);
-		if (bioPlayer == null) return;
-		bioPlayer.OnPowerupPickup(self);
 	}
 }
 
