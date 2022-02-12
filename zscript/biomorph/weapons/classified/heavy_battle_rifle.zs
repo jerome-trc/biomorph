@@ -12,7 +12,7 @@ class BIO_HeavyBattleRifle : BIO_Weapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_CHAINGUN_CLSF;
 		Weapon.SlotNumber 4;
-		Weapon.SlotPriority SLOTPRIO_CLASSIFIED;
+		Weapon.SlotPriority SLOTPRIO_CLASSIFIED - 0.05;
 
 		BIO_Weapon.Grade BIO_GRADE_CLASSIFIED;
 		BIO_Weapon.MagazineSize 50;

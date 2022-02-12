@@ -12,7 +12,7 @@ class BIO_PrecisionRifle : BIO_Weapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_PISTOL;
 		Weapon.SlotNumber 4;
-		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
+		Weapon.SlotPriority SLOTPRIO_SPECIALTY - 0.05;
 		Weapon.UpSound "bio/weap/gunswap";
 
 		BIO_Weapon.Grade BIO_GRADE_SPECIALTY;
