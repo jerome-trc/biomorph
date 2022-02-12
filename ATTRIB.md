@@ -8,6 +8,8 @@ The [ZJSON library](https://github.com/RicardoLuis0/ZJSON) is courtesy of [Ricar
 
 The Fist's state machine is derived from code written by Realm667 user That_One_Doom_Mod and Wh1teFang.
 
+The GLDEFS and state machines for the BFG10K and Plasma Bolt were devised by the Skulltag Team and converted to ZScript by Realm667 user Ghastly_dragon.
+
 The Impactor Gauntlet's state machine is derived from code written by Realm667 user TheDoomedArchvile.
 
 The GLDEFS for the Plasma Globule were devised by Realm667 user Robot J.
@@ -34,6 +36,8 @@ Assault Rifle sprites are courtesy of Terminator Rampage.
 Assault Handgun sprites are courtesy of Realm667 users JoeyTD and Minigunner, as well as id Software LLC.
 
 Auto Shotgun sprites are courtesy of id Software LLC, Infinity Ward, Inc., and were edited by Realm667 user Captain Toenail. 
+
+BFG10K sprites are courtesy of Eriance.
 
 Nailgun and Nail sprites are courtesy of ZDoom forum user osjclatchford, with fixes by Hellstorm Archon.
 
@@ -138,6 +142,8 @@ The following audio files are provided by ZDoom forum user Joblez_I, under no li
 ["Swoosh.wav"](https://freesound.org/people/Brsjak/sounds/482880/) (WHOOSH0 through WHOOSH5) by freesound user [Brsjak](https://freesound.org/people/Brsjak/) is licensed under Creative Commons Attribution 3.0 Unported.
 
 Realm667 user JoeyTD cites an unknown source as having created the sound used in Biomorph as ASHGFIRE.
+
+All sounds related to the BFG10K are courtesy of the Skulltag Team.
 
 PLSCIDLE and PLSCRAIS are courtesy of id Software LLC and Midway Software Inc.
 

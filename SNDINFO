@@ -111,6 +111,10 @@ $RANDOM bio/weap/autoshotgun/fire
 	bio/weap/autoshotgun/fire_2
 }
 
+bio/weap/bfg10k/fire BFG10FIR
+bio/weap/bfg10k/cooldown BFG10CLD
+bio/weap/bfg10k/idle BFG10IDL
+
 bio/weap/nailgun/fire_0 NLGNFIR0
 bio/weap/nailgun/fire_1 NLGNFIR1
 bio/weap/nailgun/fire_2 NLGNFIR2
@@ -211,6 +215,8 @@ bio/weap/incursion/reload INCURELO
 
 bio/puff/lightning/hit ELECPUFF
 
+bio/proj/plasbolt/expl DSBAREXP
+$limit bio/proj/plasbolt/expl 0
 bio/proj/proximity/beep PROXBEEP
 bio/proj/proximity/hit PROXHIT
 
