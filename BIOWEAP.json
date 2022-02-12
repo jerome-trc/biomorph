@@ -41,6 +41,7 @@
 		],
 		"super": [
 			"BIO_BFG9000",
+			"BIO_BFG10K",
 			"BIO_BlackHoleDynamo"
 		]
 	},
@@ -83,6 +84,7 @@
 		],
 		"super": [
 			"BIO_BFG9000",
+			"BIO_BFG10K",
 			"BIO_BlackHoleDynamo"
 		]
 	},

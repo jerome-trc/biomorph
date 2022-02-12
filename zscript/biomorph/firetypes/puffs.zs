@@ -40,6 +40,38 @@ class BIO_MeleeHit : BIO_Puff
 	}
 }
 
+class BIO_PlasmaBolt : BIO_Puff
+{
+	Default
+	{
+		+ACTIVATEIMPACT
+		+ACTIVATEPCROSS
+		+FORCERADIUSDMG
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+NOTELEPORT
+		+PUFFONACTORS
+
+		Alpha 0.75;
+		AttackSound "bio/proj/plasbolt/expl";
+		Decal 'BFGLightning';
+		Height 8;
+		Radius 11;
+		Renderstyle 'Add';
+		SeeSound "bio/proj/plasbolt/expl";
+		Speed 20;
+	}
+
+	States
+	{
+	Spawn:
+		BFE1 A 0 Bright;
+		BFE1 A 3 Bright;
+		BFE1 BCDEF 3 Bright;
+		Stop;
+	}
+}
+
 class BIO_ElectricPuff : BIO_RailPuff
 {
 	Default

@@ -76,7 +76,48 @@ pointlight BIO_ElecPuff
     size 15
 }
 
-// Plasma Globule ==============================================================
+// Plasma bolt =================================================================
+
+pointlight BIO_PlasmaBolt
+{
+	color 0.0 1.0 0.0
+	size 80
+}
+
+flickerlight BIO_PlasmaBolt_X1
+{
+	color 0.0 1.0 0.0
+	size 80
+	secondarysize 88
+	chance 0.3
+}
+
+flickerlight BIO_PlasmaBolt_X2
+{
+	color 0.0 1.0 0.0
+	size 104
+	secondarysize 112
+	chance 0.3
+}
+
+flickerlight BIO_PlasmaBolt_X3
+{
+	color 0.0 1.0 0.0
+	size 120
+	secondarysize 128
+	chance 0.3
+}
+
+object BIO_PlasmaBolt
+{
+	frame BFE1A0 { light BIO_PlasmaBolt }
+	frame BFE1B0 { light BIO_PlasmaBolt }
+	frame BFE1C0 { light BIO_PlasmaBolt_X1 }
+	frame BFE1D0 { light BIO_PlasmaBolt_X2 }
+	frame BFE1E0 { light BIO_PlasmaBolt_X3 }
+}
+
+// Plasma globule ==============================================================
 
 pointlight BIO_PlasmaGlob_A
 {
