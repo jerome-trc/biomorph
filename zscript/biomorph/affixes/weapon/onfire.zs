@@ -87,7 +87,7 @@ class BIO_WAfx_ExtraShotPellets : BIO_WeaponAffix
 				continue;
 			}
 
-			Count.Push(Random(6, 8));
+			Count.Push(Random[BIO_Afx](6, 8));
 			Damage.Push(Max(weap.Pipelines[i].GetAverageDamage() / Count[i], 1));
 		}
 	}
