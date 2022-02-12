@@ -196,7 +196,7 @@ class BIO_WAfx_NthRoundCost : BIO_WeaponAffix
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Interval = Random(3, 5);
+		Interval = Random[BIO_Afx](3, 5);
 		CostModifier1 = -weap.AmmoUse1;
 		CostModifier2 = -weap.AmmoUse2;
 	}

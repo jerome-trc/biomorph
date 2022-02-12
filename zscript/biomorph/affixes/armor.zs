@@ -6,7 +6,7 @@ class BIO_EAfx_SaveAmount : BIO_EquipmentAffix
 	{
 		let armor = BIO_Armor(equip);
 		let statDefs = GetDefaultByType(armor.StatClass);
-		Modifier = Random(statDefs.SaveAmount * 0.1, statDefs.SaveAmount * 0.2);
+		Modifier = Random[BIO_Afx](statDefs.SaveAmount * 0.1, statDefs.SaveAmount * 0.2);
 	}
 
 	final override void PreArmorApply(BIO_Armor armor,
@@ -43,7 +43,7 @@ class BIO_EAfx_SavePercent : BIO_EquipmentAffix
 	{
 		let armor = BIO_Armor(equip);
 		let statDefs = GetDefaultByType(armor.StatClass);
-		Modifier = Random(statDefs.SavePercent * 0.1, statDefs.SavePercent * 0.2);
+		Modifier = Random[BIO_Afx](statDefs.SavePercent * 0.1, statDefs.SavePercent * 0.2);
 	}
 
 	final override void PreArmorApply(BIO_Armor armor,
