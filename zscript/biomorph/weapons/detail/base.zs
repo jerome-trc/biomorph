@@ -944,23 +944,62 @@ class BIO_Weapon : DoomWeapon abstract
 		return false;
 	}
 
-	BIO_WeaponAffix GetAffixByType(
-		Class<BIO_WeaponAffix> t, bool implicit = false) const
+	BIO_WeaponAffix GetImplicitAffixByType(
+		Class<BIO_WeaponAffix> t, bool subclass = false) const
 	{
-		if (!implicit)
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
 		{
-			for (uint i = 0; i < Affixes.Size(); i++)
-				if (Affixes[i].GetClass() == t)
-					return Affixes[i];
-		}
-		else
-		{
-			for (uint i = 0; i < ImplicitAffixes.Size(); i++)
-				if (ImplicitAffixes[i].GetClass() == t)
-					return ImplicitAffixes[i];
+			if ((subclass && ImplicitAffixes[i] is t) ||
+				!subclass && ImplicitAffixes[i].GetClass() == t)
+			{
+				return ImplicitAffixes[i];
+			}
 		}
 
 		return null;
+	}
+
+	BIO_WeaponAffix GetExplicitAffixByType(
+		Class<BIO_WeaponAffix> t, bool subclass = false) const
+	{
+		for (uint i = 0; i < Affixes.Size(); i++)
+		{
+			if ((subclass && Affixes[i] is t) ||
+				!subclass && Affixes[i].GetClass() == t)
+			{
+				return Affixes[i];
+			}
+		}
+
+		return null;
+	}
+
+	BIO_WeaponAffix, BIO_WeaponAffix GetAffixByType(
+		Class<BIO_WeaponAffix> t, bool subclass = false) const
+	{
+		BIO_WeaponAffix retImpl = null, retExpl = null;
+
+		for (uint i = 0; i < ImplicitAffixes.Size(); i++)
+		{
+			if ((subclass && ImplicitAffixes[i] is t) ||
+				!subclass && ImplicitAffixes[i].GetClass() == t)
+			{
+				retImpl = ImplicitAffixes[i];
+				break;
+			}
+		}
+
+		for (uint i = 0; i < Affixes.Size(); i++)
+		{
+			if ((subclass && Affixes[i] is t) ||
+				!subclass && Affixes[i].GetClass() == t)
+			{
+				retExpl = Affixes[i];
+				break;
+			}
+		}
+
+		return retImpl, retExpl;
 	}
 
 	bool AnyAffixesAddGravity() const
