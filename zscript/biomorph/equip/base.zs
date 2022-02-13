@@ -72,8 +72,7 @@ class BIO_Equipment : Inventory abstract
 
 	final override void AttachToOwner(Actor newOwner)
 	{
-		if (!PreviouslyPickedUp) DRLMDangerLevel();
-		PreviouslyPickedUp = true;
+		OnOwnerAttach();
 		super.AttachToOwner(newOwner);
 	}
 

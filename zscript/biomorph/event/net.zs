@@ -24,6 +24,7 @@ extend class BIO_EventHandler
 	const EVENT_WUPOVERLAY = "bio_wupoverlay";
 	const EVENT_WEAPUPGRADE = "bio_weapupgrade";
 	const EVENT_PERKOP = "bio_perkop";
+	const EVENT_FIRSTPKUP = "bio_firstpkup";
 
 	enum PerkOp : uint8
 	{
@@ -545,5 +546,10 @@ extend class BIO_EventHandler
 	static clearscope void CommitPerks()
 	{
 		EventHandler.SendNetworkEvent(EVENT_PERKOP, PERKOPARG_COMMIT);
+	}
+
+	static clearscope void BroadcastFirstPickup(name typeName)
+	{
+		EventHandler.SendNetworkEvent(EVENT_FIRSTPKUP .. ":" .. typeName);
 	}
 }
