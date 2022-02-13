@@ -24,27 +24,27 @@ extend class BIO_Utils
 		return inv is 'Medikit' || inv is thriftyMedi;
 	}
 
-	static Class<Inventory> ExtInv(string tName)
+	static Class<Inventory> ExtInv(name tName)
 	{
 		Class<Inventory> ret = tName;
 		return ret;
 	}
 
-	static Inventory TryFindInv(Actor a, string tName)
+	static Inventory TryFindInv(Actor a, name tName)
 	{
 		Class<Inventory> t = tName;
 		if (t == null) return null;
 		return a.FindInventory(t);
 	}
 
-	static play void TryGiveInv(Actor a, string tName, int amt, bool giveCheat = false)
+	static play void TryGiveInv(Actor a, name tName, int amt, bool giveCheat = false)
 	{
 		Class<Inventory> t = tName;
 		if (t == null) return;
 		a.GiveInventory(t, 1, giveCheat);
 	}
 
-	static play bool TryA_GiveInv(Actor a, string tName, int amount = 0,
+	static play bool TryA_GiveInv(Actor a, name tName, int amount = 0,
 		int giveTo = AAPTR_DEFAULT)
 	{
 		Class<Inventory> t = tName;
@@ -52,7 +52,7 @@ extend class BIO_Utils
 		return Actor.DoGiveInventory(a, false, t, amount, giveTo);
 	}
 
-	static play bool, Actor TrySpawnEx(Actor source, string typeName,
+	static play bool, Actor TrySpawnEx(Actor source, name typeName,
 		double xofs = 0.0, double yofs = 0.0, double zofs = 0.0,
 		double xvel = 0.0, double yvel = 0.0, double zvel = 0.0,
 		double angle = 0.0, int flags = 0, int failchance = 0, int tid = 0)
@@ -69,12 +69,19 @@ extend class BIO_Utils
 		return ret0, ret1;
 	}
 
-	static play bool TryCheckInv(Actor a, string typeName, int amt,
+	static play bool TryCheckInv(Actor a, name typeName, int amt,
 		statelabel label, int owner = AAPTR_DEFAULT)
 	{
 		Class<Inventory> t = typeName;
 		if (t == null) return null;
 		return a.CheckInventory(t, amt, owner);
+	}
+
+	static play int TryCountInv(Actor a, name typeName, int ptr_select = AAPTR_DEFAULT)
+	{
+		Class<Inventory> t = typeName;
+		if (t == null) return 0;
+		return a.CountInv(t, ptr_select);
 	}
 
 	static play void DRLMDangerLevel(uint danger)
