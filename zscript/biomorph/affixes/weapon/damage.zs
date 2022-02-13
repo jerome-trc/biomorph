@@ -582,28 +582,35 @@ class BIO_WAfx_DamageForAmmoUse : BIO_WeaponAffix
 			if (!weap.Pipelines[i].DealsAnyDamage())
 				continue;
 
-			if (!weap.Pipelines[i].UsesSecondaryAmmo() &&
-				weap.ShotsPerMagazine(false) > 1)
-				return true;
-			else if (weap.Pipelines[i].UsesSecondaryAmmo() &&
-				weap.ShotsPerMagazine(true) > 1)
+			if (PrimaryCompatible(weap, weap.Pipelines[i].AsConst()) ||
+				SecondaryCompatible(weap, weap.Pipelines[i].AsConst()))
 				return true;
 		}
 
 		return false;
 	}
 
+	private static bool PrimaryCompatible(
+		readOnly<BIO_Weapon> weap, readOnly<BIO_WeaponPipeline> ppl)
+	{
+		return !ppl.UsesSecondaryAmmo() &&
+			(weap.ShotsPerMagazine(false) > 1 || weap.AmmoType1 == weap.MagazineType1);
+	}
+
+	private static bool SecondaryCompatible(
+		readOnly<BIO_Weapon> weap, readOnly<BIO_WeaponPipeline> ppl)
+	{
+		return ppl.UsesSecondaryAmmo() &&
+			(weap.ShotsPerMagazine(true) > 1 || weap.AmmoType2 == weap.MagazineType2);
+	}
+
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		bool
-			prim = weap.ShotsPerMagazine(false) > 1,
-			sec = weap.ShotsPerMagazine(true) > 1;
-
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			if (!weap.Pipelines[i].UsesSecondaryAmmo() && prim)
+			if (PrimaryCompatible(weap, weap.Pipelines[i].AsConst()))
 				Modifiers.Push(FRandom[BIO_Afx](1.5, 2.0));
-			else if (weap.Pipelines[i].UsesSecondaryAmmo() && sec)
+			else if (SecondaryCompatible(weap, weap.Pipelines[i].AsConst()))
 				Modifiers.Push(FRandom[BIO_Afx](1.5, 2.0));
 			else
 				Modifiers.Push(0.0);
