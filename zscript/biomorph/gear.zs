@@ -39,6 +39,17 @@ mixin class BIO_Gear
 	bool NoExplicitAffixes() const { return Affixes.Size() < 1; }
 	bool NoAffixes() const { return NoImplicitAffixes() && NoExplicitAffixes(); }
 
+	private void OnOwnerAttach()
+	{
+		if (!PreviouslyPickedUp)
+		{
+			DRLMDangerLevel();
+			BIO_EventHandler.BroadcastFirstPickup(GetClassName());
+		}
+
+		PreviouslyPickedUp = true;
+	}
+
 	void DRLMDangerLevel() const
 	{
 		if (Rarity == BIO_RARITY_UNIQUE)

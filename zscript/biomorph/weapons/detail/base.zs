@@ -428,8 +428,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	final override void AttachToOwner(Actor newOwner)
 	{
-		if (!PreviouslyPickedUp) DRLMDangerLevel();
-		PreviouslyPickedUp = true;
+		OnOwnerAttach();
 
 		int 
 			prevAmmo1 = newOwner.CountInv(AmmoType1),
