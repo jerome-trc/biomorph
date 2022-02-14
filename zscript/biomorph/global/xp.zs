@@ -648,4 +648,31 @@ extend class BIO_GlobalData
 		BasePerkGraph.Nodes[e].Icon = template.Icon;
 		return true;
 	}
+
+	void RegenPerks()
+	{
+		BasePerkGraph.Nodes.Clear();
+		CreateBasePerkGraph();
+
+		for (uint i = 0; i < PerkGraphs.Size(); i++)
+		{
+			PerkGraphs[i].Points = PartyLevel;
+
+			for (uint j = 1; j < PerkGraphs[i].PerkActive.Size(); j++)
+				PerkGraphs[i].PerkActive[j] = false;
+			
+			PerkGraphs[i].PerkActive.Resize(BasePerkGraph.Nodes.Size());
+			PerkGraphs[i].PerkActive[0] = true;
+		}
+
+		for (uint i = 0; i < MAXPLAYERS; i++)
+		{
+			let bioPlayer = BIO_Player(Players[i].MO);
+
+			if (bioPlayer == null) continue;
+
+			bioPlayer.Reset();
+			bioPlayer.ApplyPerks();
+		}
+	}
 }
