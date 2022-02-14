@@ -60,6 +60,8 @@ class BIO_PlasmaBolt : BIO_Puff
 		Renderstyle 'Add';
 		SeeSound "bio/proj/plasbolt/expl";
 		Speed 20;
+		Tag "$BIO_PLASMABOLT_TAG";
+		BIO_Puff.PluralTag "$BIO_PLASMABOLT_TAG_PLURAL";
 	}
 
 	States
