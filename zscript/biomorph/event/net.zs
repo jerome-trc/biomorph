@@ -312,17 +312,8 @@ extend class BIO_EventHandler
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"Weapon already has affix of type `%s` "
-				"(give non-zero as second argument to force).",
-				wafx_t.GetClassName());
-			return;
-		}
-
-		if (weap.HasAffixOfType(wafx_t, implicit: implicit) && !force)
-		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"Weapon already has affix of type `%s` "
-				"(give non-zero as second argument to force).",
-				wafx_t.GetClassName());
+				"(give `bio_addwafx:%s 1` to force).",
+				wafx_t.GetClassName(), wafx_t.GetClassName());
 			return;
 		}
 
@@ -331,8 +322,8 @@ extend class BIO_EventHandler
 		{
 			Console.Printf(Biomorph.LOGPFX_INFO ..
 				"Weapon incompatible with affix of type `%s` "
-				"(give non-zero as arg. 2 to force).",
-				wafx_t.GetClassName());
+				"(give `bio_addwafx:%s 1` to force).",
+				wafx_t.GetClassName(), wafx_t.GetClassName());
 			return;
 		}
 
