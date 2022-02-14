@@ -226,6 +226,54 @@ extend class BIO_GlobalData
 		}
 	}
 
+	void RegenLoot()
+	{
+		for (uint i = 0; i < __BIO_WEAPCAT_COUNT__; i++)
+			for (uint j = 0; j < 3; j++)
+				WeaponLootTables[j][i].Clear();
+
+		for (int lump = 0; lump < Wads.GetNumLumps(); lump++)
+		{
+			if (Wads.GetLumpNamespace(lump) != Wads.NS_GLOBAL)
+				continue;
+			if (!(Wads.GetLumpFullName(lump).Left(LMPNAME_WEAPONS.Length())
+				~== LMPNAME_WEAPONS))
+				continue;
+
+			BIO_JsonElementOrError fileOpt = BIO_JSON.parse(Wads.ReadLump(lump));
+			if (fileOpt is 'BIO_JsonError')
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. 
+					"Skipping malformed %s lump %d. Details: %s", LMPNAME_WEAPONS,
+					lump, BIO_JsonError(fileOpt).what);
+				continue;
+			}
+
+			let obj = BIO_Utils.TryGetJsonObject(BIO_JsonElement(fileOpt));
+			if (obj == null)
+			{
+				Console.Printf(Biomorph.LOGPFX_ERR .. LMPNAME_WEAPONS ..
+					" lump %d has malformed contents.", lump);
+				continue;
+			}
+
+			let loot = BIO_Utils.TryGetJsonObject(obj.get("loot"), errMsg: false);
+			if (loot != null)
+			{
+				TryReadWeaponLootArray(lump, loot, "melee", BIO_WEAPCAT_MELEE);
+				TryReadWeaponLootArray(lump, loot, "pistol", BIO_WEAPCAT_PISTOL);
+				TryReadWeaponLootArray(lump, loot, "shotgun", BIO_WEAPCAT_SHOTGUN);
+				TryReadWeaponLootArray(lump, loot, "ssg", BIO_WEAPCAT_SSG);
+				TryReadWeaponLootArray(lump, loot, "supershotgun", BIO_WEAPCAT_SSG);
+				TryReadWeaponLootArray(lump, loot, "rifle", BIO_WEAPCAT_RIFLE);
+				TryReadWeaponLootArray(lump, loot, "autogun", BIO_WEAPCAT_AUTOGUN);
+				TryReadWeaponLootArray(lump, loot, "launcher", BIO_WEAPCAT_LAUNCHER);
+				TryReadWeaponLootArray(lump, loot, "energy", BIO_WEAPCAT_ENERGY);
+				TryReadWeaponLootArray(lump, loot, "super", BIO_WEAPCAT_SUPER);
+			}
+		}
+	}
+
 	void PrintLootDiag() const
 	{
 		for (uint i = 0; i < __BIO_WEAPCAT_COUNT__; i++)

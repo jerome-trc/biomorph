@@ -36,7 +36,9 @@ extend class BIO_EventHandler
 
 	enum GlobalRegen : uint8
 	{
-		GLOBALREGEN_UPGRADES = 0
+		GLOBALREGEN_UPGRADES = 0,
+		GLOBALREGEN_LOOT = 1,
+		GLOBALREGEN_PERKS = 2
 	}
 
 	private transient BIO_WeaponUpgradeOverlay WeaponUpgradeOverlay;
@@ -509,7 +511,16 @@ extend class BIO_EventHandler
 		switch (event.Args[0])
 		{
 		case GLOBALREGEN_UPGRADES:
+			Console.Printf(Biomorph.LOGPFX_INFO .. "Regenerating weapon upgrades...");
 			Globals.RegenUpgrades();
+			return;
+		case GLOBALREGEN_LOOT:
+			Console.Printf(Biomorph.LOGPFX_INFO .. "Regenerating loot tables...");
+			Globals.RegenLoot();
+			return;
+		case GLOBALREGEN_PERKS:
+			Console.Printf(Biomorph.LOGPFX_INFO .. "Regenerating perk graph...");
+			Globals.RegenPerks();
 			return;
 		default:
 			Console.Printf(Biomorph.LOGPFX_INFO ..
