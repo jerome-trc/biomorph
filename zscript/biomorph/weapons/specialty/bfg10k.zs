@@ -11,7 +11,7 @@ class BIO_BFG10K : BIO_Weapon
 	
 		Weapon.AmmoGive 100;
 		Weapon.AmmoType 'Cell';
-		Weapon.AmmoUse 15;
+		Weapon.AmmoUse 10;
 		Weapon.SelectionOrder SELORDER_BFG_SPEC;
 		Weapon.SlotNumber 7;
 		Weapon.SlotPriority SLOTPRIO_SPECIALTY;
