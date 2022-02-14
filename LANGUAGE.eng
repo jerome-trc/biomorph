@@ -536,6 +536,16 @@
 	BIO_PERK_SOULSPHEREBONUSHEALTH_DESC =
 		"\c[Green]+10 maximum health and +10 maximum bonus health from each Soulsphere";
 
+	BIO_PERK_BETTERMEGASPHERES_TAG =
+		"\c[White]Rejuvenation";
+	BIO_PERK_BETTERMEGASPHERES_DESC =
+		"\c[Green]Megaspheres overheal you by 5% of your maximum bonus health";
+
+	BIO_PERK_MEGASPHEREBONUSHEALTH_TAG =
+		"\c[White]Hellish Might";
+	BIO_PERK_MEGASPHEREBONUSHEALTH_DESC =
+		"\c[Green]+10 maximum health and +10 maximum bonus health from each Megasphere";
+
 	BIO_PERK_SLIMERESIST_MINOR_TAG =
 		"\c[White]Ironfoot";
 	BIO_PERK_SLIMERESIST_MAJOR_TAG =
