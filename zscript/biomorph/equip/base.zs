@@ -319,7 +319,8 @@ class BIO_Armor : BIO_Equipment abstract
 		bioPlayer.A_Print(output, upTime);
 		bioPlayer.A_StartSound("bio/ui/beep", attenuation: 1.2);
 
-		return true;
+		// Don't consume the interaction so players can open doors and so on
+		return false;
 	}
 
 	// Does not check if already in perfect condition.
