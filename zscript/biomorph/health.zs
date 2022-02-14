@@ -70,3 +70,38 @@ class BIO_Soulsphere : Soulsphere replaces Soulsphere
 		Health.LowMessage 25, "$BIO_SOULSPHERE_PKUPLOW";
 	}
 }
+
+class BIO_Megasphere : Megasphere replaces Megasphere
+{
+	Default
+	{
+		Inventory.PickupMessage "$BIO_MEGASPHERE_PKUP";
+	}
+
+	States
+	{
+	Pickup:
+		TNT1 A 0;
+		Stop;
+	}
+
+	final override void DoPickupSpecial(Actor toucher)
+	{
+		super.DoPickupSpecial(toucher);
+		toucher.GiveBody(-200);
+
+		let bioPlayer = BIO_Player(toucher);
+		if (bioPlayer == null) return;
+		
+		if (bioPlayer.EquippedArmor != null && bioPlayer.EquippedArmor.Reparable())
+		{
+			BIO_ArmorBonus.TryRepairArmor(bioPlayer, 0);
+
+			PrintPickupMessage(toucher.CheckLocalView(), String.Format(
+				StringTable.Localize("$BIO_MEGASPHERE_ARMORREPAIR"),
+				bioPlayer.EquippedArmor.GetTag()));
+		}
+
+		bioPlayer.OnHealthPickup(self);
+	}
+}

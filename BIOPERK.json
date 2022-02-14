@@ -36,6 +36,13 @@
 			"icon": "SOULA0"
 		},
 		{
+			"id": "bio_bettermegaspheres",
+			"class": "BIO_Perk_BetterMegaspheres",
+			"tag": "$BIO_PERK_BETTERMEGASPHERES_TAG",
+			"desc": "$BIO_PERK_BETTERMEGASPHERES_DESC",
+			"icon": "MEGAA0"
+		},
+		{
 			"id": "bio_slimeresist1",
 			"class": "BIO_Perk_SlimeResist1",
 			"tag": "$BIO_PERK_SLIMERESIST_MINOR_TAG",
@@ -353,6 +360,51 @@
 					"desc": "$BIO_PERK_SOULSPHEREBONUSHEALTH_DESC",
 					"icon": "SOULA0",
 					"neighbors": [ "bio_bettersoulspheres_04" ]
+				}
+			]
+		},
+		"megasphere": {
+			"minor": [
+				{
+					"uuid": "bio_bettermegaspheres_00",
+					"template": "bio_bettermegaspheres",
+					"x": 114, "y": -841,
+					"neighbors": [ "bio_bonushealth_major_00" ]
+				},
+				{
+					"uuid": "bio_bettermegaspheres_01",
+					"template": "bio_bettermegaspheres",
+					"x": 193, "y": -835,
+					"neighbors": [ "bio_bettermegaspheres_00" ]
+				},
+				{
+					"uuid": "bio_bettermegaspheres_02",
+					"template": "bio_bettermegaspheres",
+					"x": 241, "y": -771,
+					"neighbors": [ "bio_bettermegaspheres_01" ]
+				},
+				{
+					"uuid": "bio_bettermegaspheres_03",
+					"template": "bio_bettermegaspheres",
+					"x": 204, "y": -720,
+					"neighbors": [ "bio_bettermegaspheres_02" ]
+				},
+				{
+					"uuid": "bio_bettermegaspheres_04",
+					"template": "bio_bettermegaspheres",
+					"x": 122, "y": -704,
+					"neighbors": [ "bio_bettermegaspheres_03" ]
+				}
+			],
+			"major": [
+				{
+					"uuid": "bio_megaspherebonushealth",
+					"class": "BIO_Perk_MegasphereBonusHealth",
+					"x": 75, "y": -759,
+					"tag": "$BIO_PERK_MEGASPHEREBONUSHEALTH_TAG",
+					"desc": "$BIO_PERK_MEGASPHEREBONUSHEALTH_DESC",
+					"icon": "MEGAA0",
+					"neighbors": [ "bio_bettermegaspheres_04" ]
 				}
 			]
 		},

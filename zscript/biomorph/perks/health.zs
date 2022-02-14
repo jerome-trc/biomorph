@@ -137,3 +137,48 @@ class BIO_PkupFunc_SoulsphereBonusHealth : BIO_ItemPickupFunctor
 		}
 	}
 }
+
+// 5% overhealing from Megaspheres =============================================
+
+class BIO_Perk_BetterMegaspheres : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PkupFunc_BetterMegaspheres');
+	}
+}
+
+class BIO_PkupFunc_BetterMegaspheres : BIO_ItemPickupFunctor
+{
+	final override void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const
+	{
+		if (!(item is 'Megasphere')) return;
+
+		for (uint i = 0; i < Count; i++)
+			bioPlayer.GiveBody(bioPlayer.GetMaxHealth(true) * 0.05, int.MAX);
+	}
+}
+
+// +10 increase to `BonusHealth` from each Megasphere ==========================
+
+class BIO_Perk_MegasphereBonusHealth : BIO_Perk
+{
+	final override void Apply(BIO_Player bioPlayer) const
+	{
+		bioPlayer.PushFunctor('BIO_PkupFunc_MegasphereBonusHealth');
+	}
+}
+
+class BIO_PkupFunc_MegasphereBonusHealth : BIO_ItemPickupFunctor
+{
+	final override void OnHealthPickup(BIO_Player bioPlayer, Inventory item) const
+	{
+		if (!(item is 'Megasphere')) return;
+
+		for (uint i = 0; i < Count; i++)
+		{
+			bioPlayer.BonusHealth += 10;
+			bioPlayer.PersistentHealth += 10;
+		}
+	}
+}
