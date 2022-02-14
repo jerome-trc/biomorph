@@ -131,6 +131,9 @@ class BIO_PkupFunc_SoulsphereBonusHealth : BIO_ItemPickupFunctor
 		if (!(item is 'Soulsphere')) return;
 
 		for (uint i = 0; i < Count; i++)
+		{
 			bioPlayer.BonusHealth += 10;
+			bioPlayer.PersistentHealth += 10;
+		}
 	}
 }

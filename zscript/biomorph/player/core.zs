@@ -23,6 +23,7 @@ class BIO_Player : DoomPlayer
 	property MaxWeaponsHeld: MaxWeaponsHeld;
 	property MaxEquipmentHeld: MaxEquipmentHeld;
 
+	int PersistentHealth; // Gets added to BonusHealth; is never reset
 	double SlimeDamageFactor; property SlimeDamageFactor: SlimeDamageFactor;
 
 	BIO_Armor EquippedArmor;
@@ -384,6 +385,7 @@ class BIO_Player : DoomPlayer
 
 		MaxHealth = Default.MaxHealth;
 		BonusHealth = Default.BonusHealth;
+		BonusHealth += PersistentHealth;
 		Stamina = Default.Stamina;
 
 		ForwardMove1 = Default.ForwardMove1;
