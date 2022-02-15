@@ -455,9 +455,7 @@ class BIO_HDF_EnemyHealthDamage : BIO_HitDamageFunctor
 
 	final override void ToString(in out Array<string> readout) const
 	{
-		readout.Push(String.Format(
-			StringTable.Localize("$BIO_HDF_ENEMYHEALTHDMG"),
-			Factor * 100.0));
+		// Nothing needed here; the affix to-string tells all
 	}
 }
 
