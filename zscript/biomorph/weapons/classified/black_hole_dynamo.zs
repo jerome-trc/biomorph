@@ -26,10 +26,10 @@ class BIO_BlackHoleDynamo : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
-			.FireFunctor(new('BIO_FireFunc_BHoleDyn').CustomSet(10, 90))
+			.FireFunctor(new('BIO_FireFunc_BHoleDyn').CustomSet(15, 110))
 			.FireType('BIO_BlackHoleProj')
 			.FireCount(1)
-			.SingleDamage(10)
+			.SingleDamage(10) // Damage dealt when ripping, not via spaghettification
 			.AssociateFirstFireTime()
 			.FireSound("bio/weap/bholedyn/fire")
 			.SetRestrictions(BIO_WPM_FIREFUNCTOR | BIO_WPM_FIRETYPE)
