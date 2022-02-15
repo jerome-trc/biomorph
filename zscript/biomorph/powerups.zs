@@ -27,6 +27,11 @@ mixin class BIO_Powerup
 
 mixin class BIO_Mixin_PowerupGiver
 {
+	Default
+	{
+		+DONTGIB
+	}
+
 	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
@@ -44,6 +49,11 @@ class BIO_PowerupGiver : PowerupGiver {}
 
 class BIO_Berserk : Berserk replaces Berserk
 {
+	Default
+	{
+		+DONTGIB
+	}
+
 	States
 	{
 	Pickup:
@@ -183,6 +193,7 @@ class BIO_Allmap : Allmap replaces Allmap
 {
 	Default
 	{
+		+DONTGIB
 		Inventory.PickupMessage "$BIO_ALLMAP_PKUP";
 	}
 
