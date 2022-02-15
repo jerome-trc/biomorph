@@ -22,7 +22,7 @@ extend class BIO_EventHandler
 		if (ReplaceWeapon(event) || ReplaceArmor(event))
 			return;
 
-		if (ContextFlags & BIO_EHCF_NOSUPPLYBOXES)
+		if ((ContextFlags & BIO_EHCF_NOSUPPLYBOXES) || Level.MapTime > 1)
 			return;
 
 		TrySpawnSupplyBox(event);
