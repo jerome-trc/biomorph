@@ -25,7 +25,7 @@ class BIO_PlasmaCannon : BIO_Weapon
 	{
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
 			.Projectile('BIO_PlasmaGlobule')
-			.X1D8Damage(10)
+			.X1D8Damage(8)
 			.Spread(0.4, 0.4)
 			.AssociateFirstFireTime()
 			.Build());
