@@ -101,6 +101,13 @@ class BIO_Megasphere : Megasphere replaces Megasphere
 				StringTable.Localize("$BIO_MEGASPHERE_ARMORREPAIR"),
 				bioPlayer.EquippedArmor.GetTag()));
 		}
+		else
+		{
+			bioPlayer.GiveInventory('BlueArmorForMegasphere', 1);
+
+			PrintPickupMessage(toucher.CheckLocalView(),
+				StringTable.Localize("$BIO_MEGASPHERE_SPIRITARMOR"));
+		}
 
 		bioPlayer.OnHealthPickup(self);
 	}
