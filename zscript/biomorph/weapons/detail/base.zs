@@ -1333,7 +1333,7 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 
 		ClearAffixes();
-		OnChange();
+		OnChange(rewriteReadout: false);
 
 		uint fl = Min(2, MaxAffixes);
 		uint c = Random[BIO_Afx](fl, MaxAffixes);
@@ -1359,7 +1359,7 @@ class BIO_Weapon : DoomWeapon abstract
 			let afx = BIO_WeaponAffix(new(eligibles[r]));
 			afx.Init(AsConst());
 			Affixes.Push(afx);
-			OnChange();
+			OnChange(rewriteReadout: false); // Caller should perform final `OnChange()`
 		}
 	}
 
@@ -1465,9 +1465,37 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 	}
 
+	// Unused as of now.
+	private void CullIncompatibleAffixes()
+	{
+		Array<bool> incompatibleExplicits;
+
+		for (uint i = 0; i < Affixes.Size(); i++)
+		{
+			incompatibleExplicits.Push(!Affixes[i].Compatible(AsConst()));
+
+			if (!incompatibleExplicits[i])
+				Affixes[i].Apply(self);
+		}
+
+		for (uint i = Affixes.Size() - 1; i >= 0; i--)
+		{
+			if (!incompatibleExplicits[i]) continue;
+			
+			if (BIO_debug)
+			{
+				Console.Printf(Biomorph.LOGPFX_DEBUG ..
+					"Culling incompatible affix: %s (%d)",
+					Affixes[i].GetClassName(), i);	
+			}
+
+			Affixes.Delete(i);
+		}
+	}
+
 	// Re-orders and then applies affixes, recomputes rarity,
 	// re-acquires magazine if possible, recolors tag, and rewrites readouts.
-	void OnChange()
+	void OnChange(bool rewriteReadout = true)
 	{
 		Array<BIO_WeaponAffix> implicits;
 		implicits.Move(ImplicitAffixes);
@@ -1496,34 +1524,8 @@ class BIO_Weapon : DoomWeapon abstract
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].Apply(self);
 
-		/*
-			// If a corruption effect or something similar has modified implicits
-			// in a way that causes an explicit to become incompatible, cull it
-
-			Array<bool> incompatibleExplicits;
-
-			for (uint i = 0; i < Affixes.Size(); i++)
-			{
-				incompatibleExplicits.Push(!Affixes[i].Compatible(AsConst()));
-
-				if (!incompatibleExplicits[i])
-					Affixes[i].Apply(self);
-			}
-
-			for (uint i = Affixes.Size() - 1; i >= 0; i--)
-			{
-				if (!incompatibleExplicits[i]) continue;
-				
-				if (BIO_debug)
-				{
-					Console.Printf(Biomorph.LOGPFX_DEBUG ..
-						"Culling incompatible affix: %s (%d)",
-						Affixes[i].GetClassName(), i);	
-				}
-
-				Affixes.Delete(i);
-			}
-		*/
+		Magazine1 = Magazine2 = null;
+		if (Owner != null) AcquireMagazines();
 
 		if (Default.Rarity == BIO_RARITY_UNIQUE)
 			Rarity = BIO_RARITY_UNIQUE;
@@ -1532,10 +1534,9 @@ class BIO_Weapon : DoomWeapon abstract
 		else
 			Rarity = BIO_RARITY_COMMON;
 
-		Magazine1 = Magazine2 = null;
-		if (Owner != null) AcquireMagazines();
-
 		SetTag(FullTag());
+
+		if (!rewriteReadout) return;
 
 		StatReadout.Clear();
 

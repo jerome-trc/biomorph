@@ -591,17 +591,9 @@ class BIO_CorrFunc_RandomizeHide : BIO_CorruptionFunctor
 {
 	final override void Invoke(BIO_Weapon weap) const
 	{
-		weap.ClearAffixes();
-
-		uint c = Random[BIO_Afx](2, weap.MaxAffixes);
-
-		for (uint i = 0; i < c; i++)
-		{
-			weap.AddRandomAffix();
-			weap.OnChange();
-		}
-		
+		weap.RandomizeAffixes(rerandomize: false);
 		weap.BIOFlags |= BIO_WF_AFFIXESHIDDEN;
+		// `OnChange()` not called because caller does so
 		weap.Owner.A_Print("$BIO_MUTA_CORRUPT_USE_HIDDENRAND", 3.5);
 	}
 
@@ -631,7 +623,7 @@ class BIO_CorrFunc_Implicit : BIO_CorruptionFunctor
 			let afx1 = BIO_WeaponAffix(new(Eligibles[r]));
 			uint e = weap.ImplicitAffixes.Push(afx1);
 			weap.ImplicitAffixes[e].Init(weap.AsConst());
-			weap.OnChange();
+			weap.OnChange(rewriteReadout: false); // Readout gets rewritten by caller
 
 			Eligibles.Delete(r);
 
