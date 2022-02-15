@@ -593,15 +593,21 @@ class BIO_WAfx_DamageForAmmoUse : BIO_WeaponAffix
 	private static bool PrimaryCompatible(
 		readOnly<BIO_Weapon> weap, readOnly<BIO_WeaponPipeline> ppl)
 	{
-		return !ppl.UsesSecondaryAmmo() &&
-			(weap.ShotsPerMagazine(false) > 1 || weap.AmmoType1 == weap.MagazineType1);
+		if (ppl.UsesSecondaryAmmo()) return false;
+		if (weap.AmmoType1 == null) return false;
+		if (weap.AmmoType1 != weap.MagazineType1 &&
+			weap.ShotsPerMagazine(false) < 1) return false;
+		return true;
 	}
 
 	private static bool SecondaryCompatible(
 		readOnly<BIO_Weapon> weap, readOnly<BIO_WeaponPipeline> ppl)
 	{
-		return ppl.UsesSecondaryAmmo() &&
-			(weap.ShotsPerMagazine(true) > 1 || weap.AmmoType2 == weap.MagazineType2);
+		if (!ppl.UsesSecondaryAmmo()) return false;
+		if (weap.AmmoType2 == null) return false;
+		if (weap.AmmoType2 != weap.MagazineType2 &&
+			weap.ShotsPerMagazine(true) < 1) return false;
+		return true;
 	}
 
 	final override void Init(readOnly<BIO_Weapon> weap)
