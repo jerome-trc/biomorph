@@ -109,6 +109,9 @@
 	BIO_BFG10K_TAG = "BFG10K";
 	BIO_BFG10K_PKUP = "Obtained a %s.";
 
+	BIO_BREACHINGAXE_TAG = "Breaching Axe";
+	BIO_BREACHINGAXE_PKUP = "Obtained a %s.";
+
 	BIO_NAILGUN_TAG = "Nailgun";
 	BIO_NAILGUN_PKUP = "Obtained a %s.";
 
