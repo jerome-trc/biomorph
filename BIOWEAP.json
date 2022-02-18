@@ -2,6 +2,7 @@
 	"loot": {
 		"melee": [
 			"BIO_Chainsaw",
+			"BIO_BreachingAxe",
 			"BIO_ImpactorGauntlet"
 		],
 		"pistol": [
