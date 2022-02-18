@@ -111,6 +111,7 @@
 
 	BIO_BREACHINGAXE_TAG = "Breaching Axe";
 	BIO_BREACHINGAXE_PKUP = "Obtained a %s.";
+	BIO_FIREFUNC_AXE = "\c[MidGrey]Charge and release an axe cut";
 
 	BIO_NAILGUN_TAG = "Nailgun";
 	BIO_NAILGUN_PKUP = "Obtained a %s.";
@@ -816,5 +817,6 @@
 	BIO_PUNCH = "punch";
 	BIO_KICK = "kick";
 	BIO_LUNGE = "lunge";
+	BIO_SWING = "swing";
 	BIO_ALL_4 = "all 4";
 	BIO_2 = "2";
