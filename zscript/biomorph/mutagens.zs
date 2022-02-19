@@ -401,6 +401,20 @@ class BIO_Muta_Recycle : BIO_Mutagen
 			return false;
 		}
 
+		Owner.TakeInventory(weap.GetClass(), 1);
+		Owner.A_Print("$BIO_MUTA_RECYCLE_USE");
+
+		for (Inventory i = Owner.Inv; i != null; i = i.Inv)
+		{
+			let genes = BIO_RecombinantGenes(i);
+
+			if (genes != null && genes.AffixType == afx.GetClass())
+			{
+				genes.Amount = Min(genes.Amount + 1, genes.MaxAmount);
+				return true;
+			}
+		}
+
 		let genes = BIO_RecombinantGenes(
 			Actor.Spawn('BIO_RecombinantGenes', Owner.Pos));
 
@@ -413,8 +427,6 @@ class BIO_Muta_Recycle : BIO_Mutagen
 
 		genes.AffixType = afx.GetClass();
 		genes.AttachToOwner(Owner);
-		Owner.TakeInventory(weap.GetClass(), 1);
-		Owner.A_Print("$BIO_MUTA_RECYCLE_USE");
 		return true;
 	}
 }
@@ -436,8 +448,8 @@ class BIO_RecombinantGenes : Inventory
 		Tag "$BIO_RECOMBGENES_TAG";
 
 		Inventory.Icon 'RECOA0';
-		Inventory.InterHubAmount 1;
-		Inventory.MaxAmount 1;
+		Inventory.InterHubAmount 99;
+		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "$BIO_RECOMBGENES_PKUP";
 		Inventory.UseSound "bio/muta/use/general";
 	}
@@ -467,8 +479,19 @@ class BIO_RecombinantGenes : Inventory
 		SetTag(newTag);
 	}
 
-	// Prevent pickups from being folded together.
-	final override bool HandlePickup(Inventory item) { return false; }
+	// Prevent pickups from being folded together
+	// unless they have the same type of affix.
+	final override bool HandlePickup(Inventory item)
+	{
+		let gene = BIO_RecombinantGenes(item);
+
+		if (gene == null || gene.AffixType != AffixType)
+			return false;
+
+		Amount = Min(Amount + 1, MaxAmount);
+		gene.bPickupGood = true;
+		return true;
+	}
 
 	final override bool Use(bool pickup)
 	{
