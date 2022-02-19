@@ -177,17 +177,19 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder X1D3Damage(int baseline)
+	BIO_WeaponPipelineBuilder X1D3Damage(int multi)
 	{
 		CheckDamageFunctorRestricted();
-		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_1DX').CustomSet(baseline, 3));
+		Pipeline.SetDamageFunctor(
+			new('BIO_DmgFunc_XTimesRand').CustomSet(multi, 1, 3));
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder X1D8Damage(int baseline)
+	BIO_WeaponPipelineBuilder X1D8Damage(int multi)
 	{
 		CheckDamageFunctorRestricted();
-		Pipeline.SetDamageFunctor(new('BIO_DmgFunc_1Dx').CustomSet(baseline, 8));
+		Pipeline.SetDamageFunctor(
+			new('BIO_DmgFunc_XTimesRand').CustomSet(multi, 1, 8));
 		return self;
 	}
 

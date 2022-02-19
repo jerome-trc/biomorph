@@ -80,53 +80,6 @@ class BIO_DmgFunc_Rand : BIO_DamageFunctor
 	}
 }
 
-// For imitating the vanilla behaviour of multiplying puff  
-// damage by 1D3, or of multiplying projectile damage by 1D8.
-class BIO_DmgFunc_1DX : BIO_DamageFunctor
-{
-	protected int Baseline, MaxFactor;
-
-	override int Invoke() const
-	{
-		return Baseline * Random(1, MaxFactor);
-	}
-
-	override int MinOutput() const { return Baseline; }
-	override int MaxOutput() const { return Baseline * MaxFactor; }
-
-	BIO_DmgFunc_1DX CustomSet(int base, int maxFac)
-	{
-		Baseline = base;
-		MaxFactor = maxFac;
-		return self;
-	}
-
-	override void GetValues(in out Array<int> vals) const
-	{
-		vals.PushV(Baseline);
-	}
-
-	override void SetValues(in out Array<int> vals)
-	{
-		Baseline = vals[0];
-	}
-
-	override string ToString(BIO_DamageFunctor def) const
-	{
-		let myDefs = BIO_DmgFunc_1DX(def);
-		string crEsc = "";
-		
-		if (myDefs != null)
-			crEsc = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
-		else
-			crEsc = CRESC_STATMODIFIED;
-
-		return String.Format(
-			StringTable.Localize("$BIO_DMGFUNC_1DX"),
-			crEsc, Baseline, MaxFactor);
-	}
-}
-
 class BIO_DmgFunc_XTimesRand : BIO_DamageFunctor
 {
 	protected int Multiplier, MinRandom, MaxRandom;
