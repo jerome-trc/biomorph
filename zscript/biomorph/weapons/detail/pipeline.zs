@@ -232,6 +232,7 @@ class BIO_WeaponPipeline play
 		return FireTypeIsDefault() && !(Mask & BIO_WPM_FIRETYPE) && !sameType;
 	}
 
+	bool FiresPuff() const { return FireType is 'BIO_Puff'; }
 	bool FiresTrueProjectile() const { return FireType is 'BIO_Projectile'; }
 	bool FiresFastProjectile() const { return FireType is 'BIO_FastProjectile'; }
 	bool FiresProjectile() const { return FiresTrueProjectile() || FiresFastProjectile(); }
