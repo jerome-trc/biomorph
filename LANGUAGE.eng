@@ -94,6 +94,9 @@
 	BIO_SHOTGUN_PKUP = "Grabbed a %s.";
 	BIO_SUPERSHOTGUN_PKUP = "Grabbed a %s.";
 
+	BIO_STOPPINGSHOTGUN_TAG = "Stopping Shotgun";
+	BIO_STOPPINGSHOTGUN_PKUP = "Grabbed a %s.";
+
 	BIO_ASSAULTRIFLE_TAG = "Assault Rifle";
 	BIO_ASSAULTRIFLE_PKUP = "Grabbed an %s.";
 

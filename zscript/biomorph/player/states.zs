@@ -141,7 +141,6 @@ extend class BIO_Player
 		'XDeath_BFG10K'
 	};
 
-
 	States
 	{
 	// Spawn

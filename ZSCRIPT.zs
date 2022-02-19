@@ -107,6 +107,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/standard/plasma_rifle.zs"
 #include "zscript/biomorph/weapons/standard/rocket_launcher.zs"
 #include "zscript/biomorph/weapons/standard/shotgun.zs"
+// #include "zscript/biomorph/weapons/standard/stopping_shotgun.zs"
 #include "zscript/biomorph/weapons/standard/super_shotgun.zs"
 
 #include "zscript/biomorph/weapons/specialty/assault_handgun.zs"
