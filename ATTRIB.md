@@ -39,6 +39,8 @@ Auto Shotgun sprites are courtesy of id Software LLC, Infinity Ward, Inc., and w
 
 BFG10K sprites are courtesy of Eriance.
 
+Breaching Axe sprites are courtesy of ZDoom forum user neoworm.
+
 Nailgun and Nail sprites are courtesy of ZDoom forum user osjclatchford, with fixes by Hellstorm Archon.
 
 Plasma Cannon sprites (as well as those of the Plasma Globule) are courtesy of id Software LLC and Midway Games Inc., and were edited by Realm667 user Robot J.

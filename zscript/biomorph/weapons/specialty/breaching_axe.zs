@@ -21,6 +21,8 @@ class BIO_BreachingAxe : BIO_Weapon
 	override void InitPipelines(in out Array<BIO_WeaponPipeline> pipelines) const
 	{
 		let fireFunc = new('BIO_FireFunc_Axe');
+		fireFunc.MissSound = "bio/weap/whoosh";
+		fireFunc.HitSound = "*fist";
 		fireFunc.Range = DEFMELEERANGE * 1.5;
 
 		pipelines.Push(BIO_WeaponPipelineBuilder.Create()
