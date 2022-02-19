@@ -40,6 +40,46 @@ class BIO_MeleeHit : BIO_Puff
 	}
 }
 
+class BIO_DemoBullet : BIO_Bullet
+{
+	Default
+	{
+		+PUFFONACTORS
+		Scale 0.2;
+		Tag "$BIO_DEMOBULLET_TAG";
+		BIO_Puff.PluralTag "$BIO_DEMOBULLET_TAG_PLURAL";
+	}
+
+	States
+	{
+	Spawn:
+	Melee:
+		MISL B 8 Bright;
+		MISL C 6 Bright;
+		MISL D 4 Bright;
+		Stop;
+	}
+}
+
+class BIO_DemoShotPellet : BIO_DemoBullet
+{
+	Default
+	{
+		Scale 0.1;
+		Tag "$BIO_DEMOSHOTPELLET_TAG";
+		BIO_Puff.PluralTag "$BIO_DEMOSHOTPELLET_TAG_PLURAL";
+	}
+}
+
+class BIO_DemoSlug : BIO_DemoBullet
+{
+	Default
+	{
+		Tag "$BIO_DEMOSLUG_TAG";
+		BIO_Puff.PluralTag "$BIO_DEMOSLUG_TAG_PLURAL";
+	}
+}
+
 class BIO_PlasmaBolt : BIO_Puff
 {
 	Default

@@ -180,6 +180,15 @@
 	BIO_SLUG_TAG = "slug";
 	BIO_SLUG_TAG_PLURAL = "slugs";
 
+	BIO_DEMOBULLET_TAG = "demolition bullet";
+	BIO_DEMOBULLET_TAG_PLURAL = "demolition bullets";
+
+	BIO_DEMOSHOTPELLET_TAG = "demolition shot pellet";
+	BIO_DEMOSHOTPELLET_TAG_PLURAL = "demolition shot pellets";
+
+	BIO_DEMOSLUG_TAG = "demolition slug";
+	BIO_DEMOSLUG_TAG_PLURAL = "demolition slugs";
+
 	BIO_ELECTRICPUFF_TAG = "electric arc";
 	BIO_ELECTRICPUFF_TAG_PLURAL = "electric arcs";
 
@@ -371,6 +380,9 @@
 
 	BIO_WAFX_SLUG_TAG = "Slug Retrofit";
 	BIO_WAFX_SLUG_TOSTR = "Fires highly-accurate solid slugs";
+
+	BIO_WAFX_DEMOAMMO_TAG = "Demolition Retrofit";
+	BIO_WAFX_DEMOAMMO_TOSTR = "Fires demolition rounds";
 
 	BIO_WAFX_MINIMISSILE_TAG = "Gyrojet";
 	BIO_WAFX_MINIMISSILE_TOSTR = "Fires fast mini-missiles";

@@ -125,6 +125,79 @@ class BIO_WAfx_Slug : BIO_WeaponAffix
 	}
 }
 
+class BIO_WAfx_DemoAmmo : BIO_WeaponAffix
+{
+	// Weapon must be firing shot pellets for this affix to be applicable.	
+	final override bool Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_DemoBullet', true) ||
+				!weap.Pipelines[i].FiresPuff())
+				continue;
+			if (!weap.Pipelines[i].SplashMutable())
+				continue;
+			if (!weap.Pipelines[i].CanFirePuffs() &&
+				!weap.Pipelines[i].FireFunctorMutable())
+				continue;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!weap.Pipelines[i].FireTypeMutableTo('BIO_DemoBullet', true))
+				continue;
+
+			bool cfp = weap.Pipelines[i].CanFirePuffs();
+			
+			if (!cfp)
+			{
+				if (!weap.Pipelines[i].FireFunctorMutable())
+					continue;
+				else
+					weap.Pipelines[i].SetFireFunctor(new('BIO_FireFunc_Bullet').Setup());
+			}
+
+			let prevFT = weap.Pipelines[i].GetFireType();
+
+			if (prevFT == 'BIO_ShotPellet')
+				weap.Pipelines[i].SetFireType('BIO_DemoShotPellet');
+			else if (prevFT == 'BIO_Slug')
+				weap.Pipelines[i].SetFireType('BIO_DemoSlug');
+			else
+				weap.Pipelines[i].SetFireType('BIO_DemoBullet');
+
+			int avgDmg = weap.Pipelines[i].GetAverageDamage();
+			weap.Pipelines[i].SetSplash(avgDmg, avgDmg * 1.5);
+		}
+	}
+
+	final override void ToString(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap) const
+	{
+		strings.Push(StringTable.Localize("$BIO_WAFX_DEMOAMMO_TOSTR"));
+	}
+
+	final override string GetTag() const
+	{
+		return StringTable.Localize("$BIO_WAFX_DEMOAMMO_TAG");
+	}
+
+	final override bool SupportsReroll(readOnly<BIO_Weapon> _) const { return false; }
+	final override bool ImplicitExplicitExclusive() const { return true; }
+
+	final override BIO_WeaponAffixFlags GetFlags() const
+	{
+		return BIO_WAF_NONE;
+	}
+}
+
 class BIO_WAfx_MiniMissile : BIO_WeaponAffix
 {
 	final override bool Compatible(readOnly<BIO_Weapon> weap) const
