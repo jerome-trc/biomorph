@@ -360,21 +360,23 @@ class BIO_Weapon : DoomWeapon abstract
 
 		int given1 = 0, given2 = 0;
 
-		if (AmmoType1 != null)
+		if (AmmoType1 != null && AmmoGive1 > 0)
 		{
-			int amt = toucher.CountInv(AmmoType1);
-			toucher.GiveInventory(AmmoType1,
-				AmmoGive1 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR));
-			given1 = toucher.CountInv(AmmoType1) - amt;
+			let ammoItem = toucher.FindInventory(AmmoType1);
+			int amt = toucher.CountInv(AmmoType1),
+				toGive = AmmoGive1 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR);
+			ammoItem.Amount = Min(ammoItem.Amount + toGive, ammoItem.MaxAmount);
+			given1 = ammoItem.Amount - amt;
 			AmmoGive1 -= given1;
 		}
 
-		if (AmmoType2 != null)
+		if (AmmoType2 != null && AmmoGive2 > 0)
 		{
-			int amt = toucher.CountInv(AmmoType2);
-			toucher.GiveInventory(AmmoType2,
-				AmmoGive2 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR));
-			given2 = toucher.CountInv(AmmoType2) - amt;
+			let ammoItem = toucher.FindInventory(AmmoType2);
+			int amt = toucher.CountInv(AmmoType2),
+				toGive = AmmoGive2 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR);
+			ammoItem.Amount = Min(ammoItem.Amount + toGive, ammoItem.MaxAmount);
+			given2 = ammoItem.Amount - amt;
 			AmmoGive2 -= given2;
 		}
 
