@@ -187,15 +187,27 @@ class BIO_StatusBar : BaseStatusBar
 	{
 		let armor = CPlayer.MO.FindInventory('BasicArmor');
 		if (armor == null || armor.Amount <= 0) return;
-
 		DrawInventoryIcon(armor, (20, -22));
-		DrawString(Font_HUD, FormatNumber(armor.Amount, 3),
-			(44, -36), 0, Font.CR_DARKGREEN);
-		DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3) .. "%",
-			(14, -30), 0, Font.CR_WHITE);
 
 		let bioArmor = BIOPlayer.EquippedArmor;
-		if (bioArmor == null) return;
+		if (bioArmor != null)
+		{
+			DrawString(Font_HUD,
+				String.Format("%s / %s",
+					FormatNumber(armor.Amount, 3, 5),
+					FormatNumber(bioArmor.ArmorData.MaxAmount, 3, 5)), 
+				(44, -36), 0, Font.CR_DARKGREEN);
+			DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3) .. "%",
+				(14, -30), 0, Font.CR_WHITE);
+		}
+		else
+		{
+			DrawString(Font_HUD, FormatNumber(armor.Amount, 3),
+				(44, -36), 0, Font.CR_DARKGREEN);
+			DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3) .. "%",
+				(14, -30), 0, Font.CR_WHITE);
+			return;
+		}
 
 		int affixY = -54;
 
