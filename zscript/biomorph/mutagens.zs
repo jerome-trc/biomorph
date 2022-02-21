@@ -434,7 +434,6 @@ class BIO_Muta_Recycle : BIO_Mutagen
 class BIO_RecombinantGenes : Inventory
 {
 	Class<BIO_WeaponAffix> AffixType;
-	private BIO_WeaponAffix Affix;
 
 	Default
 	{
@@ -474,8 +473,8 @@ class BIO_RecombinantGenes : Inventory
 		}
 
 		string newTag = Default.GetTag();
-		Affix = BIO_WeaponAffix(new(AffixType));
-		newTag.AppendFormat("\n\n\c[White]%s\c-", Affix.GetTag());
+		newTag.AppendFormat("\n\n\c[White]%s\c-", 
+			BIO_WeaponAffix(new(AffixType)).GetTag());
 		SetTag(newTag);
 	}
 
@@ -521,23 +520,32 @@ class BIO_RecombinantGenes : Inventory
 			return false;
 		}
 
-		if (weap.HasAffixOfType(Affix.GetClass()))
+		let affix = BIO_WeaponAffix(new(AffixType));
+
+		if (weap.HasAffixOfType(affix.GetClass()))
 		{
 			Owner.A_Print("$BIO_RECOMBGENES_FAIL_OVERLAP", 5.0);
 			return false;
 		}
 
-		if (!Affix.Compatible(weap.AsConst()))
+		if (!affix.Compatible(weap.AsConst()))
 		{
 			Owner.A_Print("$BIO_RECOMBGENES_FAIL_INCOMPAT", 5.0);
 			return false;
 		}
-		
-		uint e = weap.Affixes.Push(Affix);
+
+		uint e = weap.Affixes.Push(affix);
 		weap.Affixes[e].Init(weap.AsConst());
 		weap.OnChange();
 		Owner.A_Print("$BIO_MUTA_ADD_USE");
 		return true;
+	}
+
+	final override Inventory CreateTossable(int amt)
+	{
+		let ret = BIO_RecombinantGenes(super.CreateTossable(amt));
+		ret.AffixType = AffixType;
+		return ret;
 	}
 
 	readOnly<BIO_RecombinantGenes> AsConst() const { return self; }
