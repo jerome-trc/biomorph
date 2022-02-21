@@ -296,6 +296,7 @@ class BIO_WAfx_BFGSpray : BIO_WeaponAffix
 			ppl.SetFireType('BIO_BFGExtra');
 			ppl.SetFireCount(ppl.GetFireCount() * 4);
 			ppl.MultiplyAllDamage(0.75);
+			ppl.ClampDamage(1);
 			ppl.SetFireSound("weapons/bfgx");
 			ppl.ModifyAngleAndPitch(90.0, 0.0);
 		}
