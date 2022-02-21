@@ -369,6 +369,19 @@ class BIO_WeaponPipeline play
 		SetDamageValues(vals);
 	}
 
+	void ClampDamage(int min = 0, int max = int.MAX)
+	{
+		if (Mask & BIO_WPM_DAMAGEVALS) return;
+
+		Array<int> vals;
+		GetDamageValues(vals);
+
+		for (uint i = 0; i < vals.Size(); i++)
+			vals[i] = Clamp(vals[i], min, max);
+
+		SetDamageValues(vals);
+	}
+
 	bool DealsAnyDamage() const
 	{
 		Array<int> vals;
