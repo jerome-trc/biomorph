@@ -1,19 +1,28 @@
-acs/*
-actors/*
-decorate/*
+# File system ##################################################################
+.DS_Store
+desktop.ini
+
+# Text editor/IDE ##############################################################
+.vs
+.atomignore
+*.swp
+*.swo
+Session.vim
+.cproject
+.idea
+*.iml
+.vscode
+.project
+.favorites.json
+.settings/
 
 *.pk3
 *.pk3.bak
 
-# IDEs, text editors, etc.
-.vscode
-.atomignore
+# Assets-in-progress ###########################################################
+*.blend1
+/blender/render
 
-# Graphics/sprites-in-progress
-*.xcf
-
-# Audio-in-progress
-*.aup
-*.au
-
+# Miscellaneous ################################################################
 gzdoom-crash.log
+/temp
