@@ -1,0 +1,6 @@
+addkeysection "$BIO_MODTITLE" BIO_Section
+
+// Debug event aliases
+
+alias bio_help_ "event bio_help"
+alias bio_monsval_ "event bio_monsval"

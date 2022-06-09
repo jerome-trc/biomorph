@@ -1,0 +1,13 @@
+GameInfo
+{
+	AddEventHandlers = "BIO_EventHandler"
+   PlayerClasses = "BIO_Player"
+	StatusBarClass = "BIO_StatusBar"
+}
+
+DamageType BIO_NullDamage
+{
+   Factor = 0
+   NoArmor
+   ReplaceFactor
+}
