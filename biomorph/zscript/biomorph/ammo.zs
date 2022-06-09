@@ -163,5 +163,48 @@ class BIO_Backpack : BackpackItem replaces Backpack
 		Stop;
 	}
 
-	// LATER: Maybe waste-proof this; not as big a deal as with the others
+	override bool HandlePickup(Inventory item)
+	{
+		if (!(item is 'BackpackItem'))
+			return false;
+
+		bool overflow = false;
+
+		for (let i = Owner.Inv; i != null; i = i.Inv)
+		{
+			let a = Ammo(i);
+
+			if (a == null || a.GetParentAmmo() != a.GetClass())
+				continue;
+
+			if (a.Amount < a.MaxAmount || sv_unlimited_pickup)
+			{
+				int amt = a.Default.BackpackAmount;
+
+				if (!bIgnoreSkill)
+					amt = int(amt * G_SkillPropertyFloat(SKILLP_AmmoFactor));
+				
+				a.Amount += amt;
+
+				if (!sv_unlimited_pickup)
+					a.Amount = Min(a.Amount, a.MaxAmount);
+			}
+			else
+			{
+				overflow = true;
+				Actor.Spawn(a.GetClass(), item.Pos, ALLOW_REPLACE);
+			}
+		}
+
+		if (overflow)
+		{
+			PrintPickupMessage(
+				Owner.CheckLocalView(),
+				"$BIO_BACKPACK_OVERFLOW"
+			);
+		}
+
+		item.bPickupGood = true;
+		return true;
+	}
 }

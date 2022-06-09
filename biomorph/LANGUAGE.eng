@@ -75,6 +75,7 @@
 
 	BIO_BACKPACK_TAG = "Backpack";
 	BIO_BACKPACK_PKUP = "Obtained a backpack full of ammo.";
+	BIO_BACKPACK_OVERFLOW = "Left some excess ammo behind from a backpack.";
 
 // Powerups ////////////////////////////////////////////////////////////////////
 
