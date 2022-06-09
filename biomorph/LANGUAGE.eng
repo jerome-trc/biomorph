@@ -1,0 +1,121 @@
+/*	Commonwealth English localization.
+
+	Some notes:
+
+	- Indented in hopes that your text editor of choice provides folding (YMMV).
+	- Many of these strings are predefined instead of generated algorithmically due
+	to a need for different indefinite articles (a/an); I don't know of a programmatic
+	solution which doesn't break when moved from English to, for instance, French.
+	- Don't be surprised if an internal name doesn't line up with a flavour name.
+	- Color escape codes often get substituted at runtime.
+*/
+
+[eng default]
+
+	BIO_MODTITLE = "Biomorph";
+
+// Health //////////////////////////////////////////////////////////////////////
+
+	BIO_HEALTHBONUS_TAG = "Health Flask";
+	BIO_HEALTHBONUS_PKUP = "Drank the contents of a health flask.";
+	BIO_HEALTHBONUS_COLLECTED = "Didn't pick up a Health Flask, but counted it as collected.";
+	BIO_STIMPACK_TAG = "Stimpack";
+	BIO_STIMPACK_PKUP = "Used a stimpack.";
+	BIO_STIMPACK_PARTIAL = "Partially used a stimpack.";
+	BIO_STIMPACK_PKUPLOW = "Used a badly-needed stimpack.";
+	BIO_MEDIKIT_TAG = "First-Aid Kit";
+	BIO_MEDIKIT_PKUP = "Used a first-aid kit.";
+	BIO_MEDIKIT_PARTIAL = "Partially used a first-aid kit.";
+	BIO_MEDIKIT_PKUPLOW = "Used a badly-needed first-aid kit.";
+	BIO_SOULSPHERE_TAG = "Soulsphere";
+	BIO_SOULSPHERE_PKUP = "Absorbed a Soulsphere.";
+	BIO_SOULSPHERE_PARTIAL = "Partially absorbed a Soulsphere.";
+	BIO_SOULSPHERE_PKUPLOW = "Absorbed a much-needed Soulsphere.";
+	BIO_SOULSPHERE_COLLECTED = "Didn't pick up a Soulsphere, but counted it as collected.";
+
+// Armour //////////////////////////////////////////////////////////////////////
+
+	BIO_ARMORBONUS_TAG = "Armour Shard";
+	BIO_ARMORBONUS_PKUP = "Jury-rigged some protection using an armour shard.";
+	BIO_ARMORBONUS_COLLECTED = "Didn't pick up an Armour Shard, but counted it as collected.";
+
+	BIO_LIGHTARMOR_TAG = "Security Vest";
+	BIO_LIGHTARMOR_PKUP = "Picked up and donned a security vest.";
+	BIO_LIGHTARMOR_PARTIAL = "Repaired your worn armour by scavenging a security vest.";
+
+	BIO_HEAVYARMOR_TAG = "Combat Rig";
+	BIO_HEAVYARMOR_PKUP = "Picked up and donned a combat rig.";
+	BIO_HEAVYARMOR_PARTIAL = "Repaired your worn armour by scavenging a combat rig.";
+
+// Ammo ////////////////////////////////////////////////////////////////////////
+
+	BIO_CLIP_TAG = "Magazine";
+	BIO_CLIP_PKUP = "Picked up a bullet magazine.";
+	BIO_CLIP_PARTIAL = "Partially emptied a bullet magazine.";
+	BIO_CLIPBOX_TAG = "Bullet Box";
+	BIO_CLIPBOX_PKUP = "Picked up a bullet box.";
+	BIO_CLIPBOX_PARTIAL = "Partially emptied a bullet box.";
+	BIO_SHELL_TAG = "Shotshells";
+	BIO_SHELL_PKUP = "Picked up a handful of shotshells.";
+	BIO_SHELL_PARTIAL = "Picked up part of a handful of shotshells.";
+	BIO_SHELLBOX_TAG = "Shell Box";
+	BIO_SHELLBOX_PKUP = "Picked up a box of shotshells.";
+	BIO_SHELLBOX_PARTIAL = "Partially emptied a box of shotshells.";
+	BIO_ROCKETAMMO_TAG = "Rocket";
+	BIO_ROCKETAMMO_PKUP = "Picked up a rocket.";
+	BIO_ROCKETBOX_TAG = "Rocket Box";
+	BIO_ROCKETBOX_PKUP = "Picked up a rocket box.";
+	BIO_ROCKETBOX_PARTIAL = "Partially emptied a rocket box.";
+	BIO_CELL_TAG = "Energy Cell";
+	BIO_CELL_PKUP = "Picked up an energy cell.";
+	BIO_CELL_PARTIAL = "Partially drained an energy cell.";
+	BIO_CELLPACK_TAG = "Energy Cell Pack";
+	BIO_CELLPACK_PKUP = "Picked up an energy cell pack.";
+	BIO_CELLPACK_PARTIAL = "Partially drained an energy cell pack.";
+
+	BIO_BACKPACK_TAG = "Backpack";
+	BIO_BACKPACK_PKUP = "Obtained a backpack full of ammo.";
+
+// Powerups ////////////////////////////////////////////////////////////////////
+
+	BIO_ALLMAP_PKUP = "Obtained a computer area map; your surroundings become clear.";
+	BIO_BLURSPHERE_PKUP = "Absorbed a blursphere.";
+	BIO_LIGHTAMP_PKUP = "Obtained a light amplification visor.";
+	BIO_MEGASPHERE_PKUP = "Absorbed a Megasphere!";
+	BIO_RADSUIT_PKUP = "Obtained and donned an N.B.C. suit.";
+
+// Menu, game options //////////////////////////////////////////////////////////
+
+	BIO_OPTLBL_AUTORELOAD_PRE = "Firing an empty weapon reloads it";
+	BIO_OPTLBL_AUTORELOAD_POST = "Auto-reload after emptying magazine";
+	BIO_OPTVAL_AUTOREL_ALWAYS = "Always";
+	BIO_OPTVAL_AUTOREL_SINGLE = "Single-shot weapons only";
+	BIO_OPTVAL_AUTOREL_NEVER = "Never";
+
+	BIO_OPTLBL_MULTIBARRELFIRE = "Multi-Barrel Fire Mode";
+	BIO_OPTVAL_MBF_PRIM = "Primary Fires Multiple Barrels";
+	BIO_OPTVAL_MBF_SEC = "Secondary Fires Multiple Barrels";
+
+	BIO_OPTLBL_BERSERKSWITCH = "Going Berserk switches to Fist";
+	BIO_OPTVAL_BSKS_NONE = "Never";
+	BIO_OPTVAL_BSKS_MELEE = "Always";
+	BIO_OPTVAL_BSKS_FIRSTONLY = "Only on first pickup";
+
+	BIO_OPTLBL_MULTIRELOADMODE = "Multi-reload mode";
+	BIO_OPTVAL_MRM_AUTO = "Continue until interrupted";
+	BIO_OPTVAL_MRM_HOLD = "Hold \c[LightBlue]Reload\c[White] to continue";
+
+	BIO_OPTLBL_INVBARSLOTS = "HUD Inventory Bar Slots";
+
+	BIO_OPTLBL_QUAKE = "Screen Shake";
+
+// Keybindings /////////////////////////////////////////////////////////////////
+
+	BIO_UNASSIGNED_KEY = "\c[Gray]Unassigned Key\c-";
+
+	BIO_KB_DROPWEAP = "Drop Weapon";
+	BIO_KB_INVENTORYMENU = "Inventory Menu";
+
+// Quit messages ///////////////////////////////////////////////////////////////
+
+	// SOON
