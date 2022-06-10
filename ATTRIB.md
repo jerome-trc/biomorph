@@ -2,6 +2,20 @@
 
 This list is meant to be maximally exhaustive but given the possibility for errors, completeness is not guaranteed. Any resource not listed below is the creation of Rat Circus, and is provided under the [MIT License](/LICENSE).
 
+## Code
+
+The GLDEFS for the Armour Bonus were devised by Realm667 user Infirnex.
+
+## Graphics
+
+Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
+
+## Audio
+
+#### Other
+
+ARMRBON is courtesy of id Software LLC.
+
 ## Blender (Materials, Meshes)
 
 ["Female Body Base Character Mesh"](https://www.blendswap.com/blend/4458) (used to render the arms of first-person view sprites) is provided by [cgcookie](https://www.blendswap.com/profile/8267https://www.blendswap.com/profile/8267) under the Creative Commons Attribution 2.0 Generic License.
