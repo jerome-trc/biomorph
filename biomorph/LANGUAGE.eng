@@ -85,6 +85,122 @@
 	BIO_MEGASPHERE_PKUP = "Absorbed a Megasphere!";
 	BIO_RADSUIT_PKUP = "Obtained and donned an N.B.C. suit.";
 
+// Weapons (tags, obituaries, readouts, pickup strings) ////////////////////////
+
+	BIO_WEAP_TAG = "Weapon";
+	BIO_WEAP_OB = "%k killed %o.";
+	BIO_WEAP_PKUP = "Procured some kind of weapon.";
+
+	BIO_FISTS_TAG = "Fists";
+
+	// (None of the handguns or melee weapons have scavenge messages)
+
+	BIO_CHAINSAW_TAG = "Chainsaw";
+	BIO_CHAINSAW_PKUP = "Procured a %s.";
+	BIO_CHAINSAW_OB = "%k sawed %o in half with a %s.";
+
+	BIO_SERVICEPISTOL_TAG = "Service Pistol";
+	BIO_SERVICEPISTOL_PKUP = "Procured a %s.";
+	BIO_SERVICEPISTOL_OB = "%k served %o summary execution with a %s.";
+
+	BIO_PUMPSHOTGUN_TAG = "Pump Shotgun";
+	BIO_PUMPSHOTGUN_PKUP = "Procured a %s.";
+	BIO_PUMPSHOTGUN_OB = "%k wasted %o with a %s.";
+	BIO_PUMPSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
+
+	BIO_COACHGUN_TAG = "Coachgun";
+	BIO_COACHGUN_PKUP = "Procured a %s.";
+	BIO_COACHGUN_OB = "%k cut %o down with a %s.";
+	BIO_COACHGUN_SCAV = "Scavenged ammo from a dropped %s.";
+
+	BIO_VOLLEYGUN_TAG = "Volley Gun";
+	BIO_VOLLEYGUN_PKUP = "Procured a %s.";
+	BIO_VOLLEYGUN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_VOLLEYGUN_OB = "%k gave %o a three-course meal of lead with a %s.";
+
+	BIO_AUTOSHOTGUN_TAG = "Auto Shotgun";
+	BIO_AUTOSHOTGUN_PKUP = "Procured a %s.";
+	BIO_AUTOSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_AUTOSHOTGUN_OB = "%k ploughed %o down with a %s.";
+
+	BIO_MACHINEGUN_TAG = "Machine Gun";
+	BIO_MACHINEGUN_PKUP = "Procured a %s.";
+	BIO_MACHINEGUN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_MACHINEGUN_OB = "%k gunned %o down with a %s.";
+
+	BIO_MICROVULCAN_TAG = "Microvulcan";
+	BIO_MICROVULCAN_PKUP = "Procured a %s.";
+	BIO_MICROVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_MICROVULCAN_OB = "%k shredded %o with a %s.";
+
+	BIO_ROCKETAUTOLAUNCHER_TAG = "Rocket Auto-Launcher";
+	BIO_ROCKETAUTOLAUNCHER_PKUP = "Procured a %s.";
+	BIO_ROCKETAUTOLAUNCHER_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_ROCKETAUTOLAUNCHER_OB = "%k blew %o away with a %s.";
+
+	BIO_PLASMARIFLE_TAG = "Plasma Rifle";
+	BIO_PLASMARIFLE_PKUP = "Procured a %s.";
+	BIO_PLASMARIFLE_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_PLASMARIFLE_OB = "%k burned %o with a %s.";
+
+	BIO_BFG_TAG = "BFG9000";
+	BIO_BFG_PKUP = "Procured a %s.";
+	BIO_BFG_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_BFG_OB = "%k field-tested a %s on %o.";
+
+// Weapon modifiers ////////////////////////////////////////////////////////////
+
+	BIO_WMOD_INCOMPAT_NODAMAGE = "This weapon deals no damage.";
+	BIO_WMOD_INCOMPAT_AMMOLESS = "This weapon doesn't use ammunition.";
+
+	BIO_WMOD_DAMAGE_TAG = "High-Power";
+	BIO_WMOD_DAMAGE_SUMM = "\c[Green]20% of minimum damage added";
+	BIO_WMOD_DAMAGE_DESC = "\c[White]Damage%s: \c[Green]+%d";
+
+	BIO_WMOD_DEMONSLAYER_TAG = "Demonslayer";
+	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]400% damage\c[White] dealt to Legendary monsters";
+	// Summary is also used as description
+
+	BIO_WMOD_INFINITEAMMO_TAG = "Ammo Apparition";
+	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
+
+	BIO_WMOD_MAGSIZE_TAG = "High-Capacity";
+	BIO_WMOD_MAGSIZE_SUMM = "Increases magazine capacity";
+	BIO_WAFX_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
+	BIO_WAFX_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
+
+// Mutagens ////////////////////////////////////////////////////////////////////
+
+	BIO_MUTA_FAIL_NULL = "This weapon doesn't even respond to the mutagen.";
+	BIO_MUTA_FAIL_ALREADYMUTATED = "This weapon has already been mutated.";
+
+	BIO_MUTA_GENERAL_TAG = "\c[Cyan]C.O.N.T.R.O.L.\c[White] Mutagen";
+	BIO_MUTA_GENERAL_PKUP = "Acquired a sample of \c[Cyan]C.O.N.T.R.O.L.\c- Mutagen.";
+	BIO_MUTA_GENERAL_USE = "\c[Cyan]You feel your weapon integrate with your body.\c-";
+
+// Genes ///////////////////////////////////////////////////////////////////////
+
+	BIO_GENE_TAG = "Gene";
+	BIO_GENE_PKUP = "Collected a gene.";
+
+	BIO_MGENE_DEMONSLAYER_TAG = "Demonslayer Gene";
+	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a Demonslayer gene.";
+
+	BIO_MGENE_MAGSIZE_TAG = "High-Capacity Gene";
+	BIO_MGENE_MAGSIZE_PKUP = "Collected a High-Capacity gene.";
+
+// Menu, weapon modification ///////////////////////////////////////////////////
+
+	BIO_MENU_WEAPMOD_HELP_PAN =
+		"\c[White]Hold the \c[LightBlue]mouse wheel"
+		"\c[White] and \c[LightBlue]move the mouse\c[White] to pan";
+	BIO_MENU_WEAPMOD_UNMUTATED =
+		"\c[White]This weapon is unmutated.\n"
+		"\c[White]To modify it, use a sample of "
+		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen while it's equipped.";
+	BIO_MENU_WEAPMOD_HELP_MODORDER =
+		"\c[White]Modifiers are applied in the order displayed next to their nodes";
+
 // Menu, game options //////////////////////////////////////////////////////////
 
 	BIO_OPTLBL_AUTORELOAD_PRE = "Firing an empty weapon reloads it";

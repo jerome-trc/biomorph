@@ -31,3 +31,67 @@ object BIO_ArmorBonus
 	frame ARSDC { light BIO_ArmorBonus_C }
 	frame ARSDD { light BIO_ArmorBonus_D }
 }
+
+// Mutagens/genes //////////////////////////////////////////////////////////////
+
+pointlight BIO_MutaGene_White
+{
+	color 1.0 1.0 1.0
+	size 24
+}
+
+pointlight BIO_MutaGene_Cyan
+{
+	color 1.0 0.48 1.0
+	size 24
+}
+
+pointlight BIO_MutaGene_Green
+{
+	color 0.67 0.67 1.0
+	size 24
+}
+
+pointlight BIO_MutaGene_Orange
+{
+	color 1.0 0.63 0.65
+	size 24
+}
+
+pointlight BIO_MutaGene_Purple
+{
+	color 1.0 0.48 1.0
+	size 24
+}
+
+pointlight BIO_MutaGene_Red
+{
+	color 1.0 0.0 0.0
+	size 24
+}
+
+pointlight BIO_MutaGene_Tan
+{
+	color 0.74 0.65 0.56
+	size 24
+}
+
+pointlight BIO_MutaGene_Yellow
+{
+	color 1.0 1.0 0.45
+	size 24
+}
+
+// Gear pickups ////////////////////////////////////////////////////////////////
+
+pointlight BIO_MutatedLoot
+{
+	color 0.0 1.0 1.0
+	size 30
+}
+
+pointlight BIO_UniqueLoot
+{
+	color 1.0 0.5 0.0
+	size 30
+}

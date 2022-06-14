@@ -1,1 +1,106 @@
+// User interface //////////////////////////////////////////////////////////////
+
+bio/ui/beep USRINPT0
+bio/ui/cancel USRINPT1 // Same as above, but pitched down
+
+// Pickups /////////////////////////////////////////////////////////////////////
+
 bio/armorbonus/pkup ARMRBON
+
+// Mutagen/antigen/mutation ////////////////////////////////////////////////////
+
+bio/mutation/general/0 MUTATE_0
+bio/mutation/general/1 MUTATE_1
+
+$random bio/mutation/general
+{
+	bio/mutation/general/0
+	bio/mutation/general/1
+}
+
+// Weapons /////////////////////////////////////////////////////////////////////
+
+// Service Pistol
+
+bio/weap/servicepistol/fire/0 SVCP_FR0
+bio/weap/servicepistol/fire/1 SVCP_FR1
+bio/weap/servicepistol/fire/2 SVCP_FR2
+
+$random bio/weap/servicepistol/fire
+{
+	bio/weap/servicepistol/fire/0
+	bio/weap/servicepistol/fire/1
+	bio/weap/servicepistol/fire/2
+}
+
+// Pump Shotgun
+
+bio/weap/pumpshotgun/fire/0 PASG_FR0
+bio/weap/pumpshotgun/fire/1 PASG_FR1
+bio/weap/pumpshotgun/fire/2 PASG_FR2
+
+$random bio/weap/pumpshotgun/fire
+{
+	bio/weap/pumpshotgun/fire/0
+	bio/weap/pumpshotgun/fire/1
+	bio/weap/pumpshotgun/fire/2
+}
+
+bio/weap/pumpshotgun/pumpback PUMPBACK
+bio/weap/pumpshotgun/pumpforward PUMPFORW
+
+// Coachgun
+
+bio/weap/coachgun/fire/0 COAC_FR0
+bio/weap/coachgun/fire/1 COAC_FR1
+bio/weap/coachgun/fire/2 COAC_FR2
+
+$random bio/weap/coachgun/fire
+{
+	bio/weap/coachgun/fire/0
+	bio/weap/coachgun/fire/1
+	bio/weap/coachgun/fire/2
+}
+
+// Volley Gun
+
+bio/weap/volleygun/fire VOLL_FR
+
+// Auto Shotgun
+
+bio/weap/autoshotgun/fire/0 AUSG_FR0
+bio/weap/autoshotgun/fire/1 AUSG_FR1
+bio/weap/autoshotgun/fire/2 AUSG_FR2
+
+$random bio/weap/autoshotgun/fire
+{
+	bio/weap/autoshotgun/fire/0
+	bio/weap/autoshotgun/fire/1
+	bio/weap/autoshotgun/fire/2
+}
+
+// Machine Gun
+
+bio/weap/machinegun/fire/0 GPMG_FR0
+bio/weap/machinegun/fire/1 GPMG_FR1
+bio/weap/machinegun/fire/2 GPMG_FR2
+
+$random bio/weap/machinegun/fire
+{
+	bio/weap/machinegun/fire/0
+	bio/weap/machinegun/fire/1
+	bio/weap/machinegun/fire/2
+}
+
+// Microvulcan
+
+bio/weap/microvulcan/fire/0 MCRV_FR0
+bio/weap/microvulcan/fire/1 MCRV_FR1
+bio/weap/microvulcan/fire/2 MCRV_FR2
+
+$random bio/weap/microvulcan/fire
+{
+	bio/weap/microvulcan/fire/0
+	bio/weap/microvulcan/fire/1
+	bio/weap/microvulcan/fire/2
+}

@@ -21,18 +21,20 @@ class BIO_Berserk : Berserk replaces Berserk
 		super.DoPickupSpecial(toucher);
 		toucher.GiveBody(100, toucher.GetMaxHealth());
 
-		let bioPlayer = BIO_Player(toucher);
-		if (bioPlayer == null) return;
+		let pawn = BIO_Player(toucher);
 
-		let bsks = BIO_CVar.BerserkSwitch(bioPlayer.Player);
+		if (pawn == null)
+			return;
+
+		let bsks = BIO_CVar.BerserkSwitch(pawn.Player);
 
 		if (bsks == BIO_CV_BSKS_MELEE ||
 			(bsks == BIO_CV_BSKS_ONLYFIRST &&
-			!bioPlayer.FindInventory('PowerStrength', true)))
+			!pawn.FindInventory('PowerStrength', true)))
 		{
-			bioPlayer.A_SelectWeapon('Fist');
+			pawn.A_SelectWeapon('Fist');
 		}
 
-		bioPlayer.GiveInventory('PowerStrength', 1);
+		pawn.GiveInventory('PowerStrength', 1);
 	}
 }

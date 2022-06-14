@@ -97,7 +97,7 @@ mixin class BIO_Armor
 			armor.Icon = Icon;
 			armor.MaxAbsorb = MaxAbsorb;
 			armor.MaxFullAbsorb = MaxFullAbsorb;
-			// RAT: Why isn't this variable of type `class<T>`...?
+			// (Rat) Why isn't this variable of type `class<T>`...?
 			armor.ArmorType = GetClassName();
 			armor.ActualSaveAmount = SaveAmount;
 			return true;

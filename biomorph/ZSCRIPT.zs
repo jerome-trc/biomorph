@@ -1,4 +1,4 @@
-version "2.4"
+version "3.7"
 
 // Mod meta-class. If your mod ever needs to check if Biomorph is loaded,
 // you can always rely on this class to exist.
@@ -22,9 +22,49 @@ class Biomorph abstract
 #include "zscript/biomorph/ammo.zs"
 #include "zscript/biomorph/armor.zs"
 #include "zscript/biomorph/event.zs"
+#include "zscript/biomorph/gear.zs"
+#include "zscript/biomorph/genes.zs"
 #include "zscript/biomorph/global.zs"
 #include "zscript/biomorph/health.zs"
+#include "zscript/biomorph/keybinds.zs"
+#include "zscript/biomorph/mutagens.zs"
 #include "zscript/biomorph/pickup.zs"
 #include "zscript/biomorph/player.zs"
 #include "zscript/biomorph/powerups.zs"
+#include "zscript/biomorph/sbar.zs"
 #include "zscript/biomorph/utils.zs"
+
+#include "zscript/biomorph/menus/weapmod.zs"
+
+#include "zscript/biomorph/payloads/base.zs"
+#include "zscript/biomorph/payloads/projectiles.zs"
+#include "zscript/biomorph/payloads/puffs.zs"
+
+#include "zscript/biomorph/weapons/base.zs"
+#include "zscript/biomorph/weapons/base_dual.zs"
+#include "zscript/biomorph/weapons/detail.zs"
+#include "zscript/biomorph/weapons/dmgfunc.zs"
+#include "zscript/biomorph/weapons/firefunc.zs"
+#include "zscript/biomorph/weapons/modgraph.zs"
+#include "zscript/biomorph/weapons/pipeline.zs"
+#include "zscript/biomorph/weapons/recoil.zs"
+
+#include "zscript/biomorph/weapons/affixes/base.zs"
+
+#include "zscript/biomorph/weapons/modifiers/base.zs"
+#include "zscript/biomorph/weapons/modifiers/ammo.zs"
+#include "zscript/biomorph/weapons/modifiers/damage.zs"
+
+#include "zscript/biomorph/weapons/single/ralauncher.zs"
+#include "zscript/biomorph/weapons/single/auto_shotgun.zs"
+#include "zscript/biomorph/weapons/single/bfg.zs"
+#include "zscript/biomorph/weapons/single/chainsaw.zs"
+#include "zscript/biomorph/weapons/single/coachgun.zs"
+#include "zscript/biomorph/weapons/single/machine_gun.zs"
+#include "zscript/biomorph/weapons/single/microvulcan.zs"
+#include "zscript/biomorph/weapons/single/plasma_rifle.zs"
+#include "zscript/biomorph/weapons/single/pump_shotgun.zs"
+#include "zscript/biomorph/weapons/single/service_pistol.zs"
+#include "zscript/biomorph/weapons/single/volley_gun.zs"
+
+#include "zscript/biomorph/weapons/dual/fists.zs"

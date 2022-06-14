@@ -18,6 +18,8 @@ OptionMenu "BIO_Options"
 	Option "$BIO_OPTLBL_QUAKE", "BIO_quake", "OnOff"
 }
 
+// Option values ///////////////////////////////////////////////////////////////
+
 OptionValue "BIO_AutoReload"
 {
 	0, "$BIO_OPTVAL_AUTOREL_ALWAYS"

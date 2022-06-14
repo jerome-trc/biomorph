@@ -306,6 +306,79 @@ extend class BIO_Utils
 				return CRESC_STATDEFAULT;
 		}
 	}
+
+	// Output is fully localized.
+	static string PayloadTag(class<Actor> payload, uint count)
+	{
+		if (payload is 'BIO_Projectile')
+		{
+			let defs = GetDefaultByType((class<BIO_Projectile>)(payload));
+
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
+		else if (payload is 'BIO_FastProjectile')
+		{
+			let defs = GetDefaultByType((class<BIO_FastProjectile>)(payload));
+		
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
+		else if (payload is 'BIO_RailPuff')
+		{
+			let defs = GetDefaultByType((class<BIO_RailPuff>)(payload));
+
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
+		else if (payload is 'BIO_RailSpawn')
+		{
+			let defs = GetDefaultByType((class<BIO_RailSpawn>)(payload));
+
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
+		else if (payload is 'BIO_Puff')
+		{
+			let defs = GetDefaultByType((class<BIO_Puff>)(payload));
+
+			switch (count)
+			{
+			case -1:
+			case 1: return defs.GetTag();
+			default: return StringTable.Localize(defs.PluralTag);
+			}
+		}
+		else if (payload is 'BIO_BFGExtra')
+		{
+			switch (count)
+			{
+			case -1:
+			case 1: return StringTable.Localize("$BIO_PROJEXTRA_TAG_BFGRAY");
+			default: return StringTable.Localize("$BIO_PROJEXTRA_TAG_BFGRAYS"); 
+			}
+		}
+		else if (payload == null)
+			return StringTable.Localize("$BIO_NOTHING");
+		else
+			return StringTable.Localize(GetDefaultByType(payload).GetTag());
+	}
 }
 
 // Compatibility helpers ///////////////////////////////////////////////////////
@@ -387,6 +460,13 @@ extend class BIO_Utils
 			if (Players[0].MO != null)
 				Players[0].MO.GiveInventory(rldl_tn, danger);
 		}
+	}
+
+	static bool LegenDoom()
+	{
+		name ldToken_tn = 'LDLegendaryMonsterToken';
+		class<Inventory> ldToken_t = ldToken_tn;
+		return ldToken_t != null;
 	}
 
 	static bool Lexicon()
@@ -847,6 +927,69 @@ enum BIO_CVar_MultiReload : int
 }
 
 // Miscellaneous ///////////////////////////////////////////////////////////////
+
+class BIO_NamedKey
+{
+	int ScanCode_0, ScanCode_1;
+	string KeyName;
+
+	static BIO_NamedKey Create(string cmd)
+	{
+		let ret = new('BIO_NamedKey');
+
+		[ret.ScanCode_0, ret.ScanCode_1] = Bindings.GetKeysForCommand(cmd);
+		
+		Array<string> parts;
+		ret.KeyName = Bindings.GetBinding(ret.ScanCode_0);
+		Bindings.NameKeys(ret.ScanCode_0, ret.ScanCode_1).Split(parts, ", ");
+
+		if (parts.Size() == 0)
+			ret.KeyName = StringTable.Localize("$BIO_UNASSIGNED_KEY");
+		else if (parts.Size() == 1)
+		{
+			parts[0].Replace("\cm", "");
+			parts[0].Replace("\c-", "");
+			ret.KeyName = "\cn" .. parts[0] .. "\c-";
+		}
+		else
+		{
+			parts[0].Replace("\cm", "");
+			parts[0].Replace("\c-", "");
+			parts[1].Replace("\cm", "");
+			parts[1].Replace("\c-", "");
+			ret.KeyName = String.Format("\cn%s\c-/\cn%s\c-", parts[0], parts[1]);
+		}
+
+		return ret;
+	}
+
+	void Recolor(string escCode)
+	{
+		Array<string> parts;
+		KeyName = Bindings.GetBinding(ScanCode_0);
+		Bindings.NameKeys(ScanCode_0, ScanCode_1).Split(parts, ", ");
+
+		if (parts.Size() == 0)
+			KeyName = StringTable.Localize("$BIO_UNASSIGNED_KEY");
+		else if (parts.Size() == 1)
+		{
+			parts[0].Replace("\cm", "");
+			parts[0].Replace("\c-", "");
+			KeyName = escCode .. parts[0] .. "\c-";
+		}
+		else
+		{
+			parts[0].Replace("\cm", "");
+			parts[0].Replace("\c-", "");
+			parts[1].Replace("\cm", "");
+			parts[1].Replace("\c-", "");
+			KeyName = String.Format("%s%s\c-/\%s%s\c-",
+				escCode, parts[0], escCode, parts[1]);
+		}
+	}
+	
+	bool Matches(int code) const { return code == ScanCode_0 || code == ScanCode_1; }
+}
 
 class BIO_PermanentInventory : Inventory abstract
 {
