@@ -344,6 +344,7 @@ class BIO_WeaponModSimulator : Thinker
 		}
 
 		Simulate();
+		Weap.SetupMagazines();
 	}
 
 	void PostCommit()
