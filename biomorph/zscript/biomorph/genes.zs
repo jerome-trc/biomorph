@@ -12,7 +12,7 @@ class BIO_Gene : Inventory abstract
 
 		Height 16;
         Radius 20;
-		Scale 0.6;
+		Scale 0.75;
 	}
 
 	override void PostBeginPlay()
@@ -60,7 +60,7 @@ class BIO_MGene_MagSize : BIO_ModifierGene
 	Default
 	{
 		Tag "$BIO_MGENE_MAGSIZE_TAG";
-		Inventory.Icon 'GEN2D0';
+		Inventory.Icon 'GEN1M0';
 		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
 		BIO_ModifierGene.ModType 'BIO_WMod_MagSize';
 	}
