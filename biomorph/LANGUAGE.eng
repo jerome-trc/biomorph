@@ -200,6 +200,8 @@
 		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen while it's equipped.";
 	BIO_MENU_WEAPMOD_HELP_MODORDER =
 		"\c[White]Modifiers are applied in the order displayed next to their nodes";
+	BIO_MENU_WEAPMOD_NODUP =
+		"\c[Yellow]This gene can only be applied to this weapon once.";
 
 // Menu, game options //////////////////////////////////////////////////////////
 

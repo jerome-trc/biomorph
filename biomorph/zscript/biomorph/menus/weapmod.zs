@@ -1,47 +1,58 @@
-class BIO_WeaponModMenuNode
+// Note to reader: classes are defined using `extend` blocks for code folding.
+
+class BIO_WModMenu_Node
 {
 	Vector2 DrawPos, ScreenPos;
 }
 
-class BIO_WeaponModMenuInv
+class BIO_WModMenu_DraggedGene
 {
-	Vector2 DrawPos;
-	BIO_Gene Gene;
+	enum OriginType
+	{
+		ORIGIN_INVSLOT,
+		ORIGIN_NODE
+	}
+
+	class<BIO_Gene> Type;
+	OriginType Origin;
+	// The following 2 fields correspond to the `Nodes` and `Genes` of
+	// `BIO_WeaponModSimulator` respectively, and reflect origin.
+	uint Node, InvSlot;
 }
 
-class BIO_WeaponModChange
-{
-	uint Node;
-	int GeneTID;
-}
-
+// Class declaration, initialization, ticker.
 class BIO_WeaponModMenu : GenericMenu
 {
 	const VIRT_W = 640.0; const VIRT_H = 360.0;
 
 	// Note to self: color constructor takes A, R, G, B
+	const COLOR_NONE = Color(0, 0, 0, 0);
+	const COLOR_INVALID = Color(127, 224, 0, 0);
 	const COLOR_HOVERED = Color(127, 127, 127, 127);
+	const COLOR_HOVEREDINVALID = Color(127, 255, 127, 127);
 	const COLOR_FULLCONN_OUTER = Color(127, 130, 239, 255);
 	const COLOR_FULLCONN_INNER = Color(127, 65, 255, 240);
-	const COLOR_NONE = Color(0, 0, 0, 0);
 
 	private string Txt_Help_Pan, Txt_Help_ModOrder, Txt_Unmutated;
 	private textureID Tex_Node;
 
-	private Array<BIO_WeaponModMenuNode> NodeDrawState;
-	private Array<BIO_WeaponModMenuInv> InvDrawState;
-	private Array<BIO_WeaponModChange> PendingChanges;
-	private BIO_Weapon CurrentWeap;
+	private readOnly<BIO_Weapon> CurrentWeap;
+	private BIO_WeaponModSimulator Simulator;
+
+	private Array<BIO_WModMenu_Node> NodeDrawState;
 
 	private bool Pan;
 	private Vector2 Size; // Used as virtual width/height to provide zoom.
 	private Vector2 ViewPosition; // Where on the whole graph is the user looking?
 	private Vector2 MousePos, LMP; // Last mouse position, used for panning.
 
-	// Defaults to `NodeDrawState.Size()` if nothing hovered;
-	// corresponds to a WMG node's UUID.
+	// Corresponds to the UUID of an element in `BIO_WeaponModSimulator::Nodes`.
+	// Defaults to the size of the array if nothing hovered.
 	private uint HoveredNode;
-	private BIO_Gene DraggedGene;
+	// Corresponds to an element in `BIO_WeaponModSimulator::Genes`.
+	// Defaults to the size of the array if nothing hovered.
+	private uint HoveredInvSlot;
+	BIO_WModMenu_DraggedGene DraggedGene;
 
 	final override void Init(Menu parent)
 	{
@@ -59,17 +70,10 @@ class BIO_WeaponModMenu : GenericMenu
 			"graphics/wmg_node.png", TexMan.TYPE_ANY);
 
 		Size = (VIRT_W, VIRT_H);
-		CurrentWeap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
-
-		RegenerateInventoryDrawState();
+		CurrentWeap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon).AsConst();
 
 		if (CurrentWeap.ModGraph != null)
-		{
-			for (uint i = 0; i < CurrentWeap.ModGraph.Nodes.Size(); i++)
-				NodeDrawState.Push(new('BIO_WeaponModMenuNode'));
-
-			UpdateNodeDrawState();
-		}
+			BIO_EventHandler.WeapModSim_Start();
 	}
 
 	final override void Ticker()
@@ -79,41 +83,72 @@ class BIO_WeaponModMenu : GenericMenu
 			Close();
 			return;
 		}
-	}
 
+		if (CurrentWeap.ModGraph != null && Simulator == null)
+		{
+			Simulator = BIO_WeaponModSimulator.Get(
+				BIO_Weapon(Players[ConsolePlayer].ReadyWeapon),
+				fallible: true
+			);
+
+			if (Simulator == null)
+				return;
+
+			for (uint i = 0; i < Simulator.Nodes.Size(); i++)
+				NodeDrawState.Push(new('BIO_WModMenu_Node'));
+
+			UpdateNodeDrawState();
+			UpdateInvDrawState();
+		}
+	}
+}
+
+// Drawer and its helpers.
+extend class BIO_WeaponModMenu
+{
 	final override void Drawer()
 	{
 		super.Drawer(); // Draw the back button
 
 		if (CurrentWeap.ModGraph == null)
 		{
-			Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
-				VIRT_W * 0.5 - (SmallFont.StringWidth(Txt_Unmutated) / 2),
-				VIRT_H * 0.5 - (SmallFont.GetHeight() / 2),
-				Txt_Unmutated, DTA_KEEPRATIO, true,
-				DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H
-			);
-			DrawGeneInventory();
+			let lines = SmallFont.BreakLines(Txt_Unmutated, int(VIRT_W * 0.3));
+
+			for (uint i = 0; i < lines.Count(); i++)
+			{
+				let htOffs = SmallFont.GetHeight() * i;
+
+				Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+					VIRT_W * 0.5 - (lines.StringWidth(i) / 2),
+					(VIRT_H * 0.5 - (SmallFont.GetHeight() / 2)) + htOffs,
+					lines.StringAt(i), DTA_KEEPRATIO, true,
+					DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H
+				);
+			}
+
 			return;
 		}
-
-		let graph = CurrentWeap.ModGraph.AsConst();
+		else
+		{
+			if (Simulator == null)
+				return;
+		}
 
 		// Node connections
 	
-		for (uint i = 0; i < graph.Nodes.Size(); i++)
+		for (uint i = 0; i < Simulator.Nodes.Size(); i++)
 		{
-			let node = graph.Nodes[i];
+			let node = Simulator.Nodes[i];
 
-			for (uint j = 0; j < node.Neighbors.Size(); j++)
+			for (uint j = 0; j < node.Basis.Neighbors.Size(); j++)
 			{
-				let o = node.Neighbors[j];
-				let other = graph.Nodes[o];
+				let o = node.Basis.Neighbors[j];
+				let other = Simulator.Nodes[o];
 
 				if (i == o)
 					continue;
 
-				if (node.Active() && other.Active())
+				if (node.IsActive() && other.IsActive())
 				{
 					Screen.DrawThickLine(
 						NodeDrawState[i].ScreenPos.X, NodeDrawState[i].ScreenPos.Y,
@@ -152,23 +187,38 @@ class BIO_WeaponModMenu : GenericMenu
 		Screen.DrawText(SmallFont, Font.CR_WHITE,
 			NodeDrawState[0].DrawPos.X + (VIRT_W * 0.03),
 			NodeDrawState[0].DrawPos.Y + (VIRT_H * 0.04),
-			String.Format("%d", graph.Nodes[0].UUID + 1),
+			String.Format("%d", Simulator.Nodes[0].Basis.UUID + 1),
 			DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 			DTA_KEEPRATIO, true
 		);
 
 		// Non-home nodes; frames, icons, order numbers
 
-		for (uint i = 1; i < graph.Nodes.Size(); i++)
+		for (uint i = 1; i < Simulator.Nodes.Size(); i++)
 		{
+			let overlay = COLOR_NONE;
+
+			if (HoveredNode == i)
+			{
+				if (Simulator.Nodes[i].Valid)
+					overlay = COLOR_HOVERED;
+				else
+					overlay = COLOR_HOVEREDINVALID;
+			}
+			else
+			{
+				if (!Simulator.Nodes[i].Valid)
+					overlay = COLOR_INVALID;
+			}
+
 			Screen.DrawTexture(Tex_Node, false,
 				NodeDrawState[i].DrawPos.X, NodeDrawState[i].DrawPos.Y,
 				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
-				DTA_COLOROVERLAY, HoveredNode == i ? COLOR_HOVERED : COLOR_NONE
+				DTA_COLOROVERLAY, overlay
 			);
-			
-			let gene_t = graph.Nodes[i].GetGeneType();
+
+			let gene_t = Simulator.Nodes[i].GetGeneType();
 
 			if (gene_t != null)
 			{
@@ -182,50 +232,116 @@ class BIO_WeaponModMenu : GenericMenu
 			Screen.DrawText(SmallFont, Font.CR_WHITE,
 				NodeDrawState[i].DrawPos.X + (VIRT_W * 0.03),
 				NodeDrawState[i].DrawPos.Y + (VIRT_H * 0.04),
-				String.Format("%d", graph.Nodes[i].UUID + 1),
+				String.Format("%d", Simulator.Nodes[i].Basis.UUID + 1),
 				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 				DTA_KEEPRATIO, true
 			);
 		}
 
-		// Help text
-
-		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
-			VIRT_W * 0.5 - (SmallFont.StringWidth(Txt_Help_Pan) / 2),
-			VIRT_H * 0.025, Txt_Help_Pan, DTA_KEEPRATIO, true,
-			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H
-		);
-		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
-			VIRT_W * 0.5 - (SmallFont.StringWidth(Txt_Help_ModOrder) / 2),
-			VIRT_H * 0.05, Txt_Help_ModOrder, DTA_KEEPRATIO, true,
-			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H
-		);
-
 		DrawGeneInventory();
+
+		bool noDupTooltip = false;
 
 		if (DraggedGene != null)
 		{
-			Screen.DrawTexture(DraggedGene.Icon, false,
+			Screen.DrawTexture(DraggedGeneIcon(), false,
 				MousePos.X / CleanXFac, MousePos.Y / CleanYFac,
 				DTA_VIRTUALWIDTHF, CleanWidth, DTA_VIRTUALHEIGHTF, CleanHeight,
 				DTA_KEEPRATIO, true, DTA_CENTEROFFSET, true
 			);
+
+			bool testNode = DraggedGene.Origin == BIO_WModMenu_DraggedGene.ORIGIN_NODE;
+			uint origin = uint.MAX;
+
+			if (testNode)
+				origin = DraggedGene.Node;
+			else
+				origin = DraggedGene.InvSlot;
+
+			if (ValidHoveredNode() && !Simulator.TestDuplicateAllowance(origin, testNode))
+			{
+				noDupTooltip = true;
+
+				Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+					(MousePos.X / CleanXFac) + 8, (MousePos.Y / CleanYFac) + 8,
+					StringTable.Localize("$BIO_MENU_WEAPMOD_NODUP"),
+					DTA_VIRTUALWIDTHF, CleanWidth, DTA_VIRTUALHEIGHTF, CleanHeight,
+					DTA_KEEPRATIO, true
+				);
+			}
 		}
 
-		if (!ValidHoveredNode())
-			return;
+		if (!noDupTooltip)
+		{
+			if (ValidHoveredNode() &&
+				Simulator.Nodes[HoveredNode].IsOccupied())
+			{
+				DrawModifierTooltip(HoveredNode);
+			}
+			else if (ValidHoveredInvSlot() &&
+				Simulator.Genes[HoveredInvSlot] != null)
+			{
+				DrawGeneTooltip(HoveredInvSlot);
+			}
+		}
+	}
 
-		// Tooltip
+	private void DrawGeneInventory() const
+	{
+		let pawn = BIO_Player(Players[ConsolePlayer].MO);
+		Vector2 scrSz = (Screen.GetWidth(), Screen.GetHeight());
+		Vector2 nodeSz;
+		[nodeSz.X, nodeSz.Y] = TexMan.GetSize(Tex_Node);
+		let genePosX = VIRT_W * 0.1, genePosY = VIRT_H * 0.2;
+		uint geneC = 0;
 
-		let mod = graph.Nodes[HoveredNode].GetModifier();
+		for (uint i = 0; i < Simulator.Genes.Size(); i++)
+		{
+			let drawPos = (genePosX, genePosY);
 
-		if (mod == null)
-			return;
+			if (++geneC == (pawn.MaxGenesHeld / 2))
+			{
+				genePosY = VIRT_H * 0.2;
+				genePosX += VIRT_W * 0.1;
+			}
+			else
+			{
+				genePosY += VIRT_H * 0.15;
+			}
+
+			Screen.DrawTexture(Tex_Node, false,
+				drawPos.X, drawPos.Y,
+				DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H,
+				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true, DTA_ALPHA, 0.5,
+				DTA_COLOROVERLAY, HoveredInvSlot == i ? COLOR_HOVERED : COLOR_NONE
+			);
+
+			if (Simulator.Genes[i] == null)
+				continue;
+
+			let defs = GetDefaultByType(Simulator.Genes[i].GetType());
+
+			Screen.DrawTexture(defs.Icon, false,
+				drawPos.X, drawPos.Y,
+				DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H,
+				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true
+			);
+		}
+	}
+
+	private void DrawModifierTooltip(uint node) const
+	{
+		let mod = Simulator.Nodes[node].GetModifier();
+		Array<string> desc;
+		mod.Description(desc, CurrentWeap);
 
 		string tt = String.Format(
-			"\c[White]",
+			"\c[White]%s\n",
 			StringTable.Localize(mod.GetTag())
 		);
+
+		for (uint i = 0; i < desc.Size(); i++)
+			tt.AppendFormat("\n%s", StringTable.Localize(desc[i]));
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
 			(MousePos.X / CleanXFac) + 8, (MousePos.Y / CleanYFac) + 8, tt,
@@ -234,37 +350,49 @@ class BIO_WeaponModMenu : GenericMenu
 		);
 	}
 
-	private void DrawGeneInventory()
+	private void DrawGeneTooltip(uint slot) const
 	{
-		for (uint i = 0; i < InvDrawState.Size(); i++)
+		let gene = Simulator.Genes[slot];
+		let defs = GetDefaultByType(gene.GetType());
+		let mod = gene.Modifier;
+
+		Array<string> summary;
+		mod.Summary(summary);
+
+		string tt = String.Format(
+			"\c[White]%s\n",
+			StringTable.Localize(defs.GetTag())
+		);
+
+		for (uint i = 0; i < summary.Size(); i++)
+			tt.AppendFormat("\n%s", StringTable.Localize(summary[i]));
+
+		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+			(MousePos.X / CleanXFac) + 8, (MousePos.Y / CleanYFac) + 8, tt,
+			DTA_VIRTUALWIDTHF, CleanWidth, DTA_VIRTUALHEIGHTF, CleanHeight,
+			DTA_KEEPRATIO, true
+		);
+	}
+}
+
+// Event handling.
+extend class BIO_WeaponModMenu
+{
+	// Closing the menu cleans up after any un-committed changes.
+	final override bool MenuEvent(int mKey, bool fromController)
+	{
+		if (super.MenuEvent(mKey, fromController))
 		{
-			let slot = InvDrawState[i];
+			if (Simulator != null)
+				BIO_EventHandler.WeapModSim_Stop();
 
-			if (slot.Gene == null)
-			{
-				RegenerateInventoryDrawState();
-				break;
-			}
-
-			bool faded =
-				slot.Gene.PendingApplication() ||
-				slot.Gene == DraggedGene;
-
-			Screen.DrawTexture(Tex_Node, false,
-				slot.DrawPos.X, slot.DrawPos.Y,
-				DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H,
-				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
-				DTA_COLOROVERLAY, InvSlotIsHovered(i) ? COLOR_HOVERED : COLOR_NONE
-			);
-			Screen.DrawTexture(slot.Gene.Icon, false,
-				slot.DrawPos.X, slot.DrawPos.Y,
-				DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H,
-				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
-				DTA_ALPHA, faded ? 0.3 : 1.0
-			);
+			return true;
 		}
+
+		return false;
 	}
 
+	// Handles panning.
 	final override bool MouseEvent(int type, int mX, int mY)
 	{
 		switch (type)
@@ -305,6 +433,7 @@ class BIO_WeaponModMenu : GenericMenu
 			MousePos.X = event.MouseX;
 			MousePos.Y = event.MouseY;
 			UpdateNodeDrawState();
+			UpdateInvDrawState();
 			break;
 		case UIEvent.Type_LButtonDown:
 			res = MouseEventBack(MOUSE_Click, event.MouseX, y);
@@ -318,20 +447,7 @@ class BIO_WeaponModMenu : GenericMenu
 			if (res)
 				SetCapture(true);
 
-			if (CurrentWeap.ModGraph != null)
-			{
-				for (uint i = 0; i < InvDrawState.Size(); i++)
-				{
-					if (!InvSlotIsHovered(i))
-						continue;
-
-					if (InvDrawState[i].Gene.PendingApplication())
-						continue;
-
-					DraggedGene = InvDrawState[i].Gene;
-				}
-			}
-
+			OnLeftMouseButtonDown();
 			break;
 		case UIEvent.Type_LButtonUp:
 			if (mMouseCapture)
@@ -342,9 +458,7 @@ class BIO_WeaponModMenu : GenericMenu
 				res |= MouseEvent(MOUSE_Release, event.MouseX, y);
 			}
 
-			if (DraggedGene != null)
-				ReleaseDraggedGene();
-
+			OnLeftMouseButtonUp();
 			break;
 		case UIEvent.Type_WheelDown:
 			Size.X = Min(Size.X + 32.0, VIRT_W * 3.0);
@@ -365,19 +479,7 @@ class BIO_WeaponModMenu : GenericMenu
 			Pan = false;
 			break;
 		case UIEvent.Type_RButtonUp:
-			if (ValidHoveredNode())
-			{
-				for (uint i = 0; i < PendingChanges.Size(); i++)
-				{
-					if (PendingChanges[i].Node != HoveredNode)
-						continue;
-
-					if (TryRemoveGene(HoveredNode, PendingChanges[i].GeneTID))
-						MenuSound("bio/ui/cancel");
-					break;
-				}
-			}
-
+			OnRightClick();
 			break;
 		case UIEvent.Type_KeyUp:
 			if (event.KeyString ~== "e")
@@ -389,113 +491,55 @@ class BIO_WeaponModMenu : GenericMenu
 
 		return false;
 	}
+}
 
-	final override bool MenuEvent(int mKey, bool fromController)
+// Introspective helpers.
+extend class BIO_WeaponModMenu
+{
+	private textureID DraggedGeneIcon()
 	{
-		if (super.MenuEvent(mKey, fromController))
+		textureID ret;
+		ret.SetNull();
+
+		if (DraggedGene != null)
 		{
-			OnMenuClose();
-			return true;
+			bool fromNode = DraggedGene.Origin == BIO_WModMenu_DraggedGene.ORIGIN_NODE;
+			uint origin = uint.MAX;
+
+			if (fromNode)
+				origin = DraggedGene.Node;
+			else
+				origin = DraggedGene.InvSlot;
+
+			let gene_t = Simulator.GetGeneType(origin, fromNode);
+			ret = GetDefaultByType(gene_t).Icon;
 		}
 
-		return false;
+		return ret;
 	}
 
-	// Extract the weapon modifier pointer out of the relevant gene and insert it
-	// into the graph node, then reset the weapon and apply the graph again.
-	private void AddGene(uint node, int geneTID)
+	private bool ValidHoveredNode() const
 	{
-		let change = new('BIO_WeaponModChange');
-		change.Node = node;
-		change.GeneTID = geneTID;
-		PendingChanges.Push(change);
-
-		BIO_EventHandler.AddGene(node, geneTID);
-		BIO_EventHandler.RefreshWeapon();
+		return HoveredNode < NodeDrawState.Size();
 	}
 
-	// Wraps `RemoveGene()`, but performs some preliminary checks first. A gene
-	// can't be removed from a node with no gene in it, and a gene can't be removed
-	// if any other nodes pending gene insertion would become disconnected first.
-	// Returns `true` if gene removal succeeds.
-	private bool TryRemoveGene(uint node, int geneTID)
+	private bool ValidHoveredInvSlot() const
 	{
-		let graph = CurrentWeap.ModGraph;
-
-		if (!graph.Nodes[node].Active())
-			return false;
-
-		for (uint i = 1; i < graph.Nodes.Size(); i++)
-		{
-			if (!graph.Nodes[i].Active() || i == node)
-				continue;
-
-			if (!graph.NodeAccessible(i))
-				return false;
-		}
-
-		RemoveGene(node, geneTID);
-		return true;
+		return HoveredInvSlot < Simulator.Genes.Size();
 	}
+}
 
-	// Extract the weapon modifier pointer out of the relevant graph node and
-	// re-insert it into the gene, then reset the weapon and apply the graph again.
-	private void RemoveGene(uint node, int geneTID)
-	{
-		for (uint i = 0; i < PendingChanges.Size(); i++)
-		{
-			if (PendingChanges[i].Node == node && 
-				PendingChanges[i].GeneTID == geneTID)
-			{
-				PendingChanges.Delete(i);
-				break;
-			}
-		}
-
-		BIO_EventHandler.RemoveGene(node, geneTID);
-		BIO_EventHandler.RefreshWeapon();
-	}
-
-	// Send a network event which removes any applied genes from the player's
-	// inventory, as well as consuming the requisite quantity of mutagen.
-	private void TryCommitChanges()
-	{
-		let mutaC = Players[ConsolePlayer].MO.CountInv('BIO_Muta_General');
-
-		if (mutaC < CurrentWeap.ModCost)
-		{
-			// TODO: Failure beep, maybe a message
-			return;
-		}
-
-		for (uint i = 0; i < PendingChanges.Size(); i++)
-			BIO_EventHandler.CommitGene(PendingChanges[i].GeneTID);
-
-		MenuSound("bio/mutation/general");
-		PendingChanges.Clear();
-	}
-
-	// Undo un-committed changes.
-	private void OnMenuClose()
-	{
-		for (uint i = 0; i < PendingChanges.Size(); i++)
-		{
-			BIO_EventHandler.RemoveGene(
-				PendingChanges[i].Node,
-				PendingChanges[i].GeneTID
-			);
-		}
-
-		PendingChanges.Clear();
-	}
-
+// Helpers for operating the menu.
+extend class BIO_WeaponModMenu
+{
 	// Called whenever the mouse moves or the zoom level changes.
+	// Updates the data used to inform `Drawer()` as to how to render nodes,
+	// and determines which node is currently hovered, if any.
 	private void UpdateNodeDrawState()
 	{
-		if (CurrentWeap.ModGraph == null)
+		if (Simulator == null)
 			return;
 
-		let graph = CurrentWeap.ModGraph.AsConst();
 		HoveredNode = NodeDrawState.Size();
 
 		Vector2 scrSz = (Screen.GetWidth(), Screen.GetHeight());
@@ -503,13 +547,13 @@ class BIO_WeaponModMenu : GenericMenu
 		Vector2 nodeSz;
 		[nodeSz.X, nodeSz.Y] = TexMan.GetSize(Tex_Node);
 
-		for (uint i = 0; i < graph.Nodes.Size(); i++)
+		for (uint i = 0; i < Simulator.Nodes.Size(); i++)
 		{
-			let node = graph.Nodes[i];
+			let node = Simulator.Nodes[i];
 
 			NodeDrawState[i].DrawPos = (
-				(Size.X / 2) + (node.PosX * 72) + ViewPosition.X,
-				(Size.Y / 2) + (node.PosY * 72) + ViewPosition.Y
+				(Size.X / 2) + (node.Basis.PosX * 72) + ViewPosition.X,
+				(Size.Y / 2) + (node.Basis.PosY * 72) + ViewPosition.Y
 			);
 
 			NodeDrawState[i].ScreenPos = Screen.VirtualToRealCoords( 
@@ -536,26 +580,25 @@ class BIO_WeaponModMenu : GenericMenu
 		}
 	}
 
-	private void RegenerateInventoryDrawState()
+	// Called whenever the mouse moves.
+	// Determines which inventory slot is currently hovered.
+	private void UpdateInvDrawState()
 	{
-		InvDrawState.Clear();
+		if (Simulator == null)
+			return;
+
+		HoveredInvSlot = Simulator.Genes.Size();
 
 		let pawn = BIO_Player(Players[ConsolePlayer].MO);
-
+		Vector2 scrSz = (Screen.GetWidth(), Screen.GetHeight());
+		Vector2 nodeSz;
+		[nodeSz.X, nodeSz.Y] = TexMan.GetSize(Tex_Node);
 		let genePosX = VIRT_W * 0.1, genePosY = VIRT_H * 0.2;
 		uint geneC = 0;
 
-		for (Inventory i = pawn.Inv; i != null; i = i.Inv)
+		for (uint i = 0; i < Simulator.Genes.Size(); i++)
 		{
-			let gene = BIO_Gene(i);
-
-			if (gene == null)
-				continue;
-
-			let slot = new('BIO_WeaponModMenuInv');
-			slot.DrawPos = (genePosX, genePosY);
-			slot.Gene = gene;
-			InvDrawState.Push(slot);
+			let drawPos = (genePosX, genePosY);
 
 			if (++geneC == (pawn.MaxGenesHeld / 2))
 			{
@@ -566,75 +609,156 @@ class BIO_WeaponModMenu : GenericMenu
 			{
 				genePosY += VIRT_H * 0.15;
 			}
-		}
-	}
 
-	private void ReleaseDraggedGene()
-	{
-		let gene = DraggedGene;
-		DraggedGene = null;
+			Vector2
+				realTL = Screen.VirtualToRealCoords(
+					(drawPos.X - (nodeSz.X * 0.5),
+					drawPos.Y - (nodeSz.Y * 0.5)),
+					scrSz, (VIRT_W, VIRT_H), handleAspect: false
+				),
+				realBR = Screen.VirtualToRealCoords(
+					(drawPos.X + (nodeSz.X * 0.5),
+					drawPos.Y + (nodeSz.Y * 0.5)),
+					scrSz, (VIRT_W, VIRT_H), handleAspect: false
+				);
 
-		if (!ValidHoveredNode())
-			return;
-
-		let node = CurrentWeap.ModGraph.Nodes[HoveredNode];
-
-		if (node.Active()) // Is the node already occupied?
-			return;
-
-		bool accessible = false;
-
-		for (uint i = 0; i < node.Neighbors.Size(); i++)
-		{
-			let n = node.Neighbors[i];
-			let neighbor = CurrentWeap.ModGraph.Nodes[n];
-
-			if (neighbor.Active())
+			if (MousePos.X > realTL.X && MousePos.X < realBR.X &&
+				MousePos.Y > realTL.Y && MousePos.Y < realBR.Y)
 			{
-				accessible = true;
+				HoveredInvSlot = i;
 				break;
 			}
 		}
+	}
 
-		if (!accessible)
+	// If dragging a gene, release it. This may be from an inventory slot to a
+	// node, from one node to another node, or from a node to an inventory slot.
+	// Genes can't be dragged out of inventory slots if the weapon is unmutated.
+	private void OnLeftMouseButtonDown()
+	{
+		if (CurrentWeap.ModGraph == null)
 			return;
 
-		// Would inserting this gene violate a multiple-allowance rule?
-		if (!CurrentWeap.ModGraph.TestDuplicateAllowance(gene))
+		if (ValidHoveredInvSlot() && Simulator.Genes[HoveredInvSlot] != null)
+		{
+			// Inventory slots take precedence, being drawn above the nodes
+			DraggedGene = new('BIO_WModMenu_DraggedGene');
+			DraggedGene.Origin = BIO_WModMenu_DraggedGene.ORIGIN_INVSLOT;
+			DraggedGene.Node = Simulator.Nodes.Size();
+			DraggedGene.InvSlot = HoveredInvSlot;
+		}
+		else if (ValidHoveredNode() && Simulator.Nodes[HoveredNode].IsOccupied())
+		{
+			DraggedGene = new('BIO_WModMenu_DraggedGene');
+			DraggedGene.Origin = BIO_WModMenu_DraggedGene.ORIGIN_NODE;
+			DraggedGene.Node = HoveredNode;
+			DraggedGene.InvSlot = Simulator.Genes.Size();
+		}
+	}
+
+	private void OnLeftMouseButtonUp()
+	{
+		if (CurrentWeap.ModGraph == null || DraggedGene == null)
+			return;
+
+		if (ValidHoveredNode())
+		{
+			if (DraggedGene.Origin == BIO_WModMenu_DraggedGene.ORIGIN_INVSLOT)
+				TryInsertGeneFromInventory(HoveredNode, DraggedGene.InvSlot);
+			else if (DraggedGene.Origin == BIO_WModMenu_DraggedGene.ORIGIN_NODE)
+				TryMoveGeneBetweenNodes(DraggedGene.Node, HoveredNode);
+		}
+		else if (ValidHoveredInvSlot())
+		{
+			if (DraggedGene.Origin == BIO_WModMenu_DraggedGene.ORIGIN_INVSLOT)
+				TryMoveGeneBetweenInventorySlots(DraggedGene.InvSlot, HoveredInvSlot);
+			else if (DraggedGene.Origin == BIO_WModMenu_DraggedGene.ORIGIN_NODE)
+				TryExtractGeneFromNode(DraggedGene.Node, HoveredInvSlot);
+		}
+
+		// If neither of the above are valid, put the gene back where it started
+		DraggedGene = null;
+	}
+
+	// Right-clicking a node pops that gene out of it and returns it to the inventory.
+	private void OnRightClick()
+	{
+		if (CurrentWeap.ModGraph == null)
+			return;
+	}
+}
+
+// Helpers for operating the modification simulator.
+extend class BIO_WeaponModMenu
+{
+	private void TryInsertGeneFromInventory(uint node, uint slot)
+	{
+		if (Simulator.Genes[slot] == null)
+			return;
+
+		if (!Simulator.NodeAccessible(node))
 			return;
 
 		MenuSound("bio/ui/beep");
-		AddGene(HoveredNode, gene.TID);
+		BIO_EventHandler.WeapModSim_InsertGeneFromInventory(node, slot);
+		BIO_EventHandler.WeapModSim_Run();
 	}
 
-	private bool InvSlotIsHovered(uint i) const
+	private void TryMoveGeneBetweenNodes(uint fromNode, uint toNode)
 	{
-		let slot = InvDrawState[i];
+		if (Simulator.Nodes[fromNode].Gene == null)
+			return;
 
-		Vector2 scrSz = (Screen.GetWidth(), Screen.GetHeight());
+		if (fromNode == toNode)
+			return;
 
-		Vector2 nodeSz;
-		[nodeSz.X, nodeSz.Y] = TexMan.GetSize(Tex_Node);
+		if (!Simulator.NodeAccessible(toNode))
+			return;
 
-		Vector2
-			realTL = Screen.VirtualToRealCoords(
-				(slot.DrawPos.X - (nodeSz.X * 0.5),
-				slot.DrawPos.Y - (nodeSz.Y * 0.5)),
-				scrSz, (VIRT_W, VIRT_H), handleAspect: false
-			),
-			realBR = Screen.VirtualToRealCoords(
-				(slot.DrawPos.X + (nodeSz.X * 0.5),
-				slot.DrawPos.Y + (nodeSz.Y * 0.5)),
-				scrSz, (VIRT_W, VIRT_H), handleAspect: false
-			);
+		// `toNode` can be filled; this causes a swap
+		MenuSound("bio/ui/beep");
+		BIO_EventHandler.WeapModSim_MoveGeneBetweenNodes(fromNode, toNode);
+		BIO_EventHandler.WeapModSim_Run();
+	}
+	
+	private void TryMoveGeneBetweenInventorySlots(uint fromSlot, uint toSlot)
+	{
+		if (Simulator.Genes[fromSlot] == null)
+			return;
 
-		return
-			MousePos.X > realTL.X && MousePos.X < realBR.X &&
-			MousePos.Y > realTL.Y && MousePos.Y < realBR.Y;
+		if (fromSlot == toSlot)
+			return;
+
+		// `toSlot` can be filled; this causes a swap
+		MenuSound("bio/ui/beep");
+		BIO_EventHandler.WeapModSim_MoveGeneBetweenInventorySlots(fromSlot, toSlot);
+		BIO_EventHandler.WeapModSim_Run();
 	}
 
-	private bool ValidHoveredNode() const
+	private void TryExtractGeneFromNode(uint node, uint slot)
 	{
-		return HoveredNode < NodeDrawState.Size();
+		if (Simulator.Nodes[node].Gene == null)
+			return;
+
+		MenuSound("bio/ui/beep");
+		BIO_EventHandler.WeapModSim_ExtractGeneFromNode(node, slot);
+		BIO_EventHandler.WeapModSim_Run();
+	}
+
+	// Send a network event which removes any applied genes from the player's
+	// inventory, as well as consuming the requisite quantity of mutagen.
+	// TODO: Failure beep, maybe messaging too.
+	private void TryCommitChanges()
+	{
+		let mutaC = Players[ConsolePlayer].MO.CountInv('BIO_Muta_General');
+
+		if (mutaC < CurrentWeap.ModCost)
+			return;
+
+		if (!Simulator.IsValid())
+			return;
+
+		BIO_EventHandler.WeapModSim_Commit();
+		MenuSound("bio/mutation/general");
 	}
 }

@@ -42,12 +42,16 @@ class BIO_EventHandler : EventHandler
 // Network event handling.
 extend class BIO_EventHandler
 {
-	enum BIO_WeapModOp
+	enum WeapModOp
 	{
-		WEAPMODOP_ADD,
-		WEAPMODOP_REMOVE,
-		WEAPMODOP_REFRESH,
-		WEAPMODOP_COMMIT
+		WEAPMODOP_START,
+		WEAPMODOP_INSERT,
+		WEAPMODOP_NODEMOVE,
+		WEAPMODOP_INVMOVE,
+		WEAPMODOP_EXTRACT,
+		WEAPMODOP_SIMULATE,
+		WEAPMODOP_COMMIT,
+		WEAPMODOP_STOP
 	}
 
 	const EVENT_WEAPMOD = "bio_wmod";
@@ -61,9 +65,9 @@ extend class BIO_EventHandler
 
 	private static void NetEvent_WeapMod(ConsoleEvent event)
 	{
-		if (event.Name.Length() < 8 || !(event.Name.Left(8) ~== EVENT_WEAPMOD))
+		if (!(event.Name ~== EVENT_WEAPMOD))
 			return;
-		
+
 		if (event.Player != ConsolePlayer)
 			return;
 
@@ -98,46 +102,47 @@ extend class BIO_EventHandler
 
 		switch (event.Args[0])
 		{
-		case WEAPMODOP_ADD:
-			WeapMod_Add(weap, uint(event.Args[1]), event.Args[2]);
+		case WEAPMODOP_START:
+			BIO_WeaponModSimulator.Create(weap);
 			break;
-		case WEAPMODOP_REMOVE:
-			WeapMod_Remove(weap, uint(event.Args[1]), event.Args[2]);
+		case WEAPMODOP_INSERT:
+			BIO_WeaponModSimulator.Get(weap).InsertGene(
+				uint(event.Args[1]), uint(event.Args[2])
+			);
 			break;
-		case WEAPMODOP_REFRESH:
-			weap.Refresh();
+		case WEAPMODOP_NODEMOVE:
+			BIO_WeaponModSimulator.Get(weap).NodeMove(
+				uint(event.Args[1]), uint(event.Args[2])
+			);
+			break;
+		case WEAPMODOP_INVMOVE:
+			BIO_WeaponModSimulator.Get(weap).InventoryMove(
+				uint(event.Args[1]), uint(event.Args[2])
+			);
+			break;
+		case WEAPMODOP_EXTRACT:
+			BIO_WeaponModSimulator.Get(weap).ExtractGene(
+				uint(event.Args[1]), uint(event.Args[2])
+			);
+			break;
+		case WEAPMODOP_SIMULATE:
+			BIO_WeaponModSimulator.Get(weap).Simulate();
 			break;
 		case WEAPMODOP_COMMIT:
 			WeapMod_Commit(pawn, event.Args[1]);
 			break;
-		}
-	}
-
-	private static void WeapMod_Add(BIO_Weapon weap, uint node, int geneTID)
-	{
-		let gene = BIO_Gene.FindByTID(geneTID);
-
-		if (gene is 'BIO_ModifierGene')
-		{
-			weap.ModGraph.Nodes[node].InsertModifier(BIO_ModifierGene(gene));
-		}
-	}
-
-	private static void WeapMod_Remove(BIO_Weapon weap, uint node, int geneTID)
-	{
-		let gene = BIO_Gene.FindByTID(geneTID);
-
-		if (gene is 'BIO_ModifierGene')
-		{
-			let mod = weap.ModGraph.Nodes[node].ExtractModifier();
-			BIO_ModifierGene(gene).ReinsertModifier(mod);
+		case WEAPMODOP_STOP:
+			BIO_WeaponModSimulator.Get(weap).Destroy();
+			break;
 		}
 	}
 
 	private static void WeapMod_Commit(BIO_Player pawn, int geneTID)
 	{
-		if (pawn.CountInv('BIO_Muta_General') <
-			BIO_Weapon(pawn.Player.ReadyWeapon).ModCost)
+		let weap = BIO_Weapon(pawn.Player.ReadyWeapon);
+		let sim = BIO_WeaponModSimulator.Get(weap);
+
+		if (pawn.CountInv('BIO_Muta_General') < weap.ModCost)
 		{
 			Console.Printf(
 				Biomorph.LOGPFX_ERR ..
@@ -147,13 +152,36 @@ extend class BIO_EventHandler
 			return;
 		}
 
-		pawn.TakeInventory(
-			'BIO_Muta_General',
-			BIO_Weapon(pawn.Player.ReadyWeapon).ModCost
-		);
+		Array<class<BIO_Gene> > toGive;
+		ArraY<Inventory> toDestroy;
 
-		let gene = BIO_Gene.FindByTID(geneTID);
-		gene.DepleteOrDestroy();
+		for (uint i = 0; i < sim.Genes.Size(); i++)
+		{
+			if (sim.Genes[i] == null)
+				continue;
+
+			toGive.Push(sim.Genes[i].GetType());
+		}
+
+		for (Inventory i = pawn.Inv; i != null; i = i.Inv)
+		{
+			if (i is 'BIO_Gene')
+				toDestroy.Push(i);
+		}
+
+		sim.Commit();
+
+		for (uint i = 0; i < toDestroy.Size(); i++)	
+		{
+			toDestroy[i].Amount = 0;
+			toDestroy[i].DepleteOrDestroy();
+		}
+
+		for (uint i = 0; i < toGive.Size(); i++)
+			pawn.GiveInventory(toGive[i], 1);
+
+		sim.PostCommit();
+		pawn.TakeInventory('BIO_Muta_General', weap.ModCost);
 		pawn.A_StartSound("bio/mutation/general");
 	}
 }
@@ -413,38 +441,73 @@ extend class BIO_EventHandler
 // Static helpers for sending network events.
 extend class BIO_EventHandler
 {
-	static clearscope void AddGene(uint node, int geneTID)
+	static clearscope void WeapModSim_Start()
 	{
 		EventHandler.SendNetworkEvent(
 			EVENT_WEAPMOD,
-			WEAPMODOP_ADD,
-			node, geneTID
+			WEAPMODOP_START
 		);
 	}
 
-	static clearscope void RemoveGene(uint node, int geneTID)
+	static clearscope void WeapModSim_InsertGeneFromInventory(uint node, uint slot)
 	{
 		EventHandler.SendNetworkEvent(
 			EVENT_WEAPMOD,
-			WEAPMODOP_REMOVE,
-			node, geneTID
+			WEAPMODOP_INSERT,
+			node, slot
 		);
 	}
 
-	static clearscope void RefreshWeapon()
+	static clearscope void WeapModSim_MoveGeneBetweenNodes(
+		uint fromNode, uint toNode)
 	{
 		EventHandler.SendNetworkEvent(
 			EVENT_WEAPMOD,
-			WEAPMODOP_REFRESH	
+			WEAPMODOP_NODEMOVE,
+			fromNode, toNode
 		);
 	}
 
-	static clearscope void CommitGene(int geneTID)
+	static clearscope void WeapModSim_MoveGeneBetweenInventorySlots(
+		uint fromSlot, uint toSlot)
 	{
 		EventHandler.SendNetworkEvent(
 			EVENT_WEAPMOD,
-			WEAPMODOP_COMMIT,
-			geneTID
+			WEAPMODOP_INVMOVE,
+			fromSlot, toSlot
+		);
+	}
+
+	static clearscope void WeapModSim_ExtractGeneFromNode(uint node, uint slot)
+	{
+		EventHandler.SendNetworkEvent(
+			EVENT_WEAPMOD,
+			WEAPMODOP_EXTRACT,
+			node, slot
+		);
+	}
+
+	static clearscope void WeapModSim_Run()
+	{
+		EventHandler.SendNetworkEvent(
+			EVENT_WEAPMOD,
+			WEAPMODOP_SIMULATE	
+		);
+	}
+
+	static clearscope void WeapModSim_Commit()
+	{
+		EventHandler.SendNetworkEvent(
+			EVENT_WEAPMOD,
+			WEAPMODOP_COMMIT
+		);
+	}
+
+	static clearscope void WeapModSim_Stop()
+	{
+		EventHandler.SendNetworkEvent(
+			EVENT_WEAPMOD,
+			WEAPMODOP_STOP
 		);
 	}
 }

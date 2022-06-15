@@ -5,6 +5,7 @@ class BIO_Gene : Inventory abstract
 		-COUNTITEM
 		+DONTGIB
 		+FLOATBOB
+		+INVENTORY.INVBAR // Just for the sake of being able to drop them
 
 		Tag "$BIO_GENE_TAG";
 		Inventory.PickupMessage "$BIO_GENE_PKUP";
@@ -41,8 +42,6 @@ class BIO_Gene : Inventory abstract
 	// This gene will never drop as loot if this returns `false`.
 	virtual bool CanGenerate() const { return true; }
 
-	abstract bool PendingApplication() const;
-
 	static BIO_Gene FindByTID(int tid)
 	{
 		let iter = Level.CreateActorIterator(tid, 'BIO_Gene');
@@ -53,42 +52,7 @@ class BIO_Gene : Inventory abstract
 class BIO_ModifierGene : BIO_Gene abstract
 {
 	meta class<BIO_WeaponModifier> ModType;
-	property ModType: ModType; 
-	private BIO_WeaponModifier Modifier;
-
-	override void PostBeginPlay()
-	{
-		super.PostBeginPlay();
-		Modifier = BIO_WeaponModifier(new(ModType));
-	}
-
-	final override bool PendingApplication() const
-	{
-		return Modifier == null;
-	}
-
-	readOnly<BIO_WeaponModifier> GetModifier() const { return Modifier.AsConst(); }
-
-	BIO_WeaponModifier ExtractModifier()
-	{
-		let ret = Modifier;
-		Modifier = null;
-		return ret;
-	}
-
-	void ReinsertModifier(BIO_WeaponModifier mod)
-	{
-		if (mod == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"`BIO_Gene::ReinsertModifier()` received a null pointer."
-			);
-			return;
-		}
-
-		Modifier = mod;
-	}
+	property ModType: ModType;
 }
 
 class BIO_MGene_MagSize : BIO_ModifierGene
