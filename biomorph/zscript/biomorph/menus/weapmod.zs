@@ -321,10 +321,16 @@ extend class BIO_WeaponModMenu
 
 			let defs = GetDefaultByType(Simulator.Genes[i].GetType());
 
+			bool isDragged =
+				DraggedGene != null &&
+				DraggedGene.Origin == BIO_WModMenu_DraggedGene.ORIGIN_INVSLOT &&
+				DraggedGene.InvSlot == i;
+
 			Screen.DrawTexture(defs.Icon, false,
 				drawPos.X, drawPos.Y,
 				DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H,
-				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true
+				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
+				DTA_ALPHA, isDragged ? 0.33 : 1.0
 			);
 		}
 	}
