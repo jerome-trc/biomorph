@@ -313,6 +313,11 @@ extend class BIO_EventHandler
 		if (event.Thing == null || !event.Thing.bIsMonster)
 			return;
 
+		let pawn = BIO_Player(event.Thing.Target);
+
+		if (pawn != null)
+			pawn.OnKill(event.Thing, event.Inflictor);
+
 		if (event.Thing.FindInventory(LDToken))
 		{
 			// TODO:

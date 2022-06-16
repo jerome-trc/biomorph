@@ -181,8 +181,17 @@ class BIO_Weapon : DoomWeapon abstract
 	abstract void SetDefaults();
 
 	// Each is called once before starting its respective loop.
-	virtual void OnDeselect() {}
-	virtual void OnSelect() {}
+	virtual void OnDeselect()
+	{
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnDeselect(self);
+	}
+
+	virtual void OnSelect()
+	{
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnSelect(self);
+	}
 
 	virtual BIO_WeaponModGraph CustomModGraph() const { return null; }
 
@@ -276,6 +285,14 @@ extend class BIO_Weapon
 		SetTag(ColoredTag());
 	}
 
+	override void Tick()
+	{
+		super.Tick();
+
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnTick(self);
+	}
+
 	final override bool Used(Actor user)
 	{
 		let pawn = BIO_Player(user);
@@ -293,22 +310,6 @@ extend class BIO_Weapon
 
 		// Don't consume the interaction so players can open doors and so on
 		return false;
-	}
-
-	override void AttachToOwner(Actor newOwner)
-	{
-		OnOwnerAttach();
-
-		int 
-			prevAmmo1 = newOwner.CountInv(AmmoType1),
-			prevAmmo2 = newOwner.CountInv(AmmoType2);
-
-		super.AttachToOwner(newOwner);
-		AmmoGive1 -= (newOwner.CountInv(AmmoType1) - prevAmmo1);
-		AmmoGive2 -= (newOwner.CountInv(AmmoType2) - prevAmmo2);
-
-		LazyInit();
-		SetupMagazines();
 	}
 
 	// The player can't pick up a weapon if they're full on them,
@@ -416,36 +417,28 @@ extend class BIO_Weapon
 		return ret;
 	}
 
-	final override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
+	override void DoPickupSpecial(Actor toucher)
 	{
-		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
-			return true;
+		super.DoPickupSpecial(toucher);
 
-		if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammoUse))
-			return false;
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnPickup(self);
+	}
 
-		if (!altFire)
-		{
-			if (ammoUse < 0) ammoUse = AmmoUse1;
+	override void AttachToOwner(Actor newOwner)
+	{
+		OnOwnerAttach();
 
-			if (Magazine1 != null)
-				Magazine1.Amount = Max(Magazine1.Amount - ammoUse, 0);
+		int 
+			prevAmmo1 = newOwner.CountInv(AmmoType1),
+			prevAmmo2 = newOwner.CountInv(AmmoType2);
 
-			if (bPRIMARY_USES_BOTH && Magazine2 != null)
-				Magazine2.Amount = Max(Magazine2.Amount - AmmoUse2, 0);
-		}
-		else
-		{
-			if (ammoUse < 0) ammoUse = AmmoUse2;
+		super.AttachToOwner(newOwner);
+		AmmoGive1 -= (newOwner.CountInv(AmmoType1) - prevAmmo1);
+		AmmoGive2 -= (newOwner.CountInv(AmmoType2) - prevAmmo2);
 
-			if (Magazine2 != null)
-				Magazine2.Amount = Max(Magazine2.Amount - ammoUse, 0);
-
-			if (bALT_USES_BOTH && Magazine1 != null)
-				Magazine1.Amount = Max(Magazine1.Amount - AmmoUse1, 0);
-		}
-
-		return true;
+		LazyInit();
+		SetupMagazines();
 	}
 
 	// The parent variant of this function clears both `AmmoGive` fields to
@@ -463,8 +456,50 @@ extend class BIO_Weapon
 	override void OnDrop(Actor dropper)
 	{
 		super.OnDrop(dropper);
+
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnDrop(self, BIO_Player(dropper));
+
 		Magazine1 = Magazine2 = null;
 		HitGround = false;
+	}
+
+	final override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
+	{
+		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
+			return true;
+
+		if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammoUse))
+			return false;
+
+		if (!altFire)
+		{
+			if (ammoUse < 0) ammoUse = AmmoUse1;
+
+			for (uint i = 0; i < Affixes.Size(); i++)
+				Affixes[i].BeforeAmmoDeplete(self, ammoUse, altFire);
+
+			if (Magazine1 != null)
+				Magazine1.Amount = Max(Magazine1.Amount - ammoUse, 0);
+
+			if (bPRIMARY_USES_BOTH && Magazine2 != null)
+				Magazine2.Amount = Max(Magazine2.Amount - AmmoUse2, 0);
+		}
+		else
+		{
+			if (ammoUse < 0) ammoUse = AmmoUse2;
+
+			for (uint i = 0; i < Affixes.Size(); i++)
+				Affixes[i].BeforeAmmoDeplete(self, ammoUse, altFire);
+
+			if (Magazine2 != null)
+				Magazine2.Amount = Max(Magazine2.Amount - ammoUse, 0);
+
+			if (bALT_USES_BOTH && Magazine1 != null)
+				Magazine1.Amount = Max(Magazine1.Amount - AmmoUse1, 0);
+		}
+
+		return true;
 	}
 }
 
@@ -823,6 +858,12 @@ extend class BIO_Weapon
 		let given = int(float(dmg) * lsp);
 		Owner.GiveBody(given, Owner.GetMaxHealth(true) + 100);
 	}
+
+	void OnKill(Actor killed, Actor inflictor)
+	{
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].OnKill(self, killed, inflictor);
+	}
 }
 
 // Newly-defined actions.
@@ -908,6 +949,10 @@ extend class BIO_Weapon
 		toLoad = int(Floor(float(toLoad) / float(output)));
 		toDraw = Min(toLoad * cost, reserve);
 		toLoad = Min(toLoad, toDraw) * output;
+
+		for (uint i = 0; i < invoker.Affixes.Size(); i++)
+			invoker.Affixes[i].OnMagLoad(invoker, secondary, toDraw, toLoad);
+
 		TakeInventory(res_t, toDraw);
 		mag.Amount += toLoad;
 	}

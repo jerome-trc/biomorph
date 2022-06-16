@@ -119,4 +119,12 @@ class BIO_Player : DoomPlayer
 		ExamineTimer = upTime;
 		A_StartSound("bio/ui/beep", attenuation: 1.2);
 	}
+
+	void OnKill(Actor killed, Actor inflictor)
+	{
+		let weap = BIO_Weapon(Player.ReadyWeapon);
+
+		if (weap != null)
+			weap.OnKill(killed, inflictor);
+	}
 }
