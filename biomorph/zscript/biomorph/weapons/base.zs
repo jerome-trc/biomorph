@@ -115,10 +115,10 @@ class BIO_Weapon : DoomWeapon abstract
 
 		Inventory.PickupMessage "";
 
-		Weapon.BobRangeX 0.5;
+		Weapon.BobRangeX 0.3;
 		Weapon.BobRangeY 0.5;
-		Weapon.BobSpeed 1.2;
-		Weapon.BobStyle 'Alpha';
+		Weapon.BobStyle 'InverseSmooth';
+		Weapon.BobSpeed 2.0;
 
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/0";
 		BIO_Weapon.MinAmmoReserves 1, 1;
