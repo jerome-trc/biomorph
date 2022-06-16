@@ -306,8 +306,12 @@
 	BIO_UNASSIGNED_KEY = "\c[Gray]Unassigned Key\c-";
 
 	BIO_KB_DROPWEAP = "Drop Weapon";
-	BIO_KB_INVENTORYMENU = "Inventory Menu";
+	BIO_KB_WEAPMODMENU = "Weapon Modification Menu";
 
 // Quit messages ///////////////////////////////////////////////////////////////
 
 	// SOON
+
+// Miscellaneous ///////////////////////////////////////////////////////////////
+
+	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";

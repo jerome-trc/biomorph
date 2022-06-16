@@ -1,5 +1,13 @@
 addkeysection "$BIO_MODTITLE" BIO_Section
 
+// Controls
+
+addmenukey "$BIO_KB_DROPWEAP" "use BIO_WeaponDrop"
+defaultbind Y "use BIO_WeaponDrop"
+
+addmenukey "$BIO_KB_WEAPMODMENU" "event bio_weapmodmenu"
+defaultbind M "event bio_weapmodmenu"
+
 // Debug event aliases
 
 alias bio_help_ "event bio_help"

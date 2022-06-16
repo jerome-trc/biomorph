@@ -240,8 +240,9 @@ extend class BIO_EventHandler
 
 		Console.Printf(
 			"\c[Gold]Console events:\c-\n"
-			"\tbio_help_\n"
-			"\tbio_wmod:<weapon mod class name> [>1 to force] [>1 to pre-reset]");
+			"\tbio_help_\n",
+			"\tbio_monsval_"
+		);
 	}
 
 	private static ui void ConEvent_MonsVal(ConsoleEvent event)
