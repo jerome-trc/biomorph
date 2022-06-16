@@ -69,7 +69,20 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 	final override void Apply(BIO_Weapon weap) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
-			weap.Pipelines[i].HitDamageFunctors.Push(new('BIO_HDF_DemonSlayer'));
+		{
+			let func = weap.Pipelines[i].GetHitDamageFunctor('BIO_HDF_DemonSlayer');
+
+			if (func != null)
+			{
+				BIO_HDF_DemonSlayer(func).Count++;
+			}	
+			else
+			{
+				func = new('BIO_HDF_DemonSlayer');
+				BIO_HDF_DemonSlayer(func).Count = 1;
+				weap.Pipelines[i].HitDamageFunctors.Push(func);
+			}
+		}
 	}
 
 	final override bool CanGenerate() const
@@ -101,16 +114,18 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 
 class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 {
+	uint Count;
+
 	final override void InvokeSlow(BIO_Projectile proj,
 		Actor target, in out int damage, name dmgType) const
 	{
 		if (target == null) return;
 
-		if (BIO_Utils.TryFindInv(target, "LDLegendaryMonsterToken"))
+		if (BIO_Utils.TryFindInv(target, 'LDLegendaryMonsterToken'))
 		{
-			damage *= 4;
+			damage *= (4 * Count);
 			proj.DamageType = 'DemonSlayer';
-			proj.DamageMultiply = 4.0;
+			proj.DamageMultiply = (4.0 * float(Count));
 		}
 	}
 
@@ -119,11 +134,11 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 	{
 		if (target == null) return;
 
-		if (BIO_Utils.TryFindInv(target, "LDLegendaryMonsterToken"))
+		if (BIO_Utils.TryFindInv(target, 'LDLegendaryMonsterToken'))
 		{
-			damage *= 4;
+			damage *= (4 * Count);
 			proj.DamageType = 'DemonSlayer';
-			proj.DamageMultiply = 4.0;
+			proj.DamageMultiply = (4.0 * float(Count));
 		}
 	}
 
@@ -131,10 +146,12 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 	{
 		if (puff.Tracer == null) return;
 
-		if (BIO_Utils.TryFindInv(puff.Tracer, "LDLegendaryMonsterToken"))
+		if (BIO_Utils.TryFindInv(puff.Tracer, 'LDLegendaryMonsterToken'))
 		{
-			puff.Tracer.DamageMObj(puff, null, puff.Damage * 3, 'DemonSlayer');
-			puff.DamageMultiply = 4.0;
+			int multi = (Count - 1) * 4;
+			multi += 3;
+			puff.Tracer.DamageMObj(puff, null, puff.Damage * multi, 'DemonSlayer');
+			puff.DamageMultiply = (4.0 * float(Count));
 		}
 	}
 
@@ -143,8 +160,11 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 		return new('BIO_HDF_DemonSlayer');
 	}
 
-	final override void Summary(in out Array<string> _) const
+	final override void Summary(in out Array<string> strings) const
 	{
-		// Nothing needed here; the affix to-string tells all
+		strings.Push(String.Format(
+			StringTable.Localize("$BIO_HDF_DEMONSLAYER"),
+			Count * 400
+		));
 	}
 }

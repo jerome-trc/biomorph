@@ -219,9 +219,23 @@ class BIO_WeaponPipeline play
 
 	BIO_PLDF_Explode GetSplashFunctor() const
 	{
-		for (uint i = 0; i < PayloadDeathFunctors.Size(); i++)
-			if (PayloadDeathFunctors[i].GetClass() == 'BIO_PLDF_Explode')
-				return BIO_PLDF_Explode(PayloadDeathFunctors[i]);
+		return BIO_PLDF_Explode(GetPayloadDeathFunctor('BIO_PLDF_Explode'));
+	}
+
+	BIO_ProjTravelFunctor GetProjTravelFunctor(class<BIO_ProjTravelFunctor> type)
+	{
+		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
+			if (ProjTravelFunctors[i].GetClass() == type)
+				return ProjTravelFunctors[i];
+
+		return null;
+	}
+
+	BIO_HitDamageFunctor GetHitDamageFunctor(class<BIO_HitDamageFunctor> type)
+	{
+		for (uint i = 0; i < HitDamageFunctors.Size(); i++)
+			if (HitDamageFunctors[i].GetClass() == type)
+				return HitDamageFunctors[i];
 
 		return null;
 	}

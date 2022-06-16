@@ -148,6 +148,79 @@
 	BIO_BFG_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_BFG_OB = "%k field-tested a %s on %o.";
 
+// Payloads (puff/projectile tags, functor summaries) //////////////////////////
+
+	// Generic tags used as defaults
+	BIO_ROUND_TAG = "round";
+	BIO_ROUND_TAGS = "rounds";
+
+	BIO_MELEEHIT_TAG = "hit";
+	BIO_MELEEHIT_TAG_PLURAL = "hits";
+
+	BIO_BULLET_TAG = "bullet";
+	BIO_BULLET_TAG_PLURAL = "bullets";
+
+	BIO_SHOTPELLET_TAG = "pellet";
+	BIO_SHOTPELLET_TAG_PLURAL = "pellets";
+
+	BIO_SLUG_TAG = "slug";
+	BIO_SLUG_TAG_PLURAL = "slugs";
+
+	BIO_DEMOBULLET_TAG = "demolition bullet";
+	BIO_DEMOBULLET_TAG_PLURAL = "demolition bullets";
+
+	BIO_DEMOSHOTPELLET_TAG = "demolition shot pellet";
+	BIO_DEMOSHOTPELLET_TAG_PLURAL = "demolition shot pellets";
+
+	BIO_DEMOSLUG_TAG = "demolition slug";
+	BIO_DEMOSLUG_TAG_PLURAL = "demolition slugs";
+
+	BIO_ELECTRICPUFF_TAG = "electric arc";
+	BIO_ELECTRICPUFF_TAG_PLURAL = "electric arcs";
+
+	BIO_ROCKET_TAG = "rocket";
+	BIO_ROCKET_TAG_PLURAL = "rockets";
+
+	BIO_GRENADE_TAG = "grenade";
+	BIO_GRENADE_TAG_PLURAL = "grenades";
+
+	BIO_MINIMISSILE_TAG = "mini-missile";
+	BIO_MINIMISSILE_TAG_PLURAL = "mini-missiles";
+	
+	BIO_PLASMABALL_TAG = "plasma ball";
+	BIO_PLASMABALL_TAG_PLURAL = "plasma balls";
+	
+	BIO_BFGBALL_TAG = "ball";
+	BIO_BFGBALL_TAG_PLURAL = "balls";
+
+	BIO_NAIL_TAG = "nail";
+	BIO_NAIL_TAG_PLURAL = "nails";
+
+	BIO_PROXMINE_TAG = "proximity mine";
+	BIO_PROXMINE_TAG_PLURAL = "proximity mines";
+
+	BIO_PROJEXTRA_TAG_BFGRAY = "ray";
+	BIO_PROJEXTRA_TAG_BFGRAYS = "rays";
+
+	BIO_PLASMAGLOBULE_TAG = "plasma globule";
+	BIO_PLASMAGLOBULE_TAG_PLURAL = "plasma globules";
+
+	BIO_PLASMABOLT_TAG = "plasma bolt";
+	BIO_PLASMABOLT_TAG_PLURAL = "plasma bolts";
+
+	BIO_BLACKHOLE_TAG = "black hole";
+	BIO_BLACKHOLE_PKUP = "black holes";
+
+	BIO_HDF_ENEMYHEALTHDMG = "\c[White]%.1f%%\c[MidGrey] of enemy health added to damage";
+	BIO_HDF_DEMONSLAYER = "\c[White]%%%d damage\c[MidGrey] to Legendary monsters";
+
+	BIO_PLDF_EXPLODE_SPLASH =
+		"\c[MidGrey]Splash: %s%d \c[MidGrey]damage, %s%d \c[MidGrey]radius";
+	BIO_PLDF_EXPLODE_SHRAPNEL =
+		"\c[MidGrey]Shrapnel: %s%d\c[MidGrey] x %s%d\c[MidGrey] damage";
+	BIO_PLDF_BFGSPRAY =
+		"\c[MidGrey]%s%d \c[MidGrey]rays, %s%d \cu-\c[MidGrey] %s%d damage";
+
 // Weapon modifiers ////////////////////////////////////////////////////////////
 
 	BIO_WMOD_INCOMPAT_NODAMAGE = "This weapon deals no damage.";
