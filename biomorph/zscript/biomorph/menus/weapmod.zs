@@ -346,8 +346,23 @@ extend class BIO_WeaponModMenu
 			StringTable.Localize(mod.GetTag())
 		);
 
-		for (uint i = 0; i < desc.Size(); i++)
-			tt.AppendFormat("\n%s", StringTable.Localize(desc[i]));
+		if (!Simulator.Nodes[node].Valid)
+		{
+			bool _ = false;
+			string reason = "";
+			[_, reason] = Simulator.Nodes[node].GetModifier()
+				.Compatible(CurrentWeap);
+
+			tt.AppendFormat(
+				StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
+				StringTable.Localize(reason)
+			);
+		}
+		else
+		{
+			for (uint i = 0; i < desc.Size(); i++)
+				tt.AppendFormat("\n%s", StringTable.Localize(desc[i]));
+		}
 
 		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
 			(MousePos.X / CleanXFac) + 8, (MousePos.Y / CleanYFac) + 8, tt,
