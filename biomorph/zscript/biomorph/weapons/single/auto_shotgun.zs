@@ -14,7 +14,7 @@ class BIO_AutoShotgun : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_HIGH;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.GraphQuality 6, 8;
+		BIO_Weapon.GraphQuality 4;
 		BIO_Weapon.MagazineSize 8;
 		BIO_Weapon.MagazineType 'BIO_Mag_AutoShotgun';
 		BIO_Weapon.PickupMessages

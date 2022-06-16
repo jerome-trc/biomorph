@@ -14,7 +14,7 @@ class BIO_Coachgun : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_HIGH;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.GraphQuality 8, 10;
+		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.MagazineType 'BIO_Mag_Coachgun';
 		BIO_Weapon.MagazineSize 2;
 		BIO_Weapon.PickupMessages

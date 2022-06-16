@@ -73,9 +73,7 @@ class BIO_Muta_General : BIO_Mutagen
 			return false;
 		}
 
-		weap.ModGraph = BIO_WeaponModGraph.Create(
-			weap.GraphQualityMin, weap.GraphQualityMax
-		);
+		weap.ModGraph = BIO_WeaponModGraph.Create(weap.GraphQuality);
 		Owner.A_Print("$BIO_MUTA_GENERAL_USE");
 		return true;
 	}

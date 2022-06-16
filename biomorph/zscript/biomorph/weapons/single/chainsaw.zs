@@ -14,7 +14,7 @@ class BIO_Chainsaw : BIO_Weapon
 		Weapon.SlotNumber 1;
 		Weapon.UpSound "weapons/sawup";
 
-		BIO_Weapon.GraphQuality 8, 10;
+		BIO_Weapon.GraphQuality 10;
 		BIO_Weapon.PickupMessages
 			"$BIO_CHAINSAW_PKUP",
 			"";

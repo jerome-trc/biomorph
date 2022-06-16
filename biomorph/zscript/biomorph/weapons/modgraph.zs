@@ -44,25 +44,15 @@ class BIO_WeaponModGraph play
 {
 	Array<BIO_WMGNode> Nodes;
 
-	static BIO_WeaponModGraph Create(uint qualityMin = 0, uint qualityMax = 0)
+	static BIO_WeaponModGraph Create(uint numNodes = 0)
 	{
 		let ret = new('BIO_WeaponModGraph');
 
 		ret.Nodes.Push(new('BIO_WMGNode'));
-		// All home fields left to their defaults
+		// All fields of the home node left to their defaults
 
-		if (qualityMax < qualityMin)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_WARN ..
-				"Invalid quality arguments given to `BIO_WeaponModGraph::Create()`: "
-				"%d min., %d max.", qualityMin, qualityMax
-			);
-		}
-		else if (qualityMin > 0 && qualityMax > 0)
-		{
-			ret.TryGenerateNodes(Random[BIO_WMod](qualityMin, qualityMax));
-		}
+		if (numNodes > 0)
+			ret.TryGenerateNodes(numNodes);
 
 		return ret;
 	}

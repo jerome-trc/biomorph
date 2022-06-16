@@ -14,7 +14,7 @@ class BIO_VolleyGun : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_HIGH;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.GraphQuality 8, 10;
+		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.MagazineSize 4;
 		BIO_Weapon.MagazineType 'BIO_Mag_VolleyGun';
 		BIO_Weapon.PickupMessages

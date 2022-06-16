@@ -15,7 +15,7 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		Weapon.SlotNumber 5;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.GraphQuality 6, 8;
+		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'RocketAmmo';
 		BIO_Weapon.PickupMessages
 			"$BIO_ROCKETAUTOLAUNCHER_PKUP",

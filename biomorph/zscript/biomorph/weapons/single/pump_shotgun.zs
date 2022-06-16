@@ -16,7 +16,7 @@ class BIO_PumpShotgun : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_LOW;
 		Weapon.UpSound "bio/weap/gunswap/0";
 
-		BIO_Weapon.GraphQuality 8, 10;
+		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.PickupMessages
 			"$BIO_PUMPSHOTGUN_PKUP",
 			"$BIO_PUMPSHOTGUN_SCAV";

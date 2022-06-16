@@ -13,7 +13,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 		Weapon.SlotNumber 6;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.GraphQuality 6, 8;
+		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'Cell';
 		BIO_Weapon.PickupMessages
 			"$BIO_PLASMARIFLE_PKUP",

@@ -12,6 +12,7 @@ class BIO_Fists : BIO_DualWieldWeapon
 		Weapon.SlotNumber 1;
 
 		BIO_Weapon.Family BIO_WEAPFAM_FIST;
+		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.SwitchSpeeds 14, 14;
 	}
 
@@ -49,6 +50,6 @@ class BIO_Fists : BIO_DualWieldWeapon
 
 	override BIO_WeaponModGraph CustomModGraph() const
 	{
-		return BIO_WeaponModGraph.Create(GraphQualityMin, GraphQualityMax);
+		return BIO_WeaponModGraph.Create(GraphQuality);
 	}
 }

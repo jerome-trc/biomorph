@@ -16,7 +16,7 @@ class BIO_BFG : BIO_Weapon
 		Weapon.SelectionOrder SELORDER_BFG;
 		Weapon.SlotNumber 7;
 
-		BIO_Weapon.GraphQuality 6, 8;
+		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'Cell';
 		BIO_Weapon.PickupMessages
 			"$BIO_BFG_PKUP",

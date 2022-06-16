@@ -42,8 +42,8 @@ class BIO_Weapon : DoomWeapon abstract
 	meta BIO_WeaponSpawnCategory SpawnCategory;
 	property SpawnCategory: SpawnCategory;
 
-	meta uint GraphQualityMin, GraphQualityMax;
-	property GraphQuality: GraphQualityMin, GraphQualityMax;
+	meta uint GraphQuality;
+	property GraphQuality: GraphQuality;
 
 	meta uint ModCost;
 	property ModCost: ModCost;

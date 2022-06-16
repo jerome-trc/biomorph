@@ -14,7 +14,7 @@ class BIO_MicroVulcan : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_HIGH;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.GraphQuality 8, 10;
+		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.MagazineType 'Clip';
 		BIO_Weapon.PickupMessages
 			"$BIO_MICROVULCAN_PKUP",
