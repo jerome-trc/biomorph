@@ -281,7 +281,7 @@ extend class BIO_WeaponModMenu
 			else if (ValidHoveredInvSlot() &&
 				Simulator.Genes[HoveredInvSlot] != null)
 			{
-				DrawGeneTooltip(HoveredInvSlot);
+				DrawInvSlotTooltip(HoveredInvSlot);
 			}
 		}
 	}
@@ -371,7 +371,7 @@ extend class BIO_WeaponModMenu
 		);
 	}
 
-	private void DrawGeneTooltip(uint slot) const
+	private void DrawInvSlotTooltip(uint slot) const
 	{
 		let gene = Simulator.Genes[slot];
 		let defs = GetDefaultByType(gene.GetType());
