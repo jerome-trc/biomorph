@@ -227,7 +227,9 @@
 
 	BIO_WMOD_INCOMPAT_NODAMAGE = "This weapon deals no damage.";
 	BIO_WMOD_INCOMPAT_AMMOLESS = "This weapon doesn't use ammunition.";
-	BIO_WMOD_INCOMPAT_NOMAGAZINE = "No valid primary or secondary magazine";
+	BIO_WMOD_INCOMPAT_NOMAGAZINE =
+		"No valid primary or secondary magazine,\n"
+		"or no reserve ammo type.";
 
 	BIO_WMOD_DAMAGE_TAG = "High-Power";
 	BIO_WMOD_DAMAGE_SUMM = "\c[Green]20% of minimum damage added";
