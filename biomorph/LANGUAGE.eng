@@ -239,8 +239,8 @@
 
 	BIO_WMOD_MAGSIZE_TAG = "High-Capacity";
 	BIO_WMOD_MAGSIZE_SUMM = "Increases magazine capacity";
-	BIO_WAFX_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
-	BIO_WAFX_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
+	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
+	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
 
 // Mutagens ////////////////////////////////////////////////////////////////////
 
