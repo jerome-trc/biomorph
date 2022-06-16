@@ -44,9 +44,9 @@ class BIO_Player : DoomPlayer
 		if (Pos.Z ~== FloorZ || bOnMObj)
 		{
 			// Bump up the player's speed to compensate for the deceleration
-			// TODO (NASH): math here is shit and wrong, please fix
+			// TODO (Nash): math here is shit and wrong, please fix
 			double s = 1.0 + (1.0 - DECEL_MULT);
-			A_SetSpeed(s * 2);
+			Speed = s * 2.0;
 
 			// Decelerate the player, if not in pain
 			Vel.X *= DECEL_MULT;
