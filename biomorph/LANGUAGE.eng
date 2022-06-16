@@ -221,7 +221,7 @@
 	BIO_PLDF_BFGSPRAY =
 		"\c[MidGrey]%s%d \c[MidGrey]rays, %s%d \cu-\c[MidGrey] %s%d damage";
 
-// Weapon modifiers ////////////////////////////////////////////////////////////
+// Weapon modifiers (tags, summaries, descriptions, incompatibility readouts) //
 
 	// (If a grouping has no description, then assume the summary doubles as one)
 
@@ -247,7 +247,7 @@
 	BIO_WMOD_RESERVEFEED_TAG = "Ammochain";
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
-// Mutagens ////////////////////////////////////////////////////////////////////
+// Mutagens (tags, pickup and usage strings) ///////////////////////////////////
 
 	BIO_MUTA_FAIL_NULL = "This weapon doesn't even respond to the mutagen.";
 	BIO_MUTA_FAIL_ALREADYMUTATED = "This weapon has already been mutated.";
@@ -256,19 +256,19 @@
 	BIO_MUTA_GENERAL_PKUP = "Acquired a sample of \c[Cyan]C.O.N.T.R.O.L.\c- Mutagen.";
 	BIO_MUTA_GENERAL_USE = "\c[Cyan]You feel your weapon integrate with your body.\c-";
 
-// Genes ///////////////////////////////////////////////////////////////////////
+// Genes (tags, pickup strings) ////////////////////////////////////////////////
 
-	BIO_GENE_TAG = "Gene";
-	BIO_GENE_PKUP = "Collected a gene.";
+	BIO_GENE_TAG = "\c[White]Gene\c-";
+	BIO_GENE_PKUP = "Collected a \c[White]gene\c-.";
 
-	BIO_MGENE_DEMONSLAYER_TAG = "Demonslayer Gene";
-	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a Demonslayer gene.";
+	BIO_MGENE_DEMONSLAYER_TAG = "\c[Red]Demonslayer\c[White] Gene\c-";
+	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a \c[Red]Demonslayer\c[White] gene\c-.";
 
-	BIO_MGENE_MAGSIZE_TAG = "High-Capacity Gene";
-	BIO_MGENE_MAGSIZE_PKUP = "Collected a High-Capacity gene.";
+	BIO_MGENE_MAGSIZE_TAG = "\c[Yellow]High-Capacity\c[White] Gene\c-";
+	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Yellow]High-Capacity\c[White] gene\c-.";
 
-	BIO_MGENE_RESERVEFEED_TAG = "Ammochain Gene";
-	BIO_MGENE_RESERVEFEED_PKUP = "Collected an Ammochain gene";
+	BIO_MGENE_RESERVEFEED_TAG = "\c[Yellow]Ammochain\c[White] Gene";
+	BIO_MGENE_RESERVEFEED_PKUP = "Collected an \c[Yellow]Ammochain\c[White] gene\c-.";
 
 // Menu, weapon modification ///////////////////////////////////////////////////
 
