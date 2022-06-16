@@ -72,6 +72,66 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 	}
 }
 
+class BIO_WMod_ReserveFeed : BIO_WeaponModifier
+{
+	final override bool, string Compatible(readOnly<BIO_Weapon> weap) const
+	{
+		if (PrimaryCompatible(weap) || SecondaryCompatible(weap))
+			return true, "";
+
+		return false, "$BIO_WMOD_INCOMPAT_NOMAGAZINE";
+	}
+
+	private static bool PrimaryCompatible(readOnly<BIO_Weapon> weap)
+	{
+		return
+			weap.AmmoType1 != null &&
+			weap.MagazineType1 != null &&
+			weap.MagazineType1 != weap.AmmoType1 &&
+			weap.MagazineSize1 > 0 &&
+			weap.ReloadCost1 > 0;
+	}
+
+	private static bool SecondaryCompatible(readOnly<BIO_Weapon> weap)
+	{
+		return
+			weap.AmmoType2 != null &&
+			weap.MagazineType2 != null &&
+			weap.MagazineType2 != weap.AmmoType2 &&
+			weap.MagazineSize2 > 0 &&
+			weap.ReloadCost2 > 0;	
+	}
+
+	final override void Apply(BIO_Weapon weap) const
+	{
+		weap.SetupMagazines(
+			PrimaryCompatible(weap.AsConst()) ? weap.AmmoType1 : null,
+			SecondaryCompatible(weap.AsConst()) ? weap.AmmoType2 : null
+		);
+	}
+
+	final override bool AllowMultiple() const
+	{
+		return false;
+	}
+
+	final override string GetTag() const
+	{
+		return "$BIO_WMOD_RESERVEFEED_TAG";
+	}
+
+	final override void Summary(in out Array<string> strings) const
+	{
+		strings.Push("$BIO_WMOD_RESERVEFEED_SUMM");
+	}
+
+	final override void Description(in out Array<string> strings,
+		readOnly<BIO_Weapon> _) const
+	{
+		Summary(strings);
+	}
+}
+
 class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 {
 	final override bool, string Compatible(readOnly<BIO_Weapon> weap) const
@@ -102,8 +162,8 @@ class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 	}
 
 	final override void Description(in out Array<string> strings,
-		readOnly<BIO_Weapon> weap) const
+		readOnly<BIO_Weapon> _) const
 	{
-		strings.Push("$BIO_WMOD_INFINITEAMMO_SUMM");
+		Summary(strings);
 	}
 }

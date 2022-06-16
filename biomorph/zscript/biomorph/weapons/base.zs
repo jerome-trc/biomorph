@@ -798,11 +798,15 @@ extend class BIO_Weapon
 			ModGraph.Apply(self);
 	}
 
-	void SetupMagazines()
+	void SetupMagazines(class<Ammo> override1 = null, class<Ammo> override2 = null)
 	{
+		if (override1 != null)
+		{
+			Magazine1 = Ammo(Owner.FindInventory(override1));
+		}
 		// Get a pointer to primary ammo (which is either `AmmoType1` or
 		// `MagazineType1`). If it isn't found, generate and attach it
-		if (Magazine1 == null && (MagazineType1 != null || AmmoType1 != null))
+		else if (Magazine1 == null && (MagazineType1 != null || AmmoType1 != null))
 		{
 			bool previouslyOwned = true;
 
@@ -821,8 +825,12 @@ extend class BIO_Weapon
 				Magazine1.Amount = Max(Default.MagazineSize1, 0);
 		}
 
+		if (override2 != null)
+		{
+			Magazine2 = Ammo(Owner.FindInventory(override2));
+		}
 		// Same for secondary:
-		if (Magazine2 == null && (MagazineType2 != null || AmmoType2 != null))
+		else if (Magazine2 == null && (MagazineType2 != null || AmmoType2 != null))
 		{
 			bool previouslyOwned = true;
 
