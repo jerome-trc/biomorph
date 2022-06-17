@@ -795,6 +795,7 @@ extend class BIO_Weapon
 
 			if (ModGraph != null)
 			{
+				SetTag(ColoredTag());
 				let sim = BIO_WeaponModSimulator.Create(self);
 				sim.Simulate();
 				sim.Commit();
