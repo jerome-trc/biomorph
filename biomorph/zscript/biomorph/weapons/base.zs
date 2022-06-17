@@ -193,7 +193,15 @@ class BIO_Weapon : DoomWeapon abstract
 			Affixes[i].OnSelect(self);
 	}
 
-	virtual BIO_WeaponModGraph CustomModGraph() const { return null; }
+	/*	Receives a null pointer when the weapon lazy-initialises, and then
+		receives a non-null pointer when the weapon naturally gets mutated
+		by the user.
+		If your intent is for the unique weapon to have a pre-filled mod graph,
+		act upon the former.
+		If your intent is for a weapon to start un-mutated but gain certain
+		properties implicitly upon mutation, act upon the latter.
+	*/
+	virtual void IntrinsicModGraph(in out BIO_WeaponModGraph graph) const {}
 
 	virtual void Summary(in out Array<string> strings) const
 	{
@@ -783,7 +791,7 @@ extend class BIO_Weapon
 		if (Uninitialised())
 		{
 			SetDefaults();
-			ModGraph = CustomModGraph(); // Possibly null
+			IntrinsicModGraph(ModGraph);
 
 			if (ModGraph != null)
 			{

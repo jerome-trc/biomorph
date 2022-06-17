@@ -48,8 +48,18 @@ class BIO_Fists : BIO_DualWieldWeapon
 		);
 	}
 
-	override BIO_WeaponModGraph CustomModGraph() const
+	override void IntrinsicModGraph(in out BIO_WeaponModGraph graph) const
 	{
-		return BIO_WeaponModGraph.Create(GraphQuality);
+		if (graph != null) // Should never happen
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"`%s::IntrinsicModGraph()` illegally received a non-null argument.",
+				GetClassName()
+			);
+			return;
+		}
+
+		graph = BIO_WeaponModGraph.Create(GraphQuality);
 	}
 }
