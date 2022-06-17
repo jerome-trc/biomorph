@@ -1,6 +1,6 @@
 class BIO_WMGNode play
 {
-	// Corresponds to node's place in `BIO_WeaponModGraph::Nodes`.
+	// Corresponds to this node's place in `BIO_WeaponModGraph::Nodes`.
 	// Also dictates modifier application order.
 	uint UUID;
 	uint HomeDistance; // 0 for the home node, of course.
@@ -13,16 +13,6 @@ class BIO_WMGNode play
 	bool Active() const
 	{
 		return GeneType != null || UUID == 0;
-	}
-
-	void Apply(BIO_Weapon weap)
-	{
-		if (GeneType is 'BIO_ModifierGene')
-		{
-			let mgene_t = (class<BIO_ModifierGene>)(GeneType);
-			let defs = GetDefaultByType(mgene_t);
-			BIO_WeaponModifier(new(defs.ModType)).Apply(weap);
-		}
 	}
 
 	BIO_WMGNode Copy() const
@@ -55,15 +45,6 @@ class BIO_WeaponModGraph play
 			ret.TryGenerateNodes(numNodes);
 
 		return ret;
-	}
-
-	void Apply(BIO_Weapon weap)
-	{
-		for (uint i = 1; i < Nodes.Size(); i++)
-		{
-			if (Nodes[i].Active())
-				Nodes[i].Apply(weap);
-		}
 	}
 
 	void TryGenerateNodes(uint count = 1)

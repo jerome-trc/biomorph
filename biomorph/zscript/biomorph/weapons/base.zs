@@ -784,18 +784,15 @@ extend class BIO_Weapon
 		{
 			SetDefaults();
 			ModGraph = CustomModGraph(); // Possibly null
+
 			if (ModGraph != null)
-				ModGraph.Apply(self);
+			{
+				let sim = BIO_WeaponModSimulator.Create(self);
+				sim.Simulate();
+				sim.Commit();
+				sim.PostCommit();
+			}
 		}
-	}
-
-	void Refresh()
-	{
-		Reset();
-		SetDefaults();
-
-		if (ModGraph != null)
-			ModGraph.Apply(self);
 	}
 
 	void SetupMagazines(class<Ammo> override1 = null, class<Ammo> override2 = null)
