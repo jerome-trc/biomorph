@@ -121,6 +121,41 @@ class BIO_WeaponModGraph play
 		}
 	}
 
+	int, int RandomAvailableAdjacency() const
+	{
+		Array<BIO_WMGNode> cNodes;
+		cNodes.Copy(Nodes);
+
+		for (uint i = cNodes.Size() - 1; i >= 0; i--)
+		{
+			// If a node has a neighbor on each cardinal side,
+			// nothing can be put next to it
+			if (cNodes[i].Neighbors.Size() >= 4)
+			{
+				cNodes.Delete(i);
+				continue;
+			}
+
+			let candidate = cNodes[i];
+
+			// Which adiacent slots are available?
+			Array<int> availX, availY;
+			GetOpenAdjacencies(candidate, availX, availY);
+
+			if (availX.Size() < 1 || availY.Size() < 1)
+			{
+				cNodes.Delete(i);
+				continue;
+			}
+		}
+
+		let neighbor = cNodes[Random[BIO_WMod](0, cNodes.Size() - 1)];
+		Array<int> availX, availY;
+		GetOpenAdjacencies(neighbor, availX, availY);
+		let p = Random[BIO_WMod](0, availX.Size() - 1);
+		return neighbor.PosX + availX[p], neighbor.PosY + availY[p];
+	}
+
 	private void GetOpenAdjacencies(BIO_WMGNode candidate,
 		in out Array<int> availX, in out Array<int> availY) const
 	{

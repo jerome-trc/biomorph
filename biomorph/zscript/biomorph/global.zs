@@ -19,6 +19,7 @@ class BIO_Global : Thinker
 
 		ret.PopulateWeaponLootTables();
 		ret.PopulateMutagenLootTable();
+		ret.PopulateWeaponUpgradeCache();
 
 		for (uint i = 0; i < __BIO_WSCAT_COUNT__; i++)
 		{
@@ -139,6 +140,54 @@ extend class BIO_Global
 				continue;
 
 			WeaponModifiers.Push(BIO_WeaponModifier(new(mod_t)));
+		}
+	}
+}
+
+// Weapon upgrade recipe cache.
+extend class BIO_Global
+{
+	private Array<BIO_WeaponUpgradeRecipe> WeaponUpgradeRecipes;
+
+	private void PopulateWeaponUpgradeCache()
+	{
+		for (uint i = 0; i < AllClasses.Size(); i++)
+		{
+			let recipe_t = (class<BIO_WeaponUpgradeRecipe>)(AllClasses[i]);
+
+			if (recipe_t == null || recipe_t.IsAbstract())
+				continue;
+
+			let recipe = BIO_WeaponUpgradeRecipe(new(recipe_t));
+
+			if (!recipe.Enabled())
+				continue;
+
+			WeaponUpgradeRecipes.Push(recipe);
+		}
+	}
+
+	void GetUpgradesFromWeaponType(class<BIO_Weapon> type,
+		in out Array<BIO_WeaponUpgradeRecipe> recipes)
+	{
+		if (recipes.Size() > 0)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"`GetUpgradesFromWeaponType()` illegally received a non-empty array."
+			);
+			return;
+		}
+
+		for (uint i = 0; i < WeaponUpgradeRecipes.Size(); i++)
+		{
+			let recipe = WeaponUpgradeRecipes[i];
+
+			Array<class<BIO_Weapon> > inTypes;
+			recipe.GetInputTypes(inTypes);
+
+			if (inTypes.Find(type) != inTypes.Size())
+				recipes.Push(recipe);
 		}
 	}
 }

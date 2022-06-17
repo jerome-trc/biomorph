@@ -1,3 +1,5 @@
+// (Rat): My kingdom for some honest-to-god sum types
+
 class BIO_WeaponModSimNode
 {
 	// This is a reflection of the real state of the weapon's mod graph.
@@ -10,8 +12,11 @@ class BIO_WeaponModSimNode
 	bool Valid;
 	string InvalidMessage;
 
+	BIO_WeaponUpgradeRecipe Upgrade;
+
 	bool IsOccupied() const { return Gene != null; }
 	bool IsActive() const { return IsOccupied() || Basis.UUID == 0; }
+	bool IsUpgrade() const { return Upgrade != null; }
 
 	BIO_WeaponModifier GetModifier() const
 	{
@@ -27,6 +32,19 @@ class BIO_WeaponModSimNode
 	class<BIO_Gene> GetGeneType() const
 	{
 		return Gene == null ? null : Gene.GetType();
+	}
+
+	textureID GetIcon() const
+	{
+		textureID ret;
+		ret.SetNull();
+
+		if (Gene != null)
+			ret = GetDefaultByType(Gene.GetType()).Icon;
+		else if (Upgrade != null)
+			ret = GetDefaultByType(Upgrade.GetOutput()).Icon;
+
+		return ret;
 	}
 }
 
@@ -136,6 +154,20 @@ class BIO_WeaponModSimulator : Thinker
 			simNode.Valid = true;
 			simNode.UpdateModifier();
 			ret.Nodes.Push(simNode);
+		}
+
+		let globals = BIO_Global.Get();
+		Array<BIO_WeaponUpgradeRecipe> upgrades;
+		globals.GetUpgradesFromWeaponType(Weap.GetClass(), upgrades);
+
+		for (uint i = 0; i < upgrades.Size(); i++)
+		{
+			let simNode = new('BIO_WeaponModSimNode');
+			simNode.Basis = new('BIO_WMGNode');
+			[simNode.Basis.PosX, simNode.Basis.PosY] =
+				graph.RandomAvailableAdjacency();
+			simNode.Upgrade = upgrades[i];
+			simNode.Basis.UUID = ret.Nodes.Push(simNode);
 		}
 
 		ret.RebuildGeneInventory();
@@ -309,16 +341,18 @@ class BIO_WeaponModSimulator : Thinker
 
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			Nodes[i].Valid = true;
+			let node = Nodes[i];
+			node.Valid = true;
 
-			if (Nodes[i].GetModifier() == null)
+			let mod = node.GetModifier();
+
+			if (mod == null)
 				continue;
 
-			[Nodes[i].Valid, Nodes[i].InvalidMessage] =
-				Nodes[i].GetModifier().Compatible(weap.AsConst());
+			[node.Valid, node.InvalidMessage] = mod.Compatible(weap.AsConst());
 
-			if (Nodes[i].Valid)
-				Nodes[i].Basis.Apply(weap);
+			if (node.Valid)
+				mod.Apply(weap);
 			else
 				Valid = false;
 		}
@@ -339,6 +373,9 @@ class BIO_WeaponModSimulator : Thinker
 
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
+			if (Nodes[i].IsUpgrade())
+				break;
+
 			Nodes[i].Basis.GeneType = Nodes[i].GetGeneType();
 			weap.ModGraph.Nodes.Push(Nodes[i].Basis.Copy());
 		}
@@ -610,7 +647,25 @@ class BIO_WeaponModSimulator : Thinker
 		return true;
 	}
 
-	clearscope bool IsValid() const { return Valid; }
+	bool IsFull() const
+	{
+		for (uint i = 1; i < Nodes.Size(); i++)
+		{
+			if (Nodes[i].IsUpgrade())
+				continue;
+
+			if (!Nodes[i].IsOccupied())
+				return false;
+		}
+
+		return true;
+	}
+
+	bool IsValid() const { return Valid; }
+
+	readOnly<BIO_Weapon> GetWeapon() const { return Weap.AsConst(); }
+
+	readOnly<BIO_WeaponModSimulator> AsConst() const { return self; }
 
 	// Other internal implementation details ///////////////////////////////////
 

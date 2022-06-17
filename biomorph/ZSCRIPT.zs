@@ -50,6 +50,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/pipeline.zs"
 #include "zscript/biomorph/weapons/recoil.zs"
 #include "zscript/biomorph/weapons/simulator.zs"
+#include "zscript/biomorph/weapons/upgrade.zs"
 
 #include "zscript/biomorph/weapons/affixes/base.zs"
 

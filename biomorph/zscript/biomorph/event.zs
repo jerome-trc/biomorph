@@ -51,6 +51,7 @@ extend class BIO_EventHandler
 		WEAPMODOP_EXTRACT,
 		WEAPMODOP_SIMULATE,
 		WEAPMODOP_COMMIT,
+		WEAPMODOP_UPGRADE,
 		WEAPMODOP_STOP
 	}
 
@@ -131,6 +132,9 @@ extend class BIO_EventHandler
 		case WEAPMODOP_COMMIT:
 			WeapMod_Commit(pawn, event.Args[1]);
 			break;
+		case WEAPMODOP_UPGRADE:
+			WeapMod_Upgrade(pawn, uint(event.Args[1]));
+			break;
 		case WEAPMODOP_STOP:
 			BIO_WeaponModSimulator.Get(weap).Destroy();
 			break;
@@ -153,7 +157,7 @@ extend class BIO_EventHandler
 		}
 
 		Array<class<BIO_Gene> > toGive;
-		ArraY<Inventory> toDestroy;
+		Array<Inventory> toDestroy;
 
 		for (uint i = 0; i < sim.Genes.Size(); i++)
 		{
@@ -183,6 +187,59 @@ extend class BIO_EventHandler
 		sim.PostCommit();
 		pawn.TakeInventory('BIO_Muta_General', weap.ModCost);
 		pawn.A_StartSound("bio/mutation/general");
+	}
+
+	private static void WeapMod_Upgrade(BIO_Player pawn, uint node)
+	{
+		let weap = BIO_Weapon(pawn.Player.ReadyWeapon);
+		let sim = BIO_WeaponModSimulator.Get(weap);
+		let upgr = sim.Nodes[node].Upgrade;
+
+		if (pawn.CountInv('BIO_Muta_General') < upgr.MutagenCost())
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Player %s has insufficient mutagen to upgrade weapon %s.",
+				pawn.Player.GetUserName(), weap.GetClassName()
+			);
+			return;
+		}
+
+		Array<class<BIO_Gene> > toGive;
+		Array<Inventory> toDestroy;
+
+		for (uint i = 0; i < sim.Genes.Size(); i++)
+		{
+			if (sim.Genes[i] == null)
+				continue;
+
+			toGive.Push(sim.Genes[i].GetType());
+		}
+
+		for (Inventory i = pawn.Inv; i != null; i = i.Inv)
+		{
+			if (i is 'BIO_Gene')
+				toDestroy.Push(i);
+		}
+
+		for (uint i = 0; i < toDestroy.Size(); i++)	
+		{
+			toDestroy[i].Amount = 0;
+			toDestroy[i].DepleteOrDestroy();
+		}
+
+		for (uint i = 0; i < toGive.Size(); i++)
+			pawn.GiveInventory(toGive[i], 1);
+
+		weap.Amount = 0;
+		weap.DepleteOrDestroy();
+
+		pawn.GiveInventory(upgr.GetOutput(), 1);
+		let upgraded = pawn.FindInventory(upgr.GetOutput());
+
+		pawn.TakeInventory('BIO_Muta_General', upgr.MutagenCost());
+		pawn.A_StartSound("bio/mutation/general");
+		pawn.A_SelectWeapon(upgr.GetOutput());
 	}
 }
 
@@ -506,6 +563,15 @@ extend class BIO_EventHandler
 		EventHandler.SendNetworkEvent(
 			EVENT_WEAPMOD,
 			WEAPMODOP_COMMIT
+		);
+	}
+
+	static clearscope void WeapModSim_Upgrade(uint node)
+	{
+		EventHandler.SendNetworkEvent(
+			EVENT_WEAPMOD,
+			WEAPMODOP_UPGRADE,
+			node
 		);
 	}
 

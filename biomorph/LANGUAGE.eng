@@ -287,6 +287,10 @@
 		"\c[White]Modifiers are applied in the order displayed next to their nodes";
 	BIO_MENU_WEAPMOD_NODUP =
 		"\c[Yellow]This gene can only be applied to this weapon once.";
+	BIO_MENU_WEAPMOD_UPGRADE =
+		"\c[Green]Upgrade this weapon to:\n%s\n\n"
+		"\c[Gold]Cost:\c[Yellow] %d %s\n\n"
+		"\c[Brick]Will consume all genes in this tree!";
 
 // Menu, game options //////////////////////////////////////////////////////////
 
