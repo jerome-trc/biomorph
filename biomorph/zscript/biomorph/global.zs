@@ -125,25 +125,6 @@ extend class BIO_Global
 	}
 }
 
-// Weapon modifier cache.
-extend class BIO_Global
-{
-	private Array<BIO_WeaponModifier> WeaponModifiers;
-
-	private void PopulateWeaponModifierCache()
-	{
-		for (uint i = 0; i < AllClasses.Size(); i++)
-		{
-			let mod_t = (class<BIO_WeaponModifier>)(AllClasses[i]);
-
-			if (mod_t == null || mod_t.IsAbstract())
-				continue;
-
-			WeaponModifiers.Push(BIO_WeaponModifier(new(mod_t)));
-		}
-	}
-}
-
 // Weapon upgrade recipe cache.
 extend class BIO_Global
 {
