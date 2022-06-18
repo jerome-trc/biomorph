@@ -1,17 +1,19 @@
 class BIO_WMod_Damage : BIO_WeaponModifier
 {
-	final override bool, string Compatible(readOnly<BIO_Weapon> weap) const
+	final override bool, string Compatible(readOnly<BIO_Weapon> weap, uint _) const
 	{
 		return weap.DealsAnyDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
 	}
 
-	final override void Apply(BIO_Weapon weap) const
+	final override void Apply(BIO_Weapon weap, uint count) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
 			let ppl = weap.Pipelines[i];
 			let dmg = DamageIncrease(ppl.AsConst());
-			ppl.AddToAllDamageValues(dmg);
+
+			for (uint i = 0; i < count; i++)
+				ppl.AddToAllDamageValues(dmg);
 		}
 	}
 
@@ -25,6 +27,11 @@ class BIO_WMod_Damage : BIO_WeaponModifier
 		return true;
 	}
 
+	final override BIO_WeapModRepeatRules RepeatRules() const
+	{
+		return BIO_WMODREPEATRULES_INTERNAL;
+	}
+
 	final override string GetTag() const
 	{
 		return "$BIO_WMOD_DAMAGE_TAG";
@@ -36,7 +43,7 @@ class BIO_WMod_Damage : BIO_WeaponModifier
 	}
 
 	final override void Description(in out Array<string> strings,
-		readOnly<BIO_Weapon> weap) const
+		readOnly<BIO_Weapon> weap, uint count) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -51,7 +58,7 @@ class BIO_WMod_Damage : BIO_WeaponModifier
 				String.Format(
 					StringTable.Localize("$BIO_WMOD_DAMAGE_DESC"),
 					qual.Length() > 0 ? " " .. qual : "",
-					dmg
+					dmg * count
 				)
 			);
 		}
@@ -61,12 +68,12 @@ class BIO_WMod_Damage : BIO_WeaponModifier
 // LegenDoom(Lite) exclusive. 400% damage to Legendary enemies.
 class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 {
-	final override bool, string Compatible(readOnly<BIO_Weapon> weap) const
+	final override bool, string Compatible(readOnly<BIO_Weapon> weap, uint _) const
 	{
 		return weap.DealsAnyDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
 	}
 
-	final override void Apply(BIO_Weapon weap) const
+	final override void Apply(BIO_Weapon weap, uint _) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
@@ -95,6 +102,11 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 		return true;
 	}
 
+	final override BIO_WeapModRepeatRules RepeatRules() const
+	{
+		return BIO_WMODREPEATRULES_EXTERNAL;
+	}
+
 	final override string GetTag() const
 	{
 		return "$BIO_WMOD_DEMONSLAYER_TAG";
@@ -106,9 +118,14 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 	}
 
 	final override void Description(in out Array<string> strings,
-		readOnly<BIO_Weapon> _) const
+		readOnly<BIO_Weapon> _, uint count) const
 	{
-		strings.Push("$BIO_WMOD_DEMONSLAYER_SUMM");
+		strings.Push(
+			String.Format(
+				StringTable.Localize("$BIO_WMOD_DEMONSLAYER_SUMM"),
+				400 * count
+			)
+		);
 	}
 }
 

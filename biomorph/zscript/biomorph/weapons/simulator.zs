@@ -6,13 +6,17 @@ class BIO_WeaponModSimNode
 	// Only gets altered when the simulation gets committed, so it and the graph
 	// are always in perfect sync.
 	BIO_WMGNode Basis;
+
+	uint Multiplier;
+
 	// Null if no gene is being simulated in this node.
 	// Acts as a representative for what will end up in `Basis.GeneType`.
 	BIO_WeaponModSimGene Gene;
 	bool Valid;
-	string InvalidMessage;
 
 	BIO_WeaponUpgradeRecipe Upgrade;
+
+	// Accessors ///////////////////////////////////////////////////////////////
 
 	bool IsOccupied() const { return Gene != null; }
 	bool IsActive() const { return IsOccupied() || Basis.UUID == 0; }
@@ -23,10 +27,9 @@ class BIO_WeaponModSimNode
 		return Gene == null ? null : Gene.Modifier;
 	}
 
-	void UpdateModifier()
+	bool HasModifier() const
 	{
-		if (Gene != null)
-			Gene.UpdateModifier();
+		return Gene != null && Gene.Modifier != null;
 	}
 
 	class<BIO_Gene> GetGeneType() const
@@ -46,15 +49,206 @@ class BIO_WeaponModSimNode
 
 		return ret;
 	}
+
+	bool Repeatable() const
+	{
+		let mod = GetModifier();
+
+		if (mod == null)
+			return false;
+
+		return mod.RepeatRules() != BIO_WMODREPEATRULES_NONE;
+	}
+
+	bool Repeating() const
+	{
+		return Repeatable() && Multiplier > 1;
+	}
+
+	string GetTag() const
+	{
+		let gene_t = Gene.GetType();
+
+		if (gene_t is 'BIO_ModifierGene')
+		{
+			return Gene.Modifier.GetTag();
+		}
+		else
+		{
+			let defs = GetDefaultByType(gene_t);
+			return defs.GetTag();
+		}
+	}
+
+	bool, string Compatible(readOnly<BIO_WeaponModSimulator> sim) const
+	{
+		if (Gene == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Attempted to check compatibility of node %d, which lacks a gene.",
+				Basis.UUID
+			);
+			return false, "";
+		}
+
+		let gene_t = Gene.GetType();
+		bool ret1 = false;
+		string ret2 = "";
+
+		if (gene_t is 'BIO_ModifierGene')
+		{
+			[ret1, ret2] = Gene.Modifier.Compatible(sim.GetWeapon(), Multiplier);
+		}
+		else if (gene_t is 'BIO_SupportGene')
+		{
+			let sgene_t = (class<BIO_SupportGene>)(gene_t);
+			let defs = GetDefaultByType(sgene_t);
+			[ret1, ret2] = defs.Compatible(sim, Basis.UUID);
+		}
+		else if (gene_t is 'BIO_ActiveGene')
+		{
+			let agene_t = (class<BIO_ActiveGene>)(gene_t);
+			let defs = GetDefaultByType(agene_t);
+			[ret1, ret2] = defs.Compatible(sim, Basis.UUID);
+		}
+		else
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Attempted to check compatibility of node %d, with illegal gene type %s.",
+				Basis.UUID, gene_t.GetClassName()
+			);
+			return false, "";
+		}
+
+		return ret1, ret2;
+	}
+
+	// Mutators ////////////////////////////////////////////////////////////////
+
+	void Update()
+	{
+		if (Gene != null)
+			Gene.UpdateModifier();
+	}
+
+	void Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		in out Array<BIO_WeaponModSimNode> nodes
+	) const
+	{
+		if (Gene == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Attempted to apply node %d, which lacks a gene.",
+				Basis.UUID
+			);
+			return;
+		}
+
+		let gene_t = Gene.GetType();
+
+		if (gene_t is 'BIO_ModifierGene')
+		{
+			let mod = Gene.Modifier;
+
+			switch (mod.RepeatRules())
+			{
+			case BIO_WMODREPEATRULES_NONE:
+				mod.Apply(weap, 1);
+				break;
+			case BIO_WMODREPEATRULES_INTERNAL:
+				mod.Apply(weap, Multiplier);
+				break;
+			case BIO_WMODREPEATRULES_EXTERNAL:
+				for (uint i = 0; i < Multiplier; i++)
+					mod.Apply(weap, 1);
+
+				break;
+			default:
+				Console.Printf(
+					Biomorph.LOGPFX_ERR ..
+					"Invalid repeat rules returned by modifier: %s",
+					mod.GetClassName()
+				);
+				break;
+			}
+		}
+		else if (gene_t is 'BIO_SupportGene')
+		{
+			let sgene_t = (class<BIO_SupportGene>)(gene_t);
+			let defs = GetDefaultByType(sgene_t);
+			defs.Apply(sim.AsConst(), Basis.UUID);
+		}
+		else if (gene_t is 'BIO_ActiveGene')
+		{
+			let agene_t = (class<BIO_ActiveGene>)(gene_t);
+			let defs = GetDefaultByType(agene_t);
+			defs.Apply(weap, sim, Basis.UUID);
+		}
+	}
 }
 
-// (Rat): Not a sum type, but close enough.
 class BIO_WeaponModSimGene abstract
 {
 	BIO_WeaponModifier Modifier;
 
 	abstract void UpdateModifier();
 	abstract class<BIO_Gene> GetType() const;
+
+	string GetSummaryTooltip() const
+	{
+		let gene_t = GetType();
+
+		let ret = String.Format(
+			"\c[White]%s\n",
+			gene_t is 'BIO_ModifierGene' ?
+			 	StringTable.Localize(Modifier.GetTag()) :
+				StringTable.Localize(GetDefaultByType(GetType()).GetTag())
+		);
+
+		Array<string> summary;
+
+		if (gene_t is 'BIO_ModifierGene')
+			Modifier.Summary(summary);
+		else if (gene_t is 'BIO_SupportGene')
+			GetDefaultByType((class<BIO_SupportGene>)(gene_t)).Summary(summary);
+		else if (gene_t is 'BIO_ActiveGene')
+			GetDefaultByType((class<BIO_ActiveGene>)(gene_t)).Summary(summary);
+
+		for (uint i = 0; i < summary.Size(); i++)
+			ret.AppendFormat("\n%s", StringTable.Localize(summary[i]));
+
+		return ret;
+	}
+
+	string GetDescriptionTooltip(readOnly<BIO_Weapon> weap, uint count) const
+	{
+		let gene_t = GetType();
+
+		if (gene_t is 'BIO_ModifierGene')
+		{
+			let ret = String.Format(
+				"\c[White]%s\n",
+				StringTable.Localize(GetDefaultByType(gene_t).GetTag())
+			);
+
+			Array<string> desc;
+			Modifier.Description(desc, weap, count);
+
+			for (uint i = 0; i < desc.Size(); i++)
+				ret.AppendFormat("\n%s", StringTable.Localize(desc[i]));
+
+			return ret;
+		}
+		else
+		{
+			return GetSummaryTooltip();
+		}
+	}
 }
 
 // When representing genes that can be moved around the simulated graph, this
@@ -65,14 +259,18 @@ class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
 
 	final override void UpdateModifier()
 	{
-		if (Gene is 'BIO_ModifierGene')
-			Modifier = BIO_WeaponModifier(new(BIO_ModifierGene(Gene).ModType));
-		else
+		if (Gene == null)
 		{
 			Console.Printf(
 				Biomorph.LOGPFX_ERR ..
 				"A weapon mod sim gene object has a null internal pointer."
 			);
+			return;
+		}
+
+		if (Gene is 'BIO_ModifierGene')
+		{
+			Modifier = BIO_WeaponModifier(new(BIO_ModifierGene(Gene).ModType));
 		}
 	}
 
@@ -88,18 +286,20 @@ class BIO_WeaponModSimGeneVirtual : BIO_WeaponModSimGene
 
 	final override void UpdateModifier()
 	{
-		if (Type is 'BIO_ModifierGene')
-		{
-			let mgene_t = (class<BIO_ModifierGene>)(Type);
-			let defs = GetDefaultByType(mgene_t);
-			Modifier = BIO_WeaponModifier(new(defs.ModType));
-		}
-		else
+		if (Type == null)
 		{
 			Console.Printf(
 				Biomorph.LOGPFX_ERR ..
 				"A weapon mod sim gene object has a null internal class."
 			);
+			return;
+		}
+
+		if (Type is 'BIO_ModifierGene')
+		{
+			let mgene_t = (class<BIO_ModifierGene>)(Type);
+			let defs = GetDefaultByType(mgene_t);
+			Modifier = BIO_WeaponModifier(new(defs.ModType));
 		}
 	}
 
@@ -151,8 +351,9 @@ class BIO_WeaponModSimulator : Thinker
 				simNode.Gene = g;
 			}
 
+			simNode.Multiplier = 1;
 			simNode.Valid = true;
-			simNode.UpdateModifier();
+			simNode.Update();
 			ret.Nodes.Push(simNode);
 		}
 
@@ -339,22 +540,54 @@ class BIO_WeaponModSimulator : Thinker
 		Weap.Reset();
 		Weap.SetDefaults();
 
+		// First pass sets node defaults
+
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			let node = Nodes[i];
-			node.Valid = true;
+			Nodes[i].Multiplier = 1;
+			Nodes[i].Valid = true;
+		}
 
-			let mod = node.GetModifier();
+		// Second pass invokes supports
 
-			if (mod == null)
+		for (uint i = 1; i < Nodes.Size(); i++)
+		{			
+			if (!(Nodes[i].GetGeneType() is 'BIO_SupportGene'))
 				continue;
 
-			[node.Valid, node.InvalidMessage] = mod.Compatible(weap.AsConst());
+			let node = Nodes[i];
 
-			if (node.Valid)
-				mod.Apply(weap);
-			else
+			string _ = "";
+			[node.Valid, _] = node.Compatible(AsConst());
+
+			if (!node.Valid)
+			{
 				Valid = false;
+				continue;
+			}
+
+			node.Apply(Weap, self, Nodes);
+		}
+
+		// Third pass applies modifiers
+
+		for (uint i = 1; i < Nodes.Size(); i++)
+		{
+			if (!(Nodes[i].GetGeneType() is 'BIO_ModifierGene'))
+				continue;
+
+			let node = Nodes[i];
+			string _ = "";
+
+			[node.Valid, _] = node.Compatible(AsConst());
+
+			if (!node.Valid)
+			{
+				Valid = false;
+				continue;
+			}
+
+			node.Apply(Weap, self, Nodes);
 		}
 	}
 
@@ -391,7 +624,7 @@ class BIO_WeaponModSimulator : Thinker
 		// Nodes which contained a pointer to a real gene item will have had
 		// their data invalidated by whoever manipulates the player's inventory
 		// after calling `Commit()`. Convert them to virtual genes
-		
+
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
 			let rGene = BIO_WeaponModSimGeneReal(Nodes[i].Gene);
@@ -405,7 +638,7 @@ class BIO_WeaponModSimulator : Thinker
 				let g = new('BIO_WeaponModSimGeneVirtual');
 				g.Type = Nodes[i].Basis.GeneType;
 				Nodes[i].Gene = g;
-				Nodes[i].UpdateModifier();
+				Nodes[i].Update();
 			}
 		}
 	}
@@ -560,6 +793,45 @@ class BIO_WeaponModSimulator : Thinker
 		return false;
 	}
 
+	// Helpers specifically for the weapon mod. menu ///////////////////////////
+
+	string GetNodeTooltip(uint node) const
+	{
+		if (Nodes[node].IsUpgrade())
+		{
+			let upgr = Nodes[node].Upgrade;
+
+			return String.Format(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_UPGRADE"),
+				GetDefaultByType(upgr.GetOutput()).ColoredTag(),
+				upgr.MutagenCost(),
+				GetDefaultByType('BIO_Muta_General').GetTag()
+			);
+		}
+
+		let n = Nodes[node];
+
+		if (!n.Valid)
+		{
+			bool _ = false;
+			string reason = "";
+			[_, reason] = n.Compatible(AsConst());
+
+			return String.Format(
+				StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
+				StringTable.Localize(n.GetTag()),
+				StringTable.Localize(reason)
+			);
+		}
+
+		return Nodes[node].Gene.GetDescriptionTooltip(Weap.AsConst(), n.Multiplier);
+	}
+
+	string GetGeneSlotTooltip(uint slot) const
+	{
+		return Genes[slot].GetSummaryTooltip();
+	}
+
 	// Other introspective helpers /////////////////////////////////////////////
 
 	class<BIO_Gene> GetGeneType(uint gene, bool node) const
@@ -578,7 +850,7 @@ class BIO_WeaponModSimulator : Thinker
 	bool TestDuplicateAllowance(uint gene, bool node) const
 	{
 		BIO_WeaponModSimGene toTest;
-		
+
 		if (node)
 		{
 			if (!Nodes[node].IsOccupied())
@@ -648,6 +920,20 @@ class BIO_WeaponModSimulator : Thinker
 		return true;
 	}
 
+	BIO_WeaponModSimNode GetNodeByPosition(int x, int y, bool includeFake = false)
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			if (!includeFake && Nodes[i].IsUpgrade())
+				continue;
+
+			if (Nodes[i].Basis.PosX == x && Nodes[i].Basis.PosY == y)
+				return Nodes[i];
+		}
+	
+		return null;
+	}
+
 	bool IsFull() const
 	{
 		for (uint i = 1; i < Nodes.Size(); i++)
@@ -663,10 +949,6 @@ class BIO_WeaponModSimulator : Thinker
 	}
 
 	bool IsValid() const { return Valid; }
-
-	readOnly<BIO_Weapon> GetWeapon() const { return Weap.AsConst(); }
-
-	readOnly<BIO_WeaponModSimulator> AsConst() const { return self; }
 
 	// Other internal implementation details ///////////////////////////////////
 
@@ -690,4 +972,9 @@ class BIO_WeaponModSimulator : Thinker
 		while (Genes.Size() < BIO_Player(weap.Owner).MaxGenesHeld)
 			Genes.Push(null);
 	}
+
+	// Miscellaneous ///////////////////////////////////////////////////////////
+
+	readOnly<BIO_Weapon> GetWeapon() const { return Weap.AsConst(); }
+	readOnly<BIO_WeaponModSimulator> AsConst() const { return self; }
 }

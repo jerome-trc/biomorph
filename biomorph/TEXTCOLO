@@ -1,1 +1,11 @@
 MidGrey { #292929 #cacaca }
+
+SGene // Olive, but lighter
+{
+	#171F07  #CBCFA0
+Console:
+	#373F27  #7B7F63    0 127
+	#676B4F  #D1D8A8  128 256
+Flat:
+	#D1D8A8
+}

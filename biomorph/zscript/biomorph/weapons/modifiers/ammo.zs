@@ -1,6 +1,6 @@
 class BIO_WMod_MagSize : BIO_WeaponModifier
 {
-	final override bool, string Compatible(readOnly<BIO_Weapon> weap) const
+	final override bool, string Compatible(readOnly<BIO_Weapon> weap, uint _) const
 	{
 		if (weap.MagazineSizeMutable(false) || weap.MagazineSizeMutable(true))
 			return true, "";
@@ -8,7 +8,7 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 		return false, "$BIO_WMOD_INCOMPAT_NOMUTABLEMAGS";
 	}
 
-	final override void Apply(BIO_Weapon weap) const
+	final override void Apply(BIO_Weapon weap, uint _) const
 	{
 		if (weap.MagazineSizeMutable(false))
 			weap.MagazineSize1 += MagazineSizeIncrease(weap.AsConst(), false);
@@ -39,6 +39,11 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 		return true;
 	}
 
+	final override BIO_WeapModRepeatRules RepeatRules() const
+	{
+		return BIO_WMODREPEATRULES_EXTERNAL;
+	}
+
 	final override string GetTag() const
 	{
 		return "$BIO_WMOD_MAGSIZE_TAG";
@@ -50,14 +55,14 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 	}
 
 	final override void Description(in out Array<string> strings,
-		readOnly<BIO_Weapon> weap) const
+		readOnly<BIO_Weapon> weap, uint count) const
 	{
 		if (weap.MagazineSizeMutable(false))
 		{
 			strings.Push(
 				String.Format(
 					StringTable.Localize("$BIO_WMOD_MAGSIZE_DESC_1"),
-					MagazineSizeIncrease(weap, false)
+					MagazineSizeIncrease(weap, false) * count
 				)
 			);
 		}
@@ -67,7 +72,7 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 			strings.Push(
 				String.Format(
 					StringTable.Localize("$BIO_WMOD_MAGSIZE_DESC_2"),
-					MagazineSizeIncrease(weap, true)
+					MagazineSizeIncrease(weap, true) * count
 				)
 			);
 		}
@@ -76,7 +81,7 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 
 class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 {
-	final override bool, string Compatible(readOnly<BIO_Weapon> weap) const
+	final override bool, string Compatible(readOnly<BIO_Weapon> weap, uint _) const
 	{
 		if (PrimaryCompatible(weap) || SecondaryCompatible(weap))
 			return true, "";
@@ -104,7 +109,7 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 			weap.ReloadCost2 > 0;	
 	}
 
-	final override void Apply(BIO_Weapon weap) const
+	final override void Apply(BIO_Weapon weap, uint _) const
 	{
 		weap.SetupMagazines(
 			PrimaryCompatible(weap.AsConst()) ? weap.AmmoType1 : null,
@@ -115,6 +120,11 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 	final override bool AllowMultiple() const
 	{
 		return false;
+	}
+
+	final override BIO_WeapModRepeatRules RepeatRules() const
+	{
+		return BIO_WMODREPEATRULES_NONE;
 	}
 
 	final override string GetTag() const
@@ -128,7 +138,7 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 	}
 
 	final override void Description(in out Array<string> strings,
-		readOnly<BIO_Weapon> _) const
+		readOnly<BIO_Weapon> _, uint _) const
 	{
 		Summary(strings);
 	}
@@ -136,12 +146,12 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 
 class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 {
-	final override bool, string Compatible(readOnly<BIO_Weapon> weap) const
+	final override bool, string Compatible(readOnly<BIO_Weapon> weap, uint _) const
 	{
 		return !weap.Ammoless(), "$BIO_WMOD_INCOMPAT_AMMOLESS";
 	}
 
-	final override void Apply(BIO_Weapon weap) const
+	final override void Apply(BIO_Weapon weap, uint _) const
 	{
 		weap.ClearMagazines();
 		weap.AmmoType1 = weap.AmmoType2 = null;
@@ -151,6 +161,11 @@ class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 	final override bool AllowMultiple() const
 	{
 		return false;
+	}
+
+	final override BIO_WeapModRepeatRules RepeatRules() const
+	{
+		return BIO_WMODREPEATRULES_NONE;
 	}
 
 	final override string GetTag() const
@@ -164,7 +179,7 @@ class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 	}
 
 	final override void Description(in out Array<string> strings,
-		readOnly<BIO_Weapon> _) const
+		readOnly<BIO_Weapon> _, uint _) const
 	{
 		Summary(strings);
 	}

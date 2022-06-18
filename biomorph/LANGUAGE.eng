@@ -225,7 +225,7 @@
 
 	// (If a grouping has no description, then assume the summary doubles as one)
 
-	BIO_WMOD_INCOMPAT_TEMPLATE = "\n\c[Yellow]Incompatible:\c[Gold]\n%s";
+	BIO_WMOD_INCOMPAT_TEMPLATE = "\c[White]%s\n\n\c[Yellow]Incompatible:\c[Gold]\n%s";
 
 	BIO_WMOD_INCOMPAT_NODAMAGE = "This weapon deals no damage.";
 	BIO_WMOD_INCOMPAT_AMMOLESS = "This weapon doesn't use ammunition.";
@@ -238,7 +238,7 @@
 	BIO_WMOD_DAMAGE_DESC = "\c[White]Damage%s: \c[Green]+%d";
 
 	BIO_WMOD_DEMONSLAYER_TAG = "Demonslayer";
-	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]400% damage\c[White] dealt to Legendary monsters";
+	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]%d%% damage\c[White] dealt to Legendary monsters";
 
 	BIO_WMOD_INFINITEAMMO_TAG = "Ammo Apparition";
 	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
@@ -251,6 +251,16 @@
 	BIO_WMOD_RESERVEFEED_TAG = "Ammochain";
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
+// Weapon modifier supports (tags, ) ////////////////////////////////////////////////////
+
+	BIO_MODSUP_INCOMPAT_NONODENORTH = "No node to the north.";
+	BIO_MODSUP_INCOMPAT_NOMODNORTH = "No modifier in the northern node.";
+
+	BIO_MODSUP_ADDNORTH_TAG = "\c[SGene]N1 Regulator\c-";
+	BIO_MODSUP_ADDNORTH_SUMM =
+		"\c[Green]Modifier in node to north is applied one extra time\n"
+		"\c[White]Node does not need to be connected";
+
 // Mutagens (tags, pickup and usage strings) ///////////////////////////////////
 
 	BIO_MUTA_FAIL_NULL = "This weapon doesn't even respond to the mutagen.";
@@ -260,10 +270,12 @@
 	BIO_MUTA_GENERAL_PKUP = "Acquired a sample of \c[Cyan]C.O.N.T.R.O.L.\c- Mutagen.";
 	BIO_MUTA_GENERAL_USE = "\c[Cyan]You feel your weapon integrate with your body.\c-";
 
-// Genes (tags, pickup strings) ////////////////////////////////////////////////
+// Gene items (tags, pickup strings) ///////////////////////////////////////////
 
 	BIO_GENE_TAG = "\c[White]Gene\c-";
 	BIO_GENE_PKUP = "Collected a \c[White]gene\c-.";
+
+	// Modifier
 
 	BIO_MGENE_DEMONSLAYER_TAG = "\c[Red]Demonslayer\c[White] Gene\c-";
 	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a \c[Red]Demonslayer\c[White] gene\c-.";
@@ -273,6 +285,11 @@
 
 	BIO_MGENE_RESERVEFEED_TAG = "\c[Yellow]Ammochain\c[White] Gene";
 	BIO_MGENE_RESERVEFEED_PKUP = "Collected an \c[Yellow]Ammochain\c[White] gene\c-.";
+
+	// Support
+
+	BIO_SGENE_ADDNORTH_TAG = "\c[SGene]N1 Regulator\c[White] Gene\c-";
+	BIO_SGENE_ADDNORTH_PKUP = "Collected an \c[SGene]N1\ regulator\c[White] gene\c-.";
 
 // Menu, weapon modification ///////////////////////////////////////////////////
 

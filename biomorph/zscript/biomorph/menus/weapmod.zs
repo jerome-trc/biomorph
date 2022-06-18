@@ -276,6 +276,17 @@ extend class BIO_WeaponModMenu
 				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 				DTA_KEEPRATIO, true
 			);
+
+			if (!Simulator.Nodes[i].Repeating())
+				continue;
+
+			Screen.DrawText(SmallFont, Font.CR_GREEN,
+				NodeDrawState[i].DrawPos.X + (VIRT_W * 0.03),
+				NodeDrawState[i].DrawPos.Y + (VIRT_H * 0.01),
+				String.Format("x%d", Simulator.Nodes[i].Multiplier),
+				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
+				DTA_KEEPRATIO, true
+			);
 		}
 
 		DrawGeneInventory();
@@ -310,14 +321,14 @@ extend class BIO_WeaponModMenu
 
 		if (!noDupTooltip)
 		{
-			if (ValidHoveredNode())
+			if (ValidHoveredNode() && Simulator.Nodes[HoveredNode].IsOccupied())
 			{
-				DrawNodeTooltip(HoveredNode);
+				DrawTooltip(Simulator.GetNodeTooltip(HoveredNode));
 			}
 			else if (ValidHoveredInvSlot() &&
 				Simulator.Genes[HoveredInvSlot] != null)
 			{
-				DrawInvSlotTooltip(HoveredInvSlot);
+				DrawTooltip(Simulator.GetGeneSlotTooltip(HoveredInvSlot));
 			}
 		}
 	}
@@ -369,80 +380,6 @@ extend class BIO_WeaponModMenu
 				DTA_ALPHA, isDragged ? 0.33 : 1.0
 			);
 		}
-	}
-
-	private void DrawNodeTooltip(uint node) const
-	{
-		if (Simulator.Nodes[node].IsOccupied())
-			DrawModifierTooltip(node);
-		else if (Simulator.Nodes[node].IsUpgrade())
-			DrawUpgradeTooltip(node);
-	}
-
-	private void DrawModifierTooltip(uint node) const
-	{
-		let mod = Simulator.Nodes[node].GetModifier();
-		Array<string> desc;
-		mod.Description(desc, CurrentWeap);
-
-		string tt = String.Format(
-			"\c[White]%s\n",
-			StringTable.Localize(mod.GetTag())
-		);
-
-		if (!Simulator.Nodes[node].Valid)
-		{
-			bool _ = false;
-			string reason = "";
-			[_, reason] = Simulator.Nodes[node].GetModifier()
-				.Compatible(CurrentWeap);
-
-			tt.AppendFormat(
-				StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
-				StringTable.Localize(reason)
-			);
-		}
-		else
-		{
-			for (uint i = 0; i < desc.Size(); i++)
-				tt.AppendFormat("\n%s", StringTable.Localize(desc[i]));
-		}
-
-		DrawTooltip(tt);
-	}
-
-	private void DrawUpgradeTooltip(uint node) const
-	{
-		let upgr = Simulator.Nodes[node].Upgrade;
-
-		string tt = String.Format(
-			StringTable.Localize("$BIO_MENU_WEAPMOD_UPGRADE"),
-			GetDefaultByType(upgr.GetOutput()).ColoredTag(),
-			upgr.MutagenCost(),
-			GetDefaultByType('BIO_Muta_General').GetTag()
-		);
-
-		DrawTooltip(tt);
-	}
-
-	private void DrawInvSlotTooltip(uint slot) const
-	{
-		let gene = Simulator.Genes[slot];
-		let defs = GetDefaultByType(gene.GetType());
-		let mod = gene.Modifier;
-
-		Array<string> summary;
-		mod.Summary(summary);
-
-		string tt = String.Format(
-			"\c[White]%s\n",
-			StringTable.Localize(defs.GetTag())
-		);
-
-		for (uint i = 0; i < summary.Size(); i++)
-			tt.AppendFormat("\n%s", StringTable.Localize(summary[i]));
-
-		DrawTooltip(tt);
 	}
 
 	private void DrawTooltip(string tooltip)
