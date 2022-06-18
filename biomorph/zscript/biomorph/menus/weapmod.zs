@@ -31,6 +31,16 @@ class BIO_WModMenu_DraggedGene
 	{
 		return Origin == ORIGIN_NODE;
 	}
+
+	bool IsFromNode(uint node) const
+	{
+		return OriginIsNode() && self.Node == node;
+	}
+
+	bool IsFromInvSlot(uint slot) const
+	{
+		return !OriginIsNode() && self.InvSlot == slot;
+	}
 }
 
 // Class declaration, initialization, ticker.
@@ -259,10 +269,13 @@ extend class BIO_WeaponModMenu
 
 			if (!icon.IsNull())
 			{
+				bool isDragged = DraggedGene != null && DraggedGene.IsFromNode(i);
+
 				Screen.DrawTexture(icon, false,
 					NodeDrawState[i].DrawPos.X, NodeDrawState[i].DrawPos.Y,
 					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
-					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true
+					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
+					DTA_ALPHA, isDragged ? 0.33 : 1.0
 				);
 			}
 
@@ -368,10 +381,7 @@ extend class BIO_WeaponModMenu
 
 			let defs = GetDefaultByType(Simulator.Genes[i].GetType());
 
-			bool isDragged =
-				DraggedGene != null &&
-				DraggedGene.Origin == BIO_WModMenu_DraggedGene.ORIGIN_INVSLOT &&
-				DraggedGene.InvSlot == i;
+			bool isDragged = DraggedGene != null && DraggedGene.IsFromInvSlot(i);
 
 			Screen.DrawTexture(defs.Icon, false,
 				drawPos.X, drawPos.Y,
