@@ -405,6 +405,7 @@ class BIO_WeaponModSimulator : Thinker
 				let g = new('BIO_WeaponModSimGeneVirtual');
 				g.Type = Nodes[i].Basis.GeneType;
 				Nodes[i].Gene = g;
+				Nodes[i].UpdateModifier();
 			}
 		}
 	}
