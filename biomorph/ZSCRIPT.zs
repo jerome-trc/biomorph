@@ -24,7 +24,6 @@ class Biomorph abstract
 #include "zscript/biomorph/debug.zs"
 #include "zscript/biomorph/event.zs"
 #include "zscript/biomorph/gear.zs"
-#include "zscript/biomorph/genes.zs"
 #include "zscript/biomorph/global.zs"
 #include "zscript/biomorph/health.zs"
 #include "zscript/biomorph/keybinds.zs"
@@ -34,6 +33,10 @@ class Biomorph abstract
 #include "zscript/biomorph/powerups.zs"
 #include "zscript/biomorph/sbar.zs"
 #include "zscript/biomorph/utils.zs"
+
+#include "zscript/biomorph/genes/base.zs"
+#include "zscript/biomorph/genes/modifier.zs"
+#include "zscript/biomorph/genes/support.zs"
 
 #include "zscript/biomorph/menus/weapmod.zs"
 
