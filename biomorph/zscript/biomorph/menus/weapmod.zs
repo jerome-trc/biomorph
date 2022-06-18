@@ -717,6 +717,9 @@ extend class BIO_WeaponModMenu
 		if (CurrentWeap.ModGraph == null)
 			return;
 
+		if (DraggedGene != null)
+			return;
+
 		if (ValidHoveredInvSlot() && Simulator.Genes[HoveredInvSlot] != null)
 		{
 			// Inventory slots take precedence, being drawn above the nodes
