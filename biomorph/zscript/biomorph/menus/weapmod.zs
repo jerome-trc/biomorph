@@ -724,11 +724,20 @@ extend class BIO_WeaponModMenu
 		DraggedGene = null;
 	}
 
-	// Right-clicking a node pops that gene out of it and returns it to the inventory.
+	// Right-clicking a node pops that gene out of it and returns it to the first
+	// open slot in the inventory.
 	private void OnRightClick()
 	{
 		if (CurrentWeap.ModGraph == null)
 			return;
+
+		if (!ValidHoveredNode())
+			return;
+
+		if (Simulator.InventoryFull())
+			return;
+
+		TryExtractGeneFromNode(HoveredNode, Simulator.FirstOpenInventorySlot());
 	}
 }
 
@@ -737,11 +746,13 @@ extend class BIO_WeaponModMenu
 {
 	private void TryInsertGeneFromInventory(uint node, uint slot)
 	{
-		if (Simulator.Genes[slot] == null)
+		if (Simulator.Genes[slot] == null ||
+			Simulator.Nodes[node].IsOccupied() ||
+			!Simulator.NodeAccessible(node) ||
+			node == 0)
+		{
 			return;
-
-		if (!Simulator.NodeAccessible(node))
-			return;
+		}
 
 		MenuSound("bio/ui/beep");
 		BIO_EventHandler.WeapModSim_InsertGeneFromInventory(node, slot);
@@ -750,14 +761,23 @@ extend class BIO_WeaponModMenu
 
 	private void TryMoveGeneBetweenNodes(uint fromNode, uint toNode)
 	{
-		if (!Simulator.Nodes[fromNode].IsOccupied())
+		if (!Simulator.Nodes[fromNode].IsOccupied() ||
+			Simulator.Nodes[toNode].IsOccupied() ||
+			fromNode == toNode ||
+			!Simulator.NodeAccessible(toNode) ||
+			toNode == 0)
+		{
 			return;
+		}
 
-		if (fromNode == toNode)
+		if (!Simulator.CanRemoveGeneFrom(fromNode))
+		{
+			Console.Printf(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_EXTRACTFAIL_ORPHANNODES")
+			);
+			MenuSound("bio/ui/fail");
 			return;
-
-		if (!Simulator.NodeAccessible(toNode))
-			return;
+		}
 
 		// `toNode` can be filled; this causes a swap
 		MenuSound("bio/ui/beep");
@@ -767,11 +787,12 @@ extend class BIO_WeaponModMenu
 	
 	private void TryMoveGeneBetweenInventorySlots(uint fromSlot, uint toSlot)
 	{
-		if (Simulator.Genes[fromSlot] == null)
+		if (Simulator.Genes[fromSlot] == null ||
+			Simulator.Genes[toSlot] != null ||
+			fromSlot == toSlot)
+		{
 			return;
-
-		if (fromSlot == toSlot)
-			return;
+		}
 
 		// `toSlot` can be filled; this causes a swap
 		MenuSound("bio/ui/beep");
@@ -781,8 +802,18 @@ extend class BIO_WeaponModMenu
 
 	private void TryExtractGeneFromNode(uint node, uint slot)
 	{
-		if (!Simulator.Nodes[node].IsOccupied())
+		if (!Simulator.Nodes[node].IsOccupied() ||
+			Simulator.Genes[slot] != null)
 			return;
+
+		if (!Simulator.CanRemoveGeneFrom(node))
+		{
+			Console.Printf(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_EXTRACTFAIL_ORPHANNODES")
+			);
+			MenuSound("bio/ui/fail");
+			return;
+		}
 
 		MenuSound("bio/ui/beep");
 		BIO_EventHandler.WeapModSim_ExtractGeneFromNode(node, slot);
@@ -791,16 +822,24 @@ extend class BIO_WeaponModMenu
 
 	// Send a network event which removes any applied genes from the player's
 	// inventory, as well as consuming the requisite quantity of mutagen.
-	// TODO: Failure beep, maybe messaging too.
 	private void TryCommitChanges()
 	{
 		let mutaC = Players[ConsolePlayer].MO.CountInv('BIO_Muta_General');
 
 		if (mutaC < CurrentWeap.ModCost)
-			return;
+		{
+			Console.Printf(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_COMMITFAIL_MUTACOST")
+			);
+			MenuSound("bio/ui/fail");
+			return;	
+		}
 
 		if (!Simulator.IsValid())
-			return;
+		{
+			MenuSound("bio/ui/fail");
+			return;			
+		}
 
 		BIO_EventHandler.WeapModSim_Commit();
 		MenuSound("bio/mutation/general");
@@ -819,10 +858,19 @@ extend class BIO_WeaponModMenu
 		let mutaC = Players[ConsolePlayer].MO.CountInv('BIO_Muta_General');
 
 		if (mutaC < upgr.MutagenCost())
+		{
+			MenuSound("bio/ui/fail");
 			return;
+		}
 
 		if (!Simulator.IsValid())
+		{
+			Console.Printf(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_UPGRADEFAIL_INVALID")
+			);
+			MenuSound("bio/ui/fail");
 			return;
+		}
 
 		BIO_EventHandler.WeapModSim_Upgrade(node);
 		MenuSound("bio/mutation/general");

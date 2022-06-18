@@ -72,6 +72,8 @@ ARMRBON is courtesy of id Software LLC.
 
 VOLLFIRE is courtesy of [Kentucky Ballistics](https://www.youtube.com/watch?v=8gIS2n-bY1w).
 
+["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) (USRFAIL0, edited for a 20% speed increase) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/) is licensed under Creative Commons 0.
+
 ## Blender (Materials, Meshes)
 
 ["Female Body Base Character Mesh"](https://www.blendswap.com/blend/4458) (used to render the arms of first-person view sprites) is provided by [cgcookie](https://www.blendswap.com/profile/8267https://www.blendswap.com/profile/8267) under the Creative Commons Attribution 2.0 Generic License.

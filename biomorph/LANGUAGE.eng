@@ -309,6 +309,19 @@
 		"\c[Green]Upgrade this weapon to:\n%s\n\n"
 		"\c[Gold]Cost:\c[Yellow] %d %s\n\n"
 		"\c[Brick]Will consume all genes in this tree!";
+	BIO_MENU_WEAPMOD_COMMITFAIL_MUTACOST =
+		"\c[Yellow]Insufficient "
+		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen"
+		"\c[Yellow] to commit these changes.";
+	BIO_MENU_WEAPMOD_EXTRACTFAIL_ORPHANNODES =
+		"\c[Yellow]Moving this gene would leave other nodes disconnected.";
+	BIO_MENU_WEAPMOD_UPGRADEFAIL_MUTACOST =
+		"\c[Yellow]Insufficient "
+		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen"
+		"\c[Yellow] to perform this weapon upgrade.";
+	BIO_MENU_WEAPMOD_UPGRADEFAIL_INVALID =
+		"\c[Yellow]Upgrading isn't possible while any genes are "
+		"\c[Brick]incompatible\c[Yellow].";
 
 // Menu, game options //////////////////////////////////////////////////////////
 

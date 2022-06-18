@@ -486,7 +486,6 @@ class BIO_WeaponModSimulator : Thinker
 	}
 
 	// Take a gene out of a node and put it back into the inventory.
-	// If `slot >= Genes.Size()`, the first available slot is used.
 	void ExtractGene(uint node, uint slot)
 	{
 		if (!Nodes[node].IsOccupied())
@@ -497,25 +496,6 @@ class BIO_WeaponModSimulator : Thinker
 				node
 			);
 			return;
-		}
-
-		if (slot >= Genes.Size())
-		{
-			for (uint i = 0; i < Genes.Size(); i++)
-			{
-				if (Genes[i] != null)
-					continue;
-
-				Genes[i] = Nodes[node].Gene;
-				Nodes[node].Gene = null;
-				return;
-			}
-
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Found no open inventory slot for gene extracted from node %d.",
-				node
-			);
 		}
 
 		// User specified a slot to return the gene to
@@ -875,11 +855,11 @@ class BIO_WeaponModSimulator : Thinker
 	// If `node` is `false`, test `Genes[gene]` instead of `Nodes[gene]`.
 	bool TestDuplicateAllowance(uint gene, bool node) const
 	{
-		BIO_WeaponModSimGene toTest;
+		BIO_WeaponModSimGene toTest = null;
 
 		if (node)
 		{
-			if (!Nodes[node].IsOccupied())
+			if (!Nodes[gene].IsOccupied())
 			{
 				Console.Printf(
 					Biomorph.LOGPFX_ERR ..
@@ -958,6 +938,24 @@ class BIO_WeaponModSimulator : Thinker
 		}
 	
 		return null;
+	}
+
+	uint FirstOpenInventorySlot() const
+	{
+		for (uint i = 0; i < Genes.Size(); i++)
+			if (Genes[i] == null)
+				return i;
+
+		return Genes.Size();
+	}
+
+	bool InventoryFull() const
+	{
+		for (uint i = 0; i < Genes.Size(); i++)
+			if (Genes[i] == null)
+				return false;
+
+		return true;
 	}
 
 	bool IsFull() const

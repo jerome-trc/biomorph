@@ -2,6 +2,7 @@
 
 bio/ui/beep USRINPT0
 bio/ui/cancel USRINPT1 // Same as above, but pitched down
+bio/ui/fail USRFAIL0
 
 // Pickups /////////////////////////////////////////////////////////////////////
 
