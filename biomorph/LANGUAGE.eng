@@ -238,7 +238,8 @@
 	BIO_WMOD_DAMAGE_DESC = "\c[White]Damage%s: \c[Green]+%d";
 
 	BIO_WMOD_DEMONSLAYER_TAG = "Demonslayer";
-	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]%d%% damage\c[White] dealt to Legendary monsters";
+	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]400% damage\c[White] dealt to Legendary monsters";
+	BIO_WMOD_DEMONSLAYER_DESC = "\c[Green]%d%% damage\c[White] dealt to Legendary monsters";
 
 	BIO_WMOD_INFINITEAMMO_TAG = "Ammo Apparition";
 	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";

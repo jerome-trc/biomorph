@@ -122,7 +122,7 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 	{
 		strings.Push(
 			String.Format(
-				StringTable.Localize("$BIO_WMOD_DEMONSLAYER_SUMM"),
+				StringTable.Localize("$BIO_WMOD_DEMONSLAYER_DESC"),
 				400 * count
 			)
 		);
