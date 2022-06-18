@@ -320,14 +320,24 @@ extend class BIO_EventHandler
 
 		if (!event.IsManual)
 		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"Illegal attempt by a script to invoke `bio_monsval`.");
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Illegal attempt by a script to invoke `bio_monsval`."
+			);
 			return;
 		}
 
-		Console.Printf(Biomorph.LOGPFX_INFO ..
-			"Total monster value in this level: %d",
-			MapTotalMonsterValue());
+		let val = MapTotalMonsterValue();
+		let loot = val / LOOT_VALUE_THRESHOLD;
+
+		Console.Printf(
+			Biomorph.LOGPFX_INFO ..
+			"Total monster value in this level: %d", val
+		);
+		Console.Printf(
+			Biomorph.LOGPFX_INFO ..
+			"Number of times loot value threshold crossed: %d", loot
+		);
 	}
 }
 
