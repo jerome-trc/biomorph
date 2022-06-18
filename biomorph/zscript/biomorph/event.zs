@@ -51,6 +51,7 @@ extend class BIO_EventHandler
 		WEAPMODOP_EXTRACT,
 		WEAPMODOP_SIMULATE,
 		WEAPMODOP_COMMIT,
+		WEAPMODOP_REVERT,
 		WEAPMODOP_UPGRADE,
 		WEAPMODOP_STOP
 	}
@@ -132,11 +133,21 @@ extend class BIO_EventHandler
 		case WEAPMODOP_COMMIT:
 			WeapMod_Commit(pawn, event.Args[1]);
 			break;
+		case WEAPMODOP_REVERT:
+			BIO_WeaponModSimulator.Get(weap).Revert();
+			break;
 		case WEAPMODOP_UPGRADE:
 			WeapMod_Upgrade(pawn, uint(event.Args[1]));
 			break;
 		case WEAPMODOP_STOP:
 			BIO_WeaponModSimulator.Get(weap).Destroy();
+			break;
+		default:
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal weapon mod. operation requested: %d",
+				event.Args[0]
+			);
 			break;
 		}
 	}
@@ -563,6 +574,14 @@ extend class BIO_EventHandler
 		EventHandler.SendNetworkEvent(
 			EVENT_WEAPMOD,
 			WEAPMODOP_COMMIT
+		);
+	}
+
+	static clearscope void WeapModSim_Revert()
+	{
+		EventHandler.SendNetworkEvent(
+			EVENT_WEAPMOD,
+			WEAPMODOP_REVERT
 		);
 	}
 

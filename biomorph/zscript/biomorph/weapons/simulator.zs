@@ -643,6 +643,32 @@ class BIO_WeaponModSimulator : Thinker
 		}
 	}
 
+	void Revert()
+	{
+		RebuildGeneInventory();
+
+		let graph = Weap.ModGraph;
+
+		for (uint i = 0; i < graph.Nodes.Size(); i++)
+		{
+			Nodes[i] = new('BIO_WeaponModSimNode');
+			Nodes[i].Basis = graph.Nodes[i].Copy();
+
+			if (Nodes[i].Basis.GeneType != null)
+			{
+				let g = new('BIO_WeaponModSimGeneVirtual');
+				g.Type = Nodes[i].Basis.GeneType;
+				Nodes[i].Gene = g;
+			}
+
+			Nodes[i].Multiplier = 1;
+			Nodes[i].Valid = true;
+			Nodes[i].Update();
+		}
+
+		Simulate();
+	}
+
 	// Accessibility checker ///////////////////////////////////////////////////
 
 	bool NodeAccessible(uint node) const
@@ -951,6 +977,13 @@ class BIO_WeaponModSimulator : Thinker
 	bool IsValid() const { return Valid; }
 
 	// Other internal implementation details ///////////////////////////////////
+
+	final override void OnDestroy()
+	{
+		Revert();
+		Weap.SetupMagazines();
+		super.OnDestroy();
+	}
 
 	private void RebuildGeneInventory()
 	{

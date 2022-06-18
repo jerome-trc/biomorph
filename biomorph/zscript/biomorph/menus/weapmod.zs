@@ -501,6 +501,8 @@ extend class BIO_WeaponModMenu
 		case UIEvent.Type_KeyUp:
 			if (event.KeyString ~== "e")
 				TryCommitChanges();
+			else if (event.KeyString ~== "r")
+				TryRevertChanges();
 
 			break;
 		default: break;
@@ -792,6 +794,11 @@ extend class BIO_WeaponModMenu
 
 		BIO_EventHandler.WeapModSim_Commit();
 		MenuSound("bio/mutation/general");
+	}
+
+	private void TryRevertChanges()
+	{
+		BIO_EventHandler.WeapModSim_Revert();
 	}
 
 	private void TryRunWeaponUpgrade(uint node) const
