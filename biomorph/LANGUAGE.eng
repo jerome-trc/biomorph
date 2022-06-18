@@ -331,6 +331,11 @@
 	BIO_OPTVAL_AUTOREL_SINGLE = "Single-shot weapons only";
 	BIO_OPTVAL_AUTOREL_NEVER = "Never";
 
+	BIO_OPTLBL_HUDWEAP_OFFSX = "HUD Weapon Info Offset X";
+	BIO_OPTLBL_HUDWEAP_OFFSY = "HUD Weapon Info Offset Y";
+	BIO_OPTLBL_HUDEXAM_OFFSX = "HUD Examine Info Offset X";
+	BIO_OPTLBL_HUDEXAM_OFFSY = "HUD Examine Info Offset Y";
+
 	BIO_OPTLBL_MULTIBARRELFIRE = "Multi-Barrel Fire Mode";
 	BIO_OPTVAL_MBF_PRIM = "Primary Fires Multiple Barrels";
 	BIO_OPTVAL_MBF_SEC = "Secondary Fires Multiple Barrels";

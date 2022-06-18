@@ -1,9 +1,7 @@
 class BIO_StatusBar : BaseStatusBar
 {
-	const WEAPINFO_X = -22; // Leave room for keys at top-right corner
-	const WEAPINFO_EXAMINE_X = -WEAPINFO_X;
-
 	private CVar InvBarSlots, NotifyLineCount;
+	private CVar HUDWeapOffsX, HUDWeapOffsY, HUDExamOffsX, HUDExamOffsY;
 
 	private BIO_Player BIOPlayer;
 
@@ -33,6 +31,10 @@ class BIO_StatusBar : BaseStatusBar
 
 		NotifyLineCount = CVar.GetCVar("con_notifylines", CPlayer);
 		InvBarSlots = CVar.GetCVar("BIO_invbarslots", CPlayer);
+		HUDWeapOffsX = CVar.GetCVar("BIO_hudweap_offsx", CPlayer);
+		HUDWeapOffsY = CVar.GetCVar("BIO_hudweap_offsy", CPlayer);
+		HUDExamOffsX = CVar.GetCVar("BIO_hudexam_offsx", CPlayer);
+		HUDExamOffsY = CVar.GetCVar("BIO_hudexam_offsy", CPlayer);
 		BIOPlayer = BIO_Player(CPlayer.MO);
 	}
 
@@ -230,16 +232,16 @@ class BIO_StatusBar : BaseStatusBar
 		if (!leftSide)
 		{
 			align = DI_TEXT_ALIGN_RIGHT;
-			xPos = WEAPINFO_X;
+			xPos = HUDWeapOffsX.GetInt();
 		}
 		else
 		{
 			align = DI_TEXT_ALIGN_LEFT;
-			xPos = WEAPINFO_EXAMINE_X;
+			xPos = HUDExamOffsX.GetInt();
 		}
 
 		// Leave room for automap timers
-		int weapInfoY = 18;
+		int weapInfoY = leftSide ? HUDExamOffsY.GetInt() : HUDWeapOffsY.GetInt();
 
 		DrawInventoryIcon(weap, (xPos, weapInfoY),
 			!leftSide ?
