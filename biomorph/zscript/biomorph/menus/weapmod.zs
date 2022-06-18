@@ -711,9 +711,7 @@ extend class BIO_WeaponModMenu
 		}
 	}
 
-	// If dragging a gene, release it. This may be from an inventory slot to a
-	// node, from one node to another node, or from a node to an inventory slot.
-	// Genes can't be dragged out of inventory slots if the weapon is unmutated.
+	// Try to attach a gene to the mouse to be dragged.
 	private void OnLeftMouseButtonDown()
 	{
 		if (CurrentWeap.ModGraph == null)
@@ -736,6 +734,8 @@ extend class BIO_WeaponModMenu
 		}
 	}
 
+	// If dragging a gene, release it. This may be from an inventory slot to a
+	// node, from one node to another node, or from a node to an inventory slot.
 	private void OnLeftMouseButtonUp()
 	{
 		if (CurrentWeap.ModGraph == null)
