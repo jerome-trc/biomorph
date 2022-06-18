@@ -19,9 +19,11 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 
 	private static uint MagazineSizeIncrease(readOnly<BIO_Weapon> weap, bool secondary)
 	{
-		uint magSize = !secondary ? weap.MagazineSize1 : weap.MagazineSize2;
+		uint magSize = !secondary ?
+			weap.Default.MagazineSize1 :
+			weap.Default.MagazineSize2;
 
-		switch (weap.MagazineSize1)
+		switch (magSize)
 		{
 		case 0: return 0;
 		case 1:
