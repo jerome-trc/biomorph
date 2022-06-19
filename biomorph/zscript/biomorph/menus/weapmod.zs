@@ -770,7 +770,7 @@ extend class BIO_WeaponModMenu
 			return;
 		}
 
-		if (!Simulator.CanRemoveGeneFrom(fromNode))
+		if (Simulator.MoveCausesDisconnection(fromNode, toNode))
 		{
 			Console.Printf(
 				StringTable.Localize("$BIO_MENU_WEAPMOD_EXTRACTFAIL_ORPHANNODES")

@@ -915,7 +915,7 @@ class BIO_WeaponModSimulator : Thinker
 		active.Push(0);
 
 		for (uint i = 1; i < Nodes.Size(); i++)
-			if (Nodes[i].IsActive() && i != node)
+			if (Nodes[i].IsOccupied() && i != node)
 				active.Push(i);
 
 		for (uint i = 1; i < active.Size(); i++)
@@ -925,6 +925,42 @@ class BIO_WeaponModSimulator : Thinker
 		}
 
 		return true;
+	}
+
+	/*	[0]-[1]-[2]
+	
+		If 1 starts with a gene and the gene is then moved to 2,
+		the graph becomes invalid. Use this function to check for these cases,
+		and disallow such moves.
+	*/
+	bool MoveCausesDisconnection(uint from, uint to) const
+	{
+		if (Nodes[to].IsOccupied())
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"`MoveCausesDisconnection()` expected an empty `to` node. "
+				"(from %d, to %d)", from, to
+			);
+			return false;
+		}
+
+		Array<uint> active;
+		active.Push(0);
+
+		for (uint i = 1; i < Nodes.Size(); i++)
+			if (Nodes[i].IsOccupied() && i != from)
+				active.Push(i);
+
+		active.Push(to);
+
+		for (uint i = 1; i < active.Size(); i++)
+		{
+			if (!NodeAccessibleEx(active[i], active))
+				return true;
+		}
+
+		return false;
 	}
 
 	BIO_WeaponModSimNode GetNodeByPosition(int x, int y, bool includeFake = false)
