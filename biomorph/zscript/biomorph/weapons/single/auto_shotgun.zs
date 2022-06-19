@@ -17,6 +17,7 @@ class BIO_AutoShotgun : BIO_Weapon
 		BIO_Weapon.GraphQuality 4;
 		BIO_Weapon.MagazineSize 8;
 		BIO_Weapon.MagazineType 'BIO_Mag_AutoShotgun';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_AutoShotgun';
 		BIO_Weapon.PickupMessages
 			"$BIO_AUTOSHOTGUN_PKUP",
 			"$BIO_AUTOSHOTGUN_SCAV";
@@ -110,3 +111,20 @@ class BIO_AutoShotgun : BIO_Weapon
 }
 
 class BIO_Mag_AutoShotgun : BIO_Magazine {}
+
+class BIO_MagETM_AutoShotgun : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_AutoShotgun';
+	}
+}
+
+class BIO_ETM_AutoShotgun : BIO_EnergyToMatterPowerup
+{
+	Default
+	{
+		Powerup.Duration -1;
+		BIO_EnergyToMatterPowerup.CellCost 15;
+	}
+}

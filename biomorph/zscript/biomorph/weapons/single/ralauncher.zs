@@ -17,6 +17,7 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'RocketAmmo';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_RocketAutoLauncher';
 		BIO_Weapon.PickupMessages
 			"$BIO_ROCKETAUTOLAUNCHER_PKUP",
 			"$BIO_ROCKETAUTOLAUNCHER_SCAV";
@@ -74,5 +75,22 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		);
 
 		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
+	}
+}
+
+class BIO_MagETM_RocketAutoLauncher : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_RocketAutoLauncher';
+	}
+}
+
+class BIO_ETM_RocketAutoLauncher : BIO_EnergyToMatterPowerup
+{
+	Default
+	{
+		Powerup.Duration -1;
+		BIO_EnergyToMatterPowerup.CellCost 20;
 	}
 }

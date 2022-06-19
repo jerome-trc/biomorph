@@ -17,6 +17,7 @@ class BIO_VolleyGun : BIO_Weapon
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.MagazineSize 4;
 		BIO_Weapon.MagazineType 'BIO_Mag_VolleyGun';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_VolleyGun';
 		BIO_Weapon.PickupMessages
 			"$BIO_VOLLEYGUN_PKUP",
 			"$BIO_VOLLEYGUN_SCAV";
@@ -174,3 +175,20 @@ class BIO_VolleyGun : BIO_Weapon
 }
 
 class BIO_Mag_VolleyGun : BIO_Magazine {}
+
+class BIO_MagETM_VolleyGun : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_VolleyGun';
+	}
+}
+
+class BIO_ETM_VolleyGun : BIO_EnergyToMatterPowerup
+{
+	Default
+	{
+		Powerup.Duration -1;
+		BIO_EnergyToMatterPowerup.CellCost 20;
+	}
+}

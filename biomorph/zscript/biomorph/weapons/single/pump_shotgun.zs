@@ -22,6 +22,7 @@ class BIO_PumpShotgun : BIO_Weapon
 			"$BIO_PUMPSHOTGUN_SCAV";
 		BIO_Weapon.MagazineSize 1;
 		BIO_Weapon.MagazineType 'BIO_Mag_PumpShotgun';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_PumpShotgun';
 		BIO_Weapon.ScavengePersist false;
 		BIO_Weapon.SpawnCategory BIO_WSCAT_SHOTGUN;
 	}
@@ -136,3 +137,19 @@ class BIO_PumpShotgun : BIO_Weapon
 }
 
 class BIO_Mag_PumpShotgun : BIO_Magazine {}
+
+class BIO_MagETM_PumpShotgun : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_PumpShotgun';
+	}
+}
+
+class BIO_ETM_PumpShotgun : BIO_EnergyToMatterPowerup
+{
+	Default
+	{
+		Powerup.Duration -1;
+	}
+}

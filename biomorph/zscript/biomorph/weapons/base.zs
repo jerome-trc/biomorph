@@ -57,6 +57,12 @@ class BIO_Weapon : DoomWeapon abstract
 	property MagazineType2: MagazineType2;
 	property MagazineTypes: MagazineType1, MagazineType2;
 
+	meta class<BIO_MagazineETM> MagazineTypeETM1, MagazineTypeETM2;
+	property MagazineTypeETM: MagazineTypeETM1;
+	property MagazineTypeETM1: MagazineTypeETM1;
+	property MagazineTypeETM2: MagazineTypeETM2;
+	property MagazineTypeETMs: MagazineTypeETM1, MagazineTypeETM2;
+
 	uint MagazineSize1, MagazineSize2;
 	property MagazineSize: MagazineSize1;
 	property MagazineSize1: MagazineSize1;
@@ -477,6 +483,9 @@ extend class BIO_Weapon
 		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
 			return true;
 
+		if (TryEnergyToMatterFeed(altFire))
+			return true;
+
 		if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammoUse))
 			return false;
 
@@ -544,6 +553,9 @@ extend class BIO_Weapon
 				magItem != null && magItem.Amount < magSize)
 				return true;
 
+			if (magItem is 'BIO_MagazineETM')
+				return false;
+
 			reserveAmmo = Ammo(Owner.FindInventory(AmmoType1));
 			cost = ReloadCost1;
 			minReserve = MinAmmoReserve1;
@@ -556,6 +568,9 @@ extend class BIO_Weapon
 			if (AmmoType2 == null && MagazineType2 != null &&
 				magItem != null && magItem.Amount < magSize)
 				return true;
+
+			if (magItem is 'BIO_MagazineETM')
+				return false;
 
 			reserveAmmo = Ammo(Owner.FindInventory(AmmoType2));
 			cost = ReloadCost2;
@@ -657,14 +672,28 @@ extend class BIO_Weapon
 
 	bool SufficientAmmo(bool secondary = false, int multi = 1) const
 	{
+		if (sv_infiniteammo ||
+			(Owner.FindInventory('PowerInfiniteAmmo', true) != null))
+		{
+			return true;
+		}
+
+		if (CanFeedEnergyToMatter(secondary, multi) ||
+			CanFireEnergyToMatter(secondary, multi))
+			return true;
+
 		if (!secondary)
 		{
-			if (Magazine1.Amount < (AmmoUse1 * multi)) return false;
+			if (Magazine1.Amount < (AmmoUse1 * multi))
+				return false;
+
 			return true;
 		}
 		else
 		{
-			if (Magazine2.Amount < (AmmoUse2 * multi)) return false;
+			if (Magazine2.Amount < (AmmoUse2 * multi))
+				return false;
+
 			return true;
 		}
 	}
@@ -679,6 +708,60 @@ extend class BIO_Weapon
 		return !secondary ?
 			Magazine1.Amount >= MagazineSize1 :
 			Magazine2.Amount >= MagazineSize2;
+	}
+
+	bool CanFeedEnergyToMatter(bool secondary = false, int multi = 1) const
+	{
+		if (!secondary)
+		{
+			if (!(Magazine1 is 'BIO_MagazineETM'))
+				return false;
+
+			// Can't feed if the user's ETMF charge is already active
+			if (Owner.FindInventory(BIO_MagazineETM(Magazine1).PowerupType))
+				return false;
+
+			if (CountInv('Cell') < AmmoUse1 * multi)
+				return false;
+
+			return true;
+		}
+		else
+		{
+			if (!(Magazine2 is 'BIO_MagazineETM'))
+				return false;
+
+			// Can't feed if the user's ETMF charge is already active
+			if (Owner.FindInventory(BIO_MagazineETM(Magazine2).PowerupType))
+				return false;
+
+			if (CountInv('Cell') < AmmoUse2 * multi)
+				return false;
+
+			return true;
+		}
+	}
+
+	bool CanFireEnergyToMatter(bool secondary = false, int multi = 1) const
+	{
+		if (!secondary)
+		{
+			if (!(Magazine1 is 'BIO_MagazineETM'))
+				return false;
+
+			if (Owner.FindInventory(BIO_MagazineETM(Magazine1).PowerupType))
+				return true;
+		}
+		else
+		{
+			if (!(Magazine2 is 'BIO_MagazineETM'))
+				return false;
+
+			if (Owner.FindInventory(BIO_MagazineETM(Magazine2).PowerupType))
+				return true;
+		}
+
+		return false;
 	}
 
 	bool Ammoless() const
@@ -804,11 +887,23 @@ extend class BIO_Weapon
 		}
 	}
 
+	void SetupAmmo()
+	{
+		Ammo1 = AddAmmo(Owner, AmmoType1, 0);
+		Ammo2 = AddAmmo(Owner, AmmoType2, 0);
+	}
+
 	void SetupMagazines(class<Ammo> override1 = null, class<Ammo> override2 = null)
 	{
 		if (override1 != null)
 		{
 			Magazine1 = Ammo(Owner.FindInventory(override1));
+
+			if (Magazine1 == null)
+			{
+				Magazine1 = Ammo(Actor.Spawn(override1));
+				Magazine1.AttachToOwner(Owner);
+			}
 		}
 		// Get a pointer to primary ammo (which is either `AmmoType1` or
 		// `MagazineType1`). If it isn't found, generate and attach it
@@ -834,6 +929,12 @@ extend class BIO_Weapon
 		if (override2 != null)
 		{
 			Magazine2 = Ammo(Owner.FindInventory(override2));
+
+			if (Magazine2 == null)
+			{
+				Magazine2 = Ammo(Actor.Spawn(override2));
+				Magazine2.AttachToOwner(Owner);
+			}
 		}
 		// Same for secondary:
 		else if (Magazine2 == null && (MagazineType2 != null || AmmoType2 != null))
@@ -864,6 +965,35 @@ extend class BIO_Weapon
 			Magazine1 = null;
 		else
 			Magazine2 = null;
+	}
+
+	bool TryEnergyToMatterFeed(bool secondary = false, int multi = 1)
+	{
+		if (CanFireEnergyToMatter(secondary, multi))
+			return true;
+
+		if (!CanFeedEnergyToMatter(secondary, multi))
+			return false;
+
+		if (!secondary)
+		{
+			Owner.A_TakeInventory('Cell', AmmoUse1 * multi, TIF_NOTAKEINFINITE);
+			BIO_Utils.GivePowerup(
+				Owner, BIO_MagazineETM(Magazine1).PowerupType,
+				MagazineSize1 * multi
+			);
+		}
+		else
+		{
+			Owner.A_TakeInventory('Cell', AmmoUse2 * multi, TIF_NOTAKEINFINITE);
+			BIO_Utils.GivePowerup(
+				Owner, BIO_MagazineETM(Magazine2).PowerupType,
+				MagazineSize2 * multi
+			);
+		}
+
+		Owner.A_StartSound("bio/weap/etmf", CHAN_AUTO);
+		return true;
 	}
 
 	void ApplyLifeSteal(float percent, int dmg)

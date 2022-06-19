@@ -17,6 +17,7 @@ class BIO_MachineGun : BIO_Weapon
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.MagazineSize 150;
 		BIO_Weapon.MagazineType 'BIO_Mag_MachineGun';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_MachineGun';
 		BIO_Weapon.PickupMessages
 			"$BIO_MACHINEGUN_PKUP",
 			"$BIO_MACHINEGUN_SCAV";
@@ -100,3 +101,18 @@ class BIO_MachineGun : BIO_Weapon
 }
 
 class BIO_Mag_MachineGun : BIO_Magazine {}
+
+class BIO_MagETM_MachineGun : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_MachineGun';
+	}
+}
+
+class BIO_ETM_MachineGun : BIO_EnergyToMatterPowerup
+{
+	Default
+	{
+	}
+}

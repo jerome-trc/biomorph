@@ -14,6 +14,7 @@ class BIO_ServicePistol : BIO_Weapon
 		BIO_Weapon.GraphQuality 10;
 		BIO_Weapon.MagazineSize 15;
 		BIO_Weapon.MagazineType 'BIO_Mag_ServicePistol';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_ServicePistol';
 		BIO_Weapon.PickupMessages
 			"$BIO_PISTOL_PKUP",
 			"";
@@ -99,3 +100,20 @@ class BIO_ServicePistol : BIO_Weapon
 }
 
 class BIO_Mag_ServicePistol : BIO_Magazine {}
+
+class BIO_MagETM_ServicePistol : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_ServicePistol';
+	}
+}
+
+class BIO_ETM_ServicePistol : BIO_EnergyToMatterPowerup
+{
+	Default
+	{
+		Powerup.Duration -5;
+		BIO_EnergyToMatterPowerup.CellCost 1;
+	}
+}

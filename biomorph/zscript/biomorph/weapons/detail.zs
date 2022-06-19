@@ -55,6 +55,30 @@ class BIO_Magazine : Ammo
 	}
 }
 
+class BIO_MagazineETM : BIO_Magazine
+{
+	meta class<BIO_EnergyToMatterPowerup> PowerupType;
+	property PowerupType: PowerupType;
+
+	Default
+	{
+		Inventory.MaxAmount 0;
+	}
+}
+
+class BIO_EnergyToMatterPowerup : Powerup abstract
+{
+	meta int CellCost;
+	property CellCost: CellCost;
+
+	Default
+	{
+		+INVENTORY.UNTOSSABLE
+		Powerup.Duration -3;
+		BIO_EnergyToMatterPowerup.CellCost 5;
+	}
+}
+
 class BIO_StateTimeGroup
 {
 	string Tag;

@@ -41,6 +41,25 @@ class BIO_MGene_DemonSlayer : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_ETMF : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_ETMF_TAG";
+		Inventory.Icon 'GEN2E0';
+		Inventory.PickupMessage "$BIO_MGENE_ETMF_PKUP";
+		BIO_ModifierGene.ModType 'BIO_WMod_ETMF';
+	}
+
+	States
+	{
+	Spawn:
+		GEN2 E 6;
+		#### # 6 Bright Light("BIO_MutaGene_Blue");
+		Loop;
+	}
+}
+
 class BIO_MGene_ReserveFeed : BIO_ModifierGene
 {
 	Default

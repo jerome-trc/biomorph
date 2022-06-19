@@ -21,6 +21,10 @@ $random bio/mutation/general
 
 // Weapons /////////////////////////////////////////////////////////////////////
 
+// Common
+
+bio/weap/etmf NRG2MATR
+
 // Service Pistol
 
 bio/weap/servicepistol/fire/0 SVCP_FR0

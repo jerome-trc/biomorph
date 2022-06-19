@@ -594,6 +594,7 @@ class BIO_WeaponModSimulator : Thinker
 		}
 
 		Simulate();
+		Weap.SetupAmmo();
 		Weap.SetupMagazines();
 	}
 
@@ -979,6 +980,7 @@ class BIO_WeaponModSimulator : Thinker
 	final override void OnDestroy()
 	{
 		Revert();
+		Weap.SetupAmmo();
 		Weap.SetupMagazines();
 		super.OnDestroy();
 	}

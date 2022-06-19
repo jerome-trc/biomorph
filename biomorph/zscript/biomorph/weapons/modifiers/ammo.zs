@@ -144,6 +144,145 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 	}
 }
 
+class BIO_WMod_ETMF : BIO_WeaponModifier
+{
+	final override bool, string Compatible(readOnly<BIO_Weapon> weap, uint _) const
+	{
+		if (PrimaryCompatible(weap) || SecondaryCompatible(weap))
+			return true, "";
+
+		return false, "$BIO_WMOD_INCOMPAT_ETMF";
+	}
+
+	private static bool PrimaryCompatible(readOnly<BIO_Weapon> weap)
+	{
+		return
+			weap.MagazineTypeETM1 != null &&
+			weap.MagazineType1 != weap.MagazineTypeETM1;
+	}
+
+	private static bool SecondaryCompatible(readOnly<BIO_Weapon> weap)
+	{
+		return
+			weap.MagazineTypeETM2 != null &&
+			weap.MagazineType2 != weap.MagazineTypeETM2;
+	}
+
+	final override void Apply(BIO_Weapon weap, uint count) const
+	{
+		Ammo mag1 = null, mag2 = null;
+		[mag1, mag2] = weap.GetMagazines();
+		bool a1 = mag1 is weap.MagazineTypeETM1, a2 = mag2 is weap.MagazineTypeETM2;
+
+		if (!a1 && !a2)
+		{
+			bool
+				compatP = PrimaryCompatible(weap.AsConst()),
+				compatS = SecondaryCompatible(weap.AsConst());
+
+			if (compatP)
+			{
+				let magDefs = GetDefaultByType(weap.MagazineTypeETM1);
+				let powupDefs = GetDefaultByType(magDefs.PowerupType);
+				weap.AmmoType1 = 'Cell';
+				weap.AmmoUse1 = powupDefs.CellCost;
+				weap.MagazineSize1 = powupDefs.EffectTics;
+			}
+
+			if (compatS)
+			{
+				let magDefs = GetDefaultByType(weap.MagazineTypeETM2);
+				let powupDefs = GetDefaultByType(magDefs.PowerupType);
+				weap.AmmoType2 = 'Cell';
+				weap.AmmoUse2 = powupDefs.CellCost;
+				weap.MagazineSize2 = powupDefs.EffectTics;
+			}
+
+			weap.SetupAmmo();
+
+			weap.SetupMagazines(
+				compatP ? weap.MagazineTypeETM1 : null,
+				compatS ? weap.MagazineTypeETM2 : null
+			);
+
+			if (--count <= 0)
+				return;
+		}
+
+		[mag1, mag2] = weap.GetMagazines();
+		a1 = mag1 is weap.MagazineTypeETM1;
+		a2 = mag2 is weap.MagazineTypeETM2;
+
+		for (uint i = 0; i < count; i++)
+		{
+			if (a1)
+				weap.MagazineSize1 += (TICRATE / 2);
+			if (a2)
+				weap.MagazineSize2 += (TICRATE / 2);
+		}
+	}
+
+	final override bool AllowMultiple() const
+	{
+		return true;
+	}
+
+	final override BIO_WeapModRepeatRules RepeatRules() const
+	{
+		return BIO_WMODREPEATRULES_INTERNAL;
+	}
+
+	final override string GetTag() const
+	{
+		return "$BIO_WMOD_ETMF_TAG";
+	}
+
+	final override void Summary(in out Array<string> strings) const
+	{
+		strings.Push("$BIO_WMOD_ETMF_SUMM");
+	}
+
+	final override void Description(in out Array<string> strings,
+		readOnly<BIO_Weapon> weap, uint _) const
+	{
+		bool compatP = PrimaryCompatible(weap), compatS = SecondaryCompatible(weap);
+
+		if (compatP)
+		{
+			let e = strings.Push(
+				String.Format(
+					StringTable.Localize("$BIO_WMOD_ETMF_DESC"),
+					weap.AmmoUse1, float(weap.MagazineSize1) / float(TICRATE)
+				)
+			);
+
+			if (compatP && compatS)
+			{
+				strings[e].AppendFormat(
+					" %s", StringTable.Localize("$BIO_PRIMARYQUALIFIER")
+				);
+			}
+		}
+
+		if (compatS)
+		{
+			let e = strings.Push(
+				String.Format(
+					StringTable.Localize("$BIO_WMOD_ETMF_DESC"),
+					weap.AmmoUse2, float(weap.MagazineSize2) / float(TICRATE)
+				)
+			);
+
+			if (compatP && compatS)
+			{
+				strings[e].AppendFormat(
+					" %s", StringTable.Localize("$BIO_SECONDARYQUALIFIER")
+				);
+			}
+		}
+	}
+}
+
 class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 {
 	final override bool, string Compatible(readOnly<BIO_Weapon> weap, uint _) const

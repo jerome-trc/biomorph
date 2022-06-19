@@ -1,4 +1,4 @@
-class BIO_MicroVulcan : BIO_Weapon
+class BIO_Microvulcan : BIO_Weapon
 {
 	Default
 	{
@@ -16,6 +16,7 @@ class BIO_MicroVulcan : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.MagazineType 'Clip';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_Microvulcan';
 		BIO_Weapon.PickupMessages
 			"$BIO_MICROVULCAN_PKUP",
 			"$BIO_MICROVULCAN_SCAV";
@@ -113,3 +114,13 @@ class BIO_MicroVulcan : BIO_Weapon
 		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
 	}
 }
+
+class BIO_MagETM_Microvulcan : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_Microvulcan';
+	}
+}
+
+class BIO_ETM_Microvulcan : BIO_EnergyToMatterPowerup {}

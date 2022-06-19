@@ -15,6 +15,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'Cell';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_PlasmaRifle';
 		BIO_Weapon.PickupMessages
 			"$BIO_PLASMARIFLE_PKUP",
 			"$BIO_PLASMARIFLE_SCAV";
@@ -82,3 +83,13 @@ class BIO_PlasmaRifle : BIO_Weapon
 		FireTimeGroups.Push(StateTimeGroupFrom('Cooldown', "$BIO_COOLDOWN"));
 	}
 }
+
+class BIO_MagETM_PlasmaRifle : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_PlasmaRifle';
+	}
+}
+
+class BIO_ETM_PlasmaRifle : BIO_EnergyToMatterPowerup {}

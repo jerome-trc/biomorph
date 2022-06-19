@@ -16,6 +16,7 @@ class BIO_Coachgun : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.MagazineType 'BIO_Mag_Coachgun';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_Coachgun';
 		BIO_Weapon.MagazineSize 2;
 		BIO_Weapon.PickupMessages
 			"$BIO_COACHGUN_PKUP",
@@ -136,3 +137,20 @@ class BIO_Coachgun : BIO_Weapon
 }
 
 class BIO_Mag_Coachgun : BIO_Magazine {}
+
+class BIO_MagETM_Coachgun : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_Coachgun';
+	}
+}
+
+class BIO_ETM_Coachgun : BIO_EnergyToMatterPowerup
+{
+	Default
+	{
+		Powerup.Duration -1;
+		BIO_EnergyToMatterPowerup.CellCost 10;
+	}
+}
