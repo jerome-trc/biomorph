@@ -1,5 +1,10 @@
 mixin class BIO_Pickup
 {
+	Default
+	{
+		+DONTGIB
+	}
+
 	meta string PartialPickupMessage;
 	property PartialPickupMessage: PartialPickupMessage;
 	meta string CollectedMessage;

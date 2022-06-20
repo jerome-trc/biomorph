@@ -1,13 +1,36 @@
 mixin class BIO_Health
 {
+	private void OnFirstBerserkPickup(in out Actor other)
+	{
+		other.GiveInventory('PowerStrength', 1);
+		PrintPickupMessage(other.CheckLocalView(), "$BIO_BERSERK_PKUPFIRST");
+
+		let pawn = BIO_Player(other);
+
+		if (pawn != null)
+		{
+			let bsks = BIO_CVar.BerserkSwitch(pawn.Player);
+			bool prev = pawn.FindInventory('PowerStrength', true) != null;
+			bool select = bsks == BIO_CV_BSKS_MELEE;
+			select |= (bsks == BIO_CV_BSKS_ONLYFIRST && !prev);
+
+			if (select)
+				pawn.A_SelectWeapon('Fist');
+		}
+	}
+
 	final override bool TryPickup(in out Actor other)
 	{
+		if (self is 'BIO_Berserk' && bCountItem)
+			OnFirstBerserkPickup(other);
+
 		int amt = 0;
 
 		if (other.Player != null)
 		{
 			PrevHealth = other.Player.Health;
 			let cap = other.GetMaxHealth() - other.Player.Health;
+			cap = Max(cap, 0);
 
 			if (self is 'BIO_HealthBonus' || self is 'BIO_Soulsphere')
 				cap += 100;
@@ -20,6 +43,7 @@ mixin class BIO_Health
 		{
 			PrevHealth = other.Health;
 			let cap = other.GetMaxHealth() - other.Health;
+			cap = Max(cap, 0);
 
 			if (self is 'BIO_HealthBonus' || self is 'BIO_Soulsphere')
 				cap += 100;
