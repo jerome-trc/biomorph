@@ -4,6 +4,11 @@ class BIO_Player : DoomPlayer
 	{
 		Species 'Player';
 		Player.DisplayName "$BIO_MODTITLE";
+
+		Player.StartItem 'Clip', 0;
+		Player.StartItem 'Shell', 0;
+		Player.StartItem 'RocketAmmo', 0;
+		Player.StartItem 'Cell', 0;
 	}
 
 	// How much to reduce the slippery movement.
