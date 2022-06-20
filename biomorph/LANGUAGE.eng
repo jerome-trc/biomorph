@@ -289,16 +289,16 @@
 	// Modifier
 
 	BIO_MGENE_DEMONSLAYER_TAG = "\c[Ice]Demonslayer\c[White] Gene\c-";
-	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a \c[Red]Demonslayer\c[White] gene\c-.";
+	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a \c[Ice]Demonslayer\c[White] gene\c-.";
 
 	BIO_MGENE_ETMF_TAG = "\c[Ice]Energy-to-Matter Feed\c[White] Gene\c-";
-	BIO_MGENE_ETMF_PKUP = "Collected a \c[Blue]Energy-to-matter Feed\c[White] gene\c-.";
+	BIO_MGENE_ETMF_PKUP = "Collected a \c[Ice]Energy-to-matter Feed\c[White] gene\c-.";
 
 	BIO_MGENE_MAGSIZE_TAG = "\c[Ice]High-Capacity\c[White] Gene\c-";
-	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Yellow]High-Capacity\c[White] gene\c-.";
+	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Ice]High-Capacity\c[White] gene\c-.";
 
 	BIO_MGENE_RESERVEFEED_TAG = "\c[Ice]Ammochain\c[White] Gene";
-	BIO_MGENE_RESERVEFEED_PKUP = "Collected an \c[Yellow]Ammochain\c[White] gene\c-.";
+	BIO_MGENE_RESERVEFEED_PKUP = "Collected an \c[Ice]Ammochain\c[White] gene\c-.";
 
 	// Support
 
