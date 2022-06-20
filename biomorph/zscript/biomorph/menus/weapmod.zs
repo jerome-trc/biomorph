@@ -826,7 +826,7 @@ extend class BIO_WeaponModMenu
 	{
 		let mutaC = Players[ConsolePlayer].MO.CountInv('BIO_Muta_General');
 
-		if (mutaC < CurrentWeap.ModCost)
+		if (mutaC < Simulator.CommitCost())
 		{
 			Console.Printf(
 				StringTable.Localize("$BIO_MENU_WEAPMOD_COMMITFAIL_MUTACOST")

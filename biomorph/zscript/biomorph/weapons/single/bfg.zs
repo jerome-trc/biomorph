@@ -18,6 +18,7 @@ class BIO_BFG : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'Cell';
+		BIO_Weapon.ModCostMultiplier 2;
 		BIO_Weapon.PickupMessages
 			"$BIO_BFG_PKUP",
 			"$BIO_BFG_SCAV";

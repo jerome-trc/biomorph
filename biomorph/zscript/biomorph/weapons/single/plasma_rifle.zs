@@ -16,6 +16,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'Cell';
 		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_PlasmaRifle';
+		BIO_Weapon.ModCostMultiplier 2;
 		BIO_Weapon.PickupMessages
 			"$BIO_PLASMARIFLE_PKUP",
 			"$BIO_PLASMARIFLE_SCAV";

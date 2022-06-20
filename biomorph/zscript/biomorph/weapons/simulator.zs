@@ -841,6 +841,26 @@ class BIO_WeaponModSimulator : Thinker
 
 	// Other introspective helpers /////////////////////////////////////////////
 
+	uint CommitCost() const
+	{
+		if (Weap.ModCostMultiplier <= 0)
+			return 0;
+
+		uint ret = 0;
+
+		for (uint i = 0; i < Weap.ModGraph.Nodes.Size(); i++)
+		{
+			let realNode = Weap.ModGraph.Nodes[i];
+			let simNode = Nodes[i];
+
+			// Is this node pending occupation or extraction?
+			if (realNode.GeneType != simNode.GetGeneType())
+				ret += Weap.ModCostMultiplier;
+		}
+
+		return ret;
+	}
+
 	class<BIO_Gene> GetGeneType(uint gene, bool node) const
 	{
 		class<BIO_Gene> ret = null;

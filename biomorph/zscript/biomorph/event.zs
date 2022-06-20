@@ -156,8 +156,9 @@ extend class BIO_EventHandler
 	{
 		let weap = BIO_Weapon(pawn.Player.ReadyWeapon);
 		let sim = BIO_WeaponModSimulator.Get(weap);
+		let cost = sim.CommitCost();
 
-		if (pawn.CountInv('BIO_Muta_General') < weap.ModCost)
+		if (pawn.CountInv('BIO_Muta_General') < cost)
 		{
 			Console.Printf(
 				Biomorph.LOGPFX_ERR ..
@@ -196,7 +197,7 @@ extend class BIO_EventHandler
 			pawn.GiveInventory(toGive[i], 1);
 
 		sim.PostCommit();
-		pawn.TakeInventory('BIO_Muta_General', weap.ModCost);
+		pawn.TakeInventory('BIO_Muta_General', cost);
 		pawn.A_StartSound("bio/mutation/general");
 	}
 

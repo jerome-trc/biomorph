@@ -45,8 +45,8 @@ class BIO_Weapon : DoomWeapon abstract
 	meta uint GraphQuality;
 	property GraphQuality: GraphQuality;
 
-	meta uint ModCost;
-	property ModCost: ModCost;
+	meta uint ModCostMultiplier;
+	property ModCostMultiplier: ModCostMultiplier;
 
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
@@ -128,7 +128,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/0";
 		BIO_Weapon.MinAmmoReserves 1, 1;
-		BIO_Weapon.ModCost 1;
+		BIO_Weapon.ModCostMultiplier 1;
 		BIO_Weapon.ReloadRatio1 1, 1;
 		BIO_Weapon.ReloadRatio2 1, 1;
 		BIO_Weapon.ScavengePersist true;
