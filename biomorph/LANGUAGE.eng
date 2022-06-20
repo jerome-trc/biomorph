@@ -237,29 +237,29 @@
 		"doesn't fire real matter, or is\n"
 		"otherwise unsuited to energy-to-matter conversion.";
 
-	BIO_WMOD_DAMAGE_TAG = "High-Power";
-	BIO_WMOD_DAMAGE_SUMM = "\c[Green]20% of minimum damage added";
-	BIO_WMOD_DAMAGE_DESC = "\c[White]Damage%s: \c[Green]+%d";
+	BIO_WMOD_DAMAGEADD_TAG = "\c[Ice]High-Power\c-";
+	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]20% of minimum damage added";
+	BIO_WMOD_DAMAGEADD_DESC = "\c[White]Damage%s: \c[Green]+%d";
 
-	BIO_WMOD_DEMONSLAYER_TAG = "Demonslayer";
+	BIO_WMOD_DEMONSLAYER_TAG = "\c[Ice]Demonslayer";
 	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]400% damage\c[White] dealt to Legendary monsters";
 	BIO_WMOD_DEMONSLAYER_DESC = "\c[Green]%d%% damage\c[White] dealt to Legendary monsters";
 
-	BIO_WMOD_ETMF_TAG = "Energy-to-Matter Feed";
+	BIO_WMOD_ETMF_TAG = "\c[Ice]Energy-to-Matter Feed\c-";
 	BIO_WMOD_ETMF_SUMM =
 		"\c[White]Change to consuming cells for a few seconds of free firing";
 	BIO_WMOD_ETMF_DESC =
 		"\c[White]Consumes %d cells for %.1f second(s) of free firing";
 
-	BIO_WMOD_INFINITEAMMO_TAG = "Ammo Apparition";
+	BIO_WMOD_INFINITEAMMO_TAG = "\c[Ice]Ammo Apparition\c-";
 	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
 
-	BIO_WMOD_MAGSIZE_TAG = "High-Capacity";
+	BIO_WMOD_MAGSIZE_TAG = "\c[Ice]High-Capacity\c-";
 	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
 
-	BIO_WMOD_RESERVEFEED_TAG = "Ammochain";
+	BIO_WMOD_RESERVEFEED_TAG = "\c[Ice]Ammochain\c-";
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
 // Weapon modifier supports (tags, summaries) //////////////////////////////////
@@ -288,16 +288,16 @@
 
 	// Modifier
 
-	BIO_MGENE_DEMONSLAYER_TAG = "\c[Red]Demonslayer\c[White] Gene\c-";
+	BIO_MGENE_DEMONSLAYER_TAG = "\c[Ice]Demonslayer\c[White] Gene\c-";
 	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a \c[Red]Demonslayer\c[White] gene\c-.";
 
 	BIO_MGENE_ETMF_TAG = "\c[Ice]Energy-to-Matter Feed\c[White] Gene\c-";
 	BIO_MGENE_ETMF_PKUP = "Collected a \c[Blue]Energy-to-matter Feed\c[White] gene\c-.";
 
-	BIO_MGENE_MAGSIZE_TAG = "\c[Yellow]High-Capacity\c[White] Gene\c-";
+	BIO_MGENE_MAGSIZE_TAG = "\c[Ice]High-Capacity\c[White] Gene\c-";
 	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Yellow]High-Capacity\c[White] gene\c-.";
 
-	BIO_MGENE_RESERVEFEED_TAG = "\c[Yellow]Ammochain\c[White] Gene";
+	BIO_MGENE_RESERVEFEED_TAG = "\c[Ice]Ammochain\c[White] Gene";
 	BIO_MGENE_RESERVEFEED_PKUP = "Collected an \c[Yellow]Ammochain\c[White] gene\c-.";
 
 	// Support

@@ -3,14 +3,14 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 	Default
 	{
 		Tag "$BIO_SGENE_ADDNORTH_TAG";
-		Inventory.Icon 'GENSN0';
+		Inventory.Icon 'GEN1A0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDNORTH_PKUP";
 	}
 
 	States
 	{
 	Spawn:
-		GENS N 6;
+		GEN1 A 6;
 		#### # 6 Bright Light("BIO_MutaGene_Green");
 		Loop;
 	}

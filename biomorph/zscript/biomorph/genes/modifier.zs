@@ -1,28 +1,9 @@
-class BIO_MGene_MagSize : BIO_ModifierGene
-{
-	Default
-	{
-		Tag "$BIO_MGENE_MAGSIZE_TAG";
-		Inventory.Icon 'GEN1M0';
-		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
-		BIO_ModifierGene.ModType 'BIO_WMod_MagSize';
-	}
-
-	States
-	{
-	Spawn:
-		GEN1 M 6;
-		#### # 6 Bright Light("BIO_MutaGene_Yellow");
-		Loop;
-	}
-}
-
 class BIO_MGene_DemonSlayer : BIO_ModifierGene
 {
 	Default
 	{
 		Tag "$BIO_MGENE_DEMONSLAYER_TAG";
-		Inventory.Icon 'GEN2D0';
+		Inventory.Icon 'GENDA0';
 		Inventory.PickupMessage "$BIO_MGENE_DEMONSLAYER_PKUP";
 		BIO_ModifierGene.ModType 'BIO_WMod_DemonSlayer';
 	}
@@ -30,7 +11,7 @@ class BIO_MGene_DemonSlayer : BIO_ModifierGene
 	States
 	{
 	Spawn:
-		GEN2 D 6;
+		GEND A 6;
 		#### # 6 Bright Light("BIO_MutaGene_Red");
 		Loop;
 	}
@@ -46,7 +27,7 @@ class BIO_MGene_ETMF : BIO_ModifierGene
 	Default
 	{
 		Tag "$BIO_MGENE_ETMF_TAG";
-		Inventory.Icon 'GEN2E0';
+		Inventory.Icon 'GENAC0';
 		Inventory.PickupMessage "$BIO_MGENE_ETMF_PKUP";
 		BIO_ModifierGene.ModType 'BIO_WMod_ETMF';
 	}
@@ -54,8 +35,27 @@ class BIO_MGene_ETMF : BIO_ModifierGene
 	States
 	{
 	Spawn:
-		GEN2 E 6;
+		GENA C 6;
 		#### # 6 Bright Light("BIO_MutaGene_Blue");
+		Loop;
+	}
+}
+
+class BIO_MGene_MagSize : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_MAGSIZE_TAG";
+		Inventory.Icon 'GENAA0';
+		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
+		BIO_ModifierGene.ModType 'BIO_WMod_MagSize';
+	}
+
+	States
+	{
+	Spawn:
+		GENA A 6;
+		#### # 6 Bright Light("BIO_MutaGene_Yellow");
 		Loop;
 	}
 }
@@ -65,7 +65,7 @@ class BIO_MGene_ReserveFeed : BIO_ModifierGene
 	Default
 	{
 		Tag "$BIO_MGENE_RESERVEFEED_TAG";
-		Inventory.Icon 'GEN2R0';
+		Inventory.Icon 'GENAB0';
 		Inventory.PickupMessage "$BIO_MGENE_RESERVEFEED_PKUP";
 		BIO_ModifierGene.ModType 'BIO_WMod_ReserveFeed';
 	}
@@ -73,7 +73,7 @@ class BIO_MGene_ReserveFeed : BIO_ModifierGene
 	States
 	{
 	Spawn:
-		GEN2 R 6;
+		GENA B 6;
 		#### # 6 Bright Light("BIO_MutaGene_Yellow");
 		Loop;
 	}

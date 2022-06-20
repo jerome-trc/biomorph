@@ -1,4 +1,4 @@
-class BIO_WMod_Damage : BIO_WeaponModifier
+class BIO_WMod_DamageAdd : BIO_WeaponModifier
 {
 	final override bool, string Compatible(readOnly<BIO_Weapon> weap, uint _) const
 	{
@@ -34,12 +34,12 @@ class BIO_WMod_Damage : BIO_WeaponModifier
 
 	final override string GetTag() const
 	{
-		return "$BIO_WMOD_DAMAGE_TAG";
+		return "$BIO_WMOD_DAMAGEADD_TAG";
 	}
 
 	final override void Summary(in out Array<string> strings) const
 	{
-		strings.Push("$BIO_WMOD_DAMAGE_SUMM");
+		strings.Push("$BIO_WMOD_DAMAGEADD_SUMM");
 	}
 
 	final override void Description(in out Array<string> strings,
@@ -56,7 +56,7 @@ class BIO_WMod_Damage : BIO_WeaponModifier
 
 			strings.Push(
 				String.Format(
-					StringTable.Localize("$BIO_WMOD_DAMAGE_DESC"),
+					StringTable.Localize("$BIO_WMOD_DAMAGEADD_DESC"),
 					qual.Length() > 0 ? " " .. qual : "",
 					dmg * count
 				)
