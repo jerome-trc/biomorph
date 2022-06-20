@@ -403,12 +403,24 @@ extend class BIO_EventHandler
 
 		while (Globals.DrainLootValueBuffer())
 		{
-			event.Thing.A_SpawnItemEx(
-				Globals.RandomMutagenType(),
-				0.0, 0.0, 32.0,
-				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
-				FRandom(0.0, 360.0)
-			);
+			if (Random[BIO_Loot](0, 32) == 0)
+			{
+				event.Thing.A_SpawnItemEx(
+					Globals.RandomGeneType(),
+					0.0, 0.0, 32.0,
+					FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
+					FRandom(0.0, 360.0)
+				);
+			}
+			else
+			{
+				event.Thing.A_SpawnItemEx(
+					Globals.RandomMutagenType(),
+					0.0, 0.0, 32.0,
+					FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
+					FRandom(0.0, 360.0)
+				);
+			}
 		}
 	}
 }

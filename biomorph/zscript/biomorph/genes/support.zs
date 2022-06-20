@@ -5,6 +5,7 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 		Tag "$BIO_SGENE_ADDNORTH_TAG";
 		Inventory.Icon 'GEN1A0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDNORTH_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 	}
 
 	States

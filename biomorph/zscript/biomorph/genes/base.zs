@@ -1,5 +1,8 @@
 class BIO_Gene : Inventory abstract
 {
+	meta uint LootWeight;
+	property LootWeight: LootWeight;
+
 	Default
 	{
 		-COUNTITEM
@@ -87,4 +90,14 @@ class BIO_ActiveGene : BIO_Gene abstract
 	) const;
 
 	abstract void Summary(in out Array<string> strings) const;
+}
+
+// General symbolic constants for loot weights, kept in one place.
+extend class BIO_Gene
+{
+	const LOOTWEIGHT_VERYCOMMON = 32;
+	const LOOTWEIGHT_COMMON = 8;
+	const LOOTWEIGHT_UNCOMMON = 4;
+	const LOOTWEIGHT_RARE = 2;
+	const LOOTWEIGHT_VERYRARE = 1;
 }
