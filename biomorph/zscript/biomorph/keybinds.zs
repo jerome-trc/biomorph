@@ -2,6 +2,12 @@
 
 class BIO_Keybind : BIO_PermanentInventory abstract
 {
+	Default
+	{
+		Inventory.PickupMessage
+			"If you see this message, please report a bug to RatCircus.";
+	}
+
 	protected bool Primed;
 
 	bool IsPrimed() const { return Primed; }

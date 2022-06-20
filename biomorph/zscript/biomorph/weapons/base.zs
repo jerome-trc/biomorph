@@ -603,7 +603,7 @@ extend class BIO_Weapon
 
 			if (Magazine1 != null)
 			{
-				if (Magazine1.MaxAmount < BIO_Magazine.MAX_AMOUNT) // Likely reserve
+				if (!(Magazine1 is 'BIO_Magazine')) // Reserve
 					dividend = float(Magazine1.MaxAmount);
 				else
 					dividend = float(MagazineSize1);
@@ -623,7 +623,7 @@ extend class BIO_Weapon
 
 			if (Magazine2 != null)
 			{
-				if (Magazine2.MaxAmount < BIO_Magazine.MAX_AMOUNT) // Likely reserve
+				if (!(Magazine2 is 'BIO_Magazine')) // Reserve
 					dividend = float(Magazine2.MaxAmount);
 				else
 					dividend = float(MagazineSize2);
