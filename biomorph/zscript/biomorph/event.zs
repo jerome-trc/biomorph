@@ -328,7 +328,7 @@ extend class BIO_EventHandler
 		}
 
 		let val = MapTotalMonsterValue();
-		let loot = val / LOOT_VALUE_THRESHOLD;
+		let loot = val / BIO_Global.LOOT_VALUE_THRESHOLD;
 
 		Console.Printf(
 			Biomorph.LOGPFX_INFO ..
@@ -344,20 +344,9 @@ extend class BIO_EventHandler
 // Death handling.
 extend class BIO_EventHandler
 {
-	const LOOT_VALUE_THRESHOLD = 3200;
-
-	private uint LootValueBuffer;
-
 	// Assigned in `OnRegister()`
 	// (will be null if LegenDoom or its Lite version isn't loaded).
 	private class<Inventory> LDToken;
-
-	static clearscope uint GetMonsterValue(Actor mons)
-	{
-		let ret = uint(Max(mons.Default.Health, mons.GetMaxHealth(true)));
-		// TODO: Refine
-		return ret;
-	}
 
 	static clearscope uint MapTotalMonsterValue()
 	{
@@ -374,7 +363,7 @@ extend class BIO_EventHandler
 			if (!mons.bIsMonster || MonsterIsLostSoul(mons))
 				continue;
 
-			ret += GetMonsterValue(mons);
+			ret += Biomorph.GetMonsterValue(mons);
 		}
 
 		return ret;
@@ -410,9 +399,9 @@ extend class BIO_EventHandler
 			return;
 		}
 
-		LootValueBuffer += GetMonsterValue(event.Thing);
+		Globals.LootValueBuffer += Biomorph.GetMonsterValue(event.Thing);
 
-		while (LootValueBuffer >= LOOT_VALUE_THRESHOLD)
+		while (Globals.DrainLootValueBuffer())
 		{
 			event.Thing.A_SpawnItemEx(
 				Globals.RandomMutagenType(),
@@ -420,8 +409,6 @@ extend class BIO_EventHandler
 				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
 				FRandom(0.0, 360.0)
 			);
-
-			LootValueBuffer -= LOOT_VALUE_THRESHOLD;
 		}
 	}
 }

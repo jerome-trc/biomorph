@@ -211,3 +211,32 @@ extend class BIO_Global
 		return (class<BIO_Mutagen>)(MutagenLoot.Result());
 	}
 }
+
+// Loot value buffer and related symbols.
+extend class BIO_Global
+{
+	const LOOT_VALUE_THRESHOLD = 3200;
+
+	uint LootValueBuffer;
+
+	bool DrainLootValueBuffer()
+	{
+		if (LootValueBuffer >= LOOT_VALUE_THRESHOLD)
+		{
+			LootValueBuffer -= LOOT_VALUE_THRESHOLD;
+			return true;
+		}
+
+		return false;
+	}
+}
+
+extend class Biomorph
+{
+	static uint GetMonsterValue(Actor mons)
+	{
+		let ret = uint(Max(mons.Default.Health, mons.GetMaxHealth(true)));
+		// TODO: Refine
+		return ret;
+	}
+}
