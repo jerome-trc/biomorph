@@ -206,7 +206,7 @@ class BIO_PLDF_BFGSpray : BIO_PayloadDeathFunctor
 			crEsc_max = BIO_Utils.StatFontColor(MaxDamage, Defaults.MaxDamage);
 		}
 		else
-			crEsc_rc = crEsc_min = crEsc_max = CRESC_STATMODIFIED;
+			crEsc_rc = crEsc_min = crEsc_max = Biomorph.CRESC_STATMODIFIED;
 		
 		readout.Push(String.Format(
 			StringTable.Localize("$BIO_PLDF_BFGSPRAY"),

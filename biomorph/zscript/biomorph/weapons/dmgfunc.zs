@@ -72,7 +72,7 @@ class BIO_DmgFunc_Rand : BIO_DamageFunctor
 		}
 		else
 		{
-			crEsc_min = crEsc_max = CRESC_STATMODIFIED;
+			crEsc_min = crEsc_max = Biomorph.CRESC_STATMODIFIED;
 		}
 
 		return String.Format(
@@ -129,7 +129,7 @@ class BIO_DmgFunc_XTimesRand : BIO_DamageFunctor
 		}
 		else
 		{
-			crEsc_multi = crEsc_min = crEsc_max = CRESC_STATMODIFIED;
+			crEsc_multi = crEsc_min = crEsc_max = Biomorph.CRESC_STATMODIFIED;
 		}
 
 		return String.Format(
@@ -182,7 +182,7 @@ class BIO_DmgFunc_XPlusRand : BIO_DamageFunctor
 		if (myDefs != null)
 			crEsc = BIO_Utils.StatFontColor(Baseline, myDefs.Baseline);
 		else
-			crEsc = CRESC_STATMODIFIED;
+			crEsc = Biomorph.CRESC_STATMODIFIED;
 
 		return String.Format(
 			StringTable.Localize("$BIO_DMGFUNC_XPLUSRAND"),
@@ -240,7 +240,7 @@ class BIO_DmgFunc_RandomPick : BIO_DamageFunctor
 		if (myDefs != null)
 			crEsc = BIO_Utils.StatFontColor(AverageValue(), myDefs.AverageValue());
 		else
-			crEsc = CRESC_STATMODIFIED;
+			crEsc = Biomorph.CRESC_STATMODIFIED;
 
 		string ret = StringTable.Localize("$BIO_DMGFUNC_RANDOMPICK") .. crEsc;
 
@@ -294,7 +294,7 @@ class BIO_DmgFunc_Single : BIO_DamageFunctor
 		if (myDefs != null)
 			crEsc = BIO_Utils.StatFontColor(Value, myDefs.Value);
 		else
-			crEsc = CRESC_STATMODIFIED;
+			crEsc = Biomorph.CRESC_STATMODIFIED;
 
 		return String.Format(
 			StringTable.Localize("$BIO_DMGFUNC_SINGLE"),

@@ -376,7 +376,7 @@ class BIO_PLDF_Explode : BIO_PayloadDeathFunctor
 				crEsc_rad = BIO_Utils.StatFontColor(Radius, Defaults.Radius);
 			}
 			else
-				crEsc_dmg = crEsc_rad = CRESC_STATMODIFIED;
+				crEsc_dmg = crEsc_rad = Biomorph.CRESC_STATMODIFIED;
 
 			readout.Push(String.Format(
 				StringTable.Localize("$BIO_PLDF_EXPLODE_SPLASH"),
@@ -395,7 +395,7 @@ class BIO_PLDF_Explode : BIO_PayloadDeathFunctor
 					ShrapnelDamage, Defaults.ShrapnelDamage);
 			}
 			else
-				crEsc_count = crEsc_dmg = CRESC_STATMODIFIED;
+				crEsc_count = crEsc_dmg = Biomorph.CRESC_STATMODIFIED;
 
 			readout.Push(String.Format(
 				StringTable.Localize("$BIO_PLDF_EXPLODE_SHRAPNEL"),

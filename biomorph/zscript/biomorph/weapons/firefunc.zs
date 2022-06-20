@@ -66,7 +66,7 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 		readout.Push(String.Format(
 			StringTable.Localize("$BIO_FIREFUNC_PROJECTILE"),
 			BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
-			pl != pipelineDef.Payload ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
+			pl != pipelineDef.Payload ? Biomorph.CRESC_STATMODIFIED : Biomorph.CRESC_STATDEFAULT,
 			BIO_Utils.PayloadTag(pl, sc)));
 	}
 
@@ -120,7 +120,7 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 		readout.Push(String.Format(
 			StringTable.Localize("$BIO_FIREFUNC_PROJECTILE"),
 			BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
-			pl != pipelineDef.Payload ? CRESC_STATMODIFIED : CRESC_STATDEFAULT,
+			pl != pipelineDef.Payload ? Biomorph.CRESC_STATMODIFIED : Biomorph.CRESC_STATDEFAULT,
 			BIO_Utils.PayloadTag(pl, sc)));
 	}
 
@@ -229,9 +229,9 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 			output = String.Format(
 				StringTable.Localize("$BIO_FIREFUNC_RAIL"),
 				BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
-				defaultPuff ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
+				defaultPuff ? Biomorph.CRESC_STATDEFAULT : Biomorph.CRESC_STATMODIFIED,
 				BIO_Utils.PayloadTag(puff_t, sc),
-				defaultSpawn ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
+				defaultSpawn ? Biomorph.CRESC_STATDEFAULT : Biomorph.CRESC_STATMODIFIED,
 				BIO_Utils.PayloadTag(spawnClass, sc));
 		}
 		else if (puff_t == null)
@@ -239,7 +239,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 			output = String.Format(
 				StringTable.Localize("$BIO_FIREFUNC_RAIL_NOPUFF"),
 				BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
-				defaultSpawn ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
+				defaultSpawn ? Biomorph.CRESC_STATDEFAULT : Biomorph.CRESC_STATMODIFIED,
 				BIO_Utils.PayloadTag(spawnClass, sc));
 		}
 		else if (spawnClass == null)
@@ -247,7 +247,7 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 			output = String.Format(
 				StringTable.Localize("$BIO_FIREFUNC_RAIL_NOSPAWN"),
 				BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
-				defaultPuff ? CRESC_STATDEFAULT : CRESC_STATMODIFIED,
+				defaultPuff ? Biomorph.CRESC_STATDEFAULT : Biomorph.CRESC_STATMODIFIED,
 				BIO_Utils.PayloadTag(puff_t, sc));
 		}
 		else

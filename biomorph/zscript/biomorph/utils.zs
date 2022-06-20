@@ -196,10 +196,13 @@ extend class BIO_Utils
 
 // String/colour helpers ///////////////////////////////////////////////////////
 
-const CRESC_STATDEFAULT = "\c[White]";
-const CRESC_STATMODIFIED = "\c[Cyan]";
-const CRESC_STATBETTER = "\c[Green]";
-const CRESC_STATWORSE = "\c[Red]";
+extend class Biomorph
+{
+	const CRESC_STATDEFAULT = "\c[White]";
+	const CRESC_STATMODIFIED = "\c[Cyan]";
+	const CRESC_STATBETTER = "\c[Green]";
+	const CRESC_STATWORSE = "\c[Red]";
+}
 
 extend class BIO_Utils
 {
@@ -264,20 +267,20 @@ extend class BIO_Utils
 		if (!invert)
 		{
 			if (stat1 > stat2)
-				return CRESC_STATBETTER;
+				return Biomorph.CRESC_STATBETTER;
 			else if (stat1 < stat2)
-				return CRESC_STATWORSE;
+				return Biomorph.CRESC_STATWORSE;
 			else
-				return CRESC_STATDEFAULT;
+				return Biomorph.CRESC_STATDEFAULT;
 		}
 		else
 		{
 			if (stat1 < stat2)
-				return CRESC_STATBETTER;
+				return Biomorph.CRESC_STATBETTER;
 			else if (stat1 > stat2)
-				return CRESC_STATWORSE;
+				return Biomorph.CRESC_STATWORSE;
 			else
-				return CRESC_STATDEFAULT;
+				return Biomorph.CRESC_STATDEFAULT;
 		}
 	}
 
@@ -286,24 +289,24 @@ extend class BIO_Utils
 		if (!invert)
 		{
 			if (stat1 ~== stat2)
-				return CRESC_STATDEFAULT;
+				return Biomorph.CRESC_STATDEFAULT;
 			else if (stat1 > stat2)
-				return CRESC_STATBETTER;
+				return Biomorph.CRESC_STATBETTER;
 			else if (stat1 < stat2)
-				return CRESC_STATWORSE;
+				return Biomorph.CRESC_STATWORSE;
 			else
-				return CRESC_STATDEFAULT;
+				return Biomorph.CRESC_STATDEFAULT;
 		}
 		else
 		{
 			if (stat1 ~== stat2)
-				return CRESC_STATDEFAULT;
+				return Biomorph.CRESC_STATDEFAULT;
 			else if (stat1 < stat2)
-				return CRESC_STATBETTER;
+				return Biomorph.CRESC_STATBETTER;
 			else if (stat1 > stat2)
-				return CRESC_STATWORSE;
+				return Biomorph.CRESC_STATWORSE;
 			else
-				return CRESC_STATDEFAULT;
+				return Biomorph.CRESC_STATDEFAULT;
 		}
 	}
 
