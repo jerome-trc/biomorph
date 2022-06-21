@@ -6,6 +6,7 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 		Inventory.Icon 'GEN1A0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDNORTH_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
+		BIO_Gene.Summary "$BIO_MODSUP_ADDNORTH_SUMM";
 	}
 
 	States
@@ -30,15 +31,13 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 		if (north == null)
 			return false, "$BIO_MODSUP_INCOMPAT_NONODENORTH";
 
-		let mod = north.GetModifier();
-
-		if (mod == null)
+		if (!north.HasModifier())
 			return false, "$BIO_MODSUP_INCOMPAT_NOMODNORTH";
 
 		return true, "";
 	}
 
-	final override void Apply(
+	final override string Apply(
 		readOnly<BIO_WeaponModSimulator> sim,
 		uint node
 	) const
@@ -50,10 +49,7 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 		);
 
 		north.Multiplier++;
-	}
 
-	final override void Summary(in out Array<string> strings) const
-	{
-		strings.Push("$BIO_MODSUP_ADDNORTH_SUMM");
+		return "";
 	}
 }

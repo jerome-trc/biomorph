@@ -227,7 +227,7 @@
 	BIO_PLDF_BFGSPRAY =
 		"\c[MidGrey]%s%d \c[MidGrey]rays, %s%d \cu-\c[MidGrey] %s%d damage";
 
-// Weapon modifiers (tags, summaries, descriptions, incompatibility readouts) //
+// Weapon modifiers (summaries, descriptions, incompatibility explanations) ////
 
 	// (If a grouping has no description, then assume the summary doubles as one)
 
@@ -243,29 +243,23 @@
 		"doesn't fire real matter, or is\n"
 		"otherwise unsuited to energy-to-matter conversion.";
 
-	BIO_WMOD_DAMAGEADD_TAG = "\c[Ice]High-Power\c-";
 	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]20% of minimum damage added";
 	BIO_WMOD_DAMAGEADD_DESC = "\c[White]Damage%s: \c[Green]+%d";
 
-	BIO_WMOD_DEMONSLAYER_TAG = "\c[Ice]Demonslayer";
 	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]400% damage\c[White] dealt to Legendary monsters";
 	BIO_WMOD_DEMONSLAYER_DESC = "\c[Green]%d%% damage\c[White] dealt to Legendary monsters";
 
-	BIO_WMOD_ETMF_TAG = "\c[Ice]Energy-to-Matter Feed\c-";
 	BIO_WMOD_ETMF_SUMM =
 		"\c[White]Change to consuming cells for a few seconds of free firing";
 	BIO_WMOD_ETMF_DESC =
 		"\c[White]Consumes %d cells for %.1f second(s) of free firing";
 
-	BIO_WMOD_INFINITEAMMO_TAG = "\c[Ice]Ammo Apparition\c-";
 	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
 
-	BIO_WMOD_MAGSIZE_TAG = "\c[Ice]High-Capacity\c-";
 	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
 
-	BIO_WMOD_RESERVEFEED_TAG = "\c[Ice]Ammochain\c-";
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
 // Weapon modifier supports (tags, summaries) //////////////////////////////////
@@ -299,6 +293,9 @@
 
 	BIO_MGENE_ETMF_TAG = "\c[Ice]Energy-to-Matter Feed\c[White] Gene\c-";
 	BIO_MGENE_ETMF_PKUP = "Collected a \c[Ice]Energy-to-matter Feed\c[White] gene\c-.";
+
+	BIO_MGENE_INFINITEAMMO_TAG = "\c[Ice]Ammo Apparition\c[White] Gene\c-";
+	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an \c[Ice]Ammo Apparition\c[White] gene\c-.";
 
 	BIO_MGENE_MAGSIZE_TAG = "\c[Ice]High-Capacity\c[White] Gene\c-";
 	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Ice]High-Capacity\c[White] gene\c-.";

@@ -13,6 +13,7 @@ class BIO_WeaponModSimNode
 	// Acts as a representative for what will end up in `Basis.GeneType`.
 	BIO_WeaponModSimGene Gene;
 	bool Valid;
+	string Message;
 
 	BIO_WeaponUpgradeRecipe Upgrade;
 
@@ -29,7 +30,10 @@ class BIO_WeaponModSimNode
 
 	bool HasModifier() const
 	{
-		return Gene != null && Gene.Modifier != null;
+		if (Gene == null)
+			return false;
+
+		return Gene.GetType() is 'BIO_ModifierGene';
 	}
 
 	class<BIO_Gene> GetGeneType() const
@@ -57,7 +61,8 @@ class BIO_WeaponModSimNode
 		if (mod == null)
 			return false;
 
-		return mod.RepeatRules() != BIO_WMODREPEATRULES_NONE;
+		let defs = GetDefaultByType(mod.GeneType());
+		return defs.RepeatRules != BIO_WMODREPEATRULES_NONE;
 	}
 
 	bool Repeating() const
@@ -68,19 +73,14 @@ class BIO_WeaponModSimNode
 	string GetTag() const
 	{
 		let gene_t = Gene.GetType();
-
-		if (gene_t is 'BIO_ModifierGene')
-		{
-			return Gene.Modifier.GetTag();
-		}
-		else
-		{
-			let defs = GetDefaultByType(gene_t);
-			return defs.GetTag();
-		}
+		let defs = GetDefaultByType(gene_t);
+		return defs.GetTag();
 	}
 
-	bool, string Compatible(readOnly<BIO_WeaponModSimulator> sim) const
+	bool, string Compatible(
+		readOnly<BIO_WeaponModSimulator> sim,
+		BIO_GeneContext context
+	) const
 	{
 		if (Gene == null)
 		{
@@ -98,7 +98,26 @@ class BIO_WeaponModSimNode
 
 		if (gene_t is 'BIO_ModifierGene')
 		{
-			[ret1, ret2] = Gene.Modifier.Compatible(sim.GetWeapon(), Multiplier);
+			let mod = Gene.Modifier;
+			let defs = GetDefaultByType((class<BIO_ModifierGene>)(gene_t));
+
+			switch (defs.RepeatRules)
+			{
+			case BIO_WMODREPEATRULES_NONE:
+			case BIO_WMODREPEATRULES_EXTERNAL:
+				context.NodeCount = 1;
+			case BIO_WMODREPEATRULES_INTERNAL:
+				break;
+			default:
+				Console.Printf(
+					Biomorph.LOGPFX_ERR ..
+					"Invalid repeat rules returned by modifier: %s",
+					mod.GetClassName()
+				);
+				break;
+			}
+
+			[ret1, ret2] = mod.Compatible(context);
 		}
 		else if (gene_t is 'BIO_SupportGene')
 		{
@@ -133,10 +152,9 @@ class BIO_WeaponModSimNode
 			Gene.UpdateModifier();
 	}
 
-	void Apply(
-		BIO_Weapon weap,
-		BIO_WeaponModSimulator sim,
-		in out Array<BIO_WeaponModSimNode> nodes
+	string Apply(
+		BIO_Weapon weap, BIO_WeaponModSimulator sim,
+		in out BIO_GeneContext context
 	) const
 	{
 		if (Gene == null)
@@ -146,26 +164,36 @@ class BIO_WeaponModSimNode
 				"Attempted to apply node %d, which lacks a gene.",
 				Basis.UUID
 			);
-			return;
+			return "";
 		}
 
+		string ret = "";
 		let gene_t = Gene.GetType();
 
 		if (gene_t is 'BIO_ModifierGene')
 		{
 			let mod = Gene.Modifier;
+			let defs = GetDefaultByType((class<BIO_ModifierGene>)(gene_t));
 
-			switch (mod.RepeatRules())
+			switch (defs.RepeatRules)
 			{
 			case BIO_WMODREPEATRULES_NONE:
-				mod.Apply(weap, 1);
+				context.NodeCount = 1;
+				ret = mod.Apply(weap, context);
 				break;
 			case BIO_WMODREPEATRULES_INTERNAL:
-				mod.Apply(weap, Multiplier);
+				ret = mod.Apply(weap, context);
 				break;
 			case BIO_WMODREPEATRULES_EXTERNAL:
+				context.NodeCount = 1;
+
 				for (uint i = 0; i < Multiplier; i++)
-					mod.Apply(weap, 1);
+				{
+					let msg = mod.Apply(weap, context);
+
+					if (msg.Length() > 0)
+						ret = msg;
+				}
 
 				break;
 			default:
@@ -181,14 +209,16 @@ class BIO_WeaponModSimNode
 		{
 			let sgene_t = (class<BIO_SupportGene>)(gene_t);
 			let defs = GetDefaultByType(sgene_t);
-			defs.Apply(sim.AsConst(), Basis.UUID);
+			ret = defs.Apply(sim.AsConst(), Basis.UUID);
 		}
 		else if (gene_t is 'BIO_ActiveGene')
 		{
 			let agene_t = (class<BIO_ActiveGene>)(gene_t);
 			let defs = GetDefaultByType(agene_t);
-			defs.Apply(weap, sim, Basis.UUID);
+			ret = defs.Apply(weap, sim, Basis.UUID);
 		}
+
+		return ret;
 	}
 }
 
@@ -201,48 +231,29 @@ class BIO_WeaponModSimGene abstract
 
 	string GetSummaryTooltip() const
 	{
-		let gene_t = GetType();
-
-		let ret = String.Format(
-			"\c[White]%s\n",
-			gene_t is 'BIO_ModifierGene' ?
-			 	StringTable.Localize(Modifier.GetTag()) :
-				StringTable.Localize(GetDefaultByType(GetType()).GetTag())
+		let defs = GetDefaultByType(GetType());
+		return String.Format("\c[White]%s\n\n%s",
+			defs.GetTag(),
+			StringTable.Localize(defs.Summary)
 		);
-
-		Array<string> summary;
-
-		if (gene_t is 'BIO_ModifierGene')
-			Modifier.Summary(summary);
-		else if (gene_t is 'BIO_SupportGene')
-			GetDefaultByType((class<BIO_SupportGene>)(gene_t)).Summary(summary);
-		else if (gene_t is 'BIO_ActiveGene')
-			GetDefaultByType((class<BIO_ActiveGene>)(gene_t)).Summary(summary);
-
-		for (uint i = 0; i < summary.Size(); i++)
-			ret.AppendFormat("\n%s", StringTable.Localize(summary[i]));
-
-		return ret;
 	}
 
-	string GetDescriptionTooltip(readOnly<BIO_Weapon> weap, uint count) const
+	string GetDescriptionTooltip(
+		readOnly<BIO_Weapon> weap,
+		in out BIO_GeneContext context
+	) const
 	{
 		let gene_t = GetType();
 
 		if (gene_t is 'BIO_ModifierGene')
 		{
-			let ret = String.Format(
-				"\c[White]%s\n",
-				StringTable.Localize(GetDefaultByType(gene_t).GetTag())
+			let defs = GetDefaultByType((class<BIO_ModifierGene>)(gene_t));
+
+			return String.Format(
+				"\c[White]%s\n\n%s",
+				defs.GetTag(),
+				StringTable.Localize(Modifier.Description(context))
 			);
-
-			Array<string> desc;
-			Modifier.Description(desc, weap, count);
-
-			for (uint i = 0; i < desc.Size(); i++)
-				ret.AppendFormat("\n%s", StringTable.Localize(desc[i]));
-
-			return ret;
 		}
 		else
 		{
@@ -259,6 +270,7 @@ class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
 
 	final override void UpdateModifier()
 	{
+		// Explicitly check for this case, since it should never happen
 		if (Gene == null)
 		{
 			Console.Printf(
@@ -286,6 +298,7 @@ class BIO_WeaponModSimGeneVirtual : BIO_WeaponModSimGene
 
 	final override void UpdateModifier()
 	{
+		// Explicitly check for this case, since it should never happen
 		if (Type == null)
 		{
 			Console.Printf(
@@ -526,19 +539,28 @@ class BIO_WeaponModSimulator : Thinker
 		{
 			Nodes[i].Multiplier = 1;
 			Nodes[i].Valid = true;
+			Nodes[i].Message = "";
 		}
 
 		// Second pass invokes supports
 
 		for (uint i = 1; i < Nodes.Size(); i++)
-		{			
-			if (!(Nodes[i].GetGeneType() is 'BIO_SupportGene'))
+		{
+			let gene_t = Nodes[i].GetGeneType();
+
+			if (!(gene_t is 'BIO_SupportGene'))
 				continue;
 
 			let node = Nodes[i];
 
+			BIO_GeneContext context;
+			context.Weap = Weap.AsConst();
+			context.NodeCount = node.Multiplier;
+			context.TotalCount = CountGene(gene_t);
+			context.First = NodeHasFirstOfGene(i, gene_t);
+
 			string _ = "";
-			[node.Valid, _] = node.Compatible(AsConst());
+			[node.Valid, _] = node.Compatible(AsConst(), context);
 
 			if (!node.Valid)
 			{
@@ -546,20 +568,28 @@ class BIO_WeaponModSimulator : Thinker
 				continue;
 			}
 
-			node.Apply(Weap, self, Nodes);
+			node.Message = node.Apply(Weap, self, context);
 		}
 
 		// Third pass applies modifiers
 
 		for (uint i = 1; i < Nodes.Size(); i++)
 		{
-			if (!(Nodes[i].GetGeneType() is 'BIO_ModifierGene'))
+			let gene_t = Nodes[i].GetGeneType();
+
+			if (!(gene_t is 'BIO_ModifierGene'))
 				continue;
 
 			let node = Nodes[i];
 			string _ = "";
 
-			[node.Valid, _] = node.Compatible(AsConst());
+			BIO_GeneContext context;
+			context.Weap = Weap.AsConst();
+			context.NodeCount = node.Multiplier;
+			context.TotalCount = CountGene(gene_t);
+			context.First = NodeHasFirstOfGene(i, gene_t);
+
+			[node.Valid, _] = node.Compatible(AsConst(), context);
 
 			if (!node.Valid)
 			{
@@ -567,7 +597,7 @@ class BIO_WeaponModSimulator : Thinker
 				continue;
 			}
 
-			node.Apply(Weap, self, Nodes);
+			node.Message = node.Apply(Weap, self, context);
 		}
 	}
 
@@ -818,11 +848,17 @@ class BIO_WeaponModSimulator : Thinker
 
 		let n = Nodes[node];
 
+		BIO_GeneContext context;
+		context.Weap = Weap.AsConst();
+		context.NodeCount = n.Multiplier;
+		context.TotalCount = CountGene(n.GetGeneType());
+		context.First = NodeHasFirstOfGene(node, n.GetGeneType());
+
 		if (!n.Valid)
 		{
 			bool _ = false;
 			string reason = "";
-			[_, reason] = n.Compatible(AsConst());
+			[_, reason] = n.Compatible(AsConst(), context);
 
 			return String.Format(
 				StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
@@ -831,7 +867,7 @@ class BIO_WeaponModSimulator : Thinker
 			);
 		}
 
-		return Nodes[node].Gene.GetDescriptionTooltip(Weap.AsConst(), n.Multiplier);
+		return Nodes[node].Gene.GetDescriptionTooltip(Weap.AsConst(), context);
 	}
 
 	string GetGeneSlotTooltip(uint slot) const
@@ -873,6 +909,18 @@ class BIO_WeaponModSimulator : Thinker
 		return ret;
 	}
 
+	// Includes a node's multiplier.
+	uint CountGene(class<BIO_Gene> type) const
+	{
+		uint ret = 0;
+
+		for (uint i = 0; i < Nodes.Size(); i++)
+			if (Nodes[i].GetGeneType() == type)
+				ret += Nodes[i].Multiplier;
+
+		return ret;
+	}
+
 	// If `node` is `false`, test `Genes[gene]` instead of `Nodes[gene]`.
 	bool TestDuplicateAllowance(uint gene, bool node) const
 	{
@@ -907,21 +955,8 @@ class BIO_WeaponModSimulator : Thinker
 			toTest = Genes[gene];
 		}
 
-		for (uint i = 0; i < Nodes.Size(); i++)
-		{
-			let mod = Nodes[i].GetModifier();
-
-			if (mod == null)
-				continue;
-
-			if (mod.AllowMultiple())
-				continue;
-
-			if (mod.GetClass() == toTest.Modifier.GetClass())
-				return false;
-		}
-
-		return true;
+		let defs = GetDefaultByType(toTest.GetType());
+		return CountGene(toTest.GetType()) < defs.Limit;
 	}
 
 	// Returns `false` if there's no gene to remove, or if removing the gene
@@ -1060,6 +1095,23 @@ class BIO_WeaponModSimulator : Thinker
 
 		while (Genes.Size() < BIO_Player(weap.Owner).MaxGenesHeld)
 			Genes.Push(null);
+	}
+
+	private bool NodeHasFirstOfGene(uint node, class<BIO_Gene> type) const
+	{
+		if (Nodes[node].GetGeneType() != type)
+			return false;
+
+		bool ret = true;
+		Array<uint> nodesWithGene;
+
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			if (Nodes[i].GetGeneType() == type)
+				nodesWithGene.Push(i);
+		}
+
+		return nodesWithGene[0] == node;
 	}
 
 	// Miscellaneous ///////////////////////////////////////////////////////////

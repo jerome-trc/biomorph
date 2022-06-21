@@ -3,6 +3,13 @@ class BIO_Gene : Inventory abstract
 	meta uint LootWeight;
 	property LootWeight: LootWeight;
 
+	meta uint Limit;
+	property Limit: Limit;
+
+	// Explains in short-form and without context what the modifier does.
+	meta string Summary;
+	property Summary: Summary;
+
 	Default
 	{
 		-COUNTITEM
@@ -11,11 +18,13 @@ class BIO_Gene : Inventory abstract
 		+INVENTORY.INVBAR // Just for the sake of being able to drop them
 
 		Tag "$BIO_GENE_TAG";
-		Inventory.PickupMessage "$BIO_GENE_PKUP";
-
 		Height 16;
         Radius 20;
 		Scale 0.75;
+
+		Inventory.PickupMessage "$BIO_GENE_PKUP";
+
+		BIO_Gene.Limit uint16.MAX;
 	}
 
 	override void PostBeginPlay()
@@ -56,6 +65,14 @@ class BIO_ModifierGene : BIO_Gene abstract
 {
 	meta class<BIO_WeaponModifier> ModType;
 	property ModType: ModType;
+
+	meta BIO_WeapModRepeatRules RepeatRules;
+	property RepeatRules: RepeatRules;
+
+	Default
+	{
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+	}
 }
 
 // Support genes have effects on other nodes, rather than imparting a modifier.
@@ -66,12 +83,10 @@ class BIO_SupportGene : BIO_Gene abstract
 		uint node
 	) const;
 
-	abstract void Apply(
+	abstract string Apply(
 		readOnly<BIO_WeaponModSimulator> sim,
 		uint node
 	) const;
-
-	abstract void Summary(in out Array<string> strings) const;
 }
 
 // Active genes do something to the graph upon being committed, sometimes
@@ -83,13 +98,11 @@ class BIO_ActiveGene : BIO_Gene abstract
 		uint node
 	) const;
 
-	abstract void Apply(
+	abstract string Apply(
 		BIO_Weapon weap,
 		BIO_WeaponModSimulator sim,
 		uint node
 	) const;
-
-	abstract void Summary(in out Array<string> strings) const;
 }
 
 // General symbolic constants for loot weights, kept in one place.
