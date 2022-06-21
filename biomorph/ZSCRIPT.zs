@@ -60,6 +60,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/modifiers/base.zs"
 #include "zscript/biomorph/weapons/modifiers/ammo.zs"
 #include "zscript/biomorph/weapons/modifiers/damage.zs"
+#include "zscript/biomorph/weapons/modifiers/timing.zs"
 
 #include "zscript/biomorph/weapons/single/ralauncher.zs"
 #include "zscript/biomorph/weapons/single/auto_shotgun.zs"

@@ -803,6 +803,40 @@ extend class BIO_Weapon
 		return true;
 	}
 
+	bool FireTimesReducible() const
+	{
+		// State sequences can't have all of their tic times reduced to 0.
+		// Fire rate-affecting affixes must know in advance if
+		// they can even have any effect, given this caveat.
+		for (uint i = 0; i < FireTimeGroups.Size(); i++)
+			if (FireTimeGroups[i].PossibleReduction() > 1)
+				return true;
+
+		return false;
+	}
+
+	bool FireTimesMutable() const
+	{
+		return FireTimeGroups.Size() > 0 && FireTimesReducible();
+	}
+
+	bool ReloadTimesReducible() const
+	{
+		// State sequences can't have all of their tic times reduced to 0.
+		// Reload speed-affecting affixes must know in advance if
+		// they can even have any effect, given this caveat.
+		for (uint i = 0; i < ReloadTimeGroups.Size(); i++)
+			if (ReloadTimeGroups[i].PossibleReduction() > 1)
+				return true;
+
+		return false;
+	}
+
+	bool ReloadTimesMutable() const
+	{
+		return ReloadTimeGroups.Size() > 0 && ReloadTimesReducible();
+	}
+
 	private bool ScavengingDestroys() const
 	{
 		return

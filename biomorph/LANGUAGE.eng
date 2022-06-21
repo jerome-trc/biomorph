@@ -233,15 +233,23 @@
 
 	BIO_WMOD_INCOMPAT_TEMPLATE = "\c[White]%s\n\n\c[Yellow]Incompatible:\c[Gold]\n%s";
 
-	BIO_WMOD_INCOMPAT_NODAMAGE = "This weapon deals no damage.";
 	BIO_WMOD_INCOMPAT_AMMOLESS = "This weapon doesn't use ammunition.";
-	BIO_WMOD_INCOMPAT_NOMAGAZINE =
-		"No valid primary or secondary magazine,\n"
-		"or no reserve ammo type.";
 	BIO_WMOD_INCOMPAT_ETMF =
 		"This weapon doesn't use ammunition,\n"
 		"doesn't fire real matter, or is\n"
 		"otherwise unsuited to energy-to-matter conversion.";
+	BIO_WMOD_INCOMPAT_MINFIRETIMES =
+		"This weapon can't fire any faster than it already does.";
+	BIO_WMOD_INCOMPAT_NOFIRETIMES =
+		"This weapon has no modifiable fire timings.";
+	BIO_WMOD_INCOMPAT_MINRELOADTIMES =
+		"This weapon can't reload any faster than it already does.";
+	BIO_WMOD_INCOMPAT_NORELOADTIMES =
+		"This weapon has no modifiable reload timings.";
+	BIO_WMOD_INCOMPAT_NODAMAGE = "This weapon deals no damage.";
+	BIO_WMOD_INCOMPAT_NOMAGAZINE =
+		"No valid primary or secondary magazine,\n"
+		"or no reserve ammo type.";
 
 	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]20% of minimum damage added";
 	BIO_WMOD_DAMAGEADD_DESC = "\c[White]Damage%s: \c[Green]+%d";
@@ -254,11 +262,18 @@
 	BIO_WMOD_ETMF_DESC =
 		"\c[White]Consumes %d cells for %.1f second(s) of free firing";
 
+	BIO_WMOD_FIRETIME_SUMM = "\c[Green]Increased fire rates";
+	BIO_WMOD_FIRETIME_DESC = "\c[White]Fire time%s: \c[Green]%.2f seconds";
+
 	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
 
 	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
+
+	BIO_WMOD_RELOADTIME_SUMM =
+		"\c[Green]Increased reload speeds";
+	BIO_WMOD_RELOADTIME_DESC = "\c[White]Reload time%s: \c[Green]%.2f seconds";
 
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
@@ -294,11 +309,17 @@
 	BIO_MGENE_ETMF_TAG = "\c[Ice]Energy-to-Matter Feed\c[White] Gene\c-";
 	BIO_MGENE_ETMF_PKUP = "Collected a \c[Ice]Energy-to-matter Feed\c[White] gene\c-.";
 
+	BIO_MGENE_FIRETIME_TAG = "\c[Ice]Rapid Refire\c[White] Gene\c-";
+	BIO_MGENE_FIRETIME_PKUP = "\c[Ice]Collected a \c[Ice]Rapid Refire\c[White] gene\c-.";
+
 	BIO_MGENE_INFINITEAMMO_TAG = "\c[Ice]Ammo Apparition\c[White] Gene\c-";
 	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an \c[Ice]Ammo Apparition\c[White] gene\c-.";
 
 	BIO_MGENE_MAGSIZE_TAG = "\c[Ice]High-Capacity\c[White] Gene\c-";
 	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Ice]High-Capacity\c[White] gene\c-.";
+
+	BIO_MGENE_RELOADTIME_TAG = "\c[Ice]Ergonomic\c[White] Gene\c-";
+	BIO_MGENE_RELOADTIME_PKUP = "Collected an \c[Ice]Ergonomic\c[White] gene\c-.";
 
 	BIO_MGENE_RESERVEFEED_TAG = "\c[Ice]Ammochain\c[White] Gene";
 	BIO_MGENE_RESERVEFEED_PKUP = "Collected an \c[Ice]Ammochain\c[White] gene\c-.";

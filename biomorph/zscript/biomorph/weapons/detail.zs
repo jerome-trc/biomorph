@@ -112,7 +112,7 @@ class BIO_StateTimeGroup
 	}
 
 	// Used for checking if fire/reload time modifications are possible,
-	// and the allowances on any reductions made.
+	// and the allowances on any reductions made. Returns a positive number.
 	uint PossibleReduction() const
 	{
 		uint ret = 0;
