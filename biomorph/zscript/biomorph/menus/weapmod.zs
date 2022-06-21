@@ -210,13 +210,6 @@ extend class BIO_WeaponModMenu
 			DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 			DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true
 		);
-		Screen.DrawText(SmallFont, Font.CR_WHITE,
-			NodeDrawState[0].DrawPos.X + (VIRT_W * 0.03),
-			NodeDrawState[0].DrawPos.Y + (VIRT_H * 0.04),
-			String.Format("%d", Simulator.Nodes[0].Basis.UUID + 1),
-			DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
-			DTA_KEEPRATIO, true
-		);
 
 		// Non-home nodes; frames, icons, order numbers
 
@@ -285,7 +278,7 @@ extend class BIO_WeaponModMenu
 			Screen.DrawText(SmallFont, Font.CR_WHITE,
 				NodeDrawState[i].DrawPos.X + (VIRT_W * 0.03),
 				NodeDrawState[i].DrawPos.Y + (VIRT_H * 0.04),
-				String.Format("%d", Simulator.Nodes[i].Basis.UUID + 1),
+				String.Format("%d", Simulator.Nodes[i].Basis.UUID),
 				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 				DTA_KEEPRATIO, true
 			);
