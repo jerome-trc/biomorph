@@ -277,14 +277,34 @@
 
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
-// Weapon modifier supports (tags, summaries) //////////////////////////////////
+// Weapon modifier supports (summaries, incompatibility explanations) //////////
+
+	BIO_MODSUP_INCOMPAT_NONODEEAST = "No node to the east.";
+	BIO_MODSUP_INCOMPAT_NOMODEAST = "No modifier in the eastern node.";
 
 	BIO_MODSUP_INCOMPAT_NONODENORTH = "No node to the north.";
 	BIO_MODSUP_INCOMPAT_NOMODNORTH = "No modifier in the northern node.";
 
-	BIO_MODSUP_ADDNORTH_TAG = "\c[SGene]N1 Regulator\c-";
+	BIO_MODSUP_INCOMPAT_NONODESOUTH = "No node to the south.";
+	BIO_MODSUP_INCOMPAT_NOMODSOUTH = "No modifier in the southern node.";
+
+	BIO_MODSUP_INCOMPAT_NONODEWEST = "No node to the west.";
+	BIO_MODSUP_INCOMPAT_NOMODWEST = "No modifier in the western node.";
+
+	BIO_MODSUP_ADDEAST_SUMM =
+		"\c[Green]Modifier in node to east is applied one extra time\n"
+		"\c[White]Node does not need to be connected";
+
 	BIO_MODSUP_ADDNORTH_SUMM =
 		"\c[Green]Modifier in node to north is applied one extra time\n"
+		"\c[White]Node does not need to be connected";
+
+	BIO_MODSUP_ADDSOUTH_SUMM =
+		"\c[Green]Modifier in node to south is applied one extra time\n"
+		"\c[White]Node does not need to be connected";
+
+	BIO_MODSUP_ADDWEST_SUMM =
+		"\c[Green]Modifier in node to west is applied one extra time\n"
 		"\c[White]Node does not need to be connected";
 
 // Mutagens (tags, pickup and usage strings) ///////////////////////////////////
@@ -326,8 +346,17 @@
 
 	// Support
 
+	BIO_SGENE_ADDEAST_TAG = "\c[SGene]E1 Regulator\c[White] Gene\c-";
+	BIO_SGENE_ADDEAST_PKUP = "Collected an \c[SGene]E1 regulator\c[White] gene\c-.";
+
 	BIO_SGENE_ADDNORTH_TAG = "\c[SGene]N1 Regulator\c[White] Gene\c-";
-	BIO_SGENE_ADDNORTH_PKUP = "Collected an \c[SGene]N1\ regulator\c[White] gene\c-.";
+	BIO_SGENE_ADDNORTH_PKUP = "Collected an \c[SGene]N1 regulator\c[White] gene\c-.";
+
+	BIO_SGENE_ADDSOUTH_TAG = "\c[SGene]S1 Regulator\c[White] Gene\c-";
+	BIO_SGENE_ADDSOUTH_PKUP = "Collected an \c[SGene]S1 regulator\c[White] gene\c-.";
+
+	BIO_SGENE_ADDWEST_TAG = "\c[SGene]W1 Regulator\c[White] Gene\c-";
+	BIO_SGENE_ADDWEST_PKUP = "Collected an \c[SGene]W1 regulator\c[White] gene\c-.";
 
 // Menu, weapon modification ///////////////////////////////////////////////////
 
