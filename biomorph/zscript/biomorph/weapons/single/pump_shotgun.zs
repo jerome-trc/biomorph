@@ -61,6 +61,13 @@ class BIO_PumpShotgun : BIO_Weapon
 			'Reload.Prep.Refires'
 		);
 		Goto Ready;
+	Dryfire:
+		SHTG A 1 Offset(0, 32 + 1);
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 3) A_StartSound("bio/weap/dryfire/ballistic");
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 1);
+		Goto Ready;
 	Flash:
 		SHTF A 4 Bright
 		{

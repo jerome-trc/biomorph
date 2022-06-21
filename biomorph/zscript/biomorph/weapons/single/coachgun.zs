@@ -83,6 +83,13 @@ class BIO_Coachgun : BIO_Weapon
 		}
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
+	Dryfire:
+		SHT2 A 1 Offset(0, 32 + 1);
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 3) A_StartSound("bio/weap/dryfire/ballistic");
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 1);
+		Goto Ready;
 	Flash:
 		SHT2 I 4 Bright A_Light(1);
 		SHT2 J 3 Bright A_Light(2);

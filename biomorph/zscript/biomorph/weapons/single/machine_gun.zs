@@ -55,6 +55,13 @@ class BIO_MachineGun : BIO_Weapon
 		GPMG A 1 Fast A_BIO_SetFireTime(3);
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
+	Dryfire:
+		GPMG A 1 Offset(0, 32 + 1);
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 3) A_StartSound("bio/weap/dryfire/ballistic");
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 1);
+		Goto Ready;
 	Flash:
 		GPMG D 1 Bright A_Light(1);
 		GPMG E 1 Bright A_Light(2);

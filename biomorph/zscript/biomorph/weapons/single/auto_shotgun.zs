@@ -60,6 +60,13 @@ class BIO_AutoShotgun : BIO_Weapon
 		}
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
+	Dryfire:
+		AUSG A 1 Offset(0, 32 + 1);
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 3) A_StartSound("bio/weap/dryfire/ballistic");
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 1);
+		Goto Ready;
 	Flash:
 		TNT1 A 3
 		{

@@ -54,6 +54,13 @@ class BIO_Microvulcan : BIO_Weapon
 		CHGG B 0 A_ReFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
+	Dryfire:
+		CHGG A 1 Offset(0, 32 + 1);
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 3) A_StartSound("bio/weap/dryfire/ballistic");
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 1);
+		Goto Ready;
 	Flash:
 		CHGF A 5 Bright
 		{

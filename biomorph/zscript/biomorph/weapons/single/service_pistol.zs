@@ -53,6 +53,13 @@ class BIO_ServicePistol : BIO_Weapon
 		PISG B 5 A_BIO_SetFireTime(3);
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
+	Dryfire:
+		PISG A 1 Offset(0, 32 + 1);
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 3) A_StartSound("bio/weap/dryfire/ballistic");
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 1);
+		Goto Ready;
 	Flash:
 		PISF A 7 Bright
 		{

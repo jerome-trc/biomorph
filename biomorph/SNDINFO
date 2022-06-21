@@ -23,6 +23,17 @@ $random bio/mutation/general
 
 // Common
 
+bio/weap/dryfire/ballistic/0 DRY_BAL0
+bio/weap/dryfire/ballistic/1 DRY_BAL1
+bio/weap/dryfire/ballistic/2 DRY_BAL2
+
+$random bio/weap/dryfire/ballistic
+{
+	bio/weap/dryfire/ballistic/0
+	bio/weap/dryfire/ballistic/1
+	bio/weap/dryfire/ballistic/2
+}
+
 bio/weap/etmf NRG2MATR
 
 // Service Pistol

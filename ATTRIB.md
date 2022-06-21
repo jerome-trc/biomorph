@@ -72,6 +72,8 @@ ARMRBON is courtesy of id Software LLC.
 
 ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) (USRINPT0, pitched down for USRINPUT1) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/) is licensed under Creative Commons Attribution 3.0 Unported.
 
+["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) (DRY_BAL0 through 2) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi) is licensed under Creative Commons 0.
+
 VOLLFIRE is courtesy of [Kentucky Ballistics](https://www.youtube.com/watch?v=8gIS2n-bY1w).
 
 ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) (USRFAIL0, edited for a 20% speed increase) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/) is licensed under Creative Commons 0.

@@ -81,6 +81,13 @@ class BIO_VolleyGun : BIO_Weapon
 		}
 		TNT1 A 0 A_BIO_AutoReload(multi: 2);
 		Goto Ready;
+	Dryfire:
+		VOLL A 1 Offset(0, 32 + 1);
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 3) A_StartSound("bio/weap/dryfire/ballistic");
+		#### # 1 Offset(0, 32 + 2);
+		#### # 1 Offset(0, 32 + 1);
+		Goto Ready;
 	Reload:
 		TNT1 A 0
 		{
