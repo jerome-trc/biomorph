@@ -15,13 +15,13 @@ class BIO_WeaponModSimNode
 	bool Valid;
 	string Message;
 
-	BIO_WeaponUpgradeRecipe Upgrade;
+	BIO_WeaponMorphRecipe MorphRecipe;
 
 	// Accessors ///////////////////////////////////////////////////////////////
 
 	bool IsOccupied() const { return Gene != null; }
 	bool IsActive() const { return IsOccupied() || Basis.UUID == 0; }
-	bool IsUpgrade() const { return Upgrade != null; }
+	bool IsMorph() const { return MorphRecipe != null; }
 
 	BIO_WeaponModifier GetModifier() const
 	{
@@ -48,8 +48,8 @@ class BIO_WeaponModSimNode
 
 		if (Gene != null)
 			ret = GetDefaultByType(Gene.GetType()).Icon;
-		else if (Upgrade != null)
-			ret = GetDefaultByType(Upgrade.GetOutput()).Icon;
+		else if (MorphRecipe != null)
+			ret = GetDefaultByType(MorphRecipe.Output()).Icon;
 
 		return ret;
 	}
@@ -77,7 +77,7 @@ class BIO_WeaponModSimNode
 		return defs.GetTag();
 	}
 
-	bool HasTooltip() const { return IsOccupied() || IsUpgrade(); }
+	bool HasTooltip() const { return IsOccupied() || IsMorph(); }
 
 	bool, string Compatible(
 		readOnly<BIO_WeaponModSimulator> sim,
@@ -408,16 +408,16 @@ class BIO_WeaponModSimulator : Thinker
 		}
 
 		let globals = BIO_Global.Get();
-		Array<BIO_WeaponUpgradeRecipe> upgrades;
-		globals.GetUpgradesFromWeaponType(Weap.GetClass(), upgrades);
+		Array<BIO_WeaponMorphRecipe> recipes;
+		globals.GetMorphsFromWeaponType(Weap.GetClass(), recipes);
 
-		for (uint i = 0; i < upgrades.Size(); i++)
+		for (uint i = 0; i < recipes.Size(); i++)
 		{
 			let simNode = new('BIO_WeaponModSimNode');
 			simNode.Basis = new('BIO_WMGNode');
 			[simNode.Basis.PosX, simNode.Basis.PosY] =
 				graph.RandomAvailableAdjacency();
-			simNode.Upgrade = upgrades[i];
+			simNode.MorphRecipe = recipes[i];
 			simNode.Basis.UUID = ret.Nodes.Push(simNode);
 		}
 
@@ -653,7 +653,7 @@ class BIO_WeaponModSimulator : Thinker
 
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			if (Nodes[i].IsUpgrade())
+			if (Nodes[i].IsMorph())
 				break;
 
 			Nodes[i].Basis.GeneType = Nodes[i].GetGeneType();
@@ -863,14 +863,15 @@ class BIO_WeaponModSimulator : Thinker
 
 	string GetNodeTooltip(uint node) const
 	{
-		if (Nodes[node].IsUpgrade())
+		if (Nodes[node].IsMorph())
 		{
-			let upgr = Nodes[node].Upgrade;
+			let morph = Nodes[node].MorphRecipe;
 
 			return String.Format(
-				StringTable.Localize("$BIO_MENU_WEAPMOD_UPGRADE"),
-				GetDefaultByType(upgr.GetOutput()).ColoredTag(),
-				upgr.MutagenCost(),
+				StringTable.Localize("$BIO_MENU_WEAPMOD_MORPH"),
+				GetDefaultByType(morph.Output()).ColoredTag(),
+				morph.RequirementString(),
+				MorphCost(node),
 				GetDefaultByType('BIO_Muta_General').GetTag()
 			);
 		}
@@ -906,6 +907,20 @@ class BIO_WeaponModSimulator : Thinker
 
 	// Other introspective helpers /////////////////////////////////////////////
 
+	uint GeneValue() const
+	{
+		if (Weap.ModCostMultiplier <= 0)
+			return 0;
+
+		uint ret = 0;
+
+		for (uint i = 0; i < Nodes.Size(); i++)
+			if (Nodes[i].IsOccupied())
+				ret += Weap.ModCostMultiplier;
+
+		return ret;
+	}
+
 	uint CommitCost() const
 	{
 		if (Weap.ModCostMultiplier <= 0)
@@ -926,6 +941,15 @@ class BIO_WeaponModSimulator : Thinker
 		return ret;
 	}
 
+	uint MorphCost(uint node) const
+	{
+		uint ret = GeneValue() + CommitCost();
+		let morph = Nodes[node].MorphRecipe;
+		ret *= morph.MutagenCostMultiplier();
+		ret += morph.MutagenCostAdded();
+		return ret;
+	}
+
 	class<BIO_Gene> GetGeneType(uint gene, bool node) const
 	{
 		class<BIO_Gene> ret = null;
@@ -936,6 +960,30 @@ class BIO_WeaponModSimulator : Thinker
 			ret = Genes[gene].GetType();
 
 		return ret;
+	}
+
+	bool HasModifierWithFlags(BIO_WeaponModFlags flags, uint count = 1,
+		bool ignoreMultiplier = true) const
+	{
+		uint c = 0;
+
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			let mod = Nodes[i].GetModifier();
+
+			if (mod == null)
+				continue;
+
+			if ((mod.Flags() & flags) == flags)
+			{
+				if (ignoreMultiplier)
+					c++;
+				else
+					c += Nodes[i].Multiplier;
+			}
+		}
+
+		return c >= count;
 	}
 
 	// Includes a node's multiplier.
@@ -1051,7 +1099,7 @@ class BIO_WeaponModSimulator : Thinker
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			if (!includeFake && Nodes[i].IsUpgrade())
+			if (!includeFake && Nodes[i].IsMorph())
 				continue;
 
 			if (Nodes[i].Basis.PosX == x && Nodes[i].Basis.PosY == y)
@@ -1083,7 +1131,7 @@ class BIO_WeaponModSimulator : Thinker
 	{
 		for (uint i = 1; i < Nodes.Size(); i++)
 		{
-			if (Nodes[i].IsUpgrade())
+			if (Nodes[i].IsMorph())
 				continue;
 
 			if (!Nodes[i].IsOccupied())

@@ -52,7 +52,7 @@ extend class BIO_EventHandler
 		WEAPMODOP_SIMULATE,
 		WEAPMODOP_COMMIT,
 		WEAPMODOP_REVERT,
-		WEAPMODOP_UPGRADE,
+		WEAPMODOP_MORPH,
 		WEAPMODOP_STOP
 	}
 
@@ -136,8 +136,8 @@ extend class BIO_EventHandler
 		case WEAPMODOP_REVERT:
 			BIO_WeaponModSimulator.Get(weap).Revert();
 			break;
-		case WEAPMODOP_UPGRADE:
-			WeapMod_Upgrade(pawn, uint(event.Args[1]));
+		case WEAPMODOP_MORPH:
+			WeapMod_Morph(pawn, uint(event.Args[1]));
 			break;
 		case WEAPMODOP_STOP:
 			BIO_WeaponModSimulator.Get(weap).Destroy();
@@ -201,22 +201,23 @@ extend class BIO_EventHandler
 		pawn.A_StartSound("bio/mutation/general");
 	}
 
-	private static void WeapMod_Upgrade(BIO_Player pawn, uint node)
+	private static void WeapMod_Morph(BIO_Player pawn, uint node)
 	{
 		let weap = BIO_Weapon(pawn.Player.ReadyWeapon);
 		let sim = BIO_WeaponModSimulator.Get(weap);
-		let upgr = sim.Nodes[node].Upgrade;
+		let cost = sim.MorphCost(node);
 
-		if (pawn.CountInv('BIO_Muta_General') < upgr.MutagenCost())
+		if (pawn.CountInv('BIO_Muta_General') < cost)
 		{
 			Console.Printf(
 				Biomorph.LOGPFX_ERR ..
-				"Player %s has insufficient mutagen to upgrade weapon %s.",
+				"Player %s has insufficient mutagen to morph weapon %s.",
 				pawn.Player.GetUserName(), weap.GetClassName()
 			);
 			return;
 		}
 
+		let morph = sim.Nodes[node].MorphRecipe;
 		Array<class<BIO_Gene> > toGive;
 		Array<Inventory> toDestroy;
 
@@ -246,12 +247,12 @@ extend class BIO_EventHandler
 		weap.Amount = 0;
 		weap.DepleteOrDestroy();
 
-		pawn.GiveInventory(upgr.GetOutput(), 1);
-		let upgraded = pawn.FindInventory(upgr.GetOutput());
+		pawn.GiveInventory(morph.Output(), 1);
+		let output = pawn.FindInventory(morph.Output());
 
-		pawn.TakeInventory('BIO_Muta_General', upgr.MutagenCost());
+		pawn.TakeInventory('BIO_Muta_General', cost);
 		pawn.A_StartSound("bio/mutation/general");
-		pawn.A_SelectWeapon(upgr.GetOutput());
+		pawn.A_SelectWeapon(morph.Output());
 	}
 }
 
@@ -595,11 +596,11 @@ extend class BIO_EventHandler
 		);
 	}
 
-	static clearscope void WeapModSim_Upgrade(uint node)
+	static clearscope void WeapModSim_Morph(uint node)
 	{
 		EventHandler.SendNetworkEvent(
 			EVENT_WEAPMOD,
-			WEAPMODOP_UPGRADE,
+			WEAPMODOP_MORPH,
 			node
 		);
 	}

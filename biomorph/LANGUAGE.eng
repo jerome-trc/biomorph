@@ -369,6 +369,12 @@
 	BIO_SGENE_ADDWEST_TAG = "\c[SGene]W1 Regulator\c[White] Gene\c-";
 	BIO_SGENE_ADDWEST_PKUP = "Collected an \c[SGene]W1 regulator\c[White] gene\c-.";
 
+// Weapon morph recipe requirement strings /////////////////////////////////////
+
+	BIO_WMR_REQ_FIRETIMEDEC_1 = "\c[White]- One fire rate increase";
+	BIO_WMR_REQ_MAGSIZEINC_1 = "\c[White]- One magazine size increase";
+	BIO_WMR_REQ_MAGSIZEINC_2 = "\c[White]- Two magazine size increases";
+
 // Menu, weapon modification ///////////////////////////////////////////////////
 
 	BIO_MENU_WEAPMOD_UNMUTATED =
@@ -388,8 +394,9 @@
 		"\c[White]Cost to commit: \c[Gold]%d";
 	BIO_MENU_WEAPMOD_NODUP =
 		"\c[Yellow]This gene can only be applied to this weapon once.";
-	BIO_MENU_WEAPMOD_UPGRADE =
-		"\c[LightBlue]Left click\c[Green] to upgrade this weapon to:\n%s\n\n"
+	BIO_MENU_WEAPMOD_MORPH =
+		"\c[LightBlue]Left click\c[Green] to metamorph this weapon to:\n%s\n\n"
+		"\c[Yellow]Requirements fulfilled:\n%s\n\n"
 		"\c[White]Cost:\c[Yellow] %d %s\n\n"
 		"\c[Gold]Will consume all genes in this tree!";
 	BIO_MENU_WEAPMOD_COMMITFAIL_MUTACOST =
@@ -398,12 +405,12 @@
 		"\c[Yellow] to commit these changes.";
 	BIO_MENU_WEAPMOD_EXTRACTFAIL_ORPHANNODES =
 		"\c[Yellow]Moving this gene would leave other nodes disconnected.";
-	BIO_MENU_WEAPMOD_UPGRADEFAIL_MUTACOST =
+	BIO_MENU_WEAPMOD_MORPHFAIL_MUTACOST =
 		"\c[Yellow]Insufficient "
 		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen"
-		"\c[Yellow] to perform this weapon upgrade.";
-	BIO_MENU_WEAPMOD_UPGRADEFAIL_INVALID =
-		"\c[Yellow]Upgrading isn't possible while any genes are "
+		"\c[Yellow] to perform this weapon metamorphosis.";
+	BIO_MENU_WEAPMOD_MORPHFAIL_INVALID =
+		"\c[Yellow]Metamorphosis isn't possible while any genes are "
 		"\c[Brick]incompatible\c[Yellow].";
 
 // Menu, game options //////////////////////////////////////////////////////////

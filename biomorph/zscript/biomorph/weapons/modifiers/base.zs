@@ -8,7 +8,7 @@ enum BIO_WeapModRepeatRules : uint8
 	BIO_WMODREPEATRULES_INTERNAL
 }
 
-// Currently only so that weapon upgrade recipes can check how many of a graph's
+// Currently only so that weapon morph recipes can check how many of a graph's
 // modifiers affect one particular facet of the weapon.
 enum BIO_WeaponModFlags : uint
 {

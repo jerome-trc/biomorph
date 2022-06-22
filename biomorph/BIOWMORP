@@ -1,0 +1,5 @@
+BIO_WMR_AutoShotgun
+	BIO_PumpShotgun
+
+BIO_WMR_VolleyGun
+	BIO_Coachgun

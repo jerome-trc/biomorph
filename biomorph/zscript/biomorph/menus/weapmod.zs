@@ -225,17 +225,12 @@ extend class BIO_WeaponModMenu
 
 		// Non-home nodes; frames, icons, order numbers
 
-		bool drawUpgrades = Simulator.IsFull();
-
 		for (uint i = 1; i < Simulator.Nodes.Size(); i++)
 		{
-			if (Simulator.Nodes[i].IsUpgrade())
+			if (Simulator.Nodes[i].IsMorph() &&
+				!Simulator.Nodes[i].MorphRecipe.Eligible(Simulator.AsConst()))
 			{
-				if (!drawUpgrades)
-					break;
-
-				if (!Simulator.Nodes[i].Upgrade.Eligible(Simulator.AsConst()))
-					continue;
+				continue;
 			}
 
 			let overlay = COLOR_NONE;
@@ -260,7 +255,7 @@ extend class BIO_WeaponModMenu
 				DTA_COLOROVERLAY, overlay
 			);
 
-			if (Simulator.Nodes[i].IsUpgrade())
+			if (Simulator.Nodes[i].IsMorph())
 			{
 				Screen.DrawTexture(Tex_NodeRing, false,
 					NodeDrawState[i].DrawPos.X, NodeDrawState[i].DrawPos.Y,
@@ -284,7 +279,7 @@ extend class BIO_WeaponModMenu
 				);
 			}
 
-			if (Simulator.Nodes[i].IsUpgrade())
+			if (Simulator.Nodes[i].IsMorph())
 				continue;
 
 			Screen.DrawText(SmallFont, Font.CR_WHITE,
@@ -603,14 +598,9 @@ extend class BIO_WeaponModMenu
 		Vector2 nodeSz;
 		[nodeSz.X, nodeSz.Y] = TexMan.GetSize(Tex_Node);
 
-		let graphFull = Simulator.IsFull();
-
 		for (uint i = 0; i < Simulator.Nodes.Size(); i++)
 		{
 			let node = Simulator.Nodes[i];
-
-			if (node.IsUpgrade() && !graphFull)
-				break;
 
 			NodeDrawState[i].DrawPos = (
 				(Size.X / 2) + (node.Basis.PosX * 72) + ViewPosition.X,
@@ -631,6 +621,12 @@ extend class BIO_WeaponModMenu
 					NodeDrawState[i].DrawPos.Y + (nodeSz.Y * 0.5)),
 					scrSz, Size, handleAspect: false
 				);
+
+			if (Simulator.Nodes[i].IsMorph() &&
+				!Simulator.Nodes[i].MorphRecipe.Eligible(Simulator.AsConst()))
+			{
+				continue;
+			}
 
 			if (MousePos.X > realTL.X && MousePos.X < realBR.X &&
 				MousePos.Y > realTL.Y && MousePos.Y < realBR.Y &&
@@ -727,8 +723,8 @@ extend class BIO_WeaponModMenu
 			return;
 		}
 
-		if (ValidHoveredNode() && Simulator.Nodes[HoveredNode].IsUpgrade())
-			TryRunWeaponUpgrade(HoveredNode);
+		if (ValidHoveredNode() && Simulator.Nodes[HoveredNode].IsMorph())
+			TryRunWeaponMorph(HoveredNode);
 	}
 
 	private void ReleaseDraggedGene()
@@ -878,15 +874,15 @@ extend class BIO_WeaponModMenu
 		BIO_EventHandler.WeapModSim_Revert();
 	}
 
-	private void TryRunWeaponUpgrade(uint node) const
+	private void TryRunWeaponMorph(uint node) const
 	{
-		let n = Simulator.Nodes[node];
-		let upgr = n.Upgrade;
-
 		let mutaC = Players[ConsolePlayer].MO.CountInv('BIO_Muta_General');
 
-		if (mutaC < upgr.MutagenCost())
+		if (mutaC < Simulator.MorphCost(node))
 		{
+			Console.Printf(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_MORPHFAIL_MUTACOST")
+			);
 			MenuSound("bio/ui/fail");
 			return;
 		}
@@ -894,13 +890,13 @@ extend class BIO_WeaponModMenu
 		if (!Simulator.IsValid())
 		{
 			Console.Printf(
-				StringTable.Localize("$BIO_MENU_WEAPMOD_UPGRADEFAIL_INVALID")
+				StringTable.Localize("$BIO_MENU_WEAPMOD_MORPHFAIL_INVALID")
 			);
 			MenuSound("bio/ui/fail");
 			return;
 		}
 
-		BIO_EventHandler.WeapModSim_Upgrade(node);
+		BIO_EventHandler.WeapModSim_Morph(node);
 		MenuSound("bio/mutation/general");
 		Close();
 	}
