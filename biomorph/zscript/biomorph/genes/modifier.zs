@@ -75,6 +75,7 @@ class BIO_MGene_FireTime : BIO_ModifierGene
 	{
 		Tag "$BIO_MGENE_FIRETIME_TAG";
 		Inventory.Icon 'GENTA0';
+		Inventory.PickupMessage "$BIO_MGENE_FIRETIME_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_Gene.Summary "$BIO_WMOD_FIRETIME_SUMM";
 		BIO_ModifierGene.ModType 'BIO_WMod_FireTime';
@@ -164,6 +165,7 @@ class BIO_MGene_ReloadTime : BIO_ModifierGene
 	{
 		Tag "$BIO_MGENE_RELOADTIME_TAG";
 		Inventory.Icon 'GENTB0';
+		Inventory.PickupMessage "$BIO_MGENE_RELOADTIME_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_Gene.Summary "$BIO_WMOD_RELOADTIME_SUMM";
 		BIO_ModifierGene.ModType 'BIO_WMod_ReloadTime';
@@ -173,7 +175,7 @@ class BIO_MGene_ReloadTime : BIO_ModifierGene
 	States
 	{
 	Spawn:
-		GENT A 6;
+		GENT B 6;
 		#### # 6 Bright Light("BIO_MutaGene_Orange");
 		Loop;
 	}
