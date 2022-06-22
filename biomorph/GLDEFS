@@ -52,6 +52,12 @@ pointlight BIO_MutaGene_Green
 	size 24
 }
 
+pointlight BIO_MutaGene_LightBlue
+{
+	color 0.78 0.78 1.0
+	size 24
+}
+
 pointlight BIO_MutaGene_Orange
 {
 	color 1.0 0.63 0.65

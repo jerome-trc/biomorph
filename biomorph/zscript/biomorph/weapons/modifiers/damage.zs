@@ -46,7 +46,6 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 		}
 
 		ret.DeleteLastCharacter();
-
 		return ret;
 	}
 

@@ -180,3 +180,25 @@ class BIO_MGene_ReloadTime : BIO_ModifierGene
 		Loop;
 	}
 }
+
+class BIO_MGene_Spread : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_SPREAD_TAG";
+		Inventory.Icon 'GENMA0';
+		Inventory.PickupMessage "$BIO_MGENE_SPREAD_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
+		BIO_Gene.Summary "$BIO_WMOD_SPREAD_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_Spread';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
+	}
+
+	States
+	{
+	Spawn:
+		GENM A 6;
+		#### # 6 Bright Light("BIO_MutaGene_LightBlue");
+		Loop;
+	}
+}
