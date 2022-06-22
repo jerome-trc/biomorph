@@ -12,3 +12,8 @@ defaultbind M "event bio_weapmodmenu"
 
 alias bio_help_ "event bio_help"
 alias bio_monsval_ "event bio_monsval"
+
+alias bio_weaplootregen_ "netevent bio_globalregen 0"
+alias bio_mutalootregen_ "netevent bio_globalregen 1"
+alias bio_genelootregen_ "netevent bio_globalregen 2"
+alias bio_morphregen_ "netevent bio_globalregen 3"

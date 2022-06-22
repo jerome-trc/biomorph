@@ -42,6 +42,14 @@ class BIO_EventHandler : EventHandler
 // Network event handling.
 extend class BIO_EventHandler
 {
+	enum GlobalRegen
+	{
+		GLOBALREGEN_WEAPLOOT,
+		GLOBALREGEN_MUTALOOT,
+		GLOBALREGEN_GENELOOT,
+		GLOBALREGEN_MORPH
+	}
+
 	enum WeapModOp
 	{
 		WEAPMODOP_START,
@@ -63,6 +71,10 @@ extend class BIO_EventHandler
 		// Normal gameplay events
 
 		NetEvent_WeapMod(event);
+
+		// Debugging events
+
+		NetEvent_GlobalDataRegen(event);
 	}
 
 	private static void NetEvent_WeapMod(ConsoleEvent event)
@@ -254,6 +266,68 @@ extend class BIO_EventHandler
 		pawn.A_StartSound("bio/mutation/general");
 		pawn.A_SelectWeapon(morph.Output());
 	}
+
+	private void NetEvent_GlobalDataRegen(ConsoleEvent event)
+	{
+		if (!(event.Name ~== "bio_globalregen"))
+			return;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Net event `bio_globalregen` can only be manually invoked."
+			);
+			return;
+		}
+
+		if (event.Player != Net_Arbitrator)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Net event `bio_globalregen` "
+				"can only be invoked by the network arbitrator."
+			);
+			return;
+		}
+
+		switch (event.Args[0])
+		{
+		case GLOBALREGEN_WEAPLOOT:
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Regenerating weapon loot tables..."
+			);
+			Globals.RegenWeaponLoot();
+			return;
+		case GLOBALREGEN_MUTALOOT:
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Regenerating mutagen loot table..."
+			);
+			Globals.RegenMutagenLoot();
+			return;
+		case GLOBALREGEN_GENELOOT:
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Regenerating gene loot table..."
+			);
+			Globals.RegenGeneLoot();
+			return;
+		case GLOBALREGEN_MORPH:
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Regenerating weapon morph recipe cache..."
+			);
+			Globals.RegenWeaponMorphCache();
+			return;
+		default:
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Invalid global regen requested: %d", event.Args[0]
+			);
+		}
+	}
 }
 
 // Console event handling.
@@ -309,9 +383,15 @@ extend class BIO_EventHandler
 		}
 
 		Console.Printf(
+			Biomorph.LOGPFX_INFO .. "\n"
 			"\c[Gold]Console events:\c-\n"
-			"\tbio_help_\n",
-			"\tbio_monsval_"
+			"\tbio_help_\n"
+			"\tbio_monsval_\n"
+			"\c[Gold]Network events:\c-\n"
+			"\tbio_weaplootregen_\n"
+			"\tbio_mutalootregen_\n"
+			"\tbio_genelootregen_\n"
+			"\tbio_morphregen_"
 		);
 	}
 

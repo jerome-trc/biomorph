@@ -362,3 +362,33 @@ extend class Biomorph
 		return ret;
 	}
 }
+
+// Functions for clearing and re-populating data in the middle of gameplay.
+extend class BIO_Global
+{
+	void RegenWeaponLoot()
+	{
+		for (uint i = 0; i < WeaponLoot.Size(); i++)
+			WeaponLoot[i].Clear();
+
+		PopulateWeaponLootTables();
+	}
+
+	void RegenMutagenLoot()
+	{
+		MutagenLoot.Clear();
+		PopulateMutagenLootTable();
+	}
+
+	void RegenGeneLoot()
+	{
+		GeneLoot.Clear();
+		PopulateGeneLootTable();
+	}
+
+	void RegenWeaponMorphCache()
+	{
+		WeaponMorphRecipes.Clear();
+		PopulateWeaponMorphCache();
+	}
+}
