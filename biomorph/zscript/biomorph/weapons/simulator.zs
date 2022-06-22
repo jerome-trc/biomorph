@@ -282,8 +282,25 @@ class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
 
 		if (Gene is 'BIO_ModifierGene')
 		{
-			Modifier = BIO_WeaponModifier(new(BIO_ModifierGene(Gene).ModType));
+			let mod_t = BIO_ModifierGene(Gene).ModType;
+			if (Modifier != null && Modifier.GetClass() == mod_t)
+			{
+				let mod = Modifier.Copy();
+				Modifier = mod;
+			}
+			else
+			{
+				Modifier = BIO_WeaponModifier(new(mod_t));
+			}
 		}
+	}
+
+	BIO_WeaponModSimGeneVirtual VirtualCopy() const
+	{
+		let ret = new('BIO_WeaponModSimGeneVirtual');
+		ret.Type = Modifier.GeneType();
+		ret.Modifier = Modifier.Copy();
+		return ret;
 	}
 
 	final override class<BIO_Gene> GetType() const { return Gene.GetClass(); }
@@ -312,7 +329,16 @@ class BIO_WeaponModSimGeneVirtual : BIO_WeaponModSimGene
 		{
 			let mgene_t = (class<BIO_ModifierGene>)(Type);
 			let defs = GetDefaultByType(mgene_t);
-			Modifier = BIO_WeaponModifier(new(defs.ModType));
+			
+			if (Modifier != null && defs.ModType == Modifier.GetClass())
+			{
+				let mod = Modifier.Copy();
+				Modifier = mod;
+			}
+			else
+			{
+				Modifier = BIO_WeaponModifier(new(defs.ModType));
+			}
 		}
 	}
 
@@ -388,7 +414,7 @@ class BIO_WeaponModSimulator : Thinker
 
 		// Simulators are created when opening the weapon mod menu,
 		// at which point the graph is necessarily in a valid state
-		ret.Valid = true;
+		ret.Simulate();
 		return ret;
 	}
 
@@ -644,13 +670,7 @@ class BIO_WeaponModSimulator : Thinker
 				continue;
 
 			if (rGene.Gene == null)
-			{
-				rGene = null;
-				let g = new('BIO_WeaponModSimGeneVirtual');
-				g.Type = Nodes[i].Basis.GeneType;
-				Nodes[i].Gene = g;
-				Nodes[i].Update();
-			}
+				Nodes[i].Gene = rGene.VirtualCopy();
 		}
 	}
 
@@ -658,12 +678,10 @@ class BIO_WeaponModSimulator : Thinker
 	{
 		RebuildGeneInventory();
 
-		let graph = Weap.ModGraph;
-
-		for (uint i = 0; i < graph.Nodes.Size(); i++)
+		for (uint i = 0; i < Weap.ModGraph.Nodes.Size(); i++)
 		{
 			Nodes[i] = new('BIO_WeaponModSimNode');
-			Nodes[i].Basis = graph.Nodes[i].Copy();
+			Nodes[i].Basis = Weap.ModGraph.Nodes[i].Copy();
 
 			if (Nodes[i].Basis.GeneType != null)
 			{

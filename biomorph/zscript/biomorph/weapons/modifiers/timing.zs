@@ -69,6 +69,13 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 	{
 		return 'BIO_MGene_FireTime';
 	}
+
+	final override BIO_WeaponModifier Copy() const
+	{
+		let ret = new('BIO_WMod_FireTime');
+		ret.Changes.Copy(Changes);
+		return ret;
+	}
 }
 
 class BIO_WMod_ReloadTime : BIO_WeaponModifier
@@ -141,5 +148,12 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 	final override class<BIO_ModifierGene> GeneType() const
 	{
 		return 'BIO_MGene_ReloadTime';
+	}
+
+	final override BIO_WeaponModifier Copy() const
+	{
+		let ret = new('BIO_WMod_ReloadTime');
+		ret.Changes.Copy(Changes);
+		return ret;
 	}
 }

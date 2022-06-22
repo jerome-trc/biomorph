@@ -55,5 +55,12 @@ class BIO_WeaponModifier play abstract
 
 	abstract class<BIO_ModifierGene> GeneType() const;
 
+	// If your modifier keeps data to facilitate writing its description,
+	// make sure this transfers a copy of that data.
+	virtual BIO_WeaponModifier Copy() const
+	{
+		return BIO_WeaponModifier(new(GetClass()));
+	}
+
 	readOnly<BIO_WeaponModifier> AsConst() const { return self; }
 }
