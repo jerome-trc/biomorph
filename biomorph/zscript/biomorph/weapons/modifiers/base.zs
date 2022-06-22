@@ -28,7 +28,9 @@ enum BIO_WeaponModFlags : uint
 	BIO_WMODF_DAMAGE_INC = 1 << 12,
 	BIO_WMODF_DAMAGE_DEC = 1 << 13,
 	BIO_WMODF_SPREAD_INC = 1 << 14,
-	BIO_WMODF_SPREAD_DEC = 1 << 15
+	BIO_WMODF_SPREAD_DEC = 1 << 15,
+	BIO_WMODF_SWITCHSPEED_INC = 1 << 16,
+	BIO_WMODF_SWITCHSPEED_DEC = 1 << 17
 }
 
 struct BIO_GeneContext
@@ -70,4 +72,11 @@ class BIO_WeaponModifier play abstract
 	}
 
 	readOnly<BIO_WeaponModifier> AsConst() const { return self; }
+
+	// Helpers /////////////////////////////////////////////////////////////////
+
+	string Summary() const
+	{
+		return GetDefaultByType(GeneType()).Summary;
+	}
 }

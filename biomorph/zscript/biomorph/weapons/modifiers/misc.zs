@@ -92,3 +92,35 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 		return ret;
 	}
 }
+
+class BIO_WMod_SwitchSpeed : BIO_WeaponModifier
+{
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		return
+			context.Weap.RaiseSpeed < BIO_Weapon.SWITCHSPEED_MAX &&
+			context.Weap.LowerSpeed < BIO_Weapon.SWITCHSPEED_MAX,
+			"$BIO_WMOD_INCOMPAT_SWITCHSPEEDMAX";
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	{
+		weap.RaiseSpeed = weap.LowerSpeed = BIO_Weapon.SWITCHSPEED_MAX;
+		return "";
+	}
+
+	final override string Description(BIO_GeneContext _) const
+	{
+		return Summary();
+	}
+
+	final override BIO_WeaponModFlags Flags() const
+	{
+		return BIO_WMODF_SWITCHSPEED_INC;
+	}
+
+	final override class<BIO_ModifierGene> GeneType() const
+	{
+		return 'BIO_MGene_SwitchSpeed';
+	}
+}

@@ -25,6 +25,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// (Rat) Who designed those two properties to be so counter-intuitive?
 
+	const SWITCHSPEED_MAX = 96;
+
 	// If this weapon is unmodified and this field is false, it will
 	// be destroyed if both of its `AmmoGive` values are drained.
 	meta bool ScavengePersist;

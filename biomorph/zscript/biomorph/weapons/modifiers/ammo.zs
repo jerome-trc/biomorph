@@ -239,7 +239,7 @@ class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 
 	final override string Description(BIO_GeneContext _) const
 	{
-		return GetDefaultByType(GeneType()).Summary;
+		return Summary();
 	}
 
 	final override BIO_WeaponModFlags Flags() const
@@ -294,7 +294,7 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 
 	final override string Description(BIO_GeneContext _) const
 	{
-		return GetDefaultByType(GeneType()).Summary;
+		return Summary();
 	}
 
 	final override BIO_WeaponModFlags Flags() const
