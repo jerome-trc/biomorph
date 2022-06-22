@@ -297,11 +297,20 @@ class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
 		}
 	}
 
-	BIO_WeaponModSimGeneVirtual VirtualCopy() const
+	BIO_WeaponModSimGeneVirtual VirtualCopy(class<BIO_Gene> newType) const
 	{
 		let ret = new('BIO_WeaponModSimGeneVirtual');
-		ret.Type = Modifier.GeneType();
-		ret.Modifier = Modifier.Copy();
+
+		if (Modifier != null)
+		{
+			ret.Type = Modifier.GeneType();
+			ret.Modifier = Modifier.Copy();
+		}
+		else
+		{
+			ret.Type = newType;
+		}
+
 		return ret;
 	}
 
@@ -672,7 +681,7 @@ class BIO_WeaponModSimulator : Thinker
 				continue;
 
 			if (rGene.Gene == null)
-				Nodes[i].Gene = rGene.VirtualCopy();
+				Nodes[i].Gene = rGene.VirtualCopy(Nodes[i].Basis.GeneType);
 		}
 	}
 
