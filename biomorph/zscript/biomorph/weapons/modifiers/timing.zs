@@ -62,7 +62,7 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 
 	final override BIO_WeaponModFlags Flags() const
 	{
-		return BIO_WMODF_FIRETIME;
+		return BIO_WMODF_FIRETIME_DEC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -142,7 +142,7 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 
 	final override BIO_WeaponModFlags Flags() const
 	{
-		return BIO_WMODF_RELOADTIME;
+		return BIO_WMODF_RELOADTIME_DEC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const

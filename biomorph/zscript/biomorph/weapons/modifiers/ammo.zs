@@ -213,7 +213,7 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 
 	final override BIO_WeaponModFlags Flags() const
 	{
-		return BIO_WMODF_MAGSIZE;
+		return BIO_WMODF_MAGSIZE_INC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const

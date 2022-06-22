@@ -51,7 +51,7 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 
 	final override BIO_WeaponModFlags Flags() const
 	{
-		return BIO_WMODF_DAMAGE;
+		return BIO_WMODF_DAMAGE_INC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -99,7 +99,7 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 
 	final override BIO_WeaponModFlags Flags() const
 	{
-		return BIO_WMODF_DAMAGE;
+		return BIO_WMODF_DAMAGE_INC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const

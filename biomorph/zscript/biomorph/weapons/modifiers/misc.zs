@@ -76,7 +76,7 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 
 	final override BIO_WeaponModFlags Flags() const
 	{
-		return BIO_WMODF_SPREAD;
+		return BIO_WMODF_SPREAD_DEC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
