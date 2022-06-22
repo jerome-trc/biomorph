@@ -77,6 +77,8 @@ class BIO_WeaponModSimNode
 		return defs.GetTag();
 	}
 
+	bool HasTooltip() const { return IsOccupied() || IsUpgrade(); }
+
 	bool, string Compatible(
 		readOnly<BIO_WeaponModSimulator> sim,
 		BIO_GeneContext context

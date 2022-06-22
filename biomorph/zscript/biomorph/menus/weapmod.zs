@@ -43,10 +43,14 @@ class BIO_WModMenu_DraggedGene
 	}
 }
 
-// Class declaration, initialization, ticker.
+// Class declaration, constants and members, initialization, ticker.
 class BIO_WeaponModMenu : GenericMenu
 {
 	const VIRT_W = 640.0; const VIRT_H = 360.0;
+
+	const INVSLOT_POS_X_START = VIRT_W * 0.1;
+	const INVSLOT_POS_X_END = VIRT_W - (VIRT_W * 0.1);
+	const INVSLOT_POS_Y = VIRT_H - (VIRT_H * 0.1);
 
 	// Note to self: color constructor takes A, R, G, B
 	const COLOR_NONE = Color(0, 0, 0, 0);
@@ -56,8 +60,10 @@ class BIO_WeaponModMenu : GenericMenu
 	const COLOR_FULLCONN_OUTER = Color(127, 130, 239, 255);
 	const COLOR_FULLCONN_INNER = Color(127, 65, 255, 240);
 
-	private string Txt_Help_Pan, Txt_Help_ModOrder, Txt_Unmutated;
-	private textureID Tex_Node, Tex_NodeRing;
+	private string
+		Txt_Help_Pan, Txt_Help_ModOrder, Txt_Help_Hotkeys,
+		Txt_Unmutated, Txt_Mutagen;
+	private textureID Tex_Node, Tex_NodeRing, Tex_InvSlot;
 
 	private readOnly<BIO_Weapon> CurrentWeap;
 	private BIO_WeaponModSimulator Simulator;
@@ -85,14 +91,20 @@ class BIO_WeaponModMenu : GenericMenu
 			"$BIO_MENU_WEAPMOD_HELP_PAN");
 		Txt_Help_ModOrder = StringTable.Localize(
 			"$BIO_MENU_WEAPMOD_HELP_MODORDER");
+		Txt_Help_Hotkeys = StringTable.Localize(
+			"$BIO_MENU_WEAPMOD_HELP_HOTKEYS");
 		Txt_Unmutated = StringTable.Localize(
 			"$BIO_MENU_WEAPMOD_UNMUTATED");
+		Txt_Mutagen = StringTable.Localize(
+			"$BIO_MENU_WEAPMOD_MUTAGEN");
 
 		// Acquire graphical resources
 		Tex_Node = TexMan.CheckForTexture(
 			"graphics/wmg_node.png", TexMan.TYPE_ANY);
 		Tex_NodeRing = TexMan.CheckForTexture(
 			"graphics/wmg_nodering.png", TexMan.TYPE_ANY);
+		Tex_InvSlot = TexMan.CheckForTexture(
+			"graphics/inv_slot.png", TexMan.TYPE_ANY);
 
 		Size = (VIRT_W, VIRT_H);
 		CurrentWeap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon).AsConst();
@@ -296,6 +308,8 @@ extend class BIO_WeaponModMenu
 		}
 
 		DrawGeneInventory();
+		DrawHelpText();
+		DrawMutagenInfo();
 
 		bool noDupTooltip = false;
 
@@ -327,7 +341,7 @@ extend class BIO_WeaponModMenu
 
 		if (!noDupTooltip)
 		{
-			if (ValidHoveredNode() && Simulator.Nodes[HoveredNode].IsOccupied())
+			if (ValidHoveredNode() && Simulator.Nodes[HoveredNode].HasTooltip())
 			{
 				DrawTooltip(Simulator.GetNodeTooltip(HoveredNode));
 			}
@@ -341,28 +355,13 @@ extend class BIO_WeaponModMenu
 
 	private void DrawGeneInventory() const
 	{
-		let pawn = BIO_Player(Players[ConsolePlayer].MO);
-		Vector2 scrSz = (Screen.GetWidth(), Screen.GetHeight());
-		Vector2 nodeSz;
-		[nodeSz.X, nodeSz.Y] = TexMan.GetSize(Tex_Node);
-		let genePosX = VIRT_W * 0.1, genePosY = VIRT_H * 0.2;
-		uint geneC = 0;
+		let genePosX = INVSLOT_POS_X_START;
 
 		for (uint i = 0; i < Simulator.Genes.Size(); i++)
 		{
-			let drawPos = (genePosX, genePosY);
+			let drawPos = (InvSlotDrawPosition(i), INVSLOT_POS_Y);
 
-			if (++geneC == (pawn.MaxGenesHeld / 2))
-			{
-				genePosY = VIRT_H * 0.2;
-				genePosX += VIRT_W * 0.1;
-			}
-			else
-			{
-				genePosY += VIRT_H * 0.15;
-			}
-
-			Screen.DrawTexture(Tex_Node, false,
+			Screen.DrawTexture(Tex_InvSlot, false,
 				drawPos.X, drawPos.Y,
 				DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H,
 				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true, DTA_ALPHA, 0.5,
@@ -383,6 +382,46 @@ extend class BIO_WeaponModMenu
 				DTA_ALPHA, isDragged ? 0.33 : 1.0
 			);
 		}
+	}
+
+	private void DrawHelpText() const
+	{
+		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+			0.0 + (VIRT_W * 0.05),
+			VIRT_H * 0.025,
+			Txt_Help_Pan,
+			DTA_KEEPRATIO, true,
+			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H
+		);
+		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+			0.0 + (VIRT_W * 0.05),
+			VIRT_H * 0.05,
+			Txt_Help_ModOrder,
+			DTA_KEEPRATIO, true,
+			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H
+		);
+		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+			0.0 + (VIRT_W * 0.05),
+			VIRT_H * 0.075,
+			Txt_Help_Hotkeys,
+			DTA_KEEPRATIO, true,
+			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H
+		);
+	}
+
+	private void DrawMutagenInfo() const
+	{
+		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
+			0.0 + (VIRT_W * 0.05),
+			VIRT_H * 0.125,
+			String.Format(
+				Txt_Mutagen,
+				Players[ConsolePlayer].MO.CountInv('BIO_Muta_General'),
+				Simulator.CommitCost()
+			),
+			DTA_KEEPRATIO, true,
+			DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H
+		);
 	}
 
 	private void DrawTooltip(string tooltip)
@@ -602,6 +641,15 @@ extend class BIO_WeaponModMenu
 		}
 	}
 
+	private double InvSlotDrawPosition(uint slot) const
+	{
+		let ret = INVSLOT_POS_X_START;
+		let interval = INVSLOT_POS_X_END - INVSLOT_POS_X_START;
+		interval /= (Simulator.Genes.Size() - 1);
+		ret += (slot * interval);
+		return ret;
+	}
+
 	// Called whenever the mouse moves.
 	// Determines which inventory slot is currently hovered.
 	private void UpdateInvDrawState()
@@ -611,26 +659,13 @@ extend class BIO_WeaponModMenu
 
 		HoveredInvSlot = Simulator.Genes.Size();
 
-		let pawn = BIO_Player(Players[ConsolePlayer].MO);
 		Vector2 scrSz = (Screen.GetWidth(), Screen.GetHeight());
 		Vector2 nodeSz;
 		[nodeSz.X, nodeSz.Y] = TexMan.GetSize(Tex_Node);
-		let genePosX = VIRT_W * 0.1, genePosY = VIRT_H * 0.2;
-		uint geneC = 0;
 
 		for (uint i = 0; i < Simulator.Genes.Size(); i++)
 		{
-			let drawPos = (genePosX, genePosY);
-
-			if (++geneC == (pawn.MaxGenesHeld / 2))
-			{
-				genePosY = VIRT_H * 0.2;
-				genePosX += VIRT_W * 0.1;
-			}
-			else
-			{
-				genePosY += VIRT_H * 0.15;
-			}
+			let drawPos = (InvSlotDrawPosition(i), INVSLOT_POS_Y);
 
 			Vector2
 				realTL = Screen.VirtualToRealCoords(

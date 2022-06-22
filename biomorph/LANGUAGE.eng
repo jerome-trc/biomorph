@@ -371,21 +371,27 @@
 
 // Menu, weapon modification ///////////////////////////////////////////////////
 
-	BIO_MENU_WEAPMOD_HELP_PAN =
-		"\c[White]Hold the \c[LightBlue]mouse wheel"
-		"\c[White] and \c[LightBlue]move the mouse\c[White] to pan";
 	BIO_MENU_WEAPMOD_UNMUTATED =
 		"\c[White]This weapon is unmutated.\n"
 		"\c[White]To modify it, use a sample of "
 		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen while it's equipped.";
+	BIO_MENU_WEAPMOD_HELP_PAN =
+		"\c[White]Hold the \c[LightBlue]mouse wheel"
+		"\c[White] and \c[LightBlue]move the mouse\c[White] to pan";
 	BIO_MENU_WEAPMOD_HELP_MODORDER =
 		"\c[White]Modifiers are applied in the order displayed next to their nodes";
+	BIO_MENU_WEAPMOD_HELP_HOTKEYS =
+		"\c[White]Press \c[LightBlue]e\c[White] to commit changes; "
+		"press \c[LightBlue]r\c[White] to revert changes";
+	BIO_MENU_WEAPMOD_MUTAGEN =
+		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen held: \c[Yellow]%d \c[MidGrey]- "
+		"\c[White]Cost to commit: \c[Gold]%d";
 	BIO_MENU_WEAPMOD_NODUP =
 		"\c[Yellow]This gene can only be applied to this weapon once.";
 	BIO_MENU_WEAPMOD_UPGRADE =
-		"\c[Green]Upgrade this weapon to:\n%s\n\n"
-		"\c[Gold]Cost:\c[Yellow] %d %s\n\n"
-		"\c[Brick]Will consume all genes in this tree!";
+		"\c[LightBlue]Left click\c[Green] to upgrade this weapon to:\n%s\n\n"
+		"\c[White]Cost:\c[Yellow] %d %s\n\n"
+		"\c[Gold]Will consume all genes in this tree!";
 	BIO_MENU_WEAPMOD_COMMITFAIL_MUTACOST =
 		"\c[Yellow]Insufficient "
 		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen"
