@@ -131,7 +131,7 @@ class BIO_StatusBar : BaseStatusBar
 	
 		let hgc = BIOPlayer.HeldGeneCount();
 
-		DrawImage('HUDGA0', (-24, invY -12));
+		DrawImage("graphics/gene.png", (-24, invY -12));
 		DrawString(Font_Small,
 			String.Format("%d / %d", hgc, BIOPlayer.MaxGenesHeld),
 			(-44, invY - 24), DI_TEXT_ALIGN_RIGHT,
