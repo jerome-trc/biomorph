@@ -1099,9 +1099,14 @@ class BIO_WeaponModSimulator : Thinker
 
 	final override void OnDestroy()
 	{
-		Revert();
-		Weap.SetupAmmo();
-		Weap.SetupMagazines();
+		// Prevent VM exceptions during engine teardown
+		if (Weap != null && Weap.Owner != null)
+		{
+			Revert();
+			Weap.SetupAmmo();
+			Weap.SetupMagazines();
+		}
+
 		super.OnDestroy();
 	}
 
@@ -1109,7 +1114,7 @@ class BIO_WeaponModSimulator : Thinker
 	{
 		Genes.Clear();
 
-		for (Inventory i = weap.Owner.Inv; i != null; i = i.Inv)
+		for (Inventory i = Weap.Owner.Inv; i != null; i = i.Inv)
 		{
 			let gene = BIO_Gene(i);
 
@@ -1122,7 +1127,7 @@ class BIO_WeaponModSimulator : Thinker
 			Genes.Push(simGene);
 		}
 
-		while (Genes.Size() < BIO_Player(weap.Owner).MaxGenesHeld)
+		while (Genes.Size() < BIO_Player(Weap.Owner).MaxGenesHeld)
 			Genes.Push(null);
 	}
 
