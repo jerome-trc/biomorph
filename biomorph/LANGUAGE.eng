@@ -125,7 +125,7 @@
 	BIO_VOLLEYGUN_OB = "%k gave %o a three-course meal of lead with a %s.";
 
 	BIO_AUTOSHOTGUN_TAG = "Auto Shotgun";
-	BIO_AUTOSHOTGUN_PKUP = "Procured a %s.";
+	BIO_AUTOSHOTGUN_PKUP = "Procured an %s.";
 	BIO_AUTOSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_AUTOSHOTGUN_OB = "%k ploughed %o down with a %s.";
 
