@@ -1022,19 +1022,24 @@ class BIO_PermanentInventory : Inventory abstract
 class BIO_WanderingSpawner : Actor
 {
 	private class<Actor> ToSpawn;
-	private uint WanderCount, WanderAttempts;
+	private uint WanderCount;
 
 	Default
 	{
 		-SOLID
+		+CANPASS
 		+DONTSPLASH
+		+FLOORCLIP
 		+NOBLOCKMAP
+		+NOBLOCKMONST
 		+NOTELEPORT
 		+NOTIMEFREEZE
 		+NOTONAUTOMAP
+		+NOTRIGGER
 
-		Radius 16;
 		Height 8;
+		Radius 16;
+		RenderStyle 'None';
 		Speed 15;
 	}
 
