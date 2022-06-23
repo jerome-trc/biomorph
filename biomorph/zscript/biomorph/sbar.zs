@@ -178,7 +178,7 @@ class BIO_StatusBar : BaseStatusBar
 			invY -= 20;
 		}
 
-		if (ammoItem2 != null)
+		if (ammoItem2 != null && (ammoItem1 != ammoItem2))
 		{
 			DrawAmmoItemInfo(ammoItem2, ammoItem2.MaxAmount, invY);
 			invY -= 20;
