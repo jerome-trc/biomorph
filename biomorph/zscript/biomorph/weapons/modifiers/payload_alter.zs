@@ -76,7 +76,7 @@ class BIO_WAfx_ForcePain : BIO_WeaponAffix
 	final override string Description(readOnly<BIO_Weapon> _) const
 	{
 		return String.Format(
-			StringTable.Localize("$BIO_WMOD_FORCEPAIN_DESC"),
+			StringTable.Localize("$BIO_WAFX_FORCEPAIN_DESC"),
 			Count * BIO_WMod_ForcePain.FORCEPAIN_MULTI
 		);
 	}
