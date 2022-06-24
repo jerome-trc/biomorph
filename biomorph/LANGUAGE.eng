@@ -275,6 +275,15 @@
 	BIO_WMOD_FIRETIME_SUMM = "\c[Green]Increased fire rates";
 	BIO_WMOD_FIRETIME_DESC = "\c[White]Fire time%s: \c[Green]%.2f seconds";
 
+	BIO_WMOD_FORCEPAIN_SUMM =
+		"\c[Green]Extra 20%% chance of firing a neurotoxic payload\n"
+		"\c[White]Neurotoxic payloads always make monsters flinch\n"
+		"\c[Gold]Some monsters are immune to this effect!";
+	BIO_WMOD_FORCEPAIN_DESC =
+		"\c[Green]Extra %d%% chance of firing a neurotoxic payload\n"
+		"\c[White]Neurotoxic payloads always make monsters flinch\n"
+		"\c[Gold]Some monsters are immune to this effect!";
+
 	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
 
 	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
@@ -327,6 +336,12 @@
 		"\c[Green]Modifier in node to west is applied one extra time\n"
 		"\c[White]Node does not need to be connected";
 
+// Weapon affixes (descriptions) ///////////////////////////////////////////////
+
+	BIO_WAFX_FORCEPAIN_DESC =
+		"\c[Green]Extra %d%% chance of firing a neurotoxic payload\n"
+		"\c[White]\tNeurotoxic payloads always make monsters flinch";
+
 // Mutagens (tags, pickup and usage strings) ///////////////////////////////////
 
 	BIO_MUTA_FAIL_NULL = "This weapon doesn't even respond to the mutagen.";
@@ -351,6 +366,9 @@
 
 	BIO_MGENE_FIRETIME_TAG = "\c[Ice]Rapid Refire\c[White] Gene\c-";
 	BIO_MGENE_FIRETIME_PKUP = "\c[Ice]Collected a \c[Ice]Rapid Refire\c[White] gene\c-.";
+
+	BIO_MGENE_FORCEPAIN_TAG = "\c[Ice]Neurotoxic\c[White] Gene\c-";
+	BIO_MGENE_FORCEPAIN_PKUP = "Collected a \c[Ice]Neurotoxic\c[White] gene\c-.";
 
 	BIO_MGENE_INFINITEAMMO_TAG = "\c[Ice]Ammo Apparition\c[White] Gene\c-";
 	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an \c[Ice]Ammo Apparition\c[White] gene\c-.";

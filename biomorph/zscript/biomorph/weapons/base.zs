@@ -590,6 +590,15 @@ extend class BIO_Weapon
 		return true;
 	}
 
+	BIO_WeaponAffix GetAffixByType(class<BIO_WeaponAffix> type)
+	{
+		for (uint i = 0; i < Affixes.Size(); i++)
+			if (Affixes[i].GetClass() == type)
+				return Affixes[i];
+
+		return null;
+	}
+
 	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
 
 	// Returns a valid result even if the weapon feeds from reserves.
