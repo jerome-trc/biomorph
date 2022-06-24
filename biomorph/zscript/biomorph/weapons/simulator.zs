@@ -370,7 +370,7 @@ class BIO_WeaponModSimulator : Thinker
 	// Upon commit, the weapon's mod graph is rebuilt to reflect this.
 	Array<BIO_WeaponModSimNode> Nodes;
 
-	// Operations //////////////////////////////////////////////////////////////
+	// Critical path ///////////////////////////////////////////////////////////
 
 	static BIO_WeaponModSimulator Create(BIO_Weapon weap)
 	{
@@ -451,116 +451,6 @@ class BIO_WeaponModSimulator : Thinker
 		}
 
 		return null;
-	}
-
-	// Take a gene out of the inventory and put it into a node.
-	void InsertGene(uint node, uint slot)
-	{
-		if (Nodes[node].IsOccupied())
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt to add gene to occupied node %d.",
-				node
-			);
-			return;
-		}
-
-		if (Genes[slot] == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt to add gene from empty slot %d.",
-				slot
-			);
-			return;
-		}
-
-		Nodes[node].Gene = Genes[slot];
-		Genes[slot] = null;
-	}
-
-	// Move a gene from one node to another.
-	void NodeMove(uint fromNode, uint toNode)
-	{
-		if (!Nodes[fromNode].IsOccupied())
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt to move gene from unfilled node %d.",
-				fromNode
-			);
-			return;
-		}
-
-		if (Nodes[toNode].IsOccupied())
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt to move gene to occupied node %d.",
-				toNode
-			);
-			return;
-		}
-
-		let temp = Nodes[toNode].Gene;
-		Nodes[toNode].Gene = Nodes[fromNode].Gene;
-		Nodes[fromNode].Gene = temp;
-	}
-
-	// Move a gene from one inventory slot to another.
-	void InventoryMove(uint fromSlot, uint toSlot)
-	{
-		if (Genes[fromSlot] == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt to move gene from empty slot %d.",
-				fromSlot
-			);
-			return;
-		}
-
-		if (Genes[toSlot] != null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt to move gene to occupied slot %d.",
-				toSlot
-			);
-			return;
-		}
-
-		Genes[toSlot] = Genes[fromSlot];
-		Genes[fromSlot] = null;
-	}
-
-	// Take a gene out of a node and put it back into the inventory.
-	void ExtractGene(uint node, uint slot)
-	{
-		if (!Nodes[node].IsOccupied())
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt to remove gene from gene-less node %d.",
-				node
-			);
-			return;
-		}
-
-		// User specified a slot to return the gene to
-		if (Genes[slot] != null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt to extract gene into occupied slot %d.",
-				slot
-			);
-			return;
-		}
-
-		Genes[slot] = Nodes[node].Gene;
-		Nodes[node].Gene = null;
 	}
 
 	void Simulate()
@@ -707,6 +597,126 @@ class BIO_WeaponModSimulator : Thinker
 		}
 
 		Simulate();
+	}
+
+	// Intermediary operations /////////////////////////////////////////////////
+
+	// Take a gene out of the inventory and put it into a node.
+	void InsertGene(uint node, uint slot)
+	{
+		if (Nodes[node].IsOccupied())
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to add gene to occupied node %d.",
+				node
+			);
+			return;
+		}
+
+		if (Genes[slot] == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to add gene from empty slot %d.",
+				slot
+			);
+			return;
+		}
+
+		Nodes[node].Gene = Genes[slot];
+		Genes[slot] = null;
+	}
+
+	// Move a gene from one node to another.
+	void NodeMove(uint fromNode, uint toNode)
+	{
+		if (!Nodes[fromNode].IsOccupied())
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to move gene from unfilled node %d.",
+				fromNode
+			);
+			return;
+		}
+
+		if (Nodes[toNode].IsOccupied())
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to move gene to occupied node %d.",
+				toNode
+			);
+			return;
+		}
+
+		let temp = Nodes[toNode].Gene;
+		Nodes[toNode].Gene = Nodes[fromNode].Gene;
+		Nodes[fromNode].Gene = temp;
+	}
+
+	// Move a gene from one inventory slot to another.
+	void InventoryMove(uint fromSlot, uint toSlot)
+	{
+		if (Genes[fromSlot] == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to move gene from empty slot %d.",
+				fromSlot
+			);
+			return;
+		}
+
+		if (Genes[toSlot] != null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to move gene to occupied slot %d.",
+				toSlot
+			);
+			return;
+		}
+
+		Genes[toSlot] = Genes[fromSlot];
+		Genes[fromSlot] = null;
+	}
+
+	// Take a gene out of a node and put it back into the inventory.
+	void ExtractGene(uint node, uint slot)
+	{
+		if (!Nodes[node].IsOccupied())
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to remove gene from gene-less node %d.",
+				node
+			);
+			return;
+		}
+
+		// User specified a slot to return the gene to
+		if (Genes[slot] != null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to extract gene into occupied slot %d.",
+				slot
+			);
+			return;
+		}
+
+		Genes[slot] = Nodes[node].Gene;
+		Nodes[node].Gene = null;
+	}
+
+	void InsertNewGene(class<BIO_Gene> type, uint node)
+	{
+		let g = new('BIO_WeaponModSimGeneVirtual');
+		g.Type = type;
+		Nodes[node].Gene = g;
+		Nodes[node].Update();
 	}
 
 	// Accessibility checker ///////////////////////////////////////////////////
@@ -906,6 +916,25 @@ class BIO_WeaponModSimulator : Thinker
 	}
 
 	// Other introspective helpers /////////////////////////////////////////////
+
+	// Never returns the home node (0).
+	uint RandomNode(bool accessible = false, bool unoccupied = false) const
+	{
+		Array<uint> eligibles;
+
+		for (uint i = 1; i < Nodes.Size(); i++)
+		{
+			if (accessible && !NodeAccessible(i))
+				continue;
+
+			if (unoccupied && Nodes[i].IsOccupied())
+				continue;
+
+			eligibles.Push(i);
+		}
+
+		return eligibles[Random[BIO_WMod](0, eligibles.Size() - 1)];
+	}
 
 	uint GeneValue() const
 	{

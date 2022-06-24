@@ -190,6 +190,20 @@ class BIO_Weapon : DoomWeapon abstract
 	// Called immediately after the weapon is spawned.
 	abstract void SetDefaults();
 
+	/*	Intrinsic mod graphs can't be created in `SetDefaults()`, since that
+		function gets called during the weapon mod simulation process (causing
+		stack overflow). Do it here instead.
+
+		If `onMutate` is false, the call is being made during `LazyInit()`.
+		Otherwise it's being made during application of a general mutagen.
+
+		If your intent is for the unique weapon to have a pre-filled mod graph,
+		act upon the former.
+		If your intent is for a weapon to start un-mutated but gain certain
+		properties implicitly upon mutation, act upon the latter.
+	*/
+	virtual void IntrinsicModGraph(bool onMutate) const {}
+
 	// Each is called once before starting its respective loop.
 	virtual void OnDeselect()
 	{
@@ -202,16 +216,6 @@ class BIO_Weapon : DoomWeapon abstract
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].OnSelect(self);
 	}
-
-	/*	Receives a null pointer when the weapon lazy-initialises, and then
-		receives a non-null pointer when the weapon naturally gets mutated
-		by the user.
-		If your intent is for the unique weapon to have a pre-filled mod graph,
-		act upon the former.
-		If your intent is for a weapon to start un-mutated but gain certain
-		properties implicitly upon mutation, act upon the latter.
-	*/
-	virtual void IntrinsicModGraph(in out BIO_WeaponModGraph graph) const {}
 
 	virtual void Summary(in out Array<string> strings) const {}
 
@@ -921,16 +925,10 @@ extend class BIO_Weapon
 		if (Uninitialised())
 		{
 			SetDefaults();
-			IntrinsicModGraph(ModGraph);
+			IntrinsicModGraph(false);
 
 			if (ModGraph != null)
-			{
 				SetTag(ColoredTag());
-				let sim = BIO_WeaponModSimulator.Create(self);
-				sim.Simulate();
-				sim.Commit();
-				sim.PostCommit();
-			}
 		}
 	}
 

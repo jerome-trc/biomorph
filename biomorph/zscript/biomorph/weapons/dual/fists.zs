@@ -48,18 +48,30 @@ class BIO_Fists : BIO_DualWieldWeapon
 		);
 	}
 
-	override void IntrinsicModGraph(in out BIO_WeaponModGraph graph) const
+	override void IntrinsicModGraph(bool onMutate)
 	{
-		if (graph != null) // Should never happen
+		if (ModGraph != null || onMutate == true) // Should never happen
 		{
 			Console.Printf(
 				Biomorph.LOGPFX_ERR ..
-				"`%s::IntrinsicModGraph()` illegally received a non-null argument.",
+				"`%s` called `IntrinsicModGraph()` in an illegal context.",
 				GetClassName()
 			);
 			return;
 		}
 
-		graph = BIO_WeaponModGraph.Create(GraphQuality);
+		ModGraph = BIO_WeaponModGraph.Create(GraphQuality);
+		let sim = BIO_WeaponModSimulator.Create(self);
+
+		for (uint i = 0; i < 4; i++)
+		{
+			let r = sim.RandomNode(accessible: true, unoccupied: true);
+			sim.InsertNewGene('BIO_MGene_BerserkDamage', r);
+		}
+
+		sim.Simulate();
+		sim.Commit();
+		sim.PostCommit();
+		sim.Destroy();
 	}
 }
