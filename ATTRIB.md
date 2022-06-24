@@ -22,6 +22,8 @@ ARMRBON is courtesy of id Software LLC.
 
 ["Soft Black Fabric"](https://www.blenderkit.com/asset-gallery-detail/aa03d318-d285-48fd-92bc-9b8671d74a4c/?page=3) (used to texture the gloves of the Blender model) is provided by [Share Textures](https://www.sharetextures.com/) under Creative Commons 0.
 
+The `WornPlastic` family of materials is courtesy of [Ryan King](https://www.youtube.com/watch?v=l0whu3494_c).
+
 ## Acknowledgements
 
 - Yholl, whose mods not only inspired this project deeply, but also acted as a wellspring for techniques to learn from.
