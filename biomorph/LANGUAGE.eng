@@ -237,7 +237,7 @@
 
 // Weapon modifiers (summaries, descriptions, incompatibility explanations) ////
 
-	// (If a grouping has no description, then assume the summary doubles as one)
+	// Incompatibility
 
 	BIO_WMOD_INCOMPAT_TEMPLATE = "\c[White]%s\n\n\c[Yellow]Incompatible:\c[Gold]\n%s";
 
@@ -255,12 +255,20 @@
 	BIO_WMOD_INCOMPAT_NORELOADTIMES =
 		"This weapon has no modifiable reload timings.";
 	BIO_WMOD_INCOMPAT_NODAMAGE = "This weapon deals no damage.";
+	BIO_WMOD_INCOMPAT_NOMELEEDAMAGE =
+		"This weapon is incapable of dealing melee damage.";
 	BIO_WMOD_INCOMPAT_NOMAGAZINE =
 		"No valid primary or secondary magazine,\n"
 		"or no reserve ammo type."
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
 	BIO_WMOD_INCOMPAT_SWITCHSPEEDMAX =
 		"This weapon already switches as fast as it possibly can.";
+
+	// Summaries and descriptions
+	// (If a grouping has no description, then assume the summary doubles as one)
+
+	BIO_WMOD_BERSERKDAMAGE_SUMM = "\c[Green]250% damage \c[White]dealt after collecting a Berserk Pack";
+	BIO_WMOD_BERSERKDAMAGE_DESC = "\c[Green]%d%% damage \c[White]dealt after collecting a Berserk Pack";
 
 	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]20% of minimum damage added";
 	BIO_WMOD_DAMAGEADD_DESC = "\c[White]Damage%s: \c[Green]+%d";
@@ -358,6 +366,9 @@
 	BIO_GENE_PKUP = "Collected a \c[White]gene\c-.";
 
 	// Modifier
+
+	BIO_MGENE_BERSERKDAMAGE_TAG = "\c[Ice]Frenzying\c[White] Gene\c-";
+	BIO_MGENE_BERSERKDAMAGE_PKUP = "Collected a \c[Ice]Frenzying\c[White] gene\c-.";
 
 	BIO_MGENE_DEMONSLAYER_TAG = "\c[Ice]Demonslayer\c[White] Gene\c-";
 	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a \c[Ice]Demonslayer\c[White] gene\c-.";

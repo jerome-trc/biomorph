@@ -1,3 +1,77 @@
+class BIO_WMod_BerserkDamage : BIO_WeaponModifier
+{
+	const DAMAGE_MULTI = 2.5;
+
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+			if (context.Weap.Pipelines[i].IsMelee() &&
+				context.Weap.Pipelines[i].DealsAnyDamage())
+				return true, "";
+
+		return false, "$BIO_WMOD_INCOMPAT_NOMELEEDAMAGE";
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	{
+		let afx = weap.GetAffixByType('BIO_WAfx_BerserkDamage');
+
+		if (afx == null)
+		{
+			afx = new('BIO_WAfx_BerserkDamage');
+			weap.Affixes.Push(afx);
+		}
+
+		for (uint i = 0; i < context.NodeCount; i++)
+			BIO_WAfx_BerserkDamage(afx).Count++;
+
+		return "";
+	}
+
+	final override string Description(BIO_GeneContext context) const
+	{
+		let afx = context.Weap.GetAffixByType('BIO_WAfx_BerserkDamage');
+
+		return String.Format(
+			StringTable.Localize("$BIO_WMOD_BERSERKDAMAGE_DESC"),
+			context.NodeCount * int(DAMAGE_MULTI * 100)
+		);
+	}
+
+	final override BIO_WeaponModFlags Flags() const
+	{
+		return BIO_WMODF_DAMAGE_INC;
+	}
+
+	final override class<BIO_ModifierGene> GeneType() const
+	{
+		return 'BIO_MGene_BerserkDamage';
+	}
+}
+
+class BIO_WAfx_BerserkDamage : BIO_WeaponAffix
+{
+	uint Count;
+
+	final override void BeforeEachShot(BIO_Weapon weap,
+		in out BIO_ShotData shotData)
+	{
+		if (weap.Owner.FindInventory('PowerStrength', true) == null)
+			return;
+
+		if (weap.Pipelines[shotData.Pipeline].IsMelee())
+			shotData.Damage *= (BIO_WMod_BerserkDamage.DAMAGE_MULTI * Count);
+	}
+
+	final override string Description(readOnly<BIO_Weapon> _) const
+	{
+		return String.Format(
+			StringTable.Localize("$BIO_WMOD_BERSERKDAMAGE_DESC"),
+			Count * int(BIO_WMod_BerserkDamage.DAMAGE_MULTI * 100)
+		);
+	}
+}
+
 class BIO_WMod_DamageAdd : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
