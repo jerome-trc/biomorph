@@ -310,10 +310,10 @@ class BIO_WeaponAffix play abstract
 
 	// Modify only the shot count or the critical flag here;
 	// everything else gets overwritten afterwards.
-	virtual void BeforeAllFire(BIO_Weapon weap, in out BIO_ShotData shotData) {}
+	virtual void BeforeAllShots(BIO_Weapon weap, in out BIO_ShotData shotData) {}
 
 	// Modifying `ShotCount` here does nothing, since it is overwritten afterwards.
-	virtual void BeforeEachFire(BIO_Weapon weap, in out BIO_ShotData shotData) {}
+	virtual void BeforeEachShot(BIO_Weapon weap, in out BIO_ShotData shotData) {}
 
 	virtual void OnSlowProjectileFired(BIO_Weapon weap, BIO_Projectile proj) {}	
 	virtual void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) {}

@@ -37,6 +37,9 @@ class BIO_WeaponPipeline play
 		shotData.Pipeline = pipelineIndex;
 		shotData.Count = sc;
 
+		for (uint i = 0; i < weap.Affixes.Size(); i++)
+			weap.Affixes[i].BeforeAllShots(weap, shotData);
+
 		for (uint i = 0; i < sc; i++)
 		{
 			shotData.Number = i;
@@ -46,6 +49,9 @@ class BIO_WeaponPipeline play
 			shotData.VSpread = VSpread * spreadFactor;
 			shotData.Angle = Angle;
 			shotData.Pitch = Pitch;
+
+			for (uint i = 0; i < weap.Affixes.Size(); i++)
+				weap.Affixes[i].BeforeEachShot(weap, shotData);
 
 			Actor output = FireFunctor.Invoke(weap, shotData);
 
