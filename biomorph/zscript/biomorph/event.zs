@@ -395,7 +395,7 @@ extend class BIO_EventHandler
 		);
 	}
 
-	private static ui void ConEvent_MonsVal(ConsoleEvent event)
+	private ui void ConEvent_MonsVal(ConsoleEvent event)
 	{
 		if (!(event.Name ~== "bio_monsval"))
 			return;
@@ -430,7 +430,7 @@ extend class BIO_EventHandler
 	// (will be null if LegenDoom or its Lite version isn't loaded).
 	private class<Inventory> LDToken;
 
-	static clearscope uint MapTotalMonsterValue()
+	clearscope uint MapTotalMonsterValue() const
 	{
 		let iter = ThinkerIterator.Create('Actor');
 		uint ret = 0;
@@ -442,20 +442,13 @@ extend class BIO_EventHandler
 			if (mons == null)
 				break;
 
-			if (!mons.bIsMonster || MonsterIsLostSoul(mons))
+			if (!mons.bIsMonster)
 				continue;
 
-			ret += Biomorph.GetMonsterValue(mons);
+			ret += Globals.GetMonsterValue(mons);
 		}
 
 		return ret;
-	}
-
-	static clearscope bool MonsterIsLostSoul(Actor mons)
-	{
-		// TODO: Support for however many monster packs
-		return
-			(mons is 'LostSoul');
 	}
 
 	final override void WorldThingDied(WorldEvent event)
@@ -474,14 +467,8 @@ extend class BIO_EventHandler
 			// If we made it here, this was a legendary monster from LegenDoom
 			// or LegenDoom Lite. Drop some extra-special loot
 		}
-		else if (MonsterIsLostSoul(event.Thing))
-		{
-			// There's no way to know if a Lost Soul was a Pain Elemental spawn,
-			// so just forbid Lost Souls from giving anything to prevent farming
-			return;
-		}
 
-		Globals.LootValueBuffer += Biomorph.GetMonsterValue(event.Thing);
+		Globals.LootValueBuffer += Globals.GetMonsterValue(event.Thing);
 
 		while (Globals.DrainLootValueBuffer())
 		{

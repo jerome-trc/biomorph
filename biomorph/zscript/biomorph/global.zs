@@ -21,6 +21,7 @@ class BIO_Global : Thinker
 		ret.PopulateMutagenLootTable();
 		ret.PopulateGeneLootTable();
 		ret.PopulateWeaponMorphCache();
+		ret.PopulateZeroValueMonsterCache();
 
 		for (uint i = 0; i < __BIO_WSCAT_COUNT__; i++)
 		{
@@ -339,6 +340,7 @@ extend class BIO_Global
 {
 	const LOOT_VALUE_THRESHOLD = 800;
 
+	private Array<class<Actor> > ZeroValueMonsters;
 	uint LootValueBuffer;
 
 	bool DrainLootValueBuffer()
@@ -351,15 +353,21 @@ extend class BIO_Global
 
 		return false;
 	}
-}
 
-extend class Biomorph
-{
-	static uint GetMonsterValue(Actor mons)
+	clearscope uint GetMonsterValue(Actor mons) const
 	{
+		if (ZeroValueMonsters.Find(mons.GetClass()) != ZeroValueMonsters.Size())
+			return 0;
+
 		let ret = uint(Max(mons.Default.Health, mons.GetMaxHealth(true)));
 		// TODO: Refine
 		return ret;
+	}
+
+	private void PopulateZeroValueMonsterCache()
+	{
+		ZeroValueMonsters.Push((class<Actor>)('LostSoul'));
+		// TODO: Support for however many monster packs
 	}
 }
 
