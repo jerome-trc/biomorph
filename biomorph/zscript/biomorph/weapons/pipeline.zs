@@ -53,6 +53,9 @@ class BIO_WeaponPipeline play
 					HitDamageFunctors[i].InvokePuff(puff);
 				for (uint i = 0; i < PayloadDeathFunctors.Size(); i++)
 					PayloadDeathFunctors[i].InvokePuff(puff);
+
+				for (uint i = 0; i < weap.Affixes.Size(); i++)
+					weap.Affixes[i].OnPuffFired(weap, puff);
 			}
 			else if (output is 'BIO_Projectile')
 			{
@@ -61,6 +64,9 @@ class BIO_WeaponPipeline play
 				sProj.HitDamageFunctors.Copy(HitDamageFunctors);
 				sProj.ProjTravelFunctors.Copy(ProjTravelFunctors);
 				sProj.PayloadDeathFunctors.Copy(PayloadDeathFunctors);
+
+				for (uint i = 0; i < weap.Affixes.Size(); i++)
+					weap.Affixes[i].OnSlowProjectileFired(weap, sProj);
 			}
 			else if (output is 'BIO_FastProjectile')
 			{
@@ -68,6 +74,9 @@ class BIO_WeaponPipeline play
 				fProj.SetDamage(shotData.Damage);
 				fProj.HitDamageFunctors.Copy(HitDamageFunctors);
 				fProj.PayloadDeathFunctors.Copy(PayloadDeathFunctors);
+
+				for (uint i = 0; i < weap.Affixes.Size(); i++)
+					weap.Affixes[i].OnFastProjectileFired(weap, fProj);
 			}
 		}
 
