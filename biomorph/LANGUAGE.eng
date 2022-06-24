@@ -154,6 +154,13 @@
 	BIO_BFG_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_BFG_OB = "%k field-tested a %s on %o.";
 
+	// Dual-wield weapons
+
+	BIO_DUALMACHINEGUN_TAG = "Mirrored Machine Guns";
+	BIO_DUALMACHINEGUN_PKUP = "Procured a pair of %s.";
+	BIO_DUALMACHINEGUN_SCAV = "Scavenged ammo from a dropped pair of %s.";
+	BIO_DUALMACHINEGUN_OB = "%k gunned %o down with a pair of %s.";
+
 // Payloads (puff/projectile tags, functor summaries) //////////////////////////
 
 	// Generic tags used as defaults
@@ -379,9 +386,13 @@
 
 // Weapon morph recipe requirement strings /////////////////////////////////////
 
+	BIO_WMR_REQ_DAMAGEINC_1 = "\c[White]- One hit damage increase";
 	BIO_WMR_REQ_FIRETIMEDEC_1 = "\c[White]- One fire rate increase";
 	BIO_WMR_REQ_MAGSIZEINC_1 = "\c[White]- One magazine size increase";
 	BIO_WMR_REQ_MAGSIZEINC_2 = "\c[White]- Two magazine size increases";
+	BIO_WMR_REQ_RELOADTIMEDEC_1 = "\c[White]- One reload time increase";
+	BIO_WMR_REQ_SHOTCOUNTINC_1 = "\c[White]- One shot count increase";
+	BIO_WMR_REQ_SPREADDEC_1 = "\c[White]- One spread decrease";
 
 // Menu, weapon modification ///////////////////////////////////////////////////
 
@@ -463,6 +474,9 @@
 	// SOON
 
 // Miscellaneous ///////////////////////////////////////////////////////////////
+
+	BIO_RIGHT = "right";
+	BIO_LEFT = "left";
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";
 

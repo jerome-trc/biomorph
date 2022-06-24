@@ -30,8 +30,8 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	// Aliases for gun overlays.
 	enum FireLayers
 	{
-		PSP_RIGHTGUN = 5,
-		PSP_LEFTGUN = 6,
+		PSP_RIGHTWEAP = 5,
+		PSP_LEFTWEAP = 6,
 		PSP_RIGHTFLASH = 100,
 		PSP_LEFTFLASH = 101
 	}
@@ -81,8 +81,9 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	Select:
 		TNT1 A 0
 		{
-			A_Overlay(PSP_RIGHTGUN, 'Select.Right');
-			A_Overlay(PSP_LEFTGUN, 'Select.Left');
+			invoker.OnSelect();
+			A_Overlay(PSP_RIGHTWEAP, 'Select.Right');
+			A_Overlay(PSP_LEFTWEAP, 'Select.Left');
 		}
 		TNT1 A 1 A_Raise(invoker.RaiseSpeed);
 		Wait;
@@ -91,8 +92,9 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 	Deselect:
 		TNT1 A 0
 		{
-			A_Overlay(PSP_RIGHTGUN, 'Deselect.Right');
-			A_Overlay(PSP_LEFTGUN, 'Deselect.Left');
+			invoker.OnDeselect();
+			A_Overlay(PSP_RIGHTWEAP, 'Deselect.Right');
+			A_Overlay(PSP_LEFTWEAP, 'Deselect.Left');
 		}
 		TNT1 A 1 A_Lower(invoker.LowerSpeed);
 		Wait;
@@ -100,10 +102,11 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 
 	// Parent overrides ////////////////////////////////////////////////////////
 
-	// Setup state pointers.
+	// Set up state pointers.
 	override void PostBeginPlay()
 	{
 		super.PostBeginPlay();
+
 		s_Ready = FindState('Ready');
 		s_ReadyRight = FindState('Ready.Right');
 		s_ReadyLeft = FindState('Ready.Left');
@@ -136,30 +139,48 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 // Newly-defined actions.
 extend class BIO_DualWieldWeapon
 {
-	// Returns true if ammo should be infinite.
-	private action bool A_EDW_CheckInfiniteAmmo()
+	protected action void A_SetOverlayOffset_X(double offset)
 	{
-		return (sv_infiniteammo || FindInventory('PowerInfiniteAmmo', true));
+		A_OverlayOffset(OverlayID(), wx: offset, flags: WOF_KEEPY);
+	}
+
+	protected action void A_SetOverlayOffset_Y(double offset)
+	{
+		A_OverlayOffset(OverlayID(), wy: offset, flags: WOF_KEEPX);
+	}
+
+	protected action void A_AddOverlayOffset_X(double offset)
+	{
+		A_OverlayOffset(OverlayID(), wx: offset, flags: WOF_KEEPY | WOF_ADD);
+	}
+
+	protected action void A_AddOverlayOffset_Y(double offset)
+	{
+		A_OverlayOffset(OverlayID(), wy: offset, flags: WOF_KEEPX | WOF_ADD);
+	}
+
+	protected action void A_BIO_OverlayFlags_L()
+	{
+		A_OverlayFlags(OverlayID(), PSPF_FLIP | PSPF_MIRROR, true);
 	}
 
 	/*	This is meant to be called instead of `A_WeaponReady()` in the main
 		`Ready` state sequence (NOT in the left/right ready sequences).
 		This doesn't actually make the weapon ready for firing directly, but 
 		rather makes sure everything is set up correctly and creates overlays
-		if they haven't been created yet.
-		It also initiates reloading.
+		if they haven't been created yet. It also initiates reloading.
 	*/
 	protected action void A_DualWeaponReady()
 	{
-		// Create gun overlays (once) if they're not drawn for some reason:
-		A_Overlay(PSP_RIGHTGUN, "Ready.Right", nooverride:true);
-		A_Overlay(PSP_LEFTGUN, "Ready.Left", nooverride:true);		
-		
+		// Create weapon overlays (once) if they're not drawn for some reason:
+		A_Overlay(PSP_RIGHTWEAP, "Ready.Right", nooverride: true);
+		A_Overlay(PSP_LEFTWEAP, "Ready.Left", nooverride: true);		
+
 		bool readyRight = A_CheckReady_R();
 		bool readyLeft = A_CheckReady_L();
 		bool reloadReadyRight = A_CheckReadyForReload_R();
 		bool reloadReadyLeft = A_CheckReadyForReload_L();
-		
+
 		// Disable "rage face" if neither weapon is firing:
 		if (readyRight && readyLeft)
 			Player.AttackDown = false;
@@ -187,9 +208,9 @@ extend class BIO_DualWieldWeapon
 			}
 		}
 
-		/*	If player isn't pressing Reload but this flag was set by the right gun,
-			proceed to reload the left gun as well.
-			This is done to reload both guns in succession without having to
+		/*	If player isn't pressing Reload but this flag was set by the right
+			weapon, proceed to reload the left weapon as well.
+			This is done to reload both weapons in succession without having to
 			press the Reload button twice.
 		*/
 		else if (!invoker.bAkimboReload && invoker.continueReload && reloadReadyLeft)
@@ -201,10 +222,10 @@ extend class BIO_DualWieldWeapon
 		A_WeaponReady(WRF_NOFIRE); // Let the gun bob and be deselected
 	}
 
-	// Returns true if the gun is in its respective `Ready` state sequence
+	// Returns true if the weapon is in its respective `Ready` state sequence.
 	private action bool A_CheckReady_R(bool left = false)
 	{
-		let psp = left ? Player.FindPSprite(PSP_LEFTGUN) : Player.FindPSprite(PSP_RIGHTGUN);
+		let psp = left ? Player.FindPSprite(PSP_LEFTWEAP) : Player.FindPSprite(PSP_RIGHTWEAP);
 		let checkstate = left ? invoker.s_Readyleft : invoker.s_ReadyRight;
 		return psp && InStateSequence(psp.CurState, checkstate);
 	}
@@ -243,8 +264,8 @@ extend class BIO_DualWieldWeapon
 	{
 		return A_CheckReadyForReload_R(true);
 	}
-	
-	// Returns true if the gun has enough ammo to fire.
+
+	// Returns true if the weapon has enough ammo to fire.
 	protected action bool A_CheckAmmo_R(bool left = false)
 	{
 		let ammo2check = left ? invoker.Magazine2 : invoker.Magazine1;
@@ -253,15 +274,15 @@ extend class BIO_DualWieldWeapon
 		// Otherwise get the required amount
 		int reqAmt = left ? invoker.AmmoUse2 : invoker.AmmoUse1;
 		// Return true if infinite ammo is active or we have enough
-		return A_EDW_CheckInfiniteAmmo() || ammo2check.Amount >= reqAmt;
+		return invoker.CheckInfiniteAmmo() || ammo2check.Amount >= reqAmt;
 	}
-	
+
 	// Left-weapon alias for `A_CheckAmmo_R()`.
 	protected action bool A_CheckAmmo_L()
 	{
 		return A_CheckAmmo_R(true);
 	}
-	
+
 	/*  The actual raising is done via the regular `A_Raise()` in the regular `Select`
 		state sequence. All this function does is, it checks if the main layer
 		is already in the Ready state, and if so, moves the calling layer from
@@ -269,16 +290,15 @@ extend class BIO_DualWieldWeapon
 	*/
 	protected action void A_Raise_R(bool left = false)
 	{
-		if (!player)
+		let psp = Player.FindPSprite(PSP_WEAPON);
+
+		if (psp == null)
 			return;
-		let psp = player.FindPSprite(PSP_WEAPON);
-		if (!psp)
-			return;
-		let targetState = left ? invoker.s_readyLeft : invoker.s_readyRight;
-		if (InStateSequence(psp.curstate,invoker.s_ready))
-		{
-			player.SetPsprite(OverlayID(),targetState);
-		}
+
+		let tgt = left ? invoker.s_readyLeft : invoker.s_readyRight;
+
+		if (InStateSequence(psp.CurState, invoker.s_ready))
+			Player.SetPSprite(OverlayID(), tgt);
 	}
 
 	// Left-weapon alias for `A_Raise_R()`.
@@ -292,16 +312,16 @@ extend class BIO_DualWieldWeapon
 	*/
 	protected action void A_WeaponReady_R()
 	{
-		if (!Player) return;
 		// Enable bobbing:
 		A_OverlayFlags(OverlayID(), PSPF_ADDBOB, true);
-		state targetState = null;
+		state tgt = null;
 		bool pressingFire = Player.Cmd.Buttons & BT_ATTACK;		
+
 		if (pressingFire)
 		{
 			if (A_CheckAmmo_R())
 			{
-				targetState = invoker.s_fireRight;
+				tgt = invoker.s_fireRight;
 				invoker.continueReload = false;
 			}
 			else if (invoker.MagazineType1 && invoker.Ammo1.Amount > 0)
@@ -315,10 +335,10 @@ extend class BIO_DualWieldWeapon
 		}
 
 		// If we're going to fire/reload, disable bobbing:
-		if (targetState) 
+		if (tgt != null) 
 		{
 			A_OverlayFlags(OverlayID(), PSPF_ADDBOB, false);
-			Player.SetPSprite(OverlayID(),targetState);
+			Player.SetPSprite(OverlayID(), tgt);
 		}
 		// Otherwise re-enable bobbing:
 		else 
@@ -326,7 +346,7 @@ extend class BIO_DualWieldWeapon
 			A_OverlayFlags(OverlayID(), PSPF_ADDBOB, true);
 		}
 	}
-	
+
 	/*  Ready function for the left weapon. Will jump into the left `Fire` sequence
 		or left `Reload` sequence based on buttons pressed and ammo available.
 	*/
@@ -365,37 +385,39 @@ extend class BIO_DualWieldWeapon
 		}
 	}
 
-	/*  Right-gun analong of `A_GunFlash()`. Does two things:
+	/*  Right-weapon analong of `A_GunFlash()`. Does two things:
 		- Draws `Flash.Right`/`Flash.Left` on `PSP_RIGHTFLASH`/`PSP_LEFTFLASH` layers
 		- Makes sure the flash doesn't follow weapon bob and gets aligned
-		with the gun layer the moment it's called (If you want to move the 
+		with the weapon layer the moment it's called (If you want to move the 
 		flash around after that, you'll have to do it manually.)
 	*/
 	protected action void A_GunFlash_R(bool left = false)
 	{
-		if (!player)
-			return;
 		let psp = Player.FindPSprite(OverlayID());
+
 		if (!psp)
 			return;
+
 		int layer = left ? PSP_LEFTFLASH : PSP_RIGHTFLASH;
 		state flashstate = left ? invoker.s_flashLeft : invoker.s_flashRight;
+
 		if (!flashstate)
 			return;
-		Player.SetPsprite(layer,flashstate);
-		A_OverlayFlags(layer,PSPF_ADDBOB,false);
-		A_OverlayOffset(layer,psp.x,psp.y);
-		
+
+		Player.SetPSprite(layer, flashstate);
+		A_OverlayFlags(layer, PSPF_ADDBOB, false);
+		A_OverlayOffset(layer, psp.x, psp.y);
 	}
 
 	// Left-weapon alias for `A_GunFlash_R()`.
 	protected action void A_GunFlash_L()
 	{
 		A_GunFlash_R(true);
+		A_OverlayFlags(PSP_LEFTFLASH, PSPF_FLIP | PSPF_MIRROR, true);
 	}
-	
-	// `A_ReFire` analog for the right gun. Increases player.Refire just like
-	// `A_Refire()`, and resets it to 0 as long as neither gun is refiring.
+
+	// `A_ReFire()` analog for the right weapon. Increases `Player.Refire` just like
+	// `A_Refire()`, and resets it to 0 as long as neither weapon is refiring.
 	protected action void A_ReFire_R(bool left = false)
 	{
 		// Double-check player and psp:
@@ -443,7 +465,7 @@ extend class BIO_DualWieldWeapon
 	{
 		A_ReFire_R(true);
 	}
-	
+
 	// This jumps to the reload state provided magazine isn't full
  	// and reserve ammo isn't empty.
 	protected action void A_Reload_R(bool left = false)
@@ -454,7 +476,7 @@ extend class BIO_DualWieldWeapon
 		// set the other gun into the `ReloadWait` state sequence:
 		if (!invoker.bAkimboReload)
 		{
-			int otherGun = left ? PSP_RIGHTGUN : PSP_LEFTGUN;
+			int otherGun = left ? PSP_RIGHTWEAP : PSP_LEFTWEAP;
 			state waitState = left ? invoker.s_ReloadWaitRight : invoker.s_ReloadWaitLeft;
 			
 			if (waitState)
@@ -466,7 +488,7 @@ extend class BIO_DualWieldWeapon
 
 		// Set the current layer to the `Reload` state sequence:
 		let targetState = left ? invoker.s_ReloadLeft : invoker.s_ReloadRight;
-		int gunLayer = left ? PSP_LEFTGUN : PSP_RIGHTGUN;
+		int gunLayer = left ? PSP_LEFTWEAP : PSP_RIGHTWEAP;
 		player.SetPSprite(gunLayer, targetState);
 	}
 
@@ -474,7 +496,7 @@ extend class BIO_DualWieldWeapon
 	{
 		A_Reload_R(true);
 	}
-	
+
 	protected action void A_LoadMag_R(uint amt = 0)
 	{
 		A_BIO_LoadMag(amt, false);
@@ -483,5 +505,64 @@ extend class BIO_DualWieldWeapon
 	protected action void A_LoadMag_L(uint amt = 0)
 	{
 		A_BIO_LoadMag(amt, true);
+	}
+
+	protected action bool A_BIO_Fire_R(uint pipeline = 0,
+		int fireFactor = 1, float spreadFactor = 1.0)
+	{
+		invoker.bAltFire = false;
+		return A_BIO_Fire(pipeline, fireFactor, spreadFactor);
+	}
+
+	protected action bool A_BIO_Fire_L(uint pipeline = 0,
+		int fireFactor = 1, float spreadFactor = 1.0)
+	{
+		invoker.bAltFire = true;
+		return A_BIO_Fire(pipeline, fireFactor, spreadFactor);
+	}
+
+	// Note that for all of the below functions, the default assumption is that
+	// left weapons rely on the secondary magazine/ammo source.
+
+	protected action bool A_BIO_CheckAmmo_R(bool secondary = false,
+		int multi = 1, bool single = false)
+	{
+		return A_BIO_CheckAmmo(
+			secondary,
+			'Ready.Right', 'Reload.Right', 'Dryfire.Right',
+			multi, single
+		);
+	}
+
+	protected action bool A_BIO_CheckAmmo_L(bool secondary = true,
+		int multi = 1, bool single = false)
+	{
+		return A_BIO_CheckAmmo(
+			secondary,
+			'Ready.Left', 'Reload.Left', 'Dryfire.Left',
+			multi, single
+		);
+	}
+
+	protected action bool A_BIO_AutoReload_R(bool secondary = false,
+		int multi = 1, bool single = false)
+	{
+		return A_BIO_AutoReload(secondary, 'Reload.Right', multi, single);
+	}
+
+	protected action bool A_BIO_AutoReload_L(bool secondary = true,
+		int multi = 1, bool single = false)
+	{
+		return A_BIO_AutoReload(secondary, 'Reload.Left', multi, single);
+	}
+
+	protected action state A_BIO_CheckReload_R(bool secondary = false)
+	{
+		return A_BIO_CheckReload(secondary, 'Ready.Right');
+	}
+
+	protected action state A_BIO_CheckReload_L(bool secondary = true)
+	{
+		return A_BIO_CheckReload(secondary, 'Ready.Left');
 	}
 }

@@ -74,3 +74,35 @@ class BIO_WMR_VolleyGun : BIO_WeaponMorphRecipe
 		return StringTable.Localize("$BIO_WMR_REQ_MAGSIZEINC_2");
 	}
 }
+
+class BIO_WMR_DualMachineGun : BIO_WeaponMorphRecipe
+{
+	final override class<BIO_Weapon> Output() const
+	{
+		return 'BIO_DualMachineGun';
+	}
+
+	final override bool Eligible(readOnly<BIO_WeaponModSimulator> sim) const
+	{
+		return
+			sim.HasModifierWithFlags(BIO_WMODF_MAGSIZE_INC) &&
+			sim.HasModifierWithFlags(BIO_WMODF_FIRETIME_DEC) &&
+			sim.HasModifierWithFlags(BIO_WMODF_RELOADTIME_DEC) &&
+			sim.HasModifierWithFlags(BIO_WMODF_SHOTCOUNT_INC) &&
+			sim.HasModifierWithFlags(BIO_WMODF_DAMAGE_INC) &&
+			sim.HasModifierWithFlags(BIO_WMODF_SPREAD_DEC);
+	}
+
+	final override string RequirementString() const
+	{
+		return String.Format(
+			"%s\n%s\n%s\n%s\n%s\n%s",
+			StringTable.Localize("$BIO_WMR_REQ_MAGSIZEINC_1"),
+			StringTable.Localize("$BIO_WMR_REQ_FIRETIMEDEC_1"),
+			StringTable.Localize("$BIO_WMR_REQ_RELOADTIMEDEC_1"),
+			StringTable.Localize("$BIO_WMR_REQ_SHOTCOUNTINC_1"),
+			StringTable.Localize("$BIO_WMR_REQ_DAMAGEINC_1"),
+			StringTable.Localize("$BIO_WMR_REQ_SPREADDEC_1")
+		);
+	}
+}

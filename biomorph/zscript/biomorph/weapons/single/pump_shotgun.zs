@@ -86,7 +86,7 @@ class BIO_PumpShotgun : BIO_Weapon
 		SHTG C 2 A_Refire('Refire.Late');
 		Goto Reload.Repeat;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
+		TNT1 A 0 A_BIO_CheckReload;
 		TNT1 A 0 { if (invoker.MagazineEmpty()) invoker.Overloaded = true; }
 		SHTG A 2 A_BIO_SetReloadTime(0);
 		SHTG B 5 A_BIO_SetReloadTime(1);

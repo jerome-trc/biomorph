@@ -68,7 +68,7 @@ class BIO_ServicePistol : BIO_Weapon
 		}
 		Goto LightDone;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
+		TNT1 A 0 A_BIO_CheckReload;
 		PISG A 1 A_WeaponReady(WRF_NOFIRE);
 		PISG A 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(1);
 		PISG A 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(2);

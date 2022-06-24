@@ -475,6 +475,12 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
+	BIO_WeaponPipelineBuilder SecondaryAmmo(bool secondary)
+	{
+		Pipeline.SecondaryAmmo = secondary;
+		return self;
+	}
+
 	BIO_WeaponPipelineBuilder Tag(string tag)
 	{
 		Pipeline.Tag = tag;

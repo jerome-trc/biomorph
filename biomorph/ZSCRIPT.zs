@@ -76,3 +76,4 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/single/volley_gun.zs"
 
 #include "zscript/biomorph/weapons/dual/fists.zs"
+#include "zscript/biomorph/weapons/dual/machine_gun.zs"

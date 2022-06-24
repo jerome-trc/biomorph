@@ -95,7 +95,7 @@ class BIO_Coachgun : BIO_Weapon
 		SHT2 J 3 Bright A_Light(2);
 		Goto LightDone;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
+		TNT1 A 0 A_BIO_CheckReload;
 		SHT2 B 7 A_BIO_SetReloadTime(0);
 		SHT2 C 7 A_BIO_SetReloadTime(1);
 		SHT2 D 7

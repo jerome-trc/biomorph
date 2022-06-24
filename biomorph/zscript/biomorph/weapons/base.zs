@@ -53,6 +53,8 @@ class BIO_Weapon : DoomWeapon abstract
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
 
+	// For dual-wield weapons, ammo and magazine types 2 are for the left weapon
+
 	meta class<Ammo> MagazineType1, MagazineType2;
 	property MagazineType: MagazineType1;
 	property MagazineType1: MagazineType1;
@@ -482,7 +484,7 @@ extend class BIO_Weapon
 
 	final override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
 	{
-		if (sv_infiniteammo || (Owner.FindInventory('PowerInfiniteAmmo', true) != null))
+		if (CheckInfiniteAmmo())
 			return true;
 
 		if (TryEnergyToMatterFeed(altFire))
@@ -674,11 +676,8 @@ extend class BIO_Weapon
 
 	bool SufficientAmmo(bool secondary = false, int multi = 1) const
 	{
-		if (sv_infiniteammo ||
-			(Owner.FindInventory('PowerInfiniteAmmo', true) != null))
-		{
+		if (CheckInfiniteAmmo())
 			return true;
-		}
 
 		if (CanFeedEnergyToMatter(secondary, multi) ||
 			CanFireEnergyToMatter(secondary, multi))
@@ -710,6 +709,13 @@ extend class BIO_Weapon
 		return !secondary ?
 			Magazine1.Amount >= MagazineSize1 :
 			Magazine2.Amount >= MagazineSize2;
+	}
+
+	bool CheckInfiniteAmmo() const
+	{
+		return
+			sv_infiniteammo ||
+			Owner.FindInventory('PowerInfiniteAmmo', true) != null;
 	}
 
 	bool CanFeedEnergyToMatter(bool secondary = false, int multi = 1) const
@@ -1139,41 +1145,42 @@ extend class BIO_Weapon
 
 	// Conventionally called on a `TNT1 A 0` state at the
 	// very beginning of a fire/altfire state.
-	protected action state A_BIO_CheckAmmo(
-		bool secondary = false, int multi = 1, bool single = false)
+	protected action state A_BIO_CheckAmmo(bool secondary = false,
+		statelabel fallback = 'Ready', statelabel reload = 'Reload',
+		statelabel dryfire = 'Dryfire', int multi = 1, bool single = false)
 	{
 		if (invoker.SufficientAmmo(secondary, multi))
 			return state(null);
 
 		if (!invoker.CanReload())
 		{
-			state dfs = ResolveState('Dryfire');
+			state dfs = ResolveState(dryfire);
 			
 			if (dfs != null)
 				return dfs;
 			else
-				return ResolveState('Ready');
+				return ResolveState(fallback);
 		}
 
 		let cv = BIO_CVar.AutoReloadPre(Player);
 		bool s = single || invoker.ShotsPerMagazine(secondary) == 1;
 
 		if (cv == BIO_CV_AUTOREL_ALWAYS || (cv == BIO_CV_AUTOREL_SINGLE && s))
-			return ResolveState('Reload');
+			return ResolveState(reload);
 		else
 		{
-			state dfs = ResolveState('Dryfire');
+			state dfs = ResolveState(dryfire);
 			
 			if (dfs != null)
 				return dfs;
 			else
-				return ResolveState('Ready');
+				return ResolveState(fallback);
 		}
 	}
 
 	// To be called at the end of a fire/altfire state.
-	protected action state A_BIO_AutoReload(
-		bool secondary = false, int multi = 1, bool single = false)
+	protected action state A_BIO_AutoReload(bool secondary = false,
+		statelabel reload = 'Reload', int multi = 1, bool single = false)
 	{
 		if (invoker.SufficientAmmo(secondary, multi))
 			return state(null);
@@ -1185,9 +1192,19 @@ extend class BIO_Weapon
 		bool s = single || invoker.ShotsPerMagazine(secondary) == 1;
 
 		if (cv == BIO_CV_AUTOREL_ALWAYS || (cv == BIO_CV_AUTOREL_SINGLE && s))
-			return ResolveState('Reload');
+			return ResolveState(reload);
 		else
 			return state(null);
+	}
+
+	// Call on a `TNT1 A 0` state before a `Reload` state sequence begins.
+	protected action state A_BIO_CheckReload(
+		bool secondary = false, statelabel fallback = 'Ready')
+	{
+		if (invoker.CanReload(secondary))
+			return state(null);
+		else
+			return ResolveState(fallback);
 	}
 
 	// Clear the magazine and return rounds in it to the reserve, with

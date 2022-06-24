@@ -3,3 +3,6 @@ BIO_WMR_AutoShotgun
 
 BIO_WMR_VolleyGun
 	BIO_Coachgun
+
+BIO_WMR_DualMachineGun
+	BIO_MachineGun

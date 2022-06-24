@@ -80,7 +80,7 @@ class BIO_AutoShotgun : BIO_Weapon
 		}
 		Goto LightDone;
 	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
+		TNT1 A 0 A_BIO_CheckReload;
 		AUSG A 1 A_WeaponReady(WRF_NOFIRE);
 		AUSG A 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(1);
 		AUSG A 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(2);
