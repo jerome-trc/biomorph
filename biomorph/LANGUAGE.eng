@@ -8,6 +8,7 @@
 	solution which doesn't break when moved from English to, for instance, French.
 	- Don't be surprised if an internal name doesn't line up with a flavour name.
 	- Color escape codes often get substituted at runtime.
+	- Yes, I am a fiend for coloured text.
 */
 
 [eng default]
@@ -489,7 +490,23 @@
 
 // Quit messages ///////////////////////////////////////////////////////////////
 
-	// SOON
+	BIO_QUITMSG_EXAMINE =
+		"\c[White]Press the \c[LightBlue]Use\c[White] button "
+		"on a gear item to gain some general information on it.\c-";
+	BIO_QUITMSG_LIFESTEALMAX =
+		"\c[White]Lifesteal, like Health Flasks, "
+		"gives health up to your maximum plus 100.\c-";
+	BIO_QUITMSG_MORPHREQS =
+		"\c[White]Requirements to metamorph a weapon vary from one to another. "
+		"Try different combinations of genes. Remember that some weapons can "
+		"metamorphosize from multiple different bases.\c-";
+	BIO_QUITMSG_MULTIBARREL =
+		"\c[White]Multi-barrelled weapons like the Coachgun "
+		"always allow firing only one barrel "
+		"(try your \c[LightBlue]alt-fire\c[White] button).\c-";
+
+	BIO_QUITMSG_DRONES =
+		"\c[Purple]Please don't go. The drones need you. They look up to you.\c-";
 
 // Miscellaneous ///////////////////////////////////////////////////////////////
 
@@ -500,3 +517,5 @@
 
 	BIO_PRIMARYQUALIFIER = "\c[White](\c[Yellow]Primary\c[White])";
 	BIO_SECONDARYQUALIFIER = "\c[White](\c[Yellow]Secondary\c[White])";
+	
+	DOSY = "\c[Red](\c[White]Press \c[LightBlue]Y\c[White] to quit\c[Red])\c-";

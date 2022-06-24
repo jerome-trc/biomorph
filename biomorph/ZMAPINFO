@@ -3,6 +3,13 @@ GameInfo
 	AddEventHandlers = "BIO_EventHandler"
    PlayerClasses = "BIO_Player"
 	StatusBarClass = "BIO_StatusBar"
+
+   QuitMessages =
+      // Tips
+      "$BIO_QUITMSG_EXAMINE", "$BIO_QUITMSG_LIFESTEALMAX",
+      "$BIO_QUITMSG_MORPHREQS", "$BIO_QUITMSG_MULTIBARREL",
+      // Flavour
+      "$BIO_QUITMSG_DRONES"
 }
 
 DamageType BIO_NullDamage
