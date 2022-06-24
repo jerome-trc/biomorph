@@ -83,8 +83,8 @@
 	BIO_BERSERK_PKUP = "Injected a berserk cocktail.";
 	BIO_BERSERK_PKUPFIRST = "Used a berserk cocktail's enhancers, but left the healers.";
 	BIO_BERSERK_PKUPLOW = "Injected a badly-needed berserk cocktail.";
-	BIO_BERSERK_COLLECTED = "Didn't use a berserk coctail, but marked it as collected.";
-	BIO_BERSERK_PARTIAL = "Injected part of a berserk coctail.";
+	BIO_BERSERK_COLLECTED = "Didn't use a berserk cocktail, but marked it as collected.";
+	BIO_BERSERK_PARTIAL = "Injected part of a berserk cocktail.";
 
 	BIO_ALLMAP_PKUP = "Obtained a computer area map; your surroundings become clear.";
 	BIO_BLURSPHERE_PKUP = "Absorbed a blursphere.";
