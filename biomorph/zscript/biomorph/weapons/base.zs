@@ -1065,12 +1065,14 @@ extend class BIO_Weapon
 		int fireFactor = 1, float spreadFactor = 1.0)
 	{
 		bool secAmmo = invoker.Pipelines[pipeline].SecondaryAmmo;
+		let usage = !secAmmo ? invoker.AmmoUse1 : invoker.AmmoUse2;
 
-		if (!invoker.DepleteAmmo(secAmmo, true,
-			!secAmmo ? invoker.AmmoUse1 * fireFactor : invoker.AmmoUse2 * fireFactor))
+		if (!invoker.DepleteAmmo(secAmmo, true, usage * fireFactor))
 			return false;
 
-		invoker.Pipelines[pipeline].Invoke(invoker, fireFactor, spreadFactor);
+		invoker.Pipelines[pipeline].Invoke(
+			invoker, pipeline, fireFactor, spreadFactor
+		);
 		return true;
 	}
 

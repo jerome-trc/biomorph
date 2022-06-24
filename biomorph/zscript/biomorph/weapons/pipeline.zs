@@ -1,6 +1,8 @@
 struct BIO_ShotData
 {
-	uint Number, Count;
+	uint Pipeline;
+	uint Number; // Which shot out of `Count` is this?
+	uint Count; // Loaded with `BIO_WeaponPipeline::ShotCount`.
 	class<Actor> Payload;
 	int Damage;
 	float HSpread, VSpread, Angle, Pitch;
@@ -26,11 +28,13 @@ class BIO_WeaponPipeline play
 	Array<BIO_HitDamageFunctor> HitDamageFunctors;
 	Array<BIO_PayloadDeathFunctor> PayloadDeathFunctors;
 
-	void Invoke(BIO_Weapon weap, uint fireFactor = 1, float spreadFactor = 1.0)
+	void Invoke(BIO_Weapon weap, uint pipelineIndex,
+		uint fireFactor = 1, float spreadFactor = 1.0)
 	{
 		uint sc = ShotCount * fireFactor;
 
 		BIO_ShotData shotData;
+		shotData.Pipeline = pipelineIndex;
 		shotData.Count = sc;
 
 		for (uint i = 0; i < sc; i++)
