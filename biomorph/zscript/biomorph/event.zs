@@ -474,8 +474,16 @@ extend class BIO_EventHandler
 		{
 			if (Random[BIO_Loot](1, 20) == 1)
 			{
+				let gene_t = Globals.RandomGeneType();
+				let defs = GetDefaultByType(gene_t);
+
+				if (defs.LootWeight <= BIO_Gene.LOOTWEIGHT_VERYRARE)
+					S_StartSound("bio/loot/veryrare", CHAN_AUTO);
+				else if (defs.LootWeight <= BIO_Gene.LOOTWEIGHT_RARE)
+					S_StartSound("bio/loot/rare", CHAN_AUTO);
+
 				event.Thing.A_SpawnItemEx(
-					Globals.RandomGeneType(),
+					gene_t,
 					0.0, 0.0, 32.0,
 					FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
 					FRandom(0.0, 360.0)
@@ -483,8 +491,16 @@ extend class BIO_EventHandler
 			}
 			else
 			{
+				let muta_t = Globals.RandomMutagenType();
+				let defs = GetDefaultByType(muta_t);
+
+				if (defs.DropWeight <= BIO_Mutagen.DROPWT_CORR)
+					S_StartSound("bio/loot/veryrare", CHAN_AUTO);
+				else if (defs.DropWeight <= 2)
+					S_StartSound("bio/loot/rare", CHAN_AUTO);
+
 				event.Thing.A_SpawnItemEx(
-					Globals.RandomMutagenType(),
+					muta_t,
 					0.0, 0.0, 32.0,
 					FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
 					FRandom(0.0, 360.0)
@@ -532,26 +548,31 @@ extend class BIO_EventHandler
 	private bool OnWeaponSpawn(WorldEvent event) const
 	{
 		class<Actor> t = event.Thing.GetClass();
+		class<BIO_Weapon> lwt = null;
 
 		if (t == 'Shotgun')
-			FinalizeSpawn(Globals.LootWeaponType(BIO_WSCAT_SHOTGUN), event.Thing);
+			lwt = Globals.LootWeaponType(BIO_WSCAT_SHOTGUN);
 		else if (t == 'Chaingun')
-			FinalizeSpawn(Globals.LootWeaponType(BIO_WSCAT_CHAINGUN), event.Thing);
+			lwt = Globals.LootWeaponType(BIO_WSCAT_CHAINGUN);
 		else if (t == 'SuperShotgun')
-			FinalizeSpawn(Globals.LootWeaponType(BIO_WSCAT_SSG), event.Thing);
+			lwt = Globals.LootWeaponType(BIO_WSCAT_SSG);
 		else if (t == 'RocketLauncher')
-			FinalizeSpawn(Globals.LootWeaponType(BIO_WSCAT_RLAUNCHER), event.Thing);
+			lwt = Globals.LootWeaponType(BIO_WSCAT_RLAUNCHER);
 		else if (t == 'PlasmaRifle')
-			FinalizeSpawn(Globals.LootWeaponType(BIO_WSCAT_PLASRIFLE), event.Thing);
+			lwt = Globals.LootWeaponType(BIO_WSCAT_PLASRIFLE);
 		else if (t == 'BFG9000')
-			FinalizeSpawn(Globals.LootWeaponType(BIO_WSCAT_BFG9000), event.Thing);
+			lwt = Globals.LootWeaponType(BIO_WSCAT_BFG9000);
 		else if (t == 'Chainsaw')
-			FinalizeSpawn(Globals.LootWeaponType(BIO_WSCAT_CHAINSAW), event.Thing);
+			lwt = Globals.LootWeaponType(BIO_WSCAT_CHAINSAW);
 		else if (t == 'Pistol')
-			FinalizeSpawn(Globals.LootWeaponType(BIO_WSCAT_PISTOL), event.Thing);
+			lwt = Globals.LootWeaponType(BIO_WSCAT_PISTOL);
 		else
 			return false;
 
+		if (GetDefaultByType(lwt).Unique)
+			S_StartSound("bio/loot/unique", CHAN_AUTO);
+
+		FinalizeSpawn(lwt, event.Thing);
 		return true;
 	}
 

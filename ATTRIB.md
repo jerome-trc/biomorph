@@ -72,9 +72,15 @@ ARMRBON is courtesy of id Software LLC.
 
 ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) (USRINPT0, pitched down for USRINPUT1) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/) is licensed under Creative Commons Attribution 3.0 Unported.
 
+["Gong Hit"](https://freesound.org/people/GowlerMusic/sounds/266566/) (UNIQLOOT) by freesound user [GowlerMusic](https://freesound.org/people/GowlerMusic) is licensed under the Attribution 4.0 License.
+
 ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) (DRY_BAL0 through 2) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi) is licensed under Creative Commons 0.
 
+["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (RARELOOT) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
+
 VOLLFIRE is courtesy of [Kentucky Ballistics](https://www.youtube.com/watch?v=8gIS2n-bY1w).
+
+["Wind Chime, Gamelon Gong, A.wav"](https://freesound.org/people/InspectorJ/sounds/411090/) (SUPRLOOT) by freesound user [InspectorJ](https://freesound.org/people/InspectorJ) is licensed under the Attribution 4.0 License.
 
 ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) (USRFAIL0, edited for a 20% speed increase) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/) is licensed under Creative Commons 0.
 
