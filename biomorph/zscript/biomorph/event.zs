@@ -472,7 +472,7 @@ extend class BIO_EventHandler
 
 		while (Globals.DrainLootValueBuffer())
 		{
-			if (Random[BIO_Loot](1, 20) == 1)
+			if (Random[BIO_Loot](1, 12) == 1)
 			{
 				let gene_t = Globals.RandomGeneType();
 				let defs = GetDefaultByType(gene_t);
