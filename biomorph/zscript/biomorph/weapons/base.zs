@@ -1214,7 +1214,7 @@ extend class BIO_Weapon
 
 	// Clear the magazine and return rounds in it to the reserve, with
 	// consideration given to the relevant reload ratio.
-	protected action void A_BIO_EmptyMagazine(bool secondary = false)
+	protected action void A_BIO_DrainMag(bool secondary = false)
 	{
 		Ammo magItem = null, reserveAmmo = null;
 		int cost = -1, output = -1;
