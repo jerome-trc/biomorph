@@ -337,7 +337,7 @@ extend class BIO_Global
 // Loot value buffer and related symbols.
 extend class BIO_Global
 {
-	const LOOT_VALUE_THRESHOLD = 600;
+	const LOOT_VALUE_THRESHOLD = 800;
 
 	uint LootValueBuffer;
 

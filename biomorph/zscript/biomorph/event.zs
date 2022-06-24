@@ -485,7 +485,7 @@ extend class BIO_EventHandler
 
 		while (Globals.DrainLootValueBuffer())
 		{
-			if (Random[BIO_Loot](0, 32) == 0)
+			if (Random[BIO_Loot](1, 20) == 1)
 			{
 				event.Thing.A_SpawnItemEx(
 					Globals.RandomGeneType(),
