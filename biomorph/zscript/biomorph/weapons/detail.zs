@@ -323,5 +323,5 @@ class BIO_WeaponAffix play abstract
 	// weapon which was actually used to cause the kill. Plan accordingly.
 	virtual void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) {}
 
-	abstract void Summary(in out Array<string> strings) const;
+	abstract string Description(readOnly<BIO_Weapon> weap) const;
 }

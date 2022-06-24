@@ -270,10 +270,8 @@ class BIO_StatusBar : BaseStatusBar
 		DrawString(Font_Small, weap.GetTag(), (xPos, weapInfoY),
 			align, Font.CR_UNTRANSLATED);
 
-		weapInfoY += 16;
-
 		// Blank line between weapon's tag and its summary
-		weapInfoY += 16;
+		weapInfoY += 32;
 
 		Array<string> weapStrings;
 		weap.Summary(weapStrings);

@@ -213,11 +213,7 @@ class BIO_Weapon : DoomWeapon abstract
 	*/
 	virtual void IntrinsicModGraph(in out BIO_WeaponModGraph graph) const {}
 
-	virtual void Summary(in out Array<string> strings) const
-	{
-		for (uint i = 0; i < Affixes.Size(); i++)
-			Affixes[i].Summary(strings);
-	}
+	virtual void Summary(in out Array<string> strings) const {}
 
 	// Weapon-building helpers /////////////////////////////////////////////////
 
