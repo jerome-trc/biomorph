@@ -17,6 +17,11 @@ class BIO_WeaponMorphRecipe abstract
 	virtual uint MutagenCostAdded() const { return 0; }
 	virtual uint MutagenCostMultiplier() const { return 1; }
 
+	// For use in sidegrades and downgrades; as a reward for losing genes and
+	// trading in one's more advanced weapon, the output gets more nodes baked
+	// into its graph, and this effect is carried on to that weapon's upgrades.
+	virtual uint QualityAdded() const { return 0; }
+
 	// Return `false` if this recipe shouldn't be added to the global cache,
 	// e.g. if it's for compatibility with a mod that wasn't loaded.
 	virtual bool Enabled() const { return true; }

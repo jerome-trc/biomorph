@@ -875,17 +875,7 @@ class BIO_WeaponModSimulator : Thinker
 	string GetNodeTooltip(uint node) const
 	{
 		if (Nodes[node].IsMorph())
-		{
-			let morph = Nodes[node].MorphRecipe;
-
-			return String.Format(
-				StringTable.Localize("$BIO_MENU_WEAPMOD_MORPH"),
-				GetDefaultByType(morph.Output()).ColoredTag(),
-				morph.RequirementString(),
-				MorphCost(node),
-				GetDefaultByType('BIO_Muta_General').GetTag()
-			);
-		}
+			return GetMorphTooltip(node);
 
 		let n = Nodes[node];
 
@@ -914,6 +904,29 @@ class BIO_WeaponModSimulator : Thinker
 	string GetGeneSlotTooltip(uint slot) const
 	{
 		return Genes[slot].GetSummaryTooltip();
+	}
+
+	private string GetMorphTooltip(uint node) const
+	{
+		let morph = Nodes[node].MorphRecipe;
+
+		let ret = String.Format(
+			StringTable.Localize("$BIO_MENU_WEAPMOD_MORPH"),
+			GetDefaultByType(morph.Output()).ColoredTag(),
+			morph.RequirementString(),
+			MorphCost(node),
+			GetDefaultByType('BIO_Muta_General').GetTag()
+		);
+
+		if (morph.QualityAdded() > 0)
+		{
+			ret.AppendFormat(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_MORPH_QUALITY"),
+				morph.QualityAdded()
+			);
+		}
+
+		return ret;
 	}
 
 	// Other introspective helpers /////////////////////////////////////////////

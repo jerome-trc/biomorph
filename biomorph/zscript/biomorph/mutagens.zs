@@ -73,9 +73,7 @@ class BIO_Muta_General : BIO_Mutagen
 			return false;
 		}
 
-		weap.ModGraph = BIO_WeaponModGraph.Create(weap.GraphQuality);
-		weap.IntrinsicModGraph(true);
-		weap.SetTag(weap.ColoredTag());
+		weap.Mutate();
 		Owner.A_Print("$BIO_MUTA_GENERAL_USE");
 		return true;
 	}

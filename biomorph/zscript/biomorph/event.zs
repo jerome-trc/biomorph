@@ -256,11 +256,17 @@ extend class BIO_EventHandler
 		for (uint i = 0; i < toGive.Size(); i++)
 			pawn.GiveInventory(toGive[i], 1);
 
+		// Graph quality inherited over successive downgrades/sidegrades
+		uint qual = (weap.ModGraph.Nodes.Size() - 1) - weap.Default.GraphQuality;
+		qual += morph.QualityAdded();
+
 		weap.Amount = 0;
 		weap.DepleteOrDestroy();
 
 		pawn.GiveInventory(morph.Output(), 1);
-		let output = pawn.FindInventory(morph.Output());
+		let output = BIO_Weapon(pawn.FindInventory(morph.Output()));
+		output.Mutate();
+		output.ModGraph.TryGenerateNodes(qual);
 
 		pawn.TakeInventory('BIO_Muta_General', cost);
 		pawn.A_StartSound("bio/mutation/general");

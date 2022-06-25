@@ -1012,6 +1012,13 @@ extend class BIO_Weapon
 			Magazine2 = null;
 	}
 
+	void Mutate()
+	{
+		ModGraph = BIO_WeaponModGraph.Create(GraphQuality);
+		IntrinsicModGraph(true);
+		SetTag(ColoredTag());
+	}
+
 	bool TryEnergyToMatterFeed(bool secondary = false, int multi = 1)
 	{
 		if (CanFireEnergyToMatter(secondary, multi))
