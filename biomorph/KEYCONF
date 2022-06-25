@@ -11,6 +11,7 @@ defaultbind M "event bio_weapmodmenu"
 // Debug event aliases
 
 alias bio_help_ "event bio_help"
+alias bio_lootdiag_ "event bio_lootdiag"
 alias bio_monsval_ "event bio_monsval"
 
 alias bio_weaplootregen_ "netevent bio_globalregen 0"

@@ -263,6 +263,7 @@ extend class BIO_Global
 	private void PopulateMutagenLootTable()
 	{
 		MutagenLoot = new('BIO_LootTable');
+		MutagenLoot.Label = "Mutagen Loot";
 
 		for (uint i = 0; i < AllActorClasses.Size(); i++)
 		{
@@ -302,6 +303,7 @@ extend class BIO_Global
 	private void PopulateGeneLootTable()
 	{
 		GeneLoot = new('BIO_LootTable');
+		GeneLoot.Label = "Gene Loot";
 
 		for (uint i = 0; i < AllActorClasses.Size(); i++)
 		{
@@ -371,7 +373,8 @@ extend class BIO_Global
 	}
 }
 
-// Functions for clearing and re-populating data in the middle of gameplay.
+// Functions used by console events,
+// such as diagnostics and forced data regeneration.
 extend class BIO_Global
 {
 	void RegenWeaponLoot()
@@ -398,5 +401,19 @@ extend class BIO_Global
 	{
 		WeaponMorphRecipes.Clear();
 		PopulateWeaponMorphCache();
+	}
+
+	void PrintLootDiag() const
+	{
+		Console.Printf(
+			Biomorph.LOGPFX_INFO ..
+			"Loot value buffer: %d", LootValueBuffer
+		);
+
+		for (uint i = 0; i < WeaponLoot.Size(); i++)
+			Console.Printf(Biomorph.LOGPFX_INFO .. WeaponLoot[i].ToString());
+
+		Console.Printf(Biomorph.LOGPFX_INFO .. MutagenLoot.ToString());
+		Console.Printf(Biomorph.LOGPFX_INFO .. GeneLoot.ToString());
 	}
 }

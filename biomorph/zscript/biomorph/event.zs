@@ -351,12 +351,31 @@ extend class BIO_EventHandler
 		// Debugging events
 
 		ConEvent_Help(event);
+		ConEvent_LootDiag(event);
 		ConEvent_MonsVal(event);
+	}
+
+	private ui void ConEvent_LootDiag(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_lootdiag"))
+			return;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt by a script to invoke `bio_lootdiag`."
+			);
+			return;
+		}
+
+		Globals.PrintLootDiag();
 	}
 
 	private static ui void ConEvent_WeapModMenu(ConsoleEvent event)
 	{
-		if (!(event.Name ~== "bio_weapmodmenu")) return;
+		if (!(event.Name ~== "bio_weapmodmenu"))
+			return;
 
 		if (GameState != GS_LEVEL)
 			return;
@@ -383,8 +402,10 @@ extend class BIO_EventHandler
 
 		if (!event.IsManual)
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Illegal attempt by a script to invoke `bio_help`.");
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt by a script to invoke `bio_help`."
+			);
 			return;
 		}
 

@@ -824,21 +824,14 @@ class BIO_WeightedRandomTable
 		return ret;
 	}
 
-	void Print() const { PrintImpl(); }
+	string ToString() const { return ToStringImpl(0); }
 
-	private void PrintImpl(uint depth = 0)
+	private string ToStringImpl(uint depth) const
 	{
-		string lbl = Label.Length() > 0 ? Label : String.Format("%p", self);
-
-		if (Entries.Size() < 1)
-		{
-			Console.Printf(Biomorph.LOGPFX_INFO ..
-				"WeightedRandomTable `%s` is empty.", lbl);
-			return;
-		}
-			
-		Console.Printf(Biomorph.LOGPFX_INFO .. String.Format(
-			"Contents of WeightedRandomTable `%s`:", lbl));
+		string ret = String.Format(
+			"Contents of WeightedRandomTable `%s`:\n",
+			Label.Length() > 0 ? Label : String.Format("%p", self)
+		);
 
 		string prefix = "\t";
 
@@ -848,11 +841,19 @@ class BIO_WeightedRandomTable
 		for (uint i = 0; i < Entries.Size(); i++)
 		{
 			if (Entries[i].SubTable != null)
-				Entries[i].SubTable.PrintImpl(depth + 1);
+			{
+				ret.AppendFormat(Entries[i].SubTable.ToStringImpl(depth + 1));
+			}
 			else
-				Console.Printf(prefix .. "%s: %d",
-					Entries[i].Type.GetClassName(), Entries[i].Weight);
+			{
+				ret.AppendFormat(prefix .. "\t%s: %d\n",
+					Entries[i].Type.GetClassName(), Entries[i].Weight
+				);
+			}
 		}
+
+		ret.DeleteLastCharacter();
+		return ret;
 	}
 }
 
