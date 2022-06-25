@@ -31,7 +31,7 @@ class BIO_PumpShotgun : BIO_Weapon
 	{
 	Spawn:
 		SHOT B 0;
-		SHOT B 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Deselect:
 		SHTG A 0 A_BIO_Deselect;

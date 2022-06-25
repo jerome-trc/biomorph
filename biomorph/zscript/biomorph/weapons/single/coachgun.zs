@@ -28,7 +28,7 @@ class BIO_Coachgun : BIO_Weapon
 	{
 	Spawn:
 		SGN2 A 0;
-		SGN2 A 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Deselect:
 		SHT2 A 0 A_BIO_Deselect;

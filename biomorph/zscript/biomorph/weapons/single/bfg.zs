@@ -29,7 +29,7 @@ class BIO_BFG : BIO_Weapon
 	{
 	Spawn:
 		BFUG A 0;
-		BFUG A 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Deselect:
 		BFGG A 0 A_BIO_Deselect;

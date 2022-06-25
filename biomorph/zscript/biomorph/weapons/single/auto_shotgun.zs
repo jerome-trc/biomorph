@@ -29,7 +29,7 @@ class BIO_AutoShotgun : BIO_Weapon
 	{
 	Spawn:
 		AUSG Z 0;
-		AUSG Z 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Ready:
 		AUSG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
@@ -82,23 +82,23 @@ class BIO_AutoShotgun : BIO_Weapon
 	Reload:
 		TNT1 A 0 A_BIO_CheckReload;
 		AUSG A 1 A_WeaponReady(WRF_NOFIRE);
-		AUSG A 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(1);
-		AUSG A 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(2);
-		AUSG A 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(3);
-		AUSG A 1 Fast Offset(0, 32 + 15) A_BIO_SetReloadTime(4);
-		AUSG A 1 Offset(0, 32 + 30) A_BIO_SetReloadTime(5);
-		AUSG A 40 Offset(0, 32 + 30) A_BIO_SetReloadTime(6);
-		AUSG A 1 Offset(0, 32 + 15)
+		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(1);
+		#### # 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(2);
+		#### # 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(3);
+		#### # 1 Fast Offset(0, 32 + 15) A_BIO_SetReloadTime(4);
+		#### # 1 Offset(0, 32 + 30) A_BIO_SetReloadTime(5);
+		#### # 40 Offset(0, 32 + 30) A_BIO_SetReloadTime(6);
+		#### # 1 Offset(0, 32 + 15)
 		{
 			A_BIO_SetReloadTime(7);
 			A_BIO_LoadMag();
 		}
-		AUSG A 1 Fast Offset(0, 32 + 11) A_BIO_SetReloadTime(8);
-		AUSG A 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(9);
-		AUSG A 1 Fast Offset(0, 32 + 5) A_BIO_SetReloadTime(10);
-		AUSG A 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(11);
-		AUSG A 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
-		AUSG A 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
+		#### # 1 Fast Offset(0, 32 + 11) A_BIO_SetReloadTime(8);
+		#### # 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(9);
+		#### # 1 Fast Offset(0, 32 + 5) A_BIO_SetReloadTime(10);
+		#### # 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(11);
+		#### # 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
+		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
 		Goto Ready;
 	}
 

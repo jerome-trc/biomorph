@@ -26,7 +26,7 @@ class BIO_ServicePistol : BIO_Weapon
 	{
 	Spawn:
 		PIST A 0;
-		PIST A 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Ready:
 		PISG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
@@ -70,23 +70,23 @@ class BIO_ServicePistol : BIO_Weapon
 	Reload:
 		TNT1 A 0 A_BIO_CheckReload;
 		PISG A 1 A_WeaponReady(WRF_NOFIRE);
-		PISG A 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(1);
-		PISG A 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(2);
-		PISG A 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(3);
-		PISG A 1 Fast Offset(0, 32 + 15) A_BIO_SetReloadTime(4);
-		PISG A 1 Offset(0, 32 + 30) A_BIO_SetReloadTime(5);
-		PISG A 24 Offset(0, 32 + 30) A_BIO_SetReloadTime(6);
-		PISG A 1 Offset(0, 32 + 15)
+		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(1);
+		#### # 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(2);
+		#### # 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(3);
+		#### # 1 Fast Offset(0, 32 + 15) A_BIO_SetReloadTime(4);
+		#### # 1 Offset(0, 32 + 30) A_BIO_SetReloadTime(5);
+		#### # 24 Offset(0, 32 + 30) A_BIO_SetReloadTime(6);
+		#### # 1 Offset(0, 32 + 15)
 		{
 			A_BIO_SetReloadTime(7);
 			A_BIO_LoadMag();
 		}
-		PISG A 1 Fast Offset(0, 32 + 11) A_BIO_SetReloadTime(8);
-		PISG A 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(9);
-		PISG A 1 Fast Offset(0, 32 + 5) A_BIO_SetReloadTime(10);
-		PISG A 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(11);
-		PISG A 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
-		PISG A 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
+		#### # 1 Fast Offset(0, 32 + 11) A_BIO_SetReloadTime(8);
+		#### # 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(9);
+		#### # 1 Fast Offset(0, 32 + 5) A_BIO_SetReloadTime(10);
+		#### # 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(11);
+		#### # 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
+		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
 		Goto Ready;
 	}
 

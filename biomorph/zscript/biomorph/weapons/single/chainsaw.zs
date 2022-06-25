@@ -25,7 +25,7 @@ class BIO_Chainsaw : BIO_Weapon
 	{
 	Spawn:
 		CSAW A 0;
-		CSAW A 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Ready:
 		TNT1 A 0 A_BIO_Recoil('BIO_Recoil_ChainsawIdle');

@@ -27,7 +27,7 @@ class BIO_VolleyGun : BIO_Weapon
 	{
 	Spawn:
 		VOLL Z 0;
-		VOLL Z 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Ready:
 		VOLL A 1 A_WeaponReady(WRF_ALLOWRELOAD);

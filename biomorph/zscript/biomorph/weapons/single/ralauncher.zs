@@ -28,7 +28,7 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 	{
 	Spawn:
 		LAUN A 0;
-		LAUN A 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Deselect:
 		MISG A 0 A_BIO_Deselect;

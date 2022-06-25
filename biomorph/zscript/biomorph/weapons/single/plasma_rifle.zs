@@ -27,7 +27,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 	{
 	Spawn:
 		PLAS A 0;
-		PLAS A 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Deselect:
 		PLSG A 0 A_BIO_Deselect;

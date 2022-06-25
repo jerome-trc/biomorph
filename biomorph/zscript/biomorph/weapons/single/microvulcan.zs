@@ -28,7 +28,7 @@ class BIO_Microvulcan : BIO_Weapon
 	{
 	Spawn:
 		MGUN B 0;
-		MGUN B 0 A_BIO_Spawn;
+		#### # 0 A_BIO_Spawn;
 		Stop;
 	Deselect:
 		CHGG A 0 A_BIO_Deselect;
