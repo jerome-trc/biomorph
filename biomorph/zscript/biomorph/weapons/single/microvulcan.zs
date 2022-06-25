@@ -74,27 +74,6 @@ class BIO_Microvulcan : BIO_Weapon
 			A_Light(2);
 		}
 		Goto LightDone;
-	Reload:
-		TNT1 A 0 A_JumpIf(!invoker.CanReload(), 'Ready');
-		CHGG A 1 A_WeaponReady(WRF_NOFIRE);
-		CHGG A 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(1);
-		CHGG A 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(2);
-		CHGG A 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(3);
-		CHGG A 1 Fast Offset(0, 32 + 15) A_BIO_SetReloadTime(4);
-		CHGG A 1 Offset(0, 32 + 30) A_BIO_SetReloadTime(5);
-		CHGG A 40 Offset(0, 32 + 30) A_BIO_SetReloadTime(6);
-		CHGG A 1 Offset(0, 32 + 15)
-		{
-			A_BIO_SetReloadTime(7);
-			A_BIO_LoadMag();
-		}
-		CHGG A 1 Fast Offset(0, 32 + 11) A_BIO_SetReloadTime(8);
-		CHGG A 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(9);
-		CHGG A 1 Fast Offset(0, 32 + 5) A_BIO_SetReloadTime(10);
-		CHGG A 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(11);
-		CHGG A 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
-		CHGG A 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
-		Goto Ready;
 	}
 
 	protected action void A_Microvulcan_Fire()
