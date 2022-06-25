@@ -260,6 +260,7 @@
 	BIO_WMOD_INCOMPAT_NOMAGAZINE =
 		"No valid primary or secondary magazine,\n"
 		"or no reserve ammo type."
+	BIO_WMOD_INCOMPAT_NOPIPELINES = "This weapon doesn't fire anything.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
 	BIO_WMOD_INCOMPAT_SWITCHSPEEDMAX =
 		"This weapon already switches as fast as it possibly can.";
@@ -294,6 +295,9 @@
 		"\c[Gold]Some monsters are immune to this effect!";
 
 	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
+
+	BIO_WMOD_KICKBACK_SUMM = "\c[Green]+200% knockback";
+	BIO_WMOD_KICKBACK_DESC = "\c[Green]+%d%% knockback";
 
 	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
@@ -384,6 +388,9 @@
 
 	BIO_MGENE_INFINITEAMMO_TAG = "\c[Ice]Ammo Apparition\c[White] Gene\c-";
 	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an \c[Ice]Ammo Apparition\c[White] gene\c-.";
+
+	BIO_MGENE_KICKBACK_TAG = "\c[Ice]Stopping\c[White] Gene\c-";
+	BIO_MGENE_KICKBACK_PKUP = "Collected a \c[Ice]Stopping\c[White] gene\c-.";
 
 	BIO_MGENE_MAGSIZE_TAG = "\c[Ice]High-Capacity\c[White] Gene\c-";
 	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Ice]High-Capacity\c[White] gene\c-.";

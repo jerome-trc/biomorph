@@ -1,3 +1,35 @@
+class BIO_WMod_Kickback : BIO_WeaponModifier
+{
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		return context.Weap.Pipelines.Size() > 0, "$BIO_WMOD_INCOMPAT_NOPIPELINES";
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	{
+		weap.Kickback += (weap.Default.Kickback * 2);
+		return "";
+	}
+
+	final override string Description(BIO_GeneContext context) const
+	{
+		return String.Format(
+			StringTable.Localize("$BIO_WMOD_KICKBACK_DESC"),
+			context.NodeCount * 200
+		);
+	}
+
+	final override BIO_WeaponModFlags Flags() const
+	{
+		return BIO_WMODF_KICKBACK_INC;
+	}
+
+	final override class<BIO_ModifierGene> GeneType() const
+	{
+		return 'BIO_MGene_Kickback';
+	}
+}
+
 class BIO_WMod_Spread : BIO_WeaponModifier
 {
 	Array<float> HorizChanges, VertChanges;

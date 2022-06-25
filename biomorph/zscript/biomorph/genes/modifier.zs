@@ -135,6 +135,28 @@ class BIO_MGene_ForcePain : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_Kickback : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_KICKBACK_TAG";
+		Inventory.Icon 'GENMC0';
+		Inventory.PickupMessage "$BIO_MGENE_KICKBACK_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_KICKBACK_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_Kickback';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_EXTERNAL;
+	}
+
+	States
+	{
+	Spawn:
+		GENM C 6;
+		#### # 6 Bright Light("BIO_MutaGene_White");
+		Loop;
+	}
+}
+
 class BIO_MGene_MagSize : BIO_ModifierGene
 {
 	Default

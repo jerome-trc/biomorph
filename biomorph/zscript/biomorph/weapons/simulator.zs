@@ -285,6 +285,7 @@ class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
 		if (Gene is 'BIO_ModifierGene')
 		{
 			let mod_t = BIO_ModifierGene(Gene).ModType;
+
 			if (Modifier != null && Modifier.GetClass() == mod_t)
 			{
 				let mod = Modifier.Copy();
