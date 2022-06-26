@@ -35,18 +35,18 @@ class BIO_PumpShotgun : BIO_Weapon
 		#### # 0 A_BIO_Spawn;
 		Stop;
 	Deselect:
-		SHTG A 0 A_BIO_Deselect;
+		PASG A 0 A_BIO_Deselect;
 		Stop;
 	Select:
-		SHTG A 0 A_BIO_Select;
+		PASG A 0 A_BIO_Select;
 		Stop;
 	Ready:
-		SHTG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		PASG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		Loop;
 	Fire:
 		TNT1 A 0 A_BIO_CheckAmmo(single: true);
-		SHTG A 3 A_BIO_SetFireTime(0);
-		SHTG A 4 Bright
+		PASG A 3 A_BIO_SetFireTime(0);
+		PASG B 4 Bright
 		{
 			A_BIO_SetFireTime(1);
 			A_BIO_Fire();
@@ -54,7 +54,7 @@ class BIO_PumpShotgun : BIO_Weapon
 			A_BIO_FireSound();
 			A_BIO_Recoil('BIO_Recoil_Shotgun');
 		}
-		SHTG A 3 Bright A_BIO_SetFireTime(2);
+		PASG A 1 Bright Fast A_BIO_SetFireTime(2);
 		TNT1 A 0 A_BIO_AutoReload(single: true);
 		TNT1 A 0 A_ReFire;
 		TNT1 A 0 A_JumpIf(
@@ -63,51 +63,51 @@ class BIO_PumpShotgun : BIO_Weapon
 		);
 		Goto Ready;
 	Dryfire:
-		SHTG A 1 Offset(0, 32 + 1);
+		PASG A 1 Offset(0, 32 + 1);
 		#### # 1 Offset(0, 32 + 2);
 		#### # 1 Offset(0, 32 + 3) A_StartSound("bio/weap/dryfire/ballistic");
 		#### # 1 Offset(0, 32 + 2);
 		#### # 1 Offset(0, 32 + 1);
 		Goto Ready;
 	Flash:
-		SHTF A 4 Bright
+		TNT1 A 4 Bright
 		{
 			A_BIO_SetFireTime(1);
 			A_Light(1);
 		}
-		SHTF B 3 Bright
+		TNT1 A 3 Bright
 		{
 			A_BIO_SetFireTime(2);
 			A_Light(2);
 		}
 		Goto LightDone;
 	Reload.Prep.Refires:
-		SHTG A 1 A_Refire;
-		SHTG B 2 A_Refire('Refire.Early');
-		SHTG C 2 A_Refire('Refire.Late');
+		PASG A 1 A_Refire;
+		PASG C 2 A_Refire('Refire.Early');
+		PASG D 2 A_Refire('Refire.Late');
 		Goto Reload.Repeat;
 	Reload:
 		TNT1 A 0 A_BIO_CheckReload;
 		TNT1 A 0 { if (invoker.MagazineEmpty()) invoker.Overloaded = true; }
-		SHTG A 2 A_BIO_SetReloadTime(0);
-		SHTG B 5 A_BIO_SetReloadTime(1);
+		PASG A 1 Fast A_BIO_SetReloadTime(0);
+		PASG C 5 A_BIO_SetReloadTime(1);
 	Reload.Repeat:
-		SHTG C 5 A_BIO_SetReloadTime(2);
-		SHTG D 4
+		PASG C 2 A_BIO_SetReloadTime(2);
+		PASG D 4
 		{
 			A_BIO_SetReloadTime(3);
 			A_StartSound("bio/weap/pumpshotgun/pumpback", CHAN_AUTO, volume: 0.7);
 			A_BIO_LoadMag(1);
 			A_BIO_Recoil('BIO_Recoil_ShotgunPump');
 		}
-		SHTG C 5
+		PASG C 2
 		{
 			A_BIO_SetReloadTime(4);
 			A_StartSound("bio/weap/pumpshotgun/pumpforward", CHAN_AUTO, volume: 0.7);
 		}
-		SHTG A 0 A_JumpIf(invoker.Overloaded, 2);
-		SHTG A 0 A_ReFire('Reload.End');
-		SHTG A 0
+		PASG A 0 A_JumpIf(invoker.Overloaded, 2);
+		PASG A 0 A_ReFire('Reload.End');
+		PASG A 0
 		{
 			if (!invoker.CanReload())
 				return state(null);
@@ -116,15 +116,15 @@ class BIO_PumpShotgun : BIO_Weapon
 		}
 	Reload.End:
 		TNT1 A 0 { invoker.Overloaded = false; }
-		SHTG B 5 A_BIO_SetReloadTime(5);
-		SHTG A 3 A_BIO_SetReloadTime(6);
-		SHTG A 0 A_ReFire;
+		PASG C 5 A_BIO_SetReloadTime(5);
+		PASG A 3 A_BIO_SetReloadTime(6);
+		PASG A 0 A_ReFire;
 		Goto Ready;
 	Refire.Early:
-		SHTG A 2;
+		PASG A 2;
 	Refire.Late:
-		SHTG B 2;
-		SHTG A 2;
+		PASG C 2;
+		PASG A 2;
 		Goto Fire;
 	}
 
