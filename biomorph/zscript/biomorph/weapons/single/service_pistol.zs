@@ -16,7 +16,7 @@ class BIO_ServicePistol : BIO_Weapon
 		BIO_Weapon.MagazineType 'BIO_Mag_ServicePistol';
 		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_ServicePistol';
 		BIO_Weapon.PickupMessages
-			"$BIO_PISTOL_PKUP",
+			"$BIO_SERVICEPISTOL_PKUP",
 			"";
 		BIO_Weapon.SwitchSpeeds 14, 14;
 		BIO_Weapon.SpawnCategory BIO_WSCAT_PISTOL;
