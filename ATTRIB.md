@@ -2,6 +2,8 @@
 
 This list is meant to be maximally exhaustive but given the possibility for errors, completeness is not guaranteed. Any resource not listed below is the creation of Rat Circus, and is provided under the [MIT License](/LICENSE).
 
+If you're aware of any attribution which is evidently missing from this list, or of a misattribution, let me know so I can resolve it.
+
 ## Code
 
 The GLDEFS for the Armour Bonus were devised by Realm667 user Infirnex.
