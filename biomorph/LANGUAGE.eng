@@ -261,6 +261,7 @@
 		"No valid primary or secondary magazine,\n"
 		"or no reserve ammo type."
 	BIO_WMOD_INCOMPAT_NOPIPELINES = "This weapon doesn't fire anything.";
+	BIO_WMOD_INCOMPAT_NOSHELLPAYLOAD = "This weapon doesn't fire shotshells.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
 	BIO_WMOD_INCOMPAT_SWITCHSPEEDMAX =
 		"This weapon already switches as fast as it possibly can.";
@@ -308,6 +309,8 @@
 	BIO_WMOD_RELOADTIME_DESC = "\c[White]Reload time%s: \c[Green]%.2f seconds";
 
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
+
+	BIO_WMOD_SHELLTOSLUG_SUMM = "Change from firing shells to solid slugs";
 
 	BIO_WMOD_SPREAD_SUMM =
 		"\c[Green]Reduces firing spread";
@@ -403,6 +406,9 @@
 
 	BIO_MGENE_SPREAD_TAG = "\c[Ice]Accurised\c[White] Gene";
 	BIO_MGENE_SPREAD_PKUP = "Collected an \c[Ice]Accurised\c[White] gene\c-.";
+
+	BIO_MGENE_SHELLTOSLUG_TAG = "\c[Ice]Refit: Slug\c[White] Gene";
+	BIO_MGENE_SHELLTOSLUG_PKUP = "Collected a \c[Ice]Refit: Slug\c[White] gene\c-.";
 
 	BIO_MGENE_SWITCHSPEED_TAG = "\c[Ice]Speed Sling\c[White] Gene";
 	BIO_MGENE_SWITCHSPEED_PKUP = "Collected a \c[Ice]Speed Sling\c[White] gene\c-.";

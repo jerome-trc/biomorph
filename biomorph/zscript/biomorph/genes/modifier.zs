@@ -247,6 +247,28 @@ class BIO_MGene_ReloadTime : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_ShellToSlug : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_SHELLTOSLUG_TAG";
+		Inventory.Icon 'GENNA0';
+		Inventory.PickupMessage "$BIO_MGENE_SHELLTOSLUG_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_SHELLTOSLUG_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_ShellToSlug';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+	}
+
+	States
+	{
+	Spawn:
+		GENN A 6;
+		#### # 6 Bright Light("BIO_MutaGene_Cyan");
+		Loop;
+	}
+}
+
 class BIO_MGene_Spread : BIO_ModifierGene
 {
 	Default
