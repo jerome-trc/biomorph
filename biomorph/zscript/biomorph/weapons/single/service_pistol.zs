@@ -12,6 +12,7 @@ class BIO_ServicePistol : BIO_Weapon
 		Weapon.UpSound "bio/weap/gunswap/0";
 
 		BIO_Weapon.GraphQuality 10;
+		BIO_Weapon.GroundHitSound "bio/weap/groundhit/small/0";
 		BIO_Weapon.MagazineSize 15;
 		BIO_Weapon.MagazineType 'BIO_Mag_ServicePistol';
 		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_ServicePistol';

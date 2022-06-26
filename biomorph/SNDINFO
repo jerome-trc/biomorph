@@ -29,6 +29,8 @@ bio/loot/unique UNIQLOOT
 
 // Common
 
+bio/weap/groundhit/small/0 WGHIT0_0
+
 bio/weap/dryfire/ballistic/0 DRY_BAL0
 bio/weap/dryfire/ballistic/1 DRY_BAL1
 bio/weap/dryfire/ballistic/2 DRY_BAL2

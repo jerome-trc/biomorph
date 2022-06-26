@@ -15,6 +15,7 @@ class BIO_Microvulcan : BIO_Weapon
 		Weapon.UpSound "bio/weap/gunswap";
 
 		BIO_Weapon.GraphQuality 8;
+		BIO_Weapon.GroundHitSound "bio/weap/groundhit/small/0";
 		BIO_Weapon.MagazineType 'Clip';
 		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_Microvulcan';
 		BIO_Weapon.PickupMessages

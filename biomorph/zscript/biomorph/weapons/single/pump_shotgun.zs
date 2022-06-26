@@ -17,6 +17,7 @@ class BIO_PumpShotgun : BIO_Weapon
 		Weapon.UpSound "bio/weap/gunswap/0";
 
 		BIO_Weapon.GraphQuality 8;
+		BIO_Weapon.GroundHitSound "bio/weap/groundhit/small/0";
 		BIO_Weapon.PickupMessages
 			"$BIO_PUMPSHOTGUN_PKUP",
 			"$BIO_PUMPSHOTGUN_SCAV";
