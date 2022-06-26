@@ -4,7 +4,7 @@ class BIO_WMod_ForcePain : BIO_WeaponModifier
 
 	final override bool, string Compatible(BIO_GeneContext _) const
 	{
-		return true;
+		return true, "";
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
@@ -35,7 +35,7 @@ class BIO_WMod_ForcePain : BIO_WeaponModifier
 
 	final override BIO_WeaponModFlags Flags() const
 	{
-		return BIO_WMODF_NONE;
+		return BIO_WMODF_PAYLOAD_ALTER;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
