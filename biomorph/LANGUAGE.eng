@@ -302,6 +302,9 @@
 	BIO_WMOD_KICKBACK_SUMM = "\c[Green]+200% knockback";
 	BIO_WMOD_KICKBACK_DESC = "\c[Green]+%d%% knockback";
 
+	BIO_WMOD_LIFESTEAL_SUMM = "\c[Green]Small percentage of melee damage dealt gained as health";
+	BIO_WMOD_LIFESTEAL_DESC = "\c[Green]%d%% of damage dealt gained as health%s";
+
 	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
@@ -410,6 +413,9 @@
 
 	BIO_MGENE_KICKBACK_TAG = "\c[Ice]Stopping\c[White] Gene\c-";
 	BIO_MGENE_KICKBACK_PKUP = "Collected a \c[Ice]Stopping\c[White] gene\c-.";
+
+	BIO_MGENE_LIFESTEAL_TAG = "\c[Ice]Parasitic\c[White] Gene\c-";
+	BIO_MGENE_LIFESTEAL_PKUP = "Collected a \c[Ice]Parasitic\c[White] gene\c-.";
 
 	BIO_MGENE_MAGSIZE_TAG = "\c[Ice]High-Capacity\c[White] Gene\c-";
 	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Ice]High-Capacity\c[White] gene\c-.";

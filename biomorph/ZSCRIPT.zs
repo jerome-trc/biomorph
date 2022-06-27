@@ -58,6 +58,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/modifiers/base.zs"
 #include "zscript/biomorph/weapons/modifiers/ammo.zs"
 #include "zscript/biomorph/weapons/modifiers/damage.zs"
+#include "zscript/biomorph/weapons/modifiers/melee.zs"
 #include "zscript/biomorph/weapons/modifiers/misc.zs"
 #include "zscript/biomorph/weapons/modifiers/payload_alter.zs"
 #include "zscript/biomorph/weapons/modifiers/payload_new.zs"

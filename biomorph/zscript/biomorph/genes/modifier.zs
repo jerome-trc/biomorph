@@ -157,6 +157,28 @@ class BIO_MGene_Kickback : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_Lifesteal : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_LIFESTEAL_TAG";
+		Inventory.Icon 'GENEA0';
+		Inventory.PickupMessage "$BIO_MGENE_LIFESTEAL_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_LIFESTEAL_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_Lifesteal';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
+	}
+
+	States
+	{
+	Spawn:
+		GENE A 6;
+		#### # 6 Bright Light("BIO_MutaGene_Red");
+		Loop;
+	}
+}
+
 class BIO_MGene_MagSize : BIO_ModifierGene
 {
 	Default

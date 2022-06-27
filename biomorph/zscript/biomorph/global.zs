@@ -323,7 +323,8 @@ extend class BIO_Global
 					Biomorph.LOGPFX_WARN ..
 					"Gene class `%s` allows generation as loot "
 					"but has an invalid loot weight of 0.",
-					gene_t.GetClassName());
+					gene_t.GetClassName()
+				);
 				continue;
 			}
 
