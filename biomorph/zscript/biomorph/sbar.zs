@@ -35,7 +35,18 @@ class BIO_StatusBar : BaseStatusBar
 		HUDWeapOffsY = CVar.GetCVar("BIO_hudweap_offsy", CPlayer);
 		HUDExamOffsX = CVar.GetCVar("BIO_hudexam_offsx", CPlayer);
 		HUDExamOffsY = CVar.GetCVar("BIO_hudexam_offsy", CPlayer);
+
 		BIOPlayer = BIO_Player(CPlayer.MO);
+
+		if (CPlayer.MO != null && BIOPlayer == null)
+		{
+			ThrowAbortException(
+				Biomorph.LOGPFX_ERR ..
+				"\nFailed to attach HUD to a Biomorph-class player. "
+				"\nTry the player class patch."
+				"\nIf errors continue after that, report a bug to RatCircus."
+			);
+		}
 	}
 
 	final override void Draw(int state, double ticFrac)
