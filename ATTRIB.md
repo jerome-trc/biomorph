@@ -64,6 +64,7 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 - Deadmos Other/weapondropped.wav (GUNDROP0)
 - MC11/gunbirth1.wav (MUTATE_0)
 - MC11/gunbirth2.wav (MUTATE_1)
+- MC11/hankland.wav (BIOMLAND replacement)
 
 #### Other
 

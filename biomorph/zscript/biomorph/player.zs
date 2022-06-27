@@ -8,8 +8,12 @@ class BIO_Player : DoomPlayer
 
 	Default
 	{
+		Tag "$BIO_MODTITLE";
 		Species 'Player';
+		BloodColor 'Cyan';
+
 		Player.DisplayName "$BIO_MODTITLE";
+		Player.SoundClass 'Biomorph';
 
 		Player.StartItem 'Clip', 0;
 		Player.StartItem 'Shell', 0;

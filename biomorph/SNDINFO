@@ -25,6 +25,11 @@ bio/loot/rare RARELOOT
 bio/loot/veryrare SUPRLOOT
 bio/loot/unique UNIQLOOT
 
+// Player pawn /////////////////////////////////////////////////////////////////
+
+$playeralias Biomorph other *land bio/pawn/land
+bio/pawn/land BIOMLAND
+
 // Weapons /////////////////////////////////////////////////////////////////////
 
 // Common
