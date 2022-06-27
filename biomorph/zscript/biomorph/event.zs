@@ -271,6 +271,8 @@ extend class BIO_EventHandler
 		pawn.TakeInventory('BIO_Muta_General', cost);
 		pawn.A_StartSound("bio/mutation/general");
 		pawn.A_SelectWeapon(morph.Output());
+
+		BIO_Utils.DRLMDangerLevel(1);
 	}
 
 	private void NetEvent_GlobalDataRegen(ConsoleEvent event)
