@@ -42,7 +42,7 @@ pointlight BIO_MutaGene_White
 
 pointlight BIO_MutaGene_Cyan
 {
-	color 1.0 0.48 1.0
+	color 0.0 1.0 1.0
 	size 24
 }
 
