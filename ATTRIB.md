@@ -22,6 +22,8 @@ Auto Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and ce
 
 Machine Gun HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
+Service Pistol and Pump Shotgun muzzle flashes are derived from the sheet at [this ZDoom forum post](https://forum.zdoom.org/viewtopic.php?t=37753#p718629) courtesy of forum user Sgt. Shivers.
+
 Volley Gun sprites are courtesy of Superdave, Sonik.o.fan, 1337spy, Bgraybr, Warhawk, DBJ87, and id Software LLC.
 
 ## Audio
