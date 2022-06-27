@@ -445,6 +445,9 @@ extend class BIO_Weapon
 
 	override void AttachToOwner(Actor newOwner)
 	{
+		if (!PreviouslyPickedUp && Unique)
+			BIO_Utils.DRLMDangerLevel(1);
+
 		OnOwnerAttach();
 
 		int 

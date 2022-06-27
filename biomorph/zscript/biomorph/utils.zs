@@ -460,6 +460,7 @@ extend class BIO_Utils
 					"Increasing DRLA danger level by %d.", danger);
 
 			name rldl_tn = 'RLDangerLevel';
+
 			if (Players[0].MO != null)
 				Players[0].MO.GiveInventory(rldl_tn, danger);
 		}
