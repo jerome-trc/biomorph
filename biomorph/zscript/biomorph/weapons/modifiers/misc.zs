@@ -60,11 +60,7 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
 				if (weap.Pipelines[i].CombinedSpread() <= 0.01)
-				{
-					HorizChanges.Push(0.0);
-					VertChanges.Push(0.0);
 					continue;
-				}
 
 				float
 					h = Min(weap.Pipelines[i].HSpread, 0.3),
@@ -148,11 +144,7 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
 				if (weap.Pipelines[i].HSpread < 0.02)
-				{
-					HorizChanges.Push(0.0);
-					VertChanges.Push(0.0);
 					continue;
-				}
 
 				float h = weap.Pipelines[i].HSpread / 2.0;
 
@@ -234,11 +226,7 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
 				if (weap.Pipelines[i].VSpread < 0.02)
-				{
-					HorizChanges.Push(0.0);
-					VertChanges.Push(0.0);
 					continue;
-				}
 
 				float v = weap.Pipelines[i].VSpread / 2.0;
 
