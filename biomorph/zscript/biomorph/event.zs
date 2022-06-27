@@ -353,8 +353,38 @@ extend class BIO_EventHandler
 		// Debugging events
 
 		ConEvent_Help(event);
+		ConEvent_WeapDiag(event);
 		ConEvent_LootDiag(event);
 		ConEvent_MonsVal(event);
+	}
+
+	private static ui void ConEvent_Help(ConsoleEvent event)
+	{
+		if (!(event.Name ~== "bio_help"))
+			return;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt by a script to invoke `bio_help`."
+			);
+			return;
+		}
+
+		Console.Printf(
+			Biomorph.LOGPFX_INFO .. "\n"
+			"\c[Gold]Console events:\c-\n"
+			"\tbio_help_\n"
+			"\tbio_lootdiag_\n"
+			"\tbio_weapdiag_\n"
+			"\tbio_monsval_\n"
+			"\c[Gold]Network events:\c-\n"
+			"\tbio_weaplootregen_\n"
+			"\tbio_mutalootregen_\n"
+			"\tbio_genelootregen_\n"
+			"\tbio_morphregen_"
+		);
 	}
 
 	private ui void ConEvent_LootDiag(ConsoleEvent event) const
@@ -372,6 +402,110 @@ extend class BIO_EventHandler
 		}
 
 		Globals.PrintLootDiag();
+	}
+
+	private static ui void ConEvent_WeapDiag(ConsoleEvent event)
+	{
+		if (!(event.Name ~== "bio_weapdiag"))
+			return;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt by a script to invoke `bio_weapdiag`."
+			);
+			return;
+		}
+
+		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
+
+		if (weap == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on a Biomorph weapon."
+			);
+			return;
+		}
+
+		string output = String.Format(
+			"%sWeapon diagnostics for: %s\n",
+			Biomorph.LOGPFX_INFO, weap.GetTag()
+		);
+
+		output.AppendFormat("\c[Yellow]Class:\c- `%s`\n", weap.GetClassName());
+
+		output.AppendFormat(
+			"\c[Yellow]Switch speeds\c-: %d lower, %d raise\n",
+			weap.LowerSpeed, weap.RaiseSpeed
+		);
+
+		// Pipelines
+
+		output = output .. "\n";
+
+		if (weap.Pipelines.Size() > 0)
+			output.AppendFormat("\c[Yellow]Pipelines\c-:\n");
+
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			let ppl = weap.Pipelines[i];
+
+			if (ppl.Tag.Length() > 0)
+				output.AppendFormat("\t-> \c[Green]Pipeline: %s\c-\n", ppl.Tag);
+			else
+				output.AppendFormat("\t-> \c[Green]Pipeline: %d\c-\n", i);
+
+			output.AppendFormat(
+				"\t\tUses secondary ammo: %s\n",
+				ppl.SecondaryAmmo ? "yes" : "no"
+			);
+			output.AppendFormat(
+				"\t\tFiring functor: %s\n",
+				ppl.FireFunctor.GetClassName()
+			);
+			output.AppendFormat(
+				"\t\tPayload: %s\n",
+				ppl.Payload.GetClassName()
+			);
+			output.AppendFormat(
+				"\t\tDamage functor: %s\n",
+				ppl.Damage.GetClassName()
+			);
+		}
+
+		// Timings
+
+		output = output .. "\n";
+
+		if (weap.FireTimeGroups.Size() > 0)
+			output.AppendFormat("\c[Yellow]Fire time groups:\c-\n");
+
+		for (uint i = 0; i < weap.FireTimeGroups.Size(); i++)
+		{
+			let ftg = weap.FireTimeGroups[i];
+			string tag = ftg.Tag.Length() > 0 ? ftg.Tag : "num. " .. i;
+			output.AppendFormat("\t-> \c[Green]Group %s\c-\n", tag);
+
+			for (uint j = 0; j < ftg.Times.Size(); j++)
+				output.AppendFormat("\t\t%d, min. %d\n", ftg.Times[j], ftg.Minimums[j]);
+		}
+
+		if (weap.ReloadTimeGroups.Size() > 0)
+			output.AppendFormat("\c[Yellow]Reload time groups:\c-\n");
+
+		for (uint i = 0; i < weap.ReloadTimeGroups.Size(); i++)
+		{
+			let rtg = weap.ReloadTimeGroups[i];
+			string tag = rtg.Tag.Length() > 0 ? rtg.Tag : "num. " .. i;
+			output.AppendFormat("\t-> \c[Green]Group %s\c-\n", tag);
+
+			for (uint j = 0; j < rtg.Times.Size(); j++)
+				output.AppendFormat("\t\t%d, min. %d\n", rtg.Times[j], rtg.Minimums[j]);
+		}
+
+		Console.Printf(output);
 	}
 
 	private static ui void ConEvent_WeapModMenu(ConsoleEvent event)
@@ -395,33 +529,6 @@ extend class BIO_EventHandler
 			return;
 
 		Menu.SetMenu('BIO_WeaponModMenu');
-	}
-
-	private static ui void ConEvent_Help(ConsoleEvent event)
-	{
-		if (!(event.Name ~== "bio_help"))
-			return;
-
-		if (!event.IsManual)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt by a script to invoke `bio_help`."
-			);
-			return;
-		}
-
-		Console.Printf(
-			Biomorph.LOGPFX_INFO .. "\n"
-			"\c[Gold]Console events:\c-\n"
-			"\tbio_help_\n"
-			"\tbio_monsval_\n"
-			"\c[Gold]Network events:\c-\n"
-			"\tbio_weaplootregen_\n"
-			"\tbio_mutalootregen_\n"
-			"\tbio_genelootregen_\n"
-			"\tbio_morphregen_"
-		);
 	}
 
 	private ui void ConEvent_MonsVal(ConsoleEvent event)
