@@ -62,6 +62,7 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 - Common weapons/1911C-2.wav (SVCP_FR1)
 - Common weapons/1911C-3.wav (SVCP_FR2)
 - Deadmos Other/weapondropped.wav (GUNDROP0)
+- MC9.5/Console scroll.wav (BIOMFAIL)
 - MC11/gunbirth1.wav (MUTATE_0)
 - MC11/gunbirth2.wav (MUTATE_1)
 - MC11/hankland.wav (BIOMLAND replacement)

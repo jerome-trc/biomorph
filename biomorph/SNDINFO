@@ -29,6 +29,8 @@ bio/loot/unique UNIQLOOT
 
 $playeralias Biomorph other *land bio/pawn/land
 bio/pawn/land BIOMLAND
+$playeralias biomorph other *usefail bio/pawn/usefail
+bio/pawn/usefail BIOMFAIL
 
 // Weapons /////////////////////////////////////////////////////////////////////
 
