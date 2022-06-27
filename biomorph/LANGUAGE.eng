@@ -425,7 +425,7 @@
 	BIO_SGENE_ADDSOUTH_PKUP = "Collected an \c[SGene]S1 regulator\c[White] gene\c-.";
 
 	BIO_SGENE_ADDWEST_TAG = "\c[SGene]W1 Regulator\c[White] Gene\c-";
-	BIO_SGENE_ADDWEST_PKUP = "Collected an \c[SGene]W1 regulator\c[White] gene\c-.";
+	BIO_SGENE_ADDWEST_PKUP = "Collected a \c[SGene]W1 regulator\c[White] gene\c-.";
 
 // Weapon morph recipe requirement strings /////////////////////////////////////
 
