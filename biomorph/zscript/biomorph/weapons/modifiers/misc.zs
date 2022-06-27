@@ -83,7 +83,7 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 
 		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
 		{
-			if (HorizChanges[i] <= 0.01 && VertChanges[i] <= 0.01)
+			if (HorizChanges[i] >= -0.01 && VertChanges[i] >= -0.01)
 				continue;
 
 			string qual = "";
