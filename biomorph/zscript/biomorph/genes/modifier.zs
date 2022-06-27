@@ -291,6 +291,50 @@ class BIO_MGene_Spread : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_SpreadNarrow : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_SPREADNARROW_TAG";
+		Inventory.Icon 'GENMD0';
+		Inventory.PickupMessage "$BIO_MGENE_SPREADNARROW_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_SPREADNARROW_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_SpreadNarrow';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
+	}
+
+	States
+	{
+	Spawn:
+		GENM D 6;
+		#### # 6 Bright Light("BIO_MutaGene_White");
+		Loop;
+	}
+}
+
+class BIO_MGene_SpreadWiden : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_SPREADWIDEN_TAG";
+		Inventory.Icon 'GENME0';
+		Inventory.PickupMessage "$BIO_MGENE_SPREADWIDEN_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_SPREADWIDEN_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_SpreadWiden';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
+	}
+
+	States
+	{
+	Spawn:
+		GENM E 6;
+		#### # 6 Bright Light("BIO_MutaGene_White");
+		Loop;
+	}
+}
+
 class BIO_MGene_SwitchSpeed : BIO_ModifierGene
 {
 	Default

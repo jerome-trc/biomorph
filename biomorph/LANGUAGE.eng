@@ -263,6 +263,8 @@
 	BIO_WMOD_INCOMPAT_NOPIPELINES = "This weapon doesn't fire anything.";
 	BIO_WMOD_INCOMPAT_NOSHELLPAYLOAD = "This weapon doesn't fire shotshells.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
+	BIO_WMOD_INCOMPAT_TRIVIALHSPREAD = "This weapon has almost no horizontal spread.";
+	BIO_WMOD_INCOMPAT_TRIVIALVSPREAD = "This weapon has almost no vertical spread.";
 	BIO_WMOD_INCOMPAT_SWITCHSPEEDMAX =
 		"This weapon already switches as fast as it possibly can.";
 
@@ -317,6 +319,20 @@
 	BIO_WMOD_SPREAD_DESC =
 		"\c[White]Spread%s: "
 		"\c[Green]%.2f\c[White] horizontal, "
+		"\c[Green]%.2f\c[White] vertical";
+
+	BIO_WMOD_SPREADNARROW_SUMM =
+		"\c[White]Converts 50% of horizontal spread into vertical spread";
+	BIO_WMOD_SPREADNARROW_DESC =
+		"\c[White]Spread%s: "
+		"\c[Green]%.2f\c[White] horizontal, "
+		"\c[Brick]+%.2f\c[White] vertical";
+
+	BIO_WMOD_SPREADWIDEN_SUMM =
+		"\c[White]Converts 50% of vertical spread into horizontal spread";
+	BIO_WMOD_SPREADWIDEN_DESC =
+		"\c[White]Spread%s: "
+		"\c[Brick]+%.2f\c[White] horizontal, "
 		"\c[Green]%.2f\c[White] vertical";
 
 	BIO_WMOD_SWITCHSPEED_SUMM =
@@ -406,6 +422,12 @@
 
 	BIO_MGENE_SPREAD_TAG = "\c[Ice]Accurised\c[White] Gene";
 	BIO_MGENE_SPREAD_PKUP = "Collected an \c[Ice]Accurised\c[White] gene\c-.";
+
+	BIO_MGENE_SPREADNARROW_TAG = "\c[Ice]Duckbill Choke\c[White] Gene";
+	BIO_MGENE_SPREADNARROW_PKUP = "Collected a \c[Ice]Duckbill Choke\c[White] gene\c-.";
+
+	BIO_MGENE_SPREADWIDEN_TAG = "\c[Ice]Crab-claw Choke\c[White] Gene";
+	BIO_MGENE_SPREADWIDEN_PKUP = "Collected a \c[Ice]Crab-claw Choke\c[White] gene\c-.";
 
 	BIO_MGENE_SHELLTOSLUG_TAG = "\c[Ice]Refit: Slug\c[White] Gene";
 	BIO_MGENE_SHELLTOSLUG_PKUP = "Collected a \c[Ice]Refit: Slug\c[White] gene\c-.";
