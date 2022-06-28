@@ -316,8 +316,11 @@
 	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
 
-	BIO_WMOD_RELOADTIME_SUMM =
-		"\c[Green]Increased reload speeds";
+	BIO_WMOD_NTHROUNDCOST_SUMM = "\c[Green]Every 5th shot costs no ammo";
+	BIO_WMOD_NTHROUNDCOST_DESC_NTHFREE = "\c[Green]Free shot every %d rounds";
+	BIO_WMOD_NTHROUNDCOST_DESC_NTHCOST = "\c[Green]Ammo is only consumed every %d shots";
+
+	BIO_WMOD_RELOADTIME_SUMM = "\c[Green]Increased reload speeds";
 	BIO_WMOD_RELOADTIME_DESC = "\c[White]Reload time%s: \c[Green]%.2f seconds";
 
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
@@ -435,6 +438,9 @@
 
 	BIO_MGENE_MAGSIZE_TAG = "\c[Ice]High-Capacity\c[White] Gene\c-";
 	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Ice]High-Capacity\c[White] gene\c-.";
+
+	BIO_MGENE_NTHROUNDCOST_TAG = "\c[Ice]Ammo Thrift\c[White] Gene\c-";
+	BIO_MGENE_NTHROUNDCOST_PKUP = "Collected an \c[Ice]Ammo Thrift\c[White] gene\c-.";
 
 	BIO_MGENE_RELOADTIME_TAG = "\c[Ice]Ergonomic\c[White] Gene\c-";
 	BIO_MGENE_RELOADTIME_PKUP = "Collected an \c[Ice]Ergonomic\c[White] gene\c-.";

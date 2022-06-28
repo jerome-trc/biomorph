@@ -222,6 +222,123 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 	}
 }
 
+class BIO_WMod_NthRoundCost : BIO_WeaponModifier
+{
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		return !context.Weap.Ammoless(), "$BIO_WMOD_INCOMPAT_AMMOLESS";
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	{
+		let afx = weap.GetAffixByType('BIO_WAfx_NthRoundCost');
+
+		if (afx == null)
+		{
+			afx = new('BIO_WAfx_NthRoundCost');
+			weap.Affixes.Push(afx);
+		}
+
+		for (uint i = 0; i < context.NodeCount; i++)
+			BIO_WAfx_NthRoundCost(afx).Upgrade();
+
+		return "";
+	}
+
+	final override string Description(BIO_GeneContext context) const
+	{
+		let afx = context.Weap.GetAffixByType('BIO_WAfx_NthRoundCost');
+		return afx.Description(context.Weap);
+	}
+
+	final override BIO_WeaponModFlags Flags() const
+	{
+		return BIO_WMODF_AMMOUSE_DEC;
+	}
+
+	final override class<BIO_ModifierGene> GeneType() const
+	{
+		return 'BIO_MGene_NthRoundCost';
+	}
+}
+
+class BIO_WAfx_NthRoundCost : BIO_WeaponAffix
+{
+	private bool EveryNCosts; // Otherwise, every nth round is free
+	private uint8 Interval;
+	private uint8 Counter1, Counter2;
+
+	void Upgrade()
+	{
+		// First call acts as initialization
+		if (Interval == 0)
+		{
+			Interval = 5;
+			return;
+		}
+
+		if (EveryNCosts)
+		{
+			Interval++;
+		}
+		else if (--Interval <= 2)
+		{
+			EveryNCosts = true;
+		}
+	}
+
+	final override void BeforeAmmoDeplete(BIO_Weapon weap,
+		in out int ammoUse, bool altFire)
+	{
+		if (!EveryNCosts)
+		{
+			if (!altFire)
+			{
+				if (++Counter1 >= Interval)
+				{
+					ammoUse = 0;
+					Counter1 = 0;
+				}
+			}
+			else
+			{
+				if (++Counter2 >= Interval)
+				{
+					ammoUse = 0;
+					Counter2 = 0;
+				}
+			}
+		}
+		else
+		{
+			if (!altFire)
+			{
+				if (++Counter1 >= Interval)
+					Counter1 = 0;
+				else
+					ammoUse = 0;
+			}
+			else
+			{
+				if (++Counter2 >= Interval)
+					Counter2 = 0;
+				else
+					ammoUse = 0;
+			}
+		}
+	}
+
+	final override string Description(readOnly<BIO_Weapon> _) const
+	{
+		return String.Format(
+			EveryNCosts ?
+				StringTable.Localize("$BIO_WMOD_NTHROUNDCOST_DESC_NTHCOST") :
+				StringTable.Localize("$BIO_WMOD_NTHROUNDCOST_DESC_NTHFREE"),
+			Interval
+		);
+	}
+}
+
 class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const

@@ -223,6 +223,28 @@ class BIO_MGene_MagSize : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_NthRoundCost : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_NTHROUNDCOST_TAG";
+		Inventory.Icon 'GENAE0';
+		Inventory.PickupMessage "$BIO_MGENE_NTHROUNDCOST_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_NTHROUNDCOST_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_NthRoundCost';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
+	}
+
+	States
+	{
+	Spawn:
+		GENA E 6;
+		#### # 6 Bright Light("BIO_MutaGene_Yellow");
+		Loop;
+	}
+}
+
 class BIO_MGene_InfiniteAmmo : BIO_ModifierGene
 {
 	Default
