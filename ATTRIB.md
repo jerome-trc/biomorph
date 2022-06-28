@@ -36,38 +36,46 @@ https://forum.zdoom.org/viewtopic.php?f=37&t=65362
 
 The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY 3.0:
 
-- autoshotgun-1.wav (AUSG_FR0)
-- autoshotgun-2.wav (AUSG_FR1)
-- autoshotgun-3.wav (AUSG_FR2)
-- g_ithaca_nopump_1.wav (PASG_FR0)
-- g_ithaca_nopump_2.wav (PASG_FR1)
-- g_ithaca_nopump_3.wav (PASG_FR2)
-- g_thompson_1.wav (GPMG_FR0)
-- g_thompson_2.wav (GPMG_FR1)
-- g_thompson_3.wav (GPMG_FR2)
-- generic_semi_rifle_1.wav (MCRV_FR0)
-- generic_semi_rifle_2.wav (MCRV_FR1)
-- generic_semi_rifle_3.wav (MCRV_FR2)
-- remington870-1.wav (COAC_FR0)
-- remington870-2.wav (COAC_FR1)
-- remington870-3.wav (COAC_FR2)
-- shotpumpback.wav (PUMPBACK)
-- shotpumpfor.wav (PUMPFORW)
+- joblaudiopack.zip/
+	- g_ithaca_nopump_1.wav (PASG_FR0)
+	- g_ithaca_nopump_2.wav (PASG_FR1)
+	- g_ithaca_nopump_3.wav (PASG_FR2)
+	- generic_semi_rifle_1.wav (MCRV_FR0)
+	- generic_semi_rifle_2.wav (MCRV_FR1)
+	- generic_semi_rifle_3.wav (MCRV_FR2)
+	- g_thompson_1.wav (GPMG_FR0)
+	- g_thompson_2.wav (GPMG_FR1)
+	- g_thompson_3.wav (GPMG_FR2)
+- jobl_snd_pack_2.zip/
+	- shotguns/
+		- autoshotgun-1.wav (AUSG_FR0)
+		- autoshotgun-2.wav (AUSG_FR1)
+		- autoshotgun-3.wav (AUSG_FR2)
+		- remington870-1.wav (COAC_FR0)
+		- remington870-2.wav (COAC_FR1)
+		- remington870-3.wav (COAC_FR2)
+		- shotpumpback.wav (PUMPBACK)
+		- shotpumpfor.wav (PUMPFORW)
 
 #### CturiX Kemilon
 
 https://forum.zdoom.org/viewtopic.php?t=67032
 
-The following audio files are provided by CturiX Kemilon, under a "Typical Creative Commons license [sic]":
+The following audio files are provided by CturiX Kemilon, under a "Typical Creative Commons license [sic]" (see "CTX AUDIO.zip/"):
 
-- Common weapons/1911C-1.wav (SVCP_FR0)
-- Common weapons/1911C-2.wav (SVCP_FR1)
-- Common weapons/1911C-3.wav (SVCP_FR2)
-- Deadmos Other/weapondropped.wav (GUNDROP0)
-- MC9.5/Console scroll.wav (BIOMFAIL)
-- MC11/gunbirth1.wav (MUTATE_0)
-- MC11/gunbirth2.wav (MUTATE_1)
-- MC11/hankland.wav (BIOMLAND replacement)
+- Madness-related/
+	- Common weapons/
+		- 1911C-1.wav (SVCP_FR0)
+		- 1911C-2.wav (SVCP_FR1)
+		- 1911C-3.wav (SVCP_FR2)
+	- Deadmos Other/
+		- weapondropped.wav (GUNDROP0)
+	- MC9.5/
+		- Console scroll.wav (BIOMFAIL)
+	- MC11/
+		- gunbirth1.wav (MUTATE_0)
+		- gunbirth2.wav (MUTATE_1)
+		- hankland.wav (BIOMLAND)
 
 #### Other
 
