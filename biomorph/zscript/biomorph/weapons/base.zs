@@ -597,7 +597,16 @@ extend class BIO_Weapon
 		return true;
 	}
 
-	BIO_WeaponAffix GetAffixByType(class<BIO_WeaponAffix> type)
+	bool HasAffixOfType(class<BIO_WeaponAffix> type) const
+	{
+		for (uint i = 0; i < Affixes.Size(); i++)
+			if (Affixes[i].GetClass() == type)
+				return true;
+
+		return false;
+	}
+
+	BIO_WeaponAffix GetAffixByType(class<BIO_WeaponAffix> type) const
 	{
 		for (uint i = 0; i < Affixes.Size(); i++)
 			if (Affixes[i].GetClass() == type)
@@ -796,6 +805,15 @@ extend class BIO_Weapon
 	{
 		for (uint i = 0; i < Pipelines.Size(); i++)
 			if (Pipelines[i].DealsAnyDamage())
+				return true;
+
+		return false;
+	}
+
+	bool DealsAnySplashDamage() const
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].DealsAnySplashDamage())
 				return true;
 
 		return false;

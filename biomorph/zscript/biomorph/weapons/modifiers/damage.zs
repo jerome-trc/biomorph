@@ -238,3 +238,94 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 		));
 	}
 }
+
+class BIO_WMod_SplashToHit : BIO_WeaponModifier
+{
+	// One element per pipeline, always positive
+	Array<int> DamageChanges, RadiusChanges;
+
+
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
+				return true, "";
+
+		return false, "$BIO_WMOD_INCOMPAT_SPLASHTOHIT";
+	}
+
+	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
+	{
+		return ppl.DealsAnySplashDamage() && ppl.ExportsDamageValues();
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	{
+		DamageChanges.Clear(); DamageChanges.Resize(weap.Pipelines.Size());
+		RadiusChanges.Clear(); RadiusChanges.Resize(weap.Pipelines.Size());
+
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			if (!CompatibleWithPipeline(weap.Pipelines[i].AsConst()))
+				continue;
+
+			let func = weap.Pipelines[i].GetSplashFunctor();
+
+			let dmg = func.Damage / 2;
+			weap.Pipelines[i].AddToAllDamageValues(dmg);
+			func.Damage -= dmg;
+			DamageChanges[i] += dmg;
+			
+			let prevRad = func.Radius;
+			func.Radius /= 2;
+			RadiusChanges[i] += (prevRad - func.Radius);
+		}
+
+		return "";
+	}
+
+	final override string Description(BIO_GeneContext context) const
+	{
+		string ret = "";
+
+		for (uint i = 0; i < DamageChanges.Size(); i++)
+		{
+			if (DamageChanges[i] == 0)
+				continue;
+
+			let qual = context.Weap.Pipelines[i].GetTagAsQualifier();
+
+			if (qual.Length() > 1)
+				qual = " " .. qual;
+
+			ret.AppendFormat(
+				StringTable.Localize("$BIO_WMOD_SPLASHTOHIT_DESC"),
+				DamageChanges[i], RadiusChanges[i], qual
+			);
+			ret = ret .. "\n";
+		}
+
+		ret.DeleteLastCharacter();
+		return ret;
+	}
+
+	final override BIO_WeaponModFlags Flags() const
+	{
+		return
+			BIO_WMODF_DAMAGE_INC |
+			BIO_WMODF_SPLASHDAMAGE_DEC | BIO_WMODF_SPLASHRADIUS_DEC;
+	}
+
+	final override class<BIO_ModifierGene> GeneType() const
+	{
+		return 'BIO_MGene_SplashToHit';
+	}
+
+	final override BIO_WeaponModifier Copy() const
+	{
+		let ret = new('BIO_WMod_SplashToHit');
+		ret.DamageChanges.Copy(DamageChanges);
+		ret.RadiusChanges.Copy(RadiusChanges);
+		return ret;
+	}
+}

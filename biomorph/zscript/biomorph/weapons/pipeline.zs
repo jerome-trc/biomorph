@@ -268,6 +268,12 @@ class BIO_WeaponPipeline play
 		return null;
 	}
 
+	bool DealsAnySplashDamage() const
+	{
+		let func = GetSplashFunctor();
+		return func != null && func.Damage > 0 && func.Radius > 0;
+	}
+
 	void SetSplash(int damage, int radius,
 		EExplodeFlags flags = XF_HURTSOURCE, int fullDmgDistance = 0)
 	{

@@ -262,9 +262,13 @@
 		"or no reserve ammo type."
 	BIO_WMOD_INCOMPAT_NOPIPELINES = "This weapon doesn't fire anything.";
 	BIO_WMOD_INCOMPAT_NOSHELLPAYLOAD = "This weapon doesn't fire shotshells.";
+	BIO_WMOD_INCOMPAT_NOSPLASH = "This weapon deals no splash damage.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
 	BIO_WMOD_INCOMPAT_TRIVIALHSPREAD = "This weapon has almost no horizontal spread.";
 	BIO_WMOD_INCOMPAT_TRIVIALVSPREAD = "This weapon has almost no vertical spread.";
+	BIO_WMOD_INCOMPAT_SPLASHTOHIT =
+		"None of this weapon's fire modes has splash damage "
+		"and also allows damage mutation.";
 	BIO_WMOD_INCOMPAT_SWITCHSPEEDMAX =
 		"This weapon already switches as fast as it possibly can.";
 
@@ -297,6 +301,9 @@
 		"\c[White]Neurotoxic payloads always make monsters flinch\n"
 		"\c[Gold]Some monsters are immune to this effect!";
 
+	BIO_WMOD_FORCERADIUSDMG_SUMM =
+		"\c[Green]Payloads ignore monster splash damage immunity";
+
 	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
 
 	BIO_WMOD_KICKBACK_SUMM = "\c[Green]+200% knockback";
@@ -316,6 +323,12 @@
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
 	BIO_WMOD_SHELLTOSLUG_SUMM = "Change from firing shells to solid slugs";
+
+	BIO_WMOD_SPLASHTOHIT_SUMM =
+		"\c[White]Converts 50% of splash damage into hit damage\n"
+		"\c[White]50% splash radius reduction per application";
+	BIO_WMOD_SPLASHTOHIT_DESC =
+		"\c[White]%d damage converted; radius reduced by %d%s";
 
 	BIO_WMOD_SPREAD_SUMM =
 		"\c[Green]Reduces firing spread";
@@ -408,6 +421,9 @@
 	BIO_MGENE_FORCEPAIN_TAG = "\c[Ice]Neurotoxic\c[White] Gene\c-";
 	BIO_MGENE_FORCEPAIN_PKUP = "Collected a \c[Ice]Neurotoxic\c[White] gene\c-.";
 
+	BIO_MGENE_FORCERADIUSDMG_TAG = "\c[Ice]Squash Head\c[White] Gene\c-";
+	BIO_MGENE_FORCERADIUSDMG_PKUP = "Collected a \c[Ice]Squash Head\c[White] gene\c-.";
+
 	BIO_MGENE_INFINITEAMMO_TAG = "\c[Ice]Ammo Apparition\c[White] Gene\c-";
 	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an \c[Ice]Ammo Apparition\c[White] gene\c-.";
 
@@ -425,6 +441,9 @@
 
 	BIO_MGENE_RESERVEFEED_TAG = "\c[Ice]Ammochain\c[White] Gene";
 	BIO_MGENE_RESERVEFEED_PKUP = "Collected an \c[Ice]Ammochain\c[White] gene\c-.";
+
+	BIO_MGENE_SPLASHTOHIT_TAG = "\c[Ice]Shaped Charge\c[White] Gene";
+	BIO_MGENE_SPLASHTOHIT_PKUP = "Collected a \c[Ice]Shaped Charge\c[White] gene\c-.";
 
 	BIO_MGENE_SPREAD_TAG = "\c[Ice]Accurised\c[White] Gene";
 	BIO_MGENE_SPREAD_PKUP = "Collected an \c[Ice]Accurised\c[White] gene\c-.";

@@ -81,3 +81,57 @@ class BIO_WAfx_ForcePain : BIO_WeaponAffix
 		);
 	}
 }
+
+class BIO_WMod_ForceRadiusDmg : BIO_WeaponModifier
+{
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		return context.Weap.DealsAnySplashDamage(), "$BIO_WMOD_INCOMPAT_NOSPLASH";
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	{
+		if (!weap.HasAffixOfType('BIO_WAfx_ForceRadiusDmg'))
+			weap.Affixes.Push(new('BIO_WAfx_ForceRadiusDmg'));
+
+		return "";
+	}
+
+	final override string Description(BIO_GeneContext context) const
+	{
+		return Summary();
+	}
+
+	final override BIO_WeaponModFlags Flags() const
+	{
+		return BIO_WMODF_PAYLOAD_ALTER;
+	}
+
+	final override class<BIO_ModifierGene> GeneType() const
+	{
+		return 'BIO_MGene_ForceRadiusDmg';
+	}
+}
+
+class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
+{
+	final override void OnPuffFired(BIO_Weapon _, BIO_Puff puff)
+	{
+		puff.bForceRadiusDmg = true;
+	}
+
+	final override void OnSlowProjectileFired(BIO_Weapon _, BIO_Projectile proj)
+	{
+		proj.bForceRadiusDmg = true;
+	}
+
+	final override void OnFastProjectileFired(BIO_Weapon _, BIO_FastProjectile proj)
+	{
+		proj.bForceRadiusDmg = true;
+	}
+
+	final override string Description(readOnly<BIO_Weapon> _) const
+	{
+		return "$BIO_WMOD_FORCERADIUSDMG_SUMM";
+	}
+}

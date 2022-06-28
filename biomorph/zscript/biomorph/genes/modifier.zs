@@ -135,6 +135,28 @@ class BIO_MGene_ForcePain : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_ForceRadiusDmg : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_FORCERADIUSDMG_TAG";
+		Inventory.Icon 'GENPB0';
+		Inventory.PickupMessage "$BIO_MGENE_FORCERADIUSDMG_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_FORCERADIUSDMG_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_ForceRadiusDmg';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+	}
+
+	States
+	{
+	Spawn:
+		GENP B 6;
+		#### # 6 Bright Light("BIO_MutaGene_LightRed");
+		Loop;
+	}
+}
+
 class BIO_MGene_Kickback : BIO_ModifierGene
 {
 	Default
@@ -287,6 +309,28 @@ class BIO_MGene_ShellToSlug : BIO_ModifierGene
 	Spawn:
 		GENN A 6;
 		#### # 6 Bright Light("BIO_MutaGene_Cyan");
+		Loop;
+	}
+}
+
+class BIO_MGene_SplashToHit : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_SPLASHTOHIT_TAG";
+		Inventory.Icon 'GENDC0';
+		Inventory.PickupMessage "$BIO_MGENE_SPLASHTOHIT_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_SPLASHTOHIT_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_SplashToHit';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
+	}
+
+	States
+	{
+	Spawn:
+		GEND C 6;
+		#### # 6 Bright Light("BIO_MutaGene_LightRed");
 		Loop;
 	}
 }
