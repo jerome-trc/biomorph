@@ -533,6 +533,13 @@
 
 // Menu, game options //////////////////////////////////////////////////////////
 
+	BIO_OPTTITLE = "\c[Cyan]Biomorph:\c[White] Preferences";
+
+	BIO_OPTCAT_GUI = "\c[Green]HUD Options";
+	BIO_OPTCAT_CONTROL = "\c[Green]Control Options";
+	BIO_OPTCAT_AUDIOVIS = "\c[Green]Audio/Visual Options";
+	BIO_OPTCAT_BALANCE = "\c[Green]Balance Options";
+
 	BIO_OPTLBL_AUTORELOAD_PRE = "Firing an empty weapon reloads it";
 	BIO_OPTLBL_AUTORELOAD_POST = "Auto-reload after emptying magazine";
 	BIO_OPTVAL_AUTOREL_ALWAYS = "Always";

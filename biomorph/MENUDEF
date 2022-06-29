@@ -7,18 +7,23 @@ AddOptionMenu "OptionsMenu"
 
 OptionMenu "BIO_Options"
 {
-	Title "$BIO_MODTITLE"
+	Title "$BIO_OPTTITLE"
 	StaticText ""
+	StaticText "$BIO_OPTCAT_CONTROL"
 	Option "$BIO_OPTLBL_AUTORELOAD_PRE", "BIO_autoreload_pre", "BIO_AutoReload"
 	Option "$BIO_OPTLBL_AUTORELOAD_POST", "BIO_autoreload_post", "BIO_AutoReload"
 	Option "$BIO_OPTLBL_BERSERKSWITCH", "BIO_berserkswitch", "BIO_BerserkSwitch"
+	Option "$BIO_OPTLBL_MULTIBARRELFIRE", "BIO_multibarrelfire", "BIO_MultiBarrelFire"
+	Option "$BIO_OPTLBL_MULTIRELOADMODE", "BIO_multireload", "BIO_MultiReloadMode"
+	StaticText ""
+	StaticText "$BIO_OPTCAT_GUI"
+	Slider "$BIO_OPTLBL_INVBARSLOTS", "BIO_invbarslots", 1, 32, 1, 0
 	Slider "$BIO_OPTLBL_HUDWEAP_OFFSX", "BIO_hudweap_offsx", -512, -1, 1, 0
 	Slider "$BIO_OPTLBL_HUDWEAP_OFFSY", "BIO_hudweap_offsy", 0, 512, 1, 0
 	Slider "$BIO_OPTLBL_HUDEXAM_OFFSX", "BIO_hudexam_offsx", 1, 512, 1, 0
 	Slider "$BIO_OPTLBL_HUDEXAM_OFFSY", "BIO_hudexam_offsy", 0, 512, 1, 0
-	Slider "$BIO_OPTLBL_INVBARSLOTS", "BIO_invbarslots", 1, 32, 1, 0
-	Option "$BIO_OPTLBL_MULTIBARRELFIRE", "BIO_multibarrelfire", "BIO_MultiBarrelFire"
-	Option "$BIO_OPTLBL_MULTIRELOADMODE", "BIO_multireload", "BIO_MultiReloadMode"
+	StaticText ""
+	StaticText "$BIO_OPTCAT_AUDIOVIS"
 	Option "$BIO_OPTLBL_QUAKE", "BIO_quake", "OnOff"
 }
 
