@@ -26,7 +26,7 @@ class BIO_ServicePistol : BIO_Weapon
 	States
 	{
 	Spawn:
-		SVCP A 0;
+		SVCP Z 0;
 		#### # 0 A_BIO_Spawn;
 		Stop;
 	Ready:
