@@ -192,7 +192,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	/*	Intrinsic mod graphs can't be created in `SetDefaults()`, since that
 		function gets called during the weapon mod simulation process (causing
-		stack overflow). Do it here instead.
+		infinite recursion and stack overflow). Do it here instead.
 
 		If `onMutate` is false, the call is being made during `LazyInit()`.
 		Otherwise it's being made during application of a general mutagen.
@@ -202,7 +202,7 @@ class BIO_Weapon : DoomWeapon abstract
 		If your intent is for a weapon to start un-mutated but gain certain
 		properties implicitly upon mutation, act upon the latter.
 	*/
-	virtual void IntrinsicModGraph(bool onMutate) const {}
+	virtual void IntrinsicModGraph(bool onMutate) {}
 
 	// Each is called once before starting its respective loop.
 	virtual void OnDeselect()
