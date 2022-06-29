@@ -955,12 +955,18 @@ extend class BIO_Weapon
 
 	void SetupAmmo()
 	{
+		if (Owner == null)
+			return;
+
 		Ammo1 = AddAmmo(Owner, AmmoType1, 0);
 		Ammo2 = AddAmmo(Owner, AmmoType2, 0);
 	}
 
 	void SetupMagazines(class<Ammo> override1 = null, class<Ammo> override2 = null)
 	{
+		if (Owner == null)
+			return;
+
 		if (override1 != null)
 		{
 			Magazine1 = Ammo(Owner.FindInventory(override1));

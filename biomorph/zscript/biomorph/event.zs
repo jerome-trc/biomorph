@@ -597,12 +597,8 @@ extend class BIO_EventHandler
 		if (pawn != null)
 			pawn.OnKill(event.Thing, event.Inflictor);
 
-		if (event.Thing.FindInventory(LDToken))
-		{
-			// TODO:
-			// If we made it here, this was a legendary monster from LegenDoom
-			// or LegenDoom Lite. Drop some extra-special loot
-		}
+		if (event.Thing.FindInventory(LDToken) && BIO_ldl)
+			SpawnLegendaryLoot(event.Thing);
 
 		Globals.LootValueBuffer += Globals.GetMonsterValue(event.Thing);
 
@@ -643,6 +639,68 @@ extend class BIO_EventHandler
 				);
 			}
 		}
+	}
+
+	private void SpawnLegendaryLoot(Actor mons)
+	{
+		bool success = false;
+		Actor spawned = null;
+
+		[success, spawned] = mons.A_SpawnItemEx(
+			Globals.AnyLootWeaponType(),
+			0.0, 0.0, 32.0,
+			FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
+			FRandom(0.0, 360.0)
+		);
+
+		if (!success || spawned == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Failed to spawn a weapon loot drop from a dead Legendary."
+			);
+			return;
+		}
+
+		let weap = BIO_Weapon(spawned);
+
+		if (!weap.Unique)
+		{
+			weap.LazyInit();
+
+			if (weap.ModGraph == null)
+				weap.ModGraph = BIO_WeaponModGraph.Create(weap.GraphQuality);
+
+			int rf = 3, rc = 5;
+
+			if (mons.bBoss)
+			{
+				rf++;
+				rc++;
+				weap.ModGraph.TryGenerateNodes(1);
+			}
+
+			if (BIO_Utils.DoomRLMonsterPack())
+			{
+				rf++;
+				rc++;
+			}
+
+			let sim = BIO_WeaponModSimulator.Create(weap);
+			sim.InsertNewGenesAtRandom(
+				Min(weap.ModGraph.Nodes.Size() - 1, uint(Random[BIO_Loot](rf, rc))),
+				noDuplication: true
+			);
+
+			if (sim.ContainsGeneByLootWeight(BIO_Gene.LOOTWEIGHT_VERYRARE))
+				S_StartSound("bio/loot/veryrare", CHAN_AUTO);
+			else if (sim.ContainsGeneByLootWeight(BIO_Gene.LOOTWEIGHT_RARE))
+				S_StartSound("bio/loot/rare", CHAN_AUTO);
+
+			sim.CommitAndClose();
+		}
+
+		weap.SetState(weap.FindState('Spawn'));
 	}
 }
 

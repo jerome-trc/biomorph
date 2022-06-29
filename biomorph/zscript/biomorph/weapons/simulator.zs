@@ -600,6 +600,19 @@ class BIO_WeaponModSimulator : Thinker
 		Simulate();
 	}
 
+	void CommitAndClose()
+	{
+		Commit();
+		PostCommit();
+		Destroy();
+	}
+
+	void RunAndClose()
+	{
+		Simulate();
+		CommitAndClose();
+	}
+
 	// Intermediary operations /////////////////////////////////////////////////
 
 	// Take a gene out of the inventory and put it into a node.
@@ -718,6 +731,63 @@ class BIO_WeaponModSimulator : Thinker
 		g.Type = type;
 		Nodes[node].Gene = g;
 		Nodes[node].Update();
+	}
+
+	void InsertNewGenesAtRandom(uint count = 1, bool noDuplication = false)
+	{
+		let globals = BIO_Global.Get();
+
+		for (uint i = 0; i < count; i++)
+		{
+			let r = RandomNode(accessible: true, unoccupied: true);
+			uint a1 = 0;
+
+			do
+			{
+				class<BIO_Gene> gene_t = null;
+
+				if (noDuplication)
+				{
+					uint a2 = 0;
+
+					do
+					{
+						gene_t = globals.RandomGeneType();
+					} while (ContainsGeneOfType(gene_t) && a2++ < 50)
+
+					if (ContainsGeneOfType(gene_t))
+					{
+						Nodes[r].Gene = null;
+						Nodes[r].Update();
+						return;
+					}
+				}
+				else
+				{
+					gene_t = globals.RandomGeneType();
+				}
+
+				InsertNewGene(gene_t, r);
+				Simulate();
+			}
+			while (!Valid && a1++ < 50);
+
+			if (!Valid)
+			{
+				if (BIO_debug)
+				{
+					Console.Printf(
+						Biomorph.LOGPFX_DEBUG ..
+						"Failed to insert a new random gene into node %d "
+						"after 50 attempts.", r
+					);
+				}
+
+				Nodes[r].Gene = null;
+				Nodes[r].Update();
+				return;
+			}
+		}
 	}
 
 	// Accessibility checker ///////////////////////////////////////////////////
@@ -1005,6 +1075,15 @@ class BIO_WeaponModSimulator : Thinker
 		return ret;
 	}
 
+	bool ContainsGeneOfType(class<BIO_Gene> type) const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+			if (Nodes[i].GetGeneType() == type)
+				return true;
+
+		return false;
+	}
+
 	bool HasModifierWithFlags(BIO_WeaponModFlags flags, uint count = 1,
 		bool ignoreMultiplier = true) const
 	{
@@ -1027,6 +1106,25 @@ class BIO_WeaponModSimulator : Thinker
 		}
 
 		return c >= count;
+	}
+
+	// Note that a gene will pass the check if its loot weight is lower or equal.
+	bool ContainsGeneByLootWeight(uint lootWeight) const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			let gene_t = Nodes[i].GetGeneType();
+
+			if (gene_t == null)
+				continue;
+
+			let defs = GetDefaultByType(gene_t);
+
+			if (defs.LootWeight <= lootWeight)
+				return true;
+		}
+
+		return false;
 	}
 
 	// Includes a node's multiplier.
@@ -1203,6 +1301,9 @@ class BIO_WeaponModSimulator : Thinker
 
 	private void RebuildGeneInventory()
 	{
+		if (Weap.Owner == null)
+			return;
+
 		Genes.Clear();
 
 		for (Inventory i = Weap.Owner.Inv; i != null; i = i.Inv)

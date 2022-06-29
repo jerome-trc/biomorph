@@ -63,6 +63,8 @@ class BIO_Global : Thinker
 extend class BIO_Global
 {
 	private BIO_LootTable WeaponLoot[__BIO_WSCAT_COUNT__];
+	// Contains all tables in `WeaponLoot`.
+	private BIO_LootTable WeaponLootMeta;
 
 	private void PopulateWeaponLootTables()
 	{
@@ -119,11 +121,54 @@ extend class BIO_Global
 				defs.Unique ? 1 : 50				
 			);
 		}
+
+		WeaponLootMeta = new('BIO_LootTable');
+		WeaponLootMeta.Label = "Weapon loot: meta";
+
+		for (uint i = 0; i < __BIO_WSCAT_COUNT__; i++)
+		{
+			uint weight = 0;
+
+			switch (i)
+			{
+			default:
+				Console.Printf(
+					Biomorph.LOGPFX_ERR ..
+					"Unhandled weapon spawn category: %d", i
+				);
+				break;
+			case BIO_WSCAT_SHOTGUN:
+			case BIO_WSCAT_CHAINGUN:
+				weight = 18;
+				break;
+			case BIO_WSCAT_PISTOL:
+			case BIO_WSCAT_SSG:
+			case BIO_WSCAT_CHAINSAW:
+				weight = 8;
+				break;
+			case BIO_WSCAT_RLAUNCHER:
+				weight = 6;
+				break;
+			case BIO_WSCAT_PLASRIFLE:
+				weight = 5;
+				break;
+			case BIO_WSCAT_BFG9000:
+				weight = 1;
+				break;
+			}
+
+			WeaponLootMeta.PushLayer(WeaponLoot[i], weight);
+		}
 	}
 
 	class<BIO_Weapon> LootWeaponType(BIO_WeaponSpawnCategory category) const
 	{
 		return (class<BIO_Weapon>)(WeaponLoot[category].Result());
+	}
+
+	class<BIO_Weapon> AnyLootWeaponType() const
+	{
+		return (class<BIO_Weapon>)(WeaponLootMeta.Result());
 	}
 }
 

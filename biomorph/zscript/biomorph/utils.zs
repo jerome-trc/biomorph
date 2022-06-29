@@ -448,22 +448,30 @@ extend class BIO_Utils
 		return a.CountInv(t, ptr_select);
 	}
 
-	static play void DRLMDangerLevel(uint danger)
+	static bool DoomRLMonsterPack()
 	{
 		name mpt_tn = 'RLMonsterpackThingo';
 		class<Actor> mpt_t = mpt_tn;
-	
-		if (mpt_t != null)
+		return mpt_t != null;
+	}
+
+	static play void DRLMDangerLevel(uint danger)
+	{
+		if (!DoomRLMonsterPack())
+			return;
+
+		if (BIO_debug && danger > 0)
 		{
-			if (BIO_debug && danger > 0)
-				Console.Printf(Biomorph.LOGPFX_DEBUG ..
-					"Increasing DRLA danger level by %d.", danger);
-
-			name rldl_tn = 'RLDangerLevel';
-
-			if (Players[0].MO != null)
-				Players[0].MO.GiveInventory(rldl_tn, danger);
+			Console.Printf(
+				Biomorph.LOGPFX_DEBUG ..
+				"Increasing DRLA danger level by %d.", danger
+			);
 		}
+
+		name rldl_tn = 'RLDangerLevel';
+
+		if (Players[0].MO != null)
+			Players[0].MO.GiveInventory(rldl_tn, danger);
 	}
 
 	static bool LegenDoom()

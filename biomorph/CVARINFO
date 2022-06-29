@@ -1,6 +1,7 @@
 // See zscript/biomorph/utils.zs for value enumerations where applicable.
 
 server noarchive bool BIO_debug = false;
+server bool BIO_ldl = true;
 server bool BIO_quake = true;
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -69,9 +69,6 @@ class BIO_Fists : BIO_DualWieldWeapon
 			sim.InsertNewGene('BIO_MGene_BerserkDamage', r);
 		}
 
-		sim.Simulate();
-		sim.Commit();
-		sim.PostCommit();
-		sim.Destroy();
+		sim.RunAndClose();
 	}
 }

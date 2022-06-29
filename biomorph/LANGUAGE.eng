@@ -566,6 +566,8 @@
 
 	BIO_OPTLBL_INVBARSLOTS = "HUD Inventory Bar Slots";
 
+	BIO_OPTLBL_LDL = "LegenDoomLite Integration";
+
 	BIO_OPTLBL_QUAKE = "Screen Shake";
 
 // Keybindings /////////////////////////////////////////////////////////////////
