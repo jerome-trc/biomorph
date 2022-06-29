@@ -105,7 +105,6 @@ class BIO_Weapon : DoomWeapon abstract
 	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
 	Array<BIO_WeaponAffix> Affixes;
 	BIO_WeaponModGraph ModGraph;
-	Dictionary Userdata; // Doesn't get instantiated by default.
 
 	protected Ammo Magazine1, Magazine2;
 	protected bool Zoomed;
