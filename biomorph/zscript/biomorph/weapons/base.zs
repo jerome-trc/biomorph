@@ -546,6 +546,15 @@ extend class BIO_Weapon
 		return ModGraph != null;
 	}
 
+	// Graph quality inherited over successive downgrades/sidegrades.
+	uint InheritedGraphQuality() const
+	{
+		if (ModGraph == null)
+			return 0;
+
+		return (ModGraph.Nodes.Size() - 1) - Default.GraphQuality;
+	}
+
 	bool CanReload(bool secondary = false) const
 	{
 		Ammo magItem = null, reserveAmmo = null;

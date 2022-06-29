@@ -256,9 +256,7 @@ extend class BIO_EventHandler
 		for (uint i = 0; i < toGive.Size(); i++)
 			pawn.GiveInventory(toGive[i], 1);
 
-		// Graph quality inherited over successive downgrades/sidegrades
-		uint qual = (weap.ModGraph.Nodes.Size() - 1) - weap.Default.GraphQuality;
-		qual += morph.QualityAdded();
+		uint qual = weap.InheritedGraphQuality() + morph.QualityAdded();
 
 		weap.Amount = 0;
 		weap.DepleteOrDestroy();
