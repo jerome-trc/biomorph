@@ -81,6 +81,8 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 
 ARMRBON is courtesy of id Software LLC.
 
+BIOPAIN 0 through to 3 (all amplified, 0 slowed down, 1 to 3 sped up) are derived from [Heartbeat, Regular, Single, 01-01, LOOP.wav](https://freesound.org/people/InspectorJ/sounds/485076/) by freesound user [InspectorJ](https://freesound.org/people/InspectorJ/), licensed under the Attributions 4.0 License.
+
 ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) (NRG2MATR, edited for a 200% tempo increase) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/) is licensed under Creative Commons Attribution 3.0 Unported.
 
 ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) (USRINPT0, pitched down for USRINPUT1) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/) is licensed under Creative Commons Attribution 3.0 Unported.

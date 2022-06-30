@@ -13,7 +13,7 @@ class BIO_Player : DoomPlayer
 		BloodColor 'Cyan';
 
 		Player.DisplayName "$BIO_MODTITLE";
-		Player.SoundClass 'Biomorph';
+		Player.SoundClass 'biomorph';
 
 		Player.StartItem 'Clip', 0;
 		Player.StartItem 'Shell', 0;

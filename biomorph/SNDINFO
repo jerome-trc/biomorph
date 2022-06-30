@@ -27,10 +27,19 @@ bio/loot/unique UNIQLOOT
 
 // Player pawn /////////////////////////////////////////////////////////////////
 
-$playeralias Biomorph other *land bio/pawn/land
+$playeralias biomorph other *land bio/pawn/land
 bio/pawn/land BIOMLAND
 $playeralias biomorph other *usefail bio/pawn/usefail
 bio/pawn/usefail BIOMFAIL
+
+$playeralias biomorph other *pain25 bio/pawn/pain/25
+$playeralias biomorph other *pain50 bio/pawn/pain/50
+$playeralias biomorph other *pain75 bio/pawn/pain/75
+$playeralias biomorph other *pain100 bio/pawn/pain/100
+bio/pawn/pain/25 BIOPAIN0
+bio/pawn/pain/50 BIOPAIN1
+bio/pawn/pain/75 BIOPAIN2
+bio/pawn/pain/100 BIOPAIN3
 
 // Weapons /////////////////////////////////////////////////////////////////////
 
