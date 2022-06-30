@@ -33,7 +33,7 @@ class BIO_AutoShotgun : BIO_Weapon
 		#### # 0 A_BIO_Spawn;
 		Stop;
 	Ready:
-		AUSG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		AUSG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Deselect:
 		AUSG A 0 A_BIO_Deselect;
@@ -100,6 +100,9 @@ class BIO_AutoShotgun : BIO_Weapon
 		#### # 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(11);
 		#### # 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
 		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
+		Goto Ready;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
 		Goto Ready;
 	}
 

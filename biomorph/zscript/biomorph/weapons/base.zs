@@ -105,6 +105,7 @@ class BIO_Weapon : DoomWeapon abstract
 	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
 	Array<BIO_WeaponAffix> Affixes;
 	BIO_WeaponModGraph ModGraph;
+	BIO_WeaponSpecialFunctor SpecialFunc; // Invoked via the `Zoom` input.
 
 	protected Ammo Magazine1, Magazine2;
 	protected bool Zoomed;
@@ -915,6 +916,7 @@ extend class BIO_Weapon
 		FireTimeGroups.Clear();
 		ReloadTimeGroups.Clear();
 		Affixes.Clear();
+		SpecialFunc = null;
 
 		bNoAutoFire = Default.bNoAutoFire;
 		bNoAlert = Default.bNoAlert;
@@ -1357,6 +1359,16 @@ extend class BIO_Weapon
 
 	protected action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }
 	protected action void A_BIO_Lower() { A_Lower(invoker.LowerSpeed); }
+
+	protected action state A_BIO_WeaponSpecial()
+	{
+		if (invoker.SpecialFunc == null ||
+			invoker.Owner.FindInventory('BIO_WeaponSpecialCooldown') != null)
+			return state(null);
+
+		invoker.Owner.GiveInventory('BIO_WeaponSpecialCooldown', 1);
+		return invoker.SpecialFunc.Invoke(invoker);
+	}
 }
 
 // Customised variations on gzdoom.pk3 attack actions.

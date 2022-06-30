@@ -310,6 +310,9 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 		}
 		TNT1 A 0 A_AddOverlayOffset_Y(-1.0);
 		Goto Ready.Left;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
+		Goto Ready;
 	}
 
 	override void SetDefaults()

@@ -1,3 +1,10 @@
+enum BIO_WeaponModGraphNodeFlags : uint8
+{
+	BIO_WMGNF_NONE = 0,
+	BIO_WMGNF_MUTED = 1 << 0,
+	BIO_WMGNF_FREEACCESS = 1 << 1
+}
+
 class BIO_WMGNode play
 {
 	// Corresponds to this node's place in `BIO_WeaponModGraph::Nodes`.
@@ -6,13 +13,18 @@ class BIO_WMGNode play
 	uint HomeDistance; // 0 for the home node, of course.
 	int PosX, PosY; // Home is (0, 0), adjacent west is (-1, 0), etc.
 	Array<uint> Neighbors; // Each element is another node's UUID.
-	bool FreeAccess;
+	BIO_WeaponModGraphNodeFlags Flags;
 
 	class<BIO_Gene> GeneType;
 
 	bool Active() const
 	{
 		return GeneType != null || UUID == 0;
+	}
+
+	bool FreeAccess() const
+	{
+		return Flags & BIO_WMGNF_FREEACCESS;
 	}
 
 	BIO_WMGNode Copy() const
@@ -23,9 +35,22 @@ class BIO_WMGNode play
 		ret.PosX = PosX;
 		ret.PosY = PosY;
 		ret.Neighbors.Copy(Neighbors);
-		ret.FreeAccess = FreeAccess;
+		ret.Flags = Flags;
 		ret.GeneType = GeneType;
 		return ret;
+	}
+
+	bool IsMuted() const
+	{
+		return Flags & BIO_WMGNF_MUTED;
+	}
+
+	void Toggle()
+	{
+		if (Flags & BIO_WMGNF_MUTED)
+			Flags &= ~BIO_WMGNF_MUTED;
+		else
+			Flags |= BIO_WMGNF_MUTED;
 	}
 }
 

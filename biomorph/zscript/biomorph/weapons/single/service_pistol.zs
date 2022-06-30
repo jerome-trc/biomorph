@@ -29,15 +29,15 @@ class BIO_ServicePistol : BIO_Weapon
 		SVCP Z 0;
 		#### # 0 A_BIO_Spawn;
 		Stop;
-	Ready:
-		SVCP A 1 A_WeaponReady(WRF_ALLOWRELOAD);
-		Loop;
 	Deselect:
 		SVCP A 0 A_BIO_Deselect;
 		Stop;
 	Select:
 		SVCP A 0 A_BIO_Select;
 		Stop;
+	Ready:
+		SVCP A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
+		Loop;
 	Fire:
 		TNT1 A 0 A_BIO_CheckAmmo;
 		SVCP B 4 Bright
@@ -85,6 +85,9 @@ class BIO_ServicePistol : BIO_Weapon
 		#### # 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(11);
 		#### # 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
 		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
+		Goto Ready;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
 		Goto Ready;
 	}
 

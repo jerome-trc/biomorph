@@ -37,7 +37,7 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		MISG A 0 A_BIO_Select;
 		Stop;
 	Ready:
-		MISG A 1 A_WeaponReady;
+		MISG A 1 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Flash:
 		MISF A 1 Bright A_Light(1);
@@ -60,6 +60,9 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		}
 		MISG B 0 A_ReFire;
 		TNT1 A 0 A_BIO_AutoReload(single: true);
+		Goto Ready;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
 		Goto Ready;
 	}
 

@@ -218,8 +218,9 @@ extend class BIO_DualWieldWeapon
 			invoker.continueReload = false;
 			A_Reload_L();
 		}
-		
-		A_WeaponReady(WRF_NOFIRE); // Let the gun bob and be deselected
+
+		// Let the gun bob and be deselected
+		A_WeaponReady(WRF_NOFIRE | WRF_ALLOWZOOM);
 	}
 
 	// Returns true if the weapon is in its respective `Ready` state sequence.

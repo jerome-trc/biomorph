@@ -19,7 +19,7 @@ class BIO_Fists : BIO_DualWieldWeapon
 	States
 	{
 	Ready:
-		PUNG A 1 A_WeaponReady;
+		PUNG A 1 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Deselect:
 		PUNG A 0 A_BIO_Deselect;
@@ -33,6 +33,9 @@ class BIO_Fists : BIO_DualWieldWeapon
 		PUNG D 5;
 		PUNG C 4;
 		PUNG B 5 A_ReFire;
+		Goto Ready;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
 		Goto Ready;
 	}
 

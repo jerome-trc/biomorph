@@ -38,7 +38,7 @@ class BIO_BFG : BIO_Weapon
 		BFGG A 0 A_BIO_Select;
 		Stop;
 	Ready:
-		BFGG A 1 A_WeaponReady;
+		BFGG A 1 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Fire:
 		TNT1 A 0 A_BIO_CheckAmmo;
@@ -77,6 +77,9 @@ class BIO_BFG : BIO_Weapon
 			A_Light(2);
 		}
 		Goto LightDone;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
+		Goto Ready;
 	}
 
 	override void SetDefaults()

@@ -35,6 +35,7 @@ class Biomorph abstract
 #include "zscript/biomorph/utils.zs"
 
 #include "zscript/biomorph/genes/base.zs"
+#include "zscript/biomorph/genes/active.zs"
 #include "zscript/biomorph/genes/modifier.zs"
 #include "zscript/biomorph/genes/support.zs"
 

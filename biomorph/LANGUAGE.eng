@@ -480,6 +480,17 @@
 	BIO_SGENE_ADDWEST_TAG = "\c[SGene]W1 Regulator\c[White] Gene\c-";
 	BIO_SGENE_ADDWEST_PKUP = "Collected a \c[SGene]W1 regulator\c[White] gene\c-.";
 
+	// Active
+
+	BIO_AGENE_INCOMPAT_EXISTINGSPECIAL = "This weapon already has a special function.";
+	BIO_AGENE_INCOMPAT_ALLNEIGHBORSHAVENEIGHBORS =
+		"This gene needs at least one of its neighbours to be a dead-end.";
+
+	BIO_AGENE_TOGGLECONNECTED_TAG = "\c[Purple]Overseer\c[White] Gene\c-";
+	BIO_AGENE_TOGGLECONNECTED_PKUP = "Collected an \c[Purple]Overseer\c[White] gene\c-.";
+	BIO_AGENE_TOGGLECONNECTEDSUMM =
+		"\c[White]Connected dead-end nodes can be toggled with \c[LightBlue]Zoom\c[White]";
+
 // Weapon morph recipe requirement strings /////////////////////////////////////
 
 	BIO_WMR_REQ_DAMAGEINC_1 = "\c[White]- One hit damage increase";

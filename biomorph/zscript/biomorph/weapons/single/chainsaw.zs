@@ -29,7 +29,7 @@ class BIO_Chainsaw : BIO_Weapon
 		Stop;
 	Ready:
 		TNT1 A 0 A_BIO_Recoil('BIO_Recoil_ChainsawIdle');
-		SAWG CD 4 A_WeaponReady;
+		SAWG CD 4 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Deselect:
 		SAWG C 0 A_BIO_Deselect;
@@ -41,7 +41,10 @@ class BIO_Chainsaw : BIO_Weapon
 		SAWG A 1 A_BIO_Fire;
 		SAWG B 1 A_BIO_Fire;
 		SAWG B 0 A_ReFire;
-		Goto Ready;	
+		Goto Ready;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
+		Goto Ready;
 	}
 
 	final override void SetDefaults()

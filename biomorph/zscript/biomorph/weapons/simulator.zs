@@ -468,6 +468,7 @@ class BIO_WeaponModSimulator : Thinker
 			Nodes[i].Multiplier = 1;
 			Nodes[i].Valid = true;
 			Nodes[i].Message = "";
+			Nodes[i].Basis.Flags &= ~BIO_WMGNF_MUTED;
 		}
 
 		// Second pass invokes supports
@@ -506,6 +507,36 @@ class BIO_WeaponModSimulator : Thinker
 			let gene_t = Nodes[i].GetGeneType();
 
 			if (!(gene_t is 'BIO_ModifierGene'))
+				continue;
+
+			let node = Nodes[i];
+			string _ = "";
+
+			BIO_GeneContext context;
+			context.Weap = Weap.AsConst();
+			context.NodeCount = node.Multiplier;
+			context.TotalCount = CountGene(gene_t);
+			context.First = NodeHasFirstOfGene(i, gene_t);
+
+			[node.Valid, _] = node.Compatible(AsConst(), context);
+
+			if (!node.Valid)
+			{
+				Valid = false;
+				continue;
+			}
+
+			if (!node.Basis.IsMuted())
+				node.Message = node.Apply(Weap, self, context);
+		}
+
+		// Fourth pass applies actives
+
+		for (uint i = 1; i < Nodes.Size(); i++)
+		{
+			let gene_t =  Nodes[i].GetGeneType();
+
+			if (!(gene_t is 'BIO_ActiveGene'))
 				continue;
 
 			let node = Nodes[i];
@@ -806,7 +837,7 @@ class BIO_WeaponModSimulator : Thinker
 
 		// Completely unconnected nodes are permanently accessible
 		if (Nodes[node].Basis.Neighbors.Size() < 1 ||
-			Nodes[node].Basis.FreeAccess)
+			Nodes[node].Basis.FreeAccess())
 			return true;
 
 		Array<uint> visited;
@@ -851,7 +882,8 @@ class BIO_WeaponModSimulator : Thinker
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			if (!Nodes[i].Basis.FreeAccess) continue;
+			if (!Nodes[i].Basis.FreeAccess())
+				continue;
 
 			for (uint j = 0; j < Nodes[i].Basis.Neighbors.Size(); j++)
 			{
@@ -881,7 +913,7 @@ class BIO_WeaponModSimulator : Thinker
 
 		// Completely unconnected nodes are permanently accessible
 		if (Nodes[node].Basis.Neighbors.Size() < 1 ||
-			Nodes[node].Basis.FreeAccess)
+			Nodes[node].Basis.FreeAccess())
 			return true;
 
 		Array<uint> visited;
@@ -926,7 +958,8 @@ class BIO_WeaponModSimulator : Thinker
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			if (!Nodes[i].Basis.FreeAccess) continue;
+			if (!Nodes[i].Basis.FreeAccess())
+				continue;
 
 			for (uint j = 0; j < Nodes[i].Basis.Neighbors.Size(); j++)
 			{

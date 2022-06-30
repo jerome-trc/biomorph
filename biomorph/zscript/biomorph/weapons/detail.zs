@@ -21,8 +21,8 @@ enum BIO_WeaponFamily : uint8
 	BIO_WEAPFAM_FIST
 }
 
-// Prevent one button push from toggling a weapon's zoom multiple times.
-class BIO_WeaponZoomCooldown : Powerup
+// Prevent one button push from invoking a weapon's special functor multiple times.
+class BIO_WeaponSpecialCooldown : Powerup
 {
 	Default
 	{
@@ -324,4 +324,9 @@ class BIO_WeaponAffix play abstract
 	virtual void OnKill(BIO_Weapon weap, Actor killed, Actor inflictor) {}
 
 	abstract string Description(readOnly<BIO_Weapon> weap) const;
+}
+
+class BIO_WeaponSpecialFunctor play abstract
+{
+	abstract state Invoke(BIO_Weapon weap) const;
 }

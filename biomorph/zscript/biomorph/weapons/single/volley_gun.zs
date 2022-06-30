@@ -30,7 +30,7 @@ class BIO_VolleyGun : BIO_Weapon
 		#### # 0 A_BIO_Spawn;
 		Stop;
 	Ready:
-		VOLL A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		VOLL A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Deselect:
 		VOLL A 0 A_BIO_Deselect;
@@ -88,6 +88,14 @@ class BIO_VolleyGun : BIO_Weapon
 		#### # 1 Offset(0, 32 + 2);
 		#### # 1 Offset(0, 32 + 1);
 		Goto Ready;
+	Flash.Quad:
+		VOLL F 4 Bright A_Light(2);
+		VOLL G 3 Bright A_Light(4);
+		Goto LightDone;
+	Flash.Double:
+		VOLL B 4 Bright A_Light(1);
+		VOLL C 3 Bright A_Light(2);
+		Goto LightDone;
 	Reload:
 		TNT1 A 0
 		{
@@ -153,14 +161,9 @@ class BIO_VolleyGun : BIO_Weapon
 			A_BIO_Recoil('BIO_Recoil_ReloadSSG', invert: true);
 		}
 		Goto Ready;
-	Flash.Quad:
-		VOLL F 4 Bright A_Light(2);
-		VOLL G 3 Bright A_Light(4);
-		Goto LightDone;
-	Flash.Double:
-		VOLL B 4 Bright A_Light(1);
-		VOLL C 3 Bright A_Light(2);
-		Goto LightDone;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
+		Goto Ready;
 	}
 
 	override void SetDefaults()

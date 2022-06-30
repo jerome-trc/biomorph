@@ -41,7 +41,7 @@ class BIO_PumpShotgun : BIO_Weapon
 		PASG A 0 A_BIO_Select;
 		Stop;
 	Ready:
-		PASG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		PASG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
 		TNT1 A 0 A_BIO_CheckAmmo(single: true);
@@ -126,6 +126,9 @@ class BIO_PumpShotgun : BIO_Weapon
 		PASG C 2;
 		PASG A 2;
 		Goto Fire;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
+		Goto Ready;
 	}
 
 	override void SetDefaults()

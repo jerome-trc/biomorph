@@ -36,7 +36,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 		PLSG A 0 A_BIO_Select;
 		Stop;
 	Ready:
-		PLSG A 1 A_WeaponReady;
+		PLSG A 1 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Fire:
 		TNT1 A 0 A_BIO_CheckAmmo;
@@ -69,6 +69,9 @@ class BIO_PlasmaRifle : BIO_Weapon
 			A_Light(1);
 		}
 		Goto LightDone;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
+		Goto Ready;
 	}
 
 	override void SetDefaults()

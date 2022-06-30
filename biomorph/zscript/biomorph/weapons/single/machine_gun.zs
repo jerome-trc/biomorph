@@ -33,7 +33,7 @@ class BIO_MachineGun : BIO_Weapon
 		#### # 0 A_BIO_Spawn;
 		Stop;
 	Ready:
-		GPMG A 1 A_WeaponReady(WRF_ALLOWRELOAD);
+		GPMG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Deselect:
 		GPMG A 0 A_BIO_Deselect;
@@ -89,6 +89,9 @@ class BIO_MachineGun : BIO_Weapon
 		#### # 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(11);
 		#### # 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
 		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
+		Goto Ready;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
 		Goto Ready;
 	}
 
