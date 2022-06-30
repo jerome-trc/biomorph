@@ -848,9 +848,13 @@ extend class BIO_WeaponModMenu
 	// inventory, as well as consuming the requisite quantity of mutagen.
 	private void TryCommitChanges()
 	{
+		let cost = Simulator.CommitCost();
 		let mutaC = Players[ConsolePlayer].MO.CountInv('BIO_Muta_General');
 
-		if (mutaC < Simulator.CommitCost())
+		if (cost <= 0)
+			return; // Nothing to commit
+
+		if (mutaC < cost)
 		{
 			Console.Printf(
 				StringTable.Localize("$BIO_MENU_WEAPMOD_COMMITFAIL_MUTACOST")
