@@ -10,6 +10,10 @@ The GLDEFS for the Armour Bonus were devised by Realm667 user Infirnex.
 
 ## Graphics
 
+The following sprites are edits of the work of id Software LLC:
+- powup_infiniteammo.png
+- powup_radsuit.png
+
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
 ## Audio
