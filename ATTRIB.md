@@ -81,23 +81,23 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 
 ARMRBON is courtesy of id Software LLC.
 
-BIOPAIN 0 through to 3 (all amplified, 0 slowed down, 1 to 3 sped up) are derived from [Heartbeat, Regular, Single, 01-01, LOOP.wav](https://freesound.org/people/InspectorJ/sounds/485076/) by freesound user [InspectorJ](https://freesound.org/people/InspectorJ/), licensed under the Attributions 4.0 License.
+The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), and are all provided under the Attribution 4.0 License:
+- BIOPAIN 0 through to 3 (all amplified, 0 slowed down, 1 to 3 sped up) (["Heartbeat, Regular, Single, 01-01, LOOP.wav"](https://freesound.org/people/InspectorJ/sounds/485076/))
+- SUPRLOOT (["Wind Chime, Gamelon Gong, A.wav"](https://freesound.org/people/InspectorJ/sounds/411090/))
 
-["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) (NRG2MATR, edited for a 200% tempo increase) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/) is licensed under Creative Commons Attribution 3.0 Unported.
+DRY_BAL0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), which is licensed under Creative Commons 0.
 
-["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) (USRINPT0, pitched down for USRINPUT1) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/) is licensed under Creative Commons Attribution 3.0 Unported.
+NRG2MATR (edited for a 200% tempo increase) is derived from ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/), which is licensed under Creative Commons Attribution 3.0 Unported.
 
-["Gong Hit"](https://freesound.org/people/GowlerMusic/sounds/266566/) (UNIQLOOT) by freesound user [GowlerMusic](https://freesound.org/people/GowlerMusic) is licensed under the Attribution 4.0 License.
+RARELOOT is derived from ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/), licensed under Creative Commons 0.
 
-["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) (DRY_BAL0 through 2) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi) is licensed under Creative Commons 0.
+UNIQLOOT is derived from ["Gong Hit"](https://freesound.org/people/GowlerMusic/sounds/266566/) by freesound user [GowlerMusic](https://freesound.org/people/GowlerMusic), licensed under the Attribution 4.0 License.
 
-["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) (RARELOOT) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/) is licensed under Creative Commons 0.
+USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/), licensed under Creative Commons 0
+
+USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/), licensed under Creative Commons Attribution 3.0 Unported.
 
 VOLLFIRE is courtesy of [Kentucky Ballistics](https://www.youtube.com/watch?v=8gIS2n-bY1w).
-
-["Wind Chime, Gamelon Gong, A.wav"](https://freesound.org/people/InspectorJ/sounds/411090/) (SUPRLOOT) by freesound user [InspectorJ](https://freesound.org/people/InspectorJ) is licensed under the Attribution 4.0 License.
-
-["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) (USRFAIL0, edited for a 20% speed increase) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/) is licensed under Creative Commons 0.
 
 ## Blender (Materials, Meshes)
 
