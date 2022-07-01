@@ -320,6 +320,7 @@ class BIO_MGene_ShellToSlug : BIO_ModifierGene
 		Tag "$BIO_MGENE_SHELLTOSLUG_TAG";
 		Inventory.Icon 'GENNA0';
 		Inventory.PickupMessage "$BIO_MGENE_SHELLTOSLUG_PKUP";
+		BIO_Gene.Limit 1;
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_Gene.Summary "$BIO_WMOD_SHELLTOSLUG_SUMM";
 		BIO_ModifierGene.ModType 'BIO_WMod_ShellToSlug';
@@ -430,6 +431,7 @@ class BIO_MGene_SwitchSpeed : BIO_ModifierGene
 		Tag "$BIO_MGENE_SWITCHSPEED_TAG";
 		Inventory.Icon 'GENMB0';
 		Inventory.PickupMessage "$BIO_MGENE_SWITCHSPEED_PKUP";
+		BIO_Gene.Limit 1;
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_Gene.Summary "$BIO_WMOD_SWITCHSPEED_SUMM";
 		BIO_ModifierGene.ModType 'BIO_WMod_SwitchSpeed';
