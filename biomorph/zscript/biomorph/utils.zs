@@ -905,6 +905,31 @@ class BIO_CVar abstract
 			.GetInt() == BIO_CV_MRM_AUTORELOAD;
 	}
 
+	static bool NeverClearInventory(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar("BIO_noinvclear", pInfo).GetBool();
+	}
+
+	static int ResetInterval_Ammo(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar("BIO_reset_ammo", pInfo).GetInt();
+	}
+
+	static int ResetInterval_Armor(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar("BIO_reset_armor", pInfo).GetInt();
+	}
+
+	static int ResetInterval_Health(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar("BIO_reset_health", pInfo).GetInt();
+	}
+
+	static int ResetInterval_Weapons(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar("BIO_reset_weaps", pInfo).GetInt();
+	}
+
 	static bool StayZoomedAfterReload(PlayerInfo pInfo)
 	{
 		return CVar.GetCVar("BIO_postreloadzoom", pInfo).GetBool();

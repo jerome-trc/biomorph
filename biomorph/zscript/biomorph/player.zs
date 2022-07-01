@@ -22,8 +22,6 @@ class BIO_Player : DoomPlayer
 
 		Player.StartItem 'BIO_WeaponDrop';
 
-		Player.StartItem 'BIO_Fists';
-
 		BIO_Player.MaxWeaponsHeld 8;
 		BIO_Player.MaxGenesHeld 10;
 	}
@@ -61,22 +59,34 @@ class BIO_Player : DoomPlayer
 		}
 	}
 
+	override void ClearInventory()
+	{
+		if (BIO_CVar.NeverClearInventory(Player))
+			return;
+
+		super.ClearInventory();
+	}
+
 	override void GiveDefaultInventory()
 	{
+		if (FindInventory('BIO_WeaponDrop') != null)
+			return;
+
 		super.GiveDefaultInventory();
 
 		let globals = BIO_Global.Get();
 
 		if (globals == null)
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Global data has been illegally destroyed.");
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Global data has been illegally destroyed."
+			);
 			return;
 		}
 
-		let pistol_t = globals.LootWeaponType(BIO_WSCAT_PISTOL);
-		GiveInventory(pistol_t, 1);
-		A_SelectWeapon(pistol_t);
+		GiveInventory('BIO_Fists', 1);
+		GiveRandomStartingPistol();
 	}
 
 	bool CanCarryWeapon(BIO_Weapon weap) const
@@ -130,5 +140,72 @@ class BIO_Player : DoomPlayer
 
 		if (weap != null)
 			weap.OnKill(killed, inflictor);
+	}
+
+	protected void GiveRandomStartingPistol()
+	{
+		let pistol_t = BIO_Global.Get().LootWeaponType(BIO_WSCAT_PISTOL);
+		GiveInventory(pistol_t, 1);
+		A_SelectWeapon(pistol_t);
+	}
+
+	override void PreTravelled()
+	{
+		super.PreTravelled();
+
+		if (BIO_CVar.NeverClearInventory(Player))
+			return;
+
+		let globals = BIO_Global.Get();
+
+		let
+			resetAmmo = globals.ResetPlayerAmmo(Player),
+			resetArmor = globals.ResetPlayerArmor(Player),
+			resetHealth = globals.ResetPlayerHealth(Player),
+			resetWeaps = globals.ResetPlayerWeapons(Player);
+
+		Array<Inventory> toDestroy;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+			if ((i is 'Ammo' && resetAmmo) || (i is 'Weapon' && resetWeaps))
+				toDestroy.Push(i);
+
+		for (uint i = 0; i < toDestroy.Size(); i++)
+		{
+			let item = toDestroy[i];
+
+			if (item is 'Ammo')
+			{
+				item.MaxAmount = item.Default.MaxAmount;
+
+				if (item is 'BIO_Magazine')
+					item.Destroy();
+				else
+					item.Amount = 0;
+			}
+			else if (item is 'Weapon')
+			{
+				item.Destroy();
+			}
+		}
+
+		if (resetHealth)
+			Player.Health = Health = SpawnHealth();
+
+		if (resetArmor)
+		{
+			let arm = BasicArmor(FindInventory('BasicArmor'));
+			arm.Amount = 0;
+			arm.SavePercent = 0;
+			arm.ArmorType = 'None';
+			arm.BonusCount = 0;
+			arm.ActualSaveAmount = 0;
+		}
+
+		if (resetWeaps)
+		{
+			GiveInventory('BIO_Fists', 1);
+			GiveRandomStartingPistol();
+		}
 	}
 }

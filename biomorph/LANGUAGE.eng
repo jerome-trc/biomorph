@@ -546,10 +546,11 @@
 
 	BIO_OPTTITLE = "\c[Cyan]Biomorph:\c[White] Preferences";
 
-	BIO_OPTCAT_GUI = "\c[Green]HUD Options";
-	BIO_OPTCAT_CONTROL = "\c[Green]Control Options";
 	BIO_OPTCAT_AUDIOVIS = "\c[Green]Audio/Visual Options";
 	BIO_OPTCAT_BALANCE = "\c[Green]Balance Options";
+	BIO_OPTCAT_CONTROL = "\c[Green]Control Options";
+	BIO_OPTCAT_GUI = "\c[Green]HUD Options";
+	BIO_OPTCAT_RESET = "\c[Green]Inventory Reset Options";
 
 	BIO_OPTLBL_AUTORELOAD_PRE = "Firing an empty weapon reloads it";
 	BIO_OPTLBL_AUTORELOAD_POST = "Auto-reload after emptying magazine";
@@ -557,27 +558,34 @@
 	BIO_OPTVAL_AUTOREL_SINGLE = "Single-shot weapons only";
 	BIO_OPTVAL_AUTOREL_NEVER = "Never";
 
-	BIO_OPTLBL_HUDWEAP_OFFSX = "HUD Weapon Info Offset X";
-	BIO_OPTLBL_HUDWEAP_OFFSY = "HUD Weapon Info Offset Y";
-	BIO_OPTLBL_HUDEXAM_OFFSX = "HUD Examine Info Offset X";
-	BIO_OPTLBL_HUDEXAM_OFFSY = "HUD Examine Info Offset Y";
-
-	BIO_OPTLBL_MULTIBARRELFIRE = "Multi-Barrel Fire Mode";
-	BIO_OPTVAL_MBF_PRIM = "Primary Fires Multiple Barrels";
-	BIO_OPTVAL_MBF_SEC = "Secondary Fires Multiple Barrels";
-
 	BIO_OPTLBL_BERSERKSWITCH = "Going Berserk switches to Fist";
 	BIO_OPTVAL_BSKS_NONE = "Never";
 	BIO_OPTVAL_BSKS_MELEE = "Always";
 	BIO_OPTVAL_BSKS_FIRSTONLY = "Only on first pickup";
 
-	BIO_OPTLBL_MULTIRELOADMODE = "Multi-reload mode";
-	BIO_OPTVAL_MRM_AUTO = "Continue until interrupted";
-	BIO_OPTVAL_MRM_HOLD = "Hold \c[LightBlue]Reload\c[White] to continue";
+	BIO_OPTLBL_HUDWEAP_OFFSX = "HUD Weapon Info Offset X";
+	BIO_OPTLBL_HUDWEAP_OFFSY = "HUD Weapon Info Offset Y";
+	BIO_OPTLBL_HUDEXAM_OFFSX = "HUD Examine Info Offset X";
+	BIO_OPTLBL_HUDEXAM_OFFSY = "HUD Examine Info Offset Y";
 
 	BIO_OPTLBL_INVBARSLOTS = "HUD Inventory Bar Slots";
 
 	BIO_OPTLBL_LDL = "LegenDoomLite Integration";
+
+	BIO_OPTLBL_MULTIBARRELFIRE = "Multi-Barrel Fire Mode";
+	BIO_OPTVAL_MBF_PRIM = "Primary Fires Multiple Barrels";
+	BIO_OPTVAL_MBF_SEC = "Secondary Fires Multiple Barrels";
+
+	BIO_OPTLBL_MULTIRELOADMODE = "Multi-reload mode";
+	BIO_OPTVAL_MRM_AUTO = "Continue until interrupted";
+	BIO_OPTVAL_MRM_HOLD = "Hold \c[LightBlue]Reload\c[White] to continue";
+
+	BIO_OPTLBL_NOINVCLEAR = "Never Reset Inventory";
+
+	BIO_OPTLBL_RESET_AMMO = "Reset Ammo Every # Maps";
+	BIO_OPTLBL_RESET_ARMOR = "Reset Armor Every # Maps";
+	BIO_OPTLBL_RESET_HEALTH = "Reset Health Every # Maps";
+	BIO_OPTLBL_RESET_WEAPS = "Reset Weapons Every # Maps";
 
 	BIO_OPTLBL_QUAKE = "Screen Shake";
 

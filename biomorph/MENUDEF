@@ -12,6 +12,13 @@ OptionMenu "BIO_Options"
 	StaticText "$BIO_OPTCAT_BALANCE"
 	Option "$BIO_OPTLBL_LDL", "BIO_ldl", "OnOff"
 	StaticText ""
+	StaticText "$BIO_OPTCAT_RESET"
+	Option "$BIO_OPTLBL_NOINVCLEAR", "BIO_noinvclear", "OnOff"
+	Slider "$BIO_OPTLBL_RESET_HEALTH", "BIO_reset_health", 0, 31, 1, 0
+	Slider "$BIO_OPTLBL_RESET_ARMOR", "BIO_reset_armor", 0, 31, 1, 0
+	Slider "$BIO_OPTLBL_RESET_AMMO", "BIO_reset_ammo", 0, 31, 1, 0
+	Slider "$BIO_OPTLBL_RESET_WEAPS", "BIO_reset_weaps", 0, 31, 1, 0
+	StaticText ""
 	StaticText "$BIO_OPTCAT_CONTROL"
 	Option "$BIO_OPTLBL_AUTORELOAD_PRE", "BIO_autoreload_pre", "BIO_AutoReload"
 	Option "$BIO_OPTLBL_AUTORELOAD_POST", "BIO_autoreload_post", "BIO_AutoReload"
