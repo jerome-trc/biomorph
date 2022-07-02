@@ -33,9 +33,9 @@ class BIO_WMod_ForcePain : BIO_WeaponModifier
 		);
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_PAYLOAD_ALTER;
+		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_ALTER;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -102,9 +102,9 @@ class BIO_WMod_ForceRadiusDmg : BIO_WeaponModifier
 		return Summary();
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_PAYLOAD_ALTER;
+		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_ALTER;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const

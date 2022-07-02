@@ -60,9 +60,9 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 		return ret;
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_FIRETIME_DEC;
+		return BIO_WCMF_FIRETIME_DEC, BIO_WPMF_NONE;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -140,9 +140,9 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 		return ret;
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_RELOADTIME_DEC;
+		return BIO_WCMF_RELOADTIME_DEC, BIO_WPMF_NONE;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const

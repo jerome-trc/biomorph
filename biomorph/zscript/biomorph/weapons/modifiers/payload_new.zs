@@ -35,9 +35,9 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 		return Summary();
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_PAYLOAD_NEW;
+		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_NEW;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const

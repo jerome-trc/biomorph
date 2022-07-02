@@ -122,9 +122,9 @@ class BIO_WMod_ETMF : BIO_WeaponModifier
 		return ret;
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_MAGTYPE;
+		return BIO_WCMF_AMMOTYPE, BIO_WPMF_NONE;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -211,9 +211,9 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 		return ret;
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_MAGSIZE_INC;
+		return BIO_WCMF_MAGSIZE_INC, BIO_WPMF_NONE;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -251,9 +251,9 @@ class BIO_WMod_NthRoundCost : BIO_WeaponModifier
 		return afx.Description(context.Weap);
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_AMMOUSE_DEC;
+		return BIO_WCMF_AMMOUSE_DEC, BIO_WPMF_NONE;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -359,9 +359,9 @@ class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 		return Summary();
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_MAGTYPE | BIO_WMODF_AMMOTYPE;
+		return BIO_WCMF_MAGTYPE | BIO_WCMF_AMMOTYPE, BIO_WPMF_NONE;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -414,9 +414,9 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 		return Summary();
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_MAGTYPE;
+		return BIO_WCMF_MAGTYPE, BIO_WPMF_NONE;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const

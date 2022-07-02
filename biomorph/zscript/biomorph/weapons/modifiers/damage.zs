@@ -38,9 +38,9 @@ class BIO_WMod_BerserkDamage : BIO_WeaponModifier
 		);
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_DAMAGE_INC;
+		return BIO_WCMF_NONE, BIO_WPMF_DAMAGE_INC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -123,9 +123,9 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 		return ret;
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_DAMAGE_INC;
+		return BIO_WCMF_NONE, BIO_WPMF_DAMAGE_INC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -171,9 +171,9 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 		);
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_DAMAGE_INC;
+		return BIO_WCMF_NONE, BIO_WPMF_DAMAGE_INC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -309,11 +309,11 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 		return ret;
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return
-			BIO_WMODF_DAMAGE_INC |
-			BIO_WMODF_SPLASHDAMAGE_DEC | BIO_WMODF_SPLASHRADIUS_DEC;
+		return BIO_WCMF_NONE,
+			BIO_WPMF_DAMAGE_INC |
+			BIO_WPMF_SPLASHDAMAGE_DEC | BIO_WPMF_SPLASHRADIUS_DEC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const

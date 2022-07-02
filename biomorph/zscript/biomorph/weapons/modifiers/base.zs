@@ -8,48 +8,65 @@ enum BIO_WeapModRepeatRules : uint8
 	BIO_WMODREPEATRULES_INTERNAL
 }
 
-// Flags curently only really exist so that weapon morph recipes can check how
-// many of a graph's modifiers affect one particular facet of the weapon.
+// Flags exist so that modifiers can inspect if, for instance, a weapon has already
+// had gravity or bounce applied to it, and so weapon morph recipes can check 
+// how many of a graph's modifiers affect one particular facet of the weapon.
 
-enum BIO_WeaponModFlags : uint
+// Anything inherited from `Weapon` (e.g. ammo type) or part of `BIO_Weapon`.
+enum BIO_WeaponCoreModFlags : uint
 {
-	BIO_WMODF_NONE = 0,
-	// Core stats; inherited from `Weapon` e.g. ammo-type or part of `BIO_Weapon`
-	BIO_WMODF_KICKBACK_INC = 1 << 0,
-	BIO_WMODF_KICKBACK_DEC = 1 << 1,
-	BIO_WMODF_SWITCHSPEED_INC = 1 << 2,
-	BIO_WMODF_SWITCHSPEED_DEC = 1 << 3,
-	BIO_WMODF_AMMOTYPE = 1 << 4,
-	BIO_WMODF_AMMOUSE_INC = 1 << 5,
-	BIO_WMODF_AMMOUSE_DEC = 1 << 6,
-	BIO_WMODF_MAGTYPE = 1 << 7,
-	BIO_WMODF_MAGSIZE_INC = 1 << 8,
-	BIO_WMODF_MAGSIZE_DEC = 1 << 9,
+	BIO_WCMF_NONE = 0,
+	// Miscellaneous
+	BIO_WCMF_KICKBACK_INC = 1 << 0,
+	BIO_WCMF_KICKBACK_DEC = 1 << 1,
+	BIO_WCMF_SWITCHSPEED_INC = 1 << 2,
+	BIO_WCMF_SWITCHSPEED_DEC = 1 << 3,
+	// Ammo- and magazine-related
+	BIO_WCMF_AMMOTYPE = 1 << 4,
+	BIO_WCMF_AMMOUSE_INC = 1 << 5,
+	BIO_WCMF_AMMOUSE_DEC = 1 << 6,
+	BIO_WCMF_RELOADCOST_INC = 1 << 7,
+	BIO_WCMF_RELOADCOST_DEC = 1 << 8,
+	BIO_WCMF_RELOADOUTPUT_INC = 1 << 9,
+	BIO_WCMF_RELOADOUTPUT_DEC = 1 << 10,
+	BIO_WCMF_MAGTYPE = 1 << 11,
+	BIO_WCMF_MAGSIZE_INC = 1 << 12,
+	BIO_WCMF_MAGSIZE_DEC = 1 << 13,
 	// Timing
-	BIO_WMODF_FIRETIME_INC = 1 << 10,
-	BIO_WMODF_FIRETIME_DEC = 1 << 11,
-	BIO_WMODF_RELOADTIME_INC = 1 << 12,
-	BIO_WMODF_RELOADTIME_DEC = 1 << 13,
-	// Pipeline, general
-	BIO_WMODF_PAYLOAD_NEW = 1 << 14,
-	BIO_WMODF_PAYLOAD_ALTER = 1 << 15,
-	BIO_WMODF_SHOTCOUNT_INC = 1 << 16,
-	BIO_WMODF_SHOTCOUNT_DEC = 1 << 17,
-	BIO_WMODF_DAMAGE_INC = 1 << 18,
-	BIO_WMODF_DAMAGE_DEC = 1 << 19,
-	BIO_WMODF_SPREAD_INC = 1 << 20,
-	BIO_WMODF_SPREAD_DEC = 1 << 21,
-	BIO_WMODF_SPLASHDAMAGE_INC = 1 << 22,
-	BIO_WMODF_SPLASHDAMAGE_DEC = 1 << 23,
-	BIO_WMODF_SPLASHRADIUS_INC = 1 << 24,
-	BIO_WMODF_SPLASHRADIUS_DEC = 1 << 25,
-	BIO_WMODF_PROJSPEED_INC = 1 << 26,
-	BIO_WMODF_PROJSPEED_DEC = 1 << 27,
-	// Pipeline, melee-exclusive
-	BIO_WMODF_LIFESTEAL_INC = 1 << 28,
-	BIO_WMODF_LIFESTEAL_DEC = 1 << 29,
-	BIO_WMODF_MELEERANGE_INC = 1 << 30,
-	BIO_WMODF_MELEERANGE_DEC = 1 << 31
+	BIO_WCMF_FIRETIME_INC = 1 << 14,
+	BIO_WCMF_FIRETIME_DEC = 1 << 15,
+	BIO_WCMF_RELOADTIME_INC = 1 << 16,
+	BIO_WCMF_RELOADTIME_DEC = 1 << 17
+}
+
+enum BIO_WeaponPipelineModFlags : uint
+{
+	BIO_WPMF_NONE = 0,
+	BIO_WPMF_PAYLOAD_NEW = 1 << 0,
+	BIO_WPMF_PAYLOAD_ALTER = 1 << 1,
+	BIO_WPMF_SHOTCOUNT_INC = 1 << 2,
+	BIO_WPMF_SHOTCOUNT_DEC = 1 << 3,
+	BIO_WPMF_DAMAGE_INC = 1 << 4,
+	BIO_WPMF_DAMAGE_DEC = 1 << 5,
+	BIO_WPMF_SPREAD_INC = 1 << 6,
+	BIO_WPMF_SPREAD_DEC = 1 << 7,
+	BIO_WPMF_SPLASHDAMAGE_INC = 1 << 8,
+	BIO_WPMF_SPLASHDAMAGE_DEC = 1 << 9,
+	BIO_WPMF_SPLASHRADIUS_INC = 1 << 10,
+	BIO_WPMF_SPLASHRADIUS_DEC = 1 << 11,
+	BIO_WPMF_PROJSPEED_INC = 1 << 12,
+	BIO_WPMF_PROJSPEED_DEC = 1 << 13,
+	BIO_WPMF_GRAVITY_ADD = 1 << 14,
+	BIO_WPMF_GRAVITY_REMOVE = 1 << 15,
+	BIO_WPMF_BOUNCE_ADD = 1 << 16,
+	BIO_WPMF_BOUNCE_REMOVE = 1 << 17,
+	BIO_WPMF_SEEKING_ADD = 1 << 18,
+	BIO_WPMF_SEEKING_REMOVE = 1 << 19,
+	// Melee-exclusive
+	BIO_WPMF_LIFESTEAL_INC = 1 << 28,
+	BIO_WPMF_LIFESTEAL_DEC = 1 << 29,
+	BIO_WPMF_MELEERANGE_INC = 1 << 30,
+	BIO_WPMF_MELEERANGE_DEC = 1 << 31
 }
 
 struct BIO_GeneContext
@@ -80,7 +97,7 @@ class BIO_WeaponModifier play abstract
 	// Explains what this modifier is doing to the weapon at the moment.
 	abstract string Description(BIO_GeneContext context) const;
 
-	abstract BIO_WeaponModFlags Flags() const;
+	abstract BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const;
 
 	abstract class<BIO_ModifierGene> GeneType() const;
 

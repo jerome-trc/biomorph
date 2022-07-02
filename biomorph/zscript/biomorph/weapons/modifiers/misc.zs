@@ -19,9 +19,9 @@ class BIO_WMod_Kickback : BIO_WeaponModifier
 		);
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_KICKBACK_INC;
+		return BIO_WCMF_KICKBACK_INC, BIO_WPMF_NONE;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -102,9 +102,9 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 		return ret;
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_SPREAD_DEC;
+		return BIO_WCMF_NONE, BIO_WPMF_SPREAD_DEC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -184,9 +184,9 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 		return ret;
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_SPREAD_DEC | BIO_WMODF_SPREAD_INC;
+		return BIO_WCMF_NONE, BIO_WPMF_SPREAD_DEC | BIO_WPMF_SPREAD_INC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -266,9 +266,9 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 		return ret;
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_SPREAD_DEC | BIO_WMODF_SPREAD_INC;
+		return BIO_WCMF_NONE, BIO_WPMF_SPREAD_DEC | BIO_WPMF_SPREAD_INC;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
@@ -306,9 +306,9 @@ class BIO_WMod_SwitchSpeed : BIO_WeaponModifier
 		return Summary();
 	}
 
-	final override BIO_WeaponModFlags Flags() const
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return BIO_WMODF_SWITCHSPEED_INC;
+		return BIO_WCMF_SWITCHSPEED_INC, BIO_WPMF_NONE;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const

@@ -48,8 +48,8 @@ class BIO_WMR_AutoShotgun : BIO_WeaponMorphRecipe
 	final override bool Eligible(readOnly<BIO_WeaponModSimulator> sim) const
 	{
 		return
-			sim.HasModifierWithFlags(BIO_WMODF_FIRETIME_DEC) &&
-			sim.HasModifierWithFlags(BIO_WMODF_MAGSIZE_INC);
+			sim.HasModifierWithCoreFlags(BIO_WCMF_FIRETIME_DEC) &&
+			sim.HasModifierWithCoreFlags(BIO_WCMF_MAGSIZE_INC);
 	}
 
 	final override string RequirementString() const
@@ -71,7 +71,7 @@ class BIO_WMR_VolleyGun : BIO_WeaponMorphRecipe
 
 	final override bool Eligible(readOnly<BIO_WeaponModSimulator> sim) const
 	{
-		return sim.HasModifierWithFlags(BIO_WMODF_MAGSIZE_INC, 2);
+		return sim.HasModifierWithCoreFlags(BIO_WCMF_MAGSIZE_INC, 2);
 	}
 
 	final override string RequirementString() const
@@ -90,12 +90,12 @@ class BIO_WMR_DualMachineGun : BIO_WeaponMorphRecipe
 	final override bool Eligible(readOnly<BIO_WeaponModSimulator> sim) const
 	{
 		return
-			sim.HasModifierWithFlags(BIO_WMODF_MAGSIZE_INC) &&
-			sim.HasModifierWithFlags(BIO_WMODF_FIRETIME_DEC) &&
-			sim.HasModifierWithFlags(BIO_WMODF_RELOADTIME_DEC) &&
-			sim.HasModifierWithFlags(BIO_WMODF_SHOTCOUNT_INC) &&
-			sim.HasModifierWithFlags(BIO_WMODF_DAMAGE_INC) &&
-			sim.HasModifierWithFlags(BIO_WMODF_SPREAD_DEC);
+			sim.HasModifierWithCoreFlags(BIO_WCMF_MAGSIZE_INC) &&
+			sim.HasModifierWithCoreFlags(BIO_WCMF_FIRETIME_DEC) &&
+			sim.HasModifierWithCoreFlags(BIO_WCMF_RELOADTIME_DEC) &&
+			sim.HasModifierWithPipelineFlags(BIO_WPMF_SHOTCOUNT_INC) &&
+			sim.HasModifierWithPipelineFlags(BIO_WPMF_DAMAGE_INC) &&
+			sim.HasModifierWithPipelineFlags(BIO_WPMF_SPREAD_DEC);
 	}
 
 	final override string RequirementString() const

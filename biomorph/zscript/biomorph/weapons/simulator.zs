@@ -1121,8 +1121,8 @@ class BIO_WeaponModSimulator : Thinker
 		return false;
 	}
 
-	bool HasModifierWithFlags(BIO_WeaponModFlags flags, uint count = 1,
-		bool ignoreMultiplier = true) const
+	bool HasModifierWithCoreFlags(BIO_WeaponCoreModFlags flags,
+		uint count = 1, bool ignoreMultiplier = true) const
 	{
 		uint c = 0;
 
@@ -1133,7 +1133,70 @@ class BIO_WeaponModSimulator : Thinker
 			if (mod == null)
 				continue;
 
-			if ((mod.Flags() & flags) == flags)
+			BIO_WeaponCoreModFlags cf = BIO_WCMF_NONE;
+			BIO_WeaponPipelineModFlags _ = BIO_WPMF_NONE;
+			[cf, _] = mod.Flags();
+
+			if ((cf & flags) == flags)
+			{
+				if (ignoreMultiplier)
+					c++;
+				else
+					c += Nodes[i].Multiplier;
+			}
+		}
+
+		return c >= count;
+	}
+
+	bool HasModifierWithPipelineFlags(BIO_WeaponPipelineModFlags flags,
+		uint count = 1, bool ignoreMultiplier = true) const
+	{
+		uint c = 0;
+
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			let mod = Nodes[i].GetModifier();
+
+			if (mod == null)
+				continue;
+
+			BIO_WeaponCoreModFlags _ = BIO_WCMF_NONE;
+			BIO_WeaponPipelineModFlags pf = BIO_WPMF_NONE;
+			[_, pf] = mod.Flags();
+
+			if ((pf & flags) == flags)
+			{
+				if (ignoreMultiplier)
+					c++;
+				else
+					c += Nodes[i].Multiplier;
+			}
+		}
+
+		return c >= count;
+	}
+
+	bool HasModifierWithFlags(
+		BIO_WeaponCoreModFlags coreFlags,
+		BIO_WeaponPipelineModFlags pipelineFlags,
+		uint count = 1, bool ignoreMultiplier = true) const
+	{
+		uint c = 0;
+
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			let mod = Nodes[i].GetModifier();
+
+			if (mod == null)
+				continue;
+
+			BIO_WeaponCoreModFlags cf = BIO_WCMF_NONE;
+			BIO_WeaponPipelineModFlags pf = BIO_WPMF_NONE;
+			[cf, pf] = mod.Flags();
+
+			if (((cf & coreFlags) == coreFlags) &&
+				((pf & pipelineFlags) == pipelineFlags))
 			{
 				if (ignoreMultiplier)
 					c++;
