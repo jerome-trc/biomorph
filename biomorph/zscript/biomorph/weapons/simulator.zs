@@ -483,6 +483,7 @@ class BIO_WeaponModSimulator : Thinker
 			let node = Nodes[i];
 
 			BIO_GeneContext context;
+			context.Sim = AsConst();
 			context.Weap = Weap.AsConst();
 			context.NodeCount = node.Multiplier;
 			context.TotalCount = CountGene(gene_t);
@@ -513,6 +514,7 @@ class BIO_WeaponModSimulator : Thinker
 			string _ = "";
 
 			BIO_GeneContext context;
+			context.Sim = AsConst();
 			context.Weap = Weap.AsConst();
 			context.NodeCount = node.Multiplier;
 			context.TotalCount = CountGene(gene_t);
@@ -543,6 +545,7 @@ class BIO_WeaponModSimulator : Thinker
 			string _ = "";
 
 			BIO_GeneContext context;
+			context.Sim = AsConst();
 			context.Weap = Weap.AsConst();
 			context.NodeCount = node.Multiplier;
 			context.TotalCount = CountGene(gene_t);
@@ -983,6 +986,7 @@ class BIO_WeaponModSimulator : Thinker
 		let n = Nodes[node];
 
 		BIO_GeneContext context;
+		context.Sim = AsConst();
 		context.Weap = Weap.AsConst();
 		context.NodeCount = n.Multiplier;
 		context.TotalCount = CountGene(n.GetGeneType());

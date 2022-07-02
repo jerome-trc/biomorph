@@ -54,8 +54,9 @@ enum BIO_WeaponModFlags : uint
 
 struct BIO_GeneContext
 {
+	readOnly<BIO_WeaponModSimulator> Sim;
 	readOnly<BIO_Weapon> Weap;
-	
+
 	// Loaded with `BIO_WeaponModSimNode::Multiplier`.
 	uint NodeCount;
 	// Total number of times this gene type is present on the graph,
