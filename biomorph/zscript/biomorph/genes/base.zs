@@ -59,6 +59,11 @@ class BIO_Gene : Inventory abstract
 		let iter = Level.CreateActorIterator(tid, 'BIO_Gene');
 		return BIO_Gene(iter.Next());
 	}
+
+	final override string PickupMessage()
+	{
+		return String.Format(StringTable.Localize(PickupMsg), GetTag());
+	}
 }
 
 class BIO_ModifierGene : BIO_Gene abstract

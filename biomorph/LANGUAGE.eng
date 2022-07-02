@@ -409,76 +409,76 @@
 
 	// Modifier
 
-	BIO_MGENE_BERSERKDAMAGE_TAG = "\c[Ice]Frenzying\c[White] Gene\c-";
-	BIO_MGENE_BERSERKDAMAGE_PKUP = "Collected a \c[Ice]Frenzying\c[White] gene\c-.";
+	BIO_MGENE_BERSERKDAMAGE_TAG = "\c[MGene]Frenzying\c[White] Gene\c-";
+	BIO_MGENE_BERSERKDAMAGE_PKUP = "Collected a %s.";
 
-	BIO_MGENE_DEMONSLAYER_TAG = "\c[Ice]Demonslayer\c[White] Gene\c-";
-	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a \c[Ice]Demonslayer\c[White] gene\c-.";
+	BIO_MGENE_DEMONSLAYER_TAG = "\c[MGene]Demonslayer\c[White] Gene\c-";
+	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a %s.";
 
-	BIO_MGENE_ETMF_TAG = "\c[Ice]Energy-to-Matter Feed\c[White] Gene\c-";
-	BIO_MGENE_ETMF_PKUP = "Collected a \c[Ice]Energy-to-matter Feed\c[White] gene\c-.";
+	BIO_MGENE_ETMF_TAG = "\c[MGene]Energy-to-Matter Feed\c[White] Gene\c-";
+	BIO_MGENE_ETMF_PKUP = "Collected a %s.";
 
-	BIO_MGENE_FIRETIME_TAG = "\c[Ice]Rapid Refire\c[White] Gene\c-";
-	BIO_MGENE_FIRETIME_PKUP = "\c[Ice]Collected a \c[Ice]Rapid Refire\c[White] gene\c-.";
+	BIO_MGENE_FIRETIME_TAG = "\c[MGene]Rapid Refire\c[White] Gene\c-";
+	BIO_MGENE_FIRETIME_PKUP = "Collected a %s.";
 
-	BIO_MGENE_FORCEPAIN_TAG = "\c[Ice]Neurotoxic\c[White] Gene\c-";
-	BIO_MGENE_FORCEPAIN_PKUP = "Collected a \c[Ice]Neurotoxic\c[White] gene\c-.";
+	BIO_MGENE_FORCEPAIN_TAG = "\c[MGene]Neurotoxic\c[White] Gene\c-";
+	BIO_MGENE_FORCEPAIN_PKUP = "Collected a %s.";
 
-	BIO_MGENE_FORCERADIUSDMG_TAG = "\c[Ice]Squash Head\c[White] Gene\c-";
-	BIO_MGENE_FORCERADIUSDMG_PKUP = "Collected a \c[Ice]Squash Head\c[White] gene\c-.";
+	BIO_MGENE_FORCERADIUSDMG_TAG = "\c[MGene]Squash Head\c[White] Gene\c-";
+	BIO_MGENE_FORCERADIUSDMG_PKUP = "Collected a %s.";
 
-	BIO_MGENE_INFINITEAMMO_TAG = "\c[Ice]Ammo Apparition\c[White] Gene\c-";
-	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an \c[Ice]Ammo Apparition\c[White] gene\c-.";
+	BIO_MGENE_INFINITEAMMO_TAG = "\c[MGene]Ammo Apparition\c[White] Gene\c-";
+	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an %s.";
 
-	BIO_MGENE_KICKBACK_TAG = "\c[Ice]Stopping\c[White] Gene\c-";
-	BIO_MGENE_KICKBACK_PKUP = "Collected a \c[Ice]Stopping\c[White] gene\c-.";
+	BIO_MGENE_KICKBACK_TAG = "\c[MGene]Stopping\c[White] Gene\c-";
+	BIO_MGENE_KICKBACK_PKUP = "Collected a %s.";
 
-	BIO_MGENE_LIFESTEAL_TAG = "\c[Ice]Parasitic\c[White] Gene\c-";
-	BIO_MGENE_LIFESTEAL_PKUP = "Collected a \c[Ice]Parasitic\c[White] gene\c-.";
+	BIO_MGENE_LIFESTEAL_TAG = "\c[MGene]Parasitic\c[White] Gene\c-";
+	BIO_MGENE_LIFESTEAL_PKUP = "Collected a %s.";
 
-	BIO_MGENE_MAGSIZE_TAG = "\c[Ice]High-Capacity\c[White] Gene\c-";
-	BIO_MGENE_MAGSIZE_PKUP = "Collected a \c[Ice]High-Capacity\c[White] gene\c-.";
+	BIO_MGENE_MAGSIZE_TAG = "\c[MGene]High-Capacity\c[White] Gene\c-";
+	BIO_MGENE_MAGSIZE_PKUP = "Collected a %s.";
 
-	BIO_MGENE_NTHROUNDCOST_TAG = "\c[Ice]Ammo Thrift\c[White] Gene\c-";
-	BIO_MGENE_NTHROUNDCOST_PKUP = "Collected an \c[Ice]Ammo Thrift\c[White] gene\c-.";
+	BIO_MGENE_NTHROUNDCOST_TAG = "\c[MGene]Ammo Thrift\c[White] Gene\c-";
+	BIO_MGENE_NTHROUNDCOST_PKUP = "Collected an %s.";
 
-	BIO_MGENE_RELOADTIME_TAG = "\c[Ice]Ergonomic\c[White] Gene\c-";
-	BIO_MGENE_RELOADTIME_PKUP = "Collected an \c[Ice]Ergonomic\c[White] gene\c-.";
+	BIO_MGENE_RELOADTIME_TAG = "\c[MGene]Ergonomic\c[White] Gene\c-";
+	BIO_MGENE_RELOADTIME_PKUP = "Collected an %s.";
 
-	BIO_MGENE_RESERVEFEED_TAG = "\c[Ice]Ammochain\c[White] Gene";
-	BIO_MGENE_RESERVEFEED_PKUP = "Collected an \c[Ice]Ammochain\c[White] gene\c-.";
+	BIO_MGENE_RESERVEFEED_TAG = "\c[MGene]Ammochain\c[White] Gene";
+	BIO_MGENE_RESERVEFEED_PKUP = "Collected an %s.";
 
-	BIO_MGENE_SPLASHTOHIT_TAG = "\c[Ice]Shaped Charge\c[White] Gene";
-	BIO_MGENE_SPLASHTOHIT_PKUP = "Collected a \c[Ice]Shaped Charge\c[White] gene\c-.";
+	BIO_MGENE_SPLASHTOHIT_TAG = "\c[MGene]Shaped Charge\c[White] Gene";
+	BIO_MGENE_SPLASHTOHIT_PKUP = "Collected a %s.";
 
-	BIO_MGENE_SPREAD_TAG = "\c[Ice]Accurised\c[White] Gene";
-	BIO_MGENE_SPREAD_PKUP = "Collected an \c[Ice]Accurised\c[White] gene\c-.";
+	BIO_MGENE_SPREAD_TAG = "\c[MGene]Accurised\c[White] Gene";
+	BIO_MGENE_SPREAD_PKUP = "Collected an %s.";
 
-	BIO_MGENE_SPREADNARROW_TAG = "\c[Ice]Duckbill Choke\c[White] Gene";
-	BIO_MGENE_SPREADNARROW_PKUP = "Collected a \c[Ice]Duckbill Choke\c[White] gene\c-.";
+	BIO_MGENE_SPREADNARROW_TAG = "\c[MGene]Duckbill Choke\c[White] Gene";
+	BIO_MGENE_SPREADNARROW_PKUP = "Collected a %s.";
 
-	BIO_MGENE_SPREADWIDEN_TAG = "\c[Ice]Crab-claw Choke\c[White] Gene";
-	BIO_MGENE_SPREADWIDEN_PKUP = "Collected a \c[Ice]Crab-claw Choke\c[White] gene\c-.";
+	BIO_MGENE_SPREADWIDEN_TAG = "\c[MGene]Crab-claw Choke\c[White] Gene";
+	BIO_MGENE_SPREADWIDEN_PKUP = "Collected a %s.";
 
-	BIO_MGENE_SHELLTOSLUG_TAG = "\c[Ice]Refit: Slug\c[White] Gene";
-	BIO_MGENE_SHELLTOSLUG_PKUP = "Collected a \c[Ice]Refit: Slug\c[White] gene\c-.";
+	BIO_MGENE_SHELLTOSLUG_TAG = "\c[MGene]Refit: Slug\c[White] Gene";
+	BIO_MGENE_SHELLTOSLUG_PKUP = "Collected a %s.";
 
-	BIO_MGENE_SWITCHSPEED_TAG = "\c[Ice]Speed Sling\c[White] Gene";
-	BIO_MGENE_SWITCHSPEED_PKUP = "Collected a \c[Ice]Speed Sling\c[White] gene\c-.";
+	BIO_MGENE_SWITCHSPEED_TAG = "\c[MGene]Speed Sling\c[White] Gene";
+	BIO_MGENE_SWITCHSPEED_PKUP = "Collected a %s.";
 
 	// Support
 
 	BIO_SGENE_ADDEAST_TAG = "\c[SGene]E1 Regulator\c[White] Gene\c-";
-	BIO_SGENE_ADDEAST_PKUP = "Collected an \c[SGene]E1 regulator\c[White] gene\c-.";
+	BIO_SGENE_ADDEAST_PKUP = "Collected an %s.";
 
 	BIO_SGENE_ADDNORTH_TAG = "\c[SGene]N1 Regulator\c[White] Gene\c-";
-	BIO_SGENE_ADDNORTH_PKUP = "Collected an \c[SGene]N1 regulator\c[White] gene\c-.";
+	BIO_SGENE_ADDNORTH_PKUP = "Collected an %s.";
 
 	BIO_SGENE_ADDSOUTH_TAG = "\c[SGene]S1 Regulator\c[White] Gene\c-";
-	BIO_SGENE_ADDSOUTH_PKUP = "Collected an \c[SGene]S1 regulator\c[White] gene\c-.";
+	BIO_SGENE_ADDSOUTH_PKUP = "Collected an %s.";
 
 	BIO_SGENE_ADDWEST_TAG = "\c[SGene]W1 Regulator\c[White] Gene\c-";
-	BIO_SGENE_ADDWEST_PKUP = "Collected a \c[SGene]W1 regulator\c[White] gene\c-.";
+	BIO_SGENE_ADDWEST_PKUP = "Collected a %s.";
 
 	// Active
 
@@ -486,8 +486,8 @@
 	BIO_AGENE_INCOMPAT_ALLNEIGHBORSHAVENEIGHBORS =
 		"This gene needs at least one of its neighbours to be a dead-end.";
 
-	BIO_AGENE_TOGGLECONNECTED_TAG = "\c[Purple]Overseer\c[White] Gene\c-";
-	BIO_AGENE_TOGGLECONNECTED_PKUP = "Collected an \c[Purple]Overseer\c[White] gene\c-.";
+	BIO_AGENE_TOGGLECONNECTED_TAG = "\c[AGene]Overseer\c[White] Gene\c-";
+	BIO_AGENE_TOGGLECONNECTED_PKUP = "Collected an %s.";
 	BIO_AGENE_TOGGLECONNECTEDSUMM =
 		"\c[White]Connected dead-end nodes can be toggled with \c[LightBlue]Zoom\c[White]";
 
