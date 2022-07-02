@@ -268,6 +268,29 @@ class BIO_MGene_InfiniteAmmo : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_ProjGravity : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_PROJGRAVITY_TAG";
+		Inventory.Icon 'GENPC0';
+		Inventory.PickupMessage "$BIO_MGENE_PROJGRAVITY_PKUP";
+		BIO_Gene.Limit 1;
+		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
+		BIO_Gene.Summary "$BIO_WMOD_PROJGRAVITY_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_ProjGravity';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+	}
+
+	States
+	{
+	Spawn:
+		GENP C 6;
+		#### # 6 Bright Light("BIO_MutaGene_White");
+		Loop;
+	}
+}
+
 class BIO_MGene_ReserveFeed : BIO_ModifierGene
 {
 	Default

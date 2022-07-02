@@ -246,31 +246,36 @@
 		"This weapon doesn't use ammunition,\n"
 		"doesn't fire real matter, or is\n"
 		"otherwise unsuited to energy-to-matter conversion.";
+	BIO_WMOD_INCOMPAT_PROJGRAVITY =
+		"This weapon fires no projectiles, "
+		"or all its projectiles are already affected by gravity.";
 	BIO_WMOD_INCOMPAT_MINFIRETIMES =
 		"This weapon can't fire any faster than it already does.";
-	BIO_WMOD_INCOMPAT_NOFIRETIMES =
-		"This weapon has no modifiable fire timings.";
 	BIO_WMOD_INCOMPAT_MINRELOADTIMES =
 		"This weapon can't reload any faster than it already does.";
-	BIO_WMOD_INCOMPAT_NORELOADTIMES =
-		"This weapon has no modifiable reload timings.";
 	BIO_WMOD_INCOMPAT_NODAMAGE = "This weapon deals no damage.";
-	BIO_WMOD_INCOMPAT_NOMELEEDAMAGE =
-		"This weapon is incapable of dealing melee damage.";
+	BIO_WMOD_INCOMPAT_NOFIRETIMES =
+		"This weapon has no modifiable fire timings.";
 	BIO_WMOD_INCOMPAT_NOMAGAZINE =
 		"No valid primary or secondary magazine,\n"
 		"or no reserve ammo type."
+	BIO_WMOD_INCOMPAT_NOMELEEDAMAGE =
+		"This weapon is incapable of dealing melee damage.";
 	BIO_WMOD_INCOMPAT_NOPIPELINES = "This weapon doesn't fire anything.";
+	BIO_WMOD_INCOMPAT_NORELOADTIMES =
+		"This weapon has no modifiable reload timings.";
 	BIO_WMOD_INCOMPAT_NOSHELLPAYLOAD = "This weapon doesn't fire shotshells.";
 	BIO_WMOD_INCOMPAT_NOSPLASH = "This weapon deals no splash damage.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
-	BIO_WMOD_INCOMPAT_TRIVIALHSPREAD = "This weapon has almost no horizontal spread.";
-	BIO_WMOD_INCOMPAT_TRIVIALVSPREAD = "This weapon has almost no vertical spread.";
+	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =
+		"This weapon has already been modified to add projectile gravity.";
 	BIO_WMOD_INCOMPAT_SPLASHTOHIT =
 		"None of this weapon's fire modes has splash damage "
 		"and also allows damage mutation.";
 	BIO_WMOD_INCOMPAT_SWITCHSPEEDMAX =
 		"This weapon already switches as fast as it possibly can.";
+	BIO_WMOD_INCOMPAT_TRIVIALHSPREAD = "This weapon has almost no horizontal spread.";
+	BIO_WMOD_INCOMPAT_TRIVIALVSPREAD = "This weapon has almost no vertical spread.";
 
 	// Summaries and descriptions
 	// (If a grouping has no description, then assume the summary doubles as one)
@@ -319,6 +324,10 @@
 	BIO_WMOD_NTHROUNDCOST_SUMM = "\c[Green]Every 5th shot costs no ammo";
 	BIO_WMOD_NTHROUNDCOST_DESC_NTHFREE = "\c[Green]Free shot every %d rounds";
 	BIO_WMOD_NTHROUNDCOST_DESC_NTHCOST = "\c[Green]Ammo is only consumed every %d shots";
+
+	BIO_WMOD_PROJGRAVITY_SUMM =
+		"\c[White]Projectile payloads are affected by gravity\n"
+		"\c[Green]+20% damage to affected projectiles";
 
 	BIO_WMOD_RELOADTIME_SUMM = "\c[Green]Increased reload speeds";
 	BIO_WMOD_RELOADTIME_DESC = "\c[White]Reload time%s: \c[Green]%.2f seconds";
@@ -444,6 +453,9 @@
 
 	BIO_MGENE_RELOADTIME_TAG = "\c[MGene]Ergonomic\c[White] Gene\c-";
 	BIO_MGENE_RELOADTIME_PKUP = "Collected an %s.";
+
+	BIO_MGENE_PROJGRAVITY_TAG = "\c[MGene]Dense Payload\c[White] Gene\c-";
+	BIO_MGENE_PROJGRAVITY_PKUP = "Collected a %s.";
 
 	BIO_MGENE_RESERVEFEED_TAG = "\c[MGene]Ammochain\c[White] Gene";
 	BIO_MGENE_RESERVEFEED_PKUP = "Collected an %s.";
