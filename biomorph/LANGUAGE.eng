@@ -80,17 +80,25 @@
 
 // Powerups ////////////////////////////////////////////////////////////////////
 
+	BIO_BERSERK_TAG = "Berserk Cocktail";
 	BIO_BERSERK_PKUP = "Injected a berserk cocktail.";
 	BIO_BERSERK_PKUPFIRST = "Used a berserk cocktail's enhancers, but left the healers.";
 	BIO_BERSERK_PKUPLOW = "Injected a badly-needed berserk cocktail.";
 	BIO_BERSERK_COLLECTED = "Didn't use a berserk cocktail, but marked it as collected.";
 	BIO_BERSERK_PARTIAL = "Injected part of a berserk cocktail.";
 
+	BIO_ALLMAP_TAG = "Computer Area Map";
 	BIO_ALLMAP_PKUP = "Obtained a computer area map; your surroundings become clear.";
-	BIO_BLURSPHERE_PKUP = "Absorbed a blursphere.";
-	BIO_LIGHTAMP_PKUP = "Obtained a light amplification visor.";
-	BIO_MEGASPHERE_PKUP = "Absorbed a Megasphere!";
-	BIO_RADSUIT_PKUP = "Obtained and donned an N.B.C. suit.";
+	BIO_BLURSPHERE_TAG = "Blursphere";
+	BIO_BLURSPHERE_PKUP = "Absorbed a blursphere; you fade and shimmer.";
+	BIO_INVULNSPHERE_TAG = "Invulnerability Sphere";
+	BIO_INVULNSPHERE_PKUP = "Absorbed an invulnerability sphere! You are irrepressible!";
+	BIO_INFRARED_TAG = "Light-Amp Visor";
+	BIO_INFRARED_PKUP = "Donned a light amplification visor; the dark is illuminated.";
+	BIO_MEGASPHERE_TAG = "Megasphere";
+	BIO_MEGASPHERE_PKUP = "Absorbed a Megasphere! You feel rejuvenated.";
+	BIO_RADSUIT_TAG = "N.B.C. Suit";
+	BIO_RADSUIT_PKUP = "Donned an N.B.C. suit; you're safe from environmental hazards.";
 
 // Weapons (tags, obituaries, readouts, pickup strings) ////////////////////////
 

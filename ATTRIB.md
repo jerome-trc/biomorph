@@ -2,6 +2,8 @@
 
 This list is meant to be maximally exhaustive but given the possibility for errors, completeness is not guaranteed. Any resource not listed below is the creation of Rat Circus, and is provided under the [MIT License](/LICENSE).
 
+If you're aware of any attribution which is evidently missing from this list, or of a misattribution, let me know so I can resolve it.
+
 ## Libraries
 
 Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https://github.com/jekyllgrim/Easy-Dual-Wield) (MIT license, [included in its translation unit](/zscript/biomorph/weapons/base_dw.zs)) by [Jekyll Grim Payne](https://github.com/jekyllgrim).
@@ -13,6 +15,10 @@ The GLDEFS for the Armour Bonus were devised by Realm667 user Infirnex.
 ## Graphics
 
 Doom and Doom II's base textures are the sole property of id Software LLC.
+
+The following sprites are edits of the work of id Software LLC:
+- powup_infiniteammo.png
+- powup_radsuit.png
 
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
@@ -103,7 +109,9 @@ VOLLFIRE is courtesy of [Kentucky Ballistics](https://www.youtube.com/watch?v=8g
 
 ["Female Body Base Character Mesh"](https://www.blendswap.com/blend/4458) (used to render the arms of first-person view sprites) is provided by [cgcookie](https://www.blendswap.com/profile/8267https://www.blendswap.com/profile/8267) under the Creative Commons Attribution 2.0 Generic License.
 
-["Soft Black Fabric"](https://www.blenderkit.com/asset-gallery-detail/aa03d318-d285-48fd-92bc-9b8671d74a4c/?page=3) (used to texture the gloves of the Blender model) is provided by [Share Textures](https://www.sharetextures.com/) under Creative Commons 0.
+The `SoftFabric` family of materials is derived from ["Soft Black Fabric"](https://www.blenderkit.com/asset-gallery-detail/aa03d318-d285-48fd-92bc-9b8671d74a4c/?page=3), provided by [Share Textures](https://www.sharetextures.com/) under Creative Commons 0.
+
+The `WornPlastic` family of materials is courtesy of [Ryan King](https://www.youtube.com/watch?v=l0whu3494_c).
 
 ## Acknowledgements
 
