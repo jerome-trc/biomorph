@@ -6,7 +6,7 @@ class BIO_Fists : BIO_DualWieldWeapon
 
 		Tag "$BIO_FISTS_TAG";
 
-		Inventory.Icon 'PUNGA0';
+		Inventory.Icon 'FISTZ0';
 
 		Weapon.SelectionOrder SELORDER_FIST;
 		Weapon.SlotNumber 1;
