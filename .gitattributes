@@ -21,7 +21,7 @@ TRNSLATE text eol=lf
 ZMAPINFO text eol=lf
 
 # Denote all files that are truly binary and should not be modified.
-*.blend binary
+*.blend filter=lfs diff=lfs merge=lfs -text
 *.ogg binary
 *.png binary
 *.wav binary
