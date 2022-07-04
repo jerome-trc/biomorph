@@ -144,3 +144,18 @@ $random bio/weap/microvulcan/fire
 	bio/weap/microvulcan/fire/1
 	bio/weap/microvulcan/fire/2
 }
+
+// Turbovulcan
+
+bio/weap/turbovulcan/fire_0 TRBO_FR0
+bio/weap/turbovulcan/fire_1 TRBO_FR1
+bio/weap/turbovulcan/fire_2 TRBO_FR2
+bio/weap/turbovulcan/fire_3 TRBO_FR3
+
+$random bio/weap/turbovulcan/fire
+{
+	bio/weap/turbovulcan/fire_0
+	bio/weap/turbovulcan/fire_1
+	bio/weap/turbovulcan/fire_2
+	bio/weap/turbovulcan/fire_3
+}

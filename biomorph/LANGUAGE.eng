@@ -148,6 +148,11 @@
 	BIO_MICROVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_MICROVULCAN_OB = "%k shredded %o with a %s.";
 
+	BIO_TURBOVULCAN_TAG = "Turbovulcan";
+	BIO_TURBOVULCAN_PKUP = "Procured a %s.";
+	BIO_TURBOVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_TURBOVULCAN_OB = "%k perforated %o with a %s.";
+
 	BIO_ROCKETAUTOLAUNCHER_TAG = "Rocket Auto-Launcher";
 	BIO_ROCKETAUTOLAUNCHER_PKUP = "Procured a %s.";
 	BIO_ROCKETAUTOLAUNCHER_SCAV = "Scavenged ammo from a dropped %s.";
@@ -640,6 +645,9 @@
 
 	BIO_RIGHT = "right";
 	BIO_LEFT = "left";
+	BIO_PER2ROUNDS = "per 2 rounds";
+	BIO_SPOOLUP = "spoolup";
+	BIO_SPOOLDOWN = "spooldown";
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";
 

@@ -26,7 +26,7 @@ MGUNB0 and SHOTB0 are edits of the work of id Software LLC.
 
 Auto Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
 
-Machine Gun HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
+Turbovulcan and Machine Gun HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
 Service Pistol and Pump Shotgun muzzle flashes are derived from the sheet at [this ZDoom forum post](https://forum.zdoom.org/viewtopic.php?t=37753#p718629) courtesy of forum user Sgt. Shivers.
 
@@ -69,11 +69,15 @@ https://forum.zdoom.org/viewtopic.php?t=67032
 
 The following audio files are provided by CturiX Kemilon, under a "Typical Creative Commons license [sic]" (see "CTX AUDIO.zip/"):
 
-- Madness-related/
+- Madness-related/New Official/
 	- Common weapons/
 		- 1911C-1.wav (SVCP_FR0)
 		- 1911C-2.wav (SVCP_FR1)
 		- 1911C-3.wav (SVCP_FR2)
+		- Steyr-1.wav (TRBO_FR0)
+		- Steyr-2.wav (TRBO_FR1)
+		- Steyr-3.wav (TRBO_FR2)
+		- Steyr-4.wav (TRBO_FR3)
 	- Deadmos Other/
 		- weapondropped.wav (GUNDROP0)
 	- MC9.5/

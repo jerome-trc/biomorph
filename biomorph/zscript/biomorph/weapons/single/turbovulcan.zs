@@ -1,0 +1,138 @@
+class BIO_Turbovulcan : BIO_Weapon
+{
+	Default
+	{
+		Tag "$BIO_TURBOVULCAN_TAG";
+
+		Inventory.Icon 'TRBOZ0';
+
+		Weapon.AmmoGive 100;
+		Weapon.AmmoType 'Clip';
+		Weapon.AmmoUse 1;
+		Weapon.SelectionOrder SELORDER_CHAINGUN;
+		Weapon.SlotNumber 4;
+		Weapon.SlotPriority SLOTPRIO_HIGH;
+		Weapon.UpSound "bio/weap/gunswap";
+
+		BIO_Weapon.GraphQuality 4;
+		BIO_Weapon.MagazineType 'Clip';
+		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_Turbovulcan';
+		BIO_Weapon.ModCostMultiplier 2;
+		BIO_Weapon.PickupMessages
+			"$BIO_TURBOVULCAN_PKUP",
+			"$BIO_TURBOVULCAN_SCAV";
+	}
+
+	States
+	{
+	Ready:
+		TRBO A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
+		Loop;
+	Deselect:
+		TRBO A 0 A_BIO_Deselect;
+		Stop;
+	Select:
+		TRBO A 0 A_BIO_Select;
+		Stop;
+	Fire:
+		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
+	SpoolUp:
+		TRBO BCD 1;
+		TRBO EFGH 1;
+	FireCycle:
+		TNT1 A 0
+		{
+			if (!invoker.SufficientAmmo())
+				return ResolveState('SpoolDown');
+			else
+				return state(null);
+		}
+		TRBO E 1 Bright
+		{
+			A_GunFlash('Flash.I');
+			A_BIO_Fire();
+			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
+			A_BIO_FireSound(CHAN_WEAPON);
+		}
+		TRBO F 1 Bright A_GunFlash('Flash.J');
+		TNT1 A 0
+		{
+			if (!invoker.SufficientAmmo())
+				return ResolveState('SpoolDown');
+			else
+				return state(null);
+		}
+		TRBO G 1 Bright
+		{
+			A_GunFlash('Flash.K');
+			A_BIO_Fire();
+			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
+			A_BIO_FireSound(CHAN_7);
+		}
+		TRBO H 1 Bright A_GunFlash('Flash.L');
+		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'SpoolDown');
+		Loop;
+	SpoolDown:
+		TRBO EFGH 1;
+		TRBO ABCD 1;
+		Goto Ready;
+	Flash:
+		TNT1 A 0;
+		Goto LightDone;
+	Flash.I:
+		TRBO I 1 Bright A_Light(1);
+		Goto LightDone;
+	Flash.J:
+		TRBO J 1 Bright A_Light(2);
+		Goto LightDone;
+	Flash.K:
+		TRBO K 1 Bright A_Light(1);
+		Goto LightDone;
+	Flash.L:
+		TRBO L 1 Bright A_Light(2);
+		Goto LightDone;
+	Spawn:
+		TRBO Z 0;
+		TRBO Z 0 A_BIO_Spawn;
+		Loop;
+	}
+
+	override void SetDefaults()
+	{
+		Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.Bullet()
+				.RandomDamage(14, 16)
+				.Spread(4.0, 2.0)
+				.FireSound("bio/weap/turbovulcan/fire")
+				.Build()
+		);
+
+		FireTimeGroups.Push(
+			StateTimeGroupFromRange('SpoolUp', 'FireCycle', "$BIO_SPOOLUP")
+		);
+		FireTimeGroups.Push(
+			StateTimeGroupFrom('FireCycle', "$BIO_PER2ROUNDS")
+		);
+		FireTimeGroups.Push(
+			StateTimeGroupFrom('SpoolDown', "$BIO_SPOOLDOWN")
+		);
+	}
+}
+
+class BIO_MagETM_Turbovulcan : BIO_MagazineETM
+{
+	Default
+	{
+		BIO_MagazineETM.PowerupType 'BIO_ETM_Turbovulcan';
+	}
+}
+
+class BIO_ETM_Turbovulcan : BIO_EnergyToMatterPowerup
+{
+	Default
+	{
+		Powerup.Duration -2;
+		BIO_EnergyToMatterPowerup.CellCost 6;
+	}
+}
