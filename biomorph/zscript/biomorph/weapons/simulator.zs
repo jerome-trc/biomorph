@@ -394,6 +394,7 @@ class BIO_WeaponModSimulator : Thinker
 		{
 			let simNode = new('BIO_WeaponModSimNode');
 			simNode.Basis = graph.Nodes[i].Copy();
+			simNode.Basis.Flags &= ~BIO_WMGNF_MUTED;
 
 			if (simNode.Basis.GeneType != null)
 			{
@@ -468,7 +469,6 @@ class BIO_WeaponModSimulator : Thinker
 			Nodes[i].Multiplier = 1;
 			Nodes[i].Valid = true;
 			Nodes[i].Message = "";
-			Nodes[i].Basis.Flags &= ~BIO_WMGNF_MUTED;
 		}
 
 		// Second pass invokes supports

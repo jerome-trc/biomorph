@@ -34,7 +34,7 @@ class BIO_AGene_ToggleConnected : BIO_ActiveGene
 			let nbi = n.Basis.Neighbors[i];
 			let nb = sim.Nodes[nbi];
 
-			if (nb.Basis.Neighbors.Size() > 1)
+			if (nb.Basis.Neighbors.Size() == 1)
 				return true, "";
 		}
 
@@ -62,7 +62,7 @@ class BIO_AGene_ToggleConnected : BIO_ActiveGene
 			if (!nb.HasModifier())
 				continue;
 
-			func.ToggledNodes.Push(nbi);
+			func.AddNode(nbi, nb.Basis.Flags & BIO_WMGNF_MUTED);
 		}
 
 		return "";
@@ -71,16 +71,32 @@ class BIO_AGene_ToggleConnected : BIO_ActiveGene
 
 class BIO_WSF_NodeToggle : BIO_WeaponSpecialFunctor
 {
-	Array<uint> ToggledNodes;
+	Array<uint> NodesToToggle;
+	private Array<bool> NodeState; // `true` if the corresponding node is muted.
+
+	void AddNode(uint uuid, bool alreadyMuted)
+	{
+		NodesToToggle.Push(uuid);
+		NodeState.Push(alreadyMuted);
+	}
 
 	final override state Invoke(BIO_Weapon weap) const
 	{
-		for (uint i = 0; i < ToggledNodes.Size(); i++)
+		let sim = BIO_WeaponModSimulator.Create(weap);
+
+		for (uint i = 0; i < NodesToToggle.Size(); i++)
 		{
-			weap.ModGraph.Nodes[ToggledNodes[i]].Toggle();
+			let node = sim.Nodes[NodesToToggle[i]];
+
+			if (!NodeState[i])
+				node.Basis.Flags |= BIO_WMGNF_MUTED;
+			else
+				node.Basis.Flags &= ~BIO_WMGNF_MUTED;
+
+			NodeState[i] = node.Basis.Flags & BIO_WMGNF_MUTED;
 		}
 
-		BIO_WeaponModSimulator.Create(weap).CommitAndClose();
+		sim.RunAndClose();
 		weap.Owner.A_StartSound("bio/ui/beep");
 		return state(null);
 	}

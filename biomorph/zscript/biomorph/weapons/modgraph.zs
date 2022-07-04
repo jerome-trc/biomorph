@@ -44,14 +44,6 @@ class BIO_WMGNode play
 	{
 		return Flags & BIO_WMGNF_MUTED;
 	}
-
-	void Toggle()
-	{
-		if (Flags & BIO_WMGNF_MUTED)
-			Flags &= ~BIO_WMGNF_MUTED;
-		else
-			Flags |= BIO_WMGNF_MUTED;
-	}
 }
 
 // Each weapon instance has a pointer to one of these.
