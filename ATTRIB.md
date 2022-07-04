@@ -20,11 +20,17 @@ The following sprites are edits of the work of id Software LLC:
 - powup_infiniteammo.png
 - powup_radsuit.png
 
+Arc Caster HUD sprites are courtesy of ZDoom forum user VriskaSerket.
+
+The Arc Caster pickup sprite is courtesy of the Librequake Project, id Software LLC, and Banjo Software, with edits by Realm667 user KILLA DIO.
+
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
 MGUNB0 and SHOTB0 are edits of the work of id Software LLC.
 
 Auto Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
+
+Electric arc puff sprites are courtesy of the Librequake Project, id Software LLC, and Banjo Software, with edits by Realm667 user KILLA DIO.
 
 Turbovulcan and Machine Gun HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
@@ -83,11 +89,16 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 	- MC9.5/
 		- Console scroll.wav (BIOMFAIL)
 	- MC11/
+		- elec1.wav (ARCA_FR0)
+		- elec2.wav (ARCA_FR1)
+		- elec3.wav (ARCA_FR2)
 		- gunbirth1.wav (MUTATE_0)
 		- gunbirth2.wav (MUTATE_1)
 		- hankland.wav (BIOMLAND)
 
 #### Other
+
+ARCA_RD is courtesy of YouTube user [The Sound Channel](https://www.youtube.com/watch?v=5JUDxCWnWRM), provided under no license. No credit to a source is given by the uploader.
 
 ARMRBON is courtesy of id Software LLC.
 
@@ -96,6 +107,8 @@ The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), 
 - SUPRLOOT (["Wind Chime, Gamelon Gong, A.wav"](https://freesound.org/people/InspectorJ/sounds/411090/))
 
 DRY_BAL0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), which is licensed under Creative Commons 0.
+
+ELECPUFF is courtesy of the Librequake Project.
 
 NRG2MATR (edited for a 200% tempo increase) is derived from ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/), which is licensed under Creative Commons Attribution 3.0 Unported.
 

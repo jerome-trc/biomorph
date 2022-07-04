@@ -159,3 +159,23 @@ $random bio/weap/turbovulcan/fire
 	bio/weap/turbovulcan/fire_2
 	bio/weap/turbovulcan/fire_3
 }
+
+// Arc Caster
+
+bio/weap/arccaster/ready ARCA_RD
+bio/weap/arccaster/fire_0 ARCA_FR0
+bio/weap/arccaster/fire_1 ARCA_FR1
+bio/weap/arccaster/fire_2 ARCA_FR2
+
+$random bio/weap/arccaster/fire
+{
+	bio/weap/arccaster/fire_0
+	bio/weap/arccaster/fire_1
+	bio/weap/arccaster/fire_2
+}
+
+$limit bio/weap/arccaster/fire 1
+
+// Payloads ////////////////////////////////////////////////////////////////////
+
+bio/puff/elecarc/hit ELECPUFF

@@ -163,6 +163,11 @@
 	BIO_PLASMARIFLE_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_PLASMARIFLE_OB = "%k burned %o with a %s.";
 
+	BIO_ARCCASTER_TAG = "Arc Caster";
+	BIO_ARCCASTER_PKUP = "Procured an %s.";
+	BIO_ARCCASTER_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_ARCCASTER_OB = "%k electrocuted %o with an %s.";
+
 	BIO_BFG_TAG = "BFG9000";
 	BIO_BFG_PKUP = "Procured a %s.";
 	BIO_BFG_SCAV = "Scavenged ammo from a dropped %s.";

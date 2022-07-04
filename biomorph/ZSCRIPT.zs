@@ -65,7 +65,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/modifiers/payload_new.zs"
 #include "zscript/biomorph/weapons/modifiers/timing.zs"
 
-#include "zscript/biomorph/weapons/single/ralauncher.zs"
+#include "zscript/biomorph/weapons/single/arc_caster.zs"
 #include "zscript/biomorph/weapons/single/auto_shotgun.zs"
 #include "zscript/biomorph/weapons/single/bfg.zs"
 #include "zscript/biomorph/weapons/single/chainsaw.zs"
@@ -74,6 +74,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/single/microvulcan.zs"
 #include "zscript/biomorph/weapons/single/plasma_rifle.zs"
 #include "zscript/biomorph/weapons/single/pump_shotgun.zs"
+#include "zscript/biomorph/weapons/single/ralauncher.zs"
 #include "zscript/biomorph/weapons/single/service_pistol.zs"
 #include "zscript/biomorph/weapons/single/turbovulcan.zs"
 #include "zscript/biomorph/weapons/single/volley_gun.zs"

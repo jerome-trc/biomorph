@@ -11,6 +11,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_PLASRIFLE;
 		Weapon.SlotNumber 6;
+		Weapon.SlotPriority SLOTPRIO_HIGH;
 		Weapon.UpSound "bio/weap/gunswap";
 
 		BIO_Weapon.GraphQuality 6;
