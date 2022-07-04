@@ -290,6 +290,9 @@
 	BIO_WMOD_INCOMPAT_SPLASHTOHIT =
 		"None of this weapon's fire modes has splash damage "
 		"and also allows damage mutation.";
+	BIO_WMOD_INCOMPAT_SPMOVERRUN =
+		"None of this weapon's firing modes have ammo usage which can be "
+		"increased without becoming greater than magazine/ammo capacity.";
 	BIO_WMOD_INCOMPAT_SWITCHSPEEDMAX =
 		"This weapon already switches as fast as it possibly can.";
 	BIO_WMOD_INCOMPAT_TRIVIALHSPREAD = "This weapon has almost no horizontal spread.";
@@ -346,6 +349,15 @@
 	BIO_WMOD_PROJGRAVITY_SUMM =
 		"\c[White]Projectile payloads are affected by gravity\n"
 		"\c[Green]+20% damage to affected projectiles";
+
+	BIO_WMOD_RECHAMBERUP_SUMM =
+		"\c[Brick]Double ammo usage\c[White] but \c[Green]double damage";
+	BIO_WMOD_RECHAMBERUP_DESC_PIPELINE =
+		"\c[White]Damage \c[Green]increased by %d%%";
+	BIO_WMOD_RECHAMBERUP_DESC_AMMO1 =
+		"\c[White]Primary ammo usage \c[Brick]increased by %d%%";
+	BIO_WMOD_RECHAMBERUP_DESC_AMMO2 =
+		"\c[White]Secondary ammo usage \c[Brick]increased by %d%%";
 
 	BIO_WMOD_RELOADTIME_SUMM = "\c[Green]Increased reload speeds";
 	BIO_WMOD_RELOADTIME_DESC = "\c[White]Reload time%s: \c[Green]%.2f seconds";
@@ -474,6 +486,9 @@
 
 	BIO_MGENE_PROJGRAVITY_TAG = "\c[MGene]Dense Payload\c[White] Gene\c-";
 	BIO_MGENE_PROJGRAVITY_PKUP = "Collected a %s.";
+
+	BIO_MGENE_RECHAMBERUP_TAG = "\c[MGene]Upscale Rechamber\c[White] Gene\c-";
+	BIO_MGENE_RECHAMBERUP_PKUP = "Collected an %s.";
 
 	BIO_MGENE_RESERVEFEED_TAG = "\c[MGene]Ammochain\c[White] Gene";
 	BIO_MGENE_RESERVEFEED_PKUP = "Collected an %s.";

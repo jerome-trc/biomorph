@@ -291,6 +291,28 @@ class BIO_MGene_ProjGravity : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_RechamberUp : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_RECHAMBERUP_TAG";
+		Inventory.Icon 'GENDD0';
+		Inventory.PickupMessage "$BIO_MGENE_RECHAMBERUP_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_RECHAMBERUP_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_RechamberUp';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
+	}
+
+	States
+	{
+	Spawn:
+		GEND D 6;
+		#### # 6 Bright Light("BIO_MutaGene_LightRed");
+		Loop;
+	}
+}
+
 class BIO_MGene_ReserveFeed : BIO_ModifierGene
 {
 	Default

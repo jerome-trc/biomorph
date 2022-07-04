@@ -239,11 +239,161 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 	}
 }
 
+class BIO_WMod_RechamberUp : BIO_WeaponModifier
+{
+	Array<uint> PipelineDoubles;
+	private uint PrimaryDoubles, SecondaryDoubles;
+
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		uint invalidDamage = 0, invalidSPM = 0;
+
+		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+		{
+			let ppl = context.Weap.Pipelines[i].AsConst();
+
+			switch (PipelineCompatibility(context.Weap, ppl))
+			{
+			case 0: break;
+			case -1: invalidDamage++; break;
+			case 1: invalidSPM++; break;
+			}
+		}
+
+		if (invalidDamage == context.Weap.Pipelines.Size())
+			return false, "$BIO_WMOD_INCOMPAT_NODAMAGE";
+		else if (invalidSPM == context.Weap.Pipelines.Size())
+			return false, "$BIO_WMOD_INCOMPAT_SPMOVERRUN";
+		else
+			return true, "";
+	}
+
+	private static int PipelineCompatibility(
+		readOnly<BIO_Weapon> weap,
+		readOnly<BIO_WeaponPipeline> ppl)
+	{
+		if (!ppl.DealsAnyDamage())
+			return -1;
+
+		let ammoUse = !ppl.SecondaryAmmo ? weap.AmmoUse1 : weap.AmmoUse2;
+		let spm = weap.ShotsPerMagazine(ppl.SecondaryAmmo);
+
+		if ((ammoUse * 2) > spm)
+			return 1;
+
+		return 0;
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	{
+		PipelineDoubles.Clear();
+		PipelineDoubles.Resize(weap.Pipelines.Size());
+		PrimaryDoubles = SecondaryDoubles = 0;
+
+		for (uint i = 0; i < context.NodeCount; i++)
+		{
+			bool a1 = false, a2 = false;
+
+			for (uint j = 0; j < weap.Pipelines.Size(); j++)
+			{
+				let ppl = weap.Pipelines[j];
+
+				if (PipelineCompatibility(weap.AsConst(), ppl.AsConst()) != 0)
+					continue;
+
+				if (!ppl.SecondaryAmmo)
+					a1 = true;
+				else
+					a2 = true;
+
+				ppl.MultiplyAllDamage(2.0);
+				PipelineDoubles[j]++;
+			}
+
+			if (a1)
+			{
+				weap.AmmoUse1 *= 2;
+				PrimaryDoubles++;
+			}
+
+			if (a2)
+			{
+				weap.AmmoUse2 *= 2;
+				SecondaryDoubles++;
+			}
+		}
+
+		return "";
+	}
+
+	final override string Description(BIO_GeneContext context) const
+	{
+		string ret = "";
+
+		if (PrimaryDoubles > 0)
+		{
+			ret.AppendFormat(
+				StringTable.Localize("$BIO_WMOD_RECHAMBERUP_DESC_AMMO1"),
+				100 * 2 ** (PrimaryDoubles - 1)
+			);
+			ret = ret .. "\n";
+		}
+
+		if (SecondaryDoubles > 0)
+		{
+			ret.AppendFormat(
+				StringTable.Localize("$BIO_WMOD_RECHAMBERUP_DESC_AMMO2"),
+				100 * 2 ** (SecondaryDoubles - 1)
+			);
+			ret = ret .. "\n";
+		}
+
+		for (uint i = 0; i < PipelineDoubles.Size(); i++)
+		{
+			if (PipelineDoubles[i] < 1)
+				continue;
+
+			ret.AppendFormat(
+				StringTable.Localize("$BIO_WMOD_RECHAMBERUP_DESC_PIPELINE"),
+				100 * 2 ** (PipelineDoubles[i] - 1)
+			);
+
+			let qual = context.Weap.Pipelines[i].GetTagAsQualifier();
+
+			if (qual.Length() > 0 && PipelineDoubles.Size() > 1)
+				ret.AppendFormat(" %s", qual);
+
+			ret = ret .. "\n";
+		}
+
+		ret.DeleteLastCharacter();
+		return ret;
+	}
+
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
+	{
+		return BIO_WCMF_AMMOUSE_INC, BIO_WPMF_DAMAGE_INC;
+	}
+
+	final override class<BIO_ModifierGene> GeneType() const
+	{
+		return 'BIO_MGene_RechamberUp';
+	}
+
+	final override BIO_WeaponModifier Copy() const
+	{
+		let ret = new('BIO_WMod_RechamberUp');
+		ret.PipelineDoubles.Copy(PipelineDoubles);
+		ret.PrimaryDoubles = PrimaryDoubles;
+		ret.SecondaryDoubles = SecondaryDoubles;
+		return ret;
+	}
+}
+
 class BIO_WMod_SplashToHit : BIO_WeaponModifier
 {
 	// One element per pipeline, always positive
 	Array<int> DamageChanges, RadiusChanges;
-
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
