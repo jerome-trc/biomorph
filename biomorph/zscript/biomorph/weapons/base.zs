@@ -182,6 +182,17 @@ class BIO_Weapon : DoomWeapon abstract
 		}
 		#### ##### 1 Bright Light("BIO_UniqueLoot") A_BIO_GroundHit;
 		Goto Spawn.Unique + 1;
+	Zoom:
+		TNT1 A 0 A_BIO_WeaponSpecial;
+		TNT1 A 0 A_Jump(256, 'Ready');
+		TNT1 A 0 {
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Reached an illegal state through `BIO_Weapon::Zoom`. (%s)",
+				invoker.GetClassName()
+			);
+		}
+		Stop;
 	}
 
 	// Virtuals/abstracts //////////////////////////////////////////////////////

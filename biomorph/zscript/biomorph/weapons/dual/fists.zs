@@ -34,9 +34,6 @@ class BIO_Fists : BIO_DualWieldWeapon
 		PUNG C 4;
 		PUNG B 5 A_ReFire;
 		Goto Ready;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	override void SetDefaults()

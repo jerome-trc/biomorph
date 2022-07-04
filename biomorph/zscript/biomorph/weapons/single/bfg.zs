@@ -77,9 +77,6 @@ class BIO_BFG : BIO_Weapon
 			A_Light(2);
 		}
 		Goto LightDone;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	override void SetDefaults()

@@ -42,9 +42,6 @@ class BIO_Chainsaw : BIO_Weapon
 		SAWG B 1 A_BIO_Fire;
 		SAWG B 0 A_ReFire;
 		Goto Ready;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	final override void SetDefaults()

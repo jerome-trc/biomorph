@@ -125,9 +125,6 @@ class BIO_Coachgun : BIO_Weapon
 			A_ReFire();
 		}
 		Goto Ready;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	override void SetDefaults()

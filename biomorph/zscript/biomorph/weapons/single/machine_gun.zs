@@ -90,9 +90,6 @@ class BIO_MachineGun : BIO_Weapon
 		#### # 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
 		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
 		Goto Ready;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	override void SetDefaults()

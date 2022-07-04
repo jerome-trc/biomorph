@@ -126,9 +126,6 @@ class BIO_PumpShotgun : BIO_Weapon
 		PASG C 2;
 		PASG A 2;
 		Goto Fire;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	override void SetDefaults()

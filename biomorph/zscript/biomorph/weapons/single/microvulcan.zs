@@ -75,9 +75,6 @@ class BIO_Microvulcan : BIO_Weapon
 			A_Light(2);
 		}
 		Goto LightDone;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	protected action void A_Microvulcan_Fire()

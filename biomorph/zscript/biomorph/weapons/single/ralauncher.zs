@@ -61,9 +61,6 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		MISG B 0 A_ReFire;
 		TNT1 A 0 A_BIO_AutoReload(single: true);
 		Goto Ready;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	override void SetDefaults()

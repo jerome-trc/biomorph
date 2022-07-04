@@ -161,9 +161,6 @@ class BIO_VolleyGun : BIO_Weapon
 			A_BIO_Recoil('BIO_Recoil_ReloadSSG', invert: true);
 		}
 		Goto Ready;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	override void SetDefaults()

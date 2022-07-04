@@ -70,9 +70,6 @@ class BIO_PlasmaRifle : BIO_Weapon
 			A_Light(1);
 		}
 		Goto LightDone;
-	Zoom:
-		TNT1 A 0 A_BIO_WeaponSpecial;
-		Goto Ready;
 	}
 
 	override void SetDefaults()
