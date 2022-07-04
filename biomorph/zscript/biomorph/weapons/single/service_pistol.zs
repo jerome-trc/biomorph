@@ -4,7 +4,7 @@ class BIO_ServicePistol : BIO_Weapon
 	{
 		Tag "$BIO_SERVICEPISTOL_TAG";
 
-		Inventory.Icon 'PISTA0';
+		Inventory.Icon 'SVCPZ0';
 
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_PISTOL;
