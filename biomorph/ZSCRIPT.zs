@@ -81,3 +81,17 @@ class Biomorph abstract
 
 #include "zscript/biomorph/weapons/dual/fists.zs"
 #include "zscript/biomorph/weapons/dual/machine_gun.zs"
+
+// Third-party /////////////////////////////////////////////////////////////////
+
+#include "zscript/biomorph/libeye/projector_gl.zs"
+#include "zscript/biomorph/libeye/projector_planar.zs"
+#include "zscript/biomorph/libeye/projector.zs"
+#include "zscript/biomorph/libeye/viewport.zs"
+
+#include "zscript/biomorph/moonspeak/closest_target_in_fov.zs"
+#include "zscript/biomorph/moonspeak/kindergarten_maths.zs"
+#include "zscript/biomorph/moonspeak/pos.zs"
+#include "zscript/biomorph/moonspeak/smart_aim.zs"
+#include "zscript/biomorph/moonspeak/timer.zs"
+#include "zscript/biomorph/moonspeak/vector.zs"

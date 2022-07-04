@@ -230,6 +230,12 @@ class BIO_Weapon : DoomWeapon abstract
 
 	virtual void Summary(in out Array<string> strings) const {}
 
+	virtual ui void RenderOverlay(BIO_RenderContext context) const
+	{
+		for (uint i = 0; i < Affixes.Size(); i++)
+			Affixes[i].RenderOverlay(context);
+	}
+
 	// Weapon-building helpers /////////////////////////////////////////////////
 
 	// Shortcut for `BIO_StateTimeGroup::FromState()`.

@@ -30,6 +30,191 @@ class BIO_WMod_Kickback : BIO_WeaponModifier
 	}
 }
 
+class BIO_WMod_SmartAim : BIO_WeaponModifier
+{
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
+				return true, "";
+
+		return false, "$BIO_WMOD_INCOMPAT_NOPUFFPIPELINES";
+	}
+
+	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
+	{
+		if (ppl.IsMelee())
+			return false;
+
+		if (!ppl.CanFirePuffs())
+			return false;
+		
+		if (!(ppl.Payload is 'BIO_Puff'))
+			return false;
+
+		return true;
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	{
+		let wafx = new('BIO_WAfx_SmartAim');
+		wafx.Init(weap);
+		weap.Affixes.Push(wafx);
+
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			let ppl = weap.Pipelines[i];
+
+			if (!CompatibleWithPipeline(ppl.AsConst()))
+				continue;
+
+			let ff = new('BIO_FireFunc_SmartAim');
+			ff.Setup();
+			ff.Init(wafx);
+			ppl.FireFunctor = ff;
+		}
+
+		return "";
+	}
+
+	final override string Description(BIO_GeneContext context) const
+	{
+		return Summary();
+	}
+
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
+	{
+		return BIO_WCMF_NONE, BIO_WPMF_NONE;
+	}
+
+	final override class<BIO_ModifierGene> GeneType() const
+	{
+		return 'BIO_MGene_SmartAim';
+	}
+}
+
+class BIO_FireFunc_SmartAim : BIO_FireFunc_Bullet
+{
+	private BIO_WAfx_SmartAim Affix;
+
+	void Init(BIO_WAfx_SmartAim affix)
+	{
+		self.Affix = affix;
+	}
+
+	final override Actor Invoke(BIO_Weapon weap, in out BIO_ShotData shotData) const
+	{
+		if (Affix.HasTarget())
+		{
+			let tgt = Affix.Target();
+
+			let spawnPos = tgt.Vec3Offset(
+				FRandom(-shotData.HSpread, shotData.HSpread), 
+				FRandom(-shotData.VSpread, shotData.VSpread),
+				tgt.Height * 0.5
+			);
+
+			Actor ret = null;
+			let pldefs = GetDefaultByType(shotData.Payload);
+
+			if (pldefs.bPuffOnActors)
+				ret = Actor.Spawn(shotData.Payload, spawnPos);
+			else
+				ret = Actor.Spawn('BIO_NullPuff', spawnPos);
+
+			ret.Tracer = tgt;
+			ret.Target = weap.Owner;
+
+			if (tgt.Health > 0)
+			{
+				let admg = tgt.DamageMObj(
+					ret,
+					weap.Owner,
+					shotData.Damage,
+					pldefs.DamageType,
+					DMG_USEANGLE | DMG_INFLICTOR_IS_PUFF,
+					weap.Owner.Angle
+				);
+
+				tgt.SpawnLineAttackBlood(
+					weap.Owner,
+					spawnPos,
+					weap.Owner.Angle,
+					shotData.Damage,
+					admg
+				);
+			}
+
+			return ret;
+		}
+		else
+		{
+			return super.Invoke(weap, shotData);
+		}
+	}
+}
+
+class BIO_WAfx_SmartAim : BIO_WeaponAffix
+{
+	private textureID ReticleTexture;
+	private BIO_SmartAim SmartAim;
+
+	void Init(BIO_Weapon weap)
+	{
+		SmartAim.Begin(
+			weap.Owner.Player,
+			horizontal_fov: 38.0,
+			vertical_fov: 16.0
+		);
+
+		ReticleTexture = TexMan.CheckForTexture(
+			"graphics/smartaim_reticle.png",
+			TexMan.TYPE_ANY
+		);
+	}
+
+	bool HasTarget() const { return SmartAim.HasTarget(); }
+	Actor Target() const { return SmartAim.Target(); }
+
+	final override void OnTick(BIO_Weapon weap)
+	{
+		SmartAim.Next(PlayerPawn(weap.Owner));
+	}
+
+	final override void RenderOverlay(BIO_RenderContext context) const
+	{
+		let res = (Screen.GetWidth(), Screen.GetHeight());
+
+		// Draw the meta-crosshair over the screen centre
+		if (!HasTarget())
+		{
+			Screen.DrawTexture(
+				ReticleTexture, false,
+				res.X / 2, res.Y / 2, DTA_CENTEROFFSET, true
+			);
+			return;
+		}
+
+		let tgt = SmartAim.Target();
+
+		context.Projector.ProjectActorPos(
+			tgt, (0.0, 0.0, tgt.Height / 2.0), context.Event.FracTic
+		);
+		let norm = context.Projector.ProjectToNormal();
+		let drawPos = context.Viewport.SceneToWindow(norm);
+
+		Screen.DrawTexture(
+			ReticleTexture, false,
+			drawPos.X, drawPos.Y, DTA_CENTEROFFSET, true
+		);
+	}
+
+	final override string Description(readOnly<BIO_Weapon> _) const
+	{
+		return GetDefaultByType('BIO_MGene_SmartAim').Summary;
+	}
+}
+
 class BIO_WMod_Spread : BIO_WeaponModifier
 {
 	Array<float> HorizChanges, VertChanges;

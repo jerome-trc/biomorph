@@ -280,6 +280,7 @@
 	BIO_WMOD_INCOMPAT_NOMELEEDAMAGE =
 		"This weapon is incapable of dealing melee damage.";
 	BIO_WMOD_INCOMPAT_NOPIPELINES = "This weapon doesn't fire anything.";
+	BIO_WMOD_INCOMPAT_NOPUFFPIPELINES = "This weapon has no hitscan firing modes.";
 	BIO_WMOD_INCOMPAT_NORELOADTIMES =
 		"This weapon has no modifiable reload timings.";
 	BIO_WMOD_INCOMPAT_NOSHELLPAYLOAD = "This weapon doesn't fire shotshells.";
@@ -365,6 +366,8 @@
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
 	BIO_WMOD_SHELLTOSLUG_SUMM = "Change from firing shells to solid slugs";
+
+	BIO_WMOD_SMARTAIM_SUMM = "\c[Green]Smart aim functionality";
 
 	BIO_WMOD_SPLASHTOHIT_SUMM =
 		"\c[White]Converts 50% of splash damage into hit damage\n"
@@ -492,6 +495,9 @@
 
 	BIO_MGENE_RESERVEFEED_TAG = "\c[MGene]Ammochain\c[White] Gene";
 	BIO_MGENE_RESERVEFEED_PKUP = "Collected an %s.";
+
+	BIO_MGENE_SMARTAIM_TAG = "\c[MGene]Smart Fire Control\c[White] Gene";
+	BIO_MGENE_SMARTAIM_PKUP = "Collected a %s.";
 
 	BIO_MGENE_SPLASHTOHIT_TAG = "\c[MGene]Shaped Charge\c[White] Gene";
 	BIO_MGENE_SPLASHTOHIT_PKUP = "Collected a %s.";

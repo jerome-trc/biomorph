@@ -381,6 +381,29 @@ class BIO_MGene_ShellToSlug : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_SmartAim : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_SMARTAIM_TAG";
+		Inventory.Icon 'GENMF0';
+		Inventory.PickupMessage "$BIO_MGENE_SMARTAIM_PKUP";
+		BIO_Gene.Limit 1;
+		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
+		BIO_Gene.Summary "$BIO_WMOD_SMARTAIM_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_SmartAim';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+	}
+
+	States
+	{
+	Spawn:
+		GENM F 6;
+		#### # 6 Bright Light("BIO_MutaGene_Purple");
+		Loop;
+	}
+}
+
 class BIO_MGene_SplashToHit : BIO_ModifierGene
 {
 	Default

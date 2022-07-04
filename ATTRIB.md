@@ -6,9 +6,13 @@ If you're aware of any attribution which is evidently missing from this list, or
 
 ## Libraries
 
+Biomorph uses [libeye](https://forum.zdoom.org/viewtopic.php?t=64566), provided by KeksDose under a [custom license](/biomorph/zscript/biomorph/libeye/libeye.txt).
+
 Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https://github.com/jekyllgrim/Easy-Dual-Wield) (MIT license, [included in its translation unit](/zscript/biomorph/weapons/base_dw.zs)) by [Jekyll Grim Payne](https://github.com/jekyllgrim).
 
 ## Code
+
+Biomorph makes heavy use of code written for [Guncaster](https://forum.zdoom.org/viewtopic.php?t=37066) by KeksDose in order to implement its smart-aim weapon modifier. More information regarding licensing can be found in [/biomorph/zscript/biomorph/moonspeak/README](/biomorph/zscript/biomorph/moonspeak/README).
 
 The GLDEFS for the Armour Bonus were devised by Realm667 user Infirnex.
 
