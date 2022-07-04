@@ -29,13 +29,6 @@ class BIO_StatusBar : BaseStatusBar
 	{
 		super.AttachToPlayer(player);
 
-		NotifyLineCount = CVar.GetCVar("con_notifylines", CPlayer);
-		InvBarSlots = CVar.GetCVar("BIO_invbarslots", CPlayer);
-		HUDWeapOffsX = CVar.GetCVar("BIO_hudweap_offsx", CPlayer);
-		HUDWeapOffsY = CVar.GetCVar("BIO_hudweap_offsy", CPlayer);
-		HUDExamOffsX = CVar.GetCVar("BIO_hudexam_offsx", CPlayer);
-		HUDExamOffsY = CVar.GetCVar("BIO_hudexam_offsy", CPlayer);
-
 		BIOPlayer = BIO_Player(CPlayer.MO);
 
 		if (CPlayer.MO != null && BIOPlayer == null)
@@ -47,6 +40,13 @@ class BIO_StatusBar : BaseStatusBar
 				"\nIf errors continue after that, report a bug to RatCircus."
 			);
 		}
+
+		NotifyLineCount = CVar.GetCVar("con_notifylines", CPlayer);
+		InvBarSlots = CVar.GetCVar("BIO_invbarslots", CPlayer);
+		HUDWeapOffsX = CVar.GetCVar("BIO_hudweap_offsx", CPlayer);
+		HUDWeapOffsY = CVar.GetCVar("BIO_hudweap_offsy", CPlayer);
+		HUDExamOffsX = CVar.GetCVar("BIO_hudexam_offsx", CPlayer);
+		HUDExamOffsY = CVar.GetCVar("BIO_hudexam_offsy", CPlayer);
 	}
 
 	final override void Draw(int state, double ticFrac)
