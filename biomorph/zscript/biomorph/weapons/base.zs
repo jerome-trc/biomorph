@@ -648,14 +648,17 @@ extend class BIO_Weapon
 
 			if (Magazine1 != null)
 			{
-				if (!(Magazine1 is 'BIO_Magazine')) // Reserve
-					dividend = float(Magazine1.MaxAmount);
-				else
+				if (Magazine1 is 'BIO_Magazine')
 					dividend = float(MagazineSize1);
+				else // Reserve
+					dividend = float(Magazine1.MaxAmount);
 			}
 			else if (MagazineType1 != null)
 			{
-				dividend = float(MagazineSize1);
+				if (MagazineType1 is 'BIO_Magazine')
+					dividend = float(MagazineSize1);
+				else // Reserve
+					dividend = GetDefaultByType(MagazineType1).MaxAmount;
 			}
 			else if (Ammo1 != null)
 			{
@@ -668,14 +671,17 @@ extend class BIO_Weapon
 
 			if (Magazine2 != null)
 			{
-				if (!(Magazine2 is 'BIO_Magazine')) // Reserve
-					dividend = float(Magazine2.MaxAmount);
-				else
+				if (Magazine2 is 'BIO_Magazine')
 					dividend = float(MagazineSize2);
+				else // Reserve
+					dividend = float(Magazine2.MaxAmount);
 			}
 			else if (MagazineType2 != null)
 			{
-				dividend = float(MagazineSize2);
+				if (MagazineType2 is 'BIO_Magazine')
+					dividend = float(MagazineSize2);
+				else // Reserve
+					dividend = GetDefaultByType(MagazineType2).MaxAmount;
 			}
 			else if (Ammo2 != null)
 			{
