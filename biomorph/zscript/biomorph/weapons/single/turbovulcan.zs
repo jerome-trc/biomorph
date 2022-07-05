@@ -17,7 +17,7 @@ class BIO_Turbovulcan : BIO_Weapon
 		BIO_Weapon.GraphQuality 4;
 		BIO_Weapon.MagazineType 'Clip';
 		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_Turbovulcan';
-		BIO_Weapon.ModCostMultiplier 2;
+		BIO_Weapon.ModCostMultiplier 3;
 		BIO_Weapon.PickupMessages
 			"$BIO_TURBOVULCAN_PKUP",
 			"$BIO_TURBOVULCAN_SCAV";
