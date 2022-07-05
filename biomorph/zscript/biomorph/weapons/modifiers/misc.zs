@@ -217,7 +217,7 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 
 class BIO_WMod_Spread : BIO_WeaponModifier
 {
-	Array<float> HorizChanges, VertChanges;
+	private Array<float> HorizChanges, VertChanges;
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
@@ -308,7 +308,7 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 
 class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 {
-	Array<float> HorizChanges, VertChanges;
+	private Array<float> HorizChanges, VertChanges;
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
@@ -390,7 +390,7 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 
 class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 {
-	Array<float> HorizChanges, VertChanges;
+	private Array<float> HorizChanges, VertChanges;
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{

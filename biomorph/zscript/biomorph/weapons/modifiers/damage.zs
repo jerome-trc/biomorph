@@ -241,7 +241,7 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 
 class BIO_WMod_RechamberUp : BIO_WeaponModifier
 {
-	Array<uint> PipelineDoubles;
+	private Array<uint> PipelineDoubles;
 	private uint PrimaryDoubles, SecondaryDoubles;
 
 	final override bool, string Compatible(BIO_GeneContext context) const
@@ -393,7 +393,7 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 class BIO_WMod_SplashToHit : BIO_WeaponModifier
 {
 	// One element per pipeline, always positive
-	Array<int> DamageChanges, RadiusChanges;
+	private Array<int> DamageChanges, RadiusChanges;
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{

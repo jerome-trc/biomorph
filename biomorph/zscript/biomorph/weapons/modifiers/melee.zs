@@ -1,6 +1,6 @@
 class BIO_WMod_Lifesteal : BIO_WeaponModifier
 {
-	Array<float> AddPercents; // One per pipeline (might be 0.0)
+	private Array<float> AddPercents; // One per pipeline (might be 0.0)
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
