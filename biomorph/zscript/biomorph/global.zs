@@ -328,7 +328,7 @@ extend class BIO_Global
 			if (defs.NoLoot)
 				continue;
 
-			if (defs.DropWeight <= 0)
+			if (defs.LootWeight <= 0)
 			{
 				Console.Printf(Biomorph.LOGPFX_WARN ..
 					"Mutagen class `%s` is not marked `NoLoot` "
@@ -336,7 +336,7 @@ extend class BIO_Global
 				continue;
 			}
 
-			MutagenLoot.Push(muta_t, defs.DropWeight);
+			MutagenLoot.Push(muta_t, defs.LootWeight);
 		}
 	}
 
@@ -470,6 +470,7 @@ extend class BIO_Global
 	}
 }
 
+// Player inventory reset scheduling.
 extend class BIO_Global
 {
 	private Array<BIO_PlayerResetTracker> PlayerResetTrackers;

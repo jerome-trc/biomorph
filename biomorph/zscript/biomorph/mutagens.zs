@@ -3,7 +3,7 @@ class BIO_Mutagen : Inventory abstract
 	const DROPWT_GENERAL = 32;
 	const DROPWT_CORR = 1;
 
-	meta uint DropWeight; property DropWeight: DropWeight;
+	meta uint LootWeight; property LootWeight: LootWeight;
 	meta bool NoLoot; property NoLoot: NoLoot;
 
 	Default
@@ -19,7 +19,7 @@ class BIO_Mutagen : Inventory abstract
 
 		Inventory.MaxAmount 999;
 
-		BIO_Mutagen.DropWeight 0;
+		BIO_Mutagen.LootWeight 0;
 		BIO_Mutagen.NoLoot false;
     }
 
@@ -49,7 +49,7 @@ class BIO_Muta_General : BIO_Mutagen
 		Inventory.Icon 'MUTAG0';
 		Inventory.PickupMessage "$BIO_MUTA_GENERAL_PKUP";
 		Inventory.UseSound "bio/mutation/general";
-		BIO_Mutagen.DropWeight DROPWT_GENERAL;
+		BIO_Mutagen.LootWeight DROPWT_GENERAL;
 	}
 
 	States

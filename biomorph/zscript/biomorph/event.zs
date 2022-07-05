@@ -626,9 +626,9 @@ extend class BIO_EventHandler
 				let muta_t = Globals.RandomMutagenType();
 				let defs = GetDefaultByType(muta_t);
 
-				if (defs.DropWeight <= BIO_Mutagen.DROPWT_CORR)
+				if (defs.LootWeight <= BIO_Mutagen.DROPWT_CORR)
 					S_StartSound("bio/loot/veryrare", CHAN_AUTO);
-				else if (defs.DropWeight <= 2)
+				else if (defs.LootWeight <= 2)
 					S_StartSound("bio/loot/rare", CHAN_AUTO);
 
 				event.Thing.A_SpawnItemEx(
