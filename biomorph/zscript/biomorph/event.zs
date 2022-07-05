@@ -356,6 +356,7 @@ extend class BIO_EventHandler
 		ConEvent_WeapDiag(event);
 		ConEvent_LootDiag(event);
 		ConEvent_MonsVal(event);
+		ConEvent_LootSim(event);
 	}
 
 	private static ui void ConEvent_Help(ConsoleEvent event)
@@ -379,6 +380,7 @@ extend class BIO_EventHandler
 			"\tbio_lootdiag_\n"
 			"\tbio_weapdiag_\n"
 			"\tbio_monsval_\n"
+			"\tbio_lootsim_\n"
 			"\c[Gold]Network events:\c-\n"
 			"\tbio_weaplootregen_\n"
 			"\tbio_mutalootregen_\n"
@@ -531,7 +533,7 @@ extend class BIO_EventHandler
 		Menu.SetMenu('BIO_WeaponModMenu');
 	}
 
-	private ui void ConEvent_MonsVal(ConsoleEvent event)
+	private ui void ConEvent_MonsVal(ConsoleEvent event) const
 	{
 		if (!(event.Name ~== "bio_monsval"))
 			return;
@@ -557,11 +559,98 @@ extend class BIO_EventHandler
 			"Number of times loot value threshold crossed: %d", loot
 		);
 	}
+
+	private ui void ConEvent_LootSim(ConsoleEvent event) const
+	{
+		if (!(event.Name ~== "bio_lootsim"))
+			return;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Illegal attempt by a script to invoke `bio_lootsim`."
+			);
+			return;
+		}
+
+		string output = Biomorph.LOGPFX_INFO .. "running loot simulation...\n";
+
+		Array<class<BIO_Mutagen> > mTypes;
+		Array<class<BIO_Gene> > gTypes;
+		Array<uint> mCounters, gCounters;
+
+		let val = MapTotalMonsterValue();
+		let loot = val / BIO_Global.LOOT_VALUE_THRESHOLD;
+
+		for (uint i = 0; i < loot; i++)
+		{
+			if (Random[BIO_Loot](1, GENE_CHANCE_DENOM) == 1)
+			{
+				let gene_t = Globals.RandomGeneType();
+				let idx = gTypes.Find(gene_t);
+
+				if (idx == gTypes.Size())
+				{
+					idx = gTypes.Push(gene_t);
+					gCounters.Push(1);
+				}
+				else
+				{
+					gCounters[idx]++;
+				}
+			}
+			else
+			{
+				let muta_t = Globals.RandomMutagenType();
+				let idx = mTypes.Find(muta_t);
+
+				if (idx == mTypes.Size())
+				{
+					idx = mTypes.Push(muta_t);
+					mCounters.Push(1);
+				}
+				else
+				{
+					mCounters[idx]++;
+				}
+			}
+		}
+
+		output = output .. "\c[Yellow]Mutagen loot results:\c-\n";
+
+		for (uint i = 0; i < mTypes.Size(); i++)
+		{
+			let defs = GetDefaultByType(mTypes[i]);
+
+			output.AppendFormat(
+				"\t%s (wt. \c[Green]%d\c-): %d\n",
+				mTypes[i].GetClassName(), defs.LootWeight, mCounters[i]
+			);
+		}
+
+		output = output .. "\c[Yellow]Gene loot results:\c-\n";
+
+		for (uint i = 0; i < gTypes.Size(); i++)
+		{
+			let defs = GetDefaultByType(gTypes[i]);
+
+			output.AppendFormat(
+				"\t%s (wt. \c[Green]%d\c-): %d\n",
+				gTypes[i].GetClassName(), defs.LootWeight, gCounters[i]
+			);
+		}
+
+		output.DeleteLastCharacter();
+		Console.Printf(output);
+	}
 }
 
 // Death handling.
 extend class BIO_EventHandler
 {
+	const GENE_CHANCE_DENOM = 12;
+
 	// Assigned in `OnRegister()`
 	// (will be null if LegenDoom or its Lite version isn't loaded).
 	private class<Inventory> LDToken;
@@ -604,7 +693,7 @@ extend class BIO_EventHandler
 
 		while (Globals.DrainLootValueBuffer())
 		{
-			if (Random[BIO_Loot](1, 12) == 1)
+			if (Random[BIO_Loot](1, GENE_CHANCE_DENOM) == 1)
 			{
 				let gene_t = Globals.RandomGeneType();
 				let defs = GetDefaultByType(gene_t);
