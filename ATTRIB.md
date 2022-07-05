@@ -30,11 +30,13 @@ The Arc Caster pickup sprite is courtesy of the Librequake Project, id Software 
 
 Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
-MGUNB0 and SHOTB0 are edits of the work of id Software LLC.
+Breaching Axe sprites are courtesy of ZDoom forum user neoworm.
 
 Auto Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
 
 Electric arc puff sprites are courtesy of the Librequake Project, id Software LLC, and Banjo Software, with edits by Realm667 user KILLA DIO.
+
+MGUNB0 and SHOTB0 are edits of the work of id Software LLC.
 
 Turbovulcan and Machine Gun HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
@@ -117,6 +119,8 @@ ELECPUFF is courtesy of the Librequake Project.
 NRG2MATR (edited for a 200% tempo increase) is derived from ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/), which is licensed under Creative Commons Attribution 3.0 Unported.
 
 RARELOOT is derived from ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/), licensed under Creative Commons 0.
+
+BWHOOSH0 through 5 are derived from ["Swoosh.wav"](https://freesound.org/people/Brsjak/sounds/482880/) by freesound user [Brsjak](https://freesound.org/people/Brsjak/), licensed under Creative Commons Attribution 3.0 Unported.
 
 UNIQLOOT is derived from ["Gong Hit"](https://freesound.org/people/GowlerMusic/sounds/266566/) by freesound user [GowlerMusic](https://freesound.org/people/GowlerMusic), licensed under the Attribution 4.0 License.
 

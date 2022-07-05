@@ -161,6 +161,10 @@
 
 	// (None of the handguns or melee weapons have scavenge messages)
 
+	BIO_BREACHINGAXE_TAG = "Breaching Axe";
+	BIO_BREACHINGAXE_PKUP = "Procured a %s.";
+	BIO_BREACHINGAXE_OB = "%k hewed %o with a %s.";
+
 	BIO_CHAINSAW_TAG = "Chainsaw";
 	BIO_CHAINSAW_PKUP = "Procured a %s.";
 	BIO_CHAINSAW_OB = "%k sawed %o in half with a %s.";

@@ -68,6 +68,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/single/arc_caster.zs"
 #include "zscript/biomorph/weapons/single/auto_shotgun.zs"
 #include "zscript/biomorph/weapons/single/bfg.zs"
+#include "zscript/biomorph/weapons/single/breaching_axe.zs"
 #include "zscript/biomorph/weapons/single/chainsaw.zs"
 #include "zscript/biomorph/weapons/single/coachgun.zs"
 #include "zscript/biomorph/weapons/single/machine_gun.zs"

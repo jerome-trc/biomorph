@@ -47,6 +47,23 @@ bio/pawn/pain/100 BIOPAIN3
 
 bio/weap/groundhit/small/0 WGHIT0_0
 
+bio/weap/whoosh/0 BWHOOSH0
+bio/weap/whoosh/1 BWHOOSH1
+bio/weap/whoosh/2 BWHOOSH2
+bio/weap/whoosh/3 BWHOOSH3
+bio/weap/whoosh/4 BWHOOSH4
+bio/weap/whoosh/5 BWHOOSH5
+
+$RANDOM bio/weap/whoosh
+{
+	bio/weap/whoosh/0
+	bio/weap/whoosh/1
+	bio/weap/whoosh/2
+	bio/weap/whoosh/3
+	bio/weap/whoosh/4
+	bio/weap/whoosh/5
+}
+
 bio/weap/dryfire/ballistic/0 DRY_BAL0
 bio/weap/dryfire/ballistic/1 DRY_BAL1
 bio/weap/dryfire/ballistic/2 DRY_BAL2

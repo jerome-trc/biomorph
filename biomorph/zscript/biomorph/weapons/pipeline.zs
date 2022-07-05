@@ -416,6 +416,35 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
+	BIO_WeaponPipelineBuilder FireFunctor(BIO_FireFunctor func)
+	{
+		Pipeline.FireFunctor = func;
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Payload(class<Actor> type)
+	{
+		Pipeline.Payload = type;
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder ShotCount(uint count)
+	{
+		if (count <= 0)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Attempted to a set a shot count below 1 to a weapon pipeline."
+			);
+		}
+		else
+		{
+			Pipeline.ShotCount = count;
+		}
+
+		return self;
+	}
+
 	BIO_WeaponPipelineBuilder X1D3Damage(int multi)
 	{
 		Pipeline.Damage = new('BIO_DmgFunc_XTimesRand').Init(multi, 1, 3);
