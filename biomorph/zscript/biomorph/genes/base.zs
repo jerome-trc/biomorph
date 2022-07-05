@@ -113,7 +113,7 @@ class BIO_ActiveGene : BIO_Gene abstract
 // General symbolic constants for loot weights, kept in one place.
 extend class BIO_Gene
 {
-	const LOOTWEIGHT_VERYCOMMON = 32;
+	const LOOTWEIGHT_VERYCOMMON = 16;
 	const LOOTWEIGHT_COMMON = 8;
 	const LOOTWEIGHT_UNCOMMON = 4;
 	const LOOTWEIGHT_RARE = 2;
