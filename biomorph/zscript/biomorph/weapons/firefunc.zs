@@ -64,7 +64,7 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 		class<Actor> pl = pipeline.Payload;
 
 		readout.Push(String.Format(
-			StringTable.Localize("$BIO_FIREFUNC_PROJECTILE"),
+			StringTable.Localize("$BIO_FIREFUNC_GENERAL"),
 			BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
 			pl != pipelineDef.Payload ? Biomorph.CRESC_STATMODIFIED : Biomorph.CRESC_STATDEFAULT,
 			BIO_Utils.PayloadTag(pl, sc)));
