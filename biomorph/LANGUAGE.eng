@@ -187,7 +187,7 @@
 	BIO_AUTOSHOTGUN_TAG = "Auto Shotgun";
 	BIO_AUTOSHOTGUN_PKUP = "Procured an %s.";
 	BIO_AUTOSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_AUTOSHOTGUN_OB = "%k ploughed %o down with a %s.";
+	BIO_AUTOSHOTGUN_OB = "%k ploughed %o down with an %s.";
 
 	BIO_MACHINEGUN_TAG = "Machine Gun";
 	BIO_MACHINEGUN_PKUP = "Procured a %s.";
