@@ -57,8 +57,7 @@ class BIO_WeaponModMenu : GenericMenu
 	const COLOR_INVALID = Color(127, 224, 0, 0);
 	const COLOR_HOVERED = Color(127, 127, 127, 127);
 	const COLOR_HOVEREDINVALID = Color(127, 255, 127, 127);
-	const COLOR_FULLCONN_OUTER = Color(127, 130, 239, 255);
-	const COLOR_FULLCONN_INNER = Color(127, 65, 255, 240);
+	const COLOR_CONN = Color(127, 65, 255, 240);
 
 	private string
 		Txt_Help_Pan, Txt_Help_ModOrder, Txt_Help_Hotkeys,
@@ -174,6 +173,8 @@ extend class BIO_WeaponModMenu
 
 		// Node connections
 
+		Array<uint> iConnsDrawn, oConnsDrawn;
+
 		for (uint i = 0; i < Simulator.Nodes.Size(); i++)
 		{
 			let node = Simulator.Nodes[i];
@@ -186,27 +187,26 @@ extend class BIO_WeaponModMenu
 				if (i == o)
 					continue;
 
-				if (node.IsActive() && other.IsActive())
-				{
-					Screen.DrawThickLine(
-						NodeDrawState[i].ScreenPos.X, NodeDrawState[i].ScreenPos.Y,
-						NodeDrawState[o].ScreenPos.X, NodeDrawState[o].ScreenPos.Y,
-						Size.X / (Size.X * 0.15), COLOR_FULLCONN_OUTER
-					);
-					Screen.DrawThickLine(
-						NodeDrawState[i].ScreenPos.X, NodeDrawState[i].ScreenPos.Y,
-						NodeDrawState[o].ScreenPos.X, NodeDrawState[o].ScreenPos.Y,
-						Size.X / (Size.X * 0.35), COLOR_FULLCONN_INNER
-					);
-				}
-				else
-				{
-					Screen.DrawThickLine(
-						NodeDrawState[i].ScreenPos.X, NodeDrawState[i].ScreenPos.Y,
-						NodeDrawState[o].ScreenPos.X, NodeDrawState[o].ScreenPos.Y,
-						Size.X / (Size.X * 0.25), COLOR_HOVERED
-					);
-				}
+				bool alreadyDrawn = false;
+
+				for (uint k = 0; k < iConnsDrawn.Size(); k++)
+					if (iConnsDrawn[k] == o && iConnsDrawn[k] == i)
+					{
+						alreadyDrawn = true;	
+						break;
+					}
+
+				if (alreadyDrawn)
+					continue;
+
+				DrawNodeConnection(
+					NodeDrawState[i].ScreenPos,
+					NodeDrawState[o].ScreenPos,
+					node.IsActive() && other.IsActive()
+				);
+
+				iConnsDrawn.Push(i);
+				oConnsDrawn.Push(o);
 			}
 		}
 
@@ -344,6 +344,56 @@ extend class BIO_WeaponModMenu
 				Simulator.Genes[HoveredInvSlot] != null)
 			{
 				DrawTooltip(Simulator.GetGeneSlotTooltip(HoveredInvSlot));
+			}
+		}
+	}
+
+	private void DrawNodeConnection(Vector2 pos1, Vector2 pos2, bool bothActive) const
+	{
+		if (!bothActive)
+		{
+			Screen.DrawThickLine(
+				pos1.X, pos1.Y, pos2.X, pos2.Y,
+				Size.X / (Size.X * 0.25), COLOR_HOVERED
+			);
+			return;
+		}
+
+		let count = 16;
+		let diff = (pos2 - pos1) / double(count);
+		bool vert = diff.X == 0.0;
+		Vector2 drawPos = (pos1.X, pos1.Y);
+		let len = vert ? Log(Size.X) * 0.4 : Log(Size.Y) * 0.4;
+		let thickness = vert ? Log(Size.X) : Log(Size.Y);
+
+		// TODO:
+		// - Make this look better at lower zoom levels
+		// - Learn maths and create a nicer wave
+		// - Fancier coloration?
+
+		for (uint i = 0; i < count; i++)
+		{
+			let l = 5.0 * len * Sin((i + MenuTime()) * 6);
+
+			if (vert)
+			{
+				Screen.DrawThickLine(
+					drawPos.X - l, drawPos.Y,
+					drawPos.X + l, drawPos.Y,
+					thickness, COLOR_CONN
+				);
+
+				drawPos.Y += diff.Y;
+			}
+			else
+			{
+				Screen.DrawThickLine(
+					drawPos.X, drawPos.Y - l,
+					drawPos.X, drawPos.Y + l,
+					thickness, COLOR_CONN
+				);
+
+				drawPos.X += diff.X;
 			}
 		}
 	}
