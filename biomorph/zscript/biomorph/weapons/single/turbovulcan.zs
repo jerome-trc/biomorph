@@ -37,8 +37,13 @@ class BIO_Turbovulcan : BIO_Weapon
 	Fire:
 		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 	SpoolUp:
-		TRBO BCD 1;
-		TRBO EFGH 1;
+		TRBO B 1 A_BIO_SetFireTime(0);
+		TRBO C 1 A_BIO_SetFireTime(1);
+		TRBO D 1 A_BIO_SetFireTime(2);
+		TRBO E 1 A_BIO_SetFireTime(3);
+		TRBO F 1 A_BIO_SetFireTime(4);
+		TRBO G 1 A_BIO_SetFireTime(5);
+		TRBO H 1 A_BIO_SetFireTime(6);
 	FireCycle:
 		TNT1 A 0
 		{
@@ -49,10 +54,11 @@ class BIO_Turbovulcan : BIO_Weapon
 		}
 		TRBO E 1 Bright
 		{
+			A_BIO_SetFireTime(0, 1);
 			A_GunFlash('Flash.I');
 			A_BIO_Fire();
 			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
-			A_BIO_FireSound(CHAN_WEAPON);
+			A_BIO_FireSound(CHAN_AUTO);
 		}
 		TRBO F 1 Bright A_GunFlash('Flash.J');
 		TNT1 A 0
@@ -64,17 +70,24 @@ class BIO_Turbovulcan : BIO_Weapon
 		}
 		TRBO G 1 Bright
 		{
+			A_BIO_SetFireTime(1, 1);
 			A_GunFlash('Flash.K');
 			A_BIO_Fire();
 			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
-			A_BIO_FireSound(CHAN_7);
+			A_BIO_FireSound(CHAN_AUTO);
 		}
 		TRBO H 1 Bright A_GunFlash('Flash.L');
 		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'SpoolDown');
 		Loop;
 	SpoolDown:
-		TRBO EFGH 1;
-		TRBO ABCD 1;
+		TRBO E 1 A_BIO_SetFireTime(0, 2);
+		TRBO F 1 A_BIO_SetFireTime(1, 2);
+		TRBO G 1 A_BIO_SetFireTime(2, 2);
+		TRBO H 1 A_BIO_SetFireTime(3, 2);
+		TRBO A 1 A_BIO_SetFireTime(4, 2);
+		TRBO B 1 A_BIO_SetFireTime(5, 2);
+		TRBO C 1 A_BIO_SetFireTime(6, 2);
+		TRBO D 1 A_BIO_SetFireTime(7, 2);
 		Goto Ready;
 	Flash:
 		TNT1 A 0;
