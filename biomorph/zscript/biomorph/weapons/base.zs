@@ -572,6 +572,10 @@ extend class BIO_Weapon
 		return (ModGraph.Nodes.Size() - 1) - Default.GraphQuality;
 	}
 
+	// The number of changes being made to a weapon is multiplied by the return
+	// value of this to get the cost to commit a set of weapon modifications.
+	uint ModCost() const { return ModCostMultiplier * 3; }
+
 	bool CanReload(bool secondary = false) const
 	{
 		Ammo magItem = null, reserveAmmo = null;
