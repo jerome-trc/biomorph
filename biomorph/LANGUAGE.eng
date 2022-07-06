@@ -740,6 +740,7 @@
 
 	BIO_RIGHT = "right";
 	BIO_LEFT = "left";
+	BIO_SLOW = "slow";
 	BIO_PER2ROUNDS = "per 2 rounds";
 	BIO_SPOOLUP = "spoolup";
 	BIO_SPOOLDOWN = "spooldown";

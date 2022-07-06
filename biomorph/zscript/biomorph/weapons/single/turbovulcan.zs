@@ -62,7 +62,11 @@ class BIO_Turbovulcan : BIO_Weapon
 			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
 			A_BIO_FireSound(CHAN_AUTO);
 		}
-		TRBO F 1 Bright A_GunFlash('Flash.J');
+		TRBO F 1 Bright
+		{
+			A_BIO_SetFireTime(1, 1);
+			A_GunFlash('Flash.J');
+		}
 		TNT1 A 0
 		{
 			if (!invoker.SufficientAmmo())
@@ -72,13 +76,17 @@ class BIO_Turbovulcan : BIO_Weapon
 		}
 		TRBO G 1 Bright
 		{
-			A_BIO_SetFireTime(1, 1);
+			A_BIO_SetFireTime(2, 1);
 			A_GunFlash('Flash.K');
 			A_BIO_Fire();
 			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
 			A_BIO_FireSound(CHAN_AUTO);
 		}
-		TRBO H 1 Bright A_GunFlash('Flash.L');
+		TRBO H 1 Bright
+		{
+			A_BIO_SetFireTime(3, 1);
+			A_GunFlash('Flash.L');
+		}
 		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'SpoolDown');
 		Loop;
 	SpoolDown:
@@ -91,20 +99,82 @@ class BIO_Turbovulcan : BIO_Weapon
 		TRBO C 1 A_BIO_SetFireTime(6, 2);
 		TRBO D 1 A_BIO_SetFireTime(7, 2);
 		Goto Ready;
+	AltFire:
+		TNT1 A 0 A_BIO_CheckAmmo;
+		TRBO E 3 Bright
+		{
+			A_BIO_SetFireTime(0, 3);
+			A_GunFlash('Flash.I');
+			A_BIO_Fire(spreadFactor: 0.75);
+			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
+			A_BIO_FireSound(CHAN_AUTO);
+		}
+		TRBO F 3 Bright
+		{
+			A_BIO_SetFireTime(1, 3);
+			A_GunFlash('Flash.J');
+		}
+		TRBO G 3 Bright
+		{
+			A_BIO_SetFireTime(2, 3);
+			A_GunFlash('Flash.K');
+			A_BIO_Fire(spreadFactor: 0.75);
+			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
+			A_BIO_FireSound(CHAN_AUTO);
+		}
+		TRBO H 3 Bright
+		{
+			A_BIO_SetFireTime(3, 3);
+			A_GunFlash('Flash.L');
+		}
+		TNT1 A 0 A_BIO_AutoReload;
+		Goto Ready;
 	Flash:
 		TNT1 A 0;
 		Goto LightDone;
 	Flash.I:
-		TRBO I 1 Bright A_Light(1);
+		TRBO I 1 Bright
+		{
+			if (invoker.bAltFire)
+				A_BIO_SetFireTime(0, 3, modifier: -2);
+			else
+				A_BIO_SetFireTime(0, 1);
+
+			A_Light(1);
+		}
 		Goto LightDone;
 	Flash.J:
-		TRBO J 1 Bright A_Light(2);
+		TRBO J 1 Bright
+		{
+			if (invoker.bAltFire)
+				A_BIO_SetFireTime(1, 3, modifier: -2);
+			else
+				A_BIO_SetFireTime(1, 1);
+
+			A_Light(2);
+		}
 		Goto LightDone;
 	Flash.K:
-		TRBO K 1 Bright A_Light(1);
+		TRBO K 1 Bright
+		{
+			if (invoker.bAltFire)
+				A_BIO_SetFireTime(2, 3, modifier: -2);
+			else
+				A_BIO_SetFireTime(2, 1);
+
+			A_Light(1);
+		}
 		Goto LightDone;
 	Flash.L:
-		TRBO L 1 Bright A_Light(2);
+		TRBO L 1 Bright
+		{
+			if (invoker.bAltFire)
+				A_BIO_SetFireTime(3, 3, modifier: -2);
+			else
+				A_BIO_SetFireTime(3, 1);
+
+			A_Light(2);
+		}
 		Goto LightDone;
 	Spawn:
 		TRBO Z 0;
@@ -144,6 +214,8 @@ class BIO_Turbovulcan : BIO_Weapon
 				designation: BIO_STGD_SPOOLDOWN
 			)
 		);
+
+		FireTimeGroups.Push(StateTimeGroupFrom('AltFire', "$BIO_SLOW"));
 	}
 }
 
