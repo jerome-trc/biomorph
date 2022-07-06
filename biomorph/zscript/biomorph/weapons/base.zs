@@ -604,6 +604,9 @@ extend class BIO_Weapon
 
 		if (!secondary)
 		{
+			if (AmmoUse1 == 0)
+				return 0;
+
 			divisor = float(AmmoUse1);
 
 			if (Magazine1 != null)
@@ -627,6 +630,9 @@ extend class BIO_Weapon
 		}
 		else
 		{
+			if (AmmoUse2 == 0)
+				return 0;
+
 			divisor = float(AmmoUse2);
 
 			if (Magazine2 != null)
