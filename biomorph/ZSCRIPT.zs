@@ -73,6 +73,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/single/coachgun.zs"
 #include "zscript/biomorph/weapons/single/machine_gun.zs"
 #include "zscript/biomorph/weapons/single/microvulcan.zs"
+#include "zscript/biomorph/weapons/single/minivulcan.zs"
 #include "zscript/biomorph/weapons/single/plasma_rifle.zs"
 #include "zscript/biomorph/weapons/single/pump_shotgun.zs"
 #include "zscript/biomorph/weapons/single/ralauncher.zs"

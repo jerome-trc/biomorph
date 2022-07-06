@@ -203,6 +203,11 @@
 	BIO_MICROVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_MICROVULCAN_OB = "%k shredded %o with a %s.";
 
+	BIO_MINIVULCAN_TAG = "Minivulcan";
+	BIO_MINIVULCAN_PKUP = "Procured a %s.";
+	BIO_MINIVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_MINIVULCAN_OB = "%k honeycombed %o with a %s.";
+
 	BIO_TURBOVULCAN_TAG = "Turbovulcan";
 	BIO_TURBOVULCAN_PKUP = "Procured a %s.";
 	BIO_TURBOVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
@@ -743,6 +748,7 @@
 	BIO_SLOW = "slow";
 	BIO_PER2ROUNDS = "per 2 rounds";
 	BIO_SPOOLUP = "spoolup";
+	BIO_SPOOLED = "spooled";
 	BIO_SPOOLDOWN = "spooldown";
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";

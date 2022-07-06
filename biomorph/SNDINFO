@@ -54,7 +54,7 @@ bio/weap/whoosh/3 BWHOOSH3
 bio/weap/whoosh/4 BWHOOSH4
 bio/weap/whoosh/5 BWHOOSH5
 
-$RANDOM bio/weap/whoosh
+$random bio/weap/whoosh
 {
 	bio/weap/whoosh/0
 	bio/weap/whoosh/1
@@ -160,6 +160,19 @@ $random bio/weap/microvulcan/fire
 	bio/weap/microvulcan/fire/0
 	bio/weap/microvulcan/fire/1
 	bio/weap/microvulcan/fire/2
+}
+
+bio/weap/minivulcan/fire/0 MINV_FR0
+bio/weap/minivulcan/fire/1 MINV_FR1
+bio/weap/minivulcan/fire/2 MINV_FR2
+bio/weap/minivulcan/fire/3 MINV_FR3
+
+$random bio/weap/minivulcan/fire
+{
+	bio/weap/minivulcan/fire/0
+	bio/weap/minivulcan/fire/1
+	bio/weap/minivulcan/fire/2
+	bio/weap/minivulcan/fire/3
 }
 
 // Turbovulcan

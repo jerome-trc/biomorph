@@ -38,6 +38,8 @@ Electric arc puff sprites are courtesy of the Librequake Project, id Software LL
 
 MGUNB0 and SHOTB0 are edits of the work of id Software LLC.
 
+[Minivulcan sprites](https://www.realm667.com/en/armory-mainmenu-157-97317/doom-style-mainmenu-158-94349/1364-heavy-chaingun) are courtesy of Eriance, with edits by Realm667 user Z86.
+
 Turbovulcan and Machine Gun HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
 Service Pistol and Pump Shotgun muzzle flashes are derived from the sheet at [this ZDoom forum post](https://forum.zdoom.org/viewtopic.php?t=37753#p718629) courtesy of forum user Sgt. Shivers.
@@ -86,6 +88,10 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 		- 1911C-1.wav (SVCP_FR0)
 		- 1911C-2.wav (SVCP_FR1)
 		- 1911C-3.wav (SVCP_FR2)
+		- Merc_H-1.wav (MINV_FR0)
+		- Merc_H-2.wav (MINV_FR1)
+		- Merc_H-3.wav (MINV_FR2)
+		- Merc_H-4.wav (MINV_FR3)
 		- Steyr-1.wav (TRBO_FR0)
 		- Steyr-2.wav (TRBO_FR1)
 		- Steyr-3.wav (TRBO_FR2)
