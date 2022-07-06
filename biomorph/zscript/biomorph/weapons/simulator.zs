@@ -1372,7 +1372,7 @@ class BIO_WeaponModSimulator : Thinker
 		return true;
 	}
 
-	bool IsFull() const
+	bool GraphIsFull() const
 	{
 		for (uint i = 1; i < Nodes.Size(); i++)
 		{

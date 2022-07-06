@@ -620,10 +620,13 @@
 
 	BIO_WMR_REQ_DAMAGEINC_1 = "\c[White]- One hit damage increase";
 	BIO_WMR_REQ_FIRETIMEDEC_1 = "\c[White]- One fire rate increase";
+	BIO_WMR_REQ_FIRETIMEDEC_2 = "\c[White]- Two fire rate increases";
+	BIO_WMR_REQ_FULLGRAPH = "\c[White]- Each node is filled with a gene";
 	BIO_WMR_REQ_MAGSIZEINC_1 = "\c[White]- One magazine size increase";
 	BIO_WMR_REQ_MAGSIZEINC_2 = "\c[White]- Two magazine size increases";
 	BIO_WMR_REQ_RELOADTIMEDEC_1 = "\c[White]- One reload time increase";
 	BIO_WMR_REQ_SHOTCOUNTINC_1 = "\c[White]- One shot count increase";
+	BIO_WMR_REQ_SPOOLING = "\c[White]- Affected by a %s";
 	BIO_WMR_REQ_SPREADDEC_1 = "\c[White]- One spread decrease";
 
 // Menu, weapon modification ///////////////////////////////////////////////////

@@ -6,3 +6,9 @@ BIO_WMR_VolleyGun
 
 BIO_WMR_DualMachineGun
 	BIO_MachineGun
+
+BIO_WMR_Turbovulcan
+	BIO_Microvulcan
+
+BIO_WMR_Minivulcan
+	BIO_Microvulcan

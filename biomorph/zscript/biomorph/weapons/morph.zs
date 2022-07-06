@@ -111,3 +111,54 @@ class BIO_WMR_DualMachineGun : BIO_WeaponMorphRecipe
 		);
 	}
 }
+
+class BIO_WMR_Turbovulcan : BIO_WeaponMorphRecipe
+{
+	final override class<BIO_Weapon> Output() const
+	{
+		return 'BIO_Turbovulcan';
+	}
+
+	final override bool Eligible(readOnly<BIO_WeaponModSimulator> sim) const
+	{
+		return
+			sim.ContainsGeneOfType('BIO_MGene_Spooling') &&
+			sim.HasModifierWithCoreFlags(BIO_WCMF_FIRETIME_DEC, 2) &&
+			sim.GraphIsFull();
+	}
+
+	final override string RequirementString() const
+	{
+		return String.Format(
+			"%s\n%s\n%s",
+			StringTable.Localize("$BIO_WMR_REQ_FULLGRAPH"),
+			String.Format(
+				StringTable.Localize("$BIO_WMR_REQ_SPOOLING"),
+				GetDefaultByType('BIO_MGene_Spooling').GetTag()
+			),
+			StringTable.Localize("$BIO_WMR_REQ_FIRETIMEDEC_2")
+		);
+	}
+}
+
+class BIO_WMR_Minivulcan : BIO_WeaponMorphRecipe
+{
+	final override class<BIO_Weapon> Output() const
+	{
+		return 'BIO_Minivulcan';
+	}
+
+	final override bool Eligible(readOnly<BIO_WeaponModSimulator> sim) const
+	{
+		return
+			sim.HasModifierWithPipelineFlags(BIO_WPMF_DAMAGE_INC);
+	}
+
+	final override string RequirementString() const
+	{
+		return String.Format(
+			"%s",
+			StringTable.Localize("$BIO_WMR_REQ_DAMAGEINC_1")
+		);
+	}
+}
