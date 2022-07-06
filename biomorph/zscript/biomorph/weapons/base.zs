@@ -484,7 +484,7 @@ extend class BIO_Weapon
 	}
 }
 
-// Utility member functions.
+// Accessor member functions.
 extend class BIO_Weapon
 {
 	bool Uninitialised() const
@@ -882,9 +882,11 @@ extend class BIO_Weapon
 	}
 
 	readOnly<BIO_Weapon> AsConst() const { return self; }
+}
 
-	// Non-const ///////////////////////////////////////////////////////////////
-
+// Non-const member functions.
+extend class BIO_Weapon
+{
 	// Prepare this weapon for another call to `SetDefaults()`.
 	// Has no effect whatsoever on the mod graph, or `AmmoGive` values.
 	virtual void Reset()
