@@ -149,7 +149,7 @@
 	BIO_DMGFUNC_SINGLE =
 		"\c[MidGrey]Damage: %s%d";
 	BIO_DMGFUNC_NOOP =
-		"\c[MidGrey]Deals no damage";
+		"\c[MidGrey]Deals no direct hit damage";
 
 // Weapons (tags, obituaries, pickup strings) //////////////////////////////////
 
