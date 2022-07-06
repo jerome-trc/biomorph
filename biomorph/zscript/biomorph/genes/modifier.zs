@@ -426,6 +426,29 @@ class BIO_MGene_SplashToHit : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_Spooling : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_SPOOLING_TAG";
+		Inventory.Icon 'GENTC0';
+		Inventory.PickupMessage "$BIO_MGENE_SPOOLING_PKUP";
+		BIO_Gene.Limit 1;
+		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_SPOOLING_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_Spooling';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+	}
+
+	States
+	{
+	Spawn:
+		GENT C 6;
+		#### # 6 Bright Light("BIO_MutaGene_Orange");
+		Loop;
+	}
+}
+
 class BIO_MGene_Spread : BIO_ModifierGene
 {
 	Default

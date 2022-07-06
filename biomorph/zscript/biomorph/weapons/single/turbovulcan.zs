@@ -2,6 +2,8 @@ class BIO_Turbovulcan : BIO_Weapon
 {
 	Default
 	{
+		+BIO_WEAPON.SPOOLING
+
 		Tag "$BIO_TURBOVULCAN_TAG";
 
 		Inventory.Icon 'TRBOZ0';
@@ -44,7 +46,7 @@ class BIO_Turbovulcan : BIO_Weapon
 		TRBO F 1 A_BIO_SetFireTime(4);
 		TRBO G 1 A_BIO_SetFireTime(5);
 		TRBO H 1 A_BIO_SetFireTime(6);
-	FireCycle:
+	FireSpooled:
 		TNT1 A 0
 		{
 			if (!invoker.SufficientAmmo())
@@ -122,13 +124,25 @@ class BIO_Turbovulcan : BIO_Weapon
 		);
 
 		FireTimeGroups.Push(
-			StateTimeGroupFromRange('SpoolUp', 'FireCycle', "$BIO_SPOOLUP")
+			StateTimeGroupFromRange(
+				'SpoolUp', 'FireSpooled',
+				"$BIO_SPOOLUP",
+				designation: BIO_STGD_SPOOLUP
+			)
 		);
 		FireTimeGroups.Push(
-			StateTimeGroupFrom('FireCycle', "$BIO_PER2ROUNDS")
+			StateTimeGroupFrom(
+				'FireSpooled',
+				"$BIO_PER2ROUNDS",
+				designation: BIO_STGD_FIRESPOOLED
+			)
 		);
 		FireTimeGroups.Push(
-			StateTimeGroupFrom('SpoolDown', "$BIO_SPOOLDOWN")
+			StateTimeGroupFrom(
+				'SpoolDown',
+				"$BIO_SPOOLDOWN",
+				designation: BIO_STGD_SPOOLDOWN
+			)
 		);
 	}
 }

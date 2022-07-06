@@ -100,6 +100,7 @@ class BIO_Weapon : DoomWeapon abstract
 	property MinAmmoReserves: MinAmmoReserve1, MinAmmoReserve2;
 
 	protected uint DynFlags;
+	flagdef Spooling: DynFlags, 0;
 
 	Array<BIO_WeaponPipeline> Pipelines;
 	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
@@ -234,67 +235,6 @@ class BIO_Weapon : DoomWeapon abstract
 	{
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].RenderOverlay(context);
-	}
-
-	// Weapon-building helpers /////////////////////////////////////////////////
-
-	// Shortcut for `BIO_StateTimeGroup::FromState()`.
-	protected BIO_StateTimeGroup StateTimeGroupFrom(
-		statelabel lbl, string tag = "", bool melee = false) const
-	{
-		state s = FindState(lbl);
-		if (s == null)
-		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"`StateTimeGroupFrom()` Failed to find a state by label.", lbl);
-			return null;
-		}
-
-		return BIO_StateTimeGroup.FromState(s, tag, melee);
-	}
-
-	// Shortcut for `BIO_StateTimeGroup::FromRange()`.
-	protected BIO_StateTimeGroup StateTimeGroupFromRange(
-		statelabel from, statelabel to, string tag = "", bool melee = false) const
-	{
-		state f = FindState(from);
-		if (f == null)
-		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"`StateTimeGroupFromRange()` Failed to find state %s.", from);
-			return null;
-		}
-
-		state t = FindState(to);
-		if (t == null)
-		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"`StateTimeGroupFromRange()` Failed to find state %s.", to);
-			return null;
-		}
-
-		return BIO_StateTimeGroup.FromStateRange(f, t, tag, melee);
-	}
-
-	// Shortcut for `BIO_StateTimeGroup::FromArray()`.
-	protected BIO_StateTimeGroup StateTimeGroupFromArray(
-		in out Array<statelabel> labels, string tag = "", bool melee = false) const
-	{
-		Array<state> arr;
-
-		for (uint i = 0; i < labels.Size(); i++)
-		{
-			state s = FindState(labels[i]);
-			if (s == null)
-			{
-				Console.Printf(Biomorph.LOGPFX_ERR ..
-				"`StateTimeGroupFromArray()` Failed to find state %s.", labels[i]);
-			}
-			else
-				arr.Push(s);
-		}
-
-		return BIO_StateTimeGroup.FromStates(arr, tag, melee);
 	}
 }
 
@@ -645,6 +585,16 @@ extend class BIO_Weapon
 		return null;
 	}
 
+	BIO_StateTimeGroup GetFireTimeGroupByDesignation(
+		BIO_StateTimeGroupDesignation designation) const
+	{
+		for (uint i = 0; i < FireTimeGroups.Size(); i++)
+			if (FireTimeGroups[i].Designation == designation)
+				return FireTimeGroups[i];
+
+		return null;
+	}
+
 	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
 
 	// Returns a valid result even if the weapon feeds from reserves.
@@ -950,6 +900,8 @@ extend class BIO_Weapon
 		bNoAutoAim = Default.bNoAutoAim;
 		bMeleeWeapon = Default.bMeleeWeapon;
 
+		bSpooling = Default.bSpooling;
+
 		AmmoType1 = Default.AmmoType1;
 		AmmoType2 = Default.AmmoType2;
 		AmmoUse1 = Default.AmmoUse1;
@@ -1123,6 +1075,101 @@ extend class BIO_Weapon
 	{
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].OnKill(self, killed, inflictor);
+	}
+}
+
+// Weapon-building helpers.
+extend class BIO_Weapon
+{
+	BIO_StateTimeGroup StateTimeGroupFrom(
+		statelabel label,
+		string tag = "",
+		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
+		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
+	) const
+	{
+		state s = FindState(label);
+
+		if (s == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"`BIO_Weapon::StateTimeGroupFrom()` "
+				"failed to find a state by label. (%s)",
+				GetClassName()
+			);
+			return null;
+		}
+
+		return BIO_StateTimeGroup.FromState(s, tag, designation, flags);
+	}
+
+	BIO_StateTimeGroup StateTimeGroupFromRange(
+		statelabel start,
+		statelabel end,
+		string tag = "",
+		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
+		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
+	) const
+	{
+		state s = FindState(start);
+
+		if (s == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"`BIO_Weapon::StateTimeGroupFromRange()` "
+				"failed to find a state given a `start` label. (%s)",
+				GetClassName()
+			);
+			return null;
+		}
+
+		state e = FindState(end);
+
+		if (e == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"`BIO_Weapon::StateTimeGroupFromRange()` "
+				"failed to find a state given an `end` label. (%s)",
+				GetClassName()
+			);
+			return null;
+		}
+
+		return BIO_StateTimeGroup.FromStateRange(s, e, tag, designation, flags);
+	}
+
+	BIO_StateTimeGroup StateTimeGroupFromArray(
+		Array<statelabel> labels,
+		string tag = "",
+		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
+		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
+	) const
+	{
+		Array<state> stateptrs;
+
+		for (uint i = 0; i < labels.Size(); i++)
+		{
+			state s = FindState(labels[i]);
+
+			if (s == null)
+			{
+				Console.Printf(
+					Biomorph.LOGPFX_ERR ..
+					"`BIO_Weapon::StateTimeGroupFromArray()` "
+					"failed to find state at index %d. (%s)",
+					i, GetClassName()
+				);
+			}
+			else
+			{
+				stateptrs.Push(s);
+			}
+		}
+
+		return BIO_StateTimeGroup.FromStates(stateptrs, tag, designation, flags);
 	}
 }
 

@@ -314,6 +314,8 @@
 
 	BIO_WMOD_INCOMPAT_TEMPLATE = "\c[White]%s\n\n\c[Yellow]Incompatible:\c[Gold]\n%s";
 
+	BIO_WMOD_INCOMPAT_ALREADYSPOOLING =
+		"This weapon already has to spool up to fire.";
 	BIO_WMOD_INCOMPAT_AMMOLESS = "This weapon doesn't use ammunition.";
 	BIO_WMOD_INCOMPAT_ETMF =
 		"This weapon doesn't use ammunition,\n"
@@ -340,6 +342,7 @@
 		"This weapon has no modifiable reload timings.";
 	BIO_WMOD_INCOMPAT_NOSHELLPAYLOAD = "This weapon doesn't fire shotshells.";
 	BIO_WMOD_INCOMPAT_NOSPLASH = "This weapon deals no splash damage.";
+	BIO_WMOD_INCOMPAT_NOSPOOL = "This weapon can't be spooled.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
 	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =
 		"This weapon has already been modified to add projectile gravity.";
@@ -429,6 +432,14 @@
 		"\c[White]50% splash radius reduction per application";
 	BIO_WMOD_SPLASHTOHIT_DESC =
 		"\c[White]%d damage converted; radius reduced by %d%s";
+
+	BIO_WMOD_SPOOLING_SUMM =
+		"\c[Brick]Weapon has to be spooled before firing\n"
+		"\c[Green]Dramatic increase in fire rate";
+	BIO_WMOD_SPOOLING_DESC =
+		"\c[Brick]Weapon has to be spooled before firing";
+	BIO_WMOD_SPOOLING_NOBENEFIT =
+		"\c[Gold]Note: no fire rate benefit can be gained from this weapon!";
 
 	BIO_WMOD_SPREAD_SUMM =
 		"\c[Green]Reduces firing spread";
@@ -556,6 +567,9 @@
 
 	BIO_MGENE_SPLASHTOHIT_TAG = "\c[MGene]Shaped Charge\c[White] Gene";
 	BIO_MGENE_SPLASHTOHIT_PKUP = "Collected a %s.";
+
+	BIO_MGENE_SPOOLING_TAG = "\c[MGene]Rotary Turbocharge\c[White] Gene";
+	BIO_MGENE_SPOOLING_PKUP = "Collected a %s.";
 
 	BIO_MGENE_SPREAD_TAG = "\c[MGene]Accurised\c[White] Gene";
 	BIO_MGENE_SPREAD_PKUP = "Collected an %s.";

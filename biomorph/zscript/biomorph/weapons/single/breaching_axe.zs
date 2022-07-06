@@ -83,10 +83,10 @@ class BIO_BreachingAxe : BIO_Weapon
 		);
 
 		FireTimeGroups.Push(
-			StateTimeGroupFrom('Fire', "$BIO_CHARGE", melee: true)
+			StateTimeGroupFrom('Fire', "$BIO_CHARGE", flags: BIO_STGF_MELEE)
 		);
 		FireTimeGroups.Push(
-			StateTimeGroupFrom('Swing', "$BIO_SWING", melee: true)
+			StateTimeGroupFrom('Swing', "$BIO_SWING", flags: BIO_STGF_MELEE)
 		);
 
 		let afx = new('BIO_WAfx_BerserkDamage');

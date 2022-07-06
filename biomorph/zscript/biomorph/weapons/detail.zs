@@ -95,10 +95,32 @@ class BIO_EnergyToMatterPowerup : Powerup abstract
 	}
 }
 
+// Used to provide semantic meaning to an STG. If a constant isn't here,
+// you don't need to worry that it may need to be applied.
+enum BIO_StateTimeGroupDesignation : uint8
+{
+	BIO_STGD_NONE,
+	BIO_STGD_COOLDOWN,
+	BIO_STGD_SPOOLUP,
+	BIO_STGD_FIRESPOOLED,
+	BIO_STGD_SPOOLDOWN
+}
+
+enum BIO_StateTimeGroupFlags : uint8
+{
+	BIO_STGF_NONE = 0,
+	// If set, this STG isn't shown to the user anywhere.
+	BIO_STGF_HIDDEN = 1 << 0,
+	// Changes how a fire-time group is presented to the user
+	// ("attack time" rather than "fire time").
+	BIO_STGF_MELEE = 1 << 1
+}
+
 class BIO_StateTimeGroup
 {
+	BIO_StateTimeGroupDesignation Designation;
+	BIO_StateTimeGroupFlags Flags;
 	string Tag;
-	bool Melee;
 	Array<uint8> Times, Minimums;
 
 	uint TotalTime() const
@@ -131,6 +153,16 @@ class BIO_StateTimeGroup
 			ret += Minimums[i];
 
 		return ret;
+	}
+
+	bool IsAuxiliary() const
+	{
+		return Designation > BIO_STGD_NONE;
+	}
+
+	bool IsHidden() const
+	{
+		return Flags & BIO_STGF_HIDDEN;
 	}
 
 	void Modify(int modifier)
@@ -247,40 +279,54 @@ class BIO_StateTimeGroup
 
 	// Add the tic times from all states in a contiguous sequence from `basis`
 	// to this group. Beware that this will skip labels, and treats
-	// `Goto MyState; MyState:` as contiguous. `tag` should be a string ID.
+	// `Goto MyState; MyState:` as contiguous.
 	static BIO_StateTimeGroup FromState(
-		state basis, string tag = "", bool melee = false)
+		state basis,
+		string tag = "",
+		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
+		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
+	)
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
-		ret.Melee = melee;
+		ret.Designation = designation;
+		ret.Flags = flags;
 		ret.Populate(basis);
 		return ret;
 	}
 
-	// `tag` should be a string ID.
-	static BIO_StateTimeGroup FromStates(
-		Array<state> basisArr, string tag = "", bool melee = false)
+	// Same as `FromState()`, but stops adding times upon arriving at `end`.
+	static BIO_StateTimeGroup FromStateRange(
+		state start,
+		state end,
+		string tag = "",
+		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
+		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
+	)
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
-		ret.Melee = melee;
-
-		for (uint i = 0; i < basisArr.Size(); i++)
-			ret.Populate(basisArr[i]);
-
+		ret.Designation = designation;
+		ret.Flags = flags;
+		ret.RangePopulate(start, end);
 		return ret;
 	}
 
-	// Does the same thing as `FromState()`, but stops adding times 
-	// upon arriving at `to`. `tag` should be a string ID.
-	static BIO_StateTimeGroup FromStateRange(
-		state from, state to, string tag = "", bool melee = false)
+	static BIO_StateTimeGroup FromStates(
+		Array<state> stateptrs,
+		string tag = "",
+		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
+		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
+	)
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
-		ret.Melee = melee;
-		ret.RangePopulate(from, to);
+		ret.Designation = designation;
+		ret.Flags = flags;
+
+		for (uint i = 0; i < stateptrs.Size(); i++)
+			ret.Populate(stateptrs[i]);
+
 		return ret;
 	}
 }
