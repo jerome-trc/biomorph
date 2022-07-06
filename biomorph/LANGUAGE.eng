@@ -299,7 +299,7 @@
 	BIO_BLACKHOLE_PKUP = "black holes";
 
 	BIO_HDF_ENEMYHEALTHDMG = "\c[White]%.1f%%\c[MidGrey] of enemy health added to damage";
-	BIO_HDF_DEMONSLAYER = "\c[White]%%%d damage\c[MidGrey] to Legendary monsters";
+	BIO_HDF_DEMONSLAYER = "\c[White]+%d%% damage\c[MidGrey] to Legendary monsters";
 
 	BIO_PLDF_EXPLODE_SPLASH =
 		"\c[MidGrey]Splash: %s%d \c[MidGrey]damage, %s%d \c[MidGrey]radius";
@@ -366,8 +366,8 @@
 	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]20% of minimum damage added";
 	BIO_WMOD_DAMAGEADD_DESC = "\c[White]Damage%s: \c[Green]+%d";
 
-	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]400% damage\c[White] dealt to Legendary monsters";
-	BIO_WMOD_DEMONSLAYER_DESC = "\c[Green]%d%% damage\c[White] dealt to Legendary monsters";
+	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]+100% damage\c[White] dealt to Legendary monsters";
+	BIO_WMOD_DEMONSLAYER_DESC = "\c[Green]+%d%% damage\c[White] dealt to Legendary monsters";
 
 	BIO_WMOD_ETMF_SUMM =
 		"\c[White]Change to consuming cells for a few seconds of free firing";

@@ -167,7 +167,7 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 	{
 		return String.Format(
 			StringTable.Localize("$BIO_WMOD_DEMONSLAYER_DESC"),
-			400 * context.NodeCount
+			context.NodeCount * 100
 		);
 	}
 
@@ -189,40 +189,30 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 	final override void InvokeSlow(BIO_Projectile proj,
 		Actor target, in out int damage, name dmgType) const
 	{
-		if (target == null) return;
+		if (target == null)
+			return;
 
 		if (BIO_Utils.TryFindInv(target, 'LDLegendaryMonsterToken'))
-		{
-			damage *= (4 * Count);
-			proj.DamageType = 'DemonSlayer';
-			proj.DamageMultiply = (4.0 * float(Count));
-		}
+			damage *= (Count + 1);
 	}
 
 	final override void InvokeFast(BIO_FastProjectile proj,
 		Actor target, in out int damage, name dmgType) const
 	{
-		if (target == null) return;
+		if (target == null)
+			return;
 
 		if (BIO_Utils.TryFindInv(target, 'LDLegendaryMonsterToken'))
-		{
-			damage *= (4 * Count);
-			proj.DamageType = 'DemonSlayer';
-			proj.DamageMultiply = (4.0 * float(Count));
-		}
+			damage *= (Count + 1);
 	}
 
 	final override void InvokePuff(BIO_Puff puff) const
 	{
-		if (puff.Tracer == null) return;
+		if (puff.Tracer == null)
+			return;
 
 		if (BIO_Utils.TryFindInv(puff.Tracer, 'LDLegendaryMonsterToken'))
-		{
-			int multi = (Count - 1) * 4;
-			multi += 3;
-			puff.Tracer.DamageMObj(puff, null, puff.Damage * multi, 'DemonSlayer');
-			puff.DamageMultiply = (4.0 * float(Count));
-		}
+			puff.Tracer.DamageMObj(puff, null, puff.Damage * Count, puff.DamageType);
 	}
 
 	final override BIO_HitDamageFunctor Copy() const
@@ -233,8 +223,7 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 	final override void Summary(in out Array<string> strings) const
 	{
 		strings.Push(String.Format(
-			StringTable.Localize("$BIO_HDF_DEMONSLAYER"),
-			Count * 400
+			StringTable.Localize("$BIO_HDF_DEMONSLAYER"), Count * 100
 		));
 	}
 }
