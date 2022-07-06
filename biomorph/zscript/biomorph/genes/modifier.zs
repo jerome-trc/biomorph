@@ -291,6 +291,29 @@ class BIO_MGene_ProjGravity : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_ProxMine : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_PROXMINE_TAG";
+		Inventory.Icon 'GENNB0';
+		Inventory.PickupMessage "$BIO_MGENE_PROXMINE_PKUP";
+		BIO_Gene.Limit 1;
+		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_PROXMINE_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_ProxMine';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+	}
+
+	States
+	{
+	Spawn:
+		GENN B 6;
+		#### # 6 Bright Light("BIO_MutaGene_White");
+		Loop;
+	}
+}
+
 class BIO_MGene_RechamberUp : BIO_ModifierGene
 {
 	Default

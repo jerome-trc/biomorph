@@ -209,3 +209,7 @@ $limit bio/weap/arccaster/fire 1
 // Payloads ////////////////////////////////////////////////////////////////////
 
 bio/puff/elecarc/hit ELECPUFF
+
+bio/proj/proxmine/fire PROXFIRE
+bio/proj/proxmine/beep PROXBEEP
+bio/proj/proxmine/hit PROXHIT

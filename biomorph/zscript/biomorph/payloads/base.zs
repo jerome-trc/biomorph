@@ -2,6 +2,11 @@
 
 mixin class BIO_PayloadCommon
 {
+	private meta uint MetaFlags;
+
+	// The payload is fired through either a 40mm or rocket barrel.
+	flagdef TubeBased: MetaFlags, 0;
+
 	meta string PluralTag;
 	property PluralTag: PluralTag;
 

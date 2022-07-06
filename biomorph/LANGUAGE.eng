@@ -349,6 +349,8 @@
 	BIO_WMOD_INCOMPAT_NOSPLASH = "This weapon deals no splash damage.";
 	BIO_WMOD_INCOMPAT_NOSPOOL = "This weapon can't be spooled.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
+	BIO_WMOD_INCOMPAT_NOTTUBEBASED =
+		"None of this weapon's firing modes emit rockets or grenades.";
 	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =
 		"This weapon has already been modified to add projectile gravity.";
 	BIO_WMOD_INCOMPAT_SPLASHTOHIT =
@@ -413,6 +415,9 @@
 	BIO_WMOD_PROJGRAVITY_SUMM =
 		"\c[White]Projectile payloads are affected by gravity\n"
 		"\c[Green]+20% damage to affected projectiles";
+
+	BIO_WMOD_PROXMINE_SUMM =
+		"\c[White]Change from firing rockets/grenades to bouncy proximity mines\n";
 
 	BIO_WMOD_RECHAMBERUP_SUMM =
 		"\c[Brick]Double ammo usage\c[White] but \c[Green]double damage";
@@ -560,6 +565,9 @@
 
 	BIO_MGENE_PROJGRAVITY_TAG = "\c[MGene]Dense Payload\c[White] Gene\c-";
 	BIO_MGENE_PROJGRAVITY_PKUP = "Collected a %s.";
+
+	BIO_MGENE_PROXMINE_TAG = "\c[MGene]Refit: Proximity Mine\c[White] Gene\c-";
+	BIO_MGENE_PROXMINE_PKUP = "Collected a %s.";
 
 	BIO_MGENE_RECHAMBERUP_TAG = "\c[MGene]Upscale Rechamber\c[White] Gene\c-";
 	BIO_MGENE_RECHAMBERUP_PKUP = "Collected an %s.";

@@ -40,6 +40,8 @@ MGUNB0 and SHOTB0 are edits of the work of id Software LLC.
 
 [Minivulcan sprites](https://www.realm667.com/en/armory-mainmenu-157-97317/doom-style-mainmenu-158-94349/1364-heavy-chaingun) are courtesy of Eriance, with edits by Realm667 user Z86.
 
+Proximity mine sprites are courtesy of Mechadon and 3D Realms Entertainment ApS.
+
 Turbovulcan and Machine Gun HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
 
 Service Pistol and Pump Shotgun muzzle flashes are derived from the sheet at [this ZDoom forum post](https://forum.zdoom.org/viewtopic.php?t=37753#p718629) courtesy of forum user Sgt. Shivers.
@@ -123,6 +125,8 @@ DRY_BAL0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://fre
 ELECPUFF is courtesy of the Librequake Project.
 
 NRG2MATR (edited for a 200% tempo increase) is derived from ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/), which is licensed under Creative Commons Attribution 3.0 Unported.
+
+PROXBEEP, PROXFIRE, and PROXHIT are courtesy of id Software LLC ([as cited by Realm667 user Ghastly_dragon](https://www.realm667.com/index.php/en/armory-mainmenu-157-97317/doom-style-mainmenu-158-94349/941-prox-launcher#info)).
 
 RARELOOT is derived from ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/), licensed under Creative Commons 0.
 
