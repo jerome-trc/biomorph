@@ -1356,15 +1356,15 @@ extend class BIO_Weapon
 	}
 
 	protected action void A_BIO_SetFireTime(
-		uint ndx, uint grp = 0, int modifier = 0)
+		uint index, uint group = 0, int modifier = 0)
 	{
-		A_SetTics(Max(modifier + invoker.FireTimeGroups[grp].Times[ndx], 0));
+		A_SetTics(Max(modifier + invoker.FireTimeGroups[group].Times[index], 0));
 	}
 
 	protected action void A_BIO_SetReloadTime(
-		uint ndx, uint grp = 0, int modifier = 0)
+		uint index, uint group = 0, int modifier = 0)
 	{
-		A_SetTics(modifier + invoker.ReloadTimeGroups[grp].Times[ndx]);
+		A_SetTics(Max(modifier + invoker.ReloadTimeGroups[group].Times[index], 0));
 	}
 
 	protected action void A_BIO_Recoil(class<BIO_RecoilThinker> recoil_t,
