@@ -415,7 +415,29 @@ extend class BIO_Global
 	clearscope uint GetMonsterValue(Actor mons) const
 	{
 		let ret = uint(Max(mons.Default.Health, mons.GetMaxHealth(true)));
-		// TODO: Refine
+
+		if (mons.bAlwaysFast)
+			ret *= 1.2;
+
+		if (mons.bJumpDown)
+			ret *= 1.2;
+
+		if (mons.bMissileMore)
+			ret *= 1.2;
+
+		if (mons.bMissileEvenMore)
+			ret *= 1.2;
+
+		if (mons.bNoInfighting)
+			ret *= 1.2;
+
+		if (mons.bNoTarget)
+			ret *= 1.2;
+
+		if (mons.bQuickToRetaliate)
+			ret *= 1.2;
+
+		// TODO: Refine further
 		return ret;
 	}
 
