@@ -264,10 +264,7 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 		if (!ppl.DealsAnyDamage())
 			return -1;
 
-		let ammoUse = !ppl.SecondaryAmmo ? weap.AmmoUse1 : weap.AmmoUse2;
-		let spm = weap.ShotsPerMagazine(ppl.SecondaryAmmo);
-
-		if ((ammoUse * 2) > spm)
+		if (weap.ShotsPerMagazine(ppl.SecondaryAmmo) < 2)
 			return 1;
 
 		return 0;
