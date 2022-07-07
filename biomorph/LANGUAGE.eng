@@ -433,7 +433,7 @@
 
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
-	BIO_WMOD_SHELLTOSLUG_SUMM = "Change from firing shells to solid slugs";
+	BIO_WMOD_SHELLTOSLUG_SUMM = "\c[White]Change from firing shells to solid slugs";
 
 	BIO_WMOD_SMARTAIM_SUMM = "\c[Green]Smart aim functionality";
 
