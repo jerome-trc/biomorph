@@ -27,7 +27,6 @@ class BIO_Global : Thinker
 		ret.PopulateMutagenLootTable();
 		ret.PopulateGeneLootTable();
 		ret.PopulateWeaponMorphCache();
-		ret.PopulateZeroValueMonsterCache();
 
 		for (uint i = 0; i < __BIO_WSCAT_COUNT__; i++)
 		{
@@ -394,6 +393,11 @@ extend class BIO_Global
 {
 	const LOOT_VALUE_THRESHOLD = 800;
 
+	// Collection of monster types which don't contribute to the loot value buffer.
+	// Ensures there's no incentive to farm Pain Elementals or The Hungry, etc.
+	// It's context-sensitive; monsters only get added if the mod which
+	// defines them has been loaded.
+	// (Currently unused! Never gets written to or read from. May be used later.)
 	private Array<class<Actor> > ZeroValueMonsters;
 	uint LootValueBuffer;
 
@@ -410,18 +414,49 @@ extend class BIO_Global
 
 	clearscope uint GetMonsterValue(Actor mons) const
 	{
-		if (ZeroValueMonsters.Find(mons.GetClass()) != ZeroValueMonsters.Size())
-			return 0;
-
 		let ret = uint(Max(mons.Default.Health, mons.GetMaxHealth(true)));
 		// TODO: Refine
 		return ret;
 	}
 
+	private void PushZeroValueMonster(name typename)
+	{
+		ZeroValueMonsters.Push((class<Actor>)(typename));
+	}
+
 	private void PopulateZeroValueMonsterCache()
 	{
-		ZeroValueMonsters.Push((class<Actor>)('LostSoul'));
-		// TODO: Support for however many monster packs
+		// Acknowledge the possibility of mix-n-match involvement here
+
+		PushZeroValueMonster('LostSoul');
+
+		if (BIO_Utils.DoomRLMonsterPack())
+		{
+			PushZeroValueMonster('RLArmageddonLostSoul'); // a.k.a. unlimited teeth works
+			PushZeroValueMonster('RLCyberneticLostSoul'); // a.k.a. Hellmine
+			PushZeroValueMonster('RLLostSoul');
+			PushZeroValueMonster('RLNightmareLostSoulNPE');
+		}
+
+		if (BIO_Utils.IronSnail())
+		{
+			PushZeroValueMonster('BigEye');
+		}
+
+		if (BIO_Utils.PandemoniaMonsterPack())
+		{
+			PushZeroValueMonster('ChaosUmbra');
+			PushZeroValueMonster('NewLostSoul');
+			PushZeroValueMonster('Phantasm');
+		}
+
+		if (BIO_Utils.Rampancy())
+		{
+			PushZeroValueMonster('Robot_GunTurret');
+			PushZeroValueMonster('Robot_ScoutDrone');
+		}
+
+		// TODO: More support for more monster packs
 	}
 }
 

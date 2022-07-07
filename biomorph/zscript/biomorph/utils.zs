@@ -386,101 +386,9 @@ extend class BIO_Utils
 
 // Compatibility helpers ///////////////////////////////////////////////////////
 
+// Functions for checking which level set is being played.
 extend class BIO_Utils
 {
-	static class<Inventory> ExtInv(name tName)
-	{
-		class<Inventory> ret = tName;
-		return ret;
-	}
-
-	static Inventory TryFindInv(Actor a, name tName)
-	{
-		class<Inventory> t = tName;
-		if (t == null) return null;
-		return a.FindInventory(t);
-	}
-
-	static play void TryGiveInv(Actor a, name tName, int amt, bool giveCheat = false)
-	{
-		class<Inventory> t = tName;
-		if (t == null) return;
-		a.GiveInventory(t, 1, giveCheat);
-	}
-
-	static play bool TryA_GiveInv(Actor a, name tName, int amount = 0,
-		int giveTo = AAPTR_DEFAULT)
-	{
-		class<Inventory> t = tName;
-		if (t == null) return false;
-		return Actor.DoGiveInventory(a, false, t, amount, giveTo);
-	}
-
-	static play bool, Actor TrySpawnEx(Actor source, name typeName,
-		double xofs = 0.0, double yofs = 0.0, double zofs = 0.0,
-		double xvel = 0.0, double yvel = 0.0, double zvel = 0.0,
-		double angle = 0.0, int flags = 0, int failchance = 0, int tid = 0)
-	{
-		class<Actor> t = typeName;
-		if (t == null) return false, null;
-
-		bool ret0 = false;
-		Actor ret1 = null;
-
-		[ret0, ret1] = source.A_SpawnItemEx(
-			t, xofs, yofs, zofs, xvel, yvel, zvel, angle, flags, failchance, tid);
-
-		return ret0, ret1;
-	}
-
-	static play bool TryCheckInv(Actor a, name typeName, int amt,
-		statelabel label, int owner = AAPTR_DEFAULT)
-	{
-		class<Inventory> t = typeName;
-		if (t == null) return null;
-		return a.CheckInventory(t, amt, owner);
-	}
-
-	static play int TryCountInv(Actor a, name typeName, int ptr_select = AAPTR_DEFAULT)
-	{
-		class<Inventory> t = typeName;
-		if (t == null) return 0;
-		return a.CountInv(t, ptr_select);
-	}
-
-	static bool DoomRLMonsterPack()
-	{
-		name mpt_tn = 'RLMonsterpackThingo';
-		class<Actor> mpt_t = mpt_tn;
-		return mpt_t != null;
-	}
-
-	static play void DRLMDangerLevel(uint danger)
-	{
-		if (!DoomRLMonsterPack())
-			return;
-
-		if (BIO_debug && danger > 0)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_DEBUG ..
-				"Increasing DRLA danger level by %d.", danger
-			);
-		}
-
-		name rldl_tn = 'RLDangerLevel';
-
-		if (Players[0].MO != null)
-			Players[0].MO.GiveInventory(rldl_tn, danger);
-	}
-
-	static bool LegenDoom()
-	{
-		name ldToken_tn = 'LDLegendaryMonsterToken';
-		class<Inventory> ldToken_t = ldToken_tn;
-		return ldToken_t != null;
-	}
-
 	static bool Lexicon()
 	{
 		name lxvg_tn = 'Lexicon_VoteGun';
@@ -654,6 +562,137 @@ extend class BIO_Utils
 				return true;
 
 		return false;
+	}
+}
+
+// Functions for checking which monster pack is being played.
+extend class BIO_Utils
+{
+	// a.k.a. a sea of API-breaking changes waiting to happen
+
+	static bool ColourfulHell()
+	{
+		name tn = 'ColorTierIconCH';
+		class<Actor> t = tn;
+		return t != null;
+	}
+
+	static bool DoomRLMonsterPack()
+	{
+		name tn = 'RLMonsterpackThingo';
+		class<Actor> t = tn;
+		return t != null;
+	}
+
+	static play void DRLMDangerLevel(uint danger)
+	{
+		if (!DoomRLMonsterPack())
+			return;
+
+		if (BIO_debug && danger > 0)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_DEBUG ..
+				"Increasing DRLA danger level by %d.", danger
+			);
+		}
+
+		name rldl_tn = 'RLDangerLevel';
+
+		if (Players[0].MO != null)
+			Players[0].MO.GiveInventory(rldl_tn, danger);
+	}
+
+	static bool IronSnail()
+	{
+		name tn = 'Snail_Base';
+		class<Actor> t = tn;
+		return t != null;
+	}
+
+	static bool LegenDoom()
+	{
+		name tn = 'LDLegendaryMonsterToken';
+		class<Inventory> t = tn;
+		return t != null;
+	}
+
+	static bool PandemoniaMonsterPack()
+	{
+		name tn = 'PandMonsterReplacer';
+		class<RandomSpawner> t = tn;
+		return t != null;
+	}
+
+	static bool Rampancy()
+	{
+		name tn = 'Robot_Base';
+		class<Actor> t = tn;
+		return t != null;
+	}
+}
+
+// Functions for easily dealing with actor types which may not exist.
+extend class BIO_Utils
+{
+	static class<Inventory> ExtInv(name tName)
+	{
+		class<Inventory> ret = tName;
+		return ret;
+	}
+
+	static Inventory TryFindInv(Actor a, name tName)
+	{
+		class<Inventory> t = tName;
+		if (t == null) return null;
+		return a.FindInventory(t);
+	}
+
+	static play void TryGiveInv(Actor a, name tName, int amt, bool giveCheat = false)
+	{
+		class<Inventory> t = tName;
+		if (t == null) return;
+		a.GiveInventory(t, 1, giveCheat);
+	}
+
+	static play bool TryA_GiveInv(Actor a, name tName, int amount = 0,
+		int giveTo = AAPTR_DEFAULT)
+	{
+		class<Inventory> t = tName;
+		if (t == null) return false;
+		return Actor.DoGiveInventory(a, false, t, amount, giveTo);
+	}
+
+	static play bool, Actor TrySpawnEx(Actor source, name typeName,
+		double xofs = 0.0, double yofs = 0.0, double zofs = 0.0,
+		double xvel = 0.0, double yvel = 0.0, double zvel = 0.0,
+		double angle = 0.0, int flags = 0, int failchance = 0, int tid = 0)
+	{
+		class<Actor> t = typeName;
+		if (t == null) return false, null;
+
+		bool ret0 = false;
+		Actor ret1 = null;
+
+		[ret0, ret1] = source.A_SpawnItemEx(
+			t, xofs, yofs, zofs, xvel, yvel, zvel, angle, flags, failchance, tid);
+
+		return ret0, ret1;
+	}
+
+	static play bool TryCheckInv(Actor a, name typeName, int amt,
+		statelabel label, int owner = AAPTR_DEFAULT)
+	{
+		class<Inventory> t = typeName;
+		if (t == null) return null;
+		return a.CheckInventory(t, amt, owner);
+	}
+
+	static play int TryCountInv(Actor a, name typeName, int ptr_select = AAPTR_DEFAULT)
+	{
+		class<Inventory> t = typeName;
+		if (t == null) return 0;
+		return a.CountInv(t, ptr_select);
 	}
 }
 
