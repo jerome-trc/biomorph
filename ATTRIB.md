@@ -120,11 +120,13 @@ The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), 
 - BIOPAIN 0 through to 3 (all amplified, 0 slowed down, 1 to 3 sped up) (["Heartbeat, Regular, Single, 01-01, LOOP.wav"](https://freesound.org/people/InspectorJ/sounds/485076/))
 - SUPRLOOT (["Wind Chime, Gamelon Gong, A.wav"](https://freesound.org/people/InspectorJ/sounds/411090/))
 
-DRY_BAL0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), which is licensed under Creative Commons 0.
+BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people/Slave2theLight/sounds/157023/) by freesound user [Slave2theLight](https://freesound.org/people/Slave2theLight), licensed under the Attribution 4.0 License.
+
+DRY_BAL0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), licensed under Creative Commons 0.
 
 ELECPUFF is courtesy of the Librequake Project.
 
-NRG2MATR (edited for a 200% tempo increase) is derived from ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/), which is licensed under Creative Commons Attribution 3.0 Unported.
+NRG2MATR (edited for a 200% tempo increase) is derived from ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/), licensed under Creative Commons Attribution 3.0 Unported.
 
 PROXBEEP, PROXFIRE, and PROXHIT are courtesy of id Software LLC ([as cited by Realm667 user Ghastly_dragon](https://www.realm667.com/index.php/en/armory-mainmenu-157-97317/doom-style-mainmenu-158-94349/941-prox-launcher#info)).
 
@@ -134,7 +136,7 @@ BWHOOSH0 through 5 are derived from ["Swoosh.wav"](https://freesound.org/people/
 
 UNIQLOOT is derived from ["Gong Hit"](https://freesound.org/people/GowlerMusic/sounds/266566/) by freesound user [GowlerMusic](https://freesound.org/people/GowlerMusic), licensed under the Attribution 4.0 License.
 
-USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/), licensed under Creative Commons 0
+USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/), licensed under Creative Commons 0.
 
 USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/), licensed under Creative Commons Attribution 3.0 Unported.
 

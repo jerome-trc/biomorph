@@ -57,6 +57,21 @@ class BIO_Player : DoomPlayer
 			// Make the view bobbing match the player's movement
 			ViewBob = DECEL_MULT;
 		}
+
+		if (!Player.OnGround || Vel.Length() < 0.1)
+			return;
+
+		// Math below courtesy of Marrub
+		// See DoomRL_Arsenal.pk3/scripts/DRLALIB_Misc.acs, "RLGetStepSpeed"
+
+		float v = (Abs(Vel.X), Abs(Vel.Y)).Length();
+		float mul = Clamp(1.0 - (v / 24.0), 0.35, 1.0);
+		let interval = int(10.0 * (mul + 0.6));
+
+		if ((Level.MapTime % interval) != 0)
+			return;
+
+		A_StartSound("bio/pawn/footstep/normal", CHAN_AUTO);
 	}
 
 	override void ClearInventory()

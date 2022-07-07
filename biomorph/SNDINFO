@@ -41,6 +41,31 @@ bio/pawn/pain/50 BIOPAIN1
 bio/pawn/pain/75 BIOPAIN2
 bio/pawn/pain/100 BIOPAIN3
 
+bio/pawn/footstep/normal/0 BIOSTEP0
+bio/pawn/footstep/normal/1 BIOSTEP1
+bio/pawn/footstep/normal/2 BIOSTEP2
+bio/pawn/footstep/normal/3 BIOSTEP3
+bio/pawn/footstep/normal/4 BIOSTEP4
+bio/pawn/footstep/normal/5 BIOSTEP5
+bio/pawn/footstep/normal/6 BIOSTEP6
+bio/pawn/footstep/normal/7 BIOSTEP7
+bio/pawn/footstep/normal/8 BIOSTEP8
+bio/pawn/footstep/normal/9 BIOSTEP9
+
+$random bio/pawn/footstep/normal
+{
+	bio/pawn/footstep/normal/0
+	bio/pawn/footstep/normal/1
+	bio/pawn/footstep/normal/2
+	bio/pawn/footstep/normal/3
+	bio/pawn/footstep/normal/4
+	bio/pawn/footstep/normal/5
+	bio/pawn/footstep/normal/6
+	bio/pawn/footstep/normal/7
+	bio/pawn/footstep/normal/8
+	bio/pawn/footstep/normal/9
+}
+
 // Weapons /////////////////////////////////////////////////////////////////////
 
 // Common
