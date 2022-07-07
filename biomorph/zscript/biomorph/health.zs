@@ -30,11 +30,11 @@ mixin class BIO_Health
 		{
 			PrevHealth = other.Player.Health;
 			let cap = other.GetMaxHealth() - other.Player.Health;
-			cap = Max(cap, 0);
 
 			if (self is 'BIO_HealthBonus' || self is 'BIO_Soulsphere')
 				cap += 100;
 
+			cap = Max(cap, 0);
 			amt = Min(Amount, cap);
 			other.GiveBody(amt, MaxAmount);
 			Amount -= amt;
