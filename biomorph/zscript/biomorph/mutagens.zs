@@ -17,6 +17,7 @@ class BIO_Mutagen : Inventory abstract
         Radius 20;
 		Scale 0.75;
 
+		Inventory.InterHubAmount 999;
 		Inventory.MaxAmount 999;
 
 		BIO_Mutagen.LootWeight 0;
