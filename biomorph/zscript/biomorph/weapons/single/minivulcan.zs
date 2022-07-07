@@ -68,7 +68,9 @@ class BIO_Minivulcan : BIO_Weapon
 		MINV A 2 A_BIO_SetFireTime(4, 1);
 		MINV B 2 A_BIO_SetFireTime(5, 1);
 		MINV C 2 A_BIO_SetFireTime(6, 1);
+	SpoolUp.CP1:
 		MINV D 2 A_BIO_SetFireTime(7, 1);
+	SpoolUp.CP2:
 		MINV A 1 A_BIO_SetFireTime(8, 1);
 		MINV B 1 A_BIO_SetFireTime(9, 1);
 		MINV C 1 A_BIO_SetFireTime(10, 1);
@@ -96,13 +98,16 @@ class BIO_Minivulcan : BIO_Weapon
 		MINV B 1 A_BIO_SetFireTime(1, 3);
 		MINV C 1 A_BIO_SetFireTime(2, 3);
 		MINV D 1 A_BIO_SetFireTime(3, 3);
+		TNT1 A 0 A_JumpIf(Player.Cmd.Buttons & BT_ATTACK, 'Fire.Spooled');
 		MINV A 2 A_BIO_SetFireTime(4, 3);
 		MINV B 2 A_BIO_SetFireTime(5, 3);
 		MINV C 2 A_BIO_SetFireTime(6, 3);
 		MINV D 2 A_BIO_SetFireTime(7, 3);
+		TNT1 A 0 A_JumpIf(Player.Cmd.Buttons & BT_ATTACK, 'SpoolUp.CP2');
 		MINV A 3 A_BIO_SetFireTime(8, 3);
 		MINV B 3 A_BIO_SetFireTime(9, 3);
 		MINV C 3 A_BIO_SetFireTime(10, 3);
+		TNT1 A 0 A_JumpIf(Player.Cmd.Buttons & BT_ATTACK, 'SpoolUp.CP1');
 		MINV D 3 A_BIO_SetFireTime(11, 3);
 		Goto Ready;
 	Flash:
