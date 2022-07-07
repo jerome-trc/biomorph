@@ -760,20 +760,16 @@ extend class BIO_EventHandler
 			if (weap.ModGraph == null)
 				weap.ModGraph = BIO_WeaponModGraph.Create(weap.GraphQuality);
 
-			int rf = 3, rc = 5;
+			int rf = 1, rc = 1;
 
 			if (mons.bBoss)
 			{
-				rf++;
 				rc++;
 				weap.ModGraph.TryGenerateNodes(1);
 			}
 
 			if (BIO_Utils.DoomRLMonsterPack())
-			{
-				rf++;
 				rc++;
-			}
 
 			let sim = BIO_WeaponModSimulator.Create(weap);
 			sim.InsertNewGenesAtRandom(
