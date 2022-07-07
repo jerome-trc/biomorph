@@ -670,6 +670,8 @@
 		"\c[Yellow] to commit these changes.";
 	BIO_MENU_WEAPMOD_EXTRACTFAIL_ORPHANNODES =
 		"\c[Yellow]Moving this gene would leave other nodes disconnected.";
+	BIO_MENU_WEAPMOD_INSERTFAIL_INACCESSIBLE =
+		"\c[Yellow]There are no filled nodes connected to that node.";
 	BIO_MENU_WEAPMOD_MORPHFAIL_MUTACOST =
 		"\c[Yellow]Insufficient "
 		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen"

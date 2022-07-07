@@ -731,6 +731,33 @@ class BIO_WeaponModSimulator : Thinker
 		Genes[fromSlot] = null;
 	}
 
+	void SwapNodeAndSlot(uint node, uint slot)
+	{
+		if (!Nodes[node].IsOccupied())
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to move gene from unfilled node %d.",
+				node
+			);
+			return;
+		}
+
+		if (Genes[slot] == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal attempt to move gene from unoccupied slot %d.",
+				slot
+			);
+			return;
+		}
+
+		let ng = Nodes[node].Gene;
+		Nodes[node].Gene = Genes[slot];
+		Genes[slot] = ng;
+	}
+
 	// Take a gene out of a node and put it back into the inventory.
 	void ExtractGene(uint node, uint slot)
 	{

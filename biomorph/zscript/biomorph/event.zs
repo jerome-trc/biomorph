@@ -59,6 +59,7 @@ extend class BIO_EventHandler
 		WEAPMODOP_NODEMOVE,
 		WEAPMODOP_INVMOVE,
 		WEAPMODOP_EXTRACT,
+		WEAPMODOP_SWAPNODEANDSLOT,
 		WEAPMODOP_SIMULATE,
 		WEAPMODOP_COMMIT,
 		WEAPMODOP_REVERT,
@@ -133,6 +134,11 @@ extend class BIO_EventHandler
 			break;
 		case WEAPMODOP_INVMOVE:
 			BIO_WeaponModSimulator.Get(weap).InventoryMove(
+				uint(event.Args[1]), uint(event.Args[2])
+			);
+			break;
+		case WEAPMODOP_SWAPNODEANDSLOT:
+			BIO_WeaponModSimulator.Get(weap).SwapNodeAndSlot(
 				uint(event.Args[1]), uint(event.Args[2])
 			);
 			break;
@@ -927,6 +933,15 @@ extend class BIO_EventHandler
 			EVENT_WEAPMOD,
 			WEAPMODOP_INVMOVE,
 			fromSlot, toSlot
+		);
+	}
+
+	static clearscope void WeapModSim_SwapNodeAndSlot(uint node, uint slot)
+	{
+		EventHandler.SendNetworkEvent(
+			EVENT_WEAPMOD,
+			WEAPMODOP_SWAPNODEANDSLOT,
+			node, slot
 		);
 	}
 

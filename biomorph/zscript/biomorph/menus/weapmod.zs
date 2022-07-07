@@ -820,16 +820,25 @@ extend class BIO_WeaponModMenu
 {
 	private void TryInsertGeneFromInventory(uint node, uint slot)
 	{
-		if (Simulator.Genes[slot] == null ||
-			Simulator.Nodes[node].IsOccupied() ||
-			!Simulator.NodeAccessible(node) ||
-			node == 0)
+		if (Simulator.Genes[slot] == null || node == 0)
+			return;
+
+		if (!Simulator.NodeAccessible(node))
 		{
+			Console.Printf(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_INSERTFAIL_INACCESSIBLE")
+			);
+			MenuSound("bio/ui/fail");
 			return;
 		}
 
 		MenuSound("bio/ui/beep");
-		BIO_EventHandler.WeapModSim_InsertGeneFromInventory(node, slot);
+
+		if (Simulator.Nodes[node].IsOccupied())
+			BIO_EventHandler.WeapModSim_SwapNodeAndSlot(node, slot);
+		else
+			BIO_EventHandler.WeapModSim_InsertGeneFromInventory(node, slot);
+
 		BIO_EventHandler.WeapModSim_Run();
 	}
 
@@ -837,10 +846,17 @@ extend class BIO_WeaponModMenu
 	{
 		if (!Simulator.Nodes[fromNode].IsOccupied() ||
 			Simulator.Nodes[toNode].IsOccupied() ||
-			fromNode == toNode ||
-			!Simulator.NodeAccessible(toNode) ||
-			toNode == 0)
+			fromNode == toNode || toNode == 0)
 		{
+			return;
+		}
+
+		if (!Simulator.NodeAccessible(toNode))
+		{
+			Console.Printf(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_INSERTFAIL_INACCESSIBLE")
+			);
+			MenuSound("bio/ui/fail");
 			return;
 		}
 
@@ -876,8 +892,7 @@ extend class BIO_WeaponModMenu
 
 	private void TryExtractGeneFromNode(uint node, uint slot)
 	{
-		if (!Simulator.Nodes[node].IsOccupied() ||
-			Simulator.Genes[slot] != null)
+		if (!Simulator.Nodes[node].IsOccupied())
 			return;
 
 		if (!Simulator.CanRemoveGeneFrom(node))
@@ -890,7 +905,12 @@ extend class BIO_WeaponModMenu
 		}
 
 		MenuSound("bio/ui/beep");
-		BIO_EventHandler.WeapModSim_ExtractGeneFromNode(node, slot);
+
+		if (Simulator.Genes[slot] != null)
+			BIO_EventHandler.WeapModSim_SwapNodeAndSlot(node, slot);
+		else
+			BIO_EventHandler.WeapModSim_ExtractGeneFromNode(node, slot);
+
 		BIO_EventHandler.WeapModSim_Run();
 	}
 
