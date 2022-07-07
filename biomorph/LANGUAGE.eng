@@ -385,7 +385,7 @@
 	BIO_WMOD_FIRETIME_DESC = "\c[White]Fire time%s: \c[Green]%.2f seconds";
 
 	BIO_WMOD_FORCEPAIN_SUMM =
-		"\c[Green]Extra 20%% chance of firing a neurotoxic payload\n"
+		"\c[Green]Extra 20% chance of firing a neurotoxic payload\n"
 		"\c[White]Neurotoxic payloads always make monsters flinch\n"
 		"\c[Gold]Some monsters are immune to this effect!";
 	BIO_WMOD_FORCEPAIN_DESC =
