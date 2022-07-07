@@ -82,9 +82,7 @@ class BIO_PumpShotgun : BIO_Weapon
 		}
 		Goto LightDone;
 	Reload.Prep.Refires:
-		PASG A 1 A_Refire;
-		PASG C 2 A_Refire('Refire.Early');
-		PASG D 2 A_Refire('Refire.Late');
+		PASG A 5 A_Refire;
 		Goto Reload.Repeat;
 	Reload:
 		TNT1 A 0 A_BIO_CheckReload;
