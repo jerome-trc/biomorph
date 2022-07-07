@@ -176,8 +176,8 @@ class BIO_VolleyGun : BIO_Weapon
 
 		FireTimeGroups.Push(StateTimeGroupFrom('Fire.Quad'));
 
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Four', "$BIO_ALL_4"));
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Two', "$BIO_2"));
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Four', "$BIO_ALLFOUR"));
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Two', "$BIO_TWO"));
 	}
 }
 

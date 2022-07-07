@@ -754,6 +754,11 @@
 
 // Miscellaneous ///////////////////////////////////////////////////////////////
 
+	BIO_ALLFOUR = "all four";
+	BIO_CHARGE = "charge";
+	BIO_COOLDOWN = "cooldown";
+	BIO_FIRE = "fire";
+	BIO_SWING = "swing";
 	BIO_RIGHT = "right";
 	BIO_LEFT = "left";
 	BIO_SLOW = "slow";
@@ -761,6 +766,7 @@
 	BIO_SPOOLUP = "spoolup";
 	BIO_SPOOLED = "spooled";
 	BIO_SPOOLDOWN = "spooldown";
+	BIO_TWO = "two";
 
 	BIO_WEAPDROP_CONFIRM = "Press \cn%s\c- again to drop this weapon.";
 
