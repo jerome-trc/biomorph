@@ -182,8 +182,16 @@ class BIO_Player : DoomPlayer
 		Array<Inventory> toDestroy;
 
 		for (Inventory i = Inv; i != null; i = i.Inv)
-			if ((i is 'Ammo' && resetAmmo) || (i is 'Weapon' && resetWeaps))
+		{
+			if (resetAmmo)
+			{
+				if (i is 'Ammo' || i is 'Backpack')
+					toDestroy.Push(i);
+			}
+
+			if (resetWeaps && i is 'Weapon')
 				toDestroy.Push(i);
+		}
 
 		for (uint i = 0; i < toDestroy.Size(); i++)
 		{
@@ -198,7 +206,7 @@ class BIO_Player : DoomPlayer
 				else
 					item.Amount = 0;
 			}
-			else if (item is 'Weapon')
+			else if (item is 'Weapon' || item is 'Backpack')
 			{
 				item.Destroy();
 			}
