@@ -35,7 +35,7 @@ class BIO_StatusBar : BaseStatusBar
 		{
 			ThrowAbortException(
 				Biomorph.LOGPFX_ERR ..
-				"\nFailed to attach HUD to a Biomorph-class player. "
+				"\nFailed to attach HUD to a Biomorph-class player."
 				"\nTry the player class patch."
 				"\nIf errors continue after that, report a bug to RatCircus."
 			);
@@ -227,7 +227,7 @@ class BIO_StatusBar : BaseStatusBar
 		}
 	}
 
-	private void DrawAmmoItemInfo(Inventory mag, int maxAmount, int invY)
+	private void DrawAmmoItemInfo(Inventory mag, int maxAmount, int invY) const
 	{
 		DrawInventoryIcon(mag, (-16, invY + 16));
 
@@ -240,7 +240,7 @@ class BIO_StatusBar : BaseStatusBar
 		);
 	}
 
-	private void DrawETMMagazineInfo(BIO_MagazineETM mag, int maxAmount, int invY)
+	private void DrawETMMagazineInfo(BIO_MagazineETM mag, int maxAmount, int invY) const
 	{
 		DrawInventoryIcon(mag, (-16, invY + 16));
 
