@@ -230,5 +230,27 @@ class BIO_Player : DoomPlayer
 			GiveInventory('BIO_Fists', 1);
 			GiveRandomStartingPistol();
 		}
+
+		// Re-setup ammo and magazine pointers
+		if (resetAmmo)
+		{
+			for (Inventory i = Inv; i != null; i = i.Inv)
+			{
+				let weap = BIO_Weapon(i);
+
+				if (weap == null)
+					continue;
+
+				if (weap.ModGraph == null)
+				{
+					weap.SetupAmmo();
+					weap.SetupMagazines();
+				}
+				else
+				{
+					BIO_WeaponModSimulator.Create(weap).CommitAndClose();
+				}
+			}		
+		}
 	}
 }
