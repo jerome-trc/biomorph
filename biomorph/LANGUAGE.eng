@@ -766,5 +766,8 @@
 
 	BIO_PRIMARYQUALIFIER = "\c[White](\c[Yellow]Primary\c[White])";
 	BIO_SECONDARYQUALIFIER = "\c[White](\c[Yellow]Secondary\c[White])";
+
+	BIO_MONSTERCOUNTERCHAR = "M";
+	BIO_SECRETCOUNTERCHAR = "S";
 	
 	DOSY = "\c[Red](\c[White]Press \c[LightBlue]Y\c[White] to quit\c[Red])\c-";

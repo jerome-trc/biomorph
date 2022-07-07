@@ -54,15 +54,46 @@ class BIO_StatusBar : BaseStatusBar
 		super.Draw(state, ticFrac);
 		BeginHUD();
 
+		DrawString(
+			Font_Small,
+			String.Format(
+				"\c[White]%s: \c-%s\c[White] / \c-%s",
+				StringTable.Localize("$BIO_MONSTERCOUNTERCHAR"),
+				FormatNumber(Level.Killed_Monsters, 1, 5),
+				FormatNumber(Level.Total_Monsters, 1, 5)
+			),
+			(160, -16), 0,
+			Level.Killed_Monsters >= Level.Total_Monsters ?
+				Font.CR_GREEN :
+				Font.CR_WHITE
+		);
+		DrawString(
+			Font_Small,
+			String.Format(
+				"\c[White]%s: \c-%s\c[White] / \c-%s",
+				StringTable.Localize("$BIO_SECRETCOUNTERCHAR"),
+				FormatNumber(Level.Found_Secrets, 1, 2),
+				FormatNumber(Level.Total_Secrets, 1, 2)
+			),
+			(160, -8), 0,
+			Level.Found_Secrets >= Level.Total_Secrets ?
+				Font.CR_GREEN :
+				Font.CR_WHITE
+		);
+
 		Vector2 iconbox = (40, 20);
 
 		let berserk = CPlayer.MO.FindInventory('PowerStrength', true);
 		DrawImage(berserk ? 'PSTRA0' : 'MEDIA0', (20, -2));
-		DrawString(Font_HUD,
-			String.Format("%s / %s",
+		DrawString(
+			Font_HUD,
+			String.Format(
+				"%s / %s",
 				FormatNumber(CPlayer.Health, 3, 5),
-				FormatNumber(CPlayer.MO.GetMaxHealth(true), 3, 5)), 
-			(44, -16), 0, Font.CR_DARKRED);
+				FormatNumber(CPlayer.MO.GetMaxHealth(true), 3, 5)
+			), 
+			(44, -16), 0, Font.CR_DARKRED
+		);
 
 		let armor = CPlayer.MO.FindInventory('BasicArmor');
 
