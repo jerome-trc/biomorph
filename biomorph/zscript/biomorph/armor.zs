@@ -21,6 +21,10 @@ class BIO_ArmorBonus : ArmorBonus replaces ArmorBonus
 	final override bool Use(bool pickup)
 	{
 		let armor = BasicArmor(Owner.FindInventory('BasicArmor'));
+		let spct = Clamp(SavePercent, 0.0, 100.0) / 100.0;
+
+		if (armor.SavePercent < spct)
+			armor.SavePercent = spct;
 
 		// No null check here. I'd prefer to catch VM aborts early in testing
 
