@@ -51,7 +51,6 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/dmgfunc.zs"
 #include "zscript/biomorph/weapons/firefunc.zs"
 #include "zscript/biomorph/weapons/modgraph.zs"
-#include "zscript/biomorph/weapons/morph.zs"
 #include "zscript/biomorph/weapons/pipeline.zs"
 #include "zscript/biomorph/weapons/recoil.zs"
 #include "zscript/biomorph/weapons/simulator.zs"
@@ -64,6 +63,10 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/modifiers/payload_alter.zs"
 #include "zscript/biomorph/weapons/modifiers/payload_new.zs"
 #include "zscript/biomorph/weapons/modifiers/timing.zs"
+
+#include "zscript/biomorph/weapons/morph/base.zs"
+#include "zscript/biomorph/weapons/morph/upgrade.zs"
+#include "zscript/biomorph/weapons/morph/downgrade.zs"
 
 #include "zscript/biomorph/weapons/single/arc_caster.zs"
 #include "zscript/biomorph/weapons/single/auto_shotgun.zs"

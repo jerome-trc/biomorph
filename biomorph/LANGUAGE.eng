@@ -662,8 +662,8 @@
 		"\c[White]Cost:\c[Yellow] %d %s\n\n"
 		"\c[Gold]Will consume all genes in this tree!";
 	BIO_MENU_WEAPMOD_MORPH_QUALITY =
-		"\n\n\c[White]New weapon will have \c[Green]%d\c[White] extra nodes\n"
-		"\c[White]Extra nodes will be \c[Green]inherited by future upgrades";
+		"\n\n\c[White]New weapon will have \c[Green]%d\c[White] extra node(s)\n"
+		"\c[White]Extra nodes will be \c[Green]inherited by future morphs";
 	BIO_MENU_WEAPMOD_COMMITFAIL_MUTACOST =
 		"\c[Yellow]Insufficient "
 		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen"
