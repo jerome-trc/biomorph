@@ -48,16 +48,18 @@ class BIO_WMR_AutoShotgun : BIO_WeaponMorphRecipe
 	final override bool Eligible(readOnly<BIO_WeaponModSimulator> sim) const
 	{
 		return
-			sim.HasModifierWithCoreFlags(BIO_WCMF_FIRETIME_DEC) &&
-			sim.HasModifierWithCoreFlags(BIO_WCMF_MAGSIZE_INC);
+			sim.GraphIsFull() &&
+			sim.HasModifierWithCoreFlags(BIO_WCMF_FIRETIME_DEC, 2) &&
+			sim.HasModifierWithCoreFlags(BIO_WCMF_MAGSIZE_INC, 2);
 	}
 
 	final override string RequirementString() const
 	{
 		return String.Format(
-			"%s\n%s",
-			StringTable.Localize("$BIO_WMR_REQ_FIRETIMEDEC_1"),
-			StringTable.Localize("$BIO_WMR_REQ_MAGSIZEINC_1")
+			"%s\n%s\n%s",
+			StringTable.Localize("$BIO_WMR_REQ_FULLGRAPH"),
+			StringTable.Localize("$BIO_WMR_REQ_FIRETIMEDEC_2"),
+			StringTable.Localize("$BIO_WMR_REQ_MAGSIZEINC_2")
 		);
 	}
 }

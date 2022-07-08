@@ -23,7 +23,6 @@ class BIO_AutoShotgun : BIO_Weapon
 		BIO_Weapon.PickupMessages
 			"$BIO_AUTOSHOTGUN_PKUP",
 			"$BIO_AUTOSHOTGUN_SCAV";
-		BIO_Weapon.SpawnCategory BIO_WSCAT_SSG;
 	}
 
 	States
