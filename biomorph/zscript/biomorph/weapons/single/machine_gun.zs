@@ -1,5 +1,7 @@
 class BIO_MachineGun : BIO_Weapon
 {
+	const BASE_MAGSIZE = 100; // Also referenced by `DualMachineGun`
+
 	Default
 	{
 		Tag "$BIO_MACHINEGUN_TAG";
@@ -16,7 +18,7 @@ class BIO_MachineGun : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/small/0";
-		BIO_Weapon.MagazineSize 150;
+		BIO_Weapon.MagazineSize BASE_MAGSIZE;
 		BIO_Weapon.MagazineType 'BIO_Mag_MachineGun';
 		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_MachineGun';
 		BIO_Weapon.PickupMessages

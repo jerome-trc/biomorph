@@ -20,7 +20,9 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 		Weapon.UpSound "bio/weap/gunswap";
 
 		BIO_Weapon.GraphQuality 8;
-		BIO_Weapon.MagazineSizes 150, 150;
+		BIO_Weapon.MagazineSizes
+			BIO_MachineGun.BASE_MAGSIZE,
+			BIO_MachineGun.BASE_MAGSIZE;
 		BIO_Weapon.MagazineTypes
 			'BIO_Mag_DualMachineGun_L',
 			'BIO_Mag_DualMachineGun_R';
