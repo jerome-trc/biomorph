@@ -67,6 +67,7 @@ class BIO_Fists : BIO_DualWieldWeapon
 		{
 			let r = sim.RandomNode(accessible: true, unoccupied: true);
 			sim.InsertNewGene('BIO_MGene_BerserkDamage', r);
+			sim.Nodes[r].Basis.Lock();
 		}
 
 		sim.RunAndClose();

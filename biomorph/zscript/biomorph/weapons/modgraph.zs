@@ -2,7 +2,8 @@ enum BIO_WeaponModGraphNodeFlags : uint8
 {
 	BIO_WMGNF_NONE = 0,
 	BIO_WMGNF_MUTED = 1 << 0,
-	BIO_WMGNF_FREEACCESS = 1 << 1
+	BIO_WMGNF_FREEACCESS = 1 << 1,
+	BIO_WMGNF_LOCKED = 1 << 2
 }
 
 class BIO_WMGNode play
@@ -17,15 +18,10 @@ class BIO_WMGNode play
 
 	class<BIO_Gene> GeneType;
 
-	bool Active() const
-	{
-		return GeneType != null || UUID == 0;
-	}
-
-	bool FreeAccess() const
-	{
-		return Flags & BIO_WMGNF_FREEACCESS;
-	}
+	bool Active() const { return GeneType != null || UUID == 0; }
+	bool FreeAccess() const { return Flags & BIO_WMGNF_FREEACCESS; }
+	bool IsLocked() const { return Flags & BIO_WMGNF_LOCKED; }
+	bool IsMuted() const { return Flags & BIO_WMGNF_MUTED; }
 
 	BIO_WMGNode Copy() const
 	{
@@ -40,10 +36,8 @@ class BIO_WMGNode play
 		return ret;
 	}
 
-	bool IsMuted() const
-	{
-		return Flags & BIO_WMGNF_MUTED;
-	}
+	void Lock() { Flags |= BIO_WMGNF_LOCKED; }
+	void Unlock() { Flags &= ~BIO_WMGNF_LOCKED; }
 }
 
 // Each weapon instance has a pointer to one of these.

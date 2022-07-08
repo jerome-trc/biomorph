@@ -62,7 +62,7 @@ class BIO_WeaponModMenu : GenericMenu
 	private string
 		Txt_Help_Pan, Txt_Help_ModOrder, Txt_Help_Hotkeys,
 		Txt_Unmutated, Txt_Mutagen;
-	private textureID Tex_Node, Tex_NodeRing, Tex_InvSlot;
+	private textureID Tex_Node, Tex_NodeRing, Tex_InvSlot, Tex_Padlock;
 
 	private readOnly<BIO_Weapon> CurrentWeap;
 	private BIO_WeaponModSimulator Simulator;
@@ -104,6 +104,8 @@ class BIO_WeaponModMenu : GenericMenu
 			"graphics/wmg_nodering.png", TexMan.TYPE_ANY);
 		Tex_InvSlot = TexMan.CheckForTexture(
 			"graphics/inv_slot.png", TexMan.TYPE_ANY);
+		Tex_Padlock = TexMan.CheckForTexture(
+			"graphics/padlock.png", TexMan.TYPE_ANY);
 
 		Size = (VIRT_W, VIRT_H);
 		CurrentWeap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon).AsConst();
@@ -290,16 +292,26 @@ extend class BIO_WeaponModMenu
 				DTA_KEEPRATIO, true
 			);
 
-			if (!Simulator.Nodes[i].Repeating())
-				continue;
+			if (Simulator.Nodes[i].Repeating())
+			{
+				Screen.DrawText(SmallFont, Font.CR_GREEN,
+					NodeDrawState[i].DrawPos.X + (VIRT_W * 0.03),
+					NodeDrawState[i].DrawPos.Y + (VIRT_H * 0.01),
+					String.Format("x%d", Simulator.Nodes[i].Multiplier),
+					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
+					DTA_KEEPRATIO, true
+				);
+			}
 
-			Screen.DrawText(SmallFont, Font.CR_GREEN,
-				NodeDrawState[i].DrawPos.X + (VIRT_W * 0.03),
-				NodeDrawState[i].DrawPos.Y + (VIRT_H * 0.01),
-				String.Format("x%d", Simulator.Nodes[i].Multiplier),
-				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
-				DTA_KEEPRATIO, true
-			);
+			if (Simulator.Nodes[i].Basis.IsLocked())
+			{
+				Screen.DrawTexture(Tex_Padlock, false,
+					NodeDrawState[i].DrawPos.X + (VIRT_W * 0.035),
+					NodeDrawState[i].DrawPos.Y - (VIRT_H * 0.07),
+					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
+					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true
+				);
+			}
 		}
 
 		DrawGeneInventory();
@@ -753,6 +765,9 @@ extend class BIO_WeaponModMenu
 		}
 		else if (ValidHoveredNode() && Simulator.Nodes[HoveredNode].IsOccupied())
 		{
+			if (Simulator.Nodes[HoveredNode].Basis.IsLocked())
+				return;
+
 			DraggedGene = new('BIO_WModMenu_DraggedGene');
 			DraggedGene.Origin = BIO_WModMenu_DraggedGene.ORIGIN_NODE;
 			DraggedGene.Node = HoveredNode;
@@ -779,7 +794,7 @@ extend class BIO_WeaponModMenu
 
 	private void ReleaseDraggedGene()
 	{
-		if (ValidHoveredNode())
+		if (ValidHoveredNode() && !Simulator.Nodes[HoveredNode].Basis.IsLocked())
 		{
 			if (DraggedGene.Origin == BIO_WModMenu_DraggedGene.ORIGIN_INVSLOT)
 				TryInsertGeneFromInventory(HoveredNode, DraggedGene.InvSlot);
