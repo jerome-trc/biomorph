@@ -43,9 +43,7 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
-		return
-			BIO_WCMF_NONE,
-			BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_DAMAGE_DEC | BIO_WPMF_SPLASHDAMAGE_INC;
+		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_NEW;
 	}
 
 	final override class<BIO_ModifierGene> GeneType() const
