@@ -115,6 +115,8 @@ $random bio/weap/servicepistol/fire
 	bio/weap/servicepistol/fire/2
 }
 
+bio/weap/servicepistol/reload/end SVCP_RLE
+
 // Pump Shotgun
 
 bio/weap/pumpshotgun/fire/0 PASG_FR0

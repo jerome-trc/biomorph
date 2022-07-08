@@ -108,6 +108,7 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 	- MC9.5/
 		- Console scroll.wav (BIOMFAIL)
 	- MC11/
+		- bolt_actuate.wav (SVCP_RLE)
 		- elec1.wav (ARCA_FR0)
 		- elec2.wav (ARCA_FR1)
 		- elec3.wav (ARCA_FR2)

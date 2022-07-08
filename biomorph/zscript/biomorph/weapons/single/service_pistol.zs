@@ -1,5 +1,7 @@
 class BIO_ServicePistol : BIO_Weapon
 {
+	protected bool RoundChambered;
+
 	Default
 	{
 		Tag "$BIO_SERVICEPISTOL_TAG";
@@ -36,7 +38,7 @@ class BIO_ServicePistol : BIO_Weapon
 		SVCP A 0 A_BIO_Select;
 		Stop;
 	Ready:
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready.Empty');
+		TNT1 A 0 A_JumpIf(!invoker.RoundChambered, 'Ready.Empty');
 	Ready.Chambered:
 		SVCP A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
@@ -52,6 +54,9 @@ class BIO_ServicePistol : BIO_Weapon
 			A_GunFlash();
 			A_BIO_FireSound();
 			A_BIO_Recoil('BIO_Recoil_Handgun');
+
+			if (invoker.MagazineEmpty())
+				invoker.RoundChambered = false;
 		}
 		SVCP D 4 A_BIO_SetFireTime(1);
 		TNT1 A 0 A_BIO_AutoReload;
@@ -72,7 +77,7 @@ class BIO_ServicePistol : BIO_Weapon
 		Goto LightDone;
 	Reload:
 		TNT1 A 0 A_BIO_CheckReload;
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Reload.FromEmpty');
+		TNT1 A 0 A_JumpIf(!invoker.RoundChambered, 'Reload.FromEmpty');
 	Reload.FromLoaded:
 		SVCP E 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Reload.Common;
@@ -95,7 +100,16 @@ class BIO_ServicePistol : BIO_Weapon
 		#### # 1 Fast Offset(0, 32 + 5) A_BIO_SetReloadTime(10);
 		#### # 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(11);
 		#### # 1 Fast Offset(0, 32 + 2) A_BIO_SetReloadTime(12);
-		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
+		#### # 1 Fast Offset(0, 32 + 1) 
+		{
+			A_BIO_SetReloadTime(13);
+
+			if (!invoker.RoundChambered)
+			{
+				A_StartSound("bio/weap/servicepistol/reload/end", CHAN_AUTO);
+				invoker.RoundChambered = true;
+			}
+		}
 		Goto Ready;
 	}
 
@@ -112,6 +126,12 @@ class BIO_ServicePistol : BIO_Weapon
 
 		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.FromEmpty'));
+	}
+
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+		RoundChambered = true;
 	}
 }
 
