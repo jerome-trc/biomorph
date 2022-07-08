@@ -161,6 +161,21 @@
 
 	// (None of the handguns or melee weapons have scavenge messages)
 
+	BIO_ARCCASTER_TAG = "Arc Caster";
+	BIO_ARCCASTER_PKUP = "Procured an %s.";
+	BIO_ARCCASTER_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_ARCCASTER_OB = "%k electrocuted %o with an %s.";
+
+	BIO_AUTOSHOTGUN_TAG = "Auto Shotgun";
+	BIO_AUTOSHOTGUN_PKUP = "Procured an %s.";
+	BIO_AUTOSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_AUTOSHOTGUN_OB = "%k ploughed %o down with an %s.";
+
+	BIO_BFG_TAG = "BFG9000";
+	BIO_BFG_PKUP = "Procured a %s.";
+	BIO_BFG_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_BFG_OB = "%k field-tested a %s on %o.";
+
 	BIO_BREACHINGAXE_TAG = "Breaching Axe";
 	BIO_BREACHINGAXE_PKUP = "Procured a %s.";
 	BIO_BREACHINGAXE_OB = "%k hewed %o with a %s.";
@@ -169,29 +184,10 @@
 	BIO_CHAINSAW_PKUP = "Procured a %s.";
 	BIO_CHAINSAW_OB = "%k sawed %o in half with a %s.";
 
-	BIO_SERVICEPISTOL_TAG = "Service Pistol";
-	BIO_SERVICEPISTOL_PKUP = "Procured a %s.";
-	BIO_SERVICEPISTOL_OB = "%k served %o summary execution with a %s.";
-
-	BIO_PUMPSHOTGUN_TAG = "Pump Shotgun";
-	BIO_PUMPSHOTGUN_PKUP = "Procured a %s.";
-	BIO_PUMPSHOTGUN_OB = "%k wasted %o with a %s.";
-	BIO_PUMPSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
-
 	BIO_COACHGUN_TAG = "Coachgun";
 	BIO_COACHGUN_PKUP = "Procured a %s.";
 	BIO_COACHGUN_OB = "%k cut %o down with a %s.";
 	BIO_COACHGUN_SCAV = "Scavenged ammo from a dropped %s.";
-
-	BIO_VOLLEYGUN_TAG = "Volley Gun";
-	BIO_VOLLEYGUN_PKUP = "Procured a %s.";
-	BIO_VOLLEYGUN_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_VOLLEYGUN_OB = "%k gave %o a three-course meal of lead with a %s.";
-
-	BIO_AUTOSHOTGUN_TAG = "Auto Shotgun";
-	BIO_AUTOSHOTGUN_PKUP = "Procured an %s.";
-	BIO_AUTOSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_AUTOSHOTGUN_OB = "%k ploughed %o down with an %s.";
 
 	BIO_MACHINEGUN_TAG = "Machine Gun";
 	BIO_MACHINEGUN_PKUP = "Procured a %s.";
@@ -208,30 +204,34 @@
 	BIO_MINIVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_MINIVULCAN_OB = "%k honeycombed %o with a %s.";
 
-	BIO_TURBOVULCAN_TAG = "Turbovulcan";
-	BIO_TURBOVULCAN_PKUP = "Procured a %s.";
-	BIO_TURBOVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_TURBOVULCAN_OB = "%k perforated %o with a %s.";
+	BIO_PLASMARIFLE_TAG = "Plasma Rifle";
+	BIO_PLASMARIFLE_PKUP = "Procured a %s.";
+	BIO_PLASMARIFLE_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_PLASMARIFLE_OB = "%k burned %o with a %s.";
+
+	BIO_PUMPSHOTGUN_TAG = "Pump Shotgun";
+	BIO_PUMPSHOTGUN_PKUP = "Procured a %s.";
+	BIO_PUMPSHOTGUN_OB = "%k wasted %o with a %s.";
+	BIO_PUMPSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
 
 	BIO_ROCKETAUTOLAUNCHER_TAG = "Rocket Auto-Launcher";
 	BIO_ROCKETAUTOLAUNCHER_PKUP = "Procured a %s.";
 	BIO_ROCKETAUTOLAUNCHER_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_ROCKETAUTOLAUNCHER_OB = "%k blew %o away with a %s.";
 
-	BIO_PLASMARIFLE_TAG = "Plasma Rifle";
-	BIO_PLASMARIFLE_PKUP = "Procured a %s.";
-	BIO_PLASMARIFLE_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_PLASMARIFLE_OB = "%k burned %o with a %s.";
+	BIO_SERVICEPISTOL_TAG = "Service Pistol";
+	BIO_SERVICEPISTOL_PKUP = "Procured a %s.";
+	BIO_SERVICEPISTOL_OB = "%k served %o summary execution with a %s.";
 
-	BIO_ARCCASTER_TAG = "Arc Caster";
-	BIO_ARCCASTER_PKUP = "Procured an %s.";
-	BIO_ARCCASTER_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_ARCCASTER_OB = "%k electrocuted %o with an %s.";
+	BIO_TURBOVULCAN_TAG = "Turbovulcan";
+	BIO_TURBOVULCAN_PKUP = "Procured a %s.";
+	BIO_TURBOVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_TURBOVULCAN_OB = "%k perforated %o with a %s.";
 
-	BIO_BFG_TAG = "BFG9000";
-	BIO_BFG_PKUP = "Procured a %s.";
-	BIO_BFG_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_BFG_OB = "%k field-tested a %s on %o.";
+	BIO_VOLLEYGUN_TAG = "Volley Gun";
+	BIO_VOLLEYGUN_PKUP = "Procured a %s.";
+	BIO_VOLLEYGUN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_VOLLEYGUN_OB = "%k gave %o a three-course meal of lead with a %s.";
 
 	// Dual-wield weapons
 
