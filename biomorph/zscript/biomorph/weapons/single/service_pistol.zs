@@ -36,11 +36,16 @@ class BIO_ServicePistol : BIO_Weapon
 		SVCP A 0 A_BIO_Select;
 		Stop;
 	Ready:
+		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Ready.Empty');
+	Ready.Chambered:
 		SVCP A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
+		Loop;
+	Ready.Empty:
+		SVCP B 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
 		TNT1 A 0 A_BIO_CheckAmmo;
-		SVCP B 4 Bright
+		SVCP C 4
 		{
 			A_BIO_SetFireTime(0);
 			A_BIO_Fire();
@@ -48,18 +53,18 @@ class BIO_ServicePistol : BIO_Weapon
 			A_BIO_FireSound();
 			A_BIO_Recoil('BIO_Recoil_Handgun');
 		}
-		SVCP C 4 A_BIO_SetFireTime(1);
+		SVCP D 4 A_BIO_SetFireTime(1);
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
 	Dryfire:
-		SVCP A 1 Offset(0, 32 + 1);
+		SVCP B 1 Offset(0, 32 + 1);
 		#### # 1 Offset(0, 32 + 2);
 		#### # 1 Offset(0, 32 + 3) A_StartSound("bio/weap/dryfire/ballistic");
 		#### # 1 Offset(0, 32 + 2);
 		#### # 1 Offset(0, 32 + 1);
 		Goto Ready;
 	Flash:
-		TNT1 A 4 Bright
+		SVCP Y 4 Bright
 		{
 			A_BIO_SetFireTime(0);
 			A_Light(1);
@@ -67,7 +72,13 @@ class BIO_ServicePistol : BIO_Weapon
 		Goto LightDone;
 	Reload:
 		TNT1 A 0 A_BIO_CheckReload;
-		SVCP A 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Reload.FromEmpty');
+	Reload.FromLoaded:
+		SVCP E 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Reload.Common;
+	Reload.FromEmpty:
+		SVCP F 1 A_WeaponReady(WRF_NOFIRE);
+	Reload.Common:
 		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(1);
 		#### # 1 Fast Offset(0, 32 + 3) A_BIO_SetReloadTime(2);
 		#### # 1 Fast Offset(0, 32 + 7) A_BIO_SetReloadTime(3);
@@ -100,7 +111,7 @@ class BIO_ServicePistol : BIO_Weapon
 		);
 
 		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.FromEmpty'));
 	}
 }
 
