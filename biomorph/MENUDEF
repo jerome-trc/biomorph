@@ -7,10 +7,14 @@ AddOptionMenu "OptionsMenu"
 
 OptionMenu "BIO_Options"
 {
+	class BIO_TooltipOptionMenu
 	Title "$BIO_OPTTITLE"
+
 	StaticText ""
 	StaticText "$BIO_OPTCAT_BALANCE"
 	Option "$BIO_OPTLBL_LDL", "BIO_ldl", "OnOff"
+	BTooltip "$BIO_OPTTIP_LDL"
+
 	StaticText ""
 	StaticText "$BIO_OPTCAT_RESET"
 	Option "$BIO_OPTLBL_NOINVCLEAR", "BIO_noinvclear", "OnOff"

@@ -709,6 +709,9 @@
 	BIO_OPTLBL_INVBARSLOTS = "HUD Inventory Bar Slots";
 
 	BIO_OPTLBL_LDL = "LegenDoomLite Integration";
+	BIO_OPTTIP_LDL =
+		"If enabled, Legendary enemies will drop pre-mutated weapons,\n"
+		"in addition to generic LegenDoomLite loot.";
 
 	BIO_OPTLBL_MULTIBARRELFIRE = "Multi-Barrel Fire Mode";
 	BIO_OPTVAL_MBF_PRIM = "Primary Fires Multiple Barrels";

@@ -39,6 +39,7 @@ class Biomorph abstract
 #include "zscript/biomorph/genes/modifier.zs"
 #include "zscript/biomorph/genes/support.zs"
 
+#include "zscript/biomorph/menus/tooltipoptions.zs"
 #include "zscript/biomorph/menus/weapmod.zs"
 
 #include "zscript/biomorph/payloads/base.zs"

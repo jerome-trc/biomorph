@@ -6,9 +6,11 @@ If you're aware of any attribution which is evidently missing from this list, or
 
 ## Libraries
 
-Biomorph uses [libeye](https://forum.zdoom.org/viewtopic.php?t=64566), provided by KeksDose under a [custom license](/biomorph/zscript/biomorph/libeye/libeye.txt).
-
 Biomorph uses a heavily-modified version of the [Easy Dual Wield library](https://github.com/jekyllgrim/Easy-Dual-Wield) (MIT license, [included in its translation unit](/zscript/biomorph/weapons/base_dw.zs)) by [Jekyll Grim Payne](https://github.com/jekyllgrim).
+
+[libeye](https://forum.zdoom.org/viewtopic.php?t=64566) is provided by KeksDose under a [custom license](/biomorph/zscript/biomorph/libeye/libeye.txt).
+
+[libtooltipmenu](https://github.com/ToxicFrog/laevis/tree/main/libtooltipmenu) is provided by [Rebecca "ToxicFrog" Kelly](https://github.com/ToxicFrog) under the [MIT license](/biomorph/zscript/biomorph/menus/tooltipoptions.zs).
 
 ## Code
 
