@@ -80,6 +80,9 @@ The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY
 		- remington870-3.wav (COAC_FR2)
 		- shotpumpback.wav (PUMPBACK)
 		- shotpumpfor.wav (PUMPFORW)
+		- trenchgun-1.wav (CANS_FR0)
+		- trenchgun-2.wav (CANS_FR1)
+		- trenchgun-3.wav (CANS_FR2)
 
 #### CturiX Kemilon
 

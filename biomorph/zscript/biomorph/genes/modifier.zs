@@ -20,6 +20,28 @@ class BIO_MGene_BerserkDamage : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_CanisterShot : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_CANISTERSHOT_TAG";
+		Inventory.Icon 'GENNC0';
+		Inventory.PickupMessage "$BIO_MGENE_CANISTERSHOT_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
+		BIO_Gene.Summary "$BIO_WMOD_CANISTERSHOT_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_CanisterShot';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+	}
+
+	States
+	{
+	Spawn:
+		GENN C 6;
+		#### # 6 Bright Light("BIO_MutaGene_Cyan");
+		Loop;
+	}
+}
+
 class BIO_MGene_DamageAdd : BIO_ModifierGene
 {
 	Default

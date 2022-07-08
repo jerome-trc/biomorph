@@ -233,6 +233,17 @@ $limit bio/weap/arccaster/fire 1
 
 // Payloads ////////////////////////////////////////////////////////////////////
 
+bio/puff/canistershot/fire/0 CANS_FR0
+bio/puff/canistershot/fire/1 CANS_FR1
+bio/puff/canistershot/fire/2 CANS_FR2
+
+$random bio/puff/canistershot/fire
+{
+	bio/puff/canistershot/fire/0
+	bio/puff/canistershot/fire/1
+	bio/puff/canistershot/fire/2
+}
+
 bio/puff/elecarc/hit ELECPUFF
 
 bio/proj/proxmine/fire PROXFIRE
