@@ -375,8 +375,8 @@
 	BIO_WMOD_BERSERKDAMAGE_DESC = "\c[Green]%d%% damage \c[White]dealt after collecting a Berserk Pack";
 
 	BIO_WMOD_CANISTERSHOT_SUMM =
-		"\c[White]Change from firing rockets/grenades to a shot pellet blast"
-		"\c[White]All splash damage is converted into direct hit damage"
+		"\c[White]Change from firing rockets/grenades to a shot pellet blast\n"
+		"\c[White]All splash damage is converted into direct hit damage\n"
 		"\c[White]Any pre-existing shrapnel is lost";
 
 	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]20% of minimum damage added";
