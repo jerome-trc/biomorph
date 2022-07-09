@@ -662,6 +662,10 @@
 	BIO_WMR_REQ_SPOOLING = "\c[White]- Affected by a %s";
 	BIO_WMR_REQ_SPREADDEC_1 = "\c[White]- One spread decrease";
 
+// Miscellaneous actors ////////////////////////////////////////////////////////
+
+	BIO_SUPPLYBOX_TAG = "Supply Box";
+
 // Menu, weapon modification ///////////////////////////////////////////////////
 
 	BIO_MENU_WEAPMOD_UNMUTATED =
@@ -778,6 +782,9 @@
 		"\c[White]Multi-barrelled weapons like the Coachgun "
 		"always allow firing only one barrel "
 		"(try your \c[LightBlue]alt-fire\c[White] button).\c-";
+	BIO_QUITMSG_SUPPLYBOXES =
+		"Stay alert for supply boxes, squirreled away in secret places."
+		"Each contains a mutated weapon.";
 
 	BIO_QUITMSG_DRONES =
 		"\c[Purple]Please don't go. The drones need you. They look up to you.\c-";

@@ -33,6 +33,63 @@ class BIO_EventHandler : EventHandler
 		Globals = BIO_Global.Create();
 	}
 
+	final override void WorldLoaded(WorldEvent event)
+	{
+		if (BIO_debug)
+			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Handling WorldLoaded event...");
+
+		if (Level.Total_Secrets < 1)
+			return;
+
+		for (uint i = 0; i < Level.Sectors.Size(); i++)
+		{
+			if (!Level.Sectors[i].IsSecret())
+				continue;
+			
+			if (Level.Sectors[i].ThingList == null)
+			{
+				SpawnSupplyBox(
+					(Level.Sectors[i].CenterSpot, Level.Sectors[i].CenterFloor())
+				);
+			}
+			else
+			{
+				Actor tgt = null;
+
+				do
+				{
+					for (Actor a = Level.Sectors[i].ThingList; a != null; a = a.SNext)
+					{
+						if (Random[BIO_Loot](1, 3) == 1)
+						{
+							tgt = a;
+							break;
+						}
+					}
+				} while (tgt == null);
+
+				SpawnSupplyBox(tgt.Pos);
+			}
+		}
+	}
+
+	private void SpawnSupplyBox(Vector3 position)
+	{
+		let spawner = Actor.Spawn('BIO_WanderingSpawner', position);
+
+		if (spawner == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Failed to create supply box's wandering spawner at position: "
+				"(%.2f, %.2f, %.2f)", position.X, position.Y, position.Z
+			);
+			return;
+		}
+
+		BIO_WanderingSpawner(spawner).Initialize('BIO_SupplyBox', 10);
+	}
+
 	const EVENT_FIRSTPKUP = "bio_firstpkup";
 
 	static clearscope void BroadcastFirstPickup(name typeName)
@@ -759,39 +816,20 @@ extend class BIO_EventHandler
 
 		let weap = BIO_Weapon(spawned);
 
-		if (!weap.Unique)
-		{
-			weap.LazyInit();
+		uint gcf = 1, gcc = 1;
 
-			if (weap.ModGraph == null)
-				weap.ModGraph = BIO_WeaponModGraph.Create(weap.GraphQuality);
+		if (mons.bBoss)
+			gcf++;
 
-			int rf = 1, rc = 1;
+		if (BIO_Utils.DoomRLMonsterPack())
+			gcc++;
 
-			if (mons.bBoss)
-			{
-				rc++;
-				weap.ModGraph.TryGenerateNodes(1);
-			}
-
-			if (BIO_Utils.DoomRLMonsterPack())
-				rc++;
-
-			let sim = BIO_WeaponModSimulator.Create(weap);
-			sim.InsertNewGenesAtRandom(
-				Min(weap.ModGraph.Nodes.Size() - 1, uint(Random[BIO_Loot](rf, rc))),
-				noDuplication: true
-			);
-
-			if (sim.ContainsGeneByLootWeight(BIO_Gene.LOOTWEIGHT_VERYRARE))
-				S_StartSound("bio/loot/veryrare", CHAN_AUTO);
-			else if (sim.ContainsGeneByLootWeight(BIO_Gene.LOOTWEIGHT_RARE))
-				S_StartSound("bio/loot/rare", CHAN_AUTO);
-
-			sim.CommitAndClose();
-		}
-
-		weap.SetState(weap.FindState('Spawn'));
+		weap.SpecialLootMutate(
+			extraNodes: mons.bBoss ? 1 : 0,
+			geneCount: uint(Random[BIO_Loot](gcf, gcc)),
+			noDuplicateGenes: true,
+			raritySound: true
+		);
 	}
 }
 

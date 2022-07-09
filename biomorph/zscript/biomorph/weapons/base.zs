@@ -1089,6 +1089,42 @@ extend class BIO_Weapon
 		SetTag(ColoredTag());
 	}
 
+	// Used for supply box weapons and Legendary drops.
+	void SpecialLootMutate(
+		uint extraNodes = 0,
+		uint geneCount = 1,
+		bool noDuplicateGenes = false,
+		bool raritySound = true
+	)
+	{
+		if (Unique)
+			return;
+
+		LazyInit();
+
+		if (ModGraph == null)
+			ModGraph = BIO_WeaponModGraph.Create(GraphQuality);
+
+		ModGraph.TryGenerateNodes(extraNodes);
+		let sim = BIO_WeaponModSimulator.Create(self);
+
+		sim.InsertNewGenesAtRandom(
+			Min(ModGraph.Nodes.Size() - 1, geneCount),
+			noDuplication: noDuplicateGenes
+		);
+
+		if (raritySound)
+		{
+			if (sim.ContainsGeneByLootWeight(BIO_Gene.LOOTWEIGHT_VERYRARE))
+				S_StartSound("bio/loot/veryrare", CHAN_AUTO);
+			else if (sim.ContainsGeneByLootWeight(BIO_Gene.LOOTWEIGHT_RARE))
+				S_StartSound("bio/loot/rare", CHAN_AUTO);
+		}
+
+		sim.CommitAndClose();
+		SetState(FindState('Spawn'));
+	}
+
 	bool TryEnergyToMatterFeed(bool secondary = false, int multi = 1)
 	{
 		if (CanFireEnergyToMatter(secondary, multi))

@@ -48,6 +48,8 @@ Turbovulcan and Machine Gun HUD sprites are courtesy of ZDoom forum user Sonik.o
 
 Service Pistol and Pump Shotgun muzzle flashes are derived from the sheet at [this ZDoom forum post](https://forum.zdoom.org/viewtopic.php?t=37753#p718629) courtesy of forum user Sgt. Shivers.
 
+Supply Box sprites are derived from Sonik.o.fan's reshading of Doom 64's rocket box sprite, which is itself courtesy of Midway Games Inc.
+
 Volley Gun sprites are courtesy of Superdave, Sonik.o.fan, 1337spy, Bgraybr, Warhawk, DBJ87, and id Software LLC.
 
 ## Audio
