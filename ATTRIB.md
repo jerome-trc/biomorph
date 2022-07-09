@@ -128,6 +128,8 @@ The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), 
 
 BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people/Slave2theLight/sounds/157023/) by freesound user [Slave2theLight](https://freesound.org/people/Slave2theLight), licensed under the Attribution 4.0 License.
 
+COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/sounds/33781/) by freesound user [jobro](https://freesound.org/people/jobro), licensed under the Attribution 3.0 License.
+
 DRY_BAL0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), licensed under Creative Commons 0.
 
 ELECPUFF is courtesy of the Librequake Project.

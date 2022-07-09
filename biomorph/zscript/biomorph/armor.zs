@@ -40,7 +40,6 @@ class BIO_ArmorBonus : ArmorBonus replaces ArmorBonus
 			if (PickupFlash != null)
 				Actor.Spawn(PickupFlash, Pos, ALLOW_REPLACE);
 
-			PlayPickupSound(Owner);
 			MarkAsCollected(Owner);
 		}
 

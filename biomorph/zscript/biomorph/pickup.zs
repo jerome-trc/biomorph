@@ -10,8 +10,30 @@ mixin class BIO_Pickup
 	meta string CollectedMessage;
 	property CollectedMessage: CollectedMessage;
 
+	// Duplicates the behavior of `Inventory::PlayPickupSound()`.
+	private void PlayCollectedSound(Actor collector)
+	{
+		double atten = bNoAttenPickupSound ? ATTN_NONE : ATTN_NORM;
+		int chan;
+		int flags = 0;
+
+		if (collector != null && collector.CheckLocalView())
+		{
+			chan = CHAN_ITEM;
+			flags = CHANF_NOPAUSE | CHANF_MAYBE_LOCAL;
+		}
+		else
+		{
+			chan = CHAN_ITEM;
+			flags = CHANF_MAYBE_LOCAL;
+		}
+
+		collector.A_StartSound("bio/countitem", chan, flags, 1, atten);
+	}
+
 	private void MarkAsCollected(Actor collector)
 	{
+		PlayCollectedSound(collector);
 		PrintPickupMessage(collector.CheckLocalView(), CollectedMessage);
 		bCountItem = false;
 		Level.Found_Items++;
