@@ -329,6 +329,9 @@
 	BIO_WMOD_INCOMPAT_PROJGRAVITY =
 		"This weapon fires no projectiles, "
 		"or all its projectiles are already affected by gravity.";
+	BIO_WMOD_INCOMPAT_MAGSIZETODAMAGE =
+		"This weapon needs either a primary or secondary magazine "
+		"that can be reduced by at least 20% and feeds one of its firing modes.";
 	BIO_WMOD_INCOMPAT_MINFIRETIMES =
 		"This weapon can't fire any faster than it already does.";
 	BIO_WMOD_INCOMPAT_MINRELOADTIMES =
@@ -336,9 +339,8 @@
 	BIO_WMOD_INCOMPAT_NODAMAGE = "This weapon deals no damage.";
 	BIO_WMOD_INCOMPAT_NOFIRETIMES =
 		"This weapon has no modifiable fire timings.";
-	BIO_WMOD_INCOMPAT_NOMAGAZINE =
-		"No valid primary or secondary magazine,\n"
-		"or no reserve ammo type."
+	BIO_WMOD_INCOMPAT_NOMAGAZINES =
+		"This weapon isn't magazine-fed in any way.";
 	BIO_WMOD_INCOMPAT_NOMELEEDAMAGE =
 		"This weapon is incapable of dealing melee damage.";
 	BIO_WMOD_INCOMPAT_NOPIPELINES = "This weapon doesn't fire anything.";
@@ -353,6 +355,9 @@
 		"None of this weapon's firing modes emit rockets or grenades.";
 	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =
 		"This weapon has already been modified to add projectile gravity.";
+	BIO_WMOD_INCOMPAT_RESERVEFEED =
+		"No valid primary or secondary magazine,\n"
+		"or no reserve ammo type."
 	BIO_WMOD_INCOMPAT_SPLASHTOHIT =
 		"None of this weapon's fire modes has splash damage "
 		"and also allows damage mutation.";
@@ -412,6 +417,16 @@
 	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
+
+	BIO_WMOD_MAGSIZETODAMAGE_SUMM =
+		"\c[Brick]20% reduced magazine size\n"
+		"\c[Green]20% increased damage";
+	BIO_WMOD_MAGSIZETODAMAGE_DESC_1 =
+		"\c[Brick]%d% reduced \c[White]primary magazine size\n"
+		"\c[Green]%d%% increased damage \c[White]for applicable firing modes";
+	BIO_WMOD_MAGSIZETODAMAGE_DESC_2 =
+		"\c[Brick]%d% reduced \c[White]secondary magazine size\n"
+		"\c[Green]%d%% increased damage \c[White]for applicable firing modes";
 
 	BIO_WMOD_NTHROUNDCOST_SUMM = "\c[Green]Every 5th shot costs no ammo";
 	BIO_WMOD_NTHROUNDCOST_DESC_NTHFREE = "\c[Green]Free shot every %d rounds";
@@ -564,6 +579,9 @@
 
 	BIO_MGENE_MAGSIZE_TAG = "\c[MGene]High-Capacity\c[White] Gene\c-";
 	BIO_MGENE_MAGSIZE_PKUP = "Collected a %s.";
+
+	BIO_MGENE_MAGSIZETODAMAGE_TAG = "\c[MGene]Skirmisher\c[White] Gene\c-";
+	BIO_MGENE_MAGSIZETODAMAGE_PKUP = "Collected a %s.";
 
 	BIO_MGENE_NTHROUNDCOST_TAG = "\c[MGene]Ammo Thrift\c[White] Gene\c-";
 	BIO_MGENE_NTHROUNDCOST_PKUP = "Collected an %s.";

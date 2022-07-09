@@ -461,6 +461,8 @@ class BIO_WeaponModSimulator : Thinker
 
 		Weap.Reset();
 		Weap.SetDefaults();
+		Weap.SetupAmmo();
+		Weap.SetupMagazines();
 
 		// First pass sets node defaults
 
@@ -586,8 +588,6 @@ class BIO_WeaponModSimulator : Thinker
 		}
 
 		Simulate();
-		Weap.SetupAmmo();
-		Weap.SetupMagazines();
 	}
 
 	void PostCommit()

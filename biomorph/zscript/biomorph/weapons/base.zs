@@ -684,7 +684,7 @@ extend class BIO_Weapon
 
 	bool Magazineless(bool secondary = false) const
 	{
-		return Magazine1 == null && Magazine2 == null;
+		return !(Magazine1 is 'BIO_Magazine') && !(Magazine2 is 'BIO_Magazine');
 	}
 
 	bool SufficientAmmo(bool secondary = false, int multi = 1) const
@@ -1025,7 +1025,8 @@ extend class BIO_Weapon
 				Magazine2.Amount = Max(Default.MagazineSize2, 0);
 		}
 
-		if (MagazineType1 == MagazineType2) Magazine2 = Magazine1;
+		if (MagazineType1 == MagazineType2)
+			Magazine2 = Magazine1;
 	}
 
 	void ClearMagazines(bool secondary = false)
@@ -1034,6 +1035,51 @@ extend class BIO_Weapon
 			Magazine1 = null;
 		else
 			Magazine2 = null;
+	}
+
+	// Empty the magazine and return rounds in it to the reserve, with
+	// consideration given to the relevant reload ratio.
+	void DrainMagazine(bool secondary = false, int toDrain = 0)
+	{
+		Ammo mag = null, reserve = null;
+		int cost = -1, output = -1;
+
+		if (!secondary)
+		{
+			mag = Magazine1;
+			reserve = Ammo1;
+			cost = ReloadCost1;
+			output = ReloadOutput1;
+		}
+		else
+		{
+			mag = Magazine2;
+			reserve = Ammo2;
+			cost = ReloadCost2;
+			output = ReloadOutput2;
+		}
+
+		if (mag == null || reserve == null || !(mag is 'BIO_Magazine'))
+			return;
+
+		if (toDrain <= 0)
+		{
+			if (mag.Amount <= 0)
+				return;
+
+			toDrain = mag.Amount;
+		}
+
+		mag.Amount -= toDrain;
+		let toGive = (toDrain / output) * cost;
+		reserve.Amount = Clamp(reserve.Amount + toGive, 0, reserve.MaxAmount);
+	}
+
+	void DrainMagazineExcess(bool secondary = false)
+	{
+		Ammo mag = !secondary ? Magazine1 : Magazine2;
+		int msize = !secondary ? MagazineSize1 : MagazineSize2;
+		DrainMagazine(secondary, msize - mag.Amount);
 	}
 
 	void Mutate()
@@ -1336,32 +1382,6 @@ extend class BIO_Weapon
 			return state(null);
 		else
 			return ResolveState(fallback);
-	}
-
-	// Clear the magazine and return rounds in it to the reserve, with
-	// consideration given to the relevant reload ratio.
-	protected action void A_BIO_DrainMag(bool secondary = false)
-	{
-		Ammo magItem = null, reserveAmmo = null;
-		int cost = -1, output = -1;
-
-		if (!secondary)
-		{
-			magItem = invoker.Magazine1;
-			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType1));
-			cost = invoker.ReloadCost1;
-			output = invoker.ReloadOutput1;
-		}
-		else
-		{
-			magItem = invoker.Magazine2;
-			reserveAmmo = Ammo(invoker.Owner.FindInventory(invoker.AmmoType2));
-			cost = invoker.ReloadCost2;
-			output = invoker.ReloadOutput2;
-		}
-
-		reserveAmmo.Amount += (magItem.Amount / output) * cost;
-		magItem.Amount -= magItem.Amount;
 	}
 
 	/*	Call from the weapon's `Spawn` state, after two frames of the weapon's 

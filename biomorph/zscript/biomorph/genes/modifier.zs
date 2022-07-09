@@ -245,6 +245,28 @@ class BIO_MGene_MagSize : BIO_ModifierGene
 	}
 }
 
+class BIO_MGene_MagSizeToDamage : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIO_MGENE_MAGSIZETODAMAGE_TAG";
+		Inventory.Icon 'GENDE0';
+		Inventory.PickupMessage "$BIO_MGENE_MAGSIZETODAMAGE_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
+		BIO_Gene.Summary "$BIO_WMOD_MAGSIZETODAMAGE_SUMM";
+		BIO_ModifierGene.ModType 'BIO_WMod_MagSizeToDamage';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
+	}
+
+	States
+	{
+	Spawn:
+		GEND E 6;
+		#### # 6 Bright Light("BIO_MutaGene_LightRed");
+		Loop;
+	}
+}
+
 class BIO_MGene_NthRoundCost : BIO_ModifierGene
 {
 	Default

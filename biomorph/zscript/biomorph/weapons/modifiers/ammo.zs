@@ -377,7 +377,7 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 		if (PrimaryCompatible(context.Weap) || SecondaryCompatible(context.Weap))
 			return true, "";
 
-		return false, "$BIO_WMOD_INCOMPAT_NOMAGAZINE";
+		return false, "$BIO_WMOD_INCOMPAT_RESERVEFEED";
 	}
 
 	private static bool PrimaryCompatible(readOnly<BIO_Weapon> weap)

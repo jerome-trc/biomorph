@@ -38,6 +38,7 @@ class BIO_Magazine : Ammo
 		+INVENTORY.UNDROPPABLE
 		+INVENTORY.UNTOSSABLE
 		+INVENTORY.IGNORESKILL
+
 		Inventory.MaxAmount uint16.MAX;
 		Inventory.PickupMessage
 			"If you see this message, please report a bug to RatCircus.";
