@@ -248,8 +248,8 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 					continue;
 
 				float
-					h = Min(weap.Pipelines[i].HSpread, 0.3),
-					v = Min(weap.Pipelines[i].VSpread, 0.3);
+					h = weap.Pipelines[i].HSpread * 0.15,
+					v = weap.Pipelines[i].VSpread * 0.15;
 
 				HorizChanges[i] -= h;
 				VertChanges[i] -= v;
