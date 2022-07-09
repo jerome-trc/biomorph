@@ -133,13 +133,15 @@ class BIO_WMR_Minivulcan : BIO_WeaponMorphRecipe
 	final override bool Eligible(readOnly<BIO_WeaponModSimulator> sim) const
 	{
 		return
+			sim.GraphIsFull() &&
 			sim.HasModifierWithPipelineFlags(BIO_WPMF_DAMAGE_INC);
 	}
 
 	final override string RequirementString() const
 	{
 		return String.Format(
-			"%s",
+			"%s\n%s",
+			StringTable.Localize("$BIO_WMR_REQ_FULLGRAPH"),
 			StringTable.Localize("$BIO_WMR_REQ_DAMAGEINC_1")
 		);
 	}
