@@ -749,8 +749,23 @@ extend class BIO_EventHandler
 		if (pawn != null)
 			pawn.OnKill(event.Thing, event.Inflictor);
 
-		if (event.Thing.FindInventory(LDToken) && BIO_ldl)
-			SpawnLegendaryLoot(event.Thing);
+		if (event.Thing.FindInventory(LDToken))
+		{
+			switch (BIO_ldl)
+			{
+			case BIO_CV_LDL_WEAP:
+				SpawnLegendaryLootWeapon(event.Thing);
+				break;
+			case BIO_CV_LDL_GENE:
+				SpawnLootGene(event.Thing);
+
+				if (event.Thing.bBoss)
+					SpawnLootGene(event.Thing);
+				break;
+			default:
+				break;
+			}
+		}
 
 		Globals.LootValueBuffer += Globals.GetMonsterValue(event.Thing);
 
@@ -758,20 +773,7 @@ extend class BIO_EventHandler
 		{
 			if (Random[BIO_Loot](1, GENE_CHANCE_DENOM) == 1)
 			{
-				let gene_t = Globals.RandomGeneType();
-				let defs = GetDefaultByType(gene_t);
-
-				if (defs.LootWeight <= BIO_Gene.LOOTWEIGHT_VERYRARE)
-					S_StartSound("bio/loot/veryrare", CHAN_AUTO);
-				else if (defs.LootWeight <= BIO_Gene.LOOTWEIGHT_RARE)
-					S_StartSound("bio/loot/rare", CHAN_AUTO);
-
-				event.Thing.A_SpawnItemEx(
-					gene_t,
-					0.0, 0.0, 32.0,
-					FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
-					FRandom(0.0, 360.0)
-				);
+				SpawnLootGene(event.Thing);
 			}
 			else
 			{
@@ -793,7 +795,25 @@ extend class BIO_EventHandler
 		}
 	}
 
-	private void SpawnLegendaryLoot(Actor mons)
+	private void SpawnLootGene(Actor mons)
+	{
+		let gene_t = Globals.RandomGeneType();
+		let defs = GetDefaultByType(gene_t);
+
+		if (defs.LootWeight <= BIO_Gene.LOOTWEIGHT_VERYRARE)
+			S_StartSound("bio/loot/veryrare", CHAN_AUTO);
+		else if (defs.LootWeight <= BIO_Gene.LOOTWEIGHT_RARE)
+			S_StartSound("bio/loot/rare", CHAN_AUTO);
+
+		mons.A_SpawnItemEx(
+			gene_t,
+			0.0, 0.0, 32.0,
+			FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
+			FRandom(0.0, 360.0)
+		);
+	}
+
+	private void SpawnLegendaryLootWeapon(Actor mons)
 	{
 		bool success = false;
 		Actor spawned = null;

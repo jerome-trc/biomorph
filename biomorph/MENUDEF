@@ -12,7 +12,7 @@ OptionMenu "BIO_Options"
 
 	StaticText ""
 	StaticText "$BIO_OPTCAT_BALANCE"
-	Option "$BIO_OPTLBL_LDL", "BIO_ldl", "OnOff"
+	Option "$BIO_OPTLBL_LDL", "BIO_ldl", "BIO_LegenDoomLite"
 	BTooltip "$BIO_OPTTIP_LDL"
 
 	StaticText ""
@@ -55,6 +55,13 @@ OptionValue "BIO_BerserkSwitch"
 	0, "$BIO_OPTVAL_BSKS_NONE"
 	1, "$BIO_OPTVAL_BSKS_MELEE"
 	2, "$BIO_OPTVAL_BSKS_FIRSTONLY"
+}
+
+OptionValue "BIO_LegenDoomLite"
+{
+	0, "$BIO_OPTVAL_LDL_NONE"
+	1, "$BIO_OPTVAL_LDL_GENE"
+	2, "$BIO_OPTVAL_LDL_WEAP"
 }
 
 OptionValue "BIO_MultiBarrelFire"

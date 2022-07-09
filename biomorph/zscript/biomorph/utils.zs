@@ -989,6 +989,13 @@ enum BIO_CVar_BerserkSwitch : int
 	BIO_CV_BSKS_ONLYFIRST = 2
 }
 
+enum BIO_CVar_LegenDoomLite : int
+{
+	BIO_CV_LDL_NONE = 0,
+	BIO_CV_LDL_GENE = 1,
+	BIO_CV_LDL_WEAP = 2
+}
+
 // For the Double Shotgun and similar weapons, does primary fire multiple
 // barrels while secondary fires one, or vice versa? Default is 0, the former.
 enum BIO_CVar_MultiBarrelFire : int
