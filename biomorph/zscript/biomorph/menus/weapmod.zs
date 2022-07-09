@@ -483,8 +483,41 @@ extend class BIO_WeaponModMenu
 
 	private void DrawTooltip(string tooltip)
 	{
-		Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
-			(MousePos.X / CleanXFac) + 8, (MousePos.Y / CleanYFac) + 8, tooltip,
+		let lines = SmallFont.BreakLines(tooltip, 224);
+		string text = "";
+		int maxWidth = 0;
+
+		for (uint i = 0; i < lines.Count(); i++)
+		{
+			text.AppendFormat("%s\n", lines.StringAt(i));
+			maxWidth = Max(maxWidth, lines.StringWidth(i));
+		}
+
+		text.DeleteLastCharacter();
+
+		let dpx = (MousePos.X / CleanXFac) + 8;
+		let twac = maxWidth * CleanXFac;
+
+		if ((Screen.GetWidth() - (dpx * CleanXFac)) < twac)
+		{
+			dpx -= maxWidth;
+			dpx -= 8;
+		}
+
+		let dpy = (MousePos.Y / CleanYFac) + 8;
+		let height = SmallFont.GetHeight() * (lines.Count() + 1);
+		let thac = height * CleanYFac;
+
+		if ((Screen.GetHeight() - (dpy * CleanYFac)) < thac)
+		{
+			dpy -= height;
+			dpy -= 8;
+		}
+
+		Screen.DrawText(
+			SmallFont, Font.CR_UNTRANSLATED,
+			dpx, dpy,
+			text,
 			DTA_VIRTUALWIDTHF, CleanWidth, DTA_VIRTUALHEIGHTF, CleanHeight,
 			DTA_KEEPRATIO, true
 		);

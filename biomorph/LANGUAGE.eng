@@ -323,8 +323,8 @@
 		"This weapon already has to spool up to fire.";
 	BIO_WMOD_INCOMPAT_AMMOLESS = "This weapon doesn't use ammunition.";
 	BIO_WMOD_INCOMPAT_ETMF =
-		"This weapon doesn't use ammunition,\n"
-		"doesn't fire real matter, or is\n"
+		"This weapon doesn't use ammunition, "
+		"doesn't fire real matter, or is "
 		"otherwise unsuited to energy-to-matter conversion.";
 	BIO_WMOD_INCOMPAT_PROJGRAVITY =
 		"This weapon fires no projectiles, "
@@ -356,8 +356,7 @@
 	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =
 		"This weapon has already been modified to add projectile gravity.";
 	BIO_WMOD_INCOMPAT_RESERVEFEED =
-		"No valid primary or secondary magazine,\n"
-		"or no reserve ammo type."
+		"No valid primary or secondary magazine, or no reserve ammo type."
 	BIO_WMOD_INCOMPAT_SPLASHTOHIT =
 		"None of this weapon's fire modes has splash damage "
 		"and also allows damage mutation.";
@@ -437,7 +436,7 @@
 		"\c[Green]+20% damage to affected projectiles";
 
 	BIO_WMOD_PROXMINE_SUMM =
-		"\c[White]Change from firing rockets/grenades to bouncy proximity mines\n";
+		"\c[White]Change from firing rockets/grenades to bouncy proximity mines";
 
 	BIO_WMOD_RECHAMBERUP_SUMM =
 		"\c[Brick]Double ammo usage\c[White] but \c[Green]double damage";
