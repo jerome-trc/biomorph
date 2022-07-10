@@ -1098,7 +1098,7 @@ extend class BIO_Weapon
 		LazyInit();
 
 		if (ModGraph == null)
-			ModGraph = BIO_WeaponModGraph.Create(GraphQuality);
+			Mutate();
 
 		ModGraph.TryGenerateNodes(extraNodes);
 		let sim = BIO_WeaponModSimulator.Create(self);
