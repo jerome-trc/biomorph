@@ -639,10 +639,10 @@
 	BIO_MGENE_SPREAD_TAG = "\c[MGene]Accurised\c[White] Gene\c-";
 	BIO_MGENE_SPREAD_PKUP = "Collected an %s.";
 
-	BIO_MGENE_SPREADNARROW_TAG = "\c[MGene]Duckbill Choke\c[White] Gene\c-";
+	BIO_MGENE_SPREADNARROW_TAG = "\c[MGene]Crab-claw Choke\c[White] Gene\c-";
 	BIO_MGENE_SPREADNARROW_PKUP = "Collected a %s.";
 
-	BIO_MGENE_SPREADWIDEN_TAG = "\c[MGene]Crab-claw Choke\c[White] Gene\c-";
+	BIO_MGENE_SPREADWIDEN_TAG = "\c[MGene]Duckbill Choke\c[White] Gene\c-";
 	BIO_MGENE_SPREADWIDEN_PKUP = "Collected a %s.";
 
 	BIO_MGENE_SHELLTOSLUG_TAG = "\c[MGene]Refit: Slug\c[White] Gene\c-";
