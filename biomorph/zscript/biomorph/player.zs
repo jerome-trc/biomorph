@@ -185,7 +185,7 @@ class BIO_Player : DoomPlayer
 		{
 			if (resetAmmo)
 			{
-				if (i is 'Ammo' || i is 'Backpack')
+				if (i is 'Ammo' || i is 'BackpackItem')
 					toDestroy.Push(i);
 			}
 
@@ -206,7 +206,7 @@ class BIO_Player : DoomPlayer
 				else
 					item.Amount = 0;
 			}
-			else if (item is 'Weapon' || item is 'Backpack')
+			else if (item is 'Weapon' || item is 'BackpackItem')
 			{
 				item.Destroy();
 			}
