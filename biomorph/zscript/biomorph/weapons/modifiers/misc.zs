@@ -178,11 +178,17 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 
 	final override void OnTick(BIO_Weapon weap)
 	{
+		if (weap.Owner == null)
+			return;
+
 		SmartAim.Next(PlayerPawn(weap.Owner));
 	}
 
 	final override void RenderOverlay(BIO_RenderContext context) const
 	{
+		if (AutomapActive)
+			return;
+
 		let res = (Screen.GetWidth(), Screen.GetHeight());
 
 		// Draw the meta-crosshair over the screen centre
@@ -207,6 +213,11 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 			ReticleTexture, false,
 			drawPos.X, drawPos.Y, DTA_CENTEROFFSET, true
 		);
+	}
+
+	final override void OnDrop(BIO_Weapon _, BIO_Player __)
+	{
+		SmartAim.Reset();
 	}
 
 	final override string Description(readOnly<BIO_Weapon> _) const
