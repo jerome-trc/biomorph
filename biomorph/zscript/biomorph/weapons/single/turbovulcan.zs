@@ -16,7 +16,7 @@ class BIO_Turbovulcan : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_HIGH;
 		Weapon.UpSound "bio/weap/gunswap";
 
-		BIO_Weapon.GraphQuality 4;
+		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'Clip';
 		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_Turbovulcan';
 		BIO_Weapon.ModCostMultiplier 3;
