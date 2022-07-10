@@ -23,6 +23,7 @@ class BIO_Microvulcan : BIO_Weapon
 			"$BIO_MICROVULCAN_SCAV";
 		BIO_Weapon.ScavengePersist false;
 		BIO_Weapon.SpawnCategory BIO_WSCAT_CHAINGUN;
+		BIO_Weapon.Summary "$BIO_MICROVULCAN_SUMM";
 	}
 
 	States

@@ -142,10 +142,10 @@ class BIO_Player : DoomPlayer
 		return ret;
 	}
 
-	void ExamineWeapon(BIO_Weapon weap, uint upTime)
+	void ExamineWeapon(BIO_Weapon weap)
 	{
 		ExaminedWeapon = weap;
-		ExamineTimer = upTime;
+		ExamineTimer = TICRATE * 5;
 		A_StartSound("bio/ui/beep", attenuation: 1.2);
 	}
 

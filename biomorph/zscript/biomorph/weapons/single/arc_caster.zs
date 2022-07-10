@@ -28,6 +28,7 @@ class BIO_ArcCaster : BIO_Weapon
 			"$BIO_ARCCASTER_PKUP",
 			"$BIO_ARCCASTER_SCAV";
 		BIO_Weapon.SpawnCategory BIO_WSCAT_PLASRIFLE;
+		BIO_Weapon.Summary "$BIO_ARCCASTER_SUMM";
 	}
 
 	States

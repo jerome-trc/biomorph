@@ -23,6 +23,7 @@ class BIO_ServicePistol : BIO_Weapon
 			"";
 		BIO_Weapon.SwitchSpeeds 14, 14;
 		BIO_Weapon.SpawnCategory BIO_WSCAT_PISTOL;
+		BIO_Weapon.Summary "$BIO_SERVICEPISTOL_SUMM";
 	}
 
 	States

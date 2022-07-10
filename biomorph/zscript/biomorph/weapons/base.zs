@@ -50,6 +50,9 @@ class BIO_Weapon : DoomWeapon abstract
 	meta uint ModCostMultiplier;
 	property ModCostMultiplier: ModCostMultiplier;
 
+	meta string Summary;
+	property Summary: Summary;
+
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
 
@@ -229,8 +232,6 @@ class BIO_Weapon : DoomWeapon abstract
 			Affixes[i].OnSelect(self);
 	}
 
-	virtual void Summary(in out Array<string> strings) const {}
-
 	virtual ui void RenderOverlay(BIO_RenderContext context) const
 	{
 		for (uint i = 0; i < Affixes.Size(); i++)
@@ -271,17 +272,11 @@ extend class BIO_Weapon
 	final override bool Used(Actor user)
 	{
 		let pawn = BIO_Player(user);
-		if (pawn == null) return false;
 
-		Array<string> strings;
+		if (pawn == null)
+			return false;
 
-		// Scale message uptime off of number of characters in both readouts
-		int upTime = TICRATE;
-
-		for (uint i = 0; i < strings.Size(); i++)
-			upTime += strings[i].Length();
-
-		pawn.ExamineWeapon(self, Max(TICRATE, upTime));
+		pawn.ExamineWeapon(self);
 
 		// Don't consume the interaction so players can open doors and so on
 		return false;

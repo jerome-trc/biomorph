@@ -165,11 +165,19 @@
 	BIO_ARCCASTER_PKUP = "Procured an %s.";
 	BIO_ARCCASTER_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_ARCCASTER_OB = "%k electrocuted %o with an %s.";
+	BIO_ARCCASTER_SUMM =
+		"\c[White]Medium-range, monster-penetrating electric arc\n"
+		"\c[White]Feeds from cell reserves\n"
+		"\c[White]Very high rate-of-fire";
 
 	BIO_AUTOSHOTGUN_TAG = "Auto Shotgun";
 	BIO_AUTOSHOTGUN_PKUP = "Procured an %s.";
 	BIO_AUTOSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_AUTOSHOTGUN_OB = "%k ploughed %o down with an %s.";
+	BIO_AUTOSHOTGUN_SUMM =
+		"\c[White]High rate-of-fire\n"
+		"\c[White]Same accuracy as the Pump Shotgun\n"
+		"\c[White]8-round magazine, long reload time";
 
 	BIO_BFG_TAG = "BFG9000";
 	BIO_BFG_PKUP = "Procured a %s.";
@@ -193,16 +201,27 @@
 	BIO_MACHINEGUN_PKUP = "Procured a %s.";
 	BIO_MACHINEGUN_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_MACHINEGUN_OB = "%k gunned %o down with a %s.";
+	BIO_MACHINEGUN_SUMM =
+		"\c[White]High rate-of-fire\n"
+		"\c[White]100-round magazine\n"
+		"\c[White]Same rate-of-fire as the Microvulcan, but more accurate";
 
 	BIO_MICROVULCAN_TAG = "Microvulcan";
 	BIO_MICROVULCAN_PKUP = "Procured a %s.";
 	BIO_MICROVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_MICROVULCAN_OB = "%k shredded %o with a %s.";
+	BIO_MICROVULCAN_SUMM =
+		"\c[White]High rate-of-fire\n"
+		"\c[White]Feeds from bullet reserves";
 
 	BIO_MINIVULCAN_TAG = "Minivulcan";
 	BIO_MINIVULCAN_PKUP = "Procured a %s.";
 	BIO_MINIVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_MINIVULCAN_OB = "%k honeycombed %o with a %s.";
+	BIO_MINIVULCAN_SUMM =
+		"\c[White]High rate-of-fire\n"
+		"\c[White]Significantly more damaging than Microvulcan\n"
+		"\c[White]Feeds from bullet reserves";
 
 	BIO_PLASMARIFLE_TAG = "Plasma Rifle";
 	BIO_PLASMARIFLE_PKUP = "Procured a %s.";
@@ -222,11 +241,19 @@
 	BIO_SERVICEPISTOL_TAG = "Service Pistol";
 	BIO_SERVICEPISTOL_PKUP = "Procured a %s.";
 	BIO_SERVICEPISTOL_OB = "%k served %o summary execution with a %s.";
+	BIO_SERVICEPISTOL_SUMM =
+		"\c[White]Magazine-fed with infinite ammo reserve\n"
+		"\c[White]Mid-high rate-of-fire\n"
+		"\c[White]Accurate";
 
 	BIO_TURBOVULCAN_TAG = "Turbovulcan";
 	BIO_TURBOVULCAN_PKUP = "Procured a %s.";
 	BIO_TURBOVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_TURBOVULCAN_OB = "%k perforated %o with a %s.";
+	BIO_TURBOVULCAN_SUMM =
+		"\c[White]Very high rate-of-fire\n"
+		"\c[White]Requires spooling before firing\n"
+		"\c[White]Feeds from bullet reserves";
 
 	BIO_VOLLEYGUN_TAG = "Volley Gun";
 	BIO_VOLLEYGUN_PKUP = "Procured a %s.";

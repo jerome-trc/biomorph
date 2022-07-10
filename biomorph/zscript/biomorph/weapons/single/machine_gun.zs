@@ -26,6 +26,7 @@ class BIO_MachineGun : BIO_Weapon
 			"$BIO_MACHINEGUN_SCAV";
 		BIO_Weapon.ScavengePersist false;
 		BIO_Weapon.SpawnCategory BIO_WSCAT_CHAINGUN;
+		BIO_Weapon.Summary "$BIO_MACHINEGUN_SUMM";
 	}
 
 	States

@@ -23,6 +23,7 @@ class BIO_Turbovulcan : BIO_Weapon
 		BIO_Weapon.PickupMessages
 			"$BIO_TURBOVULCAN_PKUP",
 			"$BIO_TURBOVULCAN_SCAV";
+		BIO_Weapon.Summary "$BIO_TURBOVULCAN_SUMM";
 	}
 
 	States

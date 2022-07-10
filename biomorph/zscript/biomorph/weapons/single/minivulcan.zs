@@ -21,6 +21,7 @@ class BIO_Minivulcan : BIO_Weapon
 		BIO_Weapon.PickupMessages
 			"$BIO_MINIVULCAN_PKUP",
 			"$BIO_MINIVULCAN_SCAV";
+		BIO_Weapon.Summary "$BIO_MINIVULCAN_SUMM";
 	}
 
 	States

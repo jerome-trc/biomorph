@@ -302,26 +302,66 @@ class BIO_StatusBar : BaseStatusBar
 		// Leave room for automap timers
 		int weapInfoY = leftSide ? HUDExamOffsY.GetInt() : HUDWeapOffsY.GetInt();
 
-		DrawInventoryIcon(weap, (xPos, weapInfoY),
+		DrawInventoryIcon(
+			weap, (xPos, weapInfoY),
 			!leftSide ?
 				DI_SCREEN_RIGHT_TOP | DI_ITEM_RIGHT_TOP :
-				DI_SCREEN_LEFT_TOP | DI_ITEM_LEFT_TOP);
+				DI_SCREEN_LEFT_TOP | DI_ITEM_LEFT_TOP
+		);
 
 		weapInfoY += 32;
 
-		DrawString(Font_Small, weap.GetTag(), (xPos, weapInfoY),
-			align, Font.CR_UNTRANSLATED);
+		DrawString(
+			Font_Small,
+			weap.GetTag(),
+			(xPos, weapInfoY),
+			align,
+			Font.CR_UNTRANSLATED
+		);
 
-		// Blank line between weapon's tag and its summary
-		weapInfoY += 32;
+		// Summaries and mod info are only drawn when examining a weapon
+		if (!leftSide)
+			return;
 
-		Array<string> weapStrings;
-		weap.Summary(weapStrings);
-
-		for (uint i = 0; i < weapStrings.Size(); i++)
+		if (weap.Summary.Length() > 0)
 		{
-			DrawString(Font_Small, weapStrings[i], (xPos, weapInfoY),
-				align, Font.CR_UNTRANSLATED);
+			weapInfoY += 16;
+			Array<string> lines;
+			StringTable.Localize(weap.Summary).Split(lines, "\n");
+
+			for (uint i = 0; i < lines.Size(); i++)
+			{
+				DrawString(
+					Font_Small,
+					lines[i],
+					(xPos, weapInfoY),
+					align, Font.CR_UNTRANSLATED
+				);
+				weapInfoY += 8;
+			}
+		}
+		else
+		{
+			weapInfoY += 8;
+		}
+
+		if (weap.ModGraph == null)
+			return;
+
+		weapInfoY += 8;
+
+		for (uint i = 1; i < weap.ModGraph.Nodes.Size(); i++)
+		{
+			if (weap.ModGraph.Nodes[i].GeneType == null)
+				continue;
+
+			DrawString(
+				Font_Small,
+				GetDefaultByType(weap.ModGraph.Nodes[i].GeneType).GetTag(),
+				(xPos, weapInfoY),
+				align,
+				Font.CR_UNTRANSLATED
+			);
 
 			weapInfoY += 8;
 		}
