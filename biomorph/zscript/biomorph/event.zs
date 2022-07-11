@@ -103,6 +103,7 @@ extend class BIO_EventHandler
 {
 	enum GlobalRegen
 	{
+		GLOBALREGEN_LOOTCORE,
 		GLOBALREGEN_WEAPLOOT,
 		GLOBALREGEN_MUTALOOT,
 		GLOBALREGEN_GENELOOT,
@@ -364,6 +365,13 @@ extend class BIO_EventHandler
 
 		switch (event.Args[0])
 		{
+		case GLOBALREGEN_LOOTCORE:
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Regenerating loot core subsystem..."
+			);
+			Globals.RegenLootCore();
+			return;
 		case GLOBALREGEN_WEAPLOOT:
 			Console.Printf(
 				Biomorph.LOGPFX_INFO ..
@@ -764,6 +772,27 @@ extend class BIO_EventHandler
 			default:
 				break;
 			}
+		}
+
+		for (uint i = 0; i < Globals.MonsterLoot.Size(); i++)
+		{
+			if (Globals.MonsterLoot[i].Exact)
+			{
+				if (event.Thing.GetClass() != Globals.MonsterLoot[i].MonsterType)
+					continue;
+			}
+			else
+			{
+				if (!(event.Thing is Globals.MonsterLoot[i].MonsterType))
+					continue;
+			}
+
+			event.Thing.A_SpawnItemEx(
+				Globals.MonsterLoot[i].SpawnerType,
+				0.0, 0.0, 32.0,
+				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
+				FRandom(0.0, 360.0)
+			);
 		}
 
 		Globals.LootValueBuffer += Globals.GetMonsterValue(event.Thing);

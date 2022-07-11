@@ -67,6 +67,9 @@ class BIO_Utils abstract
 
 		return ret;
 	}
+
+	// So that actor types can be retrieved from DECORATE code in one line.
+	static class<Actor> TypeFromName(name typename) { return typename; }
 }
 
 // Array helpers ///////////////////////////////////////////////////////////////
@@ -1100,11 +1103,8 @@ class BIO_PermanentInventory : Inventory abstract
 	}
 }
 
-class BIO_WanderingSpawner : Actor
+class BIO_IntangibleActor : Actor abstract
 {
-	private class<Actor> ToSpawn;
-	private uint WanderCount;
-
 	Default
 	{
 		-SOLID
@@ -1121,8 +1121,18 @@ class BIO_WanderingSpawner : Actor
 		Height 8;
 		Radius 16;
 		RenderStyle 'None';
-		Speed 15;
 	}
+}
+
+class BIO_WanderingSpawner : BIO_IntangibleActor
+{
+	private class<Actor> ToSpawn;
+	private uint WanderCount;
+
+	Default
+	{
+		Speed 15;
+	}	
 
 	States
 	{

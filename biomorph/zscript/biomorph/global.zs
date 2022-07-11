@@ -21,7 +21,7 @@ class BIO_Global : Thinker
 		ret.PopulateMutagenLootTable();
 		ret.PopulateGeneLootTable();
 		ret.PopulateWeaponMorphCache();
-		ret.LootSetup();
+		ret.SetupLootCore();
 
 		for (uint i = 0; i < __BIO_WSCAT_COUNT__; i++)
 		{
@@ -383,7 +383,35 @@ extend class BIO_Global
 	}
 }
 
-// Loot value buffer and related symbols.
+class BIO_MonsterLootPair
+{
+	class<Actor> MonsterType;
+	class<BIO_LootSpawner> SpawnerType;
+	// If `true`, check `GetClass() == MonsterType`.
+	// Else, check `Monster is MonsterType`.
+	bool Exact;
+}
+
+class BIO_LootSpawner : BIO_IntangibleActor abstract
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 1 { invoker.SpawnLoot(); }
+		Stop;
+	}
+
+	abstract void AssociatedMonsters(
+		in out Array<class<Actor> > types,
+		in out Array<bool> exact
+	) const;
+
+	protected abstract void SpawnLoot() const;
+}
+
+// Loot core subsystem. Includes the loot value buffer and multiplier,
+// list of monsters which give 0 value, and monster/loot spawner key-value pairs.
 extend class BIO_Global
 {
 	const LOOT_VALUE_THRESHOLD = 800;
@@ -396,6 +424,8 @@ extend class BIO_Global
 	private Array<class<Actor> > ZeroValueMonsters;
 	private float LootValueMultiplier; // Applied after all other factors.
 	uint LootValueBuffer;
+
+	Array<BIO_MonsterLootPair> MonsterLoot;
 
 	bool DrainLootValueBuffer()
 	{
@@ -444,9 +474,63 @@ extend class BIO_Global
 		LootValueMultiplier = Max(0.0, LootValueMultiplier + change);		
 	}
 
-	private void LootSetup()
+	private void SetupLootCore()
 	{
 		LootValueMultiplier = 1.0;
+
+		for (uint i = 0; i < AllActorClasses.Size(); i++)
+		{
+			let loot_t = (class<BIO_LootSpawner>)(AllActorClasses[i]);
+
+			if (loot_t == null || loot_t.IsAbstract())
+				continue;
+
+			Array<class<Actor> > monstypes;
+			Array<bool> exact;
+
+			GetDefaultByType(loot_t).AssociatedMonsters(monstypes, exact);
+
+			if (monstypes.Size() < 1)
+			{
+				Console.Printf(
+					Biomorph.LOGPFX_WARN ..
+					"Loot spawner type `%s` has no associated monsters, and will "
+					"not be registered.", loot_t.GetClassName()
+				);
+				continue;
+			}
+
+			if (monstypes.Size() < exact.Size())
+			{
+				Console.Printf(
+					Biomorph.LOGPFX_WARN ..
+					"Loot spawner type `%s` does not provide %d subclass-check "
+					"specifications, and will not be registered.",
+					loot_t.GetClassName(), monstypes.Size()
+				);
+				continue;
+			}
+
+			for (uint j = 0; j < monstypes.Size(); j++)
+			{
+				if (monstypes[j] == null)
+				{
+					Console.Printf(
+						Biomorph.LOGPFX_WARN ..
+						"Loot spawner type `%s` tried to register an association "
+						"with a null actor type (index %d).",
+						loot_t.GetClassName(), j
+					);
+					continue;
+				}
+
+				let pair = new('BIO_MonsterLootPair');
+				pair.MonsterType = monstypes[j];
+				pair.SpawnerType = loot_t;
+				pair.Exact = exact[j];
+				MonsterLoot.Push(pair);
+			}
+		}
 	}
 
 	private void PushZeroValueMonster(name typename)
@@ -506,6 +590,13 @@ extend class BIO_Global
 // such as diagnostics and forced data regeneration.
 extend class BIO_Global
 {
+	void RegenLootCore()
+	{
+		ZeroValueMonsters.Clear();
+		MonsterLoot.Clear();
+		SetupLootCore();
+	}
+
 	void RegenWeaponLoot()
 	{
 		for (uint i = 0; i < WeaponLoot.Size(); i++)
@@ -535,9 +626,29 @@ extend class BIO_Global
 	void PrintLootDiag() const
 	{
 		Console.Printf(
-			Biomorph.LOGPFX_INFO ..
-			"Loot value buffer: %d", LootValueBuffer
+			Biomorph.LOGPFX_INFO .. "\n"
+			"\tLoot value buffer: %d\n"
+			"\tLoot value multiplier: %.2f",
+			LootValueBuffer, LootValueMultiplier
 		);
+
+		if (MonsterLoot.Size() > 0)
+		{
+			string mloot = Biomorph.LOGPFX_INFO .. "Monster loot pairs:\n";
+
+			for (uint i = 0; i < MonsterLoot.Size(); i++)
+			{
+				mloot.AppendFormat(
+					"\t%s - %s (exact: %s)\n",
+					MonsterLoot[i].MonsterType.GetClassName(),
+					MonsterLoot[i].SpawnerType.GetClassName(),
+					MonsterLoot[i].Exact ? "true" : "false"
+				);
+			}
+
+			mloot.DeleteLastCharacter();
+			Console.Printf(mloot);
+		}
 
 		for (uint i = 0; i < WeaponLoot.Size(); i++)
 			Console.Printf(Biomorph.LOGPFX_INFO .. WeaponLoot[i].ToString());
