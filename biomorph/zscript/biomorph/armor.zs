@@ -24,7 +24,14 @@ class BIO_ArmorBonus : ArmorBonus replaces ArmorBonus
 		let spct = Clamp(SavePercent, 0.0, 100.0) / 100.0;
 
 		if (armor.SavePercent < spct)
+		{
+			armor.ArmorType = GetClassName();
+			armor.Icon = Icon;
+			armor.MaxAbsorb = MaxAbsorb;
+			armor.MaxFullAbsorb = MaxFullAbsorb;
 			armor.SavePercent = spct;
+			armor.ActualSaveAmount = MaxSaveAmount;
+		}
 
 		// No null check here. I'd prefer to catch VM aborts early in testing
 
@@ -60,6 +67,10 @@ mixin class BIO_Armor
 		{
 			let defs = GetDefaultByType((class<BasicArmorPickup>)(armor.ArmorType));
 			defSaveAmount = defs.SaveAmount;
+		}
+		else if ((class<Armor>)(armor.ArmorType) is 'BasicArmorBonus')
+		{
+			defSaveAmount = 100;
 		}
 
 		if (armor.SavePercent >= spct && armor.Amount < defSaveAmount)
