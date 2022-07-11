@@ -13,5 +13,6 @@ Biomorph is provided under the MIT License; further information is [here](/LICEN
 ## Contents
 
 - The main mod, under `/biomorph`.
+- A compatibility layer for Corruption Cards, adding bespoke gameplay integration, under `/ccards`.
 - Blender files used to generate sprites.
 - A compatibility patch to prevent crashes on WADs which would otherwise override the player class, such as Valiant.

@@ -1,0 +1,2 @@
+server bool BIOCC_enabled = true;
+server int BIOCC_lvalmulti = 10; // Converted to float internally

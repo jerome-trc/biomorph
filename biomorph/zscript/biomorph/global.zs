@@ -27,6 +27,7 @@ class BIO_Global : Thinker
 		ret.PopulateMutagenLootTable();
 		ret.PopulateGeneLootTable();
 		ret.PopulateWeaponMorphCache();
+		ret.LootSetup();
 
 		for (uint i = 0; i < __BIO_WSCAT_COUNT__; i++)
 		{
@@ -399,6 +400,7 @@ extend class BIO_Global
 	// defines them has been loaded.
 	// (Currently unused! Never gets written to or read from. May be used later.)
 	private Array<class<Actor> > ZeroValueMonsters;
+	private float LootValueMultiplier; // Applied after all other factors.
 	uint LootValueBuffer;
 
 	bool DrainLootValueBuffer()
@@ -438,7 +440,19 @@ extend class BIO_Global
 			ret *= 1.2;
 
 		// TODO: Refine further
-		return ret;
+		return ret * LootValueMultiplier;
+	}
+
+	float GetLootValueMultiplier() const { return LootValueMultiplier; }
+
+	void ModifyLootValueMultiplier(float change)
+	{
+		LootValueMultiplier = Max(0.0, LootValueMultiplier + change);		
+	}
+
+	private void LootSetup()
+	{
+		LootValueMultiplier = 1.0;
 	}
 
 	private void PushZeroValueMonster(name typename)

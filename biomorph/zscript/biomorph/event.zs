@@ -614,12 +614,11 @@ extend class BIO_EventHandler
 		let loot = val / BIO_Global.LOOT_VALUE_THRESHOLD;
 
 		Console.Printf(
-			Biomorph.LOGPFX_INFO ..
-			"Total monster value in this level: %d", val
-		);
-		Console.Printf(
-			Biomorph.LOGPFX_INFO ..
-			"Number of times loot value threshold crossed: %d", loot
+			Biomorph.LOGPFX_INFO .. "\n"
+			"\tTotal monster value in this level: %d\n"
+			"\tLoot value multiplier: %.2f\n"
+			"\tNumber of times loot value threshold was crossed: %d",
+			val, Globals.GetLootValueMultiplier(), loot
 		);
 	}
 

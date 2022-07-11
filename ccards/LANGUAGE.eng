@@ -1,0 +1,12 @@
+[eng default]
+
+BIOCC_OPTCAT = "\c[Green]Corruption Cards Integration";
+
+BIOCC_OPTLBL_ENABLED = "Enabled";
+
+BIOCC_OPTLBL_LVALMULTI = "Monster Value Multiplier";
+BIOCC_OPTTIP_LVALMULTI =
+	"Progress gained towards the next loot drop gets multiplied by this number,\n"
+	"times the cumulative tiers of your active deck's cards.\n"
+	"If this is 10, and you have 2 tier 1 cards, incoming monster value is 120%.\n"
+	"Changes to this value only take effect after changing level.";
