@@ -451,7 +451,19 @@ extend class BIO_Global
 
 	private void PushZeroValueMonster(name typename)
 	{
-		ZeroValueMonsters.Push((class<Actor>)(typename));
+		let type = (class<Actor>)(typename);
+
+		if (type == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_WARN ..
+				"Tried to push null type `%s` onto zero value monster array.",
+				typename
+			);
+			return;
+		}
+
+		ZeroValueMonsters.Push(type);
 	}
 
 	private void PopulateZeroValueMonsterCache()
