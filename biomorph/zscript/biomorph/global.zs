@@ -437,7 +437,7 @@ extend class BIO_Global
 		return ret * LootValueMultiplier;
 	}
 
-	float GetLootValueMultiplier() const { return LootValueMultiplier; }
+	clearscope float GetLootValueMultiplier() const { return LootValueMultiplier; }
 
 	void ModifyLootValueMultiplier(float change)
 	{
