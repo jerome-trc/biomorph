@@ -1,6 +1,6 @@
 // (Rat): My kingdom for some honest-to-god sum types
 
-class BIO_WeaponModSimNode
+class BIO_WeaponModSimNode play
 {
 	// This is a reflection of the real state of the weapon's mod graph.
 	// Only gets altered when the simulation gets committed, so it and the graph
@@ -224,7 +224,7 @@ class BIO_WeaponModSimNode
 	}
 }
 
-class BIO_WeaponModSimGene abstract
+class BIO_WeaponModSimGene play abstract
 {
 	BIO_WeaponModifier Modifier;
 
