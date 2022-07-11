@@ -1,11 +1,5 @@
 // Note to reader: classes are defined using `extend` blocks for code folding.
 
-class BIO_PlayerResetTracker
-{
-	PlayerInfo Player;
-	uint Ammo, Health, Armor, Weapons;
-}
-
 class BIO_Global : Thinker
 {
 	static BIO_Global Create()
@@ -539,6 +533,12 @@ extend class BIO_Global
 		Console.Printf(Biomorph.LOGPFX_INFO .. MutagenLoot.ToString());
 		Console.Printf(Biomorph.LOGPFX_INFO .. GeneLoot.ToString());
 	}
+}
+
+class BIO_PlayerResetTracker
+{
+	PlayerInfo Player;
+	uint Ammo, Health, Armor, Weapons;
 }
 
 // Player inventory reset scheduling.
