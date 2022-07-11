@@ -14,19 +14,13 @@ mixin class BIO_Pickup
 	private void PlayCollectedSound(Actor collector)
 	{
 		double atten = bNoAttenPickupSound ? ATTN_NONE : ATTN_NORM;
-		int chan;
-		int flags = 0;
+		int chan = CHAN_AUTO;
+		int flags = CHANF_DEFAULT;
 
 		if (collector != null && collector.CheckLocalView())
-		{
-			chan = CHAN_ITEM;
 			flags = CHANF_NOPAUSE | CHANF_MAYBE_LOCAL;
-		}
 		else
-		{
-			chan = CHAN_ITEM;
 			flags = CHANF_MAYBE_LOCAL;
-		}
 
 		collector.A_StartSound("bio/countitem", chan, flags, 1, atten);
 	}
