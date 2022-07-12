@@ -352,9 +352,14 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Projectile(class<Actor> payload, uint shotCount = 1)
+	BIO_WeaponPipelineBuilder Projectile(
+		class<Actor> payload, uint shotCount = 1,
+		double spawnOffs_xy = 0.0, int spawnHeight = 0
+	)
 	{
-		Pipeline.FireFunctor = new('BIO_FireFunc_Projectile');
+		Pipeline.FireFunctor = new('BIO_FireFunc_Projectile').Init(
+			spawnOffs_xy, spawnHeight
+		);
 		Pipeline.Payload = payload;
 		Pipeline.ShotCount = shotCount;
 		return self;

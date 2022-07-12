@@ -42,13 +42,15 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 
 	override Actor Invoke(BIO_Weapon weap, in out BIO_ShotData shotData) const
 	{
-		return weap.BIO_FireProjectile(shotData.Payload,
+		return weap.BIO_FireProjectile(
+			shotData.Payload,
 			angle: shotData.Angle + FRandom(-shotData.HSpread, shotData.HSpread),
 			spawnOfs_xy: SpawnOffsXY, spawnHeight: SpawnHeight,
-			pitch: shotData.Pitch + FRandom(-shotData.VSpread, shotData.VSpread));
+			pitch: shotData.Pitch + FRandom(-shotData.VSpread, shotData.VSpread)
+		);
 	}
 
-	BIO_FireFunc_Projectile Init(double spawnOffs_xy, int spawnH)
+	BIO_FireFunc_Projectile Init(double spawnOffs_xy = 0.0, int spawnH = 0)
 	{
 		SpawnOffsXY = spawnOffs_xy;
 		SpawnHeight = spawnH;
