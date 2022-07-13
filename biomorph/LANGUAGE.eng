@@ -378,6 +378,7 @@
 	BIO_WMOD_INCOMPAT_NOSPLASH = "This weapon deals no splash damage.";
 	BIO_WMOD_INCOMPAT_NOSPOOL = "This weapon can't be spooled.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
+	BIO_WMOD_INCOMPAT_NOTBFG = "This isn't a BFG-class weapon or similar.";
 	BIO_WMOD_INCOMPAT_NOTTUBEBASED =
 		"None of this weapon's firing modes emit rockets or grenades.";
 	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =

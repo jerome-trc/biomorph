@@ -1,0 +1,17 @@
+[eng default]
+
+// Genes (tags, pickup strings, modifier summaries and descriptions) ///////////
+
+BIORLM_MGENE_TRISTAR_TAG = "\c[MGene]Tristar Blaster\c[White] Gene\c-";
+BIORLM_MGENE_TRISTAR_PKUP = "Collected a %s.";
+BIORLM_WMOD_TRISTAR_SUMM =
+	"\c[White]Convert to firing a 15-degree cone of explosive plasma globes\n"
+	"\c[White]Removes gamma spray, adds splash damage\n"
+	"\c[Brick]Significantly less damage than baseline BFG\n"
+	"\c[Green]Significantly faster-firing than baseline BFG\n"
+	"\c[Green]Ammo usage reduced by two thirds";
+
+// Payloads (puff/projectile tags, functor summaries) //////////////////////////
+
+BIORLM_TRISTARBALL_TAG = "tristar ball";
+BIORLM_TRISTARBALL_TAG_PLURAL = "tristar balls";
