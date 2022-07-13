@@ -4,6 +4,8 @@ GameInfo
    PlayerClasses = "BIO_Player"
 	StatusBarClass = "BIO_StatusBar"
 
+   BackpackType = "BIO_Backpack"
+
    QuitMessages =
       // Tips
       "$BIO_QUITMSG_EXAMINE", "$BIO_QUITMSG_LIFESTEALMAX",
