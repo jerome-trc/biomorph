@@ -1,6 +1,6 @@
 class BIO_ServicePistol : BIO_Weapon
 {
-	protected bool RoundChambered;
+	flagdef RoundChambered: DynFlags, 31;
 
 	Default
 	{
@@ -39,7 +39,7 @@ class BIO_ServicePistol : BIO_Weapon
 		SVCP A 0 A_BIO_Select;
 		Stop;
 	Ready:
-		TNT1 A 0 A_JumpIf(!invoker.RoundChambered, 'Ready.Empty');
+		TNT1 A 0 A_JumpIf(!invoker.bRoundChambered, 'Ready.Empty');
 	Ready.Chambered:
 		SVCP A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
@@ -57,7 +57,7 @@ class BIO_ServicePistol : BIO_Weapon
 			A_BIO_Recoil('BIO_Recoil_Handgun');
 
 			if (invoker.MagazineEmpty())
-				invoker.RoundChambered = false;
+				invoker.bRoundChambered = false;
 		}
 		SVCP D 4 A_BIO_SetFireTime(1);
 		TNT1 A 0 A_BIO_AutoReload;
@@ -78,7 +78,7 @@ class BIO_ServicePistol : BIO_Weapon
 		Goto LightDone;
 	Reload:
 		TNT1 A 0 A_BIO_CheckReload;
-		TNT1 A 0 A_JumpIf(!invoker.RoundChambered, 'Reload.FromEmpty');
+		TNT1 A 0 A_JumpIf(!invoker.bRoundChambered, 'Reload.FromEmpty');
 	Reload.FromLoaded:
 		SVCP E 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Reload.Common;
@@ -105,10 +105,10 @@ class BIO_ServicePistol : BIO_Weapon
 		{
 			A_BIO_SetReloadTime(13);
 
-			if (!invoker.RoundChambered)
+			if (!invoker.bRoundChambered)
 			{
 				A_StartSound("bio/weap/servicepistol/reload/end", CHAN_AUTO);
-				invoker.RoundChambered = true;
+				invoker.bRoundChambered = true;
 			}
 		}
 		Goto Ready;
@@ -132,7 +132,7 @@ class BIO_ServicePistol : BIO_Weapon
 	override void PostBeginPlay()
 	{
 		super.PostBeginPlay();
-		RoundChambered = true;
+		bRoundChambered = true;
 	}
 }
 

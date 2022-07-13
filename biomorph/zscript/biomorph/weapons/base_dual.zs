@@ -42,9 +42,9 @@ class BIO_DualWieldWeapon : BIO_Weapon abstract
 		CHAN_LEFTGUN = 13
 	}
 
-	flagdef NoAutoPrimary: DynFlags, 29;
-	flagdef NoAutoSecondary: DynFlags, 30;
-	flagdef AkimboReload: DynFlags, 31;
+	flagdef NoAutoPrimary: DynFlags, 25;
+	flagdef NoAutoSecondary: DynFlags, 26;
+	flagdef AkimboReload: DynFlags, 27;
 
 	protected state s_Ready,
 		s_ReadyRight, s_ReadyLeft,

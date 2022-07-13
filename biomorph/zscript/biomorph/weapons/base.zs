@@ -104,6 +104,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	protected uint DynFlags;
 	flagdef Spooling: DynFlags, 0;
+	// The last 4 flags (28 to 31) are reserved for derived classes.
 
 	Array<BIO_WeaponPipeline> Pipelines;
 	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
