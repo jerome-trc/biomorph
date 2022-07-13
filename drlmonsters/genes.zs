@@ -1,3 +1,80 @@
+// Spider Overmind /////////////////////////////////////////////////////////////
+
+class BIORLM_MGene_Overmind : BIO_ModifierGene
+{
+	Default
+	{
+		Tag "$BIORLM_MGENE_OVERMIND_TAG";
+		Inventory.Icon 'GEN5B0';
+		Inventory.PickupMessage "$BIORLM_MGENE_OVERMIND_PKUP";
+		BIO_Gene.Limit 1;
+		BIO_Gene.Summary "$BIORLM_WMOD_OVERMIND_SUMM";
+		BIO_ModifierGene.ModType 'BIORLM_WMod_Overmind';
+		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+	}
+
+	States
+	{
+	Spawn:
+		GEN5 B 6;
+		#### # 6 Bright Light("BIO_MutaGene_Cyan");
+		Loop;
+	}
+
+	final override bool CanGenerate() const { return false; }
+}
+
+class BIORLM_WMod_Overmind : BIO_WeaponModifier
+{
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		return
+			context.Weap.GetClass() is 'BIO_PlasmaRifle',
+			"$BIO_WMOD_INCOMPAT_NOTPLASMARIFLE";
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	{
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		{
+			let ppl = weap.Pipelines[i];
+
+			if (!ppl.CanFireProjectiles())
+				ppl.FireFunctor = new('BIO_FireFunc_Projectile').Init();
+
+			ppl.Payload = 'BIORLM_OvermindPlasma';
+			ppl.Damage = new('BIO_DmgFunc_XTimesRand').Init(5, 4, 6);
+
+			if (ppl.HSpread < 3.0)
+				ppl.HSpread = 3.0;
+			if (ppl.VSpread < 1.5)
+				ppl.VSpread = 1.5;
+
+			ppl.HSpread *= 1.5;
+			ppl.VSpread *= 1.5;
+		}
+
+		return "";
+	}
+
+	final override string Description(BIO_GeneContext _) const
+	{
+		return Summary();
+	}
+
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
+	{
+		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_SPREAD_INC;
+	}
+
+	final override class<BIO_ModifierGene> GeneType() const
+	{
+		return 'BIORLM_MGene_Overmind';
+	}
+}
+
+// Tristar /////////////////////////////////////////////////////////////////////
+
 class BIORLM_MGene_Tristar : BIO_ModifierGene
 {
 	Default

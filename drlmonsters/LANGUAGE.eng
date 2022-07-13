@@ -2,6 +2,11 @@
 
 // Genes (tags, pickup strings, modifier summaries and descriptions) ///////////
 
+BIORLM_MGENE_OVERMIND_TAG = "\c[MGene]Spider Overmind\c[White] Gene\c-";
+BIORLM_MGENE_OVERMIND_PKUP = "Collected a %s.";
+BIORLM_WMOD_OVERMIND_SUMM =
+	"\c[White]Convert to firing fast-moving, inaccurate plasma bolts";
+
 BIORLM_MGENE_TRISTAR_TAG = "\c[MGene]Tristar Blaster\c[White] Gene\c-";
 BIORLM_MGENE_TRISTAR_PKUP = "Collected a %s.";
 BIORLM_WMOD_TRISTAR_SUMM =
@@ -12,6 +17,9 @@ BIORLM_WMOD_TRISTAR_SUMM =
 	"\c[Green]Ammo usage reduced by two thirds";
 
 // Payloads (puff/projectile tags, functor summaries) //////////////////////////
+
+BIORLM_OVERMINDPLASMA_TAG = "plasma bolt";
+BIORLM_OVERMINDPLASMA_TAG_PLURAL = "plasma bolts";
 
 BIORLM_TRISTARBALL_TAG = "tristar ball";
 BIORLM_TRISTARBALL_TAG_PLURAL = "tristar balls";

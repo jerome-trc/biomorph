@@ -1,3 +1,37 @@
+class BIORLM_Loot_EliteCaptainTristarBlaster : BIO_LootSpawner
+{
+	final override void AssociatedMonsters(
+		in out Array<class<Actor> > types,
+		in out Array<bool> exact
+	) const
+	{
+		types.Push(BIO_Utils.TypeFromName('RLEliteCaptainTristarBlaster'));
+		exact.Push(true);
+	}
+
+	final override void SpawnLoot() const
+	{
+		Actor.Spawn('BIORLM_MGene_Tristar', Pos);
+	}
+}
+
+class BIORLM_Loot_SpiderOvermind : BIO_LootSpawner
+{
+	final override void AssociatedMonsters(
+		in out Array<class<Actor> > types,
+		in out Array<bool> exact
+	) const
+	{
+		types.Push(BIO_Utils.TypeFromName('RLCyberneticSpiderMastermind'));
+		exact.Push(true);
+	}
+
+	final override void SpawnLoot() const
+	{
+		Actor.Spawn('BIORLM_MGene_Overmind', Pos);
+	}
+}
+
 class BIORLM_Loot_SSG : BIO_LootSpawner
 {
 	final override void AssociatedMonsters(
@@ -15,22 +49,5 @@ class BIORLM_Loot_SSG : BIO_LootSpawner
 	final override void SpawnLoot() const
 	{
 		Actor.Spawn(BIO_Global.Get().LootWeaponType(BIO_WSCAT_SSG), Pos);
-	}
-}
-
-class BIORLM_Loot_EliteCaptainTristarBlaster : BIO_LootSpawner
-{
-	final override void AssociatedMonsters(
-		in out Array<class<Actor> > types,
-		in out Array<bool> exact
-	) const
-	{
-		types.Push(BIO_Utils.TypeFromName('RLEliteCaptainTristarBlaster'));
-		exact.Push(true);
-	}
-
-	final override void SpawnLoot() const
-	{
-		Actor.Spawn('BIORLM_MGene_Tristar', Pos);
 	}
 }
