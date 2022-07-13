@@ -370,6 +370,8 @@
 		"This weapon isn't magazine-fed in any way.";
 	BIO_WMOD_INCOMPAT_NOMELEEDAMAGE =
 		"This weapon is incapable of dealing melee damage.";
+	BIO_WMOD_INCOMPAT_NOMUTABLEMAGS =
+		"This weapon has no magazines which can be modified.";
 	BIO_WMOD_INCOMPAT_NOPIPELINES = "This weapon doesn't fire anything.";
 	BIO_WMOD_INCOMPAT_NOPUFFPIPELINES = "This weapon has no hitscan firing modes.";
 	BIO_WMOD_INCOMPAT_NORELOADTIMES =
@@ -386,7 +388,7 @@
 	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =
 		"This weapon has already been modified to add projectile gravity.";
 	BIO_WMOD_INCOMPAT_RESERVEFEED =
-		"No valid primary or secondary magazine, or no reserve ammo type."
+		"No valid primary or secondary magazine, or no reserve ammo type.";
 	BIO_WMOD_INCOMPAT_SPLASHTOHIT =
 		"None of this weapon's fire modes has splash damage "
 		"and also allows damage mutation.";
