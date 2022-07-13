@@ -1,4 +1,4 @@
-version "2.4"
+version "3.7"
 
 class BIORLM_Loot_SSG : BIO_LootSpawner
 {
