@@ -993,6 +993,9 @@ extend class BIO_WeaponModMenu
 
 	private void TryRevertChanges()
 	{
+		if (Simulator.AnyPendingGraphChanges())
+			MenuSound("bio/ui/cancel");
+
 		BIO_EventHandler.WeapModSim_Revert();
 	}
 

@@ -1413,6 +1413,15 @@ class BIO_WeaponModSimulator : Thinker
 		return true;
 	}
 
+	bool AnyPendingGraphChanges() const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+			if (Nodes[i].Basis.GeneType != Nodes[i].GetGeneType())
+				return true;
+
+		return false;
+	}
+
 	bool IsValid() const { return Valid; }
 
 	// Other internal implementation details ///////////////////////////////////
