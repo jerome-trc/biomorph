@@ -9,15 +9,12 @@ class BIO_All : Inventory
 
 		Inventory.MaxAmount 0;
 		Inventory.PickupMessage "";
+		Inventory.RestrictedTo 'BIO_Player';
 	}
 
 	final override bool Use(bool pickup)
 	{
 		let pawn = BIO_Player(Owner);
-
-		if (pawn == null)
-			return true;
-
 		pawn.GiveInventory('BIO_Backpack', 1);
 
 		uint mwh = pawn.MaxWeaponsHeld, mgh = pawn.MaxGenesHeld;

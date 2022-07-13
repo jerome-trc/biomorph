@@ -19,6 +19,7 @@ class BIO_Mutagen : Inventory abstract
 
 		Inventory.InterHubAmount 999;
 		Inventory.MaxAmount 999;
+		Inventory.RestrictedTo 'BIO_Player';
 
 		BIO_Mutagen.LootWeight 0;
 		BIO_Mutagen.NoLoot false;

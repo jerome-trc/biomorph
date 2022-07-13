@@ -23,6 +23,7 @@ class BIO_Gene : Inventory abstract
 		Scale 0.75;
 
 		Inventory.PickupMessage "$BIO_GENE_PKUP";
+		Inventory.RestrictedTo 'BIO_Player';
 
 		BIO_Gene.Limit uint16.MAX;
 	}
@@ -40,12 +41,7 @@ class BIO_Gene : Inventory abstract
 		if (!super.CanPickup(toucher))
 			return false;
 
-		let pawn = BIO_Player(toucher);
-
-		if (pawn == null)
-			return false;
-
-		return pawn.CanCarryGene(self);		
+		return BIO_Player(toucher).CanCarryGene(self);		
 	}
 
 	// Prevent gene pickups from being folded together.

@@ -128,6 +128,7 @@ class BIO_Weapon : DoomWeapon abstract
 		Radius 16;
 
 		Inventory.PickupMessage "";
+		Inventory.RestrictedTo 'BIO_Player';
 
 		Weapon.BobRangeX 0.3;
 		Weapon.BobRangeY 0.5;
@@ -291,8 +292,6 @@ extend class BIO_Weapon
 			return false;
 
 		let pawn = BIO_Player(toucher);
-		if (pawn == null)
-			return false;
 
 		// Gearbox calls this function on every weapon prototype when changing
 		// levels; if one of those checks returns false (i.e. when player

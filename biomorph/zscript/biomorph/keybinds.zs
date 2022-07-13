@@ -4,6 +4,7 @@ class BIO_Keybind : BIO_PermanentInventory abstract
 {
 	Default
 	{
+		Inventory.RestrictedTo 'BIO_Player';
 		Inventory.PickupMessage
 			"If you see this message, please report a bug to RatCircus.";
 	}
@@ -20,10 +21,11 @@ class BIO_WeaponDrop : BIO_Keybind
 	final override bool Use(bool pickup)
 	{
 		let pawn = BIO_Player(Owner);
-		if (pawn == null) return false;
 
 		let weap = BIO_Weapon(pawn.Player.ReadyWeapon);
-		if (weap == null || weap is 'BIO_Fists') return false;
+
+		if (weap == null || weap is 'BIO_Fists')
+			return false;
 
 		if (!Primed)
 		{
@@ -31,7 +33,8 @@ class BIO_WeaponDrop : BIO_Keybind
 			[k1, k2] = Bindings.GetKeysForCommand("use BIO_WeaponDrop");
 			string prompt = String.Format(
 				StringTable.Localize("$BIO_WEAPDROP_CONFIRM"),
-				Keybindings.NameKeys(k1, k2));
+				Keybindings.NameKeys(k1, k2)
+			);
 			pawn.A_Print(prompt, 3.0);
 			Primed = true;
 			BIO_KeybindDisarmer.Create(self);
