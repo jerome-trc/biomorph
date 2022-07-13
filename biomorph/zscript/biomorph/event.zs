@@ -787,12 +787,31 @@ extend class BIO_EventHandler
 					continue;
 			}
 
-			event.Thing.A_SpawnItemEx(
-				Globals.MonsterLoot[i].SpawnerType,
+			bool success = false;
+			Actor spawned = null;
+
+			let spawner_t = Globals.MonsterLoot[i].SpawnerType;
+
+			[success, spawned] = event.Thing.A_SpawnItemEx(
+				spawner_t,
 				0.0, 0.0, 32.0,
 				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
 				FRandom(0.0, 360.0)
 			);
+
+			if (success && spawned != null)
+			{
+				BIO_LootSpawner(spawned).Target = event.Thing;
+			}
+			else
+			{
+				Console.Printf(
+					Biomorph.LOGPFX_ERR ..
+					"Failed to create loot spawner of type `%s` "
+					"upon death of monster of type `%s`.",
+					spawner_t.GetClassName(), event.Thing.GetClassName()
+				);
+			}
 		}
 
 		Globals.LootValueBuffer += Globals.GetMonsterValue(event.Thing);

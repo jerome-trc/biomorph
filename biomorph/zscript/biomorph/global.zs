@@ -392,6 +392,7 @@ class BIO_MonsterLootPair
 	bool Exact;
 }
 
+// After being spawned, `Target` will point to the killed monster.
 class BIO_LootSpawner : BIO_IntangibleActor abstract
 {
 	States
