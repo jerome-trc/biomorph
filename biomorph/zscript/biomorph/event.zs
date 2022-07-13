@@ -886,20 +886,21 @@ extend class BIO_EventHandler
 {
 	final override void WorldThingSpawned(WorldEvent event)
 	{
-		if (!(event.Thing is 'Inventory') || event.Thing == null)
-			return;
-
+		if (event.Thing is 'Inventory')
 		{
-			let item = Inventory(event.Thing);
+			{
+				let item = Inventory(event.Thing);
 
-			if (item.Owner != null || item.Master != null)
-				return;
+				if (item.Owner != null || item.Master != null)
+					return;
+			}
+
+			OnAmmoSpawn(event);
 		}
-
-		if (OnWeaponSpawn(event))
-			return;
-
-		OnAmmoSpawn(event);
+		else if (event.Thing is 'BIO_WeaponReplacer')
+		{
+			OnWeaponSpawn(event);
+		}
 	}
 
 	private static void FinalizeSpawn(class<Actor> toSpawn, Actor eventThing)
@@ -916,35 +917,19 @@ extend class BIO_EventHandler
 		}
 	}
 
-	private bool OnWeaponSpawn(WorldEvent event) const
+	private void OnWeaponSpawn(WorldEvent event) const
 	{
-		class<Actor> t = event.Thing.GetClass();
-		class<BIO_Weapon> lwt = null;
+		let replacer = BIO_WeaponReplacer(event.Thing);
 
-		if (t == 'Shotgun')
-			lwt = Globals.LootWeaponType(BIO_WSCAT_SHOTGUN);
-		else if (t == 'Chaingun')
-			lwt = Globals.LootWeaponType(BIO_WSCAT_CHAINGUN);
-		else if (t == 'SuperShotgun')
-			lwt = Globals.LootWeaponType(BIO_WSCAT_SSG);
-		else if (t == 'RocketLauncher')
-			lwt = Globals.LootWeaponType(BIO_WSCAT_RLAUNCHER);
-		else if (t == 'PlasmaRifle')
-			lwt = Globals.LootWeaponType(BIO_WSCAT_PLASRIFLE);
-		else if (t == 'BFG9000')
-			lwt = Globals.LootWeaponType(BIO_WSCAT_BFG9000);
-		else if (t == 'Chainsaw')
-			lwt = Globals.LootWeaponType(BIO_WSCAT_CHAINSAW);
-		else if (t == 'Pistol')
-			lwt = Globals.LootWeaponType(BIO_WSCAT_PISTOL);
-		else
-			return false;
+		if (replacer == null)
+			return;
+
+		class<BIO_Weapon> lwt = Globals.LootWeaponType(replacer.SpawnCategory);
 
 		if (GetDefaultByType(lwt).Unique)
 			S_StartSound("bio/loot/unique", CHAN_AUTO);
 
 		FinalizeSpawn(lwt, event.Thing);
-		return true;
 	}
 
 	private bool OnAmmoSpawn(WorldEvent event) const
