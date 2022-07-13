@@ -257,9 +257,9 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 		if (!(mag is 'BIO_Magazine') || magsize <= 0)
 			return false;
 
-		let reduced = float(magsize) * 0.8;
+		let reduced = int(Floor(float(magsize) * 0.8));
 
-		if (int(Floor(reduced)) == magsize)
+		if (reduced == magsize || reduced <= 0)
 			return false;
 
 		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
