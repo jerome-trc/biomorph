@@ -93,6 +93,11 @@ class BIO_BreachingAxe : BIO_Weapon
 		afx.Count = 1;
 		Affixes.Push(afx);
 	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
+	}
 }
 
 class BIO_FireFunc_Axe : BIO_FireFunc_Punch

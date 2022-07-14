@@ -179,6 +179,11 @@ class BIO_Microvulcan : BIO_Weapon
 			)
 		);
 	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
+	}
 }
 
 class BIO_MagETM_Microvulcan : BIO_MagazineETM

@@ -76,6 +76,11 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 
 		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
 	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
+	}
 }
 
 class BIO_MagETM_RocketAutoLauncher : BIO_MagazineETM

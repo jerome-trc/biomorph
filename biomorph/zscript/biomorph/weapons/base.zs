@@ -45,9 +45,6 @@ class BIO_Weapon : DoomWeapon abstract
 	meta uint GraphQuality;
 	property GraphQuality: GraphQuality;
 
-	meta uint ModCostMultiplier;
-	property ModCostMultiplier: ModCostMultiplier;
-
 	meta string Summary;
 	property Summary: Summary;
 
@@ -140,7 +137,6 @@ class BIO_Weapon : DoomWeapon abstract
 
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/0";
 		BIO_Weapon.MinAmmoReserves 1, 1;
-		BIO_Weapon.ModCostMultiplier 1;
 		BIO_Weapon.ReloadRatio1 1, 1;
 		BIO_Weapon.ReloadRatio2 1, 1;
 		BIO_Weapon.ScavengePersist true;
@@ -235,6 +231,10 @@ class BIO_Weapon : DoomWeapon abstract
 		for (uint i = 0; i < Affixes.Size(); i++)
 			Affixes[i].OnSelect(self);
 	}
+
+	// When calculating the cost to modify or morph a weapon, each gene has a base
+	// value of 1, and the sum of those gene values is passed into this.
+	virtual uint ModCost(uint base) const { return base; }
 
 	virtual ui void RenderOverlay(BIO_RenderContext context) const
 	{
@@ -513,10 +513,6 @@ extend class BIO_Weapon
 
 		return (ModGraph.Nodes.Size() - 1) - Default.GraphQuality;
 	}
-
-	// The number of changes being made to a weapon is multiplied by the return
-	// value of this to get the cost to commit a set of weapon modifications.
-	uint ModCost() const { return ModCostMultiplier * 3; }
 
 	bool CanReload(bool secondary = false) const
 	{

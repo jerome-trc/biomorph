@@ -17,7 +17,6 @@ class BIO_Minivulcan : BIO_Weapon
 		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'Clip';
 		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_Minivulcan';
-		BIO_Weapon.ModCostMultiplier 3;
 		BIO_Weapon.PickupMessages
 			"$BIO_MINIVULCAN_PKUP",
 			"$BIO_MINIVULCAN_SCAV";
@@ -202,6 +201,11 @@ class BIO_Minivulcan : BIO_Weapon
 		A_GunFlash();
 		A_BIO_FireSound(CHAN_AUTO);
 		A_BIO_Recoil('BIO_Recoil_Autogun', scale: 1.5);
+	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 3;
 	}
 }
 

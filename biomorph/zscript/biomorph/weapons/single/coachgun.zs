@@ -141,6 +141,11 @@ class BIO_Coachgun : BIO_Weapon
 		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
 	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
+	}
 }
 
 class BIO_Mag_Coachgun : BIO_Magazine {}

@@ -53,4 +53,9 @@ class BIO_Chainsaw : BIO_Weapon
 				.Build()
 		);
 	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
+	}
 }

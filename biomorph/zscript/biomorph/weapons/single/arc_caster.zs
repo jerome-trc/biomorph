@@ -23,7 +23,6 @@ class BIO_ArcCaster : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 6;
 		BIO_Weapon.MagazineType 'Cell';
-		BIO_Weapon.ModCostMultiplier 2;
 		BIO_Weapon.PickupMessages
 			"$BIO_ARCCASTER_PKUP",
 			"$BIO_ARCCASTER_SCAV";
@@ -120,5 +119,10 @@ class BIO_ArcCaster : BIO_Weapon
 		);
 
 		FireTimeGroups.Push(StateTimeGroupFrom('Fire.B'));
+	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
 	}
 }

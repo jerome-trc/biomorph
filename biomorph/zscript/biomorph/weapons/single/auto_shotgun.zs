@@ -19,7 +19,6 @@ class BIO_AutoShotgun : BIO_Weapon
 		BIO_Weapon.MagazineSize 8;
 		BIO_Weapon.MagazineType 'BIO_Mag_AutoShotgun';
 		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_AutoShotgun';
-		BIO_Weapon.ModCostMultiplier 2;
 		BIO_Weapon.PickupMessages
 			"$BIO_AUTOSHOTGUN_PKUP",
 			"$BIO_AUTOSHOTGUN_SCAV";
@@ -117,6 +116,11 @@ class BIO_AutoShotgun : BIO_Weapon
 
 		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
+	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 3;
 	}
 }
 

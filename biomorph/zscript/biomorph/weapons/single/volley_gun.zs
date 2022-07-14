@@ -179,6 +179,11 @@ class BIO_VolleyGun : BIO_Weapon
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Four', "$BIO_ALLFOUR"));
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Two', "$BIO_TWO"));
 	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
+	}
 }
 
 class BIO_Mag_VolleyGun : BIO_Magazine {}

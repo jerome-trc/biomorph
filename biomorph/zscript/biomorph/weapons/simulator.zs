@@ -1131,27 +1131,17 @@ class BIO_WeaponModSimulator : Thinker
 
 	uint GeneValue() const
 	{
-		let cost = Weap.ModCost();
-
-		if (cost <= 0)
-			return 0;
-
 		uint ret = 0;
 
 		for (uint i = 0; i < Nodes.Size(); i++)
 			if (Nodes[i].IsOccupied())
-				ret += cost;
+				ret += 1;
 
-		return ret;
+		return Weap.ModCost(ret);
 	}
 
 	uint CommitCost() const
 	{
-		let cost = Weap.ModCost();
-
-		if (cost <= 0)
-			return 0;
-
 		uint ret = 0;
 
 		for (uint i = 0; i < Weap.ModGraph.Nodes.Size(); i++)
@@ -1161,10 +1151,10 @@ class BIO_WeaponModSimulator : Thinker
 
 			// Is this node pending occupation or extraction?
 			if (realNode.GeneType != simNode.GetGeneType())
-				ret += cost;
+				ret += 1;
 		}
 
-		return ret;
+		return Weap.ModCost(ret);
 	}
 
 	uint MorphCost(uint node) const
