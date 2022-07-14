@@ -161,6 +161,9 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 
 	void Init(BIO_Weapon weap)
 	{
+		if (weap.Owner == null)
+			return;
+
 		SmartAim.Begin(
 			weap.Owner.Player,
 			horizontal_fov: 38.0,
@@ -214,6 +217,8 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 			drawPos.X, drawPos.Y, DTA_CENTEROFFSET, true
 		);
 	}
+
+	final override void OnPickup(BIO_Weapon weap) { Init(weap); }
 
 	final override void OnDrop(BIO_Weapon _, BIO_Player __)
 	{
