@@ -60,6 +60,14 @@ class BIO_Gene : Inventory abstract
 	{
 		return String.Format(StringTable.Localize(PickupMsg), GetTag());
 	}
+
+	static void PlayRaritySound(uint weight)
+	{
+		if (weight <= LOOTWEIGHT_MIN)
+			S_StartSound("bio/loot/veryrare", CHAN_AUTO);
+		else if (weight <= LOOTWEIGHT_RARE)
+			S_StartSound("bio/loot/rare", CHAN_AUTO);
+	}
 }
 
 class BIO_ModifierGene : BIO_Gene abstract
@@ -109,9 +117,11 @@ class BIO_ActiveGene : BIO_Gene abstract
 // General symbolic constants for loot weights, kept in one place.
 extend class BIO_Gene
 {
+	const LOOTWEIGHT_MAX = 18;
 	const LOOTWEIGHT_VERYCOMMON = 12;
 	const LOOTWEIGHT_COMMON = 8;
-	const LOOTWEIGHT_UNCOMMON = 4;
-	const LOOTWEIGHT_RARE = 2;
-	const LOOTWEIGHT_VERYRARE = 1;
+	const LOOTWEIGHT_UNCOMMON = 5;
+	const LOOTWEIGHT_RARE = 3;
+	const LOOTWEIGHT_VERYRARE = 2;
+	const LOOTWEIGHT_MIN = 1;
 }

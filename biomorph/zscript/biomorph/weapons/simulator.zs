@@ -1143,6 +1143,26 @@ class BIO_WeaponModSimulator : Thinker
 		return ret;
 	}
 
+	uint LowestGeneLootWeight() const
+	{
+		uint ret = BIO_Gene.LOOTWEIGHT_MAX;
+
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			let gene_t = Nodes[i].GetGeneType();
+
+			if (gene_t == null)
+				continue;
+
+			let defs = GetDefaultByType(gene_t);
+
+			if (defs.LootWeight < ret)
+				ret = defs.LootWeight;
+		}
+
+		return ret;
+	}
+
 	bool ContainsGeneOfType(class<BIO_Gene> type) const
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)

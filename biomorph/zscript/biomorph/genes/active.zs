@@ -5,7 +5,7 @@ class BIO_AGene_ToggleConnected : BIO_ActiveGene
 		Tag "$BIO_AGENE_TOGGLECONNECTED_TAG";
 		Inventory.Icon 'GEN4A0';
 		Inventory.PickupMessage "$BIO_AGENE_TOGGLECONNECTED_PKUP";
-		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
+		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON + LOOTWEIGHT_VERYRARE;
 		BIO_Gene.Limit 1;
 		BIO_Gene.Summary "$BIO_AGENE_TOGGLECONNECTEDSUMM";
 	}

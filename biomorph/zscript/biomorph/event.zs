@@ -855,12 +855,7 @@ extend class BIO_EventHandler
 			else
 			{
 				let muta_t = Globals.RandomMutagenType();
-				let defs = GetDefaultByType(muta_t);
-
-				if (defs.LootWeight <= BIO_Mutagen.DROPWT_CORR)
-					S_StartSound("bio/loot/veryrare", CHAN_AUTO);
-				else if (defs.LootWeight <= 2)
-					S_StartSound("bio/loot/rare", CHAN_AUTO);
+				BIO_Mutagen.PlayRaritySound(GetDefaultByType(muta_t).LootWeight);
 
 				event.Thing.A_SpawnItemEx(
 					muta_t,
@@ -875,12 +870,7 @@ extend class BIO_EventHandler
 	private void SpawnLootGene(Actor mons)
 	{
 		let gene_t = Globals.RandomGeneType();
-		let defs = GetDefaultByType(gene_t);
-
-		if (defs.LootWeight <= BIO_Gene.LOOTWEIGHT_VERYRARE)
-			S_StartSound("bio/loot/veryrare", CHAN_AUTO);
-		else if (defs.LootWeight <= BIO_Gene.LOOTWEIGHT_RARE)
-			S_StartSound("bio/loot/rare", CHAN_AUTO);
+		BIO_Gene.PlayRaritySound(GetDefaultByType(gene_t).LootWeight);
 
 		mons.A_SpawnItemEx(
 			gene_t,

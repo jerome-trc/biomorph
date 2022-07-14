@@ -297,7 +297,7 @@ class BIO_MGene_InfiniteAmmo : BIO_ModifierGene
 		Inventory.Icon 'GENAD0';
 		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
 		BIO_Gene.Limit 1;
-		BIO_Gene.LootWeight LOOTWEIGHT_VERYRARE;
+		BIO_Gene.LootWeight LOOTWEIGHT_MIN;
 		BIO_Gene.Summary "$BIO_WMOD_INFINITEAMMO_SUMM";
 		BIO_ModifierGene.ModType 'BIO_WMod_InfiniteAmmo';
 		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
@@ -388,7 +388,7 @@ class BIO_MGene_ReserveFeed : BIO_ModifierGene
 		Inventory.Icon 'GENAB0';
 		Inventory.PickupMessage "$BIO_MGENE_RESERVEFEED_PKUP";
 		BIO_Gene.Limit 1;
-		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
+		BIO_Gene.LootWeight LOOTWEIGHT_VERYRARE;
 		BIO_Gene.Summary "$BIO_WMOD_RESERVEFEED_SUMM";
 		BIO_ModifierGene.ModType 'BIO_WMod_ReserveFeed';
 		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;

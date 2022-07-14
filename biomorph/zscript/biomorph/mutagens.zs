@@ -1,7 +1,8 @@
 class BIO_Mutagen : Inventory abstract
 {
-	const DROPWT_GENERAL = 32;
-	const DROPWT_CORR = 1;
+	const LOOTWEIGHT_MAX = 32;
+	const LOOTWEIGHT_RARE = 4;
+	const LOOTWEIGHT_MIN = 1;
 
 	meta uint LootWeight; property LootWeight: LootWeight;
 	meta bool NoLoot; property NoLoot: NoLoot;
@@ -38,6 +39,14 @@ class BIO_Mutagen : Inventory abstract
 
 		return true;
 	}
+
+	static void PlayRaritySound(uint weight)
+	{
+		if (weight <= LOOTWEIGHT_MIN)
+			S_StartSound("bio/loot/veryrare", CHAN_AUTO);
+		else if (weight <= LOOTWEIGHT_RARE)
+			S_StartSound("bio/loot/rare", CHAN_AUTO);
+	}
 }
 
 // Used to mutate weapons; that is, to initialise `BIO_Weapon::ModGraph`
@@ -51,7 +60,7 @@ class BIO_Muta_General : BIO_Mutagen
 		Inventory.Icon 'MUTAG0';
 		Inventory.PickupMessage "$BIO_MUTA_GENERAL_PKUP";
 		Inventory.UseSound "bio/mutation/general";
-		BIO_Mutagen.LootWeight DROPWT_GENERAL;
+		BIO_Mutagen.LootWeight LOOTWEIGHT_MAX;
 	}
 
 	States

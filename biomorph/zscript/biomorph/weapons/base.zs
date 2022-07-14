@@ -1109,12 +1109,7 @@ extend class BIO_Weapon
 		);
 
 		if (raritySound)
-		{
-			if (sim.ContainsGeneByLootWeight(BIO_Gene.LOOTWEIGHT_VERYRARE))
-				S_StartSound("bio/loot/veryrare", CHAN_AUTO);
-			else if (sim.ContainsGeneByLootWeight(BIO_Gene.LOOTWEIGHT_RARE))
-				S_StartSound("bio/loot/rare", CHAN_AUTO);
-		}
+			BIO_Gene.PlayRaritySound(sim.LowestGeneLootWeight());
 
 		sim.CommitAndClose();
 		SetState(FindState('Spawn'));
