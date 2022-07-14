@@ -2,8 +2,6 @@
 
 class BIO_Weapon : DoomWeapon abstract
 {
-	mixin BIO_Gear;
-
 	// `SelectionOrder` is for when ammo runs out; lower number, higher priority
 
 	const SELORDER_PLASRIFLE = 100;
@@ -56,6 +54,8 @@ class BIO_Weapon : DoomWeapon abstract
 	int RaiseSpeed, LowerSpeed;
 	property SwitchSpeeds: RaiseSpeed, LowerSpeed;
 
+	meta sound GroundHitSound; property GroundHitSound: GroundHitSound;
+
 	// For dual-wield weapons, ammo and magazine types 2 are for the left weapon
 
 	meta class<Ammo> MagazineType1, MagazineType2;
@@ -103,7 +103,9 @@ class BIO_Weapon : DoomWeapon abstract
 	property MinAmmoReserves: MinAmmoReserve1, MinAmmoReserve2;
 
 	protected uint DynFlags;
-	flagdef Spooling: DynFlags, 0;
+	flagdef HitGround: DynFlags, 0;
+	flagdef PreviouslyPickedUp: DynFlags, 1;
+	flagdef Spooling: DynFlags, 2;
 	// The last 4 flags (28 to 31) are reserved for derived classes.
 
 	Array<BIO_WeaponPipeline> Pipelines;
@@ -253,7 +255,7 @@ extend class BIO_Weapon
 		{
 			bSpecial = true;
 			bThruActors = false;
-			HitGround = true;
+			bHitGround = true;
 		}
 	}
 
@@ -397,10 +399,15 @@ extend class BIO_Weapon
 
 	override void AttachToOwner(Actor newOwner)
 	{
-		if (!PreviouslyPickedUp && Unique)
+		if (!bPreviouslyPickedUp && Unique)
 			BIO_Utils.DRLMDangerLevel(1);
 
-		OnOwnerAttach();
+		if (!bPreviouslyPickedUp)
+		{
+			BIO_EventHandler.BroadcastFirstPickup(GetClassName());
+		}
+
+		bPreviouslyPickedUp = true;
 
 		int 
 			prevAmmo1 = newOwner.CountInv(AmmoType1),
@@ -434,7 +441,7 @@ extend class BIO_Weapon
 			Affixes[i].OnDrop(self, BIO_Player(dropper));
 
 		Magazine1 = Magazine2 = null;
-		HitGround = false;
+		bHitGround = false;
 	}
 
 	final override bool DepleteAmmo(bool altFire, bool checkEnough, int ammoUse)
@@ -1446,13 +1453,13 @@ extend class BIO_Weapon
 
 	protected action void A_BIO_GroundHit()
 	{
-		if (Abs(Vel.Z) <= 0.01 && !invoker.HitGround)
+		if (Abs(Vel.Z) <= 0.01 && !invoker.bHitGround)
 		{
 			A_StartSound(invoker.GroundHitSound);
 			A_ScaleVelocity(0.5);
 			bSpecial = true;
 			bThruActors = false;
-			invoker.HitGround = true;
+			invoker.bHitGround = true;
 		}
 	}
 
