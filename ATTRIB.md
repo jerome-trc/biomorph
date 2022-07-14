@@ -20,37 +20,35 @@ The GLDEFS for the Armour Bonus were devised by Realm667 user Infirnex.
 
 ## Graphics
 
-Doom and Doom II's base textures are the sole property of id Software LLC.
-
 The following sprites are edits of the work of id Software LLC:
 - powup_infiniteammo.png
 - powup_radsuit.png
 
-Arc Caster HUD sprites are courtesy of ZDoom forum user VriskaSerket.
+ARCA A through E are courtesy of ZDoom forum user VriskaSerket.
 
-The Arc Caster pickup sprite is courtesy of the Librequake Project, id Software LLC, and Banjo Software, with edits by Realm667 user KILLA DIO.
+ARCAZ is courtesy of the Librequake Project, id Software LLC, and Banjo Software, with edits by Realm667 user KILLA DIO.
 
-Armour Bonus sprites are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
+ARSD A through D are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
-Breaching Axe sprites are courtesy of ZDoom forum user neoworm.
+AUSG A through F are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
 
-Auto Shotgun HUD sprites are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
+BRAX A through Z are courtesy of ZDoom forum user neoworm.
 
-Electric arc puff sprites are courtesy of the Librequake Project, id Software LLC, and Banjo Software, with edits by Realm667 user KILLA DIO.
+MGUNB and SHOTB are edits of the work of id Software LLC.
 
-MGUNB0 and SHOTB0 are edits of the work of id Software LLC.
+[MINV A through Z](https://www.realm667.com/en/armory-mainmenu-157-97317/doom-style-mainmenu-158-94349/1364-heavy-chaingun) are courtesy of Eriance, with edits by Realm667 user Z86.
 
-[Minivulcan sprites](https://www.realm667.com/en/armory-mainmenu-157-97317/doom-style-mainmenu-158-94349/1364-heavy-chaingun) are courtesy of Eriance, with edits by Realm667 user Z86.
+PROX A through C and PRXD A through U are courtesy of Mechadon and 3D Realms Entertainment ApS.
 
-Proximity mine sprites are courtesy of Mechadon and 3D Realms Entertainment ApS.
+RZAP A through I are courtesy of the Librequake Project, id Software LLC, and Banjo Software, with edits by Realm667 user KILLA DIO.
 
-Turbovulcan and Machine Gun HUD sprites are courtesy of ZDoom forum user Sonik.o.fan.
+TRBO A through L and GPMG A through F are courtesy of ZDoom forum user Sonik.o.fan.
 
-Service Pistol and Pump Shotgun muzzle flashes are derived from the sheet at [this ZDoom forum post](https://forum.zdoom.org/viewtopic.php?t=37753#p718629) courtesy of forum user Sgt. Shivers.
+Muzzle flash sprites used in SVCPY and PASGB are derived from the sheet at [this ZDoom forum post](https://forum.zdoom.org/viewtopic.php?t=37753#p718629) courtesy of forum user Sgt. Shivers.
 
-Supply Box sprites are derived from Sonik.o.fan's reshading of Doom 64's rocket box sprite, which is itself courtesy of Midway Games Inc.
+SUPPA and B are derived from Sonik.o.fan's reshading of Doom 64's rocket box sprite, which is itself courtesy of Midway Games Inc.
 
-Volley Gun sprites are courtesy of Superdave, Sonik.o.fan, 1337spy, Bgraybr, Warhawk, DBJ87, and id Software LLC.
+VOLL A through Z are courtesy of Superdave, Sonik.o.fan, 1337spy, Bgraybr, Warhawk, DBJ87, and id Software LLC.
 
 ## Audio
 
@@ -130,6 +128,8 @@ The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), 
 
 BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people/Slave2theLight/sounds/157023/) by freesound user [Slave2theLight](https://freesound.org/people/Slave2theLight), licensed under the Attribution 4.0 License.
 
+BWHOOSH0 through 5 are derived from ["Swoosh.wav"](https://freesound.org/people/Brsjak/sounds/482880/) by freesound user [Brsjak](https://freesound.org/people/Brsjak/), licensed under Creative Commons Attribution 3.0 Unported.
+
 COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/sounds/33781/) by freesound user [jobro](https://freesound.org/people/jobro), licensed under the Attribution 3.0 License.
 
 DRY_BAL0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), licensed under Creative Commons 0.
@@ -141,8 +141,6 @@ NRG2MATR (edited for a 200% tempo increase) is derived from ["charging power"](h
 PROXBEEP, PROXFIRE, and PROXHIT are courtesy of id Software LLC ([as cited by Realm667 user Ghastly_dragon](https://www.realm667.com/index.php/en/armory-mainmenu-157-97317/doom-style-mainmenu-158-94349/941-prox-launcher#info)).
 
 RARELOOT is derived from ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/), licensed under Creative Commons 0.
-
-BWHOOSH0 through 5 are derived from ["Swoosh.wav"](https://freesound.org/people/Brsjak/sounds/482880/) by freesound user [Brsjak](https://freesound.org/people/Brsjak/), licensed under Creative Commons Attribution 3.0 Unported.
 
 UNIQLOOT is derived from ["Gong Hit"](https://freesound.org/people/GowlerMusic/sounds/266566/) by freesound user [GowlerMusic](https://freesound.org/people/GowlerMusic), licensed under the Attribution 4.0 License.
 
