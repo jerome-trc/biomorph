@@ -1,11 +1,19 @@
+enum BIO_PayloadSizeClass : uint8
+{
+	BIO_PLSC_NONE, // e.g. incorporeal
+	BIO_PLSC_XSMALL, // e.g. 9mm up to 12G and 7.62
+	BIO_PLSC_SMALL, // e.g. .338 up to .50 BMG
+	BIO_PLSC_MEDIUM, // e.g. 20mm
+	BIO_PLSC_LARGE, // e.g. 40mm
+	BIO_PLSC_XLARGE, // e.g. BFG ball
+}
+
 // Mixins //////////////////////////////////////////////////////////////////////
 
 mixin class BIO_PayloadCommon
 {
-	private meta uint MetaFlags;
-
-	// The payload is fired through either a 40mm or rocket barrel.
-	flagdef TubeBased: MetaFlags, 0;
+	meta BIO_PayloadSizeClass SizeClass;
+	property SizeClass: SizeClass;
 
 	meta string PluralTag;
 	property PluralTag: PluralTag;

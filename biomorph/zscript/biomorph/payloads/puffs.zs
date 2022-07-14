@@ -5,6 +5,7 @@ class BIO_Bullet : BIO_Puff
 		Decal 'BulletChip';
 		Tag "$BIO_BULLET_TAG";
 		BIO_Puff.PluralTag "$BIO_BULLET_TAG_PLURAL";
+		BIO_Puff.SizeClass BIO_PLSC_XSMALL;
 	}
 }
 
@@ -84,6 +85,7 @@ class BIO_CannonShell : BIO_DemoBullet
 		Scale 0.5;
 		Tag "$BIO_CANNONSHELL_TAG";
 		BIO_Puff.PluralTag "$BIO_CANNONSHELL_TAG_PLURAL";
+		BIO_Puff.SizeClass BIO_PLSC_MEDIUM;
 	}
 }
 

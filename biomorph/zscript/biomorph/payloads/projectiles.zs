@@ -6,7 +6,6 @@ class BIO_Rocket : BIO_Projectile
 		+RANDOMIZE
 		+ROCKETTRAIL
 		+ZDOOMTRANS
-		+BIO_PROJECTILE.TUBEBASED
 
 		DeathSound "weapons/rocklx";
 		Height 8;
@@ -17,6 +16,7 @@ class BIO_Rocket : BIO_Projectile
 		Tag "$BIO_ROCKET_TAG";
 
 		BIO_Projectile.PluralTag "$BIO_ROCKET_TAG_PLURAL";
+		BIO_Projectile.SizeClass BIO_PLSC_LARGE;
 	}
 
 	States
@@ -48,6 +48,7 @@ class BIO_Minirocket : BIO_Rocket
 		Speed 50;
 
 		BIO_Projectile.PluralTag "$BIO_MINIROCKET_TAG_PLURAL";
+		BIO_Projectile.SizeClass BIO_PLSC_MEDIUM;
 	}
 }
 
@@ -55,7 +56,6 @@ class BIO_ProxMineProj : BIO_Projectile
 {
 	Default
 	{
-		+BIO_PROJECTILE.TUBEBASED
 		-NOGRAVITY
 		-SLIDESONWALLS
 		+CANBOUNCEWATER
@@ -72,6 +72,7 @@ class BIO_ProxMineProj : BIO_Projectile
 		Tag "$BIO_PROXMINE_TAG";
 
 		BIO_Projectile.PluralTag "$BIO_PROXMINE_TAG_PLURAL";
+		BIO_Projectile.SizeClass BIO_PLSC_LARGE;
 	}
 
 	States
@@ -125,6 +126,7 @@ class BIO_PlasmaBall : BIO_Projectile
 		Tag "$BIO_PLASMABALL_TAG";
 
 		BIO_Projectile.PluralTag "$BIO_PLASMABALL_TAG_PLURAL";
+		BIO_Projectile.SizeClass BIO_PLSC_SMALL;
 	}
 
 	States
@@ -169,6 +171,7 @@ class BIO_BFGBall : BIO_Projectile
 		Tag "$BIO_BFGBALL_TAG";
 
 		BIO_Projectile.PluralTag "$BIO_BFGBALL_TAG_PLURAL";
+		BIO_Projectile.SizeClass BIO_PLSC_XLARGE;
 	}
 
 	States
@@ -192,6 +195,7 @@ class BIO_MiniBFGBall : BIO_BFGBall
 	Default
 	{
 		Scale 0.1;
+		BIO_Projectile.SizeClass BIO_PLSC_LARGE;
 	}
 }
 

@@ -6,7 +6,7 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
 				return true, "";
 
-		return false, "$BIO_WMOD_INCOMPAT_NOTTUBEBASED";
+		return false, "$BIO_WMOD_INCOMPAT_PAYLOADTOOSMALL";
 	}
 
 	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
@@ -16,7 +16,7 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 		if (proj == null)
 			return false;
 
-		if (!GetDefaultByType(proj).bTubeBased)
+		if (GetDefaultByType(proj).SizeClass < BIO_PLSC_LARGE)
 			return false;
 
 		return true;
@@ -76,7 +76,7 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
 				return true, "";
 
-		return false, "$BIO_WMOD_INCOMPAT_NOTTUBEBASED";
+		return false, "$BIO_WMOD_INCOMPAT_PAYLOADTOOSMALL";
 	}
 
 	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
@@ -86,7 +86,7 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 		if (proj == null)
 			return false;
 
-		if (!GetDefaultByType(proj).bTubeBased)
+		if (GetDefaultByType(proj).SizeClass < BIO_PLSC_LARGE)
 			return false;
 
 		return true;

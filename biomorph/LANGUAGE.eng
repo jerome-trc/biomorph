@@ -384,8 +384,8 @@
 	BIO_WMOD_INCOMPAT_NOTBFG = "This isn't a BFG-class weapon or similar.";
 	BIO_WMOD_INCOMPAT_NOTPLASMARIFLE =
 		"This isn't a Plasma Rifle, or a similar type of weapon.";
-	BIO_WMOD_INCOMPAT_NOTTUBEBASED =
-		"None of this weapon's firing modes emit rockets or grenades.";
+	BIO_WMOD_INCOMPAT_PAYLOADTOOSMALL =
+		"None of this weapon's firing modes emits a large enough payload.";
 	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =
 		"This weapon has already been modified to add projectile gravity.";
 	BIO_WMOD_INCOMPAT_RESERVEFEED =
