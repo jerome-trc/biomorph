@@ -97,6 +97,7 @@
 	BIO_INFRARED_PKUP = "Donned a light amplification visor; the dark is illuminated.";
 	BIO_MEGASPHERE_TAG = "Megasphere";
 	BIO_MEGASPHERE_PKUP = "Absorbed a Megasphere! You feel rejuvenated.";
+	BIO_MEGASPHERE_COLLECTED = "Didn't absorb a Megapshere, but marked it as collected.";
 	BIO_RADSUIT_TAG = "N.B.C. Suit";
 	BIO_RADSUIT_PKUP = "Donned an N.B.C. suit; you're safe from environmental hazards.";
 

@@ -40,13 +40,65 @@ class BIO_BlurSphere : BlurSphere replaces BlurSphere
 	}
 }
 
-class BIO_Megasphere : Megasphere replaces Megasphere
+class BIO_Megasphere : Inventory replaces Megasphere
 {
+	mixin BIO_Pickup;
+
 	Default
 	{
-		+DONTGIB
+		+COUNTITEM
+		+INVENTORY.AUTOACTIVATE
+		+INVENTORY.ISHEALTH
+		+INVENTORY.ISARMOR
+
 		Tag "$BIO_MEGASPHERE_TAG";
 		Inventory.PickupMessage "$BIO_MEGASPHERE_PKUP";
+		Inventory.PickupSound "misc/p_pkup";
+		BIO_Megasphere.CollectedMessage "$BIO_MEGASPHERE_COLLECTED";
+	}
+
+	States
+	{
+	Spawn:
+		MEGA ABCD 6 Bright;
+		Loop;
+	}
+
+	final override bool CanPickup(Actor toucher)
+	{
+		let hdefs = GetDefaultByType('MegasphereHealth');
+		let adefs = GetDefaultByType('BlueArmorForMegasphere');
+
+		if (toucher.Player != null)
+		{
+			return
+				super.CanPickup(toucher) &&
+				(toucher.Player.Health < hdefs.MaxAmount ||
+				toucher.CountInv('BasicArmor') < adefs.SaveAmount);
+		}
+		else
+		{
+			return
+				super.CanPickup(toucher) &&
+				(toucher.Health < hdefs.MaxAmount ||
+				toucher.CountInv('BasicArmor') < adefs.SaveAmount);
+		}
+	}
+
+	final override bool TryPickupRestricted(in out Actor toucher)
+	{
+		if (bCountItem)
+			MarkAsCollected(toucher);
+
+		return false;
+	}
+
+	final override bool Use(bool pickup)
+	{
+		let hdefs = GetDefaultByType('MegasphereHealth');
+		Owner.GiveInventory('BlueArmorForMegasphere', 1);
+		Owner.GiveInventory('MegasphereHealth', hdefs.Amount);
+		return true;
 	}
 }
 
