@@ -341,7 +341,18 @@
 	BIO_PLDF_BFGSPRAY =
 		"\c[MidGrey]%s%d \c[MidGrey]rays, %s%d \cu-\c[MidGrey] %s%d damage";
 
-// Weapon modifiers (summaries, descriptions, incompatibility explanations) ////
+// Weapon affixes (descriptions) ///////////////////////////////////////////////
+
+	BIO_WAFX_FORCEPAIN_DESC =
+		"\c[Green]Extra %d%% chance of firing a neurotoxic payload\n"
+		"\c[White]\tNeurotoxic payloads always make monsters flinch";
+
+// Genes (tags, pickups, summaries, descriptions, incompatibility) /////////////
+
+	// Generic
+
+	BIO_GENE_TAG = "\c[White]Gene\c-";
+	BIO_GENE_PKUP = "Collected a \c[White]gene\c-.";
 
 	// Incompatibility
 
@@ -401,12 +412,28 @@
 	BIO_WMOD_INCOMPAT_TRIVIALHSPREAD = "This weapon has almost no horizontal spread.";
 	BIO_WMOD_INCOMPAT_TRIVIALVSPREAD = "This weapon has almost no vertical spread.";
 
-	// Summaries and descriptions
+	BIO_MODSUP_INCOMPAT_NONODEEAST = "No node to the east.";
+	BIO_MODSUP_INCOMPAT_NOMODEAST = "No modifier in the eastern node.";
+	BIO_MODSUP_INCOMPAT_NONODENORTH = "No node to the north.";
+	BIO_MODSUP_INCOMPAT_NOMODNORTH = "No modifier in the northern node.";
+	BIO_MODSUP_INCOMPAT_NONODESOUTH = "No node to the south.";
+	BIO_MODSUP_INCOMPAT_NOMODSOUTH = "No modifier in the southern node.";
+	BIO_MODSUP_INCOMPAT_NONODEWEST = "No node to the west.";
+	BIO_MODSUP_INCOMPAT_NOMODWEST = "No modifier in the western node.";
+
 	// (If a grouping has no description, then assume the summary doubles as one)
 
-	BIO_WMOD_BERSERKDAMAGE_SUMM = "\c[Green]250% damage \c[White]dealt after collecting a Berserk Pack";
-	BIO_WMOD_BERSERKDAMAGE_DESC = "\c[Green]%d%% damage \c[White]dealt after collecting a Berserk Pack";
+	// Modifier
 
+	BIO_MGENE_BERSERKDAMAGE_TAG = "\c[MGene]Frenzying\c[White] Gene\c-";
+	BIO_MGENE_BERSERKDAMAGE_PKUP = "Collected a %s.";
+	BIO_WMOD_BERSERKDAMAGE_SUMM =
+		"\c[Green]250% damage \c[White]dealt after collecting a Berserk Pack";
+	BIO_WMOD_BERSERKDAMAGE_DESC =
+		"\c[Green]%d%% damage \c[White]dealt after collecting a Berserk Pack";
+
+	BIO_MGENE_CANISTERSHOT_TAG = "\c[MGene]Refit: Canister Shot\c[White] Gene\c-";
+	BIO_MGENE_CANISTERSHOT_PKUP = "Collected a %s.";
 	BIO_WMOD_CANISTERSHOT_SUMM =
 		"\c[White]Change from firing rockets/grenades to a shot pellet blast\n"
 		"\c[White]All splash damage is converted into direct hit damage\n"
@@ -415,17 +442,27 @@
 	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]20% of minimum damage added";
 	BIO_WMOD_DAMAGEADD_DESC = "\c[White]Damage%s: \c[Green]+%d";
 
-	BIO_WMOD_DEMONSLAYER_SUMM = "\c[Green]+100% damage\c[White] dealt to Legendary monsters";
-	BIO_WMOD_DEMONSLAYER_DESC = "\c[Green]+%d%% damage\c[White] dealt to Legendary monsters";
+	BIO_MGENE_DEMONSLAYER_TAG = "\c[MGene]Demonslayer\c[White] Gene\c-";
+	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a %s.";
+	BIO_WMOD_DEMONSLAYER_SUMM =
+		"\c[Green]+100% damage\c[White] dealt to Legendary monsters";
+	BIO_WMOD_DEMONSLAYER_DESC =
+		"\c[Green]+%d%% damage\c[White] dealt to Legendary monsters";
 
+	BIO_MGENE_ETMF_TAG = "\c[MGene]Energy-to-Matter Feed\c[White] Gene\c-";
+	BIO_MGENE_ETMF_PKUP = "Collected a %s.";
 	BIO_WMOD_ETMF_SUMM =
 		"\c[White]Change to consuming cells for a few seconds of free firing";
 	BIO_WMOD_ETMF_DESC =
 		"\c[White]Consumes %d cells for %.1f second(s) of free firing";
 
+	BIO_MGENE_FIRETIME_TAG = "\c[MGene]Rapid Refire\c[White] Gene\c-";
+	BIO_MGENE_FIRETIME_PKUP = "Collected a %s.";
 	BIO_WMOD_FIRETIME_SUMM = "\c[Green]Increased fire rates";
 	BIO_WMOD_FIRETIME_DESC = "\c[White]Fire time%s: \c[Green]%.2f seconds";
 
+	BIO_MGENE_FORCEPAIN_TAG = "\c[MGene]Neurotoxic\c[White] Gene\c-";
+	BIO_MGENE_FORCEPAIN_PKUP = "Collected a %s.";
 	BIO_WMOD_FORCEPAIN_SUMM =
 		"\c[Green]Extra 20% chance of firing a neurotoxic payload\n"
 		"\c[White]Neurotoxic payloads always make monsters flinch\n"
@@ -435,21 +472,33 @@
 		"\c[White]Neurotoxic payloads always make monsters flinch\n"
 		"\c[Gold]Some monsters are immune to this effect!";
 
+	BIO_MGENE_FORCERADIUSDMG_TAG = "\c[MGene]Squash Head\c[White] Gene\c-";
+	BIO_MGENE_FORCERADIUSDMG_PKUP = "Collected a %s.";
 	BIO_WMOD_FORCERADIUSDMG_SUMM =
 		"\c[Green]Payloads ignore monster splash damage immunity";
 
+	BIO_MGENE_INFINITEAMMO_TAG = "\c[MGene]Ammo Apparition\c[White] Gene\c-";
+	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an %s.";
 	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
 
+	BIO_MGENE_KICKBACK_TAG = "\c[MGene]Stopping\c[White] Gene\c-";
+	BIO_MGENE_KICKBACK_PKUP = "Collected a %s.";
 	BIO_WMOD_KICKBACK_SUMM = "\c[Green]+200% knockback";
 	BIO_WMOD_KICKBACK_DESC = "\c[Green]+%d%% knockback";
 
+	BIO_MGENE_LIFESTEAL_TAG = "\c[MGene]Parasitic\c[White] Gene\c-";
+	BIO_MGENE_LIFESTEAL_PKUP = "Collected a %s.";
 	BIO_WMOD_LIFESTEAL_SUMM = "\c[Green]Small percentage of melee damage dealt gained as health";
 	BIO_WMOD_LIFESTEAL_DESC = "\c[Green]%d%% of damage dealt gained as health%s";
 
+	BIO_MGENE_MAGSIZE_TAG = "\c[MGene]High-Capacity\c[White] Gene\c-";
+	BIO_MGENE_MAGSIZE_PKUP = "Collected a %s.";
 	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
 	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
 
+	BIO_MGENE_MAGSIZETODAMAGE_TAG = "\c[MGene]Skirmisher\c[White] Gene\c-";
+	BIO_MGENE_MAGSIZETODAMAGE_PKUP = "Collected a %s.";
 	BIO_WMOD_MAGSIZETODAMAGE_SUMM =
 		"\c[Brick]20% reduced magazine size\n"
 		"\c[Green]20% increased damage";
@@ -460,17 +509,24 @@
 		"\c[Brick]%d% reduced \c[White]secondary magazine size\n"
 		"\c[Green]%d%% increased damage \c[White]for applicable firing modes";
 
+	BIO_MGENE_NTHROUNDCOST_TAG = "\c[MGene]Ammo Thrift\c[White] Gene\c-";
+	BIO_MGENE_NTHROUNDCOST_PKUP = "Collected an %s.";
 	BIO_WMOD_NTHROUNDCOST_SUMM = "\c[Green]Every 5th shot costs no ammo";
 	BIO_WMOD_NTHROUNDCOST_DESC_NTHFREE = "\c[Green]Free shot every %d rounds";
 	BIO_WMOD_NTHROUNDCOST_DESC_NTHCOST = "\c[Green]Ammo is only consumed every %d shots";
 
+	BIO_MGENE_PROJGRAVITY_TAG = "\c[MGene]Dense Payload\c[White] Gene\c-";
+	BIO_MGENE_PROJGRAVITY_PKUP = "Collected a %s.";
 	BIO_WMOD_PROJGRAVITY_SUMM =
 		"\c[White]Projectile payloads are affected by gravity\n"
 		"\c[Green]+20% damage to affected projectiles";
 
-	BIO_WMOD_PROXMINE_SUMM =
-		"\c[White]Change from firing rockets/grenades to bouncy proximity mines";
+	BIO_MGENE_PROXMINE_TAG = "\c[MGene]Refit: Proximity Mine\c[White] Gene\c-";
+	BIO_MGENE_PROXMINE_PKUP = "Collected a %s.";
+	BIO_WMOD_PROXMINE_SUMM = "\c[White]Change to firing bouncy proximity mines";
 
+	BIO_MGENE_RECHAMBERUP_TAG = "\c[MGene]Upscale Rechamber\c[White] Gene\c-";
+	BIO_MGENE_RECHAMBERUP_PKUP = "Collected an %s.";
 	BIO_WMOD_RECHAMBERUP_SUMM =
 		"\c[Brick]Double ammo usage\c[White] but \c[Green]double damage";
 	BIO_WMOD_RECHAMBERUP_DESC_PIPELINE =
@@ -480,21 +536,36 @@
 	BIO_WMOD_RECHAMBERUP_DESC_AMMO2 =
 		"\c[White]Secondary ammo usage \c[Brick]increased by %d%%";
 
+	BIO_MGENE_RELOADTIME_TAG = "\c[MGene]Ergonomic\c[White] Gene\c-";
+	BIO_MGENE_RELOADTIME_PKUP = "Collected an %s.";
 	BIO_WMOD_RELOADTIME_SUMM = "\c[Green]Increased reload speeds";
 	BIO_WMOD_RELOADTIME_DESC = "\c[White]Reload time%s: \c[Green]%.2f seconds";
 
+	BIO_MGENE_RESERVEFEED_TAG = "\c[MGene]Ammochain\c[White] Gene\c-";
+	BIO_MGENE_RESERVEFEED_PKUP = "Collected an %s.";
 	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
 
-	BIO_WMOD_SHELLTOSLUG_SUMM = "\c[White]Change from firing shells to solid slugs";
+	BIO_MGENE_SHELLTOSLUG_TAG = "\c[MGene]Refit: Slug\c[White] Gene\c-";
+	BIO_MGENE_SHELLTOSLUG_PKUP = "Collected a %s.";
+	BIO_WMOD_SHELLTOSLUG_SUMM =
+		"\c[White]Change from firing shells to highly-accurate solid slugs";
 
-	BIO_WMOD_SMARTAIM_SUMM = "\c[Green]Smart aim functionality";
+	BIO_MGENE_SMARTAIM_TAG = "\c[MGene]Smart Fire Control\c[White] Gene\c-";
+	BIO_MGENE_SMARTAIM_PKUP = "Collected a %s.";
+	BIO_WMOD_SMARTAIM_SUMM =
+		"\c[Green]Smart aim functionality\n"
+		"\c[White]Hitscan attacks \c[Green]cannot miss\c[White] while a target is locked";
 
+	BIO_MGENE_SPLASHTOHIT_TAG = "\c[MGene]Shaped Charge\c[White] Gene\c-";
+	BIO_MGENE_SPLASHTOHIT_PKUP = "Collected a %s.";
 	BIO_WMOD_SPLASHTOHIT_SUMM =
 		"\c[White]Converts 50% of splash damage into hit damage\n"
 		"\c[White]50% splash radius reduction per application";
 	BIO_WMOD_SPLASHTOHIT_DESC =
 		"\c[White]%d damage converted; radius reduced by %d%s";
 
+	BIO_MGENE_SPOOLING_TAG = "\c[MGene]Rotary Turbocharge\c[White] Gene\c-";
+	BIO_MGENE_SPOOLING_PKUP = "Collected a %s.";
 	BIO_WMOD_SPOOLING_SUMM =
 		"\c[Brick]Weapon has to be spooled before firing\n"
 		"\c[Green]Dramatic increase in fire rate";
@@ -503,13 +574,16 @@
 	BIO_WMOD_SPOOLING_NOBENEFIT =
 		"\c[Gold]Note: no fire rate benefit can be gained from this weapon!";
 
-	BIO_WMOD_SPREAD_SUMM =
-		"\c[Green]Reduces firing spread";
+	BIO_MGENE_SPREAD_TAG = "\c[MGene]Accurised\c[White] Gene\c-";
+	BIO_MGENE_SPREAD_PKUP = "Collected an %s.";
+	BIO_WMOD_SPREAD_SUMM = "\c[Green]Reduces firing spread";
 	BIO_WMOD_SPREAD_DESC =
 		"\c[White]Spread%s: "
 		"\c[Green]%.2f\c[White] horizontal, "
 		"\c[Green]%.2f\c[White] vertical";
 
+	BIO_MGENE_SPREADNARROW_TAG = "\c[MGene]Crab-claw Choke\c[White] Gene\c-";
+	BIO_MGENE_SPREADNARROW_PKUP = "Collected a %s.";
 	BIO_WMOD_SPREADNARROW_SUMM =
 		"\c[White]Converts 50% of horizontal spread into vertical spread";
 	BIO_WMOD_SPREADNARROW_DESC =
@@ -517,6 +591,8 @@
 		"\c[Green]%.2f\c[White] horizontal, "
 		"\c[Brick]+%.2f\c[White] vertical";
 
+	BIO_MGENE_SPREADWIDEN_TAG = "\c[MGene]Duckbill Choke\c[White] Gene\c-";
+	BIO_MGENE_SPREADWIDEN_PKUP = "Collected a %s.";
 	BIO_WMOD_SPREADWIDEN_SUMM =
 		"\c[White]Converts 50% of vertical spread into horizontal spread";
 	BIO_WMOD_SPREADWIDEN_DESC =
@@ -524,152 +600,36 @@
 		"\c[Brick]+%.2f\c[White] horizontal, "
 		"\c[Green]%.2f\c[White] vertical";
 
-	BIO_WMOD_SWITCHSPEED_SUMM =
-		"\c[Green]Weapon raises and lowers almost instantly";
-
-// Weapon modifier supports (summaries, incompatibility explanations) //////////
-
-	BIO_MODSUP_INCOMPAT_NONODEEAST = "No node to the east.";
-	BIO_MODSUP_INCOMPAT_NOMODEAST = "No modifier in the eastern node.";
-
-	BIO_MODSUP_INCOMPAT_NONODENORTH = "No node to the north.";
-	BIO_MODSUP_INCOMPAT_NOMODNORTH = "No modifier in the northern node.";
-
-	BIO_MODSUP_INCOMPAT_NONODESOUTH = "No node to the south.";
-	BIO_MODSUP_INCOMPAT_NOMODSOUTH = "No modifier in the southern node.";
-
-	BIO_MODSUP_INCOMPAT_NONODEWEST = "No node to the west.";
-	BIO_MODSUP_INCOMPAT_NOMODWEST = "No modifier in the western node.";
-
-	BIO_MODSUP_ADDEAST_SUMM =
-		"\c[Green]Modifier in node to east is applied one extra time\n"
-		"\c[White]Node does not need to be connected";
-
-	BIO_MODSUP_ADDNORTH_SUMM =
-		"\c[Green]Modifier in node to north is applied one extra time\n"
-		"\c[White]Node does not need to be connected";
-
-	BIO_MODSUP_ADDSOUTH_SUMM =
-		"\c[Green]Modifier in node to south is applied one extra time\n"
-		"\c[White]Node does not need to be connected";
-
-	BIO_MODSUP_ADDWEST_SUMM =
-		"\c[Green]Modifier in node to west is applied one extra time\n"
-		"\c[White]Node does not need to be connected";
-
-// Weapon affixes (descriptions) ///////////////////////////////////////////////
-
-	BIO_WAFX_FORCEPAIN_DESC =
-		"\c[Green]Extra %d%% chance of firing a neurotoxic payload\n"
-		"\c[White]\tNeurotoxic payloads always make monsters flinch";
-
-// Mutagens (tags, pickup and usage strings) ///////////////////////////////////
-
-	BIO_MUTA_FAIL_NULL = "This weapon doesn't even respond to the mutagen.";
-	BIO_MUTA_FAIL_ALREADYMUTATED = "This weapon has already been mutated.";
-
-	BIO_MUTA_GENERAL_TAG = "\c[Cyan]C.O.N.T.R.O.L.\c[White] Mutagen";
-	BIO_MUTA_GENERAL_PKUP = "Acquired a sample of \c[Cyan]C.O.N.T.R.O.L.\c- Mutagen.";
-	BIO_MUTA_GENERAL_USE = "\c[Cyan]You feel your weapon integrate with your body.\c-";
-
-// Gene items (tags, pickup strings) ///////////////////////////////////////////
-
-	BIO_GENE_TAG = "\c[White]Gene\c-";
-	BIO_GENE_PKUP = "Collected a \c[White]gene\c-.";
-
-	// Modifier
-
-	BIO_MGENE_BERSERKDAMAGE_TAG = "\c[MGene]Frenzying\c[White] Gene\c-";
-	BIO_MGENE_BERSERKDAMAGE_PKUP = "Collected a %s.";
-
-	BIO_MGENE_CANISTERSHOT_TAG = "\c[MGene]Refit: Canister Shot\c[White] Gene\c-";
-	BIO_MGENE_CANISTERSHOT_PKUP = "Collected a %s.";
-
-	BIO_MGENE_DEMONSLAYER_TAG = "\c[MGene]Demonslayer\c[White] Gene\c-";
-	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a %s.";
-
-	BIO_MGENE_ETMF_TAG = "\c[MGene]Energy-to-Matter Feed\c[White] Gene\c-";
-	BIO_MGENE_ETMF_PKUP = "Collected a %s.";
-
-	BIO_MGENE_FIRETIME_TAG = "\c[MGene]Rapid Refire\c[White] Gene\c-";
-	BIO_MGENE_FIRETIME_PKUP = "Collected a %s.";
-
-	BIO_MGENE_FORCEPAIN_TAG = "\c[MGene]Neurotoxic\c[White] Gene\c-";
-	BIO_MGENE_FORCEPAIN_PKUP = "Collected a %s.";
-
-	BIO_MGENE_FORCERADIUSDMG_TAG = "\c[MGene]Squash Head\c[White] Gene\c-";
-	BIO_MGENE_FORCERADIUSDMG_PKUP = "Collected a %s.";
-
-	BIO_MGENE_INFINITEAMMO_TAG = "\c[MGene]Ammo Apparition\c[White] Gene\c-";
-	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an %s.";
-
-	BIO_MGENE_KICKBACK_TAG = "\c[MGene]Stopping\c[White] Gene\c-";
-	BIO_MGENE_KICKBACK_PKUP = "Collected a %s.";
-
-	BIO_MGENE_LIFESTEAL_TAG = "\c[MGene]Parasitic\c[White] Gene\c-";
-	BIO_MGENE_LIFESTEAL_PKUP = "Collected a %s.";
-
-	BIO_MGENE_MAGSIZE_TAG = "\c[MGene]High-Capacity\c[White] Gene\c-";
-	BIO_MGENE_MAGSIZE_PKUP = "Collected a %s.";
-
-	BIO_MGENE_MAGSIZETODAMAGE_TAG = "\c[MGene]Skirmisher\c[White] Gene\c-";
-	BIO_MGENE_MAGSIZETODAMAGE_PKUP = "Collected a %s.";
-
-	BIO_MGENE_NTHROUNDCOST_TAG = "\c[MGene]Ammo Thrift\c[White] Gene\c-";
-	BIO_MGENE_NTHROUNDCOST_PKUP = "Collected an %s.";
-
-	BIO_MGENE_RELOADTIME_TAG = "\c[MGene]Ergonomic\c[White] Gene\c-";
-	BIO_MGENE_RELOADTIME_PKUP = "Collected an %s.";
-
-	BIO_MGENE_PROJGRAVITY_TAG = "\c[MGene]Dense Payload\c[White] Gene\c-";
-	BIO_MGENE_PROJGRAVITY_PKUP = "Collected a %s.";
-
-	BIO_MGENE_PROXMINE_TAG = "\c[MGene]Refit: Proximity Mine\c[White] Gene\c-";
-	BIO_MGENE_PROXMINE_PKUP = "Collected a %s.";
-
-	BIO_MGENE_RECHAMBERUP_TAG = "\c[MGene]Upscale Rechamber\c[White] Gene\c-";
-	BIO_MGENE_RECHAMBERUP_PKUP = "Collected an %s.";
-
-	BIO_MGENE_RESERVEFEED_TAG = "\c[MGene]Ammochain\c[White] Gene\c-";
-	BIO_MGENE_RESERVEFEED_PKUP = "Collected an %s.";
-
-	BIO_MGENE_SMARTAIM_TAG = "\c[MGene]Smart Fire Control\c[White] Gene\c-";
-	BIO_MGENE_SMARTAIM_PKUP = "Collected a %s.";
-
-	BIO_MGENE_SPLASHTOHIT_TAG = "\c[MGene]Shaped Charge\c[White] Gene\c-";
-	BIO_MGENE_SPLASHTOHIT_PKUP = "Collected a %s.";
-
-	BIO_MGENE_SPOOLING_TAG = "\c[MGene]Rotary Turbocharge\c[White] Gene\c-";
-	BIO_MGENE_SPOOLING_PKUP = "Collected a %s.";
-
-	BIO_MGENE_SPREAD_TAG = "\c[MGene]Accurised\c[White] Gene\c-";
-	BIO_MGENE_SPREAD_PKUP = "Collected an %s.";
-
-	BIO_MGENE_SPREADNARROW_TAG = "\c[MGene]Crab-claw Choke\c[White] Gene\c-";
-	BIO_MGENE_SPREADNARROW_PKUP = "Collected a %s.";
-
-	BIO_MGENE_SPREADWIDEN_TAG = "\c[MGene]Duckbill Choke\c[White] Gene\c-";
-	BIO_MGENE_SPREADWIDEN_PKUP = "Collected a %s.";
-
-	BIO_MGENE_SHELLTOSLUG_TAG = "\c[MGene]Refit: Slug\c[White] Gene\c-";
-	BIO_MGENE_SHELLTOSLUG_PKUP = "Collected a %s.";
-
 	BIO_MGENE_SWITCHSPEED_TAG = "\c[MGene]Speed Sling\c[White] Gene\c-";
 	BIO_MGENE_SWITCHSPEED_PKUP = "Collected a %s.";
+	BIO_WMOD_SWITCHSPEED_SUMM =
+		"\c[Green]Weapon raises and lowers almost instantly";
 
 	// Support
 
 	BIO_SGENE_ADDEAST_TAG = "\c[SGene]E1 Regulator\c[White] Gene\c-";
 	BIO_SGENE_ADDEAST_PKUP = "Collected an %s.";
+	BIO_MODSUP_ADDEAST_SUMM =
+		"\c[Green]Modifier in node to east is applied one extra time\n"
+		"\c[White]Node does not need to be connected";
 
 	BIO_SGENE_ADDNORTH_TAG = "\c[SGene]N1 Regulator\c[White] Gene\c-";
 	BIO_SGENE_ADDNORTH_PKUP = "Collected an %s.";
+	BIO_MODSUP_ADDNORTH_SUMM =
+		"\c[Green]Modifier in node to north is applied one extra time\n"
+		"\c[White]Node does not need to be connected";
 
 	BIO_SGENE_ADDSOUTH_TAG = "\c[SGene]S1 Regulator\c[White] Gene\c-";
 	BIO_SGENE_ADDSOUTH_PKUP = "Collected an %s.";
+	BIO_MODSUP_ADDSOUTH_SUMM =
+		"\c[Green]Modifier in node to south is applied one extra time\n"
+		"\c[White]Node does not need to be connected";
 
 	BIO_SGENE_ADDWEST_TAG = "\c[SGene]W1 Regulator\c[White] Gene\c-";
 	BIO_SGENE_ADDWEST_PKUP = "Collected a %s.";
+	BIO_MODSUP_ADDWEST_SUMM =
+		"\c[Green]Modifier in node to west is applied one extra time\n"
+		"\c[White]Node does not need to be connected";
 
 	// Active
 
@@ -694,6 +654,15 @@
 	BIO_WMR_REQ_SHOTCOUNTINC_1 = "\c[White]- One shot count increase";
 	BIO_WMR_REQ_SPOOLING = "\c[White]- Affected by a %s";
 	BIO_WMR_REQ_SPREADDEC_1 = "\c[White]- One spread decrease";
+
+// Mutagens (tags, pickup and usage strings) ///////////////////////////////////
+
+	BIO_MUTA_FAIL_NULL = "This weapon doesn't even respond to the mutagen.";
+	BIO_MUTA_FAIL_ALREADYMUTATED = "This weapon has already been mutated.";
+
+	BIO_MUTA_GENERAL_TAG = "\c[Cyan]C.O.N.T.R.O.L.\c[White] Mutagen";
+	BIO_MUTA_GENERAL_PKUP = "Acquired a sample of \c[Cyan]C.O.N.T.R.O.L.\c- Mutagen.";
+	BIO_MUTA_GENERAL_USE = "\c[Cyan]You feel your weapon integrate with your body.\c-";
 
 // Miscellaneous actors ////////////////////////////////////////////////////////
 
