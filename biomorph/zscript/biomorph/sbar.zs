@@ -350,6 +350,20 @@ class BIO_StatusBar : BaseStatusBar
 
 		weapInfoY += 8;
 
+		let igq = weap.InheritedGraphQuality();
+
+		if (igq > 0)
+		{
+			DrawString(
+				Font_Small,
+				String.Format(StringTable.Localize("$BIO_EXTRANODES"), igq),
+				(xPos, weapInfoY),
+				align,
+				Font.CR_UNTRANSLATED
+			);
+			weapInfoY += 16;
+		}
+
 		for (uint i = 1; i < weap.ModGraph.Nodes.Size(); i++)
 		{
 			if (weap.ModGraph.Nodes[i].GeneType == null)
