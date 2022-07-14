@@ -403,6 +403,9 @@ class BIO_LootSpawner : BIO_IntangibleActor abstract
 		Stop;
 	}
 
+	// If returning `false`, this type will not be cached at new-game.
+	virtual bool CanSpawn() const { return true; }
+
 	abstract void AssociatedMonsters(
 		in out Array<class<Actor> > types,
 		in out Array<bool> exact
@@ -486,10 +489,15 @@ extend class BIO_Global
 			if (loot_t == null || loot_t.IsAbstract())
 				continue;
 
+			let defs = GetDefaultByType(loot_t);
+
+			if (!defs.CanSpawn())
+				continue;
+
 			Array<class<Actor> > monstypes;
 			Array<bool> exact;
 
-			GetDefaultByType(loot_t).AssociatedMonsters(monstypes, exact);
+			defs.AssociatedMonsters(monstypes, exact);
 
 			if (monstypes.Size() < 1)
 			{
