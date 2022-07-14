@@ -871,15 +871,6 @@ extend class BIO_WeaponModMenu
 		if (Simulator.Genes[slot] == null || node == 0)
 			return;
 
-		if (!Simulator.NodeAccessible(node))
-		{
-			Console.Printf(
-				StringTable.Localize("$BIO_MENU_WEAPMOD_INSERTFAIL_INACCESSIBLE")
-			);
-			MenuSound("bio/ui/fail");
-			return;
-		}
-
 		MenuSound("bio/ui/beep");
 
 		if (Simulator.Nodes[node].IsOccupied())
@@ -898,30 +889,12 @@ extend class BIO_WeaponModMenu
 			return;
 		}
 
-		if (!Simulator.NodeAccessible(toNode))
-		{
-			Console.Printf(
-				StringTable.Localize("$BIO_MENU_WEAPMOD_INSERTFAIL_INACCESSIBLE")
-			);
-			MenuSound("bio/ui/fail");
-			return;
-		}
-
-		if (Simulator.MoveCausesDisconnection(fromNode, toNode))
-		{
-			Console.Printf(
-				StringTable.Localize("$BIO_MENU_WEAPMOD_EXTRACTFAIL_ORPHANNODES")
-			);
-			MenuSound("bio/ui/fail");
-			return;
-		}
-
 		// `toNode` can be filled; this causes a swap
 		MenuSound("bio/ui/beep");
 		BIO_EventHandler.WeapModSim_MoveGeneBetweenNodes(fromNode, toNode);
 		BIO_EventHandler.WeapModSim_Run();
 	}
-	
+
 	private void TryMoveGeneBetweenInventorySlots(uint fromSlot, uint toSlot)
 	{
 		if (Simulator.Genes[fromSlot] == null ||
@@ -941,15 +914,6 @@ extend class BIO_WeaponModMenu
 	{
 		if (!Simulator.Nodes[node].IsOccupied())
 			return;
-
-		if (!Simulator.CanRemoveGeneFrom(node))
-		{
-			Console.Printf(
-				StringTable.Localize("$BIO_MENU_WEAPMOD_EXTRACTFAIL_ORPHANNODES")
-			);
-			MenuSound("bio/ui/fail");
-			return;
-		}
 
 		MenuSound("bio/ui/beep");
 

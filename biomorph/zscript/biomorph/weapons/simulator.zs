@@ -466,17 +466,29 @@ class BIO_WeaponModSimulator : Thinker
 
 		// First pass sets node defaults
 
-		for (uint i = 0; i < Nodes.Size(); i++)
+		for (uint i = 1; i < Nodes.Size(); i++)
 		{
 			Nodes[i].Multiplier = 1;
-			Nodes[i].Valid = true;
-			Nodes[i].Message = "";
+
+			if (Nodes[i].IsOccupied() && !NodeAccessible(i))
+			{
+				Nodes[i].Valid = false;
+				Nodes[i].Message = "$BIO_MENU_WEAPMOD_INACCESSIBLE";
+			}
+			else
+			{
+				Nodes[i].Valid = true;
+				Nodes[i].Message = "";
+			}
 		}
 
 		// Second pass invokes supports
 
 		for (uint i = 1; i < Nodes.Size(); i++)
 		{
+			if (!Nodes[i].Valid)
+				continue;
+
 			let gene_t = Nodes[i].GetGeneType();
 
 			if (!(gene_t is 'BIO_SupportGene'))
@@ -507,6 +519,9 @@ class BIO_WeaponModSimulator : Thinker
 
 		for (uint i = 1; i < Nodes.Size(); i++)
 		{
+			if (!Nodes[i].Valid)
+				continue;
+
 			let gene_t = Nodes[i].GetGeneType();
 
 			if (!(gene_t is 'BIO_ModifierGene'))
@@ -538,6 +553,9 @@ class BIO_WeaponModSimulator : Thinker
 
 		for (uint i = 1; i < Nodes.Size(); i++)
 		{
+			if (!Nodes[i].Valid)
+				continue;
+
 			let gene_t =  Nodes[i].GetGeneType();
 
 			if (!(gene_t is 'BIO_ActiveGene'))
@@ -1011,15 +1029,26 @@ class BIO_WeaponModSimulator : Thinker
 
 		if (!n.Valid)
 		{
-			bool _ = false;
-			string reason = "";
-			[_, reason] = n.Compatible(AsConst(), context);
+			if (n.Message.Length() > 0)
+			{
+				return String.Format(
+					StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
+					StringTable.Localize(n.GetTag()),
+					StringTable.Localize(n.Message)
+				);
+			}
+			else
+			{
+				string reason = "";
+				bool _ = false;
+				[_, reason] = n.Compatible(AsConst(), context);
 
-			return String.Format(
-				StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
-				StringTable.Localize(n.GetTag()),
-				StringTable.Localize(reason)
-			);
+				return String.Format(
+					StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
+					StringTable.Localize(n.GetTag()),
+					StringTable.Localize(reason)
+				);
+			}
 		}
 
 		return Nodes[node].Gene.GetDescriptionTooltip(Weap.AsConst(), context);
@@ -1316,58 +1345,6 @@ class BIO_WeaponModSimulator : Thinker
 
 		let defs = GetDefaultByType(toTest.GetType());
 		return CountGene(toTest.GetType()) < defs.Limit;
-	}
-
-	// Returns `false` if there's no gene to remove, or if removing the gene
-	// would render other nodes inaccessible.
-	bool CanRemoveGeneFrom(uint node) const
-	{
-		if (!Nodes[node].IsOccupied())
-			return false;
-
-		Array<uint> active;
-		active.Push(0);
-
-		for (uint i = 1; i < Nodes.Size(); i++)
-			if (Nodes[i].IsOccupied() && i != node)
-				active.Push(i);
-
-		for (uint i = 1; i < active.Size(); i++)
-		{
-			if (!NodeAccessibleEx(active[i], active))
-				return false;
-		}
-
-		return true;
-	}
-
-	/*	[0]-[1]-[2]
-	
-		If 1 starts with a gene and the gene is then moved to 2,
-		the graph becomes invalid. Use this function to check for these cases,
-		and disallow such moves.
-	*/
-	bool MoveCausesDisconnection(uint from, uint to) const
-	{
-		if (Nodes[to].IsOccupied())
-			return !NodeAccessible(to);
-
-		Array<uint> active;
-		active.Push(0);
-
-		for (uint i = 1; i < Nodes.Size(); i++)
-			if (Nodes[i].IsOccupied() && i != from)
-				active.Push(i);
-
-		active.Push(to);
-
-		for (uint i = 1; i < active.Size(); i++)
-		{
-			if (!NodeAccessibleEx(active[i], active))
-				return true;
-		}
-
-		return false;
 	}
 
 	BIO_WeaponModSimNode GetNodeByPosition(int x, int y, bool includeFake = false)
