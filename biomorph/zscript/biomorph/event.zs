@@ -428,6 +428,7 @@ extend class BIO_EventHandler
 		ConEvent_LootDiag(event);
 		ConEvent_MonsVal(event);
 		ConEvent_LootSim(event);
+		ConEvent_WeapSerialize(event);
 	}
 
 	private static ui void ConEvent_Help(ConsoleEvent event)
@@ -452,6 +453,7 @@ extend class BIO_EventHandler
 			"\tbio_weapdiag_\n"
 			"\tbio_monsval_\n"
 			"\tbio_lootsim_\n"
+			"\tbio_weapserialize_\n"
 			"\c[Gold]Network events:\c-\n"
 			"\tbio_weaplootregen_\n"
 			"\tbio_mutalootregen_\n"
@@ -713,6 +715,34 @@ extend class BIO_EventHandler
 
 		output.DeleteLastCharacter();
 		Console.Printf(output);
+	}
+
+	private static ui void ConEvent_WeapSerialize(ConsoleEvent event)
+	{
+		if (!(event.Name ~== "bio_weapserialize"))
+			return;
+
+		if (!event.IsManual)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Illegal attempt by a script to invoke `bio_weapserialize`."
+			);
+			return;
+		}
+
+		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
+
+		if (weap == null)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"This event can only be invoked on a Biomorph weapon."
+			);
+			return;
+		}
+
+		Console.Printf(weap.Serialize().ToString());
 	}
 }
 

@@ -36,6 +36,61 @@ class BIO_WMGNode play
 		return ret;
 	}
 
+	void Serialize(in out Dictionary dict) const
+	{
+		string base = String.Format("modgraph.%d.", UUID);
+
+		dict.Insert(base .. "home_distance", String.Format("%d", HomeDistance));
+		dict.Insert(base .. "pos_x", String.Format("%d", PosX));
+		dict.Insert(base .. "pos_y", String.Format("%d", PosY));
+		dict.Insert(base .. "flags", String.Format("%d", Flags));
+		
+		if (GeneType != null)
+			dict.Insert(base .. "gene_type", GeneType.GetClassName());
+		else
+			dict.Insert(base .. "gene_type", "null");
+
+		for (uint i = 0; i < Neighbors.Size(); i++)
+		{
+			dict.Insert(
+				String.Format(base .. "neighbors.%d", i),
+				String.Format("%d", Neighbors[i])
+			);
+		}
+	}
+
+	static BIO_WMGNode Deserialize(Dictionary dict, uint uuid)
+	{
+		string base = String.Format("modgraph.%d.", uuid);
+		let ret = new('BIO_WMGNode');
+
+		ret.UUID = uuid;
+		ret.HomeDistance = dict.At(base .. "home_distance").ToInt();
+		ret.PosX = dict.At(base .. "pos_x").ToInt();
+		ret.PosY = dict.At(base .. "pos_y").ToInt();
+		ret.Flags = dict.At(base .. "flags").ToInt();
+		
+		let gene_tn = dict.At(base .. "gene_type");
+		
+		if (gene_tn != "null")
+			ret.GeneType = gene_tn;
+
+		uint nbi = 0;
+
+		do
+		{
+			let key = base .. String.Format("neighbors.%d", nbi++);
+			let val = dict.At(key);
+
+			if (val.Length() < 1)
+				break;
+
+			ret.Neighbors.Push(val.ToInt());
+		} while (true);
+
+		return ret;
+	}
+
 	void Lock() { Flags |= BIO_WMGNF_LOCKED; }
 	void Unlock() { Flags &= ~BIO_WMGNF_LOCKED; }
 }

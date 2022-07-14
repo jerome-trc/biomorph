@@ -15,6 +15,7 @@ alias bio_lootdiag_ "event bio_lootdiag"
 alias bio_weapdiag_ "event bio_weapdiag"
 alias bio_monsval_ "event bio_monsval"
 alias bio_lootsim_ "event bio_lootsim"
+alias bio_weapserialize_ "event bio_weapserialize"
 
 alias bio_lootcoreregen_ "netevent bio_globalregen 0"
 alias bio_weaplootregen_ "netevent bio_globalregen 1"

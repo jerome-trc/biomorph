@@ -1884,3 +1884,47 @@ extend class BIO_Weapon
 		return ret;
 	}
 }
+
+// Serialization/deserialization.
+extend class BIO_Weapon
+{
+	Dictionary Serialize() const
+	{
+		let ret = Dictionary.Create();
+		
+		ret.Insert("type", GetClassName());
+
+		if (ModGraph != null)
+		{
+			ret.Insert("modgraph.size", String.Format("%d", ModGraph.Nodes.Size()));
+
+			for (uint i = 0; i < ModGraph.Nodes.Size(); i++)
+			{
+				ModGraph.Nodes[i].Serialize(ret);
+			}
+		}
+
+		return ret;
+	}
+
+	static BIO_Weapon Deserialize(string input, Vector3 pos)
+	{
+		let dict = Dictionary.FromString(input);
+
+		let ret = BIO_Weapon(Actor.Spawn(dict.At("type"), pos));
+		ret.LazyInit();
+
+		let sz = dict.At("modgraph.size").ToInt();
+
+		if (sz > 0 && ret.ModGraph == null)
+			ret.ModGraph = BIO_WeaponModGraph.Create(0);
+
+		ret.ModGraph.Nodes[0] = BIO_WMGNode.Deserialize(dict, 0);
+
+		for (uint i = 1; i < sz; i++)
+			ret.ModGraph.Nodes.Push(BIO_WMGNode.Deserialize(dict, i));
+
+		ret.SetTag(ret.ColoredTag());
+		return ret;
+	}
+}
