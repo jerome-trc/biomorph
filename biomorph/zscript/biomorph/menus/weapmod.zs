@@ -893,7 +893,6 @@ extend class BIO_WeaponModMenu
 	private void TryMoveGeneBetweenNodes(uint fromNode, uint toNode)
 	{
 		if (!Simulator.Nodes[fromNode].IsOccupied() ||
-			Simulator.Nodes[toNode].IsOccupied() ||
 			fromNode == toNode || toNode == 0)
 		{
 			return;

@@ -689,16 +689,6 @@ class BIO_WeaponModSimulator : Thinker
 			return;
 		}
 
-		if (Nodes[toNode].IsOccupied())
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt to move gene to occupied node %d.",
-				toNode
-			);
-			return;
-		}
-
 		let temp = Nodes[toNode].Gene;
 		Nodes[toNode].Gene = Nodes[fromNode].Gene;
 		Nodes[fromNode].Gene = temp;
@@ -1360,14 +1350,7 @@ class BIO_WeaponModSimulator : Thinker
 	bool MoveCausesDisconnection(uint from, uint to) const
 	{
 		if (Nodes[to].IsOccupied())
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"`MoveCausesDisconnection()` expected an empty `to` node. "
-				"(from %d, to %d)", from, to
-			);
-			return false;
-		}
+			return !NodeAccessible(to);
 
 		Array<uint> active;
 		active.Push(0);
