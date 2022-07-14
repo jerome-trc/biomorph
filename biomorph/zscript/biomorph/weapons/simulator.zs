@@ -465,20 +465,46 @@ class BIO_WeaponModSimulator : Thinker
 		Weap.SetupMagazines();
 
 		// First pass sets node defaults
+		// Additionally, check if any nodes are disconnected,
+		// and if any per-gene-type limits are being exceeded
+
+		Array<class<BIO_Gene> > genetypes;
+		Array<uint> genecounts;
 
 		for (uint i = 1; i < Nodes.Size(); i++)
 		{
 			Nodes[i].Multiplier = 1;
+			Nodes[i].Valid = true;
+			Nodes[i].Message = "";
 
-			if (Nodes[i].IsOccupied() && !NodeAccessible(i))
+			if (Nodes[i].IsOccupied())
 			{
-				Nodes[i].Valid = false;
-				Nodes[i].Message = "$BIO_MENU_WEAPMOD_INACCESSIBLE";
-			}
-			else
-			{
-				Nodes[i].Valid = true;
-				Nodes[i].Message = "";
+				if (!NodeAccessible(i))
+				{
+					Nodes[i].Valid = false;
+					Nodes[i].Message = "$BIO_MENU_WEAPMOD_INACCESSIBLE";
+				}
+
+				let gene_t = Nodes[i].GetGeneType();
+				let gtc = genetypes.Find(gene_t);
+
+				if (gtc == genetypes.Size())
+				{
+					gtc = genetypes.Push(gene_t);
+					genecounts.Push(0);
+				}
+
+				let defs = GetDefaultByType(gene_t);
+
+				if (++genecounts[gtc] > defs.Limit)
+				{
+					let template = defs.Limit == 1 ?
+						StringTable.Localize("$BIO_MENU_WEAPMOD_OVERLIMIT_SINGULAR") :
+						StringTable.Localize("$BIO_MENU_WEAPMOD_OVERLIMIT_PLURAL");
+
+					Nodes[i].Valid = false;
+					Nodes[i].Message = String.Format(template, defs.Limit);
+				}
 			}
 		}
 
@@ -1307,44 +1333,6 @@ class BIO_WeaponModSimulator : Thinker
 				ret += Nodes[i].Multiplier;
 
 		return ret;
-	}
-
-	// If `node` is `false`, test `Genes[gene]` instead of `Nodes[gene]`.
-	bool TestDuplicateAllowance(uint gene, bool node) const
-	{
-		BIO_WeaponModSimGene toTest = null;
-
-		if (node)
-		{
-			if (!Nodes[gene].IsOccupied())
-			{
-				Console.Printf(
-					Biomorph.LOGPFX_ERR ..
-					"Attempted to test duplicate allowance of gene at unoccupied node %d.",
-					gene
-				);
-				return false;
-			}
-
-			toTest = Nodes[gene].Gene;
-		}
-		else
-		{
-			if (Genes[gene] == null)
-			{
-				Console.Printf(
-					Biomorph.LOGPFX_ERR ..
-					"Attempted to test duplicate allowance of gene at empty slot %d.",
-					gene
-				);
-				return false;
-			}
-
-			toTest = Genes[gene];
-		}
-
-		let defs = GetDefaultByType(toTest.GetType());
-		return CountGene(toTest.GetType()) < defs.Limit;
 	}
 
 	BIO_WeaponModSimNode GetNodeByPosition(int x, int y, bool includeFake = false)

@@ -716,8 +716,6 @@
 	BIO_MENU_WEAPMOD_MUTAGEN =
 		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen held: \c[Yellow]%d \c[MidGrey]- "
 		"\c[White]Cost to commit: \c[Gold]%d";
-	BIO_MENU_WEAPMOD_NODUP =
-		"\c[Yellow]This gene can only be applied to this weapon once.";
 	BIO_MENU_WEAPMOD_MORPH =
 		"\c[LightBlue]Left click\c[Green] to metamorph this weapon to:\n%s\n\n"
 		"\c[Yellow]Requirements fulfilled:\n%s\n\n"
@@ -728,6 +726,10 @@
 		"\c[White]Extra nodes will be \c[Green]inherited by future morphs";
 	BIO_MENU_WEAPMOD_INACCESSIBLE =
 		"\c[Gold]There are no filled nodes connected to this node.";
+	BIO_MENU_WEAPMOD_OVERLIMIT_SINGULAR =
+		"\c[Gold]Only \c[White]%d\c[Gold] gene of this type can be present at once.";
+	BIO_MENU_WEAPMOD_OVERLIMIT_PLURAL =
+		"\c[Gold]Only \c[White]%d\c[Gold] genes of this type can be present at once.";
 	BIO_MENU_WEAPMOD_COMMITFAIL_MUTACOST =
 		"\c[Yellow]Insufficient "
 		"\c[Cyan]C.O.N.T.R.O.L.\c[White] mutagen"

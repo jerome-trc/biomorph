@@ -318,8 +318,6 @@ extend class BIO_WeaponModMenu
 		DrawHelpText();
 		DrawMutagenInfo();
 
-		bool noDupTooltip = false;
-
 		if (DraggedGene != null)
 		{
 			Screen.DrawTexture(DraggedGeneIcon(), false,
@@ -327,36 +325,16 @@ extend class BIO_WeaponModMenu
 				DTA_VIRTUALWIDTHF, CleanWidth, DTA_VIRTUALHEIGHTF, CleanHeight,
 				DTA_KEEPRATIO, true, DTA_CENTEROFFSET, true
 			);
-
-			bool dupAllowed = Simulator.TestDuplicateAllowance(
-				DraggedGene.GetOrigin(),
-				DraggedGene.OriginIsNode()
-			);
-
-			if (ValidHoveredNode() && !dupAllowed)
-			{
-				noDupTooltip = true;
-
-				Screen.DrawText(SmallFont, Font.CR_UNTRANSLATED,
-					(MousePos.X / CleanXFac) + 8, (MousePos.Y / CleanYFac) + 8,
-					StringTable.Localize("$BIO_MENU_WEAPMOD_NODUP"),
-					DTA_VIRTUALWIDTHF, CleanWidth, DTA_VIRTUALHEIGHTF, CleanHeight,
-					DTA_KEEPRATIO, true
-				);
-			}
 		}
 
-		if (!noDupTooltip)
+		if (ValidHoveredNode() && Simulator.Nodes[HoveredNode].HasTooltip())
 		{
-			if (ValidHoveredNode() && Simulator.Nodes[HoveredNode].HasTooltip())
-			{
-				DrawTooltip(Simulator.GetNodeTooltip(HoveredNode));
-			}
-			else if (ValidHoveredInvSlot() &&
-				Simulator.Genes[HoveredInvSlot] != null)
-			{
-				DrawTooltip(Simulator.GetGeneSlotTooltip(HoveredInvSlot));
-			}
+			DrawTooltip(Simulator.GetNodeTooltip(HoveredNode));
+		}
+		else if (ValidHoveredInvSlot() &&
+			Simulator.Genes[HoveredInvSlot] != null)
+		{
+			DrawTooltip(Simulator.GetGeneSlotTooltip(HoveredInvSlot));
 		}
 	}
 
