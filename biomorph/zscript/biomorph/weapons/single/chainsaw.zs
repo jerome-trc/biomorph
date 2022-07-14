@@ -38,8 +38,8 @@ class BIO_Chainsaw : BIO_Weapon
 		SAWG C 0 A_BIO_Select;
 		Stop;
 	Fire:
-		SAWG A 1 A_BIO_Fire;
-		SAWG B 1 A_BIO_Fire;
+		SAWG A 2 A_BIO_Fire;
+		SAWG B 2 A_BIO_Fire;
 		SAWG B 0 A_ReFire;
 		Goto Ready;
 	}
