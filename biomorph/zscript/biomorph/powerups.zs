@@ -155,6 +155,39 @@ class BIO_Allmap : Allmap replaces Allmap
 
 // Powerup replacements ////////////////////////////////////////////////////////
 
+mixin class BIO_Powerup
+{
+	override bool HandlePickup(Inventory item)
+	{
+		let pawn = BIO_Player(Owner);
+
+		if (pawn != null && item is 'Powerup')
+			pawn.PrePowerupHandlePickup(Powerup(self), Powerup(item));
+
+		return super.HandlePickup(item);
+	}
+
+	override void AttachToOwner(Actor other)
+	{
+		let pawn = BIO_Player(other);
+
+		if (pawn != null)
+			pawn.PrePowerupAttach(self);
+
+		super.AttachToOwner(other);
+	}
+
+	override void DetachFromOwner()
+	{
+		let pawn = BIO_Player(Owner);
+
+		if (pawn != null)
+			pawn.PrePowerupDetach(self);
+
+		super.DetachFromOwner();
+	}
+}
+
 class BIO_PowerInfiniteAmmo : PowerInfiniteAmmo
 {
 	Default
@@ -166,6 +199,8 @@ class BIO_PowerInfiniteAmmo : PowerInfiniteAmmo
 
 class BIO_PowerInvisibility : PowerInvisibility
 {
+	mixin BIO_Powerup;
+
 	Default
 	{
 		Inventory.Icon 'PINSA0';
@@ -174,6 +209,8 @@ class BIO_PowerInvisibility : PowerInvisibility
 
 class BIO_PowerInvulnerable : PowerInvulnerable
 {
+	mixin BIO_Powerup;
+
 	Default
 	{
 		Inventory.Icon 'PINVA0';
@@ -182,6 +219,8 @@ class BIO_PowerInvulnerable : PowerInvulnerable
 
 class BIO_PowerIronFeet : PowerIronFeet
 {
+	mixin BIO_Powerup;
+
 	Default
 	{
 		Inventory.Icon "graphics/powup_radsuit.png";
@@ -190,6 +229,8 @@ class BIO_PowerIronFeet : PowerIronFeet
 
 class BIO_PowerLightAmp : PowerLightAmp
 {
+	mixin BIO_Powerup;
+
 	Default
 	{
 		Inventory.Icon 'PVISA0';

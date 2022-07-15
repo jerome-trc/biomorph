@@ -3,6 +3,8 @@ class BIO_Player : DoomPlayer
 	uint8 MaxWeaponsHeld; property MaxWeaponsHeld: MaxWeaponsHeld;
 	uint8 MaxGenesHeld; property MaxGenesHeld: MaxGenesHeld;
 
+	BIO_Perk Perks[4];
+
 	BIO_Weapon ExaminedWeapon;
 	private uint16 ExamineTimer;
 
@@ -104,11 +106,6 @@ class BIO_Player : DoomPlayer
 		GiveRandomStartingPistol();
 	}
 
-	bool CanCarryWeapon(BIO_Weapon weap) const
-	{
-		return HeldWeaponCount() < MaxWeaponsHeld;
-	}
-
 	uint HeldWeaponCount() const
 	{
 		uint ret = 0;
@@ -126,11 +123,6 @@ class BIO_Player : DoomPlayer
 		return ret;
 	}
 
-	bool CanCarryGene(BIO_Gene gene)
-	{
-		return HeldGeneCount() < MaxGenesHeld;
-	}
-
 	uint HeldGeneCount() const
 	{
 		uint ret = 0;
@@ -142,11 +134,76 @@ class BIO_Player : DoomPlayer
 		return ret;
 	}
 
+	uint HeldPerkCount() const
+	{
+		uint ret = 0;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+			if (i is 'BIO_Perk')
+				ret++;
+
+		return ret;
+	}
+
+	// For use by the HUD, to not have to iterate over the linked list thrice.
+	uint, uint, uint InventoryCounts() const
+	{
+		uint ret1 = 0, ret2 = 0, ret3 = 0;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+		{
+			let weap = BIO_Weapon(i);
+
+			if (weap != null && weap.Family != BIO_WEAPFAM_FIST)
+				ret1++;
+			else if (i is 'BIO_Gene')
+				ret2++;
+			else if (i is 'BIO_Perk')
+				ret3++;
+		}
+
+		return ret1, ret2, ret3;
+	}
+
 	void ExamineWeapon(BIO_Weapon weap)
 	{
 		ExaminedWeapon = weap;
 		ExamineTimer = TICRATE * 5;
 		A_StartSound("bio/ui/beep", attenuation: 1.2);
+	}
+
+	final override int TakeSpecialDamage(
+		Actor inflictor, Actor source, int damage, name dmgType
+	)
+	{
+		let ret = super.TakeSpecialDamage(inflictor, source, damage, dmgType);
+
+		for (uint i = 0; i < Perks.Size(); i++)
+			if (Perks[i] != null)
+				Perks[i].OnDamageTaken(self, inflictor, source, ret, dmgType);
+
+		return ret;
+	}
+
+	void PrePowerupHandlePickup(Powerup handler, Powerup other)
+	{
+		for (uint i = 0; i < Perks.Size(); i++)
+			if (Perks[i] != null)
+				Perks[i].PrePowerupHandlePickup(self, handler, other);
+	}
+
+	void PrePowerupAttach(Powerup power)
+	{
+		for (uint i = 0; i < Perks.Size(); i++)
+			if (Perks[i] != null)
+				Perks[i].PrePowerupAttach(self, power);
+	}
+
+	void PrePowerupDetach(Powerup power)
+	{
+		for (uint i = 0; i < Perks.Size(); i++)
+			if (Perks[i] != null)
+				Perks[i].PrePowerupDetach(self, power);
 	}
 
 	void OnKill(Actor killed, Actor inflictor)

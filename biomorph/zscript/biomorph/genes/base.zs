@@ -1,5 +1,7 @@
 class BIO_Gene : Inventory abstract
 {
+	mixin BIO_Rarity;
+
 	meta uint LootWeight;
 	property LootWeight: LootWeight;
 
@@ -41,7 +43,8 @@ class BIO_Gene : Inventory abstract
 		if (!super.CanPickup(toucher))
 			return false;
 
-		return BIO_Player(toucher).CanCarryGene(self);		
+		let pawn = BIO_Player(toucher);
+		return pawn.HeldGeneCount() < pawn.MaxGenesHeld;		
 	}
 
 	// Prevent gene pickups from being folded together.
@@ -59,14 +62,6 @@ class BIO_Gene : Inventory abstract
 	final override string PickupMessage()
 	{
 		return String.Format(StringTable.Localize(PickupMsg), GetTag());
-	}
-
-	static void PlayRaritySound(uint weight)
-	{
-		if (weight <= LOOTWEIGHT_MIN)
-			S_StartSound("bio/loot/veryrare", CHAN_AUTO);
-		else if (weight <= LOOTWEIGHT_RARE)
-			S_StartSound("bio/loot/rare", CHAN_AUTO);
 	}
 }
 

@@ -664,6 +664,23 @@
 	BIO_MUTA_GENERAL_PKUP = "Acquired a sample of \c[Cyan]C.O.N.T.R.O.L.\c- Mutagen.";
 	BIO_MUTA_GENERAL_USE = "\c[Cyan]You feel your weapon integrate with your body.\c-";
 
+// Perks (tags, pickup strings, summaries) /////////////////////////////////////
+
+	BIO_PERK_TAG = "Perk";
+	BIO_PERK_PKUP = "Obtained some kind of perk.";
+	BIO_PERK_FLAVOR = "You shudder as your molecular structure rearranges itself.";
+	BIO_PERK_EQUIPTEMPLATE = "%s\n\nEquipped: %s\n\n%s";
+	BIO_PERK_UNEQUIPTEMPLATE = "%s\n\nUnequipped: %s";
+
+	BIO_PERK_POWERUPDURATION_TAG = "\c[Green]Perfect Focus\c[White] Codon";
+	BIO_PERK_POWERUPDURATION_PKUP = "Obtained a %s.";
+	BIO_PERK_POWERUPDURATION_SUMM = "\c[White]All powerups \c[Green]last 50% longer";
+
+	BIO_PERK_SLIMERESIST_TAG = "\c[Green]Antitoxin\c[White] Codon";
+	BIO_PERK_SLIMERESIST_PKUP = "Obtained an %s.";
+	BIO_PERK_SLIMERESIST_SUMM =
+		"\c[White]Incoming damage from hazardous floors is \c[Green]halved";
+
 // Miscellaneous actors ////////////////////////////////////////////////////////
 
 	BIO_SUPPLYBOX_TAG = "Supply Box";
@@ -816,6 +833,7 @@
 	BIO_SECONDARYQUALIFIER = "\c[White](\c[Yellow]Secondary\c[White])";
 
 	BIO_EXTRANODES = "\c[White]Extra nodes: \c[Green]%d";
+	BIO_SBAR_EQUIPPED = "\c[White](\c[Yellow]Equipped\c[White])";
 	BIO_MONSTERCOUNTERCHAR = "M";
 	BIO_SECRETCOUNTERCHAR = "S";
 

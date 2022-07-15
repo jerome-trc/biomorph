@@ -101,11 +101,16 @@ class BIO_StatusBar : BaseStatusBar
 		{
 			DrawInventoryIcon(armor, (20, -22));
 
-			DrawString(Font_HUD, FormatNumber(armor.Amount, 3),
-				(44, -36), 0, Font.CR_DARKGREEN);
-			DrawString(Font_Small, FormatNumber(GetArmorSavePercent(), 3) .. "%",
-				(14, -30), 0, Font.CR_WHITE);
-
+			DrawString(
+				Font_HUD,
+				FormatNumber(armor.Amount, 3),
+				(44, -36), 0, Font.CR_DARKGREEN
+			);
+			DrawString(
+				Font_Small,
+				FormatNumber(GetArmorSavePercent(), 3) .. "%",
+				(14, -30), 0, Font.CR_WHITE
+			);
 		}
 
 		if (deathmatch)
@@ -140,12 +145,6 @@ class BIO_StatusBar : BaseStatusBar
 			}
 		}
 
-		if (isInventoryBarVisible())
-		{
-			DrawInventoryBar(InvBarState, (0, 0), InvBarSlots.GetInt(),
-				DI_SCREEN_CENTER_BOTTOM, HX_SHADOW);
-		}
-
 		DrawWeaponDetails(BIO_Weapon(CPlayer.ReadyWeapon), false);
 
 		if (BIOPlayer.ExaminedWeapon != null)
@@ -154,30 +153,67 @@ class BIO_StatusBar : BaseStatusBar
 		int invY = -20;
 		DrawAmmoDetails(invY);
 
-		if (!isInventoryBarVisible() && !Level.NoInventoryBar && CPlayer.MO.InvSel != null)
+		if (IsInventoryBarVisible())
+		{
+			DrawInventoryBar(
+				InvBarState, (0, 0), InvBarSlots.GetInt(),
+				DI_SCREEN_CENTER_BOTTOM, HX_SHADOW
+			);
+
+			let perk = BIO_Perk(CPlayer.MO.InvSel);
+
+			if (perk != null && perk.IsEquipped())
+			{
+				DrawString(
+					Font_Small,
+					StringTable.Localize("$BIO_SBAR_EQUIPPED"),
+					(0, 180),
+					DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER
+				);
+			}
+		}
+		else if (!Level.NoInventoryBar && CPlayer.MO.InvSel != null)
 		{
 			DrawInventoryIcon(CPlayer.MO.InvSel, (-22, invY + 12));
-			DrawString(Font_HUD, FormatNumber(CPlayer.MO.InvSel.Amount, 3),
-				(-40, invY - 10), DI_TEXT_ALIGN_RIGHT);
+			DrawString(
+				Font_HUD,
+				FormatNumber(CPlayer.MO.InvSel.Amount, 3),
+				(-40, invY - 10),
+				DI_TEXT_ALIGN_RIGHT
+			);
 
 			invY -= 40;
 		}
 
-		let hwc = BIOPlayer.HeldWeaponCount();
+		uint hwc = 0, hgc = 0, hpc = 0;
+		[hwc, hgc, hpc] = BIOPlayer.InventoryCounts();
 
 		DrawImage('PISTA0', (-24, invY + 12));
-		DrawString(Font_Small,
+		DrawString(
+			Font_Small,
 			String.Format("%d / %d", hwc, BIOPlayer.MaxWeaponsHeld),
 			(-44, invY), DI_TEXT_ALIGN_RIGHT,
-			hwc < BIOPlayer.MaxWeaponsHeld ? Font.CR_WHITE : Font.CR_YELLOW);
+			hwc < BIOPlayer.MaxWeaponsHeld ? Font.CR_WHITE : Font.CR_YELLOW
+		);
 	
-		let hgc = BIOPlayer.HeldGeneCount();
-
-		DrawImage("graphics/gene.png", (-24, invY -12));
-		DrawString(Font_Small,
+		DrawImage("graphics/gene.png", (-24, invY - 12));
+		DrawString(
+			Font_Small,
 			String.Format("%d / %d", hgc, BIOPlayer.MaxGenesHeld),
 			(-44, invY - 24), DI_TEXT_ALIGN_RIGHT,
-			hgc < BIOPlayer.MaxGenesHeld ? Font.CR_WHITE : Font.CR_YELLOW);
+			hgc < BIOPlayer.MaxGenesHeld ? Font.CR_WHITE : Font.CR_YELLOW
+		);
+
+		for (uint i = 0; i < BIOPlayer.Perks.Size(); i++)
+		{
+			if (BIOPlayer.Perks[i] == null)
+				continue;
+
+			DrawInventoryIcon(
+				BIOPlayer.Perks[i],
+				(-16, -256 + (i * -32))
+			);
+		}
 	}
 
 	private void DrawAmmoDetails(in out int invY) const

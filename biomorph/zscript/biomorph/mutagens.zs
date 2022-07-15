@@ -1,5 +1,7 @@
 class BIO_Mutagen : Inventory abstract
 {
+	mixin BIO_Rarity;
+
 	const LOOTWEIGHT_MAX = 32;
 	const LOOTWEIGHT_RARE = 4;
 	const LOOTWEIGHT_MIN = 1;
@@ -38,14 +40,6 @@ class BIO_Mutagen : Inventory abstract
 		}
 
 		return true;
-	}
-
-	static void PlayRaritySound(uint weight)
-	{
-		if (weight <= LOOTWEIGHT_MIN)
-			S_StartSound("bio/loot/veryrare", CHAN_AUTO);
-		else if (weight <= LOOTWEIGHT_RARE)
-			S_StartSound("bio/loot/rare", CHAN_AUTO);
 	}
 }
 

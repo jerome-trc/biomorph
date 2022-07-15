@@ -56,3 +56,14 @@ mixin class BIO_Pickup
 			A_SetTranslation('BIO_Pkup_75');
 	}
 }
+
+mixin class BIO_Rarity
+{
+	static void PlayRaritySound(uint weight)
+	{
+		if (weight <= LOOTWEIGHT_MIN)
+			S_StartSound("bio/loot/veryrare", CHAN_AUTO);
+		else if (weight <= LOOTWEIGHT_RARE)
+			S_StartSound("bio/loot/rare", CHAN_AUTO);
+	}
+}

@@ -27,6 +27,7 @@ class Biomorph abstract
 #include "zscript/biomorph/health.zs"
 #include "zscript/biomorph/keybinds.zs"
 #include "zscript/biomorph/mutagens.zs"
+#include "zscript/biomorph/perk.zs"
 #include "zscript/biomorph/pickup.zs"
 #include "zscript/biomorph/player.zs"
 #include "zscript/biomorph/powerups.zs"

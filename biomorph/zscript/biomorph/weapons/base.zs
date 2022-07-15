@@ -302,7 +302,7 @@ extend class BIO_Weapon
 		if (Level == null)
 			return true;
 
-		if (!pawn.CanCarryWeapon(self))
+		if (pawn.HeldWeaponCount() >= pawn.MaxWeaponsHeld)
 			return pawn.FindInventory(GetClass());
 
 		return true;
