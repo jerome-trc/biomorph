@@ -192,7 +192,7 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 		if (target == null)
 			return;
 
-		if (BIO_Utils.TryFindInv(target, 'LDLegendaryMonsterToken'))
+		if (BIO_Utils.TryFindInv(target, 'LDLegendaryMonsterTransformed'))
 			damage *= (Count + 1);
 	}
 
@@ -202,7 +202,7 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 		if (target == null)
 			return;
 
-		if (BIO_Utils.TryFindInv(target, 'LDLegendaryMonsterToken'))
+		if (BIO_Utils.TryFindInv(target, 'LDLegendaryMonsterTransformed'))
 			damage *= (Count + 1);
 	}
 
@@ -211,7 +211,7 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 		if (puff.Tracer == null)
 			return;
 
-		if (BIO_Utils.TryFindInv(puff.Tracer, 'LDLegendaryMonsterToken'))
+		if (BIO_Utils.TryFindInv(puff.Tracer, 'LDLegendaryMonsterTransformed'))
 			puff.Tracer.DamageMObj(puff, null, puff.Damage * Count, puff.DamageType);
 	}
 
