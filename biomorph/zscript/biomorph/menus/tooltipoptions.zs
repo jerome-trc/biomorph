@@ -39,8 +39,8 @@ class BIO_TooltipOptionMenu : OptionMenu {
 		// items.
 		bool tooltip_mode = true;
 		for (uint i = 0; i < items.size(); ++i) {
-			if (items[i] is 'OptionMenuItemBTooltip') {
-				let tt = OptionMenuItemBTooltip(items[i]);
+			if (items[i] is 'OptionMenuItemBIOTooltip') {
+				let tt = OptionMenuItemBIOTooltip(items[i]);
 				if (tt.tooltip == "" && !tooltip_mode) {
 					// Explicit marker that the above items should have no tooltips.
 					startblock = desc.mItems.size();
@@ -94,12 +94,12 @@ class BIO_TooltipOptionMenu : OptionMenu {
 	}
 }
 
-// Prefix the keyword with "B" so as not to hit a redefinition error when
+// Prefix the keyword with "BIO" so as not to hit a redefinition error when
 // trying to load this with Laevis.
-class OptionMenuItemBTooltip : OptionMenuItem {
+class OptionMenuItemBIOTooltip : OptionMenuItem {
 	string tooltip;
 
-	OptionMenuItemBTooltip Init(string tooltip) {
+	OptionMenuItemBIOTooltip Init(string tooltip) {
 		self.tooltip = tooltip.filter();
 		super.init("", "");
 		return self;

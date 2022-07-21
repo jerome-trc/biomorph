@@ -13,7 +13,7 @@ OptionMenu "BIO_Options"
 	StaticText ""
 	StaticText "$BIO_OPTCAT_BALANCE"
 	Option "$BIO_OPTLBL_LDL", "BIO_ldl", "BIO_LegenDoomLite"
-	BTooltip "$BIO_OPTTIP_LDL"
+	BIOTooltip "$BIO_OPTTIP_LDL"
 
 	StaticText ""
 	StaticText "$BIO_OPTCAT_RESET"
