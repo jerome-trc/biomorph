@@ -1,4 +1,4 @@
-class BIO_Perk : Inventory
+class BIO_Perk : Inventory abstract
 {
 	mixin BIO_Rarity;
 
