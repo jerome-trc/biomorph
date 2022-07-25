@@ -146,7 +146,7 @@ struct BIO_FadeTick {
 	}
 	
 	private void SetTickDir () {
-		tick_dir = MiscOps.IntSign(target - ticks);
+		tick_dir = BIO_MiscOps.IntSign(target - ticks);
 	}
 }
 
@@ -249,6 +249,6 @@ struct BIO_FadeTickF {
 	}
 	
 	private void SetTickDir () {
-		tick_dir = MiscOps.IntSign(target - ticks);
+		tick_dir = BIO_MiscOps.IntSign(target - ticks);
 	}
 }

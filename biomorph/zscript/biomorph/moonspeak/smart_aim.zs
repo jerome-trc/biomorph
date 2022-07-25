@@ -18,7 +18,7 @@ struct BIO_SmartAim play {
 	void Next (PlayerPawn owner_po) {
 		// kd: Targets under your crosshair are preferred, even if you already
 		// have a target.
-		let considered_mo = ActorEx.BetterAimTarget(owner_po);
+		let considered_mo = BIO_ActorEx.BetterAimTarget(owner_po);
 		
 		// kd: We don't want to aim at stuff like statues or invulnerable
 		// monsters.
@@ -95,7 +95,7 @@ struct BIO_SmartAim play {
 		}
 		
 		if(
-		!ActorEx.IsInPlayerFov(mo, owner.player, hor_fov, ver_fov) ||
+		!BIO_ActorEx.IsInPlayerFov(mo, owner.player, hor_fov, ver_fov) ||
 		mo.health < 1 ||
 		!mo.IsHostile(owner) ||
 		mo.bdormant ||

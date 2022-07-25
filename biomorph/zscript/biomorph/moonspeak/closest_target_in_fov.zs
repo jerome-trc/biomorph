@@ -133,7 +133,7 @@ struct BIO_ClosestMonsterTracer play {
 	void SaveSpottedIfCloserThreat () {
 		if(new_target.mo && player_mo) {
 			if(	target.mo == NULL || (
-				ActorEx.IsKillableLiveThing(new_target.mo, player_mo) &&
+				BIO_ActorEx.IsKillableLiveThing(new_target.mo, player_mo) &&
 				(new_target.dist < target.dist || target.mo.health < 1) ) ) {
 				target.Copy(new_target);
 			}
