@@ -806,7 +806,7 @@
 		"(try your \c[LightBlue]alt-fire\c[White] button).\c-";
 	BIO_QUITMSG_SUPPLYBOXES =
 		"Stay alert for supply boxes, squirreled away in secret places."
-		"Each contains a mutated weapon.";
+		"Each may contain extra-rare items.";
 
 	BIO_QUITMSG_DRONES =
 		"\c[Purple]Please don't go. The drones need you. They look up to you.\c-";

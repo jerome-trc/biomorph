@@ -2,8 +2,9 @@ class BIO_Perk : Inventory abstract
 {
 	mixin BIO_Rarity;
 
-	const LOOTWEIGHT_MAX = 16;
-	const LOOTWEIGHT_RARE = 4;
+	const LOOTWEIGHT_MAX = 7;
+	const LOOTWEIGHT_COMMON = 5;
+	const LOOTWEIGHT_RARE = 3;
 	const LOOTWEIGHT_MIN = 1;
 
 	meta uint LootWeight; property LootWeight: LootWeight;
@@ -152,6 +153,7 @@ class BIO_Perk_PowerupDuration : BIO_Perk
 		Tag "$BIO_PERK_POWERUPDURATION_TAG";
 		Inventory.Icon 'PERKA0';
 		Inventory.PickupMessage "$BIO_PERK_POWERUPDURATION_PKUP";
+		BIO_Perk.LootWeight LOOTWEIGHT_COMMON;
 		BIO_Perk.Summary "$BIO_PERK_POWERUPDURATION_SUMM";
 	}
 
@@ -183,6 +185,7 @@ class BIO_Perk_SlimeResist : BIO_Perk
 		Tag "$BIO_PERK_SLIMERESIST_TAG";
 		Inventory.Icon 'PERKB0';
 		Inventory.PickupMessage "$BIO_PERK_SLIMERESIST_PKUP";
+		BIO_Perk.LootWeight LOOTWEIGHT_COMMON;
 		BIO_Perk.Summary "$BIO_PERK_SLIMERESIST_SUMM";
 	}
 
