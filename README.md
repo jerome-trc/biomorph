@@ -13,7 +13,7 @@ Biomorph is provided under the MIT License; further information is [here](/LICEN
 ## Contents
 
 - The main mod, under `/biomorph`.
-- A compatibility layer for Corruption Cards, adding bespoke gameplay integration, under `/ccards`.
-- A compatibility layer for the DoomRL Arsenal Monster Pack, under `/drlmonsters`.
+- A compatibility layer for [Corruption Cards](https://forum.zdoom.org/viewtopic.php?f=43&t=67939), adding bespoke gameplay integration, under `/ccards`.
+- A compatibility layer for the [DoomRL Arsenal Monster Pack](https://forum.zdoom.org/viewtopic.php?f=43&t=37044), under `/drlmonsters`.
 - Blender files used to generate sprites.
 - A compatibility patch to prevent crashes on WADs which would otherwise override the player class, such as Valiant.
