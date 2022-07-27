@@ -18,14 +18,11 @@ class BIO_SGene_AddEast : BIO_SupportGene
 		Loop;
 	}
 
-	final override bool, string Compatible(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const
+	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		let myNode = sim.Nodes[node];
+		let myNode = context.Sim.Nodes[context.Node];
 
-		let east = sim.GetNodeByPosition(
+		let east = context.Sim.GetNodeByPosition(
 			myNode.Basis.PosX + 1, myNode.Basis.PosY
 		);
 
@@ -38,14 +35,11 @@ class BIO_SGene_AddEast : BIO_SupportGene
 		return true, "";
 	}
 
-	final override string Apply(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const
+	final override string Apply(BIO_GeneContext context) const
 	{
-		let myNode = sim.Nodes[node];
+		let myNode = context.Sim.Nodes[context.Node];
 
-		let east = sim.GetNodeByPosition(
+		let east = context.Sim.GetNodeByPosition(
 			myNode.Basis.PosX + 1, myNode.Basis.PosY
 		);
 
@@ -74,14 +68,11 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 		Loop;
 	}
 
-	final override bool, string Compatible(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const
+	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		let myNode = sim.Nodes[node];
+		let myNode = context.Sim.Nodes[context.Node];
 
-		let north = sim.GetNodeByPosition(
+		let north = context.Sim.GetNodeByPosition(
 			myNode.Basis.PosX, myNode.Basis.PosY - 1
 		);
 
@@ -94,14 +85,11 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 		return true, "";
 	}
 
-	final override string Apply(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const
+	final override string Apply(BIO_GeneContext context) const
 	{
-		let myNode = sim.Nodes[node];
+		let myNode = context.Sim.Nodes[context.Node];
 
-		let north = sim.GetNodeByPosition(
+		let north = context.Sim.GetNodeByPosition(
 			myNode.Basis.PosX, myNode.Basis.PosY - 1
 		);
 
@@ -130,14 +118,11 @@ class BIO_SGene_AddSouth : BIO_SupportGene
 		Loop;
 	}
 
-	final override bool, string Compatible(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const
+	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		let myNode = sim.Nodes[node];
+		let myNode = context.Sim.Nodes[context.Node];
 
-		let south = sim.GetNodeByPosition(
+		let south = context.Sim.GetNodeByPosition(
 			myNode.Basis.PosX, myNode.Basis.PosY + 1
 		);
 
@@ -150,14 +135,11 @@ class BIO_SGene_AddSouth : BIO_SupportGene
 		return true, "";
 	}
 
-	final override string Apply(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const
+	final override string Apply(BIO_GeneContext context) const
 	{
-		let myNode = sim.Nodes[node];
+		let myNode = context.Sim.Nodes[context.Node];
 
-		let south = sim.GetNodeByPosition(
+		let south = context.Sim.GetNodeByPosition(
 			myNode.Basis.PosX, myNode.Basis.PosY + 1
 		);
 
@@ -186,14 +168,11 @@ class BIO_SGene_AddWest : BIO_SupportGene
 		Loop;
 	}
 
-	final override bool, string Compatible(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const
+	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		let myNode = sim.Nodes[node];
+		let myNode = context.Sim.Nodes[context.Node];
 
-		let west = sim.GetNodeByPosition(
+		let west = context.Sim.GetNodeByPosition(
 			myNode.Basis.PosX - 1, myNode.Basis.PosY
 		);
 
@@ -206,14 +185,11 @@ class BIO_SGene_AddWest : BIO_SupportGene
 		return true, "";
 	}
 
-	final override string Apply(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const
+	final override string Apply(BIO_GeneContext context) const
 	{
-		let myNode = sim.Nodes[node];
+		let myNode = context.Sim.Nodes[context.Node];
 
-		let west = sim.GetNodeByPosition(
+		let west = context.Sim.GetNodeByPosition(
 			myNode.Basis.PosX - 1, myNode.Basis.PosY
 		);
 

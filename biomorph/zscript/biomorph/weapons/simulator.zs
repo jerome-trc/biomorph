@@ -125,13 +125,13 @@ class BIO_WeaponModSimNode play
 		{
 			let sgene_t = (class<BIO_SupportGene>)(gene_t);
 			let defs = GetDefaultByType(sgene_t);
-			[ret1, ret2] = defs.Compatible(sim, Basis.UUID);
+			[ret1, ret2] = defs.Compatible(context);
 		}
 		else if (gene_t is 'BIO_ActiveGene')
 		{
 			let agene_t = (class<BIO_ActiveGene>)(gene_t);
 			let defs = GetDefaultByType(agene_t);
-			[ret1, ret2] = defs.Compatible(sim, Basis.UUID);
+			[ret1, ret2] = defs.Compatible(context);
 		}
 		else
 		{
@@ -211,13 +211,13 @@ class BIO_WeaponModSimNode play
 		{
 			let sgene_t = (class<BIO_SupportGene>)(gene_t);
 			let defs = GetDefaultByType(sgene_t);
-			ret = defs.Apply(sim.AsConst(), Basis.UUID);
+			ret = defs.Apply(context);
 		}
 		else if (gene_t is 'BIO_ActiveGene')
 		{
 			let agene_t = (class<BIO_ActiveGene>)(gene_t);
 			let defs = GetDefaultByType(agene_t);
-			ret = defs.Apply(weap, sim, Basis.UUID);
+			ret = defs.Apply(weap, sim, context);
 		}
 
 		return ret;

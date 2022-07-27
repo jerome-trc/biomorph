@@ -18,21 +18,19 @@ class BIO_AGene_ToggleConnected : BIO_ActiveGene
 		Loop;
 	}
 
-	final override bool, string Compatible(
-		readOnly<BIO_WeaponModSimulator> sim, uint node
-	) const
+	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		let weap = sim.GetWeapon();
+		let weap = context.Weap;
 
 		if (weap.SpecialFunc != null)
 			return false, "$BIO_AGENE_INCOMPAT_EXISTINGSPECIAL";
 
-		let n = sim.Nodes[node];
+		let n = context.Sim.Nodes[context.Node];
 
 		for (uint i = 0; i < n.Basis.Neighbors.Size(); i++)
 		{
 			let nbi = n.Basis.Neighbors[i];
-			let nb = sim.Nodes[nbi];
+			let nb = context.Sim.Nodes[nbi];
 
 			if (nb.Basis.Neighbors.Size() == 1)
 				return true, "";
@@ -44,12 +42,12 @@ class BIO_AGene_ToggleConnected : BIO_ActiveGene
 	final override string Apply(
 		BIO_Weapon weap,
 		BIO_WeaponModSimulator sim,
-		uint node
+		BIO_GeneContext context
 	) const
 	{
 		let func = new('BIO_WSF_NodeToggle');
 		weap.SpecialFunc = func;
-		let n = sim.Nodes[node];
+		let n = sim.Nodes[context.Node];
 		
 		for (uint i = 0; i < n.Basis.Neighbors.Size(); i++)
 		{

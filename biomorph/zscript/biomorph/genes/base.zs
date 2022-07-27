@@ -82,30 +82,20 @@ class BIO_ModifierGene : BIO_Gene abstract
 // Support genes have effects on other nodes, rather than imparting a modifier.
 class BIO_SupportGene : BIO_Gene abstract
 {
-	abstract bool, string Compatible(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const;
-
-	abstract string Apply(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const;
+	abstract bool, string Compatible(BIO_GeneContext context) const;
+	abstract string Apply(BIO_GeneContext context) const;
 }
 
 // Active genes do something to the graph upon being committed, sometimes
 // being destroyed in the process.
 class BIO_ActiveGene : BIO_Gene abstract
 {
-	abstract bool, string Compatible(
-		readOnly<BIO_WeaponModSimulator> sim,
-		uint node
-	) const;
+	abstract bool, string Compatible(BIO_GeneContext context) const;
 
 	abstract string Apply(
 		BIO_Weapon weap,
 		BIO_WeaponModSimulator sim,
-		uint node
+		BIO_GeneContext context
 	) const;
 }
 
@@ -119,4 +109,21 @@ extend class BIO_Gene
 	const LOOTWEIGHT_RARE = 3;
 	const LOOTWEIGHT_VERYRARE = 2;
 	const LOOTWEIGHT_MIN = 1;
+}
+
+struct BIO_GeneContext
+{
+	readOnly<BIO_WeaponModSimulator> Sim;
+	readOnly<BIO_Weapon> Weap;
+
+	// More specifically, the node's UUID.
+	uint Node;
+	// Loaded with `BIO_WeaponModSimNode::Multiplier`.
+	uint NodeCount;
+	// Total number of times this gene type is present on the graph,
+	// including the gene receiving the argument.
+	uint TotalCount;
+	// If true, this is the first time this gene has been hit
+	// during a compatibility check or application.
+	bool First;
 }

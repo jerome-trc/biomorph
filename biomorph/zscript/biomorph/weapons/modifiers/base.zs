@@ -70,21 +70,6 @@ enum BIO_WeaponPipelineModFlags : uint
 	BIO_WPMF_MELEERANGE_DEC = 1 << 31
 }
 
-struct BIO_GeneContext
-{
-	readOnly<BIO_WeaponModSimulator> Sim;
-	readOnly<BIO_Weapon> Weap;
-
-	// Loaded with `BIO_WeaponModSimNode::Multiplier`.
-	uint NodeCount;
-	// Total number of times this gene type is present on the graph,
-	// including the gene receiving the argument.
-	uint TotalCount;
-	// If true, this is the first time this gene has been hit
-	// during a compatibility check or application.
-	bool First;
-}
-
 class BIO_WeaponModifier play abstract
 {
 	// If returning `false`, also return a string (localization not necessary)

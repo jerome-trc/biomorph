@@ -4,7 +4,7 @@ class BIO_MGene_BerserkDamage : BIO_ModifierGene
 	{
 		Tag "$BIO_MGENE_BERSERKDAMAGE_TAG";
 		Inventory.Icon 'GENDB0';
-		Inventory.PickupMessagE "$BIO_MGENE_BERSERKDAMAGE_PKUP";
+		Inventory.PickupMessage "$BIO_MGENE_BERSERKDAMAGE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
 		BIO_Gene.Summary "$BIO_WMOD_BERSERKDAMAGE_SUMM";
 		BIO_ModifierGene.ModType 'BIO_WMod_BerserkDamage';
