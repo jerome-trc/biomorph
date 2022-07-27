@@ -138,10 +138,10 @@ class BIORLM_WMod_Tristar : BIO_WeaponModifier
 				ppl.SetSplash(32, 96);
 			}
 
-			for (uint j = ppl.PayloadDeathFunctors.Size() - 1; j >= 0; j--)
+			for (uint j = ppl.PayloadFunctors.OnDeath.Size() - 1; j >= 0; j--)
 			{
-				if (ppl.PayloadDeathFunctors[j] is 'BIO_PLDF_BFGSpray')
-					ppl.PayloadDeathFunctors.Delete(j);
+				if (ppl.PayloadFunctors.OnDeath[j] is 'BIO_PLDF_BFGSpray')
+					ppl.PayloadFunctors.OnDeath.Delete(j);
 			}
 		}
 

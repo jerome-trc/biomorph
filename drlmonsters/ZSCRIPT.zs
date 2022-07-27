@@ -1,5 +1,5 @@
 version "3.7"
 
-#include "genes.zs"
-#include "loot.zs"
-#include "payloads.zs"
+#include "zscript/bio-drlm/genes.zs"
+#include "zscript/bio-drlm/loot.zs"
+#include "zscript/bio-drlm/payloads.zs"
