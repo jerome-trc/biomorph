@@ -18,6 +18,8 @@ mixin class BIO_PayloadCommon
 	meta string PluralTag;
 	property PluralTag: PluralTag;
 
+	BIO_PayloadFunctorTuple Functors;
+
 	Default
 	{
 		+BLOODSPLATTER
@@ -31,11 +33,6 @@ mixin class BIO_PayloadCommon
 
 mixin class BIO_ProjectileCommon
 {
-	// These are filled with copies of the contents of the
-	// corresponding arrays in the pipeline firing this projectile.
-	Array<BIO_HitDamageFunctor> HitDamageFunctors;
-	Array<BIO_PayloadDeathFunctor> PayloadDeathFunctors;
-
 	Default
 	{
 		+FORCEXYBILLBOARD
@@ -44,11 +41,17 @@ mixin class BIO_ProjectileCommon
 
 	protected int, int GetSplashData() const
 	{
-		for (uint i = 0; i < PayloadDeathFunctors.Size(); i++)
+		int ret1 = 0, ret2 = 0;
+
+		for (uint i = 0; i < Functors.OnDeath.Size(); i++)
 		{
-			let expl = BIO_PLDF_Explode(PayloadDeathFunctors[i]);
-			if (expl == null) continue;
-			return expl.Damage, expl.Radius;
+			let expl = BIO_PLDF_Explode(Functors.OnDeath[i]);
+
+			if (expl == null)
+				continue;
+
+			ret1 += expl.Damage;
+			ret2 += expl.Radius;
 		}
 
 		return 0, 0;
@@ -62,13 +65,6 @@ class BIO_Projectile : Actor abstract
 	mixin BIO_PayloadCommon;
 	mixin BIO_ProjectileCommon;
 
-	float Acceleration; property Acceleration: Acceleration;
-	int SeekAngle; property SeekAngle: SeekAngle;
-
-	// Set by the firing weapon to point to that 
-	// weapon's own counterpart of this arrays.
-	Array<BIO_ProjTravelFunctor> ProjTravelFunctors;
-
 	Default
 	{
 		Projectile;
@@ -76,9 +72,7 @@ class BIO_Projectile : Actor abstract
 		Tag "$BIO_ROUND_TAG";
 		BounceCount 4;
 
-		BIO_Projectile.Acceleration 1.0;
 		BIO_Projectile.PluralTag "$BIO_ROUND_TAGS";
-		BIO_Projectile.SeekAngle 0;
 	}
 
 	// Overriden so projectiles live long enough to receive their data from the
@@ -98,9 +92,10 @@ class BIO_Projectile : Actor abstract
 	{
 		int ret = Damage;
 
-		for (uint i = 0; i < HitDamageFunctors.Size(); i++)
-			HitDamageFunctors[i].InvokeSlow(BIO_Projectile(self),
-				target, ret, dmgType);
+		for (uint i = 0; i < Functors.HitDamage.Size(); i++)
+			Functors.HitDamage[i].InvokeSlow(
+				BIO_Projectile(self), target, ret, dmgType
+			);
 
 		return ret;
 	}
@@ -109,12 +104,8 @@ class BIO_Projectile : Actor abstract
 
 	action void A_Travel()
 	{
-		for (uint i = 0; i < invoker.ProjTravelFunctors.Size(); i++)
-			invoker.ProjTravelFunctors[i].Invoke(BIO_Projectile(self));
-
-		A_ScaleVelocity(invoker.Acceleration);
-		if (invoker.SeekAngle > 0)
-			A_SeekerMissile(invoker.SeekAngle, invoker.SeekAngle * 1.6, SMF_LOOK);
+		for (uint i = 0; i < invoker.Functors.Travel.Size(); i++)
+			invoker.Functors.Travel[i].Invoke(BIO_Projectile(self));
 	}
 
 	// Invoked before `A_ProjectileDeath()` does anything else.
@@ -124,11 +115,10 @@ class BIO_Projectile : Actor abstract
 	action void A_ProjectileDeath()
 	{
 		invoker.OnProjectileDeath();
-
 		bNoGravity = true;
 
-		for (uint i = 0; i < invoker.PayloadDeathFunctors.Size(); i++)
-			invoker.PayloadDeathFunctors[i].InvokeSlow(BIO_Projectile(self));
+		for (uint i = 0; i < invoker.Functors.OnDeath.Size(); i++)
+			invoker.Functors.OnDeath[i].InvokeSlow(BIO_Projectile(self));
 	}
 }
 
@@ -149,9 +139,10 @@ class BIO_FastProjectile : FastProjectile abstract
 	{
 		int ret = Damage;
 
-		for (uint i = 0; i < HitDamageFunctors.Size(); i++)
-			HitDamageFunctors[i].InvokeFast(BIO_FastProjectile(self),
-				target, ret, dmgType);
+		for (uint i = 0; i < Functors.HitDamage.Size(); i++)
+			Functors.HitDamage[i].InvokeFast(
+				BIO_FastProjectile(self), target, ret, dmgType
+			);
 
 		return ret;
 	}
@@ -166,8 +157,8 @@ class BIO_FastProjectile : FastProjectile abstract
 	{
 		invoker.OnProjectileDeath();
 
-		for (uint i = 0; i < invoker.PayloadDeathFunctors.Size(); i++)
-			invoker.PayloadDeathFunctors[i].InvokeFast(BIO_FastProjectile(self));
+		for (uint i = 0; i < invoker.Functors.OnDeath.Size(); i++)
+			invoker.Functors.OnDeath[i].InvokeFast(BIO_FastProjectile(self));
 	}
 }
 

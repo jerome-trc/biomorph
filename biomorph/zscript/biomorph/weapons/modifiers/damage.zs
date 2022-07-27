@@ -156,7 +156,7 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 			{
 				func = new('BIO_HDF_DemonSlayer');
 				BIO_HDF_DemonSlayer(func).Count = 1;
-				weap.Pipelines[i].HitDamageFunctors.Push(func);
+				weap.Pipelines[i].PayloadFunctors.HitDamage.Push(func);
 			}
 		}
 

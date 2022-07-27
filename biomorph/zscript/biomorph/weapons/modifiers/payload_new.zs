@@ -42,8 +42,8 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 			weap.Pipelines[i].VSpread = 3.0;
 			weap.Pipelines[i].FireSound = "bio/puff/canistershot/fire";
 
-			weap.Pipelines[i].PayloadDeathFunctors.Delete(
-				weap.Pipelines[i].PayloadDeathFunctors.Find(func)
+			weap.Pipelines[i].PayloadFunctors.OnDeath.Delete(
+				weap.Pipelines[i].PayloadFunctors.OnDeath.Find(func)
 			);
 		}
 

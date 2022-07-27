@@ -8,6 +8,14 @@ struct BIO_ShotData
 	float HSpread, VSpread, Angle, Pitch;
 }
 
+class BIO_PayloadFunctorTuple
+{
+	// Not applicable to puffs and `FastProjectile`s.
+	Array<BIO_ProjTravelFunctor> Travel;
+	Array<BIO_HitDamageFunctor> HitDamage;
+	Array<BIO_PayloadDeathFunctor> OnDeath;
+}
+
 class BIO_WeaponPipeline play
 {
 	string Tag;
@@ -24,9 +32,7 @@ class BIO_WeaponPipeline play
 	double MaxAlertDistance;
 	sound FireSound;
 
-	Array<BIO_ProjTravelFunctor> ProjTravelFunctors;
-	Array<BIO_HitDamageFunctor> HitDamageFunctors;
-	Array<BIO_PayloadDeathFunctor> PayloadDeathFunctors;
+	BIO_PayloadFunctorTuple PayloadFunctors; // Should never be null.
 
 	void Invoke(BIO_Weapon weap, uint pipelineIndex,
 		uint fireFactor = 1, float spreadFactor = 1.0)
@@ -59,10 +65,10 @@ class BIO_WeaponPipeline play
 			{
 				let puff = BIO_Puff(output);
 
-				for (uint i = 0; i < HitDamageFunctors.Size(); i++)
-					HitDamageFunctors[i].InvokePuff(puff);
-				for (uint i = 0; i < PayloadDeathFunctors.Size(); i++)
-					PayloadDeathFunctors[i].InvokePuff(puff);
+				for (uint i = 0; i < PayloadFunctors.HitDamage.Size(); i++)
+					PayloadFunctors.HitDamage[i].InvokePuff(puff);
+				for (uint i = 0; i < PayloadFunctors.OnDeath.Size(); i++)
+					PayloadFunctors.OnDeath[i].InvokePuff(puff);
 
 				for (uint i = 0; i < weap.Affixes.Size(); i++)
 					weap.Affixes[i].OnPuffFired(weap, puff);
@@ -71,9 +77,7 @@ class BIO_WeaponPipeline play
 			{
 				let sProj = BIO_Projectile(output);
 				sProj.SetDamage(shotData.Damage);
-				sProj.HitDamageFunctors.Copy(HitDamageFunctors);
-				sProj.ProjTravelFunctors.Copy(ProjTravelFunctors);
-				sProj.PayloadDeathFunctors.Copy(PayloadDeathFunctors);
+				sProj.Functors = PayloadFunctors;
 
 				for (uint i = 0; i < weap.Affixes.Size(); i++)
 					weap.Affixes[i].OnSlowProjectileFired(weap, sProj);
@@ -82,8 +86,7 @@ class BIO_WeaponPipeline play
 			{
 				let fProj = BIO_FastProjectile(output);
 				fProj.SetDamage(shotData.Damage);
-				fProj.HitDamageFunctors.Copy(HitDamageFunctors);
-				fProj.PayloadDeathFunctors.Copy(PayloadDeathFunctors);
+				fProj.Functors = PayloadFunctors;
 
 				for (uint i = 0; i < weap.Affixes.Size(); i++)
 					weap.Affixes[i].OnFastProjectileFired(weap, fProj);
@@ -111,20 +114,21 @@ class BIO_WeaponPipeline play
 		ret.MaxAlertDistance = MaxAlertDistance;
 
 		ret.FireSound = FireSound;
+		ret.PayloadFunctors = new('BIO_PayloadFunctorTuple');
 
-		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
+		for (uint i = 0; i < PayloadFunctors.Travel.Size(); i++)
 		{
-			ret.ProjTravelFunctors.Push(ProjTravelFunctors[i].Copy());
+			ret.PayloadFunctors.Travel.Push(PayloadFunctors.Travel[i].Copy());
 		}
 
-		for (uint i = 0; i < HitDamageFunctors.Size(); i++)
+		for (uint i = 0; i < PayloadFunctors.HitDamage.Size(); i++)
 		{
-			ret.HitDamageFunctors.Push(HitDamageFunctors[i].Copy());
+			ret.PayloadFunctors.HitDamage.Push(PayloadFunctors.HitDamage[i].Copy());
 		}
 
-		for (uint i = 0; i < PayloadDeathFunctors.Size(); i++)
+		for (uint i = 0; i < PayloadFunctors.OnDeath.Size(); i++)
 		{
-			ret.PayloadDeathFunctors.Push(PayloadDeathFunctors[i].Copy());
+			ret.PayloadFunctors.OnDeath.Push(PayloadFunctors.OnDeath[i].Copy());
 		}
 
 		return ret;
@@ -170,12 +174,12 @@ class BIO_WeaponPipeline play
 		Damage.GetValues(damages);
 		FireFunctor.GetDamageValues(damages);
 		
-		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
-			ProjTravelFunctors[i].GetDamageValues(damages);
-		for (uint i = 0; i < HitDamageFunctors.Size(); i++)
-			HitDamageFunctors[i].GetDamageValues(damages);
-		for (uint i = 0; i < PayloadDeathFunctors.Size(); i++)
-			PayloadDeathFunctors[i].GetDamageValues(damages);
+		for (uint i = 0; i < PayloadFunctors.Travel.Size(); i++)
+			PayloadFunctors.Travel[i].GetDamageValues(damages);
+		for (uint i = 0; i < PayloadFunctors.HitDamage.Size(); i++)
+			PayloadFunctors.HitDamage[i].GetDamageValues(damages);
+		for (uint i = 0; i < PayloadFunctors.OnDeath.Size(); i++)
+			PayloadFunctors.OnDeath[i].GetDamageValues(damages);
 	}
 
 	int GetMinDamage() const { return Damage.MinOutput(); }
@@ -193,22 +197,22 @@ class BIO_WeaponPipeline play
 		FireFunctor.SetDamageValues(damages);
 		damages.Delete(0, FireFunctor.DamageValueCount());
 
-		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
+		for (uint i = 0; i < PayloadFunctors.Travel.Size(); i++)
 		{
-			ProjTravelFunctors[i].SetDamageValues(damages);
-			damages.Delete(0, ProjTravelFunctors[i].DamageValueCount());
+			PayloadFunctors.Travel[i].SetDamageValues(damages);
+			damages.Delete(0, PayloadFunctors.Travel[i].DamageValueCount());
 		}
 
-		for (uint i = 0; i < HitDamageFunctors.Size(); i++)
+		for (uint i = 0; i < PayloadFunctors.HitDamage.Size(); i++)
 		{
-			HitDamageFunctors[i].SetDamageValues(damages);
-			damages.Delete(0, HitDamageFunctors[i].DamageValueCount());
+			PayloadFunctors.HitDamage[i].SetDamageValues(damages);
+			damages.Delete(0, PayloadFunctors.HitDamage[i].DamageValueCount());
 		}
 
-		for (uint i = 0; i < PayloadDeathFunctors.Size(); i++)
+		for (uint i = 0; i < PayloadFunctors.OnDeath.Size(); i++)
 		{
-			PayloadDeathFunctors[i].SetDamageValues(damages);
-			damages.Delete(0, PayloadDeathFunctors[i].DamageValueCount());
+			PayloadFunctors.OnDeath[i].SetDamageValues(damages);
+			damages.Delete(0, PayloadFunctors.OnDeath[i].DamageValueCount());
 		}
 	}
 
@@ -243,27 +247,27 @@ class BIO_WeaponPipeline play
 
 	BIO_ProjTravelFunctor GetProjTravelFunctor(class<BIO_ProjTravelFunctor> type)
 	{
-		for (uint i = 0; i < ProjTravelFunctors.Size(); i++)
-			if (ProjTravelFunctors[i].GetClass() == type)
-				return ProjTravelFunctors[i];
+		for (uint i = 0; i < PayloadFunctors.Travel.Size(); i++)
+			if (PayloadFunctors.Travel[i].GetClass() == type)
+				return PayloadFunctors.Travel[i];
 
 		return null;
 	}
 
 	BIO_HitDamageFunctor GetHitDamageFunctor(class<BIO_HitDamageFunctor> type)
 	{
-		for (uint i = 0; i < HitDamageFunctors.Size(); i++)
-			if (HitDamageFunctors[i].GetClass() == type)
-				return HitDamageFunctors[i];
+		for (uint i = 0; i < PayloadFunctors.HitDamage.Size(); i++)
+			if (PayloadFunctors.HitDamage[i].GetClass() == type)
+				return PayloadFunctors.HitDamage[i];
 
 		return null;
 	}
 
 	BIO_PayloadDeathFunctor GetPayloadDeathFunctor(class<BIO_PayloadDeathFunctor> type) const
 	{
-		for (uint i = 0; i < PayloadDeathFunctors.Size(); i++)
-			if (PayloadDeathFunctors[i].GetClass() == type)
-				return PayloadDeathFunctors[i];
+		for (uint i = 0; i < PayloadFunctors.OnDeath.Size(); i++)
+			if (PayloadFunctors.OnDeath[i].GetClass() == type)
+				return PayloadFunctors.OnDeath[i];
 
 		return null;
 	}
@@ -282,7 +286,7 @@ class BIO_WeaponPipeline play
 		if (func == null)
 		{
 			func = BIO_PLDF_Explode.Create(damage, radius, flags, fullDmgDistance);
-			PayloadDeathFunctors.Push(func);
+			PayloadFunctors.OnDeath.Push(func);
 		}
 		else
 		{
@@ -319,6 +323,7 @@ class BIO_WeaponPipelineBuilder play
 	{
 		let ret = new('BIO_WeaponPipelineBuilder');
 		ret.Pipeline = new('BIO_WeaponPipeline');
+		ret.Pipeline.PayloadFunctors = new('BIO_PayloadFunctorTuple');
 		return ret;
 	}
 
@@ -516,8 +521,10 @@ class BIO_WeaponPipelineBuilder play
 	BIO_WeaponPipelineBuilder AddBFGSpray(int rayCount = 40,
 		int minRayDmg = 49, int maxRayDmg = 87)
 	{
-		Pipeline.PayloadDeathFunctors.Push(
-			BIO_PLDF_BFGSpray.Create(rayCount, minRayDmg, maxRayDmg));
+		Pipeline.PayloadFunctors.OnDeath.Push(
+			BIO_PLDF_BFGSpray.Create(rayCount, minRayDmg, maxRayDmg)
+		);
+
 		return self;
 	}
 
