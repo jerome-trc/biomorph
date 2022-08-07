@@ -28,7 +28,12 @@ class BIO_EventHandler : EventHandler
 	final override void NewGame()
 	{
 		if (BIO_debug)
-			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Handling NewGame event...");
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_DEBUG ..
+				"Handling event: `NewGame`..."
+			);
+		}
 
 		Globals = BIO_Global.Create();
 	}
@@ -36,7 +41,12 @@ class BIO_EventHandler : EventHandler
 	final override void WorldLoaded(WorldEvent event)
 	{
 		if (BIO_debug)
-			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Handling WorldLoaded event...");
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_DEBUG ..
+				"Handling event: `WorldLoaded`..."
+			);
+		}
 
 		if (Level.Total_Secrets < 1)
 			return;
@@ -88,6 +98,17 @@ class BIO_EventHandler : EventHandler
 		}
 
 		BIO_WanderingSpawner(spawner).Initialize('BIO_SupplyBox', 10);
+	}
+
+	final override void WorldUnloaded(WorldEvent event)
+	{
+		if (BIO_debug)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_DEBUG ..
+				"Handling event: `WorldUnloaded`..."
+			);
+		}		
 	}
 
 	const EVENT_FIRSTPKUP = "bio_firstpkup";

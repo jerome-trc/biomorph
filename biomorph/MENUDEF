@@ -12,32 +12,42 @@ OptionMenu "BIO_Options"
 
 	StaticText ""
 	StaticText "$BIO_OPTCAT_BALANCE"
+
 	Option "$BIO_OPTLBL_LDL", "BIO_ldl", "BIO_LegenDoomLite"
 	BIOTooltip "$BIO_OPTTIP_LDL"
 
 	StaticText ""
 	StaticText "$BIO_OPTCAT_RESET"
-	Option "$BIO_OPTLBL_NOINVCLEAR", "BIO_noinvclear", "OnOff"
+
+	Option "$BIO_OPTLBL_INVCLEAR", "BIO_invclear", "BIO_InvClear"
+	BIOTooltip "$BIO_OPTTIP_INVCLEAR"
+
 	Slider "$BIO_OPTLBL_RESET_HEALTH", "BIO_reset_health", 0, 31, 1, 0
 	Slider "$BIO_OPTLBL_RESET_ARMOR", "BIO_reset_armor", 0, 31, 1, 0
 	Slider "$BIO_OPTLBL_RESET_AMMO", "BIO_reset_ammo", 0, 31, 1, 0
 	Slider "$BIO_OPTLBL_RESET_WEAPS", "BIO_reset_weaps", 0, 31, 1, 0
+
 	StaticText ""
 	StaticText "$BIO_OPTCAT_CONTROL"
+
 	Option "$BIO_OPTLBL_AUTORELOAD_PRE", "BIO_autoreload_pre", "BIO_AutoReload"
 	Option "$BIO_OPTLBL_AUTORELOAD_POST", "BIO_autoreload_post", "BIO_AutoReload"
 	Option "$BIO_OPTLBL_BERSERKSWITCH", "BIO_berserkswitch", "BIO_BerserkSwitch"
 	Option "$BIO_OPTLBL_MULTIBARRELFIRE", "BIO_multibarrelfire", "BIO_MultiBarrelFire"
 	Option "$BIO_OPTLBL_MULTIRELOADMODE", "BIO_multireload", "BIO_MultiReloadMode"
+
 	StaticText ""
 	StaticText "$BIO_OPTCAT_GUI"
+
 	Slider "$BIO_OPTLBL_INVBARSLOTS", "BIO_invbarslots", 1, 32, 1, 0
 	Slider "$BIO_OPTLBL_HUDWEAP_OFFSX", "BIO_hudweap_offsx", -512, -1, 1, 0
 	Slider "$BIO_OPTLBL_HUDWEAP_OFFSY", "BIO_hudweap_offsy", 0, 512, 1, 0
 	Slider "$BIO_OPTLBL_HUDEXAM_OFFSX", "BIO_hudexam_offsx", 1, 512, 1, 0
 	Slider "$BIO_OPTLBL_HUDEXAM_OFFSY", "BIO_hudexam_offsy", 0, 512, 1, 0
+	
 	StaticText ""
 	StaticText "$BIO_OPTCAT_AUDIOVIS"
+
 	Option "$BIO_OPTLBL_QUAKE", "BIO_quake", "OnOff"
 }
 
@@ -55,6 +65,13 @@ OptionValue "BIO_BerserkSwitch"
 	0, "$BIO_OPTVAL_BSKS_NONE"
 	1, "$BIO_OPTVAL_BSKS_MELEE"
 	2, "$BIO_OPTVAL_BSKS_FIRSTONLY"
+}
+
+OptionValue "BIO_InvClear"
+{
+	0, "$BIO_OPTVAL_INVCLEAR_PERMIT"
+	1, "$BIO_OPTVAL_INVCLEAR_SCHEDULED"
+	2, "$BIO_OPTVAL_INVCLEAR_RESTRICT"
 }
 
 OptionValue "BIO_LegenDoomLite"

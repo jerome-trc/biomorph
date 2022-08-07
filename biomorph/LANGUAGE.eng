@@ -762,6 +762,15 @@
 
 	BIO_OPTLBL_INVBARSLOTS = "HUD Inventory Bar Slots";
 
+	BIO_OPTLBL_INVCLEAR = "Allow Inventory Resets";
+	BIO_OPTVAL_INVCLEAR_PERMIT = "Always";
+	BIO_OPTVAL_INVCLEAR_SCHEDULED = "Only If Scheduled";
+	BIO_OPTVAL_INVCLEAR_RESTRICT = "Never";
+	BIO_OPTTIP_INVCLEAR =
+		"If \"Always\", death exits and other forced inventory clears will be allowed.\n"
+		"If \"Never\", no item will ever be taken from you, under any circumstances.\n"
+		"See the \c[Green]\"Inventory Reset Options\"\c- section to learn about scheduled inventory resets.";
+
 	BIO_OPTLBL_LDL = "LegenDoomLite Integration";
 	BIO_OPTTIP_LDL =
 		"Set what type of loot is dropped by slain Legendary enemies in addition "
@@ -777,8 +786,6 @@
 	BIO_OPTLBL_MULTIRELOADMODE = "Multi-reload mode";
 	BIO_OPTVAL_MRM_AUTO = "Continue until interrupted";
 	BIO_OPTVAL_MRM_HOLD = "Hold \c[LightBlue]Reload\c[White] to continue";
-
-	BIO_OPTLBL_NOINVCLEAR = "Never Reset Inventory";
 
 	BIO_OPTLBL_RESET_AMMO = "Reset Ammo Every # Maps";
 	BIO_OPTLBL_RESET_ARMOR = "Reset Armor Every # Maps";

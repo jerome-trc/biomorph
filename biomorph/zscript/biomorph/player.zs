@@ -78,32 +78,33 @@ class BIO_Player : DoomPlayer
 
 	override void ClearInventory()
 	{
-		if (BIO_CVar.NeverClearInventory(Player))
-			return;
-
-		super.ClearInventory();
+		if (BIO_CVar.InvClear_Always(Player))
+			super.ClearInventory();
 	}
 
 	override void GiveDefaultInventory()
 	{
-		if (FindInventory('BIO_WeaponDrop') != null)
-			return;
-
-		super.GiveDefaultInventory();
-
-		let globals = BIO_Global.Get();
-
-		if (globals == null)
+		if (FindInventory('BIO_WeaponDrop') == null)
 		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Global data has been illegally destroyed."
-			);
+			super.GiveDefaultInventory();
+			GiveInventory('BIO_Fists', 1);
+			GiveRandomStartingPistol();
 			return;
 		}
 
-		GiveInventory('BIO_Fists', 1);
-		GiveRandomStartingPistol();
+		// The player has already had their inventory initialised for the
+		// first time, but the map has attempted to force a reset. What now?
+
+		if (BIO_CVar.InvClear_Never(Player))
+			return;
+
+		// Either a scheduled inventory reset happened
+		// or the whole inventory actually was reset for real
+		if (HeldWeaponCount() < 1)
+		{
+			GiveInventory('BIO_Fists', 1);
+			GiveRandomStartingPistol();
+		}
 	}
 
 	uint HeldWeaponCount() const
@@ -218,14 +219,34 @@ class BIO_Player : DoomPlayer
 	{
 		let pistol_t = BIO_Global.Get().LootWeaponType(BIO_WSCAT_PISTOL);
 		GiveInventory(pistol_t, 1);
-		A_SelectWeapon(pistol_t);
+		let pistol = FindInventory(pistol_t);
+		Player.ReadyWeapon = Player.PendingWeapon = Weapon(pistol);
 	}
 
 	override void PreTravelled()
 	{
 		super.PreTravelled();
 
-		if (BIO_CVar.NeverClearInventory(Player))
+		// This block courtesy of Marisa the Magician
+		// See SWWMGZ's counterpart: `Demolitionist::PreTravelled`
+		// Provided under the MIT License
+		// https://github.com/OrdinaryMagician/swwmgz_m/blob/master/LICENSE.code
+		if ((Player != null) &&
+			(Player.PlayerState == PST_DEAD) &&
+			!BIO_CVar.InvClear_Always(Player))
+		{
+			Player.Resurrect();
+
+			Player.DamageCount = 0;
+			Player.BonusCount = 0;
+			Player.PoisonCount = 0;
+			Roll = 0;
+
+			if (Special1 > 2)
+				Special1 = 0;
+		}
+
+		if (!BIO_CVar.InvClear_IfScheduled(Player))
 			return;
 
 		let globals = BIO_Global.Get();

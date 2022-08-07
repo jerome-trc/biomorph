@@ -947,9 +947,19 @@ class BIO_CVar abstract
 			.GetInt() == BIO_CV_MRM_AUTORELOAD;
 	}
 
-	static bool NeverClearInventory(PlayerInfo pInfo)
+	static bool InvClear_Always(PlayerInfo pInfo)
 	{
-		return CVar.GetCVar("BIO_noinvclear", pInfo).GetBool();
+		return CVar.GetCVar("BIO_invclear", pInfo).GetInt() == BIO_CV_INVCLEAR_PERMIT;
+	}
+
+	static bool InvClear_IfScheduled(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar("BIO_invclear", pInfo).GetInt() != BIO_CV_INVCLEAR_RESTRICT;
+	}
+
+	static bool InvClear_Never(PlayerInfo pInfo)
+	{
+		return CVar.GetCVar("BIO_invclear", pInfo).GetInt() == BIO_CV_INVCLEAR_RESTRICT;
 	}
 
 	static int ResetInterval_Ammo(PlayerInfo pInfo)
@@ -990,6 +1000,13 @@ enum BIO_CVar_BerserkSwitch : int
 	BIO_CV_BSKS_NO = 0,
 	BIO_CV_BSKS_MELEE = 1,
 	BIO_CV_BSKS_ONLYFIRST = 2
+}
+
+enum BIO_CVar_InvClear : int
+{
+	BIO_CV_INVCLEAR_PERMIT = 0,
+	BIO_CV_INVCLEAR_SCHEDULED = 1,
+	BIO_CV_INVCLEAR_RESTRICT = 2,
 }
 
 enum BIO_CVar_LegenDoomLite : int
