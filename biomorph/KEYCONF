@@ -1,4 +1,4 @@
-addkeysection "$BIO_MODTITLE" BIO_Section
+addkeysection "$BIO_MODTITLE" Biomorph
 
 // Controls
 
