@@ -1371,6 +1371,25 @@ class BIO_WeaponModSimulator : Thinker
 		return true;
 	}
 
+	// Will return `true` if every node in the graph is unoccupied.
+	bool GraphIsHomogeneous() const
+	{
+		Array<class<BIO_Gene> > types;
+
+		for (uint i = 1; i < Nodes.Size(); i++)
+		{
+			if (Nodes[i].IsMorph())
+				continue;
+		
+			let gene_t = Nodes[i].GetGeneType();
+
+			if (types.Find(gene_t) == types.Size())
+				types.Push(gene_t);
+		}
+
+		return types.Size() == 1;
+	}
+
 	bool AnyPendingGraphChanges() const
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)

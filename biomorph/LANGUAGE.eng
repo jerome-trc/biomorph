@@ -644,6 +644,12 @@
 
 // Weapon morph recipe requirement strings /////////////////////////////////////
 
+	BIO_WMR_REQ_DUALWIELDCOMMON =
+		"\c[White]- All nodes filled\n"
+		"\c[White]- Every node has the same gene type\n"
+		"\c[Yellow]OR\n"
+		"\c[White]Each gene adds a different kind of improvement";
+
 	BIO_WMR_REQ_DAMAGEINC_1 = "\c[White]- One hit damage increase";
 	BIO_WMR_REQ_FIRETIMEDEC_1 = "\c[White]- One fire rate increase";
 	BIO_WMR_REQ_FIRETIMEDEC_2 = "\c[White]- Two fire rate increases";

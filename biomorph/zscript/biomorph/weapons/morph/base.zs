@@ -45,4 +45,68 @@ class BIO_WeaponMorphRecipe abstract
 	{
 		return InputTypes.Find(type) != InputTypes.Size();
 	}
+
+	protected static string CommonDualWieldRequirements()
+	{
+		return StringTable.Localize("$BIO_WMR_REQ_DUALWIELDCOMMON");
+	}
+
+	protected static bool CommonDualWieldConditions(readOnly<BIO_WeaponModSimulator> sim)
+	{
+		static const BIO_WeaponCoreModFlags CORE_IMPROVEMENTS[] = {
+			BIO_WCMF_SWITCHSPEED_INC,
+			BIO_WCMF_AMMOUSE_DEC,
+			BIO_WCMF_RELOADCOST_DEC,
+			BIO_WCMF_RELOADOUTPUT_INC,
+			BIO_WCMF_MAGSIZE_INC,
+			BIO_WCMF_FIRETIME_DEC,
+			BIO_WCMF_RELOADTIME_DEC
+		};
+
+		static const BIO_WeaponCoreModFlags PIPELINE_IMPROVEMENTS[] = {
+			BIO_WPMF_SHOTCOUNT_INC,
+			BIO_WPMF_DAMAGE_INC,
+			BIO_WPMF_SPREAD_DEC,
+			BIO_WPMF_SPLASHDAMAGE_INC,
+			BIO_WPMF_SPLASHRADIUS_INC,
+			BIO_WPMF_PROJSPEED_INC,
+			BIO_WPMF_BOUNCE_ADD,
+			BIO_WPMF_SEEKING_ADD,
+			BIO_WPMF_LIFESTEAL_INC,
+			BIO_WPMF_MELEERANGE_INC
+		};
+
+		if (sim.GraphIsHomogeneous() && sim.GraphIsFull())
+			return true;
+
+		BIO_WeaponCoreModFlags coreFlags = BIO_WCMF_NONE;
+		BIO_WeaponPipelineModFlags pplFlags = BIO_WPMF_NONE;
+
+		for (uint i = 0; i < sim.Nodes.Size(); i++)
+		{
+			let mod = sim.Nodes[i].GetModifier();
+
+			if (mod == null)
+				continue;
+
+			BIO_WeaponCoreModFlags cf = BIO_WCMF_NONE;
+			BIO_WeaponPipelineModFlags pf = BIO_WPMF_NONE;
+			[cf, pf] = mod.Flags();
+
+			coreFlags |= cf;
+			pplFlags |= pf;
+		}
+
+		uint variety = 0;
+
+		for (uint i = 0; i < CORE_IMPROVEMENTS.Size(); i++)
+			if (coreFlags & CORE_IMPROVEMENTS[i])
+				variety++;
+
+		for (uint i = 0; i < PIPELINE_IMPROVEMENTS.Size(); i++)
+			if (pplFlags & PIPELINE_IMPROVEMENTS[i])
+				variety++;
+
+		return variety >= (sim.Nodes.Size() - 1);
+	}
 }

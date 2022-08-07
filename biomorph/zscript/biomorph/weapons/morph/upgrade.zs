@@ -61,26 +61,12 @@ class BIO_WMR_DualMachineGun : BIO_WeaponMorphRecipe
 
 	final override bool Eligible(readOnly<BIO_WeaponModSimulator> sim) const
 	{
-		return
-			sim.HasModifierWithCoreFlags(BIO_WCMF_MAGSIZE_INC) &&
-			sim.HasModifierWithCoreFlags(BIO_WCMF_FIRETIME_DEC) &&
-			sim.HasModifierWithCoreFlags(BIO_WCMF_RELOADTIME_DEC) &&
-			sim.HasModifierWithPipelineFlags(BIO_WPMF_SHOTCOUNT_INC) &&
-			sim.HasModifierWithPipelineFlags(BIO_WPMF_DAMAGE_INC) &&
-			sim.HasModifierWithPipelineFlags(BIO_WPMF_SPREAD_DEC);
+		return CommonDualWieldConditions(sim);
 	}
 
 	final override string RequirementString() const
 	{
-		return String.Format(
-			"%s\n%s\n%s\n%s\n%s\n%s",
-			StringTable.Localize("$BIO_WMR_REQ_MAGSIZEINC_1"),
-			StringTable.Localize("$BIO_WMR_REQ_FIRETIMEDEC_1"),
-			StringTable.Localize("$BIO_WMR_REQ_RELOADTIMEDEC_1"),
-			StringTable.Localize("$BIO_WMR_REQ_SHOTCOUNTINC_1"),
-			StringTable.Localize("$BIO_WMR_REQ_DAMAGEINC_1"),
-			StringTable.Localize("$BIO_WMR_REQ_SPREADDEC_1")
-		);
+		return CommonDualWieldRequirements();
 	}
 
 	final override BIO_WeaponMorphClassification Classification() const
