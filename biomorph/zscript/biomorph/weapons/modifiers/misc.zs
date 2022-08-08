@@ -34,11 +34,10 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
-				return true, "";
+		if (context.Weap.HasAffixOfType('BIO_WAfx_SmartAim'))
+			return false, "$BIO_WMOD_INCOMPAT_ALREADYSMARTAIMING";
 
-		return false, "$BIO_WMOD_INCOMPAT_NOPUFFPIPELINES";
+		return context.Weap.Pipelines.Size() > 0, "$BIO_WMOD_INCOMPAT_NOPIPELINES";
 	}
 
 	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
@@ -187,6 +186,25 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 		SmartAim.Next(PlayerPawn(weap.Owner));
 	}
 
+	final override void OnSlowProjectileFired(BIO_Weapon weap, BIO_Projectile proj)
+	{
+		let tgt = Target();
+
+		if (tgt == null)
+			return;
+
+		proj.bSeekerMissile = true;
+		proj.bBounceOnWalls = true;
+		proj.bBounceOnCeilings = true;
+		proj.bBounceOnFloors = true;
+		proj.bBounceAutoOffFloorOnly = true;
+		proj.BounceCount = 16;
+		proj.BounceFactor = 1.0;
+		proj.WallBounceFactor = 1.0;
+		proj.Tracer = tgt;
+		proj.Functors.Travel.Push(new('BIO_PTF_Smart'));
+	}
+
 	final override void RenderOverlay(BIO_RenderContext context) const
 	{
 		if (AutomapActive)
@@ -229,6 +247,22 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 	{
 		return GetDefaultByType('BIO_MGene_SmartAim').Summary;
 	}
+}
+
+class BIO_PTF_Smart : BIO_ProjTravelFunctor
+{
+	final override void Invoke(BIO_Projectile proj)
+	{
+		proj.A_FaceTracer();
+		proj.A_SeekerMissile(60.0, 75.0, SMF_PRECISE | SMF_LOOK);
+	}
+
+	final override BIO_ProjTravelFunctor Copy() const
+	{
+		return new('BIO_PTF_Smart');
+	}
+
+	final override void Summary(in out Array<string> readout) const {}
 }
 
 class BIO_WMod_Spread : BIO_WeaponModifier

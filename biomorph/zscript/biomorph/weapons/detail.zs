@@ -362,7 +362,7 @@ class BIO_WeaponAffix play abstract
 	// Modifying `ShotCount` here does nothing, since it is overwritten afterwards.
 	virtual void BeforeEachShot(BIO_Weapon weap, in out BIO_ShotData shotData) {}
 
-	virtual void OnSlowProjectileFired(BIO_Weapon weap, BIO_Projectile proj) {}	
+	virtual void OnSlowProjectileFired(BIO_Weapon weap, BIO_Projectile proj) {}
 	virtual void OnFastProjectileFired(BIO_Weapon weap, BIO_FastProjectile proj) {}
 	virtual void OnPuffFired(BIO_Weapon weap, BIO_Puff puff) {}
 

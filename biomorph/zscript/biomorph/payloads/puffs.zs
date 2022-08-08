@@ -95,7 +95,7 @@ class BIO_ElectricPuff : BIO_RailPuff
 	{
 		+ALWAYSPUFF
 		+PUFFONACTORS
-		
+
 		Decal 'PlasmaScorchLower1';
 		RenderStyle 'Add';
 		Tag "$BIO_ELECTRICPUFF_TAG_PLURAL";

@@ -358,6 +358,8 @@
 
 	BIO_WMOD_INCOMPAT_TEMPLATE = "\c[White]%s\n\n\c[Yellow]Incompatible:\c[Gold]\n%s";
 
+	BIO_WMOD_INCOMPAT_ALREADYSMARTAIMING =
+		"This weapon already has smart aim functionality.";
 	BIO_WMOD_INCOMPAT_ALREADYSPOOLING =
 		"This weapon already has to spool up to fire.";
 	BIO_WMOD_INCOMPAT_AMMOLESS = "This weapon doesn't use ammunition.";
@@ -553,8 +555,9 @@
 	BIO_MGENE_SMARTAIM_TAG = "\c[MGene]Smart Fire Control\c[White] Gene\c-";
 	BIO_MGENE_SMARTAIM_PKUP = "Collected a %s.";
 	BIO_WMOD_SMARTAIM_SUMM =
-		"\c[Green]Smart aim functionality\n"
-		"\c[White]Hitscan attacks \c[Green]cannot miss\c[White] while a target is locked";
+		"\c[Green]Smart aim functionality\n\n"
+		"\c[White]Hitscan bullet attacks \c[Green]cannot miss\c[White] while a target is locked\n\n"
+		"\c[White]Low-mid speed projectiles \c[Green]relentlessly seek targets";
 
 	BIO_MGENE_SPLASHTOHIT_TAG = "\c[MGene]Shaped Charge\c[White] Gene\c-";
 	BIO_MGENE_SPLASHTOHIT_PKUP = "Collected a %s.";
