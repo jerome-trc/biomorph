@@ -126,7 +126,7 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 			if (Changes[i] == 0)
 				continue;
 
-			if (context.Weap.FireTimeGroups[i].IsHidden())
+			if (context.Weap.ReloadTimeGroups[i].IsHidden())
 				continue;
 
 			let qual = context.Weap.ReloadTimeGroups[i].GetTagAsQualifier();
