@@ -52,10 +52,13 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/detail.zs"
 #include "zscript/biomorph/weapons/dmgfunc.zs"
 #include "zscript/biomorph/weapons/firefunc.zs"
+#include "zscript/biomorph/weapons/magazine.zs"
 #include "zscript/biomorph/weapons/modgraph.zs"
 #include "zscript/biomorph/weapons/pipeline.zs"
 #include "zscript/biomorph/weapons/recoil.zs"
+#include "zscript/biomorph/weapons/replacers.zs"
 #include "zscript/biomorph/weapons/simulator.zs"
+#include "zscript/biomorph/weapons/time.zs"
 
 #include "zscript/biomorph/weapons/modifiers/base.zs"
 #include "zscript/biomorph/weapons/modifiers/ammo.zs"
