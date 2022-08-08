@@ -85,11 +85,32 @@ class BIO_WSF_NodeToggle : BIO_WeaponSpecialFunctor
 		for (uint i = 0; i < NodesToToggle.Size(); i++)
 		{
 			let node = sim.Nodes[NodesToToggle[i]];
+			let gene_tag = GetDefaultByType(node.Basis.GeneType).GetTag();
 
 			if (!NodeState[i])
+			{
 				node.Basis.Flags |= BIO_WMGNF_MUTED;
+
+				weap.PrintPickupMessage(
+					weap.Owner.CheckLocalView(),
+					String.Format(
+						StringTable.Localize("$BIO_AGENE_TOGGLECONNECTED_TOAST_MUTED"),
+						gene_tag
+					)
+				);
+			}
 			else
+			{
 				node.Basis.Flags &= ~BIO_WMGNF_MUTED;
+
+				weap.PrintPickupMessage(
+					weap.Owner.CheckLocalView(),
+					String.Format(
+						StringTable.Localize("$BIO_AGENE_TOGGLECONNECTED_TOAST_UNMUTED"),
+						gene_tag
+					)
+				);
+			}
 
 			NodeState[i] = node.Basis.Flags & BIO_WMGNF_MUTED;
 		}

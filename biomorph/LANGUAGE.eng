@@ -644,6 +644,10 @@
 	BIO_AGENE_TOGGLECONNECTED_PKUP = "Collected an %s.";
 	BIO_AGENE_TOGGLECONNECTED_SUMM =
 		"\c[White]Connected dead-end nodes can be toggled with \c[LightBlue]Zoom\c[White]";
+	BIO_AGENE_TOGGLECONNECTED_TOAST_MUTED =
+		"\c[White]Disabled: \c[Yellow]%s";
+	BIO_AGENE_TOGGLECONNECTED_TOAST_UNMUTED =
+		"\c[White]Enabled: \c[Yellow]%s";
 
 // Weapon morph recipe requirement strings /////////////////////////////////////
 
