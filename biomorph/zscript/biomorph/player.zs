@@ -94,25 +94,19 @@ class BIO_Player : DoomPlayer
 
 		if (FindInventory('BIO_WeaponDrop'))
 		{
-			super.GiveDefaultInventory();
+			// The player has already had their inventory initialised for the
+			// first time, but the map has attempted to force a reset
 			GiveInventory('BIO_Fists', 1);
 			GiveRandomStartingPistol();
 			return;
 		}
-
-		// The player has already had their inventory initialised for the
-		// first time, but the map has attempted to force a reset. What now?
 
 		if (BIO_CVar.InvClear_Never(Player))
 			return;
 
-		// Either a scheduled inventory reset happened
-		// or the whole inventory actually was reset for real
-		if (HeldWeaponCount() < 1)
-		{
-			GiveInventory('BIO_Fists', 1);
-			GiveRandomStartingPistol();
-		}
+		super.GiveDefaultInventory();
+		GiveInventory('BIO_Fists', 1);
+		GiveRandomStartingPistol();
 	}
 
 	uint HeldWeaponCount() const
