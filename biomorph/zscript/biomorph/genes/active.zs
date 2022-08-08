@@ -7,7 +7,7 @@ class BIO_AGene_ToggleConnected : BIO_ActiveGene
 		Inventory.PickupMessage "$BIO_AGENE_TOGGLECONNECTED_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON + LOOTWEIGHT_VERYRARE;
 		BIO_Gene.Limit 1;
-		BIO_Gene.Summary "$BIO_AGENE_TOGGLECONNECTEDSUMM";
+		BIO_Gene.Summary "$BIO_AGENE_TOGGLECONNECTED_SUMM";
 	}
 
 	States

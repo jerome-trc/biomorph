@@ -642,7 +642,7 @@
 
 	BIO_AGENE_TOGGLECONNECTED_TAG = "\c[AGene]Overseer\c[White] Gene\c-";
 	BIO_AGENE_TOGGLECONNECTED_PKUP = "Collected an %s.";
-	BIO_AGENE_TOGGLECONNECTEDSUMM =
+	BIO_AGENE_TOGGLECONNECTED_SUMM =
 		"\c[White]Connected dead-end nodes can be toggled with \c[LightBlue]Zoom\c[White]";
 
 // Weapon morph recipe requirement strings /////////////////////////////////////
