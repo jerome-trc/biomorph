@@ -84,7 +84,15 @@ class BIO_Player : DoomPlayer
 
 	override void GiveDefaultInventory()
 	{
-		if (FindInventory('BIO_WeaponDrop') == null)
+		// When the player submits input after dying:
+		// 1. Global data gets destroyed
+		// 2. A fraction of a second passes in which the engine calls this
+		// 3. Whatever the engine did is overriden because the last save gets loaded
+		// I don't know why things work this way but it has to get handled
+		if (BIO_Global.Get() == null)
+			return;
+
+		if (FindInventory('BIO_WeaponDrop'))
 		{
 			super.GiveDefaultInventory();
 			GiveInventory('BIO_Fists', 1);
