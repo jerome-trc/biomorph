@@ -525,6 +525,7 @@ class BIO_WeaponModSimulator : Thinker
 			BIO_GeneContext context;
 			context.Sim = AsConst();
 			context.Weap = Weap.AsConst();
+			context.Node = i;
 			context.NodeCount = node.Multiplier;
 			context.TotalCount = CountGene(gene_t);
 			context.First = NodeHasFirstOfGene(i, gene_t);
@@ -559,6 +560,7 @@ class BIO_WeaponModSimulator : Thinker
 			BIO_GeneContext context;
 			context.Sim = AsConst();
 			context.Weap = Weap.AsConst();
+			context.Node = i;
 			context.NodeCount = node.Multiplier;
 			context.TotalCount = CountGene(gene_t);
 			context.First = NodeHasFirstOfGene(i, gene_t);
@@ -593,6 +595,7 @@ class BIO_WeaponModSimulator : Thinker
 			BIO_GeneContext context;
 			context.Sim = AsConst();
 			context.Weap = Weap.AsConst();
+			context.Node = i;
 			context.NodeCount = node.Multiplier;
 			context.TotalCount = CountGene(gene_t);
 			context.First = NodeHasFirstOfGene(i, gene_t);
@@ -1049,6 +1052,7 @@ class BIO_WeaponModSimulator : Thinker
 		BIO_GeneContext context;
 		context.Sim = AsConst();
 		context.Weap = Weap.AsConst();
+		context.Node = node;
 		context.NodeCount = n.Multiplier;
 		context.TotalCount = CountGene(n.GetGeneType());
 		context.First = NodeHasFirstOfGene(node, n.GetGeneType());

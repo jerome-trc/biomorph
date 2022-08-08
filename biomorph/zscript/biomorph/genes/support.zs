@@ -1,4 +1,3 @@
-
 class BIO_SGene_AddEast : BIO_SupportGene
 {
 	Default
