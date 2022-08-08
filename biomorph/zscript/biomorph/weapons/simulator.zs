@@ -362,7 +362,6 @@ class BIO_WeaponModSimulator : Thinker
 	const STATNUM = Thinker.STAT_STATIC + 1;
 
 	private BIO_Weapon Weap;
-	private bool Valid;
 
 	// Representation for the state of the player's gene inventory. Upon commit,
 	// genes are given to/taken away from the player according to this.
@@ -457,8 +456,6 @@ class BIO_WeaponModSimulator : Thinker
 
 	void Simulate()
 	{
-		Valid = true;
-
 		Weap.Reset();
 		Weap.SetDefaults();
 		Weap.SetupAmmo();
@@ -534,10 +531,7 @@ class BIO_WeaponModSimulator : Thinker
 			[node.Valid, _] = node.Compatible(AsConst(), context);
 
 			if (!node.Valid)
-			{
-				Valid = false;
 				continue;
-			}
 
 			node.Message = node.Apply(Weap, self, context);
 		}
@@ -568,10 +562,7 @@ class BIO_WeaponModSimulator : Thinker
 			[node.Valid, _] = node.Compatible(AsConst(), context);
 
 			if (!node.Valid)
-			{
-				Valid = false;
 				continue;
-			}
 
 			if (!node.Basis.IsMuted())
 				node.Message = node.Apply(Weap, self, context);
@@ -603,10 +594,7 @@ class BIO_WeaponModSimulator : Thinker
 			[node.Valid, _] = node.Compatible(AsConst(), context);
 
 			if (!node.Valid)
-			{
-				Valid = false;
 				continue;
-			}
 
 			node.Message = node.Apply(Weap, self, context);
 		}
@@ -868,9 +856,9 @@ class BIO_WeaponModSimulator : Thinker
 				InsertNewGene(gene_t, r);
 				Simulate();
 			}
-			while (!Valid && a1++ < 50);
+			while (!IsValid() && a1++ < 50);
 
-			if (!Valid)
+			if (!IsValid())
 			{
 				if (BIO_debug)
 				{
@@ -1403,7 +1391,14 @@ class BIO_WeaponModSimulator : Thinker
 		return false;
 	}
 
-	bool IsValid() const { return Valid; }
+	bool IsValid() const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+			if (!Nodes[i].Valid)
+				return false;
+
+		return true;
+	}
 
 	// Other internal implementation details ///////////////////////////////////
 
