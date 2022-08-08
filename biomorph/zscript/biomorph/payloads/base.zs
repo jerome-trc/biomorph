@@ -117,6 +117,10 @@ class BIO_Projectile : Actor abstract
 		invoker.OnProjectileDeath();
 		bNoGravity = true;
 
+		// May have hit a surface before `Functors` could be assigned
+		if (invoker.Functors == null)
+			return;
+
 		for (uint i = 0; i < invoker.Functors.OnDeath.Size(); i++)
 			invoker.Functors.OnDeath[i].InvokeSlow(BIO_Projectile(self));
 	}
