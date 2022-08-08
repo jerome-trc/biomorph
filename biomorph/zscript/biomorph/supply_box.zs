@@ -31,7 +31,7 @@ class BIO_SupplyBox : Actor
         if (!(user is 'BIO_Player'))
 			return false;
 
-        let choice = Random[BIO_Loot](1, 4);
+        let choice = Random[BIO_Loot](1, 8);
 
 		if (choice == 1)
 		{
