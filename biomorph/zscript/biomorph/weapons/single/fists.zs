@@ -1,4 +1,4 @@
-class BIO_Fists : BIO_DualWieldWeapon
+class BIO_Fists : BIO_Weapon
 {
 	flagdef LeftHand: DynFlags, 31;
 
