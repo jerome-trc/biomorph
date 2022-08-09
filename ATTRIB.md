@@ -158,6 +158,8 @@ The `SoftFabric` family of materials is derived from ["Soft Black Fabric"](https
 
 The `WornPlastic` family of materials is courtesy of [Ryan King](https://www.youtube.com/watch?v=l0whu3494_c).
 
+The `Sleeve` material is courtesy of [Julio Sillet](https://www.patreon.com/Sillet).
+
 ## Acknowledgements
 
 - Yholl, whose mods not only inspired this project deeply, but also acted as a wellspring for techniques to learn from.
