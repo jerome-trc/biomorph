@@ -65,7 +65,6 @@ class BIO_VolleyGun : BIO_Weapon
 			A_BIO_Recoil('BIO_Recoil_DoubleShotgun', scale: 2.0);
 			A_GunFlash('Flash.Quad');
 			A_BIO_FireSound(CHAN_AUTO, attenuation: ATTN_NORM / 2.0);
-			A_BIO_FireSound(CHAN_AUTO, attenuation: ATTN_NORM / 2.0);
 		}
 		TNT1 A 0 A_BIO_AutoReload(multi: 4, single: true);
 		Goto Ready;
@@ -77,7 +76,11 @@ class BIO_VolleyGun : BIO_Weapon
 			A_BIO_Fire(fireFactor: 2);
 			A_BIO_Recoil('BIO_Recoil_DoubleShotgun');
 			A_GunFlash('Flash.Double');
-			A_BIO_FireSound();
+
+			if (invoker.Pipelines[0].FireSound == "bio/weap/volleygun/fire")
+				A_StartSound("bio/weap/coachgun/fire");
+			else
+				A_BIO_FireSound();
 		}
 		TNT1 A 0 A_BIO_AutoReload(multi: 2);
 		Goto Ready;

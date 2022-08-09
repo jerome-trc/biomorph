@@ -80,9 +80,9 @@ The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY
 		- remington870-3.wav (COAC_FR2)
 		- shotpumpback.wav (PUMPBACK)
 		- shotpumpfor.wav (PUMPFORW)
-		- trenchgun-1.wav (CANS_FR0)
-		- trenchgun-2.wav (CANS_FR1)
-		- trenchgun-3.wav (CANS_FR2)
+		- trenchgun-1.wav (VOLL_FR0)
+		- trenchgun-2.wav (VOLL_FR1)
+		- trenchgun-3.wav (VOLL_FR2)
 
 #### CturiX Kemilon
 
@@ -152,7 +152,7 @@ USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://fre
 
 USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/), licensed under Creative Commons Attribution 3.0 Unported.
 
-VOLLFIRE is courtesy of [Kentucky Ballistics](https://www.youtube.com/watch?v=8gIS2n-bY1w).
+CANS_FR is courtesy of [Kentucky Ballistics](https://www.youtube.com/watch?v=8gIS2n-bY1w).
 
 ## Blender (Materials, Meshes)
 

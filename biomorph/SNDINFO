@@ -161,7 +161,16 @@ $random bio/weap/coachgun/fire
 
 // Volley Gun
 
-bio/weap/volleygun/fire VOLL_FR
+bio/weap/volleygun/fire/0 VOLL_FR0
+bio/weap/volleygun/fire/1 VOLL_FR1
+bio/weap/volleygun/fire/2 VOLL_FR2
+
+$random bio/weap/volleygun/fire
+{
+	bio/weap/volleygun/fire/0
+	bio/weap/volleygun/fire/1
+	bio/weap/volleygun/fire/2
+}
 
 // Auto Shotgun
 
@@ -248,15 +257,11 @@ $limit bio/weap/arccaster/fire 1
 
 // Payloads ////////////////////////////////////////////////////////////////////
 
-bio/puff/canistershot/fire/0 CANS_FR0
-bio/puff/canistershot/fire/1 CANS_FR1
-bio/puff/canistershot/fire/2 CANS_FR2
+bio/puff/canistershot/fire/0 CANS_FR
 
 $random bio/puff/canistershot/fire
 {
 	bio/puff/canistershot/fire/0
-	bio/puff/canistershot/fire/1
-	bio/puff/canistershot/fire/2
 }
 
 bio/puff/elecarc/hit ELECPUFF
