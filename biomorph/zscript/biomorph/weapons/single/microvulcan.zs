@@ -50,7 +50,7 @@ class BIO_Microvulcan : BIO_Weapon
 				return state(null);
 		}
 		CHGG A 0 A_BIO_CheckAmmo;
-		CHGG A 4
+		CHGG A 1 Offset(0, 32 + 1)
 		{
 			A_BIO_SetFireTime(0);
 			A_BIO_Fire();
@@ -58,14 +58,20 @@ class BIO_Microvulcan : BIO_Weapon
 			A_BIO_FireSound(CHAN_AUTO);
 			A_BIO_Recoil('BIO_Recoil_Autogun');
 		}
-		CHGG B 4
+		CHGG A 1 Offset(0, 32 + 2) A_BIO_SetFireTime(1);
+		CHGG A 1 Offset(0, 32 + 2) A_BIO_SetFireTime(2);
+		CHGG A 1 Offset(0, 32 + 1) A_BIO_SetFireTime(3);
+		CHGG B 1 Offset(0, 32 + 1)
 		{
-			A_BIO_SetFireTime(1);
+			A_BIO_SetFireTime(4);
 			A_BIO_Fire();
 			Player.SetSafeFlash(invoker, ResolveState('Flash'), 1);
 			A_BIO_FireSound(CHAN_AUTO);
 			A_BIO_Recoil('BIO_Recoil_Autogun');
 		}
+		CHGG B 1 Offset(0, 32 + 2) A_BIO_SetFireTime(5);
+		CHGG B 1 Offset(0, 32 + 2) A_BIO_SetFireTime(6);
+		CHGG B 1 Offset(0, 32 + 1) A_BIO_SetFireTime(7);
 		CHGG B 0 A_ReFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;

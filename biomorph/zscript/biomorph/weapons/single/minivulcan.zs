@@ -47,14 +47,14 @@ class BIO_Minivulcan : BIO_Weapon
 				return state(null);
 		}
 		TNT1 A 0 A_BIO_CheckAmmo;
-		MINV A 2
+		MINV A 2 Offset(0, 32 + 1)
 		{
 			A_BIO_SetFireTime(0);
 			A_Minivulcan_Fire();
 		}
-		MINV B 1 Fast A_BIO_SetFireTime(1);
-		MINV C 2 A_BIO_SetFireTime(2);
-		MINV D 1 Fast A_BIO_SetFireTime(3);
+		MINV B 1 Offset(0, 32 + 3) Fast A_BIO_SetFireTime(1);
+		MINV C 2 Offset(0, 32 + 2) A_BIO_SetFireTime(2);
+		MINV D 1 Offset(0, 32 + 1) Fast A_BIO_SetFireTime(3);
 		TNT1 A 0 A_ReFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;

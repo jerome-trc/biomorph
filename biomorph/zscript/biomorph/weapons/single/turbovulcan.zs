@@ -54,7 +54,7 @@ class BIO_Turbovulcan : BIO_Weapon
 			else
 				return state(null);
 		}
-		TRBO E 1 Bright
+		TRBO E 1 Offset(0, 32 + 2) Bright
 		{
 			A_BIO_SetFireTime(0, 1);
 			A_GunFlash('Flash.I');
@@ -62,7 +62,7 @@ class BIO_Turbovulcan : BIO_Weapon
 			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
 			A_BIO_FireSound(CHAN_AUTO);
 		}
-		TRBO F 1 Bright
+		TRBO F 1 Offset(0, 32 + 1) Bright
 		{
 			A_BIO_SetFireTime(1, 1);
 			A_GunFlash('Flash.J');
@@ -74,7 +74,7 @@ class BIO_Turbovulcan : BIO_Weapon
 			else
 				return state(null);
 		}
-		TRBO G 1 Bright
+		TRBO G 1 Offset(0, 32 + 2) Bright
 		{
 			A_BIO_SetFireTime(2, 1);
 			A_GunFlash('Flash.K');
@@ -82,7 +82,7 @@ class BIO_Turbovulcan : BIO_Weapon
 			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
 			A_BIO_FireSound(CHAN_AUTO);
 		}
-		TRBO H 1 Bright
+		TRBO H 1 Offset(0, 32 + 1) Bright
 		{
 			A_BIO_SetFireTime(3, 1);
 			A_GunFlash('Flash.L');
