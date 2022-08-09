@@ -33,7 +33,6 @@ class Biomorph abstract
 #include "zscript/biomorph/powerups.zs"
 #include "zscript/biomorph/sbar.zs"
 #include "zscript/biomorph/supply_box.zs"
-#include "zscript/biomorph/utils.zs"
 
 #include "zscript/biomorph/genes/base.zs"
 #include "zscript/biomorph/genes/active.zs"
@@ -46,6 +45,17 @@ class Biomorph abstract
 #include "zscript/biomorph/payloads/base.zs"
 #include "zscript/biomorph/payloads/projectiles.zs"
 #include "zscript/biomorph/payloads/puffs.zs"
+
+#include "zscript/biomorph/utils/misc.zs"
+#include "zscript/biomorph/utils/actors.zs"
+#include "zscript/biomorph/utils/array.zs"
+#include "zscript/biomorph/utils/color.zs"
+#include "zscript/biomorph/utils/compat.zs"
+#include "zscript/biomorph/utils/constants.zs"
+#include "zscript/biomorph/utils/cvar.zs"
+#include "zscript/biomorph/utils/keyboard.zs"
+#include "zscript/biomorph/utils/random.zs"
+#include "zscript/biomorph/utils/string.zs"
 
 #include "zscript/biomorph/weapons/base.zs"
 #include "zscript/biomorph/weapons/base_dual.zs"

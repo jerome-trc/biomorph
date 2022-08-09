@@ -427,6 +427,14 @@ extend class BIO_Global
 	}
 }
 
+class BIO_LootTable : BIO_WeightedRandomTable
+{
+	final override uint RandomImpl() const
+	{
+		return Random[BIO_Loot](1, WeightSum);
+	}
+}
+
 class BIO_MonsterLootPair
 {
 	class<Actor> MonsterType;
