@@ -1740,11 +1740,11 @@ extend class BIO_Weapon
 
 		if (t.LineTarget == null)
 		{
-			Owner.A_StartSound(missSound, CHAN_WEAPON);
+			Owner.A_StartSound(missSound, CHAN_AUTO);
 			return null;
 		}
 
-		Owner.A_StartSound(hitSound, CHAN_WEAPON);
+		Owner.A_StartSound(hitSound, CHAN_AUTO);
 
 		if (!(flags & CPF_NOTURN))
 		{

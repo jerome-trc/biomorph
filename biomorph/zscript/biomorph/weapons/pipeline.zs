@@ -402,7 +402,7 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder Punch(class<Actor> payload = 'BIO_MeleeHit',
 		uint hitCount = 1, float range = DEFMELEERANGE,
-		ECustomPunchFlags flags = CPF_NONE, sound hitSound = "*fist",
+		ECustomPunchFlags flags = CPF_NONE, sound hitSound = "bio/punch/hit/0",
 		sound missSound = "")
 	{
 		let fireFunc = new('BIO_FireFunc_Punch');

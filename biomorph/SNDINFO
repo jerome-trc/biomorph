@@ -104,6 +104,17 @@ $random bio/weap/dryfire/ballistic
 
 bio/weap/etmf NRG2MATR
 
+// Fists
+
+bio/punch/hit/0 FIST_HT0
+bio/punch/hit/1 FIST_HT1
+
+$random bio/punch/hit
+{
+	bio/punch/hit/0
+	bio/punch/hit/1
+}
+
 // Service Pistol
 
 bio/weap/servicepistol/fire/0 SVCP_FR0

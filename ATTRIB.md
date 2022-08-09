@@ -136,6 +136,10 @@ DRY_BAL0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://fre
 
 ELECPUFF is courtesy of the Librequake Project.
 
+FIST_HT0 is derived from ["Punch_02.wav"](https://freesound.org/people/thefsoundman/sounds/118513/) by freesound user [thefsoundman](https://freesound.org/people/thefsoundman), licensed under Creative Commons 0.
+
+FIST_HT1 is derived from ["Punch in the face"](https://freesound.org/people/Huminaatio/sounds/390462/) by freesound user [Huminaatio](https://freesound.org/people/Huminaatio/), licensed under Creative Commons 0.
+
 NRG2MATR (edited for a 200% tempo increase) is derived from ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/), licensed under Creative Commons Attribution 3.0 Unported.
 
 PROXBEEP, PROXFIRE, and PROXHIT are courtesy of id Software LLC ([as cited by Realm667 user Ghastly_dragon](https://www.realm667.com/index.php/en/armory-mainmenu-157-97317/doom-style-mainmenu-158-94349/941-prox-launcher#info)).

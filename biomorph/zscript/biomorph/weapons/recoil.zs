@@ -48,6 +48,15 @@ mixin class BIO_Recoil_Impl
 ////////////////////////////////////////////////////////////////////////////////
 // Assume all values henceforth have been stolen from Yholl's DRLA
 
+class BIO_Recoil_Punch : BIO_RecoilThinker
+{
+	static const float[] PITCH_VALUES = {
+		-0.05, -0.2, -0.4, 0.3, 0.15, 0.1, 0.07, 0.03
+	};
+
+	mixin BIO_Recoil_Impl;
+}
+
 class BIO_Recoil_Handgun : BIO_RecoilThinker
 {
 	static const float[] PITCH_VALUES = {

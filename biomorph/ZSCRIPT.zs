@@ -79,6 +79,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/single/breaching_axe.zs"
 #include "zscript/biomorph/weapons/single/chainsaw.zs"
 #include "zscript/biomorph/weapons/single/coachgun.zs"
+#include "zscript/biomorph/weapons/single/fists.zs"
 #include "zscript/biomorph/weapons/single/machine_gun.zs"
 #include "zscript/biomorph/weapons/single/microvulcan.zs"
 #include "zscript/biomorph/weapons/single/minivulcan.zs"
@@ -89,7 +90,6 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/single/turbovulcan.zs"
 #include "zscript/biomorph/weapons/single/volley_gun.zs"
 
-#include "zscript/biomorph/weapons/dual/fists.zs"
 #include "zscript/biomorph/weapons/dual/machine_gun.zs"
 
 // Third-party /////////////////////////////////////////////////////////////////
