@@ -31,7 +31,7 @@ class BIO_PumpShotgun : BIO_Weapon
 	States
 	{
 	Spawn:
-		SHOT B 0;
+		PASG Z 0;
 		#### # 0 A_BIO_Spawn;
 		Stop;
 	Deselect:
@@ -46,7 +46,7 @@ class BIO_PumpShotgun : BIO_Weapon
 	Fire:
 		TNT1 A 0 A_BIO_CheckAmmo(single: true);
 		PASG A 3 A_BIO_SetFireTime(0);
-		PASG B 4 Bright
+		PASG A 4
 		{
 			A_BIO_SetFireTime(1);
 			A_BIO_Fire();
@@ -54,7 +54,7 @@ class BIO_PumpShotgun : BIO_Weapon
 			A_BIO_FireSound();
 			A_BIO_Recoil('BIO_Recoil_Shotgun');
 		}
-		PASG A 1 Bright Fast A_BIO_SetFireTime(2);
+		PASG A 1 Fast A_BIO_SetFireTime(2);
 		TNT1 A 0 A_BIO_AutoReload(single: true);
 		TNT1 A 0 A_ReFire;
 		TNT1 A 0 A_JumpIf(
@@ -70,7 +70,7 @@ class BIO_PumpShotgun : BIO_Weapon
 		#### # 1 Offset(0, 32 + 1);
 		Goto Ready;
 	Flash:
-		TNT1 A 4 Bright
+		PASG Y 4 Bright
 		{
 			A_BIO_SetFireTime(1);
 			A_Light(1);
@@ -88,17 +88,17 @@ class BIO_PumpShotgun : BIO_Weapon
 		TNT1 A 0 A_BIO_CheckReload;
 		TNT1 A 0 { if (invoker.MagazineEmpty()) invoker.Overloaded = true; }
 		PASG A 1 Fast A_BIO_SetReloadTime(0);
-		PASG C 5 A_BIO_SetReloadTime(1);
+		PASG B 5 A_BIO_SetReloadTime(1);
 	Reload.Repeat:
-		PASG C 2 A_BIO_SetReloadTime(2);
-		PASG D 4
+		PASG B 2 A_BIO_SetReloadTime(2);
+		PASG C 4
 		{
 			A_BIO_SetReloadTime(3);
 			A_StartSound("bio/weap/pumpshotgun/pumpback", CHAN_AUTO, volume: 0.7);
 			A_BIO_LoadMag(1);
 			A_BIO_Recoil('BIO_Recoil_ShotgunPump');
 		}
-		PASG C 2
+		PASG B 2
 		{
 			A_BIO_SetReloadTime(4);
 			A_StartSound("bio/weap/pumpshotgun/pumpforward", CHAN_AUTO, volume: 0.7);
@@ -114,14 +114,14 @@ class BIO_PumpShotgun : BIO_Weapon
 		}
 	Reload.End:
 		TNT1 A 0 { invoker.Overloaded = false; }
-		PASG C 5 A_BIO_SetReloadTime(5);
+		PASG B 5 A_BIO_SetReloadTime(5);
 		PASG A 3 A_BIO_SetReloadTime(6);
 		PASG A 0 A_ReFire;
 		Goto Ready;
 	Refire.Early:
 		PASG A 2;
 	Refire.Late:
-		PASG C 2;
+		PASG B 2;
 		PASG A 2;
 		Goto Fire;
 	}
