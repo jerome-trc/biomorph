@@ -33,8 +33,8 @@ class BIO_Fists : BIO_Weapon
 		TNT1 A 0 A_JumpIf(invoker.bLeftHand, 'Jab.Left');
 	Jab.Right:
 		TNT1 A 0 { invoker.bLeftHand = true; }
-		FIST B 4 A_BIO_SetFireTime(0);
-		FIST C 2 A_BIO_SetFireTime(1);
+		FIST B 1 A_BIO_SetFireTime(0);
+		FIST C 1 A_BIO_SetFireTime(1);
 		FIST D 1
 		{
 			A_BIO_SetFireTime(2);
@@ -42,11 +42,12 @@ class BIO_Fists : BIO_Weapon
 		}
 		FIST C 2 A_BIO_SetFireTime(3);
 		FIST B 4 A_BIO_SetFireTime(4);
+		FIST A 3 A_BIO_SetFireTime(5);
 		Goto Ready;
 	Jab.Left:
 		TNT1 A 0 { invoker.bLeftHand = false; }
-		FIST E 4 A_BIO_SetFireTime(0);
-		FIST F 2 A_BIO_SetFireTime(1);
+		FIST E 1 A_BIO_SetFireTime(0);
+		FIST F 1 A_BIO_SetFireTime(1);
 		FIST G 1
 		{
 			A_BIO_SetFireTime(2);
@@ -54,6 +55,7 @@ class BIO_Fists : BIO_Weapon
 		}
 		FIST F 2 A_BIO_SetFireTime(3);
 		FIST E 4 A_BIO_SetFireTime(4);
+		FIST A 3 A_BIO_SetFireTime(5);
 		Goto Ready;
 	Reload:
 		NOPE B 4 A_WeaponReady(WRF_ALLOWZOOM);
