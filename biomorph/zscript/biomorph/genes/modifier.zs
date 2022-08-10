@@ -120,7 +120,7 @@ class BIO_MGene_FireTime : BIO_ModifierGene
 		Tag "$BIO_MGENE_FIRETIME_TAG";
 		Inventory.Icon 'GENTA0';
 		Inventory.PickupMessage "$BIO_MGENE_FIRETIME_PKUP";
-		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
+		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON + LOOTWEIGHT_MIN;
 		BIO_Gene.Summary "$BIO_WMOD_FIRETIME_SUMM";
 		BIO_ModifierGene.ModType 'BIO_WMod_FireTime';
 		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
@@ -501,7 +501,7 @@ class BIO_MGene_Spooling : BIO_ModifierGene
 		Inventory.Icon 'GENTC0';
 		Inventory.PickupMessage "$BIO_MGENE_SPOOLING_PKUP";
 		BIO_Gene.Limit 1;
-		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
+		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
 		BIO_Gene.Summary "$BIO_WMOD_SPOOLING_SUMM";
 		BIO_ModifierGene.ModType 'BIO_WMod_Spooling';
 		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
