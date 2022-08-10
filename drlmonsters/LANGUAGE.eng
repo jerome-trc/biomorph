@@ -5,7 +5,14 @@
 BIORLM_MGENE_OVERMIND_TAG = "\c[MGene]Spider Overmind\c[White] Gene\c-";
 BIORLM_MGENE_OVERMIND_PKUP = "Collected a %s.";
 BIORLM_WMOD_OVERMIND_SUMM =
-	"\c[White]Convert to firing fast-moving, inaccurate plasma bolts";
+	"\c[White]Convert to firing Spider Overmind plasma bolts\n"
+	"\c[Green]High projectile speed\n"
+	"\c[Brick]Moderately inaccurate\n"
+	"\c[Green]Chance to stun monster under crosshair\n"
+	"\c[Purple]Locks node on commit; unlocks upon expiring";
+BIORLM_WMOD_OVERMIND_DESC = // Also used for affix
+	"%s\n" // Gene summary
+	"\c[Yellow]Expires after:\n\c[White]";
 
 BIORLM_MGENE_TRISTAR_TAG = "\c[MGene]Tristar Blaster\c[White] Gene\c-";
 BIORLM_MGENE_TRISTAR_PKUP = "Collected a %s.";

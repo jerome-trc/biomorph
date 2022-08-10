@@ -129,4 +129,6 @@ struct BIO_GeneContext
 	// If true, this is the first time this gene has been hit
 	// during a compatibility check or application.
 	bool First;
+
+	bool IsLastNode() const { return Node == Sim.Nodes.Size() - 1; }
 }

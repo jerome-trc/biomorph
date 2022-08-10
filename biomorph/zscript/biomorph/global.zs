@@ -464,6 +464,16 @@ class BIO_LootSpawner : BIO_IntangibleActor abstract
 	) const;
 
 	protected abstract void SpawnLoot() const;
+
+	protected void PlayRareSound() const
+	{
+		A_StartSound("bio/loot/rare", CHAN_AUTO);
+	}
+
+	protected void PlayVeryRareSound() const
+	{
+		A_StartSound("bio/loot/veryrare", CHAN_AUTO);
+	}
 }
 
 // Loot core subsystem. Includes the loot value buffer and multiplier,

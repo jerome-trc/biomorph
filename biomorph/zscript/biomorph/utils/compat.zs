@@ -306,4 +306,9 @@ extend class BIO_Utils
 		if (t == null) return 0;
 		return a.CountInv(t, ptr_select);
 	}
+
+	static play bool IsLegendary(Actor monster)
+	{
+		return BIO_Utils.TryFindInv(monster, 'LDLegendaryMonsterToken') != null;
+	}
 }

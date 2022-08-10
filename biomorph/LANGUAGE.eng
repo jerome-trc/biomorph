@@ -394,9 +394,8 @@
 	BIO_WMOD_INCOMPAT_NOSPLASH = "This weapon deals no splash damage.";
 	BIO_WMOD_INCOMPAT_NOSPOOL = "This weapon can't be spooled.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";
-	BIO_WMOD_INCOMPAT_NOTBFG = "This isn't a BFG-class weapon or similar.";
-	BIO_WMOD_INCOMPAT_NOTPLASMARIFLE =
-		"This isn't a Plasma Rifle, or a similar type of weapon.";
+	BIO_WMOD_INCOMPAT_NOTLASTNODE =
+		"This gene can only be put in the last node.";
 	BIO_WMOD_INCOMPAT_PAYLOADTOOSMALL =
 		"None of this weapon's firing modes emits a large enough payload.";
 	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =
@@ -851,6 +850,8 @@
 
 	BIO_PRIMARYQUALIFIER = "\c[White](\c[Yellow]Primary\c[White])";
 	BIO_SECONDARYQUALIFIER = "\c[White](\c[Yellow]Secondary\c[White])";
+
+	BIO_NUMBER_PLURALNOUN = "%d %s";
 
 	BIO_EXTRANODES = "\c[White]Extra nodes: \c[Green]%d";
 	BIO_SBAR_EQUIPPED = "\c[White](\c[Yellow]Equipped\c[White])";
