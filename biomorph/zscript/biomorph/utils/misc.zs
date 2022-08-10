@@ -51,4 +51,27 @@ class BIO_Utils abstract
 
 	// So that actor types can be retrieved from DECORATE code in one line.
 	static class<Actor> TypeFromName(name typename) { return typename; }
+
+	static BIO_PayloadSizeClass PayloadSizeClass(class<Actor> payload)
+	{
+		if (payload is 'BIO_Projectile')
+		{
+			let defs = GetDefaultByType((class<BIO_Projectile>)(payload));
+			return defs.SizeClass;
+		}
+		else if (payload is 'BIO_Puff')
+		{
+			let defs = GetDefaultByType((class<BIO_Puff>)(payload));
+			return defs.SizeClass;
+		}
+		else if (payload is 'BIO_FastProjectile')
+		{
+			let defs = GetDefaultByType((class<BIO_FastProjectile>)(payload));
+			return defs.SizeClass;
+		}
+		else
+		{
+			return BIO_PLSC_NONE;
+		}
+	}
 }
