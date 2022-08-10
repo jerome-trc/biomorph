@@ -78,3 +78,47 @@ class BIO_WeaponSpecialFunctor play abstract
 {
 	abstract state Invoke(BIO_Weapon weap) const;
 }
+
+class BIO_TempEffect : Thinker
+{
+	private BIO_Weapon Weap;
+	private int Counter;
+
+	static BIO_TempEffect GetOrCreate(BIO_Weapon weap, uint lifetime)
+	{
+		let iter = ThinkerIterator.Create('BIO_TempEffect', STAT_STATIC);
+		BIO_TempEffect ret = null;
+
+		while (ret = BIO_TempEffect(iter.Next(true)))
+		{
+			if (ret.Weap == weap)
+				return ret;
+		}
+
+		ret = new('BIO_TempEffect');
+		ret.ChangeStatNum(STAT_STATIC);
+		ret.Weap = weap;
+		ret.Counter = lifetime;
+		return ret;
+	}
+
+	bool CountDown(uint decrement = 1)
+	{
+		if ((Counter - decrement) <= 0)
+		{
+			Destroy();
+			return true;
+		}
+
+		Counter -= decrement;
+		return false;
+	}
+
+	uint Remaining() const
+	{
+		if (Counter < 0)
+			return 0;
+		else
+			return uint(Counter);
+	}
+}
