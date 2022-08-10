@@ -28,8 +28,7 @@ class BIORLM_Loot_SpiderOvermind : BIO_LootSpawner
 
 	final override void SpawnLoot() const
 	{
-		if (BIO_Utils.IsLegendary(Target) ||
-			Random[BIO_Loot](1, 4) == 4)
+		if (BIO_Utils.IsLegendary(Target) || Random[BIO_Loot](1, 4) == 4)
 		{
 			Actor.Spawn('BIORLM_MGene_Overmind', Pos);
 			PlayRareSound();

@@ -213,6 +213,7 @@ class BIORLM_WMod_Tristar : BIO_WeaponModifier
 			ppl.Damage = new('BIO_DmgFunc_XTimesRand').Init(8, 1, 8);
 			ppl.Payload = 'BIORLM_TristarBall';
 			ppl.ShotCount = 3;
+			ppl.HSpread = 15.0;
 
 			let func = ppl.GetSplashFunctor();
 
@@ -261,16 +262,19 @@ class BIORLM_FireFunc_Tristar : BIO_FireFunc_Projectile
 	{
 		if (shotData.Count % 2 == 0) // Even fire count
 		{
+			let ang = shotData.HSpread;
 			let h = shotData.Count / 2;
 			if (shotData.Number - h >= 0) shotData.Number++;
-			shotData.Angle += ((15.0 / float(h)) * (shotData.Number - h));
+			shotData.Angle += ((ang / float(h)) * (shotData.Number - h));
 		}
 		else // Odd fire count
 		{
+			let ang = shotData.HSpread * 2.0;
 			let h = shotData.Count - 1;
-			shotData.Angle += (shotData.Number - (h / 2)) * (30.0 / float(h));
+			shotData.Angle += (shotData.Number - (h / 2)) * (ang / float(h));
 		}
 
+		shotData.HSpread = 0.0;
 		return super.Invoke(weap, shotData);
 	}
 
