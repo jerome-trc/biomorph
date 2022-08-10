@@ -618,7 +618,20 @@ class BIO_WeaponModSimulator : Thinker
 			if (Nodes[i].IsMorph())
 				break;
 
-			Nodes[i].Basis.GeneType = Nodes[i].GetGeneType();
+			let gene_t = Nodes[i].GetGeneType();
+
+			Nodes[i].Basis.GeneType = gene_t;
+
+			if (gene_t != null)
+			{
+				let defs = GetDefaultByType(gene_t);
+
+				if (defs.LockOnCommit)
+				{
+					Nodes[i].Basis.Lock();
+				}
+			}
+
 			weap.ModGraph.Nodes.Push(Nodes[i].Basis.Copy());
 		}
 
@@ -874,6 +887,20 @@ class BIO_WeaponModSimulator : Thinker
 				return;
 			}
 		}
+	}
+
+	void GraphRemoveByType(class<BIO_Gene> type)
+	{
+		for (uint i = 1; i < Nodes.Size(); i++)
+			if (Nodes[i].GetGeneType() == type)
+				Nodes[i].Gene = null;
+	}
+
+	void GraphUnlockByType(class<BIO_Gene> type)
+	{
+		for (uint i = 1; i < Nodes.Size(); i++)
+			if (Nodes[i].GetGeneType() == type)
+				Nodes[i].Basis.Unlock();
 	}
 
 	// Accessibility checker ///////////////////////////////////////////////////

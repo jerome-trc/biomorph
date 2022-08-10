@@ -8,6 +8,9 @@ class BIO_Gene : Inventory abstract
 	meta uint Limit;
 	property Limit: Limit;
 
+	meta bool LockOnCommit;
+	property LockOnCommit: LockOnCommit;
+
 	// Explains in short-form and without context what the modifier does.
 	meta string Summary;
 	property Summary: Summary;
