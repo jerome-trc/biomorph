@@ -139,6 +139,44 @@ class BIO_Shrapnel : BulletPuff
 	}
 }
 
+class BIO_PainPuff : BulletPuff
+{
+	Default
+	{
+		-ALLOWPARTICLES
+		-SOLID
+		+ALWAYSPUFF
+		+BLOODLESSIMPACT
+		+FORCEPAIN
+		+MTHRUSPECIES
+		+NODECAL
+		+PUFFGETSOWNER
+		+PUFFONACTORS
+
+		DamageType 'BIO_NullDamage';
+		Species 'Player';
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, 'End');
+		Goto End;
+	XDeath:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, 'End');
+		Goto End;
+	Crash:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, 'End');
+		Goto End;
+	End:
+		TNT1 A 8;
+		Stop;
+	}
+}
+
 // Miscellaneous ///////////////////////////////////////////////////////////////
 
 class BIO_NullPuff : BulletPuff
