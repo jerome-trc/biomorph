@@ -528,7 +528,7 @@ class BIO_WeaponModSimulator : Thinker
 			context.First = NodeHasFirstOfGene(i, gene_t);
 
 			string _ = "";
-			[node.Valid, _] = node.Compatible(AsConst(), context);
+			[node.Valid, node.Message] = node.Compatible(AsConst(), context);
 
 			if (!node.Valid)
 				continue;
@@ -559,7 +559,7 @@ class BIO_WeaponModSimulator : Thinker
 			context.TotalCount = CountGene(gene_t);
 			context.First = NodeHasFirstOfGene(i, gene_t);
 
-			[node.Valid, _] = node.Compatible(AsConst(), context);
+			[node.Valid, node.Message] = node.Compatible(AsConst(), context);
 
 			if (!node.Valid)
 				continue;
@@ -591,7 +591,7 @@ class BIO_WeaponModSimulator : Thinker
 			context.TotalCount = CountGene(gene_t);
 			context.First = NodeHasFirstOfGene(i, gene_t);
 
-			[node.Valid, _] = node.Compatible(AsConst(), context);
+			[node.Valid, node.Message] = node.Compatible(AsConst(), context);
 
 			if (!node.Valid)
 				continue;
@@ -1074,26 +1074,11 @@ class BIO_WeaponModSimulator : Thinker
 
 		if (!n.Valid)
 		{
-			if (n.Message.Length() > 0)
-			{
-				return String.Format(
-					StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
-					StringTable.Localize(n.GetTag()),
-					StringTable.Localize(n.Message)
-				);
-			}
-			else
-			{
-				string reason = "";
-				bool _ = false;
-				[_, reason] = n.Compatible(AsConst(), context);
-
-				return String.Format(
-					StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
-					StringTable.Localize(n.GetTag()),
-					StringTable.Localize(reason)
-				);
-			}
+			return String.Format(
+				StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
+				StringTable.Localize(n.GetTag()),
+				StringTable.Localize(n.Message)
+			);
 		}
 
 		return Nodes[node].Gene.GetDescriptionTooltip(Weap.AsConst(), context);
