@@ -106,9 +106,9 @@ class BIO_ActiveGene : BIO_Gene abstract
 extend class BIO_Gene
 {
 	const LOOTWEIGHT_MAX = 18;
-	const LOOTWEIGHT_VERYCOMMON = 12;
-	const LOOTWEIGHT_COMMON = 8;
-	const LOOTWEIGHT_UNCOMMON = 5;
+	const LOOTWEIGHT_VERYCOMMON = 14;
+	const LOOTWEIGHT_COMMON = 10;
+	const LOOTWEIGHT_UNCOMMON = 6;
 	const LOOTWEIGHT_RARE = 3;
 	const LOOTWEIGHT_VERYRARE = 2;
 	const LOOTWEIGHT_MIN = 1;
