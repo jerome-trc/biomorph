@@ -45,8 +45,8 @@ class BIO_PumpShotgun : BIO_Weapon
 		Loop;
 	Fire:
 		TNT1 A 0 A_BIO_CheckAmmo(single: true);
-		PASG A 3 A_BIO_SetFireTime(0);
-		PASG A 4
+		PASG A 3 Fast A_BIO_SetFireTime(0);
+		PASG A 1 Offset(0 + 7, 32 + 7)
 		{
 			A_BIO_SetFireTime(1);
 			A_BIO_Fire();
@@ -54,7 +54,16 @@ class BIO_PumpShotgun : BIO_Weapon
 			A_BIO_FireSound();
 			A_BIO_Recoil('BIO_Recoil_Shotgun');
 		}
-		PASG A 1 Fast A_BIO_SetFireTime(2);
+		PASG A 1 Offset(0 + 5, 32 + 5) Fast A_BIO_SetFireTime(2);
+		PASG A 1 Offset(0 + 2, 32 + 2) Fast A_BIO_SetFireTime(3);
+		PASG A 1 Offset(0 + 1, 32 + 1) Fast A_BIO_SetFireTime(4);
+		PASG A 1 Fast
+		{
+			A_BIO_SetFireTime(5);
+			// This is the only way I've found to prevent
+			// last X offset from being preserved
+			A_WeaponOffset(0.0, 32.0);
+		}
 		TNT1 A 0 A_BIO_AutoReload(single: true);
 		TNT1 A 0 A_ReFire;
 		TNT1 A 0 A_JumpIf(

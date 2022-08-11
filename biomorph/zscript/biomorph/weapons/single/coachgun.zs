@@ -58,8 +58,8 @@ class BIO_Coachgun : BIO_Weapon
 		}
 	Fire.Single:
 		TNT1 A 0 A_BIO_CheckAmmo;
-		SHT2 A 3 A_BIO_SetFireTime(0);
-		SHT2 A 7 Bright
+		SHT2 A 3 Fast A_BIO_SetFireTime(0);
+		SHT2 A 1 Offset(0, 32 + 7)
 		{
 			A_BIO_SetFireTime(1);
 			A_BIO_Fire(spreadFactor: 0.5);
@@ -67,12 +67,24 @@ class BIO_Coachgun : BIO_Weapon
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			A_BIO_FireSound(CHAN_AUTO);
 		}
+		SHT2 A 1 Offset(0, 32 + 4) Fast A_BIO_SetFireTime(2);
+		SHT2 A 1 Offset(0, 32 + 3) Fast A_BIO_SetFireTime(3);
+		SHT2 A 1 Offset(0, 32 + 2) Fast A_BIO_SetFireTime(4);
+		SHT2 A 1 Offset(0, 32 + 1) Fast A_BIO_SetFireTime(5);
+		SHT2 A 1 Fast
+		{
+			A_BIO_SetFireTime(6);
+			// This is the only way I've found to prevent
+			// last X offset from being preserved
+			A_WeaponOffset(0.0, 32.0);
+		}
+		SHT2 A 1 Fast A_BIO_SetFireTime(7);
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
 	Fire.Double:
 		TNT1 A 0 A_BIO_CheckAmmo;
-		SHT2 A 3 A_BIO_SetFireTime(0);
-		SHT2 A 7 Bright
+		SHT2 A 3 Fast A_BIO_SetFireTime(0);
+		SHT2 A 1 Offset(0, 32 + 13)
 		{
 			A_BIO_SetFireTime(1);
 			A_BIO_Fire(fireFactor: 2);
@@ -80,6 +92,18 @@ class BIO_Coachgun : BIO_Weapon
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			A_BIO_FireSound(CHAN_AUTO);
 			A_BIO_FireSound(CHAN_AUTO);
+		}
+		SHT2 A 1 Offset(0, 32 + 9) Fast A_BIO_SetFireTime(2);
+		SHT2 A 1 Offset(0, 32 + 6) Fast A_BIO_SetFireTime(3);
+		SHT2 A 1 Offset(0, 32 + 3) Fast A_BIO_SetFireTime(4);
+		SHT2 A 1 Offset(0, 32 + 2) Fast A_BIO_SetFireTime(5);
+		SHT2 A 1 Offset(0, 32 + 1) Fast A_BIO_SetFireTime(6);
+		SHT2 A 1 Fast
+		{
+			A_BIO_SetFireTime(7);
+			// This is the only way I've found to prevent
+			// last X offset from being preserved
+			A_WeaponOffset(0.0, 32.0);
 		}
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
