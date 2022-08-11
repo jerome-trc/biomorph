@@ -1352,6 +1352,15 @@ class BIO_WeaponModSimulator : Thinker
 		return Genes.Size();
 	}
 
+	uint FirstOpenNode() const
+	{
+		for (uint i = 1; i < Nodes.Size(); i++)
+			if (!Nodes[i].IsOccupied())
+				return i;
+
+		return Nodes.Size();
+	}
+
 	bool InventoryFull() const
 	{
 		for (uint i = 0; i < Genes.Size(); i++)

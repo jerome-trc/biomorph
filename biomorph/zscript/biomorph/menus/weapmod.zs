@@ -539,6 +539,7 @@ extend class BIO_WeaponModMenu
 		return true;
 	}
 
+	// Mouse movement, buttons, and wheel, as well as keyboard input.
 	final override bool OnUIEvent(UIEvent event)
 	{
 		int y = event.MouseY;
@@ -825,19 +826,28 @@ extend class BIO_WeaponModMenu
 	}
 
 	// Right-clicking a node pops that gene out of it and returns it to the first
-	// open slot in the inventory.
+	// open slot in the inventory, if one is open.
+	// Right-clicking a gene inventory slot pops that gene out of it and tries to
+	// insert it into the next open node, if one exists.
 	private void OnRightClick()
 	{
 		if (CurrentWeap.ModGraph == null)
 			return;
 
-		if (!ValidHoveredNode())
-			return;
+		if (ValidHoveredNode())
+		{
+			if (Simulator.InventoryFull())
+				return;
 
-		if (Simulator.InventoryFull())
-			return;
+			TryExtractGeneFromNode(HoveredNode, Simulator.FirstOpenInventorySlot());
+		}
+		else if (ValidHoveredInvSlot())
+		{
+			if (Simulator.GraphIsFull())
+				return;
 
-		TryExtractGeneFromNode(HoveredNode, Simulator.FirstOpenInventorySlot());
+			TryInsertGeneFromInventory(Simulator.FirstOpenNode(), HoveredInvSlot);
+		}
 	}
 }
 
