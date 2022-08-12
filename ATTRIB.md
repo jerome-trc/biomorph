@@ -64,9 +64,6 @@ The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY
 	- g_ithaca_nopump_1.wav (PASG_FR0)
 	- g_ithaca_nopump_2.wav (PASG_FR1)
 	- g_ithaca_nopump_3.wav (PASG_FR2)
-	- generic_semi_rifle_1.wav (MCRV_FR0)
-	- generic_semi_rifle_2.wav (MCRV_FR1)
-	- generic_semi_rifle_3.wav (MCRV_FR2)
 	- g_thompson_1.wav (GPMG_FR0)
 	- g_thompson_2.wav (GPMG_FR1)
 	- g_thompson_3.wav (GPMG_FR2)
@@ -139,6 +136,8 @@ ELECPUFF is courtesy of the Librequake Project.
 FIST_HT0 is derived from ["Punch_02.wav"](https://freesound.org/people/thefsoundman/sounds/118513/) by freesound user [thefsoundman](https://freesound.org/people/thefsoundman), licensed under Creative Commons 0.
 
 FIST_HT1 is derived from ["Punch in the face"](https://freesound.org/people/Huminaatio/sounds/390462/) by freesound user [Huminaatio](https://freesound.org/people/Huminaatio/), licensed under Creative Commons 0.
+
+MCRV_FR0 through 2 are provided courtesy of [GunsOfTheWorld](https://www.youtube.com/watch?v=DAUIi05Rckc).
 
 NRG2MATR (edited for a 200% tempo increase) is derived from ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/), licensed under Creative Commons Attribution 3.0 Unported.
 
