@@ -1,2 +1,5 @@
 server bool BIOCC_enabled = true;
-server int BIOCC_lvalmulti = 10; // Converted to float internally
+
+server float BIOCC_lvalmulti = 0.05;
+server float BIOCC_chaosmulti = 1.5;
+server float BIOCC_mastermulti = 2.0;

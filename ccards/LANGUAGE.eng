@@ -6,7 +6,19 @@ BIOCC_OPTLBL_ENABLED = "Enabled";
 
 BIOCC_OPTLBL_LVALMULTI = "Monster Value Multiplier";
 BIOCC_OPTTIP_LVALMULTI =
-	"Progress gained towards the next loot drop gets multiplied by this number,\n"
-	"times the cumulative tiers of your active deck's cards.\n"
-	"If this is 10, and you have 2 tier 1 cards, incoming monster value is 120%.\n"
+	"The more cards in your active deck, and the higher tier those cards are,\n"
+	"the more often loot will drop from killed monsters.\n"
+	"The exact formula:\n\n"
+	"total deck tiers * (\c[Yellow]Monster Value Multiplier\c- + 1.00) * monster value\n\n"
+	"Gets applied every level, so you benefit more from permanent cards.\n"
 	"Changes to this value only take effect after changing level.";
+
+BIOCC_OPTLBL_CHAOSMULTI = "Chaos Mode Multiplier";
+BIOCC_OPTTIP_CHAOSMULTI =
+	"\c[Yellow]Monster Value Multiplier\c- is multiplied by this\n"
+	"if playing the Chaos game mode.";
+
+BIOCC_OPTLBL_MASTERMULTI = "Master Mode Multiplier";
+BIOCC_OPTTIP_MASTERMULTI =
+	"\c[Yellow]Monster Value Multiplier\c- is multiplied by this\n"
+	"if playing the Master game mode.";

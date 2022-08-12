@@ -2,7 +2,7 @@ version "3.7"
 
 class BIOCC_EventHandler : EventHandler
 {
-	private transient CVar Enabled, LootValueMulti;
+	private transient CVar Enabled, LootValueMulti, ChaosMulti, MasterMulti;
 
 	private uint InitialDeckSize;
 
@@ -11,11 +11,13 @@ class BIOCC_EventHandler : EventHandler
 		SetOrder(1);
 		Enabled = CVar.GetCVar("BIOCC_enabled");
 		LootValueMulti = CVar.GetCVar("BIOCC_lvalmulti");
+		ChaosMulti = CVar.GetCVar("BIOCC_chaosmulti");
+		MasterMulti = CVar.GetCVar("BIOCC_mastermulti");
 	}
 
 	final override void WorldTick()
 	{
-		// Card selection menu gets opened on `Level.Time 3` as of v3.5a
+		// Card selection menu gets opened on `Level.Time 3` as of v3.8
 		if (bDestroyed || Level.Time < 4)
 			return;
 
@@ -25,7 +27,7 @@ class BIOCC_EventHandler : EventHandler
 			return;
 		}
 
-		let ccgame = CCards_Game(EventHandler.Find('CCards_Game'));
+		let ccgame = CCards_Functions.GetGame();
 
 		if (Level.Time == 4)
 			InitialDeckSize = ccgame.Deck.Size();
@@ -35,15 +37,27 @@ class BIOCC_EventHandler : EventHandler
 			return;
 
 		let globals = BIO_Global.Get();
-		let lvm = float(LootValueMulti.GetInt()) * 0.01;
+		let lvm = LootValueMulti.GetFloat();
+		let total = 0.0;
+
+		if (ccgame.Global.Rules.CVarName ~== "ccards_chaosbest")
+			lvm *= ChaosMulti.GetFloat();
+		else if (ccgame.Global.Rules.CVarName ~== "ccards_masterbest")
+			lvm *= MasterMulti.GetFloat();
 
 		for (uint i = 0; i < ccgame.Deck.Size(); i++)
+			total += float(ccgame.Deck[i].Tier) * lvm;
+
+		if (BIO_debug)
 		{
-			globals.ModifyLootValueMultiplier(
-				float(ccgame.Deck[i].Tier) * lvm
+			Console.Printf(
+				Biomorph.LOGPFX_DEBUG ..
+				"(CCARDS) Adding %.2f to loot value multiplier.",
+				total
 			);
 		}
 
+		globals.ModifyLootValueMultiplier(total);
 		Destroy();
 	}
 }

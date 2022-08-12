@@ -4,6 +4,10 @@ AddOptionMenu "BIO_Options"
 	StaticText "$BIOCC_OPTCAT"
 	Option "$BIOCC_OPTLBL_ENABLED", "BIOCC_enabled", "OnOff"
 	BIOTooltip ""
-	Slider "$BIOCC_OPTLBL_LVALMULTI", "BIOCC_lvalmulti", 0, 100, 1, 0
+	Slider "$BIOCC_OPTLBL_LVALMULTI", "BIOCC_lvalmulti", 0.01, 1.0, 0.01, 2
 	BIOTooltip "$BIOCC_OPTTIP_LVALMULTI"
+	Slider "$BIOCC_OPTLBL_CHAOSMULTI", "BIOCC_chaosmulti", 1.0, 10.0, 0.01, 2
+	BIOTooltip "$BIOCC_OPTTIP_CHAOSMULTI"
+	Slider "$BIOCC_OPTLBL_MASTERMULTI", "BIOCC_mastermulti", 1.0, 10.0, 0.01, 2
+	BIOTooltip "$BIOCC_OPTTIP_MASTERMULTI"
 }
