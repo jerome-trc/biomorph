@@ -399,9 +399,6 @@ extend class BIO_Weapon
 
 	override void AttachToOwner(Actor newOwner)
 	{
-		if (!bPreviouslyPickedUp && Unique)
-			BIO_Utils.DRLMDangerLevel(1);
-
 		if (!bPreviouslyPickedUp)
 		{
 			BIO_EventHandler.BroadcastFirstPickup(GetClassName());
