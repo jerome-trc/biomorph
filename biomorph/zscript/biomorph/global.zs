@@ -753,9 +753,13 @@ extend class BIO_Global
 		return ret;
 	}
 
-	bool ResetPlayerAmmo(PlayerInfo pInfo) const
+	bool ResetPlayerAmmo(PlayerInfo pInfo)
 	{
 		let interval = BIO_CVar.ResetInterval_Ammo(pInfo);
+
+		if (interval <= 0)
+			return false;
+
 		let tracker = GetPlayerResetTracker(pInfo);
 
 		if (++tracker.Ammo == interval)
@@ -767,9 +771,13 @@ extend class BIO_Global
 		return false;
 	}
 
-	bool ResetPlayerArmor(PlayerInfo pInfo) const
+	bool ResetPlayerArmor(PlayerInfo pInfo)
 	{
 		let interval = BIO_CVar.ResetInterval_Armor(pInfo);
+
+		if (interval <= 0)
+			return false;
+
 		let tracker = GetPlayerResetTracker(pInfo);
 
 		if (++tracker.Armor == interval)
@@ -781,9 +789,13 @@ extend class BIO_Global
 		return false;
 	}
 
-	bool ResetPlayerHealth(PlayerInfo pInfo) const
+	bool ResetPlayerHealth(PlayerInfo pInfo)
 	{
 		let interval = BIO_CVar.ResetInterval_Health(pInfo);
+
+		if (interval <= 0)
+			return false;
+
 		let tracker = GetPlayerResetTracker(pInfo);
 
 		if (++tracker.Health == interval)
@@ -795,9 +807,13 @@ extend class BIO_Global
 		return false;
 	}
 
-	bool ResetPlayerWeapons(PlayerInfo pInfo) const
+	bool ResetPlayerWeapons(PlayerInfo pInfo)
 	{
 		let interval = BIO_CVar.ResetInterval_Weapons(pInfo);
+
+		if (interval <= 0)
+			return false;
+
 		let tracker = GetPlayerResetTracker(pInfo);
 
 		if (++tracker.Weapons == interval)
