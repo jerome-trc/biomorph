@@ -102,6 +102,9 @@ $random bio/weap/dryfire/ballistic
 	bio/weap/dryfire/ballistic/2
 }
 
+bio/weap/spoolup SPOOLUP
+bio/weap/spooldown SPOOLDN
+
 bio/weap/etmf NRG2MATR
 
 // Fists

@@ -39,6 +39,7 @@ class BIO_Turbovulcan : BIO_Weapon
 	Fire:
 		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 	SpoolUp:
+		TNT1 A 0 A_StartSound("bio/weap/spoolup", CHAN_7);
 		TRBO B 1 A_BIO_SetFireTime(0);
 		TRBO C 1 A_BIO_SetFireTime(1);
 		TRBO D 1 A_BIO_SetFireTime(2);
@@ -46,6 +47,7 @@ class BIO_Turbovulcan : BIO_Weapon
 		TRBO F 1 A_BIO_SetFireTime(4);
 		TRBO G 1 A_BIO_SetFireTime(5);
 		TRBO H 1 A_BIO_SetFireTime(6);
+		TNT1 A 0 A_StopSound(CHAN_7);
 	FireSpooled:
 		TNT1 A 0
 		{
@@ -69,6 +71,8 @@ class BIO_Turbovulcan : BIO_Weapon
 		}
 		TNT1 A 0
 		{
+			A_WeaponOffset(0.0, 32.0);
+
 			if (!invoker.SufficientAmmo())
 				return ResolveState('SpoolDown');
 			else
@@ -87,9 +91,14 @@ class BIO_Turbovulcan : BIO_Weapon
 			A_BIO_SetFireTime(3, 1);
 			A_GunFlash('Flash.L');
 		}
-		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'SpoolDown');
+		TNT1 A 0
+		{
+			A_WeaponOffset(0.0, 32.0);
+			return A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'SpoolDown');
+		}
 		Loop;
 	SpoolDown:
+		TNT1 A 0 A_StartSound("bio/weap/spooldown", CHAN_7);
 		TRBO E 1 A_BIO_SetFireTime(0, 2);
 		TRBO F 1 A_BIO_SetFireTime(1, 2);
 		TRBO G 1 A_BIO_SetFireTime(2, 2);
@@ -98,6 +107,33 @@ class BIO_Turbovulcan : BIO_Weapon
 		TRBO B 1 A_BIO_SetFireTime(5, 2);
 		TRBO C 1 A_BIO_SetFireTime(6, 2);
 		TRBO D 1 A_BIO_SetFireTime(7, 2);
+	SpoolDown.Tail:
+		TNT1 A 0 A_Refire;
+		TRBO A 2;
+		TRBO B 2;
+		TRBO C 2;
+		TRBO D 2;
+		TNT1 A 0 A_Refire;
+		TRBO A 3;
+		TRBO B 3;
+		TRBO C 3;
+		TRBO D 3;
+		TNT1 A 0 A_Refire;
+		TRBO A 4;
+		TRBO B 4;
+		TRBO C 4;
+		TRBO D 4;
+		TNT1 A 0 A_Refire;
+		TRBO A 5;
+		TRBO B 5;
+		TRBO C 5;
+		TRBO D 5;
+		TNT1 A 0 A_Refire;
+		TRBO A 6;
+		TRBO B 6;
+		TRBO C 6;
+		TRBO D 6;
+		TNT1 A 0 A_StopSound(CHAN_7);
 		Goto Ready;
 	AltFire:
 		TNT1 A 0 A_BIO_CheckAmmo;
@@ -208,8 +244,8 @@ class BIO_Turbovulcan : BIO_Weapon
 			)
 		);
 		FireTimeGroups.Push(
-			StateTimeGroupFrom(
-				'SpoolDown',
+			StateTimeGroupFromRange(
+				'SpoolDown', 'SpoolDown.Tail',
 				"$BIO_SPOOLDOWN",
 				designation: BIO_STGD_SPOOLDOWN
 			)

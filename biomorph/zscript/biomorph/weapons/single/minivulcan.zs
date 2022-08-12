@@ -61,6 +61,7 @@ class BIO_Minivulcan : BIO_Weapon
 	SpoolCheck:
 		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
 	SpoolUp:
+		TNT1 A 0 A_StartSound("bio/weap/spoolup", CHAN_7);
 		MINV A 3 A_BIO_SetFireTime(0, 1);
 		MINV B 3 A_BIO_SetFireTime(1, 1);
 		MINV C 3 A_BIO_SetFireTime(2, 1);
@@ -78,6 +79,8 @@ class BIO_Minivulcan : BIO_Weapon
 	FireSpooled:
 		TNT1 A 0
 		{
+			A_StopSound(CHAN_7);
+
 			if (!invoker.SufficientAmmo())
 				return ResolveState('SpoolDown');
 			else
@@ -94,6 +97,7 @@ class BIO_Minivulcan : BIO_Weapon
 		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'SpoolDown');
 		Loop;
 	SpoolDown:
+		TNT1 A 0 A_StartSound("bio/weap/spooldown", CHAN_7);
 		MINV A 1 A_BIO_SetFireTime(0, 3);
 		MINV B 1 A_BIO_SetFireTime(1, 3);
 		MINV C 1 A_BIO_SetFireTime(2, 3);
@@ -109,6 +113,20 @@ class BIO_Minivulcan : BIO_Weapon
 		MINV C 3 A_BIO_SetFireTime(10, 3);
 		TNT1 A 0 A_JumpIf(Player.Cmd.Buttons & BT_ATTACK, 'SpoolUp.CP1');
 		MINV D 3 A_BIO_SetFireTime(11, 3);
+	SpoolDown.Tail:
+		TNT1 A 0 A_Refire;
+		MINV A 4;
+		MINV B 4;
+		MINV C 4;
+		TNT1 A 0 A_Refire;
+		MINV A 5;
+		MINV B 5;
+		MINV C 5;
+		TNT1 A 0 A_Refire;
+		MINV A 6;
+		MINV B 6;
+		MINV C 6;
+		TNT1 A 0 A_StopSound(CHAN_7);
 		Goto Ready;
 	Flash:
 		TNT1 A 0 A_Jump(128, 'Flash.Large');
@@ -186,8 +204,8 @@ class BIO_Minivulcan : BIO_Weapon
 			)
 		);
 		FireTimeGroups.Push(
-			StateTimeGroupFrom(
-				'SpoolDown',
+			StateTimeGroupFromRange(
+				'SpoolDown', 'SpoolDown.Tail',
 				"$BIO_SPOOLDOWN",
 				designation: BIO_STGD_SPOOLDOWN,
 				flags: BIO_STGF_HIDDEN

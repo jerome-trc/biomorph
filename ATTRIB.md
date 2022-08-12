@@ -146,6 +146,8 @@ PROXBEEP, PROXFIRE, and PROXHIT are courtesy of id Software LLC ([as cited by Re
 
 RARELOOT is derived from ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/), licensed under Creative Commons 0.
 
+SPOOLDN and SPOOLUP are derived from ["minigun.mp3"](https://freesound.org/people/scorepion/sounds/424917/) by freesound user [scorepion](https://freesound.org/people/scorepion/), licensed under Creative Commons 0.
+
 UNIQLOOT is derived from ["Gong Hit"](https://freesound.org/people/GowlerMusic/sounds/266566/) by freesound user [GowlerMusic](https://freesound.org/people/GowlerMusic), licensed under the Attribution 4.0 License.
 
 USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/), licensed under Creative Commons 0.
