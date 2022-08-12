@@ -104,6 +104,10 @@ class BIO_Projectile : Actor abstract
 
 	action void A_Travel()
 	{
+		// Got called before `Functors` could be assigned
+		if (invoker.Functors == null)
+			return;
+
 		for (uint i = 0; i < invoker.Functors.Travel.Size(); i++)
 			invoker.Functors.Travel[i].Invoke(BIO_Projectile(self));
 	}
