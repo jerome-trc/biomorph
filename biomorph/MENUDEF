@@ -8,19 +8,21 @@ AddOptionMenu "OptionsMenu"
 OptionMenu "BIO_Options"
 {
 	class BIO_TooltipOptionMenu
+	BIO_TooltipGeometry 0.0, 0.0, 0.15, 0.1, 0.1, 0.5
+
 	Title "$BIO_OPTTITLE"
 
 	StaticText ""
 	StaticText "$BIO_OPTCAT_BALANCE"
 
 	Option "$BIO_OPTLBL_LDL", "BIO_ldl", "BIO_LegenDoomLite"
-	BIOTooltip "$BIO_OPTTIP_LDL"
+	BIO_Tooltip "$BIO_OPTTIP_LDL"
 
 	StaticText ""
 	StaticText "$BIO_OPTCAT_RESET"
 
 	Option "$BIO_OPTLBL_INVCLEAR", "BIO_invclear", "BIO_InvClear"
-	BIOTooltip "$BIO_OPTTIP_INVCLEAR"
+	BIO_Tooltip "$BIO_OPTTIP_INVCLEAR"
 
 	Slider "$BIO_OPTLBL_RESET_HEALTH", "BIO_reset_health", 0, 31, 1, 0
 	Slider "$BIO_OPTLBL_RESET_ARMOR", "BIO_reset_armor", 0, 31, 1, 0
