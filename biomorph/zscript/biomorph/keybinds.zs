@@ -24,7 +24,7 @@ class BIO_WeaponDrop : BIO_Keybind
 
 		let weap = BIO_Weapon(pawn.Player.ReadyWeapon);
 
-		if (weap == null || weap is 'BIO_Fists')
+		if (weap == null || weap is 'BIO_Unarmed')
 			return false;
 
 		if (!Primed)

@@ -158,7 +158,7 @@
 	BIO_WEAP_OB = "%k killed %o.";
 	BIO_WEAP_PKUP = "Procured some kind of weapon.";
 
-	BIO_FISTS_TAG = "Fists";
+	BIO_UNARMED_TAG = "Unarmed";
 
 	// (None of the handguns or melee weapons have scavenge messages)
 
@@ -756,7 +756,7 @@
 	BIO_OPTVAL_AUTOREL_SINGLE = "Single-shot weapons only";
 	BIO_OPTVAL_AUTOREL_NEVER = "Never";
 
-	BIO_OPTLBL_BERSERKSWITCH = "Going Berserk switches to Fist";
+	BIO_OPTLBL_BERSERKSWITCH = "Going Berserk switches to Unarmed";
 	BIO_OPTVAL_BSKS_NONE = "Never";
 	BIO_OPTVAL_BSKS_MELEE = "Always";
 	BIO_OPTVAL_BSKS_FIRSTONLY = "Only on first pickup";

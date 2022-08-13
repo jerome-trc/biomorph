@@ -13,12 +13,12 @@ enum BIO_WeaponSpawnCategory : uint8
 }
 
 // Without this, there's no way for outside code to know that a weapon
-// which isn't explicitly `BIO_Fist` is another fist-type weapon.
+// which isn't explicitly `BIO_Unarmed` is another hand-to-hand-type weapon.
 // Will probably expand this as technical needs become clearer.
 enum BIO_WeaponFamily : uint8
 {
 	BIO_WEAPFAM_NONE,
-	BIO_WEAPFAM_FIST
+	BIO_WEAPFAM_UNARMED
 }
 
 // Prevent one button push from invoking a weapon's special functor multiple times.

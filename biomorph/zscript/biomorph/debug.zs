@@ -31,7 +31,7 @@ class BIO_All : Inventory
 
 			if (t is 'BIO_Weapon')
 			{
-				if (t == 'BIO_Fists')
+				if (t == 'BIO_Unarmed')
 					continue;
 
 				if (pawn.FindInventory(t))

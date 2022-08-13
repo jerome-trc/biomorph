@@ -1,4 +1,4 @@
-class BIO_Fists : BIO_Weapon
+class BIO_Unarmed : BIO_Weapon
 {
 	flagdef LeftHand: DynFlags, 31;
 
@@ -6,14 +6,14 @@ class BIO_Fists : BIO_Weapon
 	{
 		+WEAPON.MELEEWEAPON
 
-		Tag "$BIO_FISTS_TAG";
+		Tag "$BIO_UNARMED_TAG";
 
-		Inventory.Icon 'FISTZ0';
+		Inventory.Icon 'H2HCZ0';
 
 		Weapon.SelectionOrder SELORDER_FIST;
 		Weapon.SlotNumber 1;
 
-		BIO_Weapon.Family BIO_WEAPFAM_FIST;
+		BIO_Weapon.Family BIO_WEAPFAM_UNARMED;
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.SwitchSpeeds 14, 14;
 	}
@@ -21,41 +21,41 @@ class BIO_Fists : BIO_Weapon
 	States
 	{
 	Ready:
-		FIST A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
+		H2HC A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Deselect:
-		FIST A 0 A_BIO_Deselect;
+		H2HC A 0 A_BIO_Deselect;
 		Stop;
 	Select:
-		FIST A 0 A_BIO_Select;
+		H2HC A 0 A_BIO_Select;
 		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.bLeftHand, 'Jab.Left');
 	Jab.Right:
 		TNT1 A 0 { invoker.bLeftHand = true; }
-		FIST B 1 A_BIO_SetFireTime(0);
-		FIST C 1 A_BIO_SetFireTime(1);
-		FIST D 1
+		JABR A 1 A_BIO_SetFireTime(0);
+		JABR B 1 A_BIO_SetFireTime(1);
+		JABR C 1
 		{
 			A_BIO_SetFireTime(2);
 			A_BIO_Jab();
 		}
-		FIST C 2 A_BIO_SetFireTime(3);
-		FIST B 4 A_BIO_SetFireTime(4);
-		FIST A 3 A_BIO_SetFireTime(5);
+		JABR B 2 A_BIO_SetFireTime(3);
+		JABR A 4 A_BIO_SetFireTime(4);
+		H2HC A 3 A_BIO_SetFireTime(5);
 		Goto Ready;
 	Jab.Left:
 		TNT1 A 0 { invoker.bLeftHand = false; }
-		FIST E 1 A_BIO_SetFireTime(0);
-		FIST F 1 A_BIO_SetFireTime(1);
-		FIST G 1
+		JABL A 1 A_BIO_SetFireTime(0);
+		JABL B 1 A_BIO_SetFireTime(1);
+		JABL C 1
 		{
 			A_BIO_SetFireTime(2);
 			A_BIO_Jab();
 		}
-		FIST F 2 A_BIO_SetFireTime(3);
-		FIST E 4 A_BIO_SetFireTime(4);
-		FIST A 3 A_BIO_SetFireTime(5);
+		JABL B 2 A_BIO_SetFireTime(3);
+		JABL A 4 A_BIO_SetFireTime(4);
+		H2HC A 3 A_BIO_SetFireTime(5);
 		Goto Ready;
 	Reload:
 		NOPE B 4 A_WeaponReady(WRF_ALLOWZOOM);

@@ -96,7 +96,7 @@ class BIO_Player : DoomPlayer
 		{
 			// The player has already had their inventory initialised for the
 			// first time, but the map has attempted to force a reset
-			GiveInventory('BIO_Fists', 1);
+			GiveInventory('BIO_Unarmed', 1);
 			GiveRandomStartingPistol();
 			return;
 		}
@@ -105,7 +105,7 @@ class BIO_Player : DoomPlayer
 			return;
 
 		super.GiveDefaultInventory();
-		GiveInventory('BIO_Fists', 1);
+		GiveInventory('BIO_Unarmed', 1);
 		GiveRandomStartingPistol();
 	}
 
@@ -117,7 +117,7 @@ class BIO_Player : DoomPlayer
 		{
 			let weap = BIO_Weapon(i);
 
-			if (weap == null || weap.Family == BIO_WEAPFAM_FIST)
+			if (weap == null || weap.Family == BIO_WEAPFAM_UNARMED)
 				continue;
 
 			ret++;
@@ -157,7 +157,7 @@ class BIO_Player : DoomPlayer
 		{
 			let weap = BIO_Weapon(i);
 
-			if (weap != null && weap.Family != BIO_WEAPFAM_FIST)
+			if (weap != null && weap.Family != BIO_WEAPFAM_UNARMED)
 				ret1++;
 			else if (i is 'BIO_Gene')
 				ret2++;
@@ -307,7 +307,7 @@ class BIO_Player : DoomPlayer
 
 		if (resetWeaps)
 		{
-			GiveInventory('BIO_Fists', 1);
+			GiveInventory('BIO_Unarmed', 1);
 			GiveRandomStartingPistol();
 		}
 

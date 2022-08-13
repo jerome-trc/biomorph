@@ -107,10 +107,10 @@ bio/weap/spooldown SPOOLDN
 
 bio/weap/etmf NRG2MATR
 
-// Fists
+// Unarmed
 
-bio/punch/hit/0 FIST_HT0
-bio/punch/hit/1 FIST_HT1
+bio/punch/hit/0 PUNCH_0
+bio/punch/hit/1 PUNCH_1
 
 $random bio/punch/hit
 {

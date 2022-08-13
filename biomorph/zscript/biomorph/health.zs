@@ -15,7 +15,7 @@ mixin class BIO_Health
 			select |= (bsks == BIO_CV_BSKS_ONLYFIRST && !prev);
 
 			if (select)
-				pawn.A_SelectWeapon('Fist');
+				pawn.A_SelectWeapon('BIO_Unarmed');
 		}
 	}
 
