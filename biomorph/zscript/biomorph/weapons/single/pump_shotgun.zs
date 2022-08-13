@@ -6,7 +6,7 @@ class BIO_PumpShotgun : BIO_Weapon
 	{
 		Tag "$BIO_PUMPSHOTGUN_TAG";
 
-		Inventory.Icon 'SHOTB0';
+		Inventory.Icon 'PASGZ0';
 
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType 'Shell';
