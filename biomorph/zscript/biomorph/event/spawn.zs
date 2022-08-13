@@ -29,7 +29,16 @@ extend class BIO_EventHandler
 		}
 		else
 		{
-			Actor.Spawn(toSpawn, eventThing.Pos);
+			let spawned = Actor.Spawn(toSpawn, eventThing.Pos);
+			
+			spawned.ChangeTID(eventThing.TID);
+			spawned.Special = eventThing.Special;
+			spawned.Args[0] = eventThing.Args[0];
+			spawned.Args[1] = eventThing.Args[1];
+			spawned.Args[2] = eventThing.Args[2];
+			spawned.Args[3] = eventThing.Args[3];
+			spawned.Args[4] = eventThing.Args[4];
+
 			eventThing.Destroy();
 		}
 	}
