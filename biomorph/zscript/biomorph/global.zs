@@ -17,6 +17,7 @@ class BIO_Global : Thinker
 		let ret = new('BIO_Global');
 		ret.ChangeStatNum(STAT_STATIC);
 
+		ret.DetectContext();
 		ret.PopulateWeaponLootTables();
 		ret.PopulateMutagenLootTable();
 		ret.PopulateGeneLootTable();
@@ -57,6 +58,32 @@ class BIO_Global : Thinker
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Global data teardown.");
 		
 		super.OnDestroy();
+	}
+}
+
+// Global context information.
+
+enum BIO_GlobalContext : uint8
+{
+	BIO_GCTX_NONE = 0,
+	BIO_GCTX_VALIANT = 1 << 0
+}
+
+extend class BIO_Global
+{
+	private BIO_GlobalContext ContextFlags;
+
+	private void DetectContext()
+	{
+		if (BIO_Utils.Valiant())
+		{
+			ContextFlags |= BIO_GCTX_VALIANT;
+		}
+	}
+
+	bool InValiant() const
+	{
+		return ContextFlags & BIO_GCTX_VALIANT;
 	}
 }
 

@@ -92,3 +92,35 @@ extend class BIO_EventHandler
 		return true;
 	}
 }
+
+extend class BIO_EventHandler
+{
+	static const name VALIANT_REPLACEES[] = {
+		'ValiantPistol',
+		'ValiantShotgun',
+		'ValiantSSG',
+		'ValiantChaingun'
+	};
+
+	static const class<BIO_WeaponReplacer> VALIANT_REPLACEMENTS[] = {
+		'BIO_WeaponReplacer_Pistol',
+		'BIO_WeaponReplacer_Shotgun',
+		'BIO_WeaponReplacer_SSG',
+		'BIO_WeaponReplacer_Chaingun'
+	};
+
+	final override void CheckReplacement(ReplaceEvent event)
+	{
+		if (!Globals.InValiant())
+			return;
+
+		for (uint i = 0; i < VALIANT_REPLACEES.Size(); i++)
+		{
+			if (event.Replacee == VALIANT_REPLACEES[i])
+			{
+				event.Replacement = VALIANT_REPLACEMENTS[i];
+				return;
+			}
+		}
+	}
+}
