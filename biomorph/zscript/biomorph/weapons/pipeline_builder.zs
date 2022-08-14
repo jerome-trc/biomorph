@@ -2,11 +2,20 @@ class BIO_WeaponPipelineBuilder play
 {
 	private BIO_WeaponPipeline Pipeline;
 
-	static BIO_WeaponPipelineBuilder Create()
+	static BIO_WeaponPipelineBuilder Create(BIO_WeaponPipeline existing = null)
 	{
 		let ret = new('BIO_WeaponPipelineBuilder');
-		ret.Pipeline = new('BIO_WeaponPipeline');
-		ret.Pipeline.PayloadFunctors = new('BIO_PayloadFunctorTuple');
+
+		if (existing == null)
+		{
+			ret.Pipeline = new('BIO_WeaponPipeline');
+			ret.Pipeline.PayloadFunctors = new('BIO_PayloadFunctorTuple');
+		}
+		else
+		{
+			ret.Pipeline = existing;
+		}
+
 		return ret;
 	}
 
