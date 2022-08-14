@@ -50,6 +50,7 @@ class Biomorph abstract
 #include "zscript/biomorph/menus/weapmod.zs"
 
 #include "zscript/biomorph/payloads/base.zs"
+#include "zscript/biomorph/payloads/functors.zs"
 #include "zscript/biomorph/payloads/projectiles.zs"
 #include "zscript/biomorph/payloads/puffs.zs"
 
