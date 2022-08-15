@@ -314,7 +314,7 @@ extend class BIO_DualWieldWeapon
 	protected action void A_WeaponReady_R()
 	{
 		// Enable bobbing:
-		A_OverlayFlags(OverlayID(), PSPF_ADDBOB, true);
+		A_OverlayFlags(OverlayID(), PSPF_ADDBOB | PSPF_POWDOUBLE, true);
 		state tgt = null;
 		bool pressingFire = Player.Cmd.Buttons & BT_ATTACK;		
 
@@ -354,7 +354,7 @@ extend class BIO_DualWieldWeapon
 	protected action void A_WeaponReady_L()
 	{
 		if (!Player) return;			
-		A_OverlayFlags(OverlayID(), PSPF_ADDBOB, true);
+		A_OverlayFlags(OverlayID(), PSPF_ADDBOB | PSPF_POWDOUBLE, true);
 
 		state targetState = null;
 		bool pressingFire = Player.Cmd.Buttons & BT_ALTATTACK;		
