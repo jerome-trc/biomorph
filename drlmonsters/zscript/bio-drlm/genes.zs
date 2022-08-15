@@ -278,21 +278,19 @@ class BIORLM_FireFunc_Tristar : BIO_FireFunc_Projectile
 		return super.Invoke(weap, shotData);
 	}
 
-	final override void Summary(
-		in out Array<string> readout,
+	final override string Summary(
 		readOnly<BIO_WeaponPipeline> ppl,
-		readOnly<BIO_WeaponPipeline> pplDef) const
+		readOnly<BIO_WeaponPipeline> pplDef
+	) const
 	{
-		readout.Push(
-			String.Format(
-				StringTable.Localize("$BIORLM_FIREFUNC_TRISTAR"),
-				BIO_Utils.StatFontColor(ppl.ShotCount, pplDef.ShotCount),
-				ppl.ShotCount,
-				ppl.Payload != pplDef.Payload ?
-					Biomorph.CRESC_STATMODIFIED :
-					Biomorph.CRESC_STATDEFAULT,
-				BIO_Utils.PayloadTag(ppl.Payload, ppl.ShotCount)
-			)
+		return String.Format(
+			StringTable.Localize("$BIORLM_FIREFUNC_TRISTAR"),
+			BIO_Utils.StatFontColor(ppl.ShotCount, pplDef.ShotCount),
+			ppl.ShotCount,
+			ppl.Payload != pplDef.Payload ?
+				Biomorph.CRESC_STATMODIFIED :
+				Biomorph.CRESC_STATDEFAULT,
+			BIO_Utils.PayloadTag(ppl.Payload, ppl.ShotCount)
 		);
 	}
 }

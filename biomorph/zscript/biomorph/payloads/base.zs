@@ -29,6 +29,10 @@ mixin class BIO_PayloadCommon
 		Damage -1;
 		Species 'Player';
 	}
+
+	// Context-less, universally-applicable information
+	// which the user may want/need to know about this payload.
+	virtual string Summary() const { return ""; }
 }
 
 mixin class BIO_ProjectileCommon
@@ -100,8 +104,6 @@ class BIO_Projectile : Actor abstract
 		return ret;
 	}
 
-	virtual void Summary(in out Array<string> weapReadout) {}
-
 	action void A_Travel()
 	{
 		// Got called before `Functors` could be assigned
@@ -155,8 +157,6 @@ class BIO_FastProjectile : FastProjectile abstract
 		return ret;
 	}
 
-	virtual void Summary(in out Array<string> weapReadout) {}
-
 	// Invoked before the A_ProjectileDeath does anything else.
 	// Note that you never need to call `super.OnProjectileDeath()`.
 	virtual void OnProjectileDeath() {}
@@ -194,8 +194,6 @@ class BIO_Puff : BulletPuff abstract
 		PUFF CD 4;
 		Stop;
 	}
-
-	virtual void Summary(in out Array<string> weapReadout) {}
 }
 
 class BIO_FakePuff : BIO_Puff
@@ -227,8 +225,7 @@ class BIO_RailPuff : BIO_Puff abstract
 
 class BIO_RailSpawn : Actor abstract
 {
-	meta string PluralTag; property PluralTag: PluralTag;
-	meta class<Actor> PuffType; property PuffType: PuffType;
+	mixin BIO_PayloadCommon;
 
-	virtual void Summary(in out Array<string> weapReadout) {}
+	meta class<Actor> PuffType; property PuffType: PuffType;
 }

@@ -220,11 +220,11 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 		return new('BIO_HDF_DemonSlayer');
 	}
 
-	final override void Summary(in out Array<string> strings) const
+	final override string Summary() const
 	{
-		strings.Push(String.Format(
+		return String.Format(
 			StringTable.Localize("$BIO_HDF_DEMONSLAYER"), Count * 100
-		));
+		);
 	}
 }
 

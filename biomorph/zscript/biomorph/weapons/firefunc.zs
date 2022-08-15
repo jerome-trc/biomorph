@@ -21,10 +21,10 @@ class BIO_FireFunctor play abstract
 		return dmgVals.Size();
 	}
 
-	abstract void Summary(
-		in out Array<string> readout,
+	abstract string Summary(
 		readOnly<BIO_WeaponPipeline> pipeline,
-		readOnly<BIO_WeaponPipeline> pipelineDef) const;
+		readOnly<BIO_WeaponPipeline> pipelineDef
+	) const;
 
 	// If a category of payload can be handled by this functor, include its bit.
 	// Used to determine from the outside if a new payload may be compatible.
@@ -57,19 +57,20 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 		return self;
 	}
 
-	override void Summary(
-		in out Array<string> readout,
+	override string Summary(
 		readOnly<BIO_WeaponPipeline> pipeline,
-		readOnly<BIO_WeaponPipeline> pipelineDef) const
+		readOnly<BIO_WeaponPipeline> pipelineDef
+	) const
 	{
 		uint sc = pipeline.ShotCount;
 		class<Actor> pl = pipeline.Payload;
 
-		readout.Push(String.Format(
+		return String.Format(
 			StringTable.Localize("$BIO_FIREFUNC_GENERAL"),
 			BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
 			pl != pipelineDef.Payload ? Biomorph.CRESC_STATMODIFIED : Biomorph.CRESC_STATDEFAULT,
-			BIO_Utils.PayloadTag(pl, sc)));
+			BIO_Utils.PayloadTag(pl, sc)
+		);
 	}
 
 	override BIO_FireFunctor Copy() const
@@ -111,19 +112,22 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 		return self;
 	}
 
-	override void Summary(
-		in out Array<string> readout,
+	override string Summary(
 		readOnly<BIO_WeaponPipeline> pipeline,
-		readOnly<BIO_WeaponPipeline> pipelineDef) const
+		readOnly<BIO_WeaponPipeline> pipelineDef
+		) const
 	{
 		uint sc = pipeline.ShotCount;
 		class<Actor> pl = pipeline.Payload;
 
-		readout.Push(String.Format(
+		return String.Format(
 			StringTable.Localize("$BIO_FIREFUNC_PROJECTILE"),
 			BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
-			pl != pipelineDef.Payload ? Biomorph.CRESC_STATMODIFIED : Biomorph.CRESC_STATDEFAULT,
-			BIO_Utils.PayloadTag(pl, sc)));
+			pl != pipelineDef.Payload ?
+				Biomorph.CRESC_STATMODIFIED :
+				Biomorph.CRESC_STATDEFAULT,
+			BIO_Utils.PayloadTag(pl, sc)
+		);
 	}
 
 	override BIO_FireFunctor Copy() const
@@ -202,10 +206,10 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 		return self;
 	}
 
-	override void Summary(
-		in out Array<string> readout,
+	override string Summary(
 		readOnly<BIO_WeaponPipeline> pipeline,
-		readOnly<BIO_WeaponPipeline> pipelineDef) const
+		readOnly<BIO_WeaponPipeline> pipelineDef
+	) const
 	{
 		class<Actor> pl = pipeline.Payload, puff_t = null, spawnClass = null;
 		bool defaultPuff = true, defaultSpawn = true;
@@ -224,42 +228,46 @@ class BIO_FireFunc_Rail : BIO_FireFunctor
 			defaultSpawn = spawnClass == pipelineDef.Payload;
 		}
 
-		string output = "";
+		string ret = "";
 
 		if (puff_t != null && spawnClass != null)
 		{
-			output = String.Format(
+			ret = String.Format(
 				StringTable.Localize("$BIO_FIREFUNC_RAIL"),
 				BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
 				defaultPuff ? Biomorph.CRESC_STATDEFAULT : Biomorph.CRESC_STATMODIFIED,
 				BIO_Utils.PayloadTag(puff_t, sc),
 				defaultSpawn ? Biomorph.CRESC_STATDEFAULT : Biomorph.CRESC_STATMODIFIED,
-				BIO_Utils.PayloadTag(spawnClass, sc));
+				BIO_Utils.PayloadTag(spawnClass, sc)
+			);
 		}
 		else if (puff_t == null)
 		{
-			output = String.Format(
+			ret = String.Format(
 				StringTable.Localize("$BIO_FIREFUNC_RAIL_NOPUFF"),
 				BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
 				defaultSpawn ? Biomorph.CRESC_STATDEFAULT : Biomorph.CRESC_STATMODIFIED,
-				BIO_Utils.PayloadTag(spawnClass, sc));
+				BIO_Utils.PayloadTag(spawnClass, sc)
+			);
 		}
 		else if (spawnClass == null)
 		{
-			output = String.Format(
+			ret = String.Format(
 				StringTable.Localize("$BIO_FIREFUNC_RAIL_NOSPAWN"),
 				BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc,
 				defaultPuff ? Biomorph.CRESC_STATDEFAULT : Biomorph.CRESC_STATMODIFIED,
-				BIO_Utils.PayloadTag(puff_t, sc));
+				BIO_Utils.PayloadTag(puff_t, sc)
+			);
 		}
 		else
 		{
-			output = String.Format(
+			ret = String.Format(
 				StringTable.Localize("$BIO_FIREFUNC_RAIL_NOTHING"),
-				BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc);
+				BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc
+			);
 		}
 
-		readout.Push(output);
+		return ret;
 	}
 
 	override BIO_FireFunctor Copy() const
@@ -307,12 +315,12 @@ class BIO_FireFunc_Punch : BIO_FireFunc_Melee
 		return weap.BIO_Punch(shotData, Range, Lifesteal, HitSound, MissSound, Flags);
 	}
 
-	override void Summary(
-		in out Array<string> readout,
+	override string Summary(
 		readOnly<BIO_WeaponPipeline> pipeline,
-		readOnly<BIO_WeaponPipeline> pipelineDef) const
+		readOnly<BIO_WeaponPipeline> pipelineDef
+	) const
 	{
-		readout.Push(StringTable.Localize("$BIO_FIREFUNC_PUNCH"));
+		return StringTable.Localize("$BIO_FIREFUNC_PUNCH");
 	}
 
 	override BIO_FireFunctor Copy() const
@@ -342,12 +350,12 @@ class BIO_FireFunc_Saw : BIO_FireFunc_Melee
 		return null;
 	}
 
-	override void Summary(
-		in out Array<string> readout,
+	override string Summary(
 		readOnly<BIO_WeaponPipeline> pipeline,
-		readOnly<BIO_WeaponPipeline> pipelineDef) const
+		readOnly<BIO_WeaponPipeline> pipelineDef
+	) const
 	{
-		readout.Push(StringTable.Localize("$BIO_FIREFUNC_SAW"));
+		return StringTable.Localize("$BIO_FIREFUNC_SAW");
 	}
 
 	override BIO_FireFunctor Copy() const
@@ -372,17 +380,18 @@ class BIO_FireFunc_BFGSpray : BIO_FireFunctor
 		return weap.BIO_BFGSpray(shotData);
 	}
 
-	final override void Summary(
-		in out Array<string> readout,
+	final override string Summary(
 		readOnly<BIO_WeaponPipeline> pipeline,
-		readOnly<BIO_WeaponPipeline> pipelineDef) const
+		readOnly<BIO_WeaponPipeline> pipelineDef
+	) const
 	{
 		uint sc = pipeline.ShotCount;
 		class<Actor> pl = pipeline.Payload;
 
-		readout.Push(String.Format(
+		return String.Format(
 			StringTable.Localize("$BIO_FIREFUNC_BFGSPRAY"),
-			BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc));
+			BIO_Utils.StatFontColor(sc, pipelineDef.ShotCount), sc
+		);
 	}
 
 	override BIO_FireFunctor Copy() const { return new('BIO_FireFunc_BFGSpray'); }

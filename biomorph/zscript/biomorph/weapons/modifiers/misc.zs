@@ -262,7 +262,8 @@ class BIO_PTF_Smart : BIO_ProjTravelFunctor
 		return new('BIO_PTF_Smart');
 	}
 
-	final override void Summary(in out Array<string> readout) const {}
+	// Nothing to say here
+	final override string Summary() const { return ""; }
 }
 
 class BIO_WMod_Spread : BIO_WeaponModifier

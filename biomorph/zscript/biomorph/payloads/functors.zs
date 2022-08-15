@@ -14,7 +14,9 @@ class BIO_ProjTravelFunctor play abstract
 
 	abstract BIO_ProjTravelFunctor Copy() const;
 
-	abstract void Summary(in out Array<string> readout) const;
+	// Context-less, universally-applicable basic information
+	// that the user may need/want to know about this functor.
+	abstract string Summary() const;
 
 	readOnly<BIO_ProjTravelFunctor> AsConst() const { return self; }
 }
@@ -39,7 +41,9 @@ class BIO_HitDamageFunctor play abstract
 
 	abstract BIO_HitDamageFunctor Copy() const;
 
-	abstract void Summary(in out Array<string> readout) const;
+	// Context-less, universally-applicable basic information
+	// that the user may need/want to know about this functor.
+	abstract string Summary() const;
 
 	readOnly<BIO_HitDamageFunctor> AsConst() const { return self; }
 }
@@ -62,7 +66,9 @@ class BIO_PayloadDeathFunctor play abstract
 
 	abstract BIO_PayloadDeathFunctor Copy() const;
 
-	abstract void Summary(in out Array<string> readout) const;
+	// Context-less, universally-applicable basic information
+	// that the user may need/want to know about this functor.
+	abstract string Summary() const;
 	
 	readOnly<BIO_PayloadDeathFunctor> AsConst() const { return self; }
 }
@@ -141,8 +147,10 @@ class BIO_PLDF_Explode : BIO_PayloadDeathFunctor
 		return ret;
 	}
 
-	final override void Summary(in out Array<string> readout) const
+	final override string Summary() const
 	{
+		let ret = "";
+
 		if (Damage > 0 && Radius > 0)
 		{
 			string crEsc_dmg = "", crEsc_rad = "";
@@ -153,11 +161,16 @@ class BIO_PLDF_Explode : BIO_PayloadDeathFunctor
 				crEsc_rad = BIO_Utils.StatFontColor(Radius, Defaults.Radius);
 			}
 			else
+			{
 				crEsc_dmg = crEsc_rad = Biomorph.CRESC_STATMODIFIED;
+			}
 
-			readout.Push(String.Format(
+			ret.AppendFormat(
 				StringTable.Localize("$BIO_PLDF_EXPLODE_SPLASH"),
-				crEsc_dmg, Damage, crEsc_rad, Radius));
+				crEsc_dmg, Damage,
+				crEsc_rad, Radius
+			);
+			ret = ret .. "\n";
 		}
 
 		if (ShrapnelCount > 0 && ShrapnelDamage > 0)
@@ -174,10 +187,15 @@ class BIO_PLDF_Explode : BIO_PayloadDeathFunctor
 			else
 				crEsc_count = crEsc_dmg = Biomorph.CRESC_STATMODIFIED;
 
-			readout.Push(String.Format(
+			ret.AppendFormat(
 				StringTable.Localize("$BIO_PLDF_EXPLODE_SHRAPNEL"),
-				crEsc_count, ShrapnelCount, crEsc_dmg, ShrapnelDamage));
+				crEsc_count, ShrapnelCount,
+				crEsc_dmg, ShrapnelDamage
+			);
+			ret = ret .. "\n";
 		}
+
+		return ret;
 	}
 }
 
@@ -238,7 +256,7 @@ class BIO_PLDF_BFGSpray : BIO_PayloadDeathFunctor
 		return ret;
 	}
 
-	final override void Summary(in out Array<string> readout) const
+	final override string Summary() const
 	{
 		string crEsc_rc = "", crEsc_min = "", crEsc_max = "";
 
@@ -251,8 +269,11 @@ class BIO_PLDF_BFGSpray : BIO_PayloadDeathFunctor
 		else
 			crEsc_rc = crEsc_min = crEsc_max = Biomorph.CRESC_STATMODIFIED;
 		
-		readout.Push(String.Format(
+		return String.Format(
 			StringTable.Localize("$BIO_PLDF_BFGSPRAY"),
-			crEsc_rc, RayCount, crEsc_min, MinDamage, crEsc_max, MaxDamage));
+			crEsc_rc, RayCount,
+			crEsc_min, MinDamage,
+			crEsc_max, MaxDamage
+		);
 	}
 }

@@ -102,11 +102,11 @@ class BIO_BreachingAxe : BIO_Weapon
 
 class BIO_FireFunc_Axe : BIO_FireFunc_Punch
 {
-	final override void Summary(
-		in out Array<string> readout,
+	final override string Summary(
 		readOnly<BIO_WeaponPipeline> ppl,
-		readOnly<BIO_WeaponPipeline> pplDef) const
+		readOnly<BIO_WeaponPipeline> pplDef
+	) const
 	{
-		readout.Push(StringTable.Localize("$BIO_FIREFUNC_AXE"));
+		return StringTable.Localize("$BIO_FIREFUNC_AXE");
 	}
 }
