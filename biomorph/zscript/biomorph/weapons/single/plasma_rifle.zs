@@ -147,7 +147,11 @@ class BIO_OpMode_PlasmaRifle_HybridBurst : BIO_OpMode_HybridBurst
 		);
 
 		FireTimeGroups.Push(
-			weap.StateTimeGroupFrom('HybridBurst.Cooldown', "$BIO_COOLDOWN")
+			weap.StateTimeGroupFrom(
+				'HybridBurst.Cooldown',
+				"$BIO_COOLDOWN",
+				flags: BIO_STGF_AUXILIARY
+			)
 		);
 	}
 

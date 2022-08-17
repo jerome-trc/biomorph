@@ -5,7 +5,10 @@ enum BIO_StateTimeGroupFlags : uint8
 	BIO_STGF_HIDDEN = 1 << 0,
 	// Changes how a fire-time group is presented to the user
 	// ("attack time" rather than "fire time").
-	BIO_STGF_MELEE = 1 << 1
+	BIO_STGF_MELEE = 1 << 1,
+	// This state time group isn't involved in the core action itself.
+	// e.g., a fire time group is for spool up/down but not the actual fire cycle.
+	BIO_STGF_AUXILIARY = 1 << 1,
 }
 
 class BIO_StateTimeGroup
@@ -46,10 +49,8 @@ class BIO_StateTimeGroup
 		return ret;
 	}
 
-	bool IsHidden() const
-	{
-		return Flags & BIO_STGF_HIDDEN;
-	}
+	bool IsHidden() const { return Flags & BIO_STGF_HIDDEN; }
+	bool IsAuxiliary() const { return Flags & BIO_STGF_AUXILIARY; }
 
 	void Modify(int modifier)
 	{
