@@ -84,8 +84,6 @@ class Biomorph abstract
 #include "zscript/biomorph/utils/random.zs"
 #include "zscript/biomorph/utils/string.zs"
 
-#include "zscript/biomorph/weapons/base.zs"
-#include "zscript/biomorph/weapons/base_dual.zs"
 #include "zscript/biomorph/weapons/detail.zs"
 #include "zscript/biomorph/weapons/dmgfunc.zs"
 #include "zscript/biomorph/weapons/firefunc.zs"
@@ -98,6 +96,14 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/replacers.zs"
 #include "zscript/biomorph/weapons/simulator.zs"
 #include "zscript/biomorph/weapons/time.zs"
+
+#include "zscript/biomorph/weapons/base/core.zs"
+#include "zscript/biomorph/weapons/base/actions.zs"
+#include "zscript/biomorph/weapons/base/attacks.zs"
+#include "zscript/biomorph/weapons/base/dual.zs"
+#include "zscript/biomorph/weapons/base/helper.zs"
+#include "zscript/biomorph/weapons/base/ops.zs"
+#include "zscript/biomorph/weapons/base/override.zs"
 
 #include "zscript/biomorph/weapons/modifiers/base.zs"
 #include "zscript/biomorph/weapons/modifiers/ammo.zs"
