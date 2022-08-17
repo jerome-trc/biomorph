@@ -16,8 +16,11 @@ Session.vim
 .favorites.json
 .settings/
 
-*.pk3
-*.pk3.bak
+*.zip*
+*.7z*
+*.pk7*
+*.pk3*
+*.wad*
 
 # Assets-in-progress ###########################################################
 *.blend1
