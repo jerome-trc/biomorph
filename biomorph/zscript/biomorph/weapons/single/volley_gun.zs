@@ -15,12 +15,34 @@ class BIO_VolleyGun : BIO_Weapon
 		Weapon.UpSound "bio/weap/gunswap";
 
 		BIO_Weapon.GraphQuality 8;
+		BIO_Weapon.EnergyToMatter -1, 10;
+		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
 		BIO_Weapon.MagazineSize 4;
-		BIO_Weapon.MagazineType 'BIO_Mag_VolleyGun';
-		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_VolleyGun';
+		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
+		BIO_Weapon.OperatingMode 'BIO_OpMode_VolleyGun_SmallMag';
 		BIO_Weapon.PickupMessages
 			"$BIO_VOLLEYGUN_PKUP",
 			"$BIO_VOLLEYGUN_SCAV";
+	}
+
+	override void SetDefaults()
+	{
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Four', "$BIO_ALLFOUR"));
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Two', "$BIO_TWO"));
+
+		Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.Bullet('BIO_Shotpellet', 7) // Per barrel
+				.RandomDamage(10, 15)
+				.Spread(12.0, 7.5)
+				.FireSound("bio/weap/volleygun/fire")
+				.Build()
+		);
+	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
 	}
 
 	States
@@ -39,13 +61,8 @@ class BIO_VolleyGun : BIO_Weapon
 		VOLL A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0
-		{
-			if (BIO_CVar.MultiBarrelPrimary(Player))
-				return ResolveState('Fire.Quad');
-			else
-				return ResolveState('Fire.Double');
-		}
+		TNT1 A 0 A_BIO_Op_Fire;
+		Stop;
 	AltFire:
 		TNT1 A 0
 		{
@@ -104,7 +121,7 @@ class BIO_VolleyGun : BIO_Weapon
 		{
 			if (!invoker.CanReload())
 				return ResolveState('Ready');
-			else if ((invoker.Magazine1.Amount >= invoker.Default.MagazineSize1 / 2) ||
+			else if ((invoker.Magazine1.GetAmount() >= invoker.Default.MagazineSize1 / 2) ||
 					CountInv(invoker.AmmoType1) < invoker.Default.MagazineSize1 / 2)
 				return ResolveState('Reload.Two');
 			else
@@ -165,45 +182,36 @@ class BIO_VolleyGun : BIO_Weapon
 		}
 		Goto Ready;
 	}
+}
 
-	override void SetDefaults()
+// Operating modes /////////////////////////////////////////////////////////////
+
+class BIO_OpMode_VolleyGun_SmallMag : BIO_OpMode_SmallMag
+{
+	final override class<BIO_Weapon> WeaponType() const { return 'BIO_VolleyGun'; }
+
+	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
-				.Bullet('BIO_Shotpellet', 7) // Per barrel
-				.RandomDamage(10, 15)
-				.Spread(12.0, 7.5)
-				.FireSound("bio/weap/volleygun/fire")
-				.Build()
-		);
-
-		FireTimeGroups.Push(StateTimeGroupFrom('Fire.Quad'));
-
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Four', "$BIO_ALLFOUR"));
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Two', "$BIO_TWO"));
+		FireTimeGroups.Push(weap.StateTimeGroupFrom('Fire.Quad'));
 	}
 
-	override uint ModCost(uint base) const
+	final override statelabel FireState() const
 	{
-		return super.ModCost(base) * 2;
+		return 'Fire.Common';
 	}
 }
 
-class BIO_Mag_VolleyGun : BIO_Magazine {}
-
-class BIO_MagETM_VolleyGun : BIO_MagazineETM
+extend class BIO_VolleyGun
 {
-	Default
+	States
 	{
-		BIO_MagazineETM.PowerupType 'BIO_ETM_VolleyGun';
-	}
-}
-
-class BIO_ETM_VolleyGun : BIO_EnergyToMatterPowerup
-{
-	Default
-	{
-		Powerup.Duration -1;
-		BIO_EnergyToMatterPowerup.CellCost 20;
+	Fire.Common:
+		TNT1 A 0
+		{
+			if (BIO_CVar.MultiBarrelPrimary(Player))
+				return ResolveState('Fire.Quad');
+			else
+				return ResolveState('Fire.Double');
+		}
 	}
 }

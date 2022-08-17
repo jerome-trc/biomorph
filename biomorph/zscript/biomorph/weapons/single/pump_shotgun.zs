@@ -1,3 +1,4 @@
+// Default assignments.
 class BIO_PumpShotgun : BIO_Weapon
 {
 	protected bool Overloaded;
@@ -18,14 +19,30 @@ class BIO_PumpShotgun : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/small/0";
+		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
+		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
+		BIO_Weapon.MagazineSize 1;
+		BIO_Weapon.EnergyToMatter -1, 5;
+		BIO_Weapon.OperatingMode 'BIO_OpMode_PumpShotgun_SmallMag';
 		BIO_Weapon.PickupMessages
 			"$BIO_PUMPSHOTGUN_PKUP",
 			"$BIO_PUMPSHOTGUN_SCAV";
-		BIO_Weapon.MagazineSize 1;
-		BIO_Weapon.MagazineType 'BIO_Mag_PumpShotgun';
-		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_PumpShotgun';
 		BIO_Weapon.ScavengePersist false;
 		BIO_Weapon.SpawnCategory BIO_WSCAT_SHOTGUN;
+	}
+
+	override void SetDefaults()
+	{
+		Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.Bullet('BIO_ShotPellet', 7)
+				.RandomDamage(10, 15)
+				.Spread(3.0, 3.0)
+				.FireSound("bio/weap/pumpshotgun/fire")
+				.Build()
+		);
+
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
 	}
 
 	States
@@ -44,6 +61,9 @@ class BIO_PumpShotgun : BIO_Weapon
 		PASG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
+		TNT1 A 0 A_BIO_Op_Fire;
+		Stop;
+	Fire.Common:
 		TNT1 A 0 A_BIO_CheckAmmo(single: true);
 		PASG A 3 Fast A_BIO_SetFireTime(0);
 		PASG A 1 Offset(0 + 7, 32 + 7)
@@ -64,6 +84,7 @@ class BIO_PumpShotgun : BIO_Weapon
 			// last X offset from being preserved
 			A_WeaponOffset(0.0, 32.0);
 		}
+		TNT1 A 0 A_BIO_Op_Postfire;
 		TNT1 A 0 A_BIO_AutoReload(single: true);
 		TNT1 A 0 A_ReFire;
 		TNT1 A 0 A_JumpIf(
@@ -134,37 +155,19 @@ class BIO_PumpShotgun : BIO_Weapon
 		PASG A 2;
 		Goto Fire;
 	}
-
-	override void SetDefaults()
-	{
-		Pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
-				.Bullet('BIO_ShotPellet', 7)
-				.RandomDamage(10, 15)
-				.Spread(3.0, 3.0)
-				.FireSound("bio/weap/pumpshotgun/fire")
-				.Build()
-		);
-
-		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
-	}
 }
 
-class BIO_Mag_PumpShotgun : BIO_Magazine {}
-
-class BIO_MagETM_PumpShotgun : BIO_MagazineETM
+class BIO_OpMode_PumpShotgun_SmallMag : BIO_OpMode_SmallMag
 {
-	Default
+	final override class<BIO_Weapon> WeaponType() const { return 'BIO_PumpShotgun'; }
+
+	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		BIO_MagazineETM.PowerupType 'BIO_ETM_PumpShotgun';
+		FireTimeGroups.Push(weap.StateTimeGroupFrom('Fire.Common'));
 	}
-}
 
-class BIO_ETM_PumpShotgun : BIO_EnergyToMatterPowerup
-{
-	Default
+	final override statelabel FireState() const
 	{
-		Powerup.Duration -1;
+		return 'Fire.Common';
 	}
 }

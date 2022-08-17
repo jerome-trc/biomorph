@@ -1,65 +1,332 @@
-
-class BIO_Magazine : Ammo
+// Dictate which magazine types get instantiated for a given weapon.
+enum BIO_MagazineFlags : uint8
 {
-	Default
-	{
-		+INVENTORY.UNDROPPABLE
-		+INVENTORY.UNTOSSABLE
-		+INVENTORY.IGNORESKILL
+	BIO_MAGF_NONE = 0,
+	BIO_MAGF_NORMAL_1 = 1 << 0,
+	BIO_MAGF_NORMAL_2 = 1 << 1,
+	BIO_MAGF_RECHARGING_1 = 1 << 2,
+	BIO_MAGF_RECHARGING_2 = 1 << 3,
+	BIO_MAGF_ETMF_1 = 1 << 4,
+	BIO_MAGF_ETMF_2 = 1 << 5,
 
-		Inventory.MaxAmount uint16.MAX;
-		Inventory.PickupMessage
-			"If you see this message, please report a bug to RatCircus.";
+	BIO_MAGF_BALLISTIC_1 = BIO_MAGF_NORMAL_1 | BIO_MAGF_ETMF_1,
+	BIO_MAGF_BALLISTIC_2 = BIO_MAGF_NORMAL_2 | BIO_MAGF_ETMF_2,
+	BIO_MAGF_PLASMA_1 = BIO_MAGF_RECHARGING_1 | BIO_MAGF_ETMF_1,
+	BIO_MAGF_PLASMA_2 = BIO_MAGF_RECHARGING_2 | BIO_MAGF_ETMF_2,
+
+	BIO_MAGF_BALLISTIC = BIO_MAGF_BALLISTIC_1 | BIO_MAGF_BALLISTIC_2,
+	BIO_MAGF_PLASMA = BIO_MAGF_PLASMA_1 | BIO_MAGF_PLASMA_2,
+
+	BIO_MAGF_ALL = uint8.MAX
+}
+
+class BIO_Magazine play abstract
+{
+	protected class<BIO_Weapon> WeaponType;
+	protected bool Secondary;
+
+	class<BIO_Weapon> GetWeaponType() const { return WeaponType; }
+	bool IsSecondary() const { return Secondary; }
+
+	virtual void Tick(BIO_Player owner) {}
+
+	abstract int GetAmount() const;
+	abstract uint MaxAmount(uint magazineSize) const;
+
+	abstract bool Sufficient(readOnly<BIO_Weapon> weap, int amount) const;
+	abstract bool CanReload(readOnly<BIO_Weapon> weap) const;
+	abstract bool IsFull(uint magSize) const;
+	abstract bool IsEmpty() const;
+
+	abstract void SetAmount(int amount);
+	abstract void Add(int amount);
+	abstract void Deplete(BIO_Weapon weap, int amount);
+	abstract void Drain(int amount);
+}
+
+class BIO_NormalMagazine : BIO_Magazine
+{
+	private int Amount;
+
+	final override int GetAmount() const { return Amount; }
+	final override uint MaxAmount(uint magazineSize) const { return magazineSize; } 
+
+	final override bool Sufficient(readOnly<BIO_Weapon> _, int amount) const
+	{
+		return self.Amount >= amount;
 	}
 
-	// This class can't be abstract because it would cause a VM abort if the
-	// player invoked the `give all` CCMD
-	// Why doesn't this command check for abstract classes?
-	// I assume there's an underlying technical reason
-	// To work around this, just pretend the base class doesn't exist
-
-	final override void BeginPlay()
+	final override bool CanReload(readOnly<BIO_Weapon> weap) const
 	{
-		super.BeginPlay();
+		Ammo reserve = null;
+		int cost = -1, magSize = -1, minReserve = -1;
 
-		if (GetClass() == 'BIO_Magazine')
-			Destroy();
-	}
+		if (!Secondary)
+		{
+			if (weap.Ammo1 == null)
+				return true;
 
-	final override void AttachToOwner(Actor other)
-	{
-		if (GetClass() == 'BIO_Magazine')
-			return;
+			magSize = weap.MagazineSize1;
+			reserve = weap.Ammo1;
+			cost = weap.ReloadCost1;
+			minReserve = weap.MinAmmoReserve1;
+		}
 		else
-			super.AttachToOwner(other);
+		{
+			if (weap.Ammo2 == null)
+				return true;
+
+			magSize = weap.MagazineSize2;
+			reserve = weap.Ammo2;
+			cost = weap.ReloadCost2;
+			minReserve = weap.MinAmmoReserve2;
+		}
+
+		int minAmt = minReserve * cost;
+
+		if (reserve.Amount < minAmt)
+			return false;
+
+		// Is this magazine already full?
+		return Amount < magSize;
 	}
 
-	final override bool CanPickup(Actor _)
+	final override bool IsFull(uint magSize) const
 	{
-		return GetClass() != 'BIO_Magazine';
+		return Amount >= magSize;
+	}
+
+	final override bool IsEmpty() const
+	{
+		return Amount <= 0;
+	}
+
+	final override void SetAmount(int amount)
+	{
+		self.Amount = amount;
+	}
+
+	final override void Add(int amount)
+	{
+		self.Amount += amount;
+	}
+
+	final override void Deplete(BIO_Weapon _, int amount)
+	{
+		self.Amount = Max(self.Amount - amount, 0);
+	}
+
+	final override void Drain(int amount)
+	{
+		Deplete(null, amount);
+	}
+
+	static BIO_NormalMagazine Create(
+		class<BIO_Weapon> weap_t,
+		bool secondary
+	)
+	{
+		let ret = new('BIO_NormalMagazine');
+		ret.WeaponType = weap_t;
+		ret.Secondary = secondary;
+
+		let defs = GetDefaultByType(weap_t);
+		ret.Amount = !ret.Secondary ? defs.MagazineSize1 : defs.MagazineSize2;
+
+		return ret;
 	}
 }
 
-class BIO_MagazineETM : BIO_Magazine
+// User can't conventionally reload. Instead, as long as:
+// - the user has selected a weapon with a pointer to this magazine,
+// - the magazine isn't full, and
+// - the user has reserves left,
+// ammunition passively flows in, according to the weapon's reload ratio.
+class BIO_RechargingMagazine : BIO_Magazine
 {
-	meta class<BIO_EnergyToMatterPowerup> PowerupType;
-	property PowerupType: PowerupType;
+	private int Amount;
 
-	Default
+	final override int GetAmount() const { return Amount; }
+	final override uint MaxAmount(uint magazineSize) const { return magazineSize; } 
+
+	final override void Tick(BIO_Player owner)
 	{
-		Inventory.MaxAmount 0;
+		if (Level.MapTime % 7 != 0)
+			return;
+
+		let weap = BIO_Weapon(owner.Player.ReadyWeapon);
+
+		if (weap == null)
+			return;
+
+		if (weap.Magazine1 == self)
+		{
+			if (IsFull(weap.MagazineSize1))
+				return;
+
+			let reserve = owner.FindInventory(weap.AmmoType1);
+
+			if (reserve == null)
+				return;
+
+			int toLoad = weap.ReloadOutput1, toDraw = -1;
+			toDraw = Min(toLoad * weap.ReloadCost1, reserve.Amount);
+			toLoad = Min(toLoad, toDraw) * weap.ReloadOutput1;
+
+			reserve.Amount -= toDraw;
+			Amount += toLoad;
+		}
+		else if (weap.Magazine2 == self)
+		{
+			if (IsFull(weap.MagazineSize2))
+				return;
+
+			let reserve = owner.FindInventory(weap.AmmoType2);
+
+			if (reserve == null)
+				return;
+
+			int toLoad = weap.ReloadOutput2, toDraw = -1;
+			toDraw = Min(toLoad * weap.ReloadCost2, reserve.Amount);
+			toLoad = Min(toLoad, toDraw) * weap.ReloadOutput2;
+
+			reserve.Amount -= toDraw;
+			Amount += toLoad;
+		}
+	}
+
+	final override bool CanReload(readOnly<BIO_Weapon> _) const
+	{
+		return false;
+	}
+
+	final override bool Sufficient(readOnly<BIO_Weapon> _, int amount) const
+	{
+		return self.Amount >= amount;
+	}
+
+	final override bool IsFull(uint magSize) const
+	{
+		return Amount >= magSize;
+	}
+
+	final override bool IsEmpty() const
+	{
+		return Amount <= 0;
+	}
+
+	final override void SetAmount(int amount)
+	{
+		self.Amount = amount;
+	}
+
+	final override void Add(int amount)
+	{
+		self.Amount += amount;
+	}
+
+	final override void Deplete(BIO_Weapon _, int amount)
+	{
+		self.Amount = Max(self.Amount - amount, 0);
+	}
+
+	final override void Drain(int amount)
+	{
+		Deplete(null, amount);
+	}
+
+	static BIO_RechargingMagazine Create(
+		class<BIO_Weapon> weap_t,
+		bool secondary
+	)
+	{
+		let ret = new('BIO_RechargingMagazine');
+		ret.WeaponType = weap_t;
+		ret.Secondary = secondary;
+
+		let defs = GetDefaultByType(weap_t);
+		ret.Amount = !ret.Secondary ? defs.MagazineSize1 : defs.MagazineSize2;
+
+		return ret;
 	}
 }
 
-class BIO_EnergyToMatterPowerup : Powerup abstract
+// When the user submits fire input, they expend a certain quantity of Cell ammo
+// to gain a certain duration of infinite-ammo firing time, if this status
+// isn't already present. Inspired by DUMP3's Powered Machineguns.
+class BIO_ETMFMagazine : BIO_Magazine
 {
-	meta int CellCost;
-	property CellCost: CellCost;
+	private uint Clock;
 
-	Default
+	final override int GetAmount() const
 	{
-		+INVENTORY.UNTOSSABLE
-		Powerup.Duration -3;
-		BIO_EnergyToMatterPowerup.CellCost 5;
+		return Clock / TICRATE;
+	}
+
+	final override uint MaxAmount(uint magazineSize) const
+	{
+		return magazineSize / TICRATE; 
+	}
+
+	final override void Tick(BIO_Player _)
+	{
+		if (Clock > 0)
+			Clock--;
+	}
+
+	final override bool CanReload(readOnly<BIO_Weapon> _) const
+	{
+		return false;
+	}
+
+	final override bool Sufficient(readOnly<BIO_Weapon> weap, int _) const
+	{
+		if (Clock > 0)
+			return true;
+
+		return
+			weap.Owner.CountInv('Cell') >= (!Secondary ? weap.AmmoUse1 : weap.AmmoUse2);
+	}
+
+	final override bool IsFull(uint _) const
+	{
+		return Clock > 0;
+	}
+
+	final override bool IsEmpty() const
+	{
+		return Clock <= 0;
+	}
+
+	final override void SetAmount(int _) {}
+	final override void Add(int _) {}
+
+	final override void Deplete(BIO_Weapon weap, int _)
+	{
+		if (!IsEmpty())
+			return;
+
+		weap.Owner.A_TakeInventory(
+			'Cell',
+			!Secondary ? weap.AmmoUse1 : weap.AmmoUse2,
+			TIF_NOTAKEINFINITE
+		);
+
+		Clock = !Secondary ? weap.MagazineSize1 : weap.MagazineSize2;
+
+		weap.Owner.A_StartSound("bio/weap/etmf", CHAN_AUTO);
+	}
+
+	final override void Drain(int _) {}
+
+	static BIO_ETMFMagazine Create(
+		class<BIO_Weapon> weap_t,
+		bool secondary
+	)
+	{
+		let ret = new('BIO_ETMFMagazine');
+		ret.WeaponType = weap_t;
+		ret.Secondary = secondary;
+		return ret;
 	}
 }

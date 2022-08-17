@@ -242,46 +242,49 @@ extend class BIO_DualWieldWeapon
 		- Magazine isn't full
 		- Reserve ammo isn't empty
 	*/
-	private action bool A_CheckReadyForReload_R(bool left = false)
+	private action bool A_CheckReadyForReload_R()
 	{
-		if (!left)
-		{
-			return invoker.s_reloadRight && A_CheckReady_R() &&
-				invoker.Magazine1 != invoker.Ammo1 &&
-				(invoker.Magazine1.Amount < invoker.Magazine1.MaxAmount) &&
-				(invoker.Ammo1.Amount >= invoker.AmmoUse1);
-		}
-		else
-		{
-			return invoker.s_reloadLeft && A_CheckReady_L() &&
-				invoker.Magazine2 != invoker.Ammo2 &&
-				(invoker.Magazine2.Amount < invoker.Magazine2.MaxAmount) &&
-				(invoker.Ammo2.Amount >= invoker.AmmoUse2);
-		}
+		if (invoker.s_reloadRight == null)
+			return false;
+		
+		if (!A_CheckReady_R())
+			return false;
+
+		if (invoker.Magazine1 == null)
+			return false;
+
+		if (!invoker.Magazine1.CanReload(invoker.AsConst()))
+			return false;
+
+		return true;
 	}
 
-	// Left-weapon alias for `A_CheckReadyForReload_R()`.
 	private action bool A_CheckReadyForReload_L()
 	{
-		return A_CheckReadyForReload_R(true);
+		if (invoker.s_reloadLeft == null)
+			return false;
+		
+		if (!A_CheckReady_L())
+			return false;
+
+		if (invoker.Magazine2 == null)
+			return false;
+
+		if (!invoker.Magazine2.CanReload(invoker.AsConst()))
+			return false;
+
+		return true;
 	}
 
 	// Returns true if the weapon has enough ammo to fire.
-	protected action bool A_CheckAmmo_R(bool left = false)
+	protected action bool A_CheckAmmo_R()
 	{
-		let ammo2check = left ? invoker.Magazine2 : invoker.Magazine1;
-		// Return true if the weapon doesn't define ammo (= doesn't need it)
-		if (!ammo2check) return true;
-		// Otherwise get the required amount
-		int reqAmt = left ? invoker.AmmoUse2 : invoker.AmmoUse1;
-		// Return true if infinite ammo is active or we have enough
-		return invoker.CheckInfiniteAmmo() || ammo2check.Amount >= reqAmt;
+		return invoker.SufficientAmmo(false);
 	}
 
-	// Left-weapon alias for `A_CheckAmmo_R()`.
 	protected action bool A_CheckAmmo_L()
 	{
-		return A_CheckAmmo_R(true);
+		return invoker.SufficientAmmo(true);
 	}
 
 	/*  The actual raising is done via the regular `A_Raise()` in the regular `Select`
@@ -423,10 +426,10 @@ extend class BIO_DualWieldWeapon
 	{
 		// Double-check player and psp:
 		if (!Player) return;
-		
+
 		let psp = Player.FindPSprite(OverlayID());
 		if (!psp) return;
-		
+
 		let s_fire = left ? invoker.s_FireLeft : invoker.s_FireRight; // Pointer to Fire
 		let s_hold = left ? invoker.s_HoldLeft : invoker.s_Holdright; // Pointer to Hold
 		int atkbutton = left ? BT_ALTATTACK : BT_ATTACK; // Check attack button is being held
@@ -436,11 +439,10 @@ extend class BIO_DualWieldWeapon
 			InStateSequence(psp.CurState, s_hold)))
 		{
 			// Check if we have enough ammo and the attack button is being held:
-			if (A_CheckAmmo_R(left) &&
-				Player.Cmd.Buttons & atkButton &&
-				player.OldButtons & atkButton)
+			if ((left && A_CheckAmmo_L() || !left && A_CheckAmmo_R()) &&
+				Player.Cmd.Buttons & atkButton && Player.OldButtons & atkButton)
 			{
-				//if so, jump to Hold (if it exists) or to Fire
+				// If so, jump to Hold (if it exists) or to Fire
 				targetState = s_hold ? s_hold : s_fire;
 			}
 		}
@@ -448,16 +450,16 @@ extend class BIO_DualWieldWeapon
 		// If target state was set, increase `Player.Refire` and set the state:
 		if (targetState) 
 		{
-			player.Refire++;
-			player.SetPSprite(OverlayID(),targetState);
+			Player.Refire++;
+			Player.SetPSprite(OverlayID(), targetState);
 		}
 
 		// If we're not refiring...
 		else
 		{
-			// If the OTHER weapon is in its Ready sequence, reset player.Refire:
+			// If the OTHER weapon is in its Ready sequence, reset `Player::Refire`:
 			if (A_CheckReady_R(left))
-				player.Refire = 0;
+				Player.Refire = 0;
 		}
 	}
 
@@ -471,7 +473,14 @@ extend class BIO_DualWieldWeapon
  	// and reserve ammo isn't empty.
 	protected action void A_Reload_R(bool left = false)
 	{
-		if (!A_CheckReadyForReload_R(left)) return;
+		if (left)
+		{
+			if (!A_CheckReadyForReload_L()) return;
+		}
+		else
+		{
+			if (!A_CheckReadyForReload_R()) return;
+		}
 
 		// If `bAkimboReload` isn't set,
 		// set the other gun into the `ReloadWait` state sequence:
@@ -479,10 +488,10 @@ extend class BIO_DualWieldWeapon
 		{
 			int otherGun = left ? PSP_RIGHTWEAP : PSP_LEFTWEAP;
 			state waitState = left ? invoker.s_ReloadWaitRight : invoker.s_ReloadWaitLeft;
-			
+
 			if (waitState)
 			{
-				player.SetPSprite(otherGun,waitState);
+				Player.SetPSprite(otherGun,waitState);
 				invoker.continueReload = true;
 			}
 		}
@@ -490,7 +499,7 @@ extend class BIO_DualWieldWeapon
 		// Set the current layer to the `Reload` state sequence:
 		let targetState = left ? invoker.s_ReloadLeft : invoker.s_ReloadRight;
 		int gunLayer = left ? PSP_LEFTWEAP : PSP_RIGHTWEAP;
-		player.SetPSprite(gunLayer, targetState);
+		Player.SetPSprite(gunLayer, targetState);
 	}
 
 	protected action void A_Reload_L()

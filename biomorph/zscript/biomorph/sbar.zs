@@ -219,80 +219,75 @@ class BIO_StatusBar : BaseStatusBar
 	private void DrawAmmoDetails(in out int invY) const
 	{
 		BIO_Weapon weap = BIO_Weapon(CPlayer.ReadyWeapon);
-		if (weap == null) return;
 
-		Ammo mag1 = null, mag2 = null;
-		[mag1, mag2] = weap.GetMagazines();
-		Inventory ammoItem1, ammoItem2;
-		[ammoItem1, ammoItem2] = GetCurrentAmmo();
-
-		if (mag1 != null && mag1 != ammoItem1)
+		if (weap == null)
+			return;
+		
+		if (weap.Magazine1 != null)
 		{
-			if (!(mag1 is 'BIO_MagazineETM'))
-				DrawAmmoItemInfo(mag1, weap.MagazineSize1, invY);
-			else
-				DrawETMMagazineInfo(BIO_MagazineETM(mag1),
-					weap.MagazineSize1 / GameTicRate, invY
-				);
+			// TODO: Each magazine should get its icon
+			// from a small crop of the weapon's own icon
+			DrawString(
+				Font_HUD,
+				String.Format(
+					"%s / %s",
+					FormatNumber(weap.Magazine1.GetAmount(), 3, 6),
+					FormatNumber(weap.Magazine1.MaxAmount(
+						weap.MagazineSize1
+					), 3, 6)
+				),
+				(-36, invY + 4), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD
+			);
 
 			invY -= 20;
 		}
 
-		if (mag2 != null && mag2 != ammoItem2)
+		if (weap.Magazine2 != null)
 		{
-			if (!(mag2 is 'BIO_MagazineETM'))
-				DrawAmmoItemInfo(mag2, weap.MagazineSize2, invY);
-			else
-				DrawETMMagazineInfo(BIO_MagazineETM(mag2),
-					weap.MagazineSize2 / GameTicRate, invY
-				);
+			DrawString(
+				Font_HUD,
+				String.Format(
+					"%s / %s",
+					FormatNumber(weap.Magazine2.GetAmount(), 3, 6),
+					FormatNumber(weap.Magazine2.MaxAmount(
+						weap.MagazineSize2
+					), 3, 6)
+				),
+				(-36, invY + 4), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD
+			);
 
 			invY -= 20;
 		}
 
-		if (ammoItem1 != null)
+		if (weap.Ammo1 != null)
 		{
-			DrawAmmoItemInfo(ammoItem1, ammoItem1.MaxAmount, invY);
+			DrawInventoryIcon(weap.Ammo1, (-16, invY + 16));
+
+			DrawString(Font_HUD,
+				String.Format("%s / %s",
+					FormatNumber(weap.Ammo1.Amount, 3, 6),
+					FormatNumber(weap.Ammo1.MaxAmount, 3, 6)
+				),
+				(-36, invY + 4), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD
+			);
+
 			invY -= 20;
 		}
 
-		if (ammoItem2 != null && (ammoItem1 != ammoItem2))
+		if (weap.Ammo2 != null && weap.Ammo2 != weap.Ammo1)
 		{
-			DrawAmmoItemInfo(ammoItem2, ammoItem2.MaxAmount, invY);
+			DrawInventoryIcon(weap.Ammo2, (-16, invY + 16));
+
+			DrawString(Font_HUD,
+				String.Format("%s / %s",
+					FormatNumber(weap.Ammo2.Amount, 3, 6),
+					FormatNumber(weap.Ammo2.MaxAmount, 3, 6)
+				),
+				(-36, invY + 4), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD
+			);
+
 			invY -= 20;
 		}
-	}
-
-	private void DrawAmmoItemInfo(Inventory mag, int maxAmount, int invY) const
-	{
-		DrawInventoryIcon(mag, (-16, invY + 16));
-
-		DrawString(Font_HUD,
-			String.Format("%s / %s",
-				FormatNumber(mag.Amount, 3, 6),
-				FormatNumber(maxAmount, 3, 6)
-			),
-			(-36, invY + 4), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD
-		);
-	}
-
-	private void DrawETMMagazineInfo(BIO_MagazineETM mag, int maxAmount, int invY) const
-	{
-		DrawInventoryIcon(mag, (-16, invY + 16));
-
-		let powup = BIO_EnergyToMatterPowerup(
-			BIOPlayer.FindInventory(mag.PowerupType)
-		);
-
-		DrawString(Font_HUD,
-			String.Format("%s / %s",
-				powup != null ?
-					FormatNumber(powup.EffectTics / GameTicRate, 3, 6) :
-					FormatNumber(0, 3, 6),
-				FormatNumber(maxAmount, 3, 6)
-			),
-			(-36, invY + 4), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD
-		);
 	}
 
 	// Draw powerup icons at top left, along with the 

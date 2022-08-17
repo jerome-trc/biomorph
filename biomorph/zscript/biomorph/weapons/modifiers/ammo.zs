@@ -11,25 +11,26 @@ class BIO_WMod_ETMF : BIO_WeaponModifier
 	private static bool PrimaryCompatible(readOnly<BIO_Weapon> weap)
 	{
 		return
-			weap.MagazineTypeETM1 != null &&
-			weap.MagazineType1 != weap.MagazineTypeETM1;
+			weap.MagazineFlags & BIO_MAGF_ETMF_1 &&
+			weap.MagazineType1 != 'BIO_ETMFMagazine';
 	}
 
 	private static bool SecondaryCompatible(readOnly<BIO_Weapon> weap)
 	{
 		return
-			weap.MagazineTypeETM2 != null &&
-			weap.MagazineType2 != weap.MagazineTypeETM2;
+			weap.MagazineFlags & BIO_MAGF_ETMF_2 &&
+			weap.MagazineType2 != 'BIO_ETMFMagazine';
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
 		uint count = context.NodeCount;
 
-		Ammo mag1 = null, mag2 = null;
-		[mag1, mag2] = weap.GetMagazines();
-		bool a1 = mag1 is weap.MagazineTypeETM1, a2 = mag2 is weap.MagazineTypeETM2;
+		bool
+			a1 = weap.Magazine1 is 'BIO_ETMFMagazine',
+			a2 = weap.Magazine2 is 'BIO_ETMFMagazine';
 
+		// Check if this modifier has already been applied earlier in the graph
 		if (!a1 && !a2)
 		{
 			bool
@@ -38,36 +39,39 @@ class BIO_WMod_ETMF : BIO_WeaponModifier
 
 			if (compatP)
 			{
-				let magDefs = GetDefaultByType(weap.MagazineTypeETM1);
-				let powupDefs = GetDefaultByType(magDefs.PowerupType);
 				weap.AmmoType1 = 'Cell';
-				weap.AmmoUse1 = powupDefs.CellCost;
-				weap.MagazineSize1 = powupDefs.EffectTics;
+				weap.MagazineType1 = 'BIO_ETMFMagazine';
+
+				if (weap.ETMFDuration1 < 0)
+					weap.MagazineSize1 = -(weap.ETMFDuration1 * TICRATE);
+				else
+					weap.MagazineSize1 = weap.ETMFDuration1;
+
+				weap.AmmoUse1 = weap.ETMFCellCost1;
 			}
 
 			if (compatS)
 			{
-				let magDefs = GetDefaultByType(weap.MagazineTypeETM2);
-				let powupDefs = GetDefaultByType(magDefs.PowerupType);
 				weap.AmmoType2 = 'Cell';
-				weap.AmmoUse2 = powupDefs.CellCost;
-				weap.MagazineSize2 = powupDefs.EffectTics;
+				weap.MagazineType2 = 'BIO_ETMFMagazine';
+
+				if (weap.ETMFDuration1 < 0)
+					weap.MagazineSize2 = -(weap.ETMFDuration2 * TICRATE);
+				else
+					weap.MagazineSize2 = weap.ETMFDuration2;
+
+				weap.AmmoUse2 = weap.ETMFCellCost2;
 			}
-
-			weap.SetupAmmo();
-
-			weap.SetupMagazines(
-				compatP ? weap.MagazineTypeETM1 : null,
-				compatS ? weap.MagazineTypeETM2 : null
-			);
 
 			if (--count <= 0)
 				return "";
 		}
 
-		[mag1, mag2] = weap.GetMagazines();
-		a1 = mag1 is weap.MagazineTypeETM1;
-		a2 = mag2 is weap.MagazineTypeETM2;
+		weap.SetupAmmo();
+		weap.SetupMagazines();
+
+		a1 = weap.Magazine1 is 'BIO_ETMFMagazine';
+		a2 = weap.Magazine2 is 'BIO_ETMFMagazine';
 
 		for (uint i = 0; i < count; i++)
 		{
@@ -348,9 +352,9 @@ class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		weap.ClearMagazines();
 		weap.AmmoType1 = weap.AmmoType2 = null;
 		weap.AmmoUse1 = weap.AmmoUse2 = 0;
+		weap.MagazineType1 = weap.MagazineType2 = null;
 		return "";
 	}
 
@@ -383,29 +387,24 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 	private static bool PrimaryCompatible(readOnly<BIO_Weapon> weap)
 	{
 		return
-			weap.AmmoType1 != null &&
-			weap.MagazineType1 != null &&
-			weap.MagazineType1 != weap.AmmoType1 &&
-			weap.MagazineSize1 > 0 &&
-			weap.ReloadCost1 > 0;
+			weap.AmmoType1 != null && weap.Magazine1 != null &&
+			weap.MagazineSize1 > 0 && weap.ReloadCost1 > 0;
 	}
 
 	private static bool SecondaryCompatible(readOnly<BIO_Weapon> weap)
 	{
 		return
-			weap.AmmoType2 != null &&
-			weap.MagazineType2 != null &&
-			weap.MagazineType2 != weap.AmmoType2 &&
-			weap.MagazineSize2 > 0 &&
-			weap.ReloadCost2 > 0;	
+			weap.AmmoType2 != null && weap.Magazine2 != null &&
+			weap.MagazineSize2 > 0 && weap.ReloadCost2 > 0;	
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		weap.SetupMagazines(
-			PrimaryCompatible(weap.AsConst()) ? weap.AmmoType1 : null,
-			SecondaryCompatible(weap.AsConst()) ? weap.AmmoType2 : null
-		);
+		if (PrimaryCompatible(weap.AsConst()))
+			weap.MagazineType1 = null;
+		if (SecondaryCompatible(weap.AsConst()))
+			weap.MagazineType2 = null;
+
 		return "";
 	}
 

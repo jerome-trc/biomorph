@@ -1,15 +1,3 @@
-
-// Used to provide semantic meaning to an STG. If a constant isn't here,
-// you don't need to worry that it may need to be applied.
-enum BIO_StateTimeGroupDesignation : uint8
-{
-	BIO_STGD_NONE,
-	BIO_STGD_COOLDOWN,
-	BIO_STGD_SPOOLUP,
-	BIO_STGD_FIRESPOOLED,
-	BIO_STGD_SPOOLDOWN
-}
-
 enum BIO_StateTimeGroupFlags : uint8
 {
 	BIO_STGF_NONE = 0,
@@ -22,7 +10,6 @@ enum BIO_StateTimeGroupFlags : uint8
 
 class BIO_StateTimeGroup
 {
-	BIO_StateTimeGroupDesignation Designation;
 	BIO_StateTimeGroupFlags Flags;
 	string Tag;
 	Array<uint8> Times, Minimums;
@@ -57,11 +44,6 @@ class BIO_StateTimeGroup
 			ret += Minimums[i];
 
 		return ret;
-	}
-
-	bool IsAuxiliary() const
-	{
-		return Designation > BIO_STGD_NONE;
 	}
 
 	bool IsHidden() const
@@ -187,15 +169,22 @@ class BIO_StateTimeGroup
 	static BIO_StateTimeGroup FromState(
 		state basis,
 		string tag = "",
-		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
 		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
 	)
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
-		ret.Designation = designation;
 		ret.Flags = flags;
 		ret.Populate(basis);
+
+		if (ret.Times.Size() < 1)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"A state time group was populated with no states."
+			);
+		}
+
 		return ret;
 	}
 
@@ -204,32 +193,45 @@ class BIO_StateTimeGroup
 		state start,
 		state end,
 		string tag = "",
-		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
 		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
 	)
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
-		ret.Designation = designation;
 		ret.Flags = flags;
 		ret.RangePopulate(start, end);
+		
+		if (ret.Times.Size() < 1)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"A state time group was populated with no states."
+			);
+		}
+		
 		return ret;
 	}
 
 	static BIO_StateTimeGroup FromStates(
 		Array<state> stateptrs,
 		string tag = "",
-		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
 		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
 	)
 	{
 		let ret = new('BIO_StateTimeGroup');
 		ret.Tag = Tag;
-		ret.Designation = designation;
 		ret.Flags = flags;
 
 		for (uint i = 0; i < stateptrs.Size(); i++)
 			ret.Populate(stateptrs[i]);
+
+		if (ret.Times.Size() < 1)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"A state time group was populated with no states."
+			);
+		}
 
 		return ret;
 	}

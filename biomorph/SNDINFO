@@ -102,10 +102,10 @@ $random bio/weap/dryfire/ballistic
 	bio/weap/dryfire/ballistic/2
 }
 
+bio/weap/etmf NRG2MATR
+bio/weap/mechreload MECHRELO
 bio/weap/spoolup SPOOLUP
 bio/weap/spooldown SPOOLDN
-
-bio/weap/etmf NRG2MATR
 
 // Unarmed
 

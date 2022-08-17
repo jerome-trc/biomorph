@@ -457,7 +457,9 @@ class BIO_WeaponModSimulator : Thinker
 	void Simulate()
 	{
 		Weap.Reset();
+		Weap.OpMode = BIO_WeaponOperatingMode.Create(Weap.OperatingMode, Weap);
 		Weap.SetDefaults();
+		Weap.OpMode.SideEffects(Weap);
 		Weap.SetupAmmo();
 		Weap.SetupMagazines();
 
@@ -565,7 +567,11 @@ class BIO_WeaponModSimulator : Thinker
 				continue;
 
 			if (!node.Basis.IsMuted())
+			{
 				node.Message = node.Apply(Weap, self, context);
+				Weap.SetupAmmo();
+				Weap.SetupMagazines();
+			}
 		}
 
 		// Fourth pass applies actives

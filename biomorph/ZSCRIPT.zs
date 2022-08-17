@@ -17,6 +17,25 @@ class Biomorph abstract
 	const LOGPFX_WARN = "\c[Cyan]Biomorph: \c[Yellow](WARNING)\c- ";
 	const LOGPFX_ERR = "\c[Cyan]Biomorph: \c[Red](ERROR)\c- ";
 	const LOGPFX_DEBUG = "\c[Cyan]Biomorph: \c[LightBlue](DEBUG)\c- ";
+
+	static void Unreachable(string msg = "")
+	{
+		if (msg.Length() > 0)
+		{
+			ThrowAbortException(
+				Biomorph.LOGPFX_ERR ..
+				"Hit unreachable code: %s",
+				msg
+			);
+		}
+		else
+		{
+			ThrowAbortException(
+				Biomorph.LOGPFX_ERR ..
+				"Hit unreachable code."
+			);
+		}
+	}
 }
 
 #include "zscript/biomorph/ammo.zs"
@@ -72,6 +91,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/firefunc.zs"
 #include "zscript/biomorph/weapons/magazine.zs"
 #include "zscript/biomorph/weapons/modgraph.zs"
+#include "zscript/biomorph/weapons/opmode.zs"
 #include "zscript/biomorph/weapons/pipeline.zs"
 #include "zscript/biomorph/weapons/pipeline_builder.zs"
 #include "zscript/biomorph/weapons/recoil.zs"

@@ -422,7 +422,7 @@
 	BIO_MODSUP_INCOMPAT_NONODEWEST = "No node to the west.";
 	BIO_MODSUP_INCOMPAT_NOMODWEST = "No modifier in the western node.";
 
-	// (If a grouping has no description, then assume the summary doubles as one)
+	// (If a grouping has no description, assume the summary doubles as one)
 
 	// Modifier
 
@@ -569,12 +569,10 @@
 	BIO_MGENE_SPOOLING_TAG = "\c[MGene]Rotary Turbocharge\c[White] Gene\c-";
 	BIO_MGENE_SPOOLING_PKUP = "Collected a %s.";
 	BIO_WMOD_SPOOLING_SUMM =
+		"\c[White]Converts this weapon to use the "
+		"\c[Yellow]Spooling\c[White] operating mode\n"
 		"\c[Brick]Weapon has to be spooled before firing\n"
 		"\c[Green]Dramatic increase in fire rate";
-	BIO_WMOD_SPOOLING_DESC =
-		"\c[Brick]Weapon has to be spooled before firing";
-	BIO_WMOD_SPOOLING_NOBENEFIT =
-		"\c[Gold]Note: no fire rate benefit can be gained from this weapon!";
 
 	BIO_MGENE_SPREAD_TAG = "\c[MGene]Accurised\c[White] Gene\c-";
 	BIO_MGENE_SPREAD_PKUP = "Collected an %s.";
@@ -833,9 +831,11 @@
 // Miscellaneous ///////////////////////////////////////////////////////////////
 
 	BIO_ALLFOUR = "all four";
+	BIO_BURST = "burst";
 	BIO_CHARGE = "charge";
 	BIO_COOLDOWN = "cooldown";
 	BIO_FIRE = "fire";
+	BIO_FULLAUTO = "full-auto";
 	BIO_SWING = "swing";
 	BIO_RIGHT = "right";
 	BIO_LEFT = "left";

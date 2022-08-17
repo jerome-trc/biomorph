@@ -39,12 +39,17 @@ class BIO_Weapon : DoomWeapon abstract
 	meta BIO_WeaponFamily Family;
 	property Family: Family;
 
+	// Which vanilla weapon will this potentially replace?
+	// Can be left undefined.
 	meta BIO_WeaponSpawnCategory SpawnCategory;
 	property SpawnCategory: SpawnCategory;
 
+	// Dictates how many nodes a newly-spawned weapon will get
+	// when its mod graph is first generated.
 	meta uint GraphQuality;
 	property GraphQuality: GraphQuality;
 
+	// Shown to the user when they examine a weapon on the ground.
 	meta string Summary;
 	property Summary: Summary;
 
@@ -53,19 +58,21 @@ class BIO_Weapon : DoomWeapon abstract
 
 	meta sound GroundHitSound; property GroundHitSound: GroundHitSound;
 
-	// For dual-wield weapons, ammo and magazine types 2 are for the left weapon
+	// - For dual-wield weapons, `XYZ2` is for the left weapon.
+	// - A null ammo type and a non-null magazine type means reloads are free.
+	// - A null ammo type and a null magazine type means infinite ammo.
 
-	meta class<Ammo> MagazineType1, MagazineType2;
+	// By default, the player pawn generates no
+	// magazines for a weapon class whatsoever.
+	meta BIO_MagazineFlags MagazineFlags;
+	property MagazineFlags: MagazineFlags;
+
+	// Defines the type of magazine that the weapon will attempt to acquire.
+	class<BIO_Magazine> MagazineType1, MagazineType2;
 	property MagazineType: MagazineType1;
 	property MagazineType1: MagazineType1;
 	property MagazineType2: MagazineType2;
 	property MagazineTypes: MagazineType1, MagazineType2;
-
-	meta class<BIO_MagazineETM> MagazineTypeETM1, MagazineTypeETM2;
-	property MagazineTypeETM: MagazineTypeETM1;
-	property MagazineTypeETM1: MagazineTypeETM1;
-	property MagazineTypeETM2: MagazineTypeETM2;
-	property MagazineTypeETMs: MagazineTypeETM1, MagazineTypeETM2;
 
 	uint MagazineSize1, MagazineSize2;
 	property MagazineSize: MagazineSize1;
@@ -99,20 +106,33 @@ class BIO_Weapon : DoomWeapon abstract
 	property MinAmmoReserve2: MinAmmoReserve2;
 	property MinAmmoReserves: MinAmmoReserve1, MinAmmoReserve2;
 
+	// If this weapon changes to ETMF, `ETMFDuration` is used to fill
+	// `MagazineSize` (tics) and `ETMFCellCost` is used to fill `AmmoUse`.
+	// Positive duration is interpreted as time in tics; negative as time in seconds.
+	meta int ETMFDuration1, ETMFDuration2; meta uint ETMFCellCost1, ETMFCellCost2;
+	property EnergyToMatter: ETMFDuration1, ETMFCellCost1;
+	property EnergyToMatter1: ETMFDuration1, ETMFCellCost1;
+	property EnergyToMatter2: ETMFDuration2, ETMFCellCost2;
+	property EnergyToMatters: ETMFDuration1, ETMFCellCost1, ETMFDuration2, ETMFCellCost2;
+
 	protected uint DynFlags;
 	flagdef HitGround: DynFlags, 0;
 	flagdef PreviouslyPickedUp: DynFlags, 1;
-	flagdef Spooling: DynFlags, 2;
+	// i.e. scoped in. Making a universal flag out of this allows, for example,
+	// affixes which increase damage while zoomed in for sniper weapons, etc. 
+	flagdef Zoomed: DynFlags, 2;
 	// The last 4 flags (28 to 31) are reserved for derived classes.
 
+	meta class<BIO_WeaponOperatingMode> OperatingMode;
+	property OperatingMode: OperatingMode;
+
+	BIO_WeaponOperatingMode OpMode; // Should never be null.
+	Array<BIO_StateTimeGroup> ReloadTimeGroups;
 	Array<BIO_WeaponPipeline> Pipelines;
-	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
 	Array<BIO_WeaponAffix> Affixes;
 	BIO_WeaponModGraph ModGraph;
 	BIO_WeaponSpecialFunctor SpecialFunc; // Invoked via the `Zoom` input.
-
-	protected Ammo Magazine1, Magazine2;
-	protected bool Zoomed;
+	BIO_Magazine Magazine1, Magazine2;
 
 	Default
 	{
@@ -130,9 +150,9 @@ class BIO_Weapon : DoomWeapon abstract
 		Inventory.PickupMessage "";
 		Inventory.RestrictedTo 'BIO_Player';
 
+		Weapon.BobStyle 'InverseSmooth';
 		Weapon.BobRangeX 0.3;
 		Weapon.BobRangeY 0.5;
-		Weapon.BobStyle 'InverseSmooth';
 		Weapon.BobSpeed 2.0;
 
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/0";
@@ -201,8 +221,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Virtuals/abstracts //////////////////////////////////////////////////////
 
-	// Build pipelines, define state time groups.
-	// Called immediately after the weapon is spawned.
+	// Build pipelines and reload time groups.
+	// Called by `LazyInit()` after the operating mode has been instantiated.
 	abstract void SetDefaults();
 
 	/*	Intrinsic mod graphs can't be created in `SetDefaults()`, since that
@@ -446,9 +466,6 @@ extend class BIO_Weapon
 		if (CheckInfiniteAmmo())
 			return true;
 
-		if (TryEnergyToMatterFeed(altFire))
-			return true;
-
 		if (checkEnough && !CheckAmmo(altFire ? AltFire : PrimaryFire, false, false, ammoUse))
 			return false;
 
@@ -460,10 +477,17 @@ extend class BIO_Weapon
 				Affixes[i].BeforeAmmoDeplete(self, ammoUse, altFire);
 
 			if (Magazine1 != null)
-				Magazine1.Amount = Max(Magazine1.Amount - ammoUse, 0);
+				Magazine1.Deplete(self, ammoUse);
+			else if (Ammo1 != null)
+				Ammo1.Amount = Max(Ammo1.Amount - ammoUse, 0);
 
-			if (bPRIMARY_USES_BOTH && Magazine2 != null)
-				Magazine2.Amount = Max(Magazine2.Amount - AmmoUse2, 0);
+			if (bPRIMARY_USES_BOTH)
+			{
+				if (Magazine2 != null)
+					Magazine2.Deplete(self, AmmoUse2);
+				else if (Ammo2 != null)
+					Ammo2.Amount = Max(Ammo2.Amount - AmmoUse2, 0);
+			}
 		}
 		else
 		{
@@ -473,10 +497,17 @@ extend class BIO_Weapon
 				Affixes[i].BeforeAmmoDeplete(self, ammoUse, altFire);
 
 			if (Magazine2 != null)
-				Magazine2.Amount = Max(Magazine2.Amount - ammoUse, 0);
+				Magazine2.Deplete(self, ammoUse);
+			else if (Ammo2 != null)
+				Ammo2.Amount = Max(Ammo2.Amount - ammoUse, 0);
 
-			if (bALT_USES_BOTH && Magazine1 != null)
-				Magazine1.Amount = Max(Magazine1.Amount - AmmoUse1, 0);
+			if (bALT_USES_BOTH)
+			{
+				if (Magazine1 != null)
+					Magazine1.Deplete(self, AmmoUse1);
+				else if (Ammo1 != null)
+					Ammo1.Amount = Max(Ammo1.Amount - AmmoUse1, 0);
+			}
 		}
 
 		return true;
@@ -489,10 +520,9 @@ extend class BIO_Weapon
 	bool Uninitialised() const
 	{
 		return
+			OpMode == null &&
 			Pipelines.Size() < 1 &&
 			Affixes.Size() < 1 &&
-			FireTimeGroups.Size() < 1 &&
-			ReloadTimeGroups.Size() < 1 &&
 			ModGraph == null;
 	}
 
@@ -502,64 +532,13 @@ extend class BIO_Weapon
 		return ModGraph != null;
 	}
 
-	// Graph quality inherited over successive downgrades/sidegrades.
+	// Graph quality carried over successive downgrades/sidegrades.
 	uint InheritedGraphQuality() const
 	{
 		if (ModGraph == null)
 			return 0;
 
 		return (ModGraph.Nodes.Size() - 1) - Default.GraphQuality;
-	}
-
-	bool CanReload(bool secondary = false) const
-	{
-		Ammo magItem = null, reserveAmmo = null;
-		int cost = -1, magSize = -1, minReserve = -1;
-
-		if (!secondary)
-		{
-			magItem = Magazine1;
-			magSize = MagazineSize1;
-
-			if (AmmoType1 == null && MagazineType1 != null &&
-				magItem != null && magItem.Amount < magSize)
-				return true;
-
-			if (magItem is 'BIO_MagazineETM')
-				return false;
-
-			reserveAmmo = Ammo(Owner.FindInventory(AmmoType1));
-			cost = ReloadCost1;
-			minReserve = MinAmmoReserve1;
-		}
-		else
-		{
-			magItem = Magazine2;
-			magSize = MagazineSize2;
-
-			if (AmmoType2 == null && MagazineType2 != null &&
-				magItem != null && magItem.Amount < magSize)
-				return true;
-
-			if (magItem is 'BIO_MagazineETM')
-				return false;
-
-			reserveAmmo = Ammo(Owner.FindInventory(AmmoType2));
-			cost = ReloadCost2;
-			minReserve = MinAmmoReserve2;
-		}
-
-		int minAmt = minReserve * cost;
-
-		// Insufficient reserves
-		if (reserveAmmo == null || reserveAmmo.Amount < minAmt)
-			return false;
-
-		// Magazine's already full
-		if (magItem.Amount >= magSize)
-			return false;
-
-		return true;
 	}
 
 	bool HasAffixOfType(class<BIO_WeaponAffix> type) const
@@ -580,19 +559,8 @@ extend class BIO_Weapon
 		return null;
 	}
 
-	BIO_StateTimeGroup GetFireTimeGroupByDesignation(
-		BIO_StateTimeGroupDesignation designation) const
-	{
-		for (uint i = 0; i < FireTimeGroups.Size(); i++)
-			if (FireTimeGroups[i].Designation == designation)
-				return FireTimeGroups[i];
-
-		return null;
-	}
-
-	Ammo, Ammo GetMagazines() const { return Magazine1, Magazine2; }
-
-	// Returns a valid result even if the weapon feeds from reserves.
+	// Returns a valid result even if the weapon feeds from reserves,
+	// or if the weapon doesn't consume ammo to fire.
 	uint ShotsPerMagazine(bool secondary = false) const
 	{
 		float dividend = 0.0, divisor = 0.0;
@@ -600,54 +568,30 @@ extend class BIO_Weapon
 		if (!secondary)
 		{
 			if (AmmoUse1 == 0)
-				return 0;
+				return uint.MAX;
 
 			divisor = float(AmmoUse1);
 
-			if (Magazine1 != null)
-			{
-				if (Magazine1 is 'BIO_Magazine')
-					dividend = float(MagazineSize1);
-				else // Reserve
-					dividend = float(Magazine1.MaxAmount);
-			}
-			else if (MagazineType1 != null)
-			{
-				if (MagazineType1 is 'BIO_Magazine')
-					dividend = float(MagazineSize1);
-				else // Reserve
-					dividend = GetDefaultByType(MagazineType1).MaxAmount;
-			}
+			if (Magazine1 != null || MagazineType1 != null)
+				dividend = float(MagazineSize1);
 			else if (Ammo1 != null)
-			{
 				dividend = float(Ammo1.MaxAmount);
-			}
+			else if (AmmoType1 != null)
+				dividend = float(GetDefaultByType(AmmoType1).MaxAmount);
 		}
 		else
 		{
 			if (AmmoUse2 == 0)
-				return 0;
+				return uint.MAX;
 
 			divisor = float(AmmoUse2);
 
-			if (Magazine2 != null)
-			{
-				if (Magazine2 is 'BIO_Magazine')
-					dividend = float(MagazineSize2);
-				else // Reserve
-					dividend = float(Magazine2.MaxAmount);
-			}
-			else if (MagazineType2 != null)
-			{
-				if (MagazineType2 is 'BIO_Magazine')
-					dividend = float(MagazineSize2);
-				else // Reserve
-					dividend = GetDefaultByType(MagazineType2).MaxAmount;
-			}
+			if (Magazine2 != null || MagazineType2 != null)
+				dividend = float(MagazineSize2);
 			else if (Ammo2 != null)
-			{
 				dividend = float(Ammo2.MaxAmount);
-			}
+			else if (AmmoType2 != null)
+				dividend = float(GetDefaultByType(AmmoType2).MaxAmount);
 		}
 
 		return Floor(dividend / divisor);
@@ -657,66 +601,85 @@ extend class BIO_Weapon
 	{
 		if (!secondary)
 		{
-			if (Magazine1 != null ||
-				(MagazineType1 != null && MagazineType1 != AmmoType1))
+			if (Magazine1 != null)
+			{
 				return AmmoUse1 * uint(Ceil(
 					double(ReloadCost1) / double(ReloadOutput1)
 				));
+			}
 			else
+			{
 				return AmmoUse1;
+			}
 		}
 		else
 		{
-			if (Magazine2 != null ||
-				(MagazineType2 != null && MagazineType2 != AmmoType2))
+			if (Magazine2 != null)
+			{
 				return AmmoUse2 * uint(Ceil(
 					double(ReloadCost2) / double(ReloadOutput2)
 				));
+			}
 			else
+			{
 				return AmmoUse2;
+			}
 		}
 	}
 
-	bool Magazineless(bool secondary = false) const
+	bool Ammoless() const { return Ammo1 == null && Ammo2 == null; }
+	bool Magazineless() const { return Magazine1 == null && Magazine2 == null; }
+
+	bool CanReload(bool secondary = false) const
 	{
-		return !(Magazine1 is 'BIO_Magazine') && !(Magazine2 is 'BIO_Magazine');
+		if (!secondary)
+			return Magazine1 != null && Magazine1.CanReload(self);
+		else
+			return Magazine2 != null && Magazine2.CanReload(self);
 	}
 
+	// i.e., to fire a round.
 	bool SufficientAmmo(bool secondary = false, int multi = 1) const
 	{
 		if (CheckInfiniteAmmo())
 			return true;
 
-		if (CanFeedEnergyToMatter(secondary, multi) ||
-			CanFireEnergyToMatter(secondary, multi))
-			return true;
-
 		if (!secondary)
 		{
-			if (Magazine1.Amount < (AmmoUse1 * multi))
-				return false;
-
-			return true;
+			if (Magazine1 != null)
+				return Magazine1.Sufficient(self, AmmoUse1 * multi);
+			else if (Ammo1 != null)
+				return Ammo1.Amount >= (AmmoUse1 * multi);
+			else
+				return true;
 		}
 		else
 		{
-			if (Magazine2.Amount < (AmmoUse2 * multi))
-				return false;
-
-			return true;
+			if (Magazine2 != null)
+				return Magazine2.Sufficient(self, AmmoUse2 * multi);
+			else if (Ammo2 != null)
+				return Ammo2.Amount >= (AmmoUse2 * multi);
+			else
+				return true;
 		}
 	}
 
+	// Returns `false` if the request magazine is null.
 	bool MagazineEmpty(bool secondary = false) const
 	{
-		return !secondary ? Magazine1.Amount <= 0 : Magazine2.Amount <= 0;
+		if (!secondary)
+			return Magazine1 != null && Magazine1.IsEmpty();
+		else
+			return Magazine2 != null && Magazine2.IsEmpty();
 	}
 
+	// Returns `false` if the request magazine is null.
 	bool MagazineFull(bool secondary = false) const
 	{
-		return !secondary ?
-			Magazine1.Amount >= MagazineSize1 :
-			Magazine2.Amount >= MagazineSize2;
+		if (!secondary)
+			return Magazine1 != null && Magazine1.IsFull(MagazineSize1);
+		else
+			return Magazine2 != null && Magazine2.IsFull(MagazineSize2);
 	}
 
 	bool CheckInfiniteAmmo() const
@@ -724,68 +687,6 @@ extend class BIO_Weapon
 		return
 			sv_infiniteammo ||
 			Owner.FindInventory('PowerInfiniteAmmo', true) != null;
-	}
-
-	bool CanFeedEnergyToMatter(bool secondary = false, int multi = 1) const
-	{
-		if (!secondary)
-		{
-			if (!(Magazine1 is 'BIO_MagazineETM'))
-				return false;
-
-			// Can't feed if the user's ETMF charge is already active
-			if (Owner.FindInventory(BIO_MagazineETM(Magazine1).PowerupType))
-				return false;
-
-			if (CountInv('Cell') < AmmoUse1 * multi)
-				return false;
-
-			return true;
-		}
-		else
-		{
-			if (!(Magazine2 is 'BIO_MagazineETM'))
-				return false;
-
-			// Can't feed if the user's ETMF charge is already active
-			if (Owner.FindInventory(BIO_MagazineETM(Magazine2).PowerupType))
-				return false;
-
-			if (CountInv('Cell') < AmmoUse2 * multi)
-				return false;
-
-			return true;
-		}
-	}
-
-	bool CanFireEnergyToMatter(bool secondary = false, int multi = 1) const
-	{
-		if (!secondary)
-		{
-			if (!(Magazine1 is 'BIO_MagazineETM'))
-				return false;
-
-			if (Owner.FindInventory(BIO_MagazineETM(Magazine1).PowerupType))
-				return true;
-		}
-		else
-		{
-			if (!(Magazine2 is 'BIO_MagazineETM'))
-				return false;
-
-			if (Owner.FindInventory(BIO_MagazineETM(Magazine2).PowerupType))
-				return true;
-		}
-
-		return false;
-	}
-
-	bool Ammoless() const
-	{
-		return
-			AmmoType1 == null && AmmoType2 == null &&
-			AmmoUse1 <= 0 && AmmoUse2 <= 0 &&
-			MagazineType1 == null && MagazineType2 == null;
 	}
 
 	bool DealsAnyDamage() const
@@ -809,23 +710,9 @@ extend class BIO_Weapon
 	bool MagazineSizeMutable(bool secondary = false) const
 	{
 		if (!secondary)
-		{
-			if (MagazineType1 == null || MagazineType1 == AmmoType1)
-				return false;
-
-			if (MagazineSize1 <= 0)
-				return false;
-		}
+			return Magazine1 != null && MagazineSize1 > 0;
 		else
-		{
-			if (MagazineType2 == null || MagazineType2 == AmmoType2)
-				return false;
-
-			if (MagazineSize2 <= 0)
-				return false;
-		}
-
-		return true;
+			return Magazine2 != null && MagazineSize2 > 0;
 	}
 
 	bool FireTimesReducible() const
@@ -833,8 +720,8 @@ extend class BIO_Weapon
 		// State sequences can't have all of their tic times reduced to 0.
 		// Fire rate-affecting affixes must know in advance if
 		// they can even have any effect, given this caveat.
-		for (uint i = 0; i < FireTimeGroups.Size(); i++)
-			if (FireTimeGroups[i].PossibleReduction() > 1)
+		for (uint i = 0; i < OpMode.FireTimeGroups.Size(); i++)
+			if (OpMode.FireTimeGroups[i].PossibleReduction() > 1)
 				return true;
 
 		return false;
@@ -842,7 +729,7 @@ extend class BIO_Weapon
 
 	bool FireTimesMutable() const
 	{
-		return FireTimeGroups.Size() > 0 && FireTimesReducible();
+		return OpMode.FireTimeGroups.Size() > 0 && FireTimesReducible();
 	}
 
 	bool ReloadTimesReducible() const
@@ -888,13 +775,13 @@ extend class BIO_Weapon
 // Non-const member functions.
 extend class BIO_Weapon
 {
-	// Prepare this weapon for another call to `SetDefaults()`.
+	// Destroys this weapon's operating mode instance, and
+	// prepares for another call to `SetDefaults()`.
 	// Has no effect whatsoever on the mod graph, or `AmmoGive` values.
 	virtual void Reset()
 	{
+		OpMode = null;
 		Pipelines.Clear();
-		FireTimeGroups.Clear();
-		ReloadTimeGroups.Clear();
 		Affixes.Clear();
 		SpecialFunc = null;
 
@@ -902,8 +789,6 @@ extend class BIO_Weapon
 		bNoAlert = Default.bNoAlert;
 		bNoAutoAim = Default.bNoAutoAim;
 		bMeleeWeapon = Default.bMeleeWeapon;
-
-		bSpooling = Default.bSpooling;
 
 		AmmoType1 = Default.AmmoType1;
 		AmmoType2 = Default.AmmoType2;
@@ -919,6 +804,8 @@ extend class BIO_Weapon
 		RaiseSpeed = Default.RaiseSpeed;
 		LowerSpeed = Default.LowerSpeed;
 
+		MagazineType1 = Default.MagazineType1;
+		MagazineType2 = Default.MagazineType2;
 		MagazineSize1 = Default.MagazineSize1;
 		MagazineSize2 = Default.MagazineSize2;
 
@@ -930,15 +817,18 @@ extend class BIO_Weapon
 		MinAmmoReserve1 = Default.MinAmmoReserve1;
 		MinAmmoReserve2 = Default.MinAmmoReserve2;
 
-		ClearMagazines();
+		Ammo1 = Ammo2 = null;
+		Magazine1 = Magazine2 = null;
 	}
 
 	void LazyInit()
 	{
 		if (Uninitialised())
 		{
+			OpMode = BIO_WeaponOperatingMode.Create(OperatingMode, self);
 			SetDefaults();
 			IntrinsicModGraph(false);
+			OpMode.SideEffects(self);
 
 			if (ModGraph != null)
 				SetTag(ColoredTag());
@@ -950,93 +840,29 @@ extend class BIO_Weapon
 		if (Owner == null)
 			return;
 
-		Ammo1 = AddAmmo(Owner, AmmoType1, 0);
-		Ammo2 = AddAmmo(Owner, AmmoType2, 0);
+		if (!(Ammo1 is AmmoType1))
+			Ammo1 = AddAmmo(Owner, AmmoType1, 0);
+		if (!(Ammo2 is AmmoType2))
+			Ammo2 = AddAmmo(Owner, AmmoType2, 0);
 	}
 
-	void SetupMagazines(class<Ammo> override1 = null, class<Ammo> override2 = null)
+	void SetupMagazines()
 	{
 		if (Owner == null)
 			return;
 
-		if (override1 != null)
-		{
-			Magazine1 = Ammo(Owner.FindInventory(override1));
-
-			if (Magazine1 == null)
-			{
-				Magazine1 = Ammo(Actor.Spawn(override1));
-				Magazine1.AttachToOwner(Owner);
-			}
-		}
-		// Get a pointer to primary ammo (which is either `AmmoType1` or
-		// `MagazineType1`). If it isn't found, generate and attach it
-		else if (Magazine1 == null && (MagazineType1 != null || AmmoType1 != null))
-		{
-			bool previouslyOwned = true;
-
-			Magazine1 = MagazineType1 != null ?
-				Ammo(Owner.FindInventory(MagazineType1)) :
-				Ammo(Owner.FindInventory(AmmoType1));
-
-			if (Magazine1 == null)
-			{
-				previouslyOwned = false;
-				Magazine1 = Ammo(Actor.Spawn(MagazineType1));
-				Magazine1.AttachToOwner(Owner);
-			}
-
-			if (!previouslyOwned && Default.MagazineSize1 != 0)
-				Magazine1.Amount = Max(Default.MagazineSize1, 0);
-		}
-
-		if (override2 != null)
-		{
-			Magazine2 = Ammo(Owner.FindInventory(override2));
-
-			if (Magazine2 == null)
-			{
-				Magazine2 = Ammo(Actor.Spawn(override2));
-				Magazine2.AttachToOwner(Owner);
-			}
-		}
-		// Same for secondary:
-		else if (Magazine2 == null && (MagazineType2 != null || AmmoType2 != null))
-		{
-			bool previouslyOwned = true;
-
-			Magazine2 = MagazineType2 != null ?
-				Ammo(Owner.FindInventory(MagazineType2)) :
-				Ammo(Owner.FindInventory(AmmoType2));
-
-			if (Magazine2 == null)
-			{
-				previouslyOwned = false;
-				Magazine2 = Ammo(Actor.Spawn(MagazineType2));
-				Magazine2.AttachToOwner(Owner);
-			}
-
-			if (!previouslyOwned && Default.MagazineSize2 != 0)
-				Magazine2.Amount = Max(Default.MagazineSize2, 0);
-		}
-
-		if (MagazineType1 == MagazineType2)
-			Magazine2 = Magazine1;
-	}
-
-	void ClearMagazines(bool secondary = false)
-	{
-		if (!secondary)
-			Magazine1 = null;
-		else
-			Magazine2 = null;
+		if (!(Magazine1 is MagazineType1))
+			Magazine1 = BIO_Player(Owner).GetMagazine(GetClass(), MagazineType1, false);
+		if (!(Magazine2 is MagazineType2))
+			Magazine2 = BIO_Player(Owner).GetMagazine(GetClass(), MagazineType2, true);
 	}
 
 	// Empty the magazine and return rounds in it to the reserve, with
 	// consideration given to the relevant reload ratio.
 	void DrainMagazine(bool secondary = false, int toDrain = 0)
 	{
-		Ammo mag = null, reserve = null;
+		BIO_Magazine mag = null;
+		Ammo reserve = null;
 		int cost = -1, output = -1;
 
 		if (!secondary)
@@ -1054,27 +880,27 @@ extend class BIO_Weapon
 			output = ReloadOutput2;
 		}
 
-		if (mag == null || reserve == null || !(mag is 'BIO_Magazine'))
+		if (mag == null || reserve == null)
 			return;
 
 		if (toDrain <= 0)
 		{
-			if (mag.Amount <= 0)
+			if (mag.GetAmount() <= 0)
 				return;
 
-			toDrain = mag.Amount;
+			toDrain = mag.GetAmount();
 		}
 
-		mag.Amount -= toDrain;
+		mag.Drain(toDrain);
 		let toGive = (toDrain / output) * cost;
 		reserve.Amount = Clamp(reserve.Amount + toGive, 0, reserve.MaxAmount);
 	}
 
 	void DrainMagazineExcess(bool secondary = false)
 	{
-		Ammo mag = !secondary ? Magazine1 : Magazine2;
+		let mag = !secondary ? Magazine1 : Magazine2;
 		int msize = !secondary ? MagazineSize1 : MagazineSize2;
-		DrainMagazine(secondary, msize - mag.Amount);
+		DrainMagazine(secondary, msize - mag.GetAmount());
 	}
 
 	void Mutate()
@@ -1115,35 +941,6 @@ extend class BIO_Weapon
 		SetState(FindState('Spawn'));
 	}
 
-	bool TryEnergyToMatterFeed(bool secondary = false, int multi = 1)
-	{
-		if (CanFireEnergyToMatter(secondary, multi))
-			return true;
-
-		if (!CanFeedEnergyToMatter(secondary, multi))
-			return false;
-
-		if (!secondary)
-		{
-			Owner.A_TakeInventory('Cell', AmmoUse1 * multi, TIF_NOTAKEINFINITE);
-			BIO_Utils.GivePowerup(
-				Owner, BIO_MagazineETM(Magazine1).PowerupType,
-				MagazineSize1 * multi
-			);
-		}
-		else
-		{
-			Owner.A_TakeInventory('Cell', AmmoUse2 * multi, TIF_NOTAKEINFINITE);
-			BIO_Utils.GivePowerup(
-				Owner, BIO_MagazineETM(Magazine2).PowerupType,
-				MagazineSize2 * multi
-			);
-		}
-
-		Owner.A_StartSound("bio/weap/etmf", CHAN_AUTO);
-		return true;
-	}
-
 	void ApplyLifeSteal(float percent, int dmg)
 	{
 		let lsp = Min(percent, 1.0);
@@ -1164,7 +961,6 @@ extend class BIO_Weapon
 	BIO_StateTimeGroup StateTimeGroupFrom(
 		statelabel label,
 		string tag = "",
-		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
 		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
 	) const
 	{
@@ -1181,14 +977,13 @@ extend class BIO_Weapon
 			return null;
 		}
 
-		return BIO_StateTimeGroup.FromState(s, tag, designation, flags);
+		return BIO_StateTimeGroup.FromState(s, tag, flags);
 	}
 
 	BIO_StateTimeGroup StateTimeGroupFromRange(
 		statelabel start,
 		statelabel end,
 		string tag = "",
-		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
 		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
 	) const
 	{
@@ -1218,13 +1013,12 @@ extend class BIO_Weapon
 			return null;
 		}
 
-		return BIO_StateTimeGroup.FromStateRange(s, e, tag, designation, flags);
+		return BIO_StateTimeGroup.FromStateRange(s, e, tag, flags);
 	}
 
 	BIO_StateTimeGroup StateTimeGroupFromArray(
 		Array<statelabel> labels,
 		string tag = "",
-		BIO_StateTimeGroupDesignation designation = BIO_STGD_NONE,
 		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
 	) const
 	{
@@ -1249,26 +1043,42 @@ extend class BIO_Weapon
 			}
 		}
 
-		return BIO_StateTimeGroup.FromStates(stateptrs, tag, designation, flags);
+		return BIO_StateTimeGroup.FromStates(stateptrs, tag, flags);
 	}
 }
 
 // Newly-defined actions.
 extend class BIO_Weapon
 {
-	// `fireFactor` multiplies fired count and ammo usage.
-	protected action bool A_BIO_Fire(uint pipeline = 0,
-		int fireFactor = 1, float spreadFactor = 1.0)
+	protected action state A_BIO_Op_Fire()
 	{
-		bool secAmmo = invoker.Pipelines[pipeline].SecondaryAmmo;
-		let usage = !secAmmo ? invoker.AmmoUse1 : invoker.AmmoUse2;
+		return invoker.ResolveState(invoker.OpMode.FireState());
+	}
 
-		if (!invoker.DepleteAmmo(secAmmo, true, usage * fireFactor))
+	protected action state A_BIO_Op_PostFire()
+	{
+		let postfire = invoker.ResolveState(invoker.OpMode.PostFireState());
+
+		if (postfire != null)
+			return postfire;
+
+		return state(null);
+	}
+
+	// `fireFactor` multiplies shot count and ammo usage.
+	protected action bool A_BIO_Fire(
+		uint pipeline = 0,
+		int fireFactor = 1,
+		float spreadFactor = 1.0
+	)
+	{
+		if (!A_BIO_DepleteAmmo(pipeline, fireFactor))
 			return false;
 
 		invoker.Pipelines[pipeline].Invoke(
 			invoker, pipeline, fireFactor, spreadFactor
 		);
+
 		return true;
 	}
 
@@ -1280,13 +1090,30 @@ extend class BIO_Weapon
 			channel, flags, volume, attenuation);
 	}
 
+	protected action bool A_BIO_DepleteAmmo(uint pipeline = 0, int fireFactor = 1)
+	{
+		if (invoker.Pipelines[pipeline].Flags & BIO_WPF_PRIMARYAMMO)
+		{
+			if (!invoker.DepleteAmmo(false, true, invoker.AmmoUse1 * fireFactor))
+				return false;
+		}
+
+		if (invoker.Pipelines[pipeline].Flags & BIO_WPF_SECONDARYAMMO)
+		{
+			if (!invoker.DepleteAmmo(true, true, invoker.AmmoUse2 * fireFactor))
+				return false;
+		}
+
+		return true;
+	}
+
 	// If no argument is given, try to reload as much of the magazine as 
 	// possible. Otherwise, try to reload the given amount of rounds.
 	action void A_BIO_LoadMag(uint amt = 0, bool secondary = false)
 	{
 		class<Ammo> res_t = null;
 
-		Ammo mag = null;
+		BIO_Magazine mag = null;
 		int cost = -1, output = -1, magsize = -1, reserve = -1;
 
 		if (!secondary)
@@ -1308,19 +1135,21 @@ extend class BIO_Weapon
 
 		if (mag == null)
 		{
-			Console.Printf(Biomorph.LOGPFX_WARN ..
+			Console.Printf(
+				Biomorph.LOGPFX_WARN ..
 				"%s tried to illegally load a null magazine.",
-				invoker.GetClassName());
+				invoker.GetClassName()
+			);
 			return;
 		}
 
-		if (mag.Amount >= magsize)
+		if (mag.GetAmount() >= magsize)
 			return;
 
 		// e.g., pistols
 		if (res_t == null)
 		{
-			mag.Amount = magsize;
+			mag.SetAmount(magsize);
 			return;
 		}
 		else
@@ -1331,11 +1160,15 @@ extend class BIO_Weapon
 		int toLoad = -1, toDraw = -1;
 
 		if (amt > 0)
-			toLoad = amt;
+		{
+			toLoad = amt * output;
+		}
 		else
-			toLoad = magsize - mag.Amount;
+		{
+			toLoad = magsize - mag.GetAmount();
+			toLoad = int(Floor(float(toLoad) / float(output)));
+		}
 
-		toLoad = int(Floor(float(toLoad) / float(output)));
 		toDraw = Min(toLoad * cost, reserve);
 		toLoad = Min(toLoad, toDraw) * output;
 
@@ -1343,7 +1176,7 @@ extend class BIO_Weapon
 			invoker.Affixes[i].OnMagLoad(invoker, secondary, toDraw, toLoad);
 
 		TakeInventory(res_t, toDraw);
-		mag.Amount += toLoad;
+		mag.Add(toLoad);
 	}
 
 	// Conventionally called on a `TNT1 A 0` state at the
@@ -1369,11 +1202,13 @@ extend class BIO_Weapon
 		bool s = single || invoker.ShotsPerMagazine(secondary) == 1;
 
 		if (cv == BIO_CV_AUTOREL_ALWAYS || (cv == BIO_CV_AUTOREL_SINGLE && s))
+		{
 			return ResolveState(reload);
+		}
 		else
 		{
 			state dfs = ResolveState(dryfire);
-			
+
 			if (dfs != null)
 				return dfs;
 			else
@@ -1446,12 +1281,12 @@ extend class BIO_Weapon
 
 	protected action void A_BIO_GroundHit()
 	{
-		if (Abs(Vel.Z) <= 0.01 && !invoker.bHitGround)
+		if (Abs(invoker.Vel.Z) <= 0.01 && !invoker.bHitGround)
 		{
-			A_StartSound(invoker.GroundHitSound);
-			A_ScaleVelocity(0.5);
-			bSpecial = true;
-			bThruActors = false;
+			invoker.A_StartSound(invoker.GroundHitSound);
+			invoker.A_ScaleVelocity(0.5);
+			invoker.bSpecial = true;
+			invoker.bThruActors = false;
 			invoker.bHitGround = true;
 		}
 	}
@@ -1459,13 +1294,17 @@ extend class BIO_Weapon
 	protected action void A_BIO_SetFireTime(
 		uint index, uint group = 0, int modifier = 0)
 	{
-		A_SetTics(Max(modifier + invoker.FireTimeGroups[group].Times[index], 0));
+		A_SetTics(
+			Max(modifier + invoker.OpMode.FireTimeGroups[group].Times[index], 0)
+		);
 	}
 
 	protected action void A_BIO_SetReloadTime(
 		uint index, uint group = 0, int modifier = 0)
 	{
-		A_SetTics(Max(modifier + invoker.ReloadTimeGroups[group].Times[index], 0));
+		A_SetTics(
+			Max(modifier + invoker.ReloadTimeGroups[group].Times[index], 0)
+		);
 	}
 
 	protected action void A_BIO_Recoil(class<BIO_RecoilThinker> recoil_t,
@@ -1478,11 +1317,13 @@ extend class BIO_Weapon
 	protected action void A_BIO_Pushback(float xVelMult, float zVelMult)
 	{
 		// Don't apply any if the wielding player isn't on the ground
-		if (invoker.Owner.Pos.Z > invoker.Owner.FloorZ) return;
+		if (invoker.Owner.Pos.Z > invoker.Owner.FloorZ)
+			return;
 
 		A_ChangeVelocity(
 			Cos(invoker.Pitch) * -xVelMult, 0.0,
-			Sin(invoker.Pitch) * zVelMult, CVF_RELATIVE);
+			Sin(invoker.Pitch) * zVelMult, CVF_RELATIVE
+		);
 	}
 
 	protected action void A_BIO_Raise() { A_Raise(invoker.RaiseSpeed); }

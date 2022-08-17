@@ -10,6 +10,7 @@ class BIO_WeaponPipelineBuilder play
 		{
 			ret.Pipeline = new('BIO_WeaponPipeline');
 			ret.Pipeline.PayloadFunctors = new('BIO_PayloadFunctorTuple');
+			ret.Pipeline.Flags = BIO_WPF_PRIMARYAMMO;
 		}
 		else
 		{
@@ -233,9 +234,29 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder SecondaryAmmo(bool secondary)
+	BIO_WeaponPipelineBuilder UsePrimaryAndSecondaryAmmo()
 	{
-		Pipeline.SecondaryAmmo = secondary;
+		Pipeline.Flags |= (BIO_WPF_PRIMARYAMMO | BIO_WPF_SECONDARYAMMO);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder UsePrimaryAmmo()
+	{
+		Pipeline.Flags |= BIO_WPF_PRIMARYAMMO;
+		Pipeline.Flags &= ~BIO_WPF_SECONDARYAMMO;
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder UseSecondaryAmmo()
+	{
+		Pipeline.Flags |= BIO_WPF_SECONDARYAMMO;
+		Pipeline.Flags &= ~BIO_WPF_PRIMARYAMMO;
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder UseNoAmmo()
+	{
+		Pipeline.Flags &= ~(BIO_WPF_PRIMARYAMMO | BIO_WPF_SECONDARYAMMO);
 		return self;
 	}
 

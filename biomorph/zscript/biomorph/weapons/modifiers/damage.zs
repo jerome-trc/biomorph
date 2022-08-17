@@ -247,14 +247,13 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 
 	private static bool MagazineCompatible(BIO_GeneContext context, bool secondary)
 	{
-		Ammo mag1 = null, mag2 = null;
-		[mag1, mag2] = context.Weap.GetMagazines();
-		let mag = !secondary ? mag1 : mag2;
+		let mag = !secondary ? context.Weap.Magazine1 : context.Weap.Magazine2;
+
 		let magsize = !secondary ?
 			context.Weap.MagazineSize1 :
 			context.Weap.MagazineSize2;
 
-		if (!(mag is 'BIO_Magazine') || magsize <= 0)
+		if (mag == null || magsize <= 0)
 			return false;
 
 		let reduced = int(Floor(float(magsize) * 0.8));
@@ -264,12 +263,14 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 
 		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
 		{
-			if (secondary && !context.Weap.Pipelines[i].SecondaryAmmo)
+			let ppl = context.Weap.Pipelines[i];
+
+			if (secondary && !ppl.UsesSecondaryAmmo())
 				continue;
-			else if (!secondary && context.Weap.Pipelines[i].SecondaryAmmo)
+			else if (!secondary && ppl.UsesSecondaryAmmo())
 				continue;
 
-			if (!context.Weap.Pipelines[i].DealsAnyDamage())
+			if (!ppl.DealsAnyDamage())
 				continue;
 
 			return true;
@@ -306,7 +307,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 			{
 				let ppl = weap.Pipelines[j];
 
-				if (ppl.SecondaryAmmo)
+				if (ppl.UsesSecondaryAmmo())
 					continue;
 
 				ppl.MultiplyAllDamage(dmgf);
@@ -337,7 +338,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 			{
 				let ppl = weap.Pipelines[j];
 
-				if (!ppl.SecondaryAmmo)
+				if (!ppl.UsesSecondaryAmmo())
 					continue;
 
 				ppl.MultiplyAllDamage(dmgf);
@@ -428,7 +429,9 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 		if (!ppl.DealsAnyDamage())
 			return -1;
 
-		if (weap.ShotsPerMagazine(ppl.SecondaryAmmo) < 2)
+		if (ppl.UsesPrimaryAmmo() && weap.ShotsPerMagazine(false) < 2)
+			return 1;
+		if (ppl.UsesSecondaryAmmo() && weap.ShotsPerMagazine(true) < 2)
 			return 1;
 
 		return 0;
@@ -451,7 +454,7 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 				if (PipelineCompatibility(weap.AsConst(), ppl.AsConst()) != 0)
 					continue;
 
-				if (!ppl.SecondaryAmmo)
+				if (!ppl.UsesSecondaryAmmo())
 					a1 = true;
 				else
 					a2 = true;

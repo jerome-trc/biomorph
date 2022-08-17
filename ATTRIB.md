@@ -102,6 +102,7 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 		- Steyr-4.wav (TRBO_FR3)
 	- Deadmos Other/
 		- weapondropped.wav (GUNDROP0)
+		- ShotgunSnatch.wav (MECHRELO)
 	- MC9.5/
 		- Console scroll.wav (BIOMFAIL)
 	- MC11/

@@ -15,15 +15,40 @@ class BIO_Coachgun : BIO_Weapon
 		Weapon.UpSound "bio/weap/gunswap";
 
 		BIO_Weapon.GraphQuality 8;
-		BIO_Weapon.MagazineType 'BIO_Mag_Coachgun';
-		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_Coachgun';
+		BIO_Weapon.EnergyToMatter -1, 10;
+		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
 		BIO_Weapon.MagazineSize 2;
+		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
+		BIO_Weapon.OperatingMode 'BIO_OpMode_Coachgun_SmallMag';
 		BIO_Weapon.PickupMessages
 			"$BIO_COACHGUN_PKUP",
 			"$BIO_COACHGUN_SCAV";
 		BIO_Weapon.SpawnCategory BIO_WSCAT_SSG;
 	}
 
+	override void SetDefaults()
+	{
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
+
+		Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.Bullet('BIO_ShotPellet', 7) // Per barrel
+				.RandomDamage(10, 15)
+				.Spread(12.0, 7.5)
+				.FireSound("bio/weap/coachgun/fire")
+				.Build()
+		);
+	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
+	}
+}
+
+// States: core.
+extend class BIO_Coachgun
+{
 	States
 	{
 	Spawn:
@@ -40,6 +65,9 @@ class BIO_Coachgun : BIO_Weapon
 		SHT2 A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
+		TNT1 A 0 A_BIO_Op_Fire;
+		Stop;
+	Fire.Common:
 		TNT1 A 0
 		{
 			if (BIO_CVar.MultiBarrelPrimary(Player))
@@ -150,43 +178,24 @@ class BIO_Coachgun : BIO_Weapon
 		}
 		Goto Ready;
 	}
-
-	override void SetDefaults()
-	{
-		pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
-				.Bullet('BIO_ShotPellet', 7) // Per barrel
-				.RandomDamage(10, 15)
-				.Spread(12.0, 7.5)
-				.FireSound("bio/weap/coachgun/fire")
-				.Build()
-		);
-
-		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
-	}
-
-	override uint ModCost(uint base) const
-	{
-		return super.ModCost(base) * 2;
-	}
 }
 
-class BIO_Mag_Coachgun : BIO_Magazine {}
+// Operating modes /////////////////////////////////////////////////////////////
 
-class BIO_MagETM_Coachgun : BIO_MagazineETM
+class BIO_OpMode_Coachgun_SmallMag : BIO_OpMode_SmallMag
 {
-	Default
+	final override class<BIO_Weapon> WeaponType() const
 	{
-		BIO_MagazineETM.PowerupType 'BIO_ETM_Coachgun';
+		return 'BIO_Coachgun';
 	}
-}
 
-class BIO_ETM_Coachgun : BIO_EnergyToMatterPowerup
-{
-	Default
+	final override void Init(readOnly<BIO_Weapon> weap)
 	{
-		Powerup.Duration -1;
-		BIO_EnergyToMatterPowerup.CellCost 10;
+		FireTimeGroups.Push(weap.StateTimeGroupFrom('Fire.Single'));
+	}
+
+	final override statelabel FireState() const
+	{
+		return 'Fire.Common';
 	}
 }

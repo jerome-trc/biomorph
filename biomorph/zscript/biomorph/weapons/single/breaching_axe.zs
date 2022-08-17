@@ -1,3 +1,4 @@
+// Common member definitions and default assignments.
 class BIO_BreachingAxe : BIO_Weapon
 {
 	Default
@@ -14,14 +15,50 @@ class BIO_BreachingAxe : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_HIGH;
 
 		BIO_Weapon.GraphQuality 8;
+		BIO_Weapon.OperatingMode 'BIO_OpMode_BreachingAxe_HoldRelease';
 		BIO_Weapon.PickupMessages
 			"$BIO_BREACHINGAXE_PKUP",
 			"";
 		BIO_Weapon.SpawnCategory BIO_WSCAT_CHAINSAW;
 	}
 
+	override void SetDefaults()
+	{
+		let fireFunc = new('BIO_FireFunc_Axe');
+		fireFunc.MissSound = "bio/weap/whoosh";
+		fireFunc.HitSound = "*fist";
+		fireFunc.Range = DEFMELEERANGE * 1.5;
+
+		Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.FireFunctor(fireFunc)
+				.Payload('BIO_MeleeHit')
+				.ShotCount(1)
+				.RandomDamage(60, 65)
+				.Alert(256.0)
+				.Build()
+		);
+
+		let afx = new('BIO_WAfx_BerserkDamage');
+		afx.Count = 1;
+		Affixes.Push(afx);
+	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
+	}
+}
+
+// States: core.
+extend class BIO_BreachingAxe
+{
 	States
 	{
+	Spawn:
+		BRAX Z 0;
+		#### # 0 A_BIO_Spawn;
+		Stop;
 	Ready:
 		BRAX A 1 A_WeaponReady;
 		Loop;
@@ -32,6 +69,9 @@ class BIO_BreachingAxe : BIO_Weapon
 		BRAX A 0 A_BIO_Select;
 		Stop;
 	Fire:
+		TNT1 A 0 A_BIO_Op_Fire;
+		Stop;
+	Fire.Hold:
 		BRAX A 2 A_BIO_SetFireTime(0);
 		BRAX B 2 A_BIO_SetFireTime(1);
 		BRAX C 2 A_BIO_SetFireTime(2);
@@ -59,44 +99,6 @@ class BIO_BreachingAxe : BIO_Weapon
 		BRAX E 4 A_BIO_SetFireTime(6, 1);
 		BRAX D 4 Offset(0 + 20, 32 + 15) A_BIO_SetFireTime(7, 1);
 		Goto Ready;
-	Spawn:
-		BRAX Z 0;
-		BRAX Z 0 A_BIO_Spawn;
-		Stop;
-	}
-
-	override void SetDefaults()
-	{
-		let fireFunc = new('BIO_FireFunc_Axe');
-		fireFunc.MissSound = "bio/weap/whoosh";
-		fireFunc.HitSound = "*fist";
-		fireFunc.Range = DEFMELEERANGE * 1.5;
-
-		Pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
-				.FireFunctor(fireFunc)
-				.Payload('BIO_MeleeHit')
-				.ShotCount(1)
-				.RandomDamage(60, 65)
-				.Alert(256.0)
-				.Build()
-		);
-
-		FireTimeGroups.Push(
-			StateTimeGroupFrom('Fire', "$BIO_CHARGE", flags: BIO_STGF_MELEE)
-		);
-		FireTimeGroups.Push(
-			StateTimeGroupFrom('Swing', "$BIO_SWING", flags: BIO_STGF_MELEE)
-		);
-
-		let afx = new('BIO_WAfx_BerserkDamage');
-		afx.Count = 1;
-		Affixes.Push(afx);
-	}
-
-	override uint ModCost(uint base) const
-	{
-		return super.ModCost(base) * 2;
 	}
 }
 
@@ -108,5 +110,30 @@ class BIO_FireFunc_Axe : BIO_FireFunc_Punch
 	) const
 	{
 		return StringTable.Localize("$BIO_FIREFUNC_AXE");
+	}
+}
+
+// Operating modes /////////////////////////////////////////////////////////////
+
+class BIO_OpMode_BreachingAxe_HoldRelease : BIO_OpMode_HoldRelease
+{
+	final override class<BIO_Weapon> WeaponType() const
+	{
+		return 'BIO_BreachingAxe';
+	}
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFrom('Fire.Hold', "$BIO_CHARGE", flags: BIO_STGF_MELEE)
+		);
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFrom('Swing', "$BIO_SWING", flags: BIO_STGF_MELEE)
+		);
+	}
+
+	final override statelabel FireState() const
+	{
+		return 'Fire.Hold';
 	}
 }

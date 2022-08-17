@@ -1,3 +1,5 @@
+// Note to reader: classes are defined using `extend` blocks for code folding.
+
 class BIO_Player : DoomPlayer
 {
 	uint8 MaxWeaponsHeld; property MaxWeaponsHeld: MaxWeaponsHeld;
@@ -7,6 +9,8 @@ class BIO_Player : DoomPlayer
 
 	BIO_Weapon ExaminedWeapon;
 	private uint16 ExamineTimer;
+
+	private Array<BIO_Magazine> Magazines;
 
 	Default
 	{
@@ -28,6 +32,86 @@ class BIO_Player : DoomPlayer
 		BIO_Player.MaxGenesHeld 10;
 	}
 
+	void ExamineWeapon(BIO_Weapon weap)
+	{
+		ExaminedWeapon = weap;
+		ExamineTimer = TICRATE * 5;
+		A_StartSound("bio/ui/beep", attenuation: 1.2);
+	}
+}
+
+// General introspection.
+extend class BIO_Player
+{
+	uint HeldWeaponCount() const
+	{
+		uint ret = 0;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+		{
+			let weap = BIO_Weapon(i);
+
+			if (weap == null || weap.Family == BIO_WEAPFAM_UNARMED)
+				continue;
+
+			ret++;
+		}
+
+		return ret;
+	}
+
+	uint HeldGeneCount() const
+	{
+		uint ret = 0;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+			if (i is 'BIO_Gene')
+				ret++;
+
+		return ret;
+	}
+
+	uint HeldPerkCount() const
+	{
+		uint ret = 0;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+			if (i is 'BIO_Perk')
+				ret++;
+
+		return ret;
+	}
+
+	// For use by the HUD, to not have to iterate over the linked list thrice.
+	uint, uint, uint InventoryCounts() const
+	{
+		uint ret1 = 0, ret2 = 0, ret3 = 0;
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+		{
+			let weap = BIO_Weapon(i);
+
+			if (weap != null && weap.Family != BIO_WEAPFAM_UNARMED)
+				ret1++;
+			else if (i is 'BIO_Gene')
+				ret2++;
+			else if (i is 'BIO_Perk')
+				ret3++;
+		}
+
+		return ret1, ret2, ret3;
+	}
+}
+
+// Parent overrides.
+extend class BIO_Player
+{
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+		GenerateMagazines();
+	}
+
 	// How much to reduce the slippery movement.
 	// Lower number = less slippery.
 	const DECEL_MULT = 0.85;
@@ -41,6 +125,9 @@ class BIO_Player : DoomPlayer
 			ExaminedWeapon = null;
 			ExamineTimer = 0;
 		}
+
+		for (uint i = 0; i < Magazines.Size(); i++)
+			Magazines[i].Tick(self);
 
 		// Code below courtesy of Nash Muhandes
 		// https://forum.zdoom.org/viewtopic.php?f=105&t=35761
@@ -109,72 +196,6 @@ class BIO_Player : DoomPlayer
 		GiveRandomStartingPistol();
 	}
 
-	uint HeldWeaponCount() const
-	{
-		uint ret = 0;
-
-		for (Inventory i = Inv; i != null; i = i.Inv)
-		{
-			let weap = BIO_Weapon(i);
-
-			if (weap == null || weap.Family == BIO_WEAPFAM_UNARMED)
-				continue;
-
-			ret++;
-		}
-
-		return ret;
-	}
-
-	uint HeldGeneCount() const
-	{
-		uint ret = 0;
-
-		for (Inventory i = Inv; i != null; i = i.Inv)
-			if (i is 'BIO_Gene')
-				ret++;
-
-		return ret;
-	}
-
-	uint HeldPerkCount() const
-	{
-		uint ret = 0;
-
-		for (Inventory i = Inv; i != null; i = i.Inv)
-			if (i is 'BIO_Perk')
-				ret++;
-
-		return ret;
-	}
-
-	// For use by the HUD, to not have to iterate over the linked list thrice.
-	uint, uint, uint InventoryCounts() const
-	{
-		uint ret1 = 0, ret2 = 0, ret3 = 0;
-
-		for (Inventory i = Inv; i != null; i = i.Inv)
-		{
-			let weap = BIO_Weapon(i);
-
-			if (weap != null && weap.Family != BIO_WEAPFAM_UNARMED)
-				ret1++;
-			else if (i is 'BIO_Gene')
-				ret2++;
-			else if (i is 'BIO_Perk')
-				ret3++;
-		}
-
-		return ret1, ret2, ret3;
-	}
-
-	void ExamineWeapon(BIO_Weapon weap)
-	{
-		ExaminedWeapon = weap;
-		ExamineTimer = TICRATE * 5;
-		A_StartSound("bio/ui/beep", attenuation: 1.2);
-	}
-
 	final override int TakeSpecialDamage(
 		Actor inflictor, Actor source, int damage, name dmgType
 	)
@@ -186,43 +207,6 @@ class BIO_Player : DoomPlayer
 				Perks[i].OnDamageTaken(self, inflictor, source, ret, dmgType);
 
 		return ret;
-	}
-
-	void PrePowerupHandlePickup(Powerup handler, Powerup other)
-	{
-		for (uint i = 0; i < Perks.Size(); i++)
-			if (Perks[i] != null)
-				Perks[i].PrePowerupHandlePickup(self, handler, other);
-	}
-
-	void PrePowerupAttach(Powerup power)
-	{
-		for (uint i = 0; i < Perks.Size(); i++)
-			if (Perks[i] != null)
-				Perks[i].PrePowerupAttach(self, power);
-	}
-
-	void PrePowerupDetach(Powerup power)
-	{
-		for (uint i = 0; i < Perks.Size(); i++)
-			if (Perks[i] != null)
-				Perks[i].PrePowerupDetach(self, power);
-	}
-
-	void OnKill(Actor killed, Actor inflictor)
-	{
-		let weap = BIO_Weapon(Player.ReadyWeapon);
-
-		if (weap != null)
-			weap.OnKill(killed, inflictor);
-	}
-
-	protected void GiveRandomStartingPistol()
-	{
-		let pistol_t = BIO_Global.Get().LootWeaponType(BIO_WSCAT_PISTOL);
-		GiveInventory(pistol_t, 1);
-		let pistol = FindInventory(pistol_t);
-		Player.ReadyWeapon = Player.PendingWeapon = Weapon(pistol);
 	}
 
 	override void PreTravelled()
@@ -332,5 +316,101 @@ class BIO_Player : DoomPlayer
 				}
 			}		
 		}
+	}
+}
+
+// Magazine management.
+extend class BIO_Player
+{
+	BIO_Magazine GetMagazine(
+		class<BIO_Weapon> weap_t,
+		class<BIO_Magazine> mag_t,
+		bool secondary
+	) const
+	{
+		for (uint i = 0; i < Magazines.Size(); i++)
+		{
+			if (Magazines[i].GetClass() == mag_t &&
+				Magazines[i].GetWeaponType() == weap_t &&
+				Magazines[i].IsSecondary() == secondary)
+			{
+				return Magazines[i];
+			}
+		}
+
+		return null;
+	}
+
+	private void GenerateMagazines()
+	{
+		for (uint i = 0; i < AllActorClasses.Size(); i++)
+		{
+			let weap_t = (class<BIO_Weapon>)(AllActorClasses[i]);
+
+			if (weap_t == null || weap_t.IsAbstract())
+				continue;
+
+			let defs = GetDefaultByType(weap_t);
+
+			if (defs.MagazineFlags & BIO_MAGF_NORMAL_1)
+				Magazines.Push(BIO_NormalMagazine.Create(weap_t, false));
+			if (defs.MagazineFlags & BIO_MAGF_NORMAL_2)
+				Magazines.Push(BIO_NormalMagazine.Create(weap_t, true));
+
+			if (defs.MagazineFlags & BIO_MAGF_RECHARGING_1)
+				Magazines.Push(BIO_RechargingMagazine.Create(weap_t, false));
+			if (defs.MagazineFlags & BIO_MAGF_RECHARGING_2)
+				Magazines.Push(BIO_RechargingMagazine.Create(weap_t, true));
+
+			if (defs.MagazineFlags & BIO_MAGF_ETMF_1)
+				Magazines.Push(BIO_ETMFMagazine.Create(weap_t, false));
+			if (defs.MagazineFlags & BIO_MAGF_ETMF_2)
+				Magazines.Push(BIO_ETMFMagazine.Create(weap_t, true));
+		}
+	}
+}
+
+// Callbacks.
+extend class BIO_Player
+{
+	void PrePowerupHandlePickup(Powerup handler, Powerup other)
+	{
+		for (uint i = 0; i < Perks.Size(); i++)
+			if (Perks[i] != null)
+				Perks[i].PrePowerupHandlePickup(self, handler, other);
+	}
+
+	void PrePowerupAttach(Powerup power)
+	{
+		for (uint i = 0; i < Perks.Size(); i++)
+			if (Perks[i] != null)
+				Perks[i].PrePowerupAttach(self, power);
+	}
+
+	void PrePowerupDetach(Powerup power)
+	{
+		for (uint i = 0; i < Perks.Size(); i++)
+			if (Perks[i] != null)
+				Perks[i].PrePowerupDetach(self, power);
+	}
+
+	void OnKill(Actor killed, Actor inflictor)
+	{
+		let weap = BIO_Weapon(Player.ReadyWeapon);
+
+		if (weap != null)
+			weap.OnKill(killed, inflictor);
+	}
+}
+
+// Helper functions.
+extend class BIO_Player
+{
+	protected void GiveRandomStartingPistol()
+	{
+		let pistol_t = BIO_Global.Get().LootWeaponType(BIO_WSCAT_PISTOL);
+		GiveInventory(pistol_t, 1);
+		let pistol = FindInventory(pistol_t);
+		Player.ReadyWeapon = Player.PendingWeapon = Weapon(pistol);
 	}
 }

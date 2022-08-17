@@ -122,8 +122,12 @@ extend class BIO_EventHandler
 				output.AppendFormat("\t-> \c[Green]Pipeline: %d\c-\n", i);
 
 			output.AppendFormat(
+				"\t\tUses primary amo: %s\n",
+				ppl.UsesPrimaryAmmo() ? "yes" : "no"
+			);
+			output.AppendFormat(
 				"\t\tUses secondary ammo: %s\n",
-				ppl.SecondaryAmmo ? "yes" : "no"
+				ppl.UsesSecondaryAmmo() ? "yes" : "no"
 			);
 			output.AppendFormat(
 				"\t\tFiring functor: %s\n",
@@ -139,16 +143,21 @@ extend class BIO_EventHandler
 			);
 		}
 
+		output.AppendFormat(
+			"\c[Yellow]Operating mode\c-: %s",
+			weap.OpMode.GetClassName()
+		);
+
 		// Timings
 
 		output = output .. "\n";
 
-		if (weap.FireTimeGroups.Size() > 0)
+		if (weap.OpMode.FireTimeGroups.Size() > 0)
 			output.AppendFormat("\c[Yellow]Fire time groups:\c-\n");
 
-		for (uint i = 0; i < weap.FireTimeGroups.Size(); i++)
+		for (uint i = 0; i < weap.OpMode.FireTimeGroups.Size(); i++)
 		{
-			let ftg = weap.FireTimeGroups[i];
+			let ftg = weap.OpMode.FireTimeGroups[i];
 			string tag = ftg.Tag.Length() > 0 ? ftg.Tag : "num. " .. i;
 			output.AppendFormat("\t-> \c[Green]Group %s\c-\n", tag);
 

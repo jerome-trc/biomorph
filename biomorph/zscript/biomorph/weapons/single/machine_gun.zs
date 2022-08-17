@@ -1,6 +1,9 @@
 class BIO_MachineGun : BIO_Weapon
 {
-	const BASE_MAGSIZE = 100; // Also referenced by `DualMachineGun`
+	// Constants also referenced by the dual-wield counterpart
+	const BASE_MAGSIZE = 100;
+	const ETMF_DURATION = -3;
+	const ETMF_COST = 5;
 
 	Default
 	{
@@ -18,9 +21,11 @@ class BIO_MachineGun : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/small/0";
+		BIO_Weapon.EnergyToMatter ETMF_DURATION, ETMF_COST;
+		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
+		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
 		BIO_Weapon.MagazineSize BASE_MAGSIZE;
-		BIO_Weapon.MagazineType 'BIO_Mag_MachineGun';
-		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_MachineGun';
+		BIO_Weapon.OperatingMode 'BIO_OpMode_MachineGun_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_MACHINEGUN_PKUP",
 			"$BIO_MACHINEGUN_SCAV";
@@ -29,6 +34,29 @@ class BIO_MachineGun : BIO_Weapon
 		BIO_Weapon.Summary "$BIO_MACHINEGUN_SUMM";
 	}
 
+	override void SetDefaults()
+	{
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
+
+		Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.Bullet()
+				.RandomDamage(14, 16)
+				.Spread(2.0, 1.0)
+				.FireSound("bio/weap/machinegun/fire")
+				.Build()
+		);
+	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
+	}
+}
+
+// States: core.
+extend class BIO_MachineGun
+{
 	States
 	{
 	Spawn:
@@ -45,20 +73,8 @@ class BIO_MachineGun : BIO_Weapon
 		GPMG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_CheckAmmo;
-		GPMG B 1 Bright Offset(0, 33)
-		{
-			A_BIO_SetFireTime(0);
-			A_BIO_Fire();
-			A_GunFlash();
-			A_BIO_FireSound(CHAN_AUTO);
-			A_BIO_Recoil('BIO_Recoil_Autogun');
-		}
-		GPMG C 1 Bright Offset(0, 34) A_BIO_SetFireTime(1);
-		GPMG B 1 Bright Offset(0, 33) A_BIO_SetFireTime(2);
-		GPMG A 1 Fast A_BIO_SetFireTime(3);
-		TNT1 A 0 A_BIO_AutoReload;
-		Goto Ready;
+		TNT1 A 0 A_BIO_Op_Fire;
+		Stop;
 	Dryfire:
 		GPMG A 1 Offset(0, 32 + 1);
 		#### # 1 Offset(0, 32 + 2);
@@ -94,36 +110,54 @@ class BIO_MachineGun : BIO_Weapon
 		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
 		Goto Ready;
 	}
-
-	override void SetDefaults()
-	{
-		Pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
-				.Bullet()
-				.RandomDamage(14, 16)
-				.Spread(2.0, 1.0)
-				.FireSound("bio/weap/machinegun/fire")
-				.Build()
-		);
-
-		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
-	}
-
-	override uint ModCost(uint base) const
-	{
-		return super.ModCost(base) * 2;
-	}
 }
 
-class BIO_Mag_MachineGun : BIO_Magazine {}
-
-class BIO_MagETM_MachineGun : BIO_MagazineETM
+// Helper functions.
+extend class BIO_MachineGun
 {
-	Default
+	protected action void A_BIO_MachineGun_Fire()
 	{
-		BIO_MagazineETM.PowerupType 'BIO_ETM_MachineGun';
+		A_BIO_Fire();
+		A_GunFlash();
+		A_BIO_FireSound(CHAN_AUTO);
+		A_BIO_Recoil('BIO_Recoil_Autogun');
 	}
 }
 
-class BIO_ETM_MachineGun : BIO_EnergyToMatterPowerup {}
+// Operating modes /////////////////////////////////////////////////////////////
+
+class BIO_OpMode_MachineGun_Rapid : BIO_OpMode_Rapid
+{
+	final override class<BIO_Weapon> WeaponType() const { return 'BIO_MachineGun'; }
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
+	}
+
+	final override statelabel FireState() const
+	{
+		return 'Rapid.Fire';
+	}
+}
+
+extend class BIO_MachineGun
+{
+	States
+	{
+	Rapid.Fire:
+		TNT1 A 0 A_BIO_CheckAmmo;
+		GPMG B 1 Bright Offset(0, 33)
+		{
+			A_BIO_SetFireTime(0);
+			A_BIO_MachineGun_Fire();
+		}
+		GPMG C 1 Bright Offset(0, 34) A_BIO_SetFireTime(1);
+		GPMG B 1 Bright Offset(0, 33) A_BIO_SetFireTime(2);
+		GPMG A 1 Fast A_BIO_SetFireTime(3);
+		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire');
+		TNT1 A 0 A_BIO_Op_PostFire;
+		TNT1 A 0 A_BIO_AutoReload;
+		Goto Ready;
+	}
+}

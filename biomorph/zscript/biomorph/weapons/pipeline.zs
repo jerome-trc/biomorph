@@ -16,11 +16,18 @@ class BIO_PayloadFunctorTuple
 	Array<BIO_PayloadDeathFunctor> OnDeath;
 }
 
+enum BIO_WeaponPipelineFlags
+{
+	BIO_WPF_NONE = 0,
+	BIO_WPF_PRIMARYAMMO = 1 << 0,
+	BIO_WPF_SECONDARYAMMO = 1 << 1
+}
+
 class BIO_WeaponPipeline play
 {
 	string Tag;
 
-	bool SecondaryAmmo;
+	BIO_WeaponPipelineFlags Flags;
 
 	BIO_FireFunctor FireFunctor;
 	class<Actor> Payload;
@@ -100,7 +107,7 @@ class BIO_WeaponPipeline play
 	{
 		let ret = new('BIO_WeaponPipeline');
 	
-		ret.SecondaryAmmo = SecondaryAmmo;
+		ret.Flags = Flags;
 
 		ret.FireFunctor = FireFunctor.Copy();
 		ret.Payload = Payload;
@@ -303,6 +310,9 @@ class BIO_WeaponPipeline play
 	{
 		return ShotCount > 3 && CombinedSpread() >= 5.5;
 	}
+
+	bool UsesPrimaryAmmo() const { return Flags & BIO_WPF_PRIMARYAMMO; }
+	bool UsesSecondaryAmmo() const { return Flags & BIO_WPF_SECONDARYAMMO; }
 
 	string GetTagAsQualifier(string parenthClr = "\c[White]") const
 	{

@@ -1,3 +1,4 @@
+// Common member definitions and default assignments.
 class BIO_Microvulcan : BIO_Weapon
 {
 	Default
@@ -16,14 +17,31 @@ class BIO_Microvulcan : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/small/0";
-		BIO_Weapon.MagazineType 'Clip';
-		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_Microvulcan';
+		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
+		BIO_Weapon.OperatingMode 'BIO_OpMode_Microvulcan_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_MICROVULCAN_PKUP",
 			"$BIO_MICROVULCAN_SCAV";
 		BIO_Weapon.ScavengePersist false;
 		BIO_Weapon.SpawnCategory BIO_WSCAT_CHAINGUN;
 		BIO_Weapon.Summary "$BIO_MICROVULCAN_SUMM";
+	}
+
+	override void SetDefaults()
+	{
+		Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.Bullet()
+				.RandomDamage(14, 16)
+				.Spread(4.0, 2.0)
+				.FireSound("bio/weap/microvulcan/fire")
+				.Build()
+		);
+	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 2;
 	}
 
 	States
@@ -42,39 +60,8 @@ class BIO_Microvulcan : BIO_Weapon
 		CHGG A 1 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0
-		{
-			if (invoker.bSpooling)
-				return ResolveState('SpoolCheck');
-			else
-				return state(null);
-		}
-		CHGG A 0 A_BIO_CheckAmmo;
-		CHGG A 1 Offset(0, 32 + 1)
-		{
-			A_BIO_SetFireTime(0);
-			A_BIO_Fire();
-			Player.SetSafeFlash(invoker, ResolveState('Flash'), 0);
-			A_BIO_FireSound(CHAN_AUTO);
-			A_BIO_Recoil('BIO_Recoil_Autogun');
-		}
-		CHGG A 1 Offset(0, 32 + 2) A_BIO_SetFireTime(1);
-		CHGG A 1 Offset(0, 32 + 2) A_BIO_SetFireTime(2);
-		CHGG A 1 Offset(0, 32 + 1) A_BIO_SetFireTime(3);
-		CHGG B 1 Offset(0, 32 + 1)
-		{
-			A_BIO_SetFireTime(4);
-			A_BIO_Fire();
-			Player.SetSafeFlash(invoker, ResolveState('Flash'), 1);
-			A_BIO_FireSound(CHAN_AUTO);
-			A_BIO_Recoil('BIO_Recoil_Autogun');
-		}
-		CHGG B 1 Offset(0, 32 + 2) A_BIO_SetFireTime(5);
-		CHGG B 1 Offset(0, 32 + 2) A_BIO_SetFireTime(6);
-		CHGG B 1 Offset(0, 32 + 1) A_BIO_SetFireTime(7);
-		CHGG B 0 A_ReFire;
-		TNT1 A 0 A_BIO_AutoReload;
-		Goto Ready;
+		TNT1 A 0 A_BIO_Op_Fire;
+		Stop;
 	Dryfire:
 		CHGG A 1 Offset(0, 32 + 1);
 		#### # 1 Offset(0, 32 + 2);
@@ -82,59 +69,178 @@ class BIO_Microvulcan : BIO_Weapon
 		#### # 1 Offset(0, 32 + 2);
 		#### # 1 Offset(0, 32 + 1);
 		Goto Ready;
-	SpoolCheck:
+	}
+
+	protected action void A_BIO_Microvulcan_Fire(statelabel flash, int flashOffset)
+	{
+		A_BIO_Fire();
+		Player.SetSafeFlash(invoker, ResolveState(flash), flashOffset);
+		A_BIO_FireSound(CHAN_AUTO);
+		A_BIO_Recoil('BIO_Recoil_Autogun');
+	}
+}
+
+// Operating modes /////////////////////////////////////////////////////////////
+
+class BIO_OpMode_Microvulcan_Rapid : BIO_OpMode_Rapid
+{
+	final override class<BIO_Weapon> WeaponType() const { return 'BIO_Microvulcan'; }
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFrom('Rapid.Fire', "$BIO_PER2ROUNDS")
+		);
+	}
+
+	final override statelabel FireState() const
+	{
+		return 'Rapid.Fire';
+	}
+}
+
+extend class BIO_Microvulcan
+{
+	States
+	{
+	Rapid.Fire:
+		CHGG A 0 A_BIO_CheckAmmo;
+		CHGG A 1 Offset(0, 32 + 1)
+		{
+			A_BIO_SetFireTime(0);
+			A_BIO_Microvulcan_Fire('Rapid.Flash', 0);
+		}
+		CHGG A 1 Offset(0, 32 + 2) Fast A_BIO_SetFireTime(1);
+		CHGG A 1 Offset(0, 32 + 2) Fast A_BIO_SetFireTime(2);
+		CHGG A 1 Offset(0, 32 + 1) Fast A_BIO_SetFireTime(3);
+		CHGG B 1 Offset(0, 32 + 1)
+		{
+			A_BIO_SetFireTime(4);
+			A_BIO_Microvulcan_Fire('Rapid.Flash', 1);
+		}
+		CHGG B 1 Offset(0, 32 + 2) Fast A_BIO_SetFireTime(5);
+		CHGG B 1 Offset(0, 32 + 2) Fast A_BIO_SetFireTime(6);
+		CHGG B 1 Offset(0, 32 + 1) Fast A_BIO_SetFireTime(7);
+		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire');
+		TNT1 A 0 A_BIO_Op_PostFire;
+		TNT1 A 0 A_BIO_AutoReload;
+		Goto Ready;
+	Rapid.Flash:
+		CHGF A 5 Bright
+		{
+			A_SetTics(
+				invoker.OpMode.FireTimeGroups[0].Times[0] +
+				invoker.OpMode.FireTimeGroups[0].Times[1] +
+				invoker.OpMode.FireTimeGroups[0].Times[2] +
+				invoker.OpMode.FireTimeGroups[0].Times[3] +
+				1
+			);
+			A_Light(1);
+		}
+		Goto LightDone;
+		CHGF B 5 Bright
+		{
+			A_SetTics(
+				invoker.OpMode.FireTimeGroups[0].Times[4] +
+				invoker.OpMode.FireTimeGroups[0].Times[5] +
+				invoker.OpMode.FireTimeGroups[0].Times[6] +
+				invoker.OpMode.FireTimeGroups[0].Times[7] +
+				1
+			);
+			A_Light(2);
+		}
+		Goto LightDone;
+	}
+}
+
+class BIO_OpMode_Microvulcan_BinarySpool : BIO_OpMode_BinarySpool
+{
+	final override class<BIO_Weapon> WeaponType() const
+	{ 
+		return 'BIO_Microvulcan';
+	}
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFromRange(
+				'BSpool.Up', 'BSpool.Fire',
+				"$BIO_SPOOLUP"
+			)
+		);
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFrom(
+				'BSpool.Fire',
+				"$BIO_PER2ROUNDS"
+			)
+		);
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFromRange(
+				'BSpool.Down', 'BSpool.Down.Tail',
+				"$BIO_SPOOLDOWN"
+			)
+		);
+	}
+
+	final override statelabel FireState() const
+	{
+		return 'BSpool.Check';
+	}
+}
+
+extend class BIO_Microvulcan
+{
+	States
+	{
+	BSpool.Check:
 		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
-	SpoolUp:
+	BSpool.Up:
 		TNT1 A 0 A_StartSound("bio/weap/spoolup", CHAN_7);
-		CHGG A 3 A_BIO_SetFireTime(0, 1);
-		CHGG B 3 A_BIO_SetFireTime(1, 1);
-		CHGG A 2 A_BIO_SetFireTime(2, 1);
-		CHGG B 2 A_BIO_SetFireTime(3, 1);
-		CHGG A 1 A_BIO_SetFireTime(4, 1);
-		CHGG B 1 A_BIO_SetFireTime(5, 1);
+		CHGG A 3 A_BIO_SetFireTime(0);
+		CHGG B 3 A_BIO_SetFireTime(1);
+		CHGG A 2 A_BIO_SetFireTime(2);
+		CHGG B 2 A_BIO_SetFireTime(3);
+		CHGG A 1 A_BIO_SetFireTime(4);
+		CHGG B 1 A_BIO_SetFireTime(5);
 		TNT1 A 0 A_StopSound(CHAN_7);
-	FireSpooled:
+	BSpool.Fire:
 		TNT1 A 0
 		{
 			if (!invoker.SufficientAmmo())
-				return ResolveState('SpoolDown');
+				return ResolveState('BSpool.Down');
 			else
 				return state(null);
 		}
-		CHGG A 4 Bright
+		CHGG A 1 Offset(0, 32 + 1)
 		{
-			A_BIO_SetFireTime(0, 2);
-			A_BIO_Fire();
-			Player.SetSafeFlash(invoker, ResolveState('Flash'), 0);
-			A_BIO_FireSound(CHAN_AUTO);
-			A_BIO_Recoil('BIO_Recoil_Autogun');
+			A_BIO_SetFireTime(0, 1);
+			A_BIO_Microvulcan_Fire('BSpool.Flash', 0);
 		}
+		CHGG A 1 Fast A_BIO_SetFireTime(1, 1);
 		TNT1 A 0
 		{
 			if (!invoker.SufficientAmmo())
-				return ResolveState('SpoolDown');
+				return ResolveState('BSpool.Down');
 			else
 				return state(null);
 		}
-		CHGG B 4 Bright
+		CHGG B 1 Offset(0, 32 + 1)
 		{
-			A_BIO_SetFireTime(1, 2);
-			A_BIO_Fire();
-			Player.SetSafeFlash(invoker, ResolveState('Flash'), 1);
-			A_BIO_FireSound(CHAN_AUTO);
-			A_BIO_Recoil('BIO_Recoil_Autogun');
+			A_BIO_SetFireTime(2, 1);
+			A_BIO_Microvulcan_Fire('BSpool.Flash', 1);
 		}
-		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'SpoolDown');
+		CHGG B 1 Fast A_BIO_SetFireTime(3, 1);
+		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'BSpool.Down');
 		Loop;
-	SpoolDown:
+	BSpool.Down:
 		TNT1 A 0 A_StartSound("bio/weap/spooldown", CHAN_7);
-		CHGG A 1 A_BIO_SetFireTime(0, 3);
-		CHGG B 1 A_BIO_SetFireTime(1, 3);
-		CHGG A 2 A_BIO_SetFireTime(2, 3);
-		CHGG B 2 A_BIO_SetFireTime(3, 3);
-		CHGG A 3 A_BIO_SetFireTime(4, 3);
-		CHGG B 3 A_BIO_SetFireTime(5, 3);
-	SpoolDown.Tail:
+		CHGG A 1 A_BIO_SetFireTime(0, 2);
+		CHGG B 1 A_BIO_SetFireTime(1, 2);
+		CHGG A 2 A_BIO_SetFireTime(2, 2);
+		CHGG B 2 A_BIO_SetFireTime(3, 2);
+		CHGG A 3 A_BIO_SetFireTime(4, 2);
+		CHGG B 3 A_BIO_SetFireTime(5, 2);
+	BSpool.Down.Tail:
 		TNT1 A 0 A_Refire;
 		CHGG A 4;
 		CHGG B 4;
@@ -144,74 +250,211 @@ class BIO_Microvulcan : BIO_Weapon
 		TNT1 A 0 A_Refire;
 		CHGG A 6;
 		CHGG B 6;
-		TNT1 A 0 A_StopSound(CHAN_7);
+		TNT1 A 0
+		{
+			A_StopSound(CHAN_7);
+			return A_BIO_Op_PostFire();
+		}
 		Goto Ready;
-	Flash:
+	BSpool.Flash:
 		CHGF A 5 Bright
 		{
-			A_BIO_SetFireTime(0, group: invoker.bSpooling ? 2 : 0, modifier: 1);
+			A_SetTics(
+				invoker.OpMode.FireTimeGroups[1].Times[0] +
+				invoker.OpMode.FireTimeGroups[1].Times[1] +
+				1
+			);
+			A_Light(1);
+		}
+		Goto LightDone;
+		CHGF B 1 Bright
+		{
+			A_SetTics(
+				invoker.OpMode.FireTimeGroups[1].Times[2] +
+				invoker.OpMode.FireTimeGroups[1].Times[3] +
+				1
+			);
+			A_Light(2);
+		}
+		Goto LightDone;
+	}
+}
+
+class BIO_OpMode_Microvulcan_StagedSpool : BIO_OpMode_StagedSpool
+{
+	final override class<BIO_Weapon> WeaponType() const
+	{ 
+		return 'BIO_Microvulcan';
+	}
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFromRange(
+				'SSpool.Up', 'SSpool.Fire',
+				"$BIO_SPOOLUP"
+			)
+		);
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFrom(
+				'SSpool.Fire',
+				"$BIO_PER2ROUNDS"
+			)
+		);
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFromRange(
+				'SSpool.Down', 'SSpool.Down.Tail',
+				"$BIO_SPOOLDOWN"
+			)
+		);
+	}
+
+	final override statelabel FireState() const
+	{
+		return 'SSpool.Check';
+	}
+}
+
+extend class BIO_Microvulcan
+{
+	States
+	{
+	SSpool.Check:
+		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
+	SSpool.Up:
+		TNT1 A 0 A_StartSound("bio/weap/spoolup", CHAN_7);
+		CHGG A 3
+		{
+			A_BIO_SetFireTime(0);
+			A_BIO_Microvulcan_Fire('SSpool.Flash', 0);
+		}
+		CHGG B 3
+		{
+			A_BIO_SetFireTime(1);
+			A_BIO_Microvulcan_Fire('SSpool.Flash', 1);
+		}
+		CHGG A 2
+		{
+			A_BIO_SetFireTime(2);
+			A_BIO_Microvulcan_Fire('SSpool.Flash', 2);
+		}
+		CHGG B 2
+		{
+			A_BIO_SetFireTime(3);
+			A_BIO_Microvulcan_Fire('SSpool.Flash', 3);
+		}
+		CHGG A 1
+		{
+			A_BIO_SetFireTime(4);
+			A_BIO_Microvulcan_Fire('SSpool.Flash', 4);
+		}
+		CHGG B 1 A_BIO_SetFireTime(5);
+		TNT1 A 0 A_StopSound(CHAN_7);
+	SSpool.Fire:
+		TNT1 A 0
+		{
+			if (!invoker.SufficientAmmo())
+				return ResolveState('SSpool.Down');
+			else
+				return state(null);
+		}
+		CHGG A 1 Offset(0, 32 + 1)
+		{
+			A_BIO_SetFireTime(0, 1);
+			A_BIO_Microvulcan_Fire('SSpool.Flash', 5);
+		}
+		CHGG A 1 Fast A_BIO_SetFireTime(1, 1);
+		TNT1 A 0
+		{
+			if (!invoker.SufficientAmmo())
+				return ResolveState('SSpool.Down');
+			else
+				return state(null);
+		}
+		CHGG B 1 Offset(0, 32 + 1)
+		{
+			A_BIO_SetFireTime(2, 1);
+			A_BIO_Microvulcan_Fire('SSpool.Flash', 6);
+		}
+		CHGG B 1 Fast A_BIO_SetFireTime(3, 1);
+		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'SSpool.Down');
+		Loop;
+	SSpool.Down:
+		TNT1 A 0 A_StartSound("bio/weap/spooldown", CHAN_7);
+		CHGG A 1 A_BIO_SetFireTime(0, 2);
+		CHGG B 1 A_BIO_SetFireTime(1, 2);
+		CHGG A 2 A_BIO_SetFireTime(2, 2);
+		CHGG B 2 A_BIO_SetFireTime(3, 2);
+		CHGG A 3 A_BIO_SetFireTime(4, 2);
+		CHGG B 3 A_BIO_SetFireTime(5, 2);
+	SSpool.Down.Tail:
+		TNT1 A 0 A_Refire;
+		CHGG A 4;
+		CHGG B 4;
+		TNT1 A 0 A_Refire;
+		CHGG A 5;
+		CHGG B 5;
+		TNT1 A 0 A_Refire;
+		CHGG A 6;
+		CHGG B 6;
+		TNT1 A 0
+		{
+			A_StopSound(CHAN_7);
+			return A_BIO_Op_PostFire();
+		}
+		Goto Ready;
+	SSpool.Flash:
+		CHGF A 4 Bright
+		{
+			A_BIO_SetFireTime(0, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
+		CHGF B 4 Bright
+		{
+			A_BIO_SetFireTime(1, modifier: 1);
+			A_Light(2);
+		}
+		Goto LightDone;
+		CHGF A 3 Bright
+		{
+			A_BIO_SetFireTime(2, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
+		CHGF B 3 Bright
+		{
+			A_BIO_SetFireTime(3, modifier: 1);
+			A_Light(2);
+		}
+		Goto LightDone;
+		CHGF A 2 Bright
+		{
+			A_BIO_SetFireTime(4, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
+		Goto LightDone;
+		// Fire, state offset start: 5
+		CHGF A 5 Bright
+		{
+			A_SetTics(
+				invoker.OpMode.FireTimeGroups[1].Times[0] +
+				invoker.OpMode.FireTimeGroups[1].Times[1] +
+				1
+			);
 			A_Light(1);
 		}
 		Goto LightDone;
 		CHGF B 5 Bright
 		{
-			A_BIO_SetFireTime(1, group: invoker.bSpooling ? 2 : 0, modifier: 1);
+			A_SetTics(
+				invoker.OpMode.FireTimeGroups[1].Times[2] +
+				invoker.OpMode.FireTimeGroups[1].Times[3] +
+				1
+			);
 			A_Light(2);
 		}
 		Goto LightDone;
 	}
-
-	override void SetDefaults()
-	{
-		Pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
-				.Bullet()
-				.RandomDamage(14, 16)
-				.Spread(4.0, 2.0)
-				.FireSound("bio/weap/microvulcan/fire")
-				.Build()
-		);
-
-		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
-
-		FireTimeGroups.Push(
-			StateTimeGroupFromRange(
-				'SpoolUp', 'FireSpooled',
-				"$BIO_SPOOLUP",
-				designation: BIO_STGD_SPOOLUP,
-				flags: BIO_STGF_HIDDEN
-			)
-		);
-		FireTimeGroups.Push(
-			StateTimeGroupFrom(
-				'FireSpooled',
-				"$BIO_PER2ROUNDS",
-				designation: BIO_STGD_FIRESPOOLED,
-				flags: BIO_STGF_HIDDEN
-			)
-		);
-		FireTimeGroups.Push(
-			StateTimeGroupFromRange(
-				'SpoolDown', 'SpoolDown.Tail',
-				"$BIO_SPOOLDOWN",
-				designation: BIO_STGD_SPOOLDOWN,
-				flags: BIO_STGF_HIDDEN
-			)
-		);
-	}
-
-	override uint ModCost(uint base) const
-	{
-		return super.ModCost(base) * 2;
-	}
 }
-
-class BIO_MagETM_Microvulcan : BIO_MagazineETM
-{
-	Default
-	{
-		BIO_MagazineETM.PowerupType 'BIO_ETM_Microvulcan';
-	}
-}
-
-class BIO_ETM_Microvulcan : BIO_EnergyToMatterPowerup {}

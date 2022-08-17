@@ -1,3 +1,4 @@
+// Common member definitions and default assignments.
 class BIO_ServicePistol : BIO_Weapon
 {
 	flagdef RoundChambered: DynFlags, 31;
@@ -15,15 +16,31 @@ class BIO_ServicePistol : BIO_Weapon
 
 		BIO_Weapon.GraphQuality 10;
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/small/0";
+		BIO_Weapon.EnergyToMatter -5, 1;
+		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
+		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
 		BIO_Weapon.MagazineSize 15;
-		BIO_Weapon.MagazineType 'BIO_Mag_ServicePistol';
-		BIO_Weapon.MagazineTypeETM 'BIO_MagETM_ServicePistol';
+		BIO_Weapon.OperatingMode 'BIO_OpMode_ServicePistol_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_SERVICEPISTOL_PKUP",
 			"";
 		BIO_Weapon.SwitchSpeeds 14, 14;
 		BIO_Weapon.SpawnCategory BIO_WSCAT_PISTOL;
 		BIO_Weapon.Summary "$BIO_SERVICEPISTOL_SUMM";
+	}
+
+	override void SetDefaults()
+	{
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.FromEmpty'));
+
+		Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.Bullet()
+				.RandomDamage(10, 12)
+				.Spread(1.5, 1.5)
+				.FireSound("bio/weap/servicepistol/fire")
+				.Build()
+		);
 	}
 
 	States
@@ -47,21 +64,8 @@ class BIO_ServicePistol : BIO_Weapon
 		SVCP B 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_CheckAmmo;
-		SVCP C 4
-		{
-			A_BIO_SetFireTime(0);
-			A_BIO_Fire();
-			A_GunFlash();
-			A_BIO_FireSound();
-			A_BIO_Recoil('BIO_Recoil_Handgun');
-
-			if (invoker.MagazineEmpty())
-				invoker.bRoundChambered = false;
-		}
-		SVCP D 4 A_BIO_SetFireTime(1);
-		TNT1 A 0 A_BIO_AutoReload;
-		Goto Ready;
+		TNT1 A 0 A_BIO_Op_Fire;
+		Stop;
 	Dryfire:
 		SVCP B 1 Offset(0, 32 + 1);
 		#### # 1 Offset(0, 32 + 2);
@@ -114,21 +118,6 @@ class BIO_ServicePistol : BIO_Weapon
 		Goto Ready;
 	}
 
-	override void SetDefaults()
-	{
-		Pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
-				.Bullet()
-				.RandomDamage(10, 12)
-				.Spread(1.5, 1.5)
-				.FireSound("bio/weap/servicepistol/fire")
-				.Build()
-		);
-
-		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.FromEmpty'));
-	}
-
 	override void PostBeginPlay()
 	{
 		super.PostBeginPlay();
@@ -136,21 +125,47 @@ class BIO_ServicePistol : BIO_Weapon
 	}
 }
 
-class BIO_Mag_ServicePistol : BIO_Magazine {}
+// Operating modes /////////////////////////////////////////////////////////////
 
-class BIO_MagETM_ServicePistol : BIO_MagazineETM
+class BIO_OpMode_ServicePistol_Rapid : BIO_OpMode_Rapid
 {
-	Default
+	final override class<BIO_Weapon> WeaponType() const
 	{
-		BIO_MagazineETM.PowerupType 'BIO_ETM_ServicePistol';
+		return 'BIO_ServicePistol';
+	}
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
+	}
+
+	final override statelabel FireState() const
+	{
+		return 'Rapid.Fire';
 	}
 }
 
-class BIO_ETM_ServicePistol : BIO_EnergyToMatterPowerup
+extend class BIO_ServicePistol
 {
-	Default
+	States
 	{
-		Powerup.Duration -5;
-		BIO_EnergyToMatterPowerup.CellCost 1;
+	Rapid.Fire:
+		TNT1 A 0 A_BIO_CheckAmmo;
+		SVCP C 4
+		{
+			A_BIO_SetFireTime(0);
+			A_BIO_Fire();
+			A_GunFlash();
+			A_BIO_FireSound();
+			A_BIO_Recoil('BIO_Recoil_Handgun');
+
+			if (invoker.MagazineEmpty())
+				invoker.bRoundChambered = false;
+		}
+		SVCP D 4 A_BIO_SetFireTime(1);
+		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire');
+		TNT1 A 0 A_BIO_Op_PostFire;
+		TNT1 A 0 A_BIO_AutoReload;
+		Goto Ready;
 	}
 }
