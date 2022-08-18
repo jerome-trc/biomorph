@@ -319,7 +319,7 @@ extend class BIO_DualWieldWeapon
 		// Enable bobbing:
 		A_OverlayFlags(OverlayID(), PSPF_ADDBOB | PSPF_POWDOUBLE, true);
 		state tgt = null;
-		bool pressingFire = Player.Cmd.Buttons & BT_ATTACK;		
+		bool pressingFire = Player.Cmd.Buttons & BT_ALTATTACK;		
 
 		if (pressingFire)
 		{
@@ -360,7 +360,7 @@ extend class BIO_DualWieldWeapon
 		A_OverlayFlags(OverlayID(), PSPF_ADDBOB | PSPF_POWDOUBLE, true);
 
 		state targetState = null;
-		bool pressingFire = Player.Cmd.Buttons & BT_ALTATTACK;		
+		bool pressingFire = Player.Cmd.Buttons & BT_ATTACK;		
 		if (pressingFire)
 		{
 			if (A_CheckAmmo_L())
@@ -432,7 +432,7 @@ extend class BIO_DualWieldWeapon
 
 		let s_fire = left ? invoker.s_FireLeft : invoker.s_FireRight; // Pointer to Fire
 		let s_hold = left ? invoker.s_HoldLeft : invoker.s_Holdright; // Pointer to Hold
-		int atkbutton = left ? BT_ALTATTACK : BT_ATTACK; // Check attack button is being held
+		int atkbutton = left ? BT_ATTACK : BT_ALTATTACK; // Check attack button is being held
 		state targetState = null;
 		// Check if this is being called from `Fire` or `Hold`:
 		if (s_fire && (InStateSequence(psp.CurState, s_fire) ||
