@@ -107,6 +107,9 @@ class BIO_WeaponMorphRecipe abstract
 			if (pplFlags & PIPELINE_IMPROVEMENTS[i])
 				variety++;
 
-		return variety >= (sim.Nodes.Size() - 1);
+		return variety >= Min(
+			CORE_IMPROVEMENTS.Size() + PIPELINE_IMPROVEMENTS.Size(),
+			sim.Nodes.Size() - 1
+		);
 	}
 }
