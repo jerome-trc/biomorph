@@ -22,10 +22,11 @@ class BIO_WeaponPipelineBuilder play
 	BIO_WeaponPipelineBuilder Bullet(
 		class<Actor> payload = 'BIO_Bullet',
 		uint shotCount = 1,
-		double range = PLAYERMISSILERANGE // 8192.0
+		double range = PLAYERMISSILERANGE, // 8192.0
+		class<BIO_FireFunc_Bullet> subclass = 'BIO_FireFunc_Bullet'
 	)
 	{
-		let func = new('BIO_FireFunc_Bullet');
+		let func = BIO_FireFunc_Bullet(new(subclass));
 		func.Range = range;
 
 		Pipeline.FireFunctor = func;
@@ -39,10 +40,11 @@ class BIO_WeaponPipelineBuilder play
 		class<Actor> payload,
 		uint shotCount = 1,
 		double spawnOffs_xy = 0.0,
-		int spawnHeight = 0
+		int spawnHeight = 0,
+		class<BIO_FireFunc_Projectile> subclass = 'BIO_FireFunc_Projectile'
 	)
 	{
-		let func = new('BIO_FireFunc_Projectile');
+		let func = BIO_FireFunc_Projectile(new(subclass));
 		func.SpawnOffsXY = spawnOffs_xy;
 		func.SpawnHeight = 0;
 
@@ -68,10 +70,11 @@ class BIO_WeaponPipelineBuilder play
 		int particleDuration = 0,
 		double particleSparsity = 1.0,
 		double particleDriftSpeed = 1.0,
-		int spiralOffset = 270
+		int spiralOffset = 270,
+		class<BIO_FireFunc_Rail> subclass = 'BIO_FireFunc_Rail'
 	)
 	{
-		let func = new('BIO_FireFunc_Rail');
+		let func = BIO_FireFunc_Rail(new(subclass));
 		func.Flags = flags;
 		func.PierceLimit = Max(0, pierceLimit);
 		func.Range = range;
@@ -98,10 +101,11 @@ class BIO_WeaponPipelineBuilder play
 		float range = SAWRANGE,
 		ESawFlags flags = 0,
 		sound fullSound = "weapons/sawfull",
-		sound hitSound = "weapons/sawhit"
+		sound hitSound = "weapons/sawhit",
+		class<BIO_FireFunc_Saw> subclass = 'BIO_FireFunc_Saw'
 	)
 	{
-		let func = new('BIO_FireFunc_Saw');
+		let func = BIO_FireFunc_Saw(new(subclass));
 		func.Range = range;
 		func.FullSound = fullSound;
 		func.HitSound = hitSound;
@@ -114,12 +118,17 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Punch(class<Actor> payload = 'BIO_MeleeHit',
-		uint hitCount = 1, float range = DEFMELEERANGE,
-		ECustomPunchFlags flags = CPF_NONE, sound hitSound = "bio/punch/hit/0",
-		sound missSound = "")
+	BIO_WeaponPipelineBuilder Punch(
+		class<Actor> payload = 'BIO_MeleeHit',
+		uint hitCount = 1,
+		float range = DEFMELEERANGE,
+		ECustomPunchFlags flags = CPF_NONE,
+		sound hitSound = "bio/punch/hit/0",
+		sound missSound = "",
+		class<BIO_FireFunc_Punch> subclass = 'BIO_FireFunc_Punch'
+	)
 	{
-		let fireFunc = new('BIO_FireFunc_Punch');
+		let fireFunc = BIO_FireFunc_Punch(new(subclass));
 		Pipeline.FireFunctor = fireFunc;
 		fireFunc.Range = range;
 		fireFunc.HitSound = hitSound;
@@ -131,10 +140,14 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder BFGSpray(int rayCount = 40,
-		int minRayDmg = 49, int maxRayDmg = 87)
+	BIO_WeaponPipelineBuilder BFGSpray(
+		int rayCount = 40,
+		int minRayDmg = 49,
+		int maxRayDmg = 87,
+		class<BIO_FireFunc_BFGSpray> subclass = 'BIO_FireFunc_BFGSpray'
+	)
 	{
-		Pipeline.FireFunctor = new('BIO_FireFunc_BFGSpray');
+		Pipeline.FireFunctor = BIO_FireFunc_BFGSpray(new(subclass));
 		Pipeline.Payload = 'BIO_BFGExtra';
 		Pipeline.ShotCount = rayCount;
 		return self;

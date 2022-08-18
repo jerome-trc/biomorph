@@ -24,16 +24,14 @@ class BIO_BreachingAxe : BIO_Weapon
 
 	override void SetDefaults()
 	{
-		let fireFunc = new('BIO_FireFunc_Axe');
-		fireFunc.MissSound = "bio/weap/whoosh";
-		fireFunc.HitSound = "*fist";
-		fireFunc.Range = DEFMELEERANGE * 1.5;
-
 		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
-				.FireFunctor(fireFunc)
-				.Payload('BIO_MeleeHit')
-				.ShotCount(1)
+				.Punch(
+					range: DEFMELEERANGE * 1.5,
+					hitSound: "*fist",
+					missSound: "bio/weap/whoosh",
+					subclass: 'BIO_FireFunc_Axe'
+				)
 				.RandomDamage(60, 65)
 				.Alert(256.0)
 				.Build()

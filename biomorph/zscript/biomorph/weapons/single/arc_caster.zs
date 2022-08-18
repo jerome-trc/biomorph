@@ -44,11 +44,13 @@ class BIO_ArcCaster : BIO_Weapon
 					'BIO_ElectricPuff',
 					flags: RGF_FULLBRIGHT,
 					range: 512.0,
+					color1: "",
 					color2: "LightSteelBlue",
-					maxDiff: 30.0,
+					maxDiff: 25.0,
 					particleDuration: 1,
-					particleSparsity: 0.1,
-					particleDriftSpeed: 0.0
+					particleSparsity: 0.75,
+					particleDriftSpeed: 0.0,
+					subclass: 'BIO_FireFunc_ElectricArc'
 				)
 				.X1D8Damage(4)
 				.Spread(3.0, 3.0)
@@ -177,5 +179,31 @@ extend class BIO_ArcCaster
 			}
 		}
 		Stop;
+	}
+}
+
+class BIO_FireFunc_ElectricArc : BIO_FireFunc_Rail
+{
+	override Actor Invoke(BIO_Weapon weap, in out BIO_ShotData shotData) const
+	{
+		FRailParams p;
+		p.Puff = null;
+		p.SpawnClass = null;
+		p.Damage = 0;
+		p.Offset_XY = 0;
+		p.Offset_Z = 0;
+		p.Distance = 8192.0;
+		p.AngleOffset = 0.0;
+		p.PitchOffset = 0.0;
+		p.Flags = RGF_FULLBRIGHT | RGF_SILENT;
+		p.Color1 = color("");
+		p.Color2 = color("DodgerBlue");
+		p.MaxDiff = 25.0;
+		p.Duration = 1;
+		p.Sparsity = 0.75;
+		p.Drift = 0.0;
+		weap.Owner.RailAttack(p);
+
+		return super.Invoke(weap, shotData);
 	}
 }
