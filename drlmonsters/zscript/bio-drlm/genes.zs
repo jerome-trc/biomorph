@@ -5,7 +5,7 @@ class BIORLM_MGene_Overmind : BIO_ModifierGene
 	Default
 	{
 		Tag "$BIORLM_MGENE_OVERMIND_TAG";
-		Inventory.Icon 'GEN5B0';
+		Inventory.Icon 'GEN1B0';
 		Inventory.PickupMessage "$BIORLM_MGENE_OVERMIND_PKUP";
 		BIO_Gene.Limit 1;
 		BIO_Gene.LockOnCommit true;
@@ -17,7 +17,7 @@ class BIORLM_MGene_Overmind : BIO_ModifierGene
 	States
 	{
 	Spawn:
-		GEN5 B 6;
+		GEN1 B 6;
 		#### # 6 Bright Light("BIO_MutaGene_Cyan");
 		Loop;
 	}
@@ -98,7 +98,7 @@ class BIORLM_WAfx_Overmind : BIO_WeaponAffix
 	final override void OnTick(BIO_Weapon weap)
 	{
 		if (Random(0, 20) == 0)
-			weap.BIO_FireBullet(0.0, 0.0, 1, (0), 'BIO_PainPuff');
+			weap.BIO_FireBullet('BIO_PainPuff', 0, 0.0, 0.0);
 	}
 
 	final override void BeforeAllShots(BIO_Weapon weap, in out BIO_ShotData shotData)
@@ -168,7 +168,7 @@ class BIORLM_MGene_Tristar : BIO_ModifierGene
 	Default
 	{
 		Tag "$BIORLM_MGENE_TRISTAR_TAG";
-		Inventory.Icon 'GEN5A0';
+		Inventory.Icon 'GEN1A0';
 		Inventory.PickupMessage "$BIORLM_MGENE_TRISTAR_PKUP";
 		BIO_Gene.Limit 1;
 		BIO_Gene.Summary "$BIORLM_WMOD_TRISTAR_SUMM";
@@ -179,7 +179,7 @@ class BIORLM_MGene_Tristar : BIO_ModifierGene
 	States
 	{
 	Spawn:
-		GEN5 A 6;
+		GEN1 A 6;
 		#### # 6 Bright Light("BIO_MutaGene_Blue");
 		Loop;
 	}
@@ -200,17 +200,26 @@ class BIORLM_WMod_Tristar : BIO_WeaponModifier
 	{
 		weap.AmmoUse1 *= 0.375; // e.g. 40 becomes 15
 
-		let ftg = weap.FireTimeGroups[0];
+		for (uint i = 0; i < weap.OpMode.FireTimeGroups.Size(); i++)
+		{
+			let ftg = weap.OpMode.FireTimeGroups[i];
 
-		if (ftg.TotalTime() > 36)
-			ftg.SetTotalTime(36);
+			if (ftg.IsAuxiliary())
+				continue;
+			if (ftg.TotalTime() > 36)
+				ftg.SetTotalTime(36);
+		}
 
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
 			let ppl = weap.Pipelines[i];
 
 			ppl.FireFunctor = new('BIORLM_FireFunc_Tristar').Init();
-			ppl.Damage = new('BIO_DmgFunc_XTimesRand').Init(8, 1, 8);
+			let dmg = new('BIO_DmgBase_XTimesRand');
+			dmg.Multiplier = 8;
+			dmg.MinRandom = 1;
+			dmg.MaxRandom = 8;
+			ppl.DamageBase = dmg;
 			ppl.Payload = 'BIORLM_TristarBall';
 			ppl.ShotCount = 3;
 			ppl.HSpread = 15.0;
@@ -278,7 +287,7 @@ class BIORLM_FireFunc_Tristar : BIO_FireFunc_Projectile
 		return super.Invoke(weap, shotData);
 	}
 
-	final override string Summary(
+	final override string Description(
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef
 	) const
