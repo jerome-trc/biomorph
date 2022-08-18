@@ -3,7 +3,7 @@ class BIO_AGene_ToggleConnected : BIO_ActiveGene
 	Default
 	{
 		Tag "$BIO_AGENE_TOGGLECONNECTED_TAG";
-		Inventory.Icon 'GEN4A0';
+		Inventory.Icon 'GENZA0';
 		Inventory.PickupMessage "$BIO_AGENE_TOGGLECONNECTED_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
 		BIO_Gene.Limit 1;
@@ -13,7 +13,7 @@ class BIO_AGene_ToggleConnected : BIO_ActiveGene
 	States
 	{
 	Spawn:
-		GEN4 A 6;
+		GENZ A 6;
 		#### # 6 Bright Light("BIO_MutaGene_LightRed");
 		Loop;
 	}

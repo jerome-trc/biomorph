@@ -3,7 +3,7 @@ class BIO_SGene_AddEast : BIO_SupportGene
 	Default
 	{
 		Tag "$BIO_SGENE_ADDEAST_TAG";
-		Inventory.Icon 'GEN1B0';
+		Inventory.Icon 'GENXB0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDEAST_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_Gene.Summary "$BIO_MODSUP_ADDEAST_SUMM";
@@ -12,7 +12,7 @@ class BIO_SGene_AddEast : BIO_SupportGene
 	States
 	{
 	Spawn:
-		GEN1 B 6;
+		GENX B 6;
 		#### # 6 Bright Light("BIO_MutaGene_Green");
 		Loop;
 	}
@@ -53,7 +53,7 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 	Default
 	{
 		Tag "$BIO_SGENE_ADDNORTH_TAG";
-		Inventory.Icon 'GEN1A0';
+		Inventory.Icon 'GENXA0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDNORTH_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_Gene.Summary "$BIO_MODSUP_ADDNORTH_SUMM";
@@ -62,7 +62,7 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 	States
 	{
 	Spawn:
-		GEN1 A 6;
+		GENX A 6;
 		#### # 6 Bright Light("BIO_MutaGene_Green");
 		Loop;
 	}
@@ -103,7 +103,7 @@ class BIO_SGene_AddSouth : BIO_SupportGene
 	Default
 	{
 		Tag "$BIO_SGENE_ADDSOUTH_TAG";
-		Inventory.Icon 'GEN1C0';
+		Inventory.Icon 'GENXC0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDSOUTH_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_Gene.Summary "$BIO_MODSUP_ADDSOUTH_SUMM";
@@ -112,7 +112,7 @@ class BIO_SGene_AddSouth : BIO_SupportGene
 	States
 	{
 	Spawn:
-		GEN1 C 6;
+		GENX C 6;
 		#### # 6 Bright Light("BIO_MutaGene_Green");
 		Loop;
 	}
@@ -153,7 +153,7 @@ class BIO_SGene_AddWest : BIO_SupportGene
 	Default
 	{
 		Tag "$BIO_SGENE_ADDWEST_TAG";
-		Inventory.Icon 'GEN1D0';
+		Inventory.Icon 'GENXD0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDWEST_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_Gene.Summary "$BIO_MODSUP_ADDWEST_SUMM";
@@ -162,7 +162,7 @@ class BIO_SGene_AddWest : BIO_SupportGene
 	States
 	{
 	Spawn:
-		GEN1 D 6;
+		GENX D 6;
 		#### # 6 Bright Light("BIO_MutaGene_Green");
 		Loop;
 	}
