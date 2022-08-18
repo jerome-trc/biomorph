@@ -1,4 +1,23 @@
-// Spider Overmind /////////////////////////////////////////////////////////////
+class BIORLM_Loot_SpiderOvermind : BIO_LootSpawner
+{
+	final override void AssociatedMonsters(
+		in out Array<class<Actor> > types,
+		in out Array<bool> exact
+	) const
+	{
+		types.Push(BIO_Utils.TypeFromName('RLCyberneticSpiderMastermind'));
+		exact.Push(true);
+	}
+
+	final override void SpawnLoot() const
+	{
+		if (BIO_Utils.IsLegendary(Target) || Random[BIO_Loot](1, 4) == 4)
+		{
+			Actor.Spawn('BIORLM_MGene_Overmind', Pos);
+			PlayRareSound();
+		}
+	}
+}
 
 class BIORLM_MGene_Overmind : BIO_ModifierGene
 {
@@ -161,145 +180,92 @@ class BIORLM_WAfx_Overmind : BIO_WeaponAffix
 	}
 }
 
-// Tristar /////////////////////////////////////////////////////////////////////
-
-class BIORLM_MGene_Tristar : BIO_ModifierGene
+class BIORLM_OvermindPlasma : BIO_FastProjectile
 {
 	Default
 	{
-		Tag "$BIORLM_MGENE_TRISTAR_TAG";
-		Inventory.Icon 'GEN1A0';
-		Inventory.PickupMessage "$BIORLM_MGENE_TRISTAR_PKUP";
-		BIO_Gene.Limit 1;
-		BIO_Gene.Summary "$BIORLM_WMOD_TRISTAR_SUMM";
-		BIO_ModifierGene.ModType 'BIORLM_WMod_Tristar';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
+		+THRUGHOST
+		+SEEKERMISSILE
+
+		Alpha 0.95;
+		DeathSound "";
+		Height 6;
+		Radius 6;
+		RenderStyle 'Add';
+		Scale 0.15;
+		SeeSound "";
+		Speed 60;
+		Tag "$BIORLM_OVERMINDPLASMA_TAG";
+		BIO_FastProjectile.PluralTag "$BIORLM_OVERMINDPLASMA_TAG_PLURAL";
 	}
 
 	States
-	{
-	Spawn:
-		GEN1 A 6;
-		#### # 6 Bright Light("BIO_MutaGene_Blue");
+    {
+    Spawn:
+        TNT1 A 0;
+		TNT1 A 0 A_StartSound("spiderovermind/plasma", CHAN_AUTO, attenuation: 0.6);
+    SpawnLoop:
+        TNT1 A 1;
+		TNT1 A 0
+		{
+			A_SpawnItemEx('RLSpiderOvermindPlasmaTrail',
+				(0.01 * Vel.X) / -35.0,
+				-(0.01 * Vel.Y) / -35.0,
+				2.0 + (0.01 * Vel.Z) / -35.0,
+				flags: SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION
+			);
+
+			static const class<Actor> TRAIL_TYPES[] = {
+				'RLSpiderOvermindPlasmaTrail2',
+				'RLSpiderOvermindPlasmaTrail3',
+				'RLSpiderOvermindPlasmaTrail4',
+				'RLSpiderOvermindPlasmaTrail5',
+				'RLSpiderOvermindPlasmaTrail6',
+				'RLSpiderOvermindPlasmaTrail7',
+				'RLSpiderOvermindPlasmaTrail8',
+				'RLSpiderOvermindPlasmaTrail9',
+				'RLSpiderOvermindPlasmaTrail10',
+				'RLSpiderOvermindPlasmaTrail11',
+				'RLSpiderOvermindPlasmaTrail12',
+				'RLSpiderOvermindPlasmaTrail13',
+				'RLSpiderOvermindPlasmaTrail14',
+				'RLSpiderOvermindPlasmaTrail15',
+				'RLSpiderOvermindPlasmaTrail16',
+				'RLSpiderOvermindPlasmaTrail17'
+			};
+
+			for (uint i = 1; i < 16; i++)
+			{
+				A_SpawnItemEx(TRAIL_TYPES[i - 1],
+					(float(i) * Vel.X) / -35.0,
+					-(float(i) * Vel.Y) / -35.0,
+					2.0 + (0.01 * Vel.Z) / -35.0,
+					flags: SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION
+				);
+			}
+		}
 		Loop;
-	}
-
-	final override bool CanGenerate() const { return false; }
-}
-
-class BIORLM_WMod_Tristar : BIO_WeaponModifier
-{
-	final override bool, string Compatible(BIO_GeneContext context) const
-	{
-		return	
-			context.Weap.GetClass() is 'BIO_BFG',
-			"$BIO_WMOD_INCOMPAT_NOTBFG";
-	}
-
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
-	{
-		weap.AmmoUse1 *= 0.375; // e.g. 40 becomes 15
-
-		for (uint i = 0; i < weap.OpMode.FireTimeGroups.Size(); i++)
-		{
-			let ftg = weap.OpMode.FireTimeGroups[i];
-
-			if (ftg.IsAuxiliary())
-				continue;
-			if (ftg.TotalTime() > 36)
-				ftg.SetTotalTime(36);
-		}
-
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
-		{
-			let ppl = weap.Pipelines[i];
-
-			ppl.FireFunctor = new('BIORLM_FireFunc_Tristar').Init();
-			let dmg = new('BIO_DmgBase_XTimesRand');
-			dmg.Multiplier = 8;
-			dmg.MinRandom = 1;
-			dmg.MaxRandom = 8;
-			ppl.DamageBase = dmg;
-			ppl.Payload = 'BIORLM_TristarBall';
-			ppl.ShotCount = 3;
-			ppl.HSpread = 15.0;
-
-			let func = ppl.GetSplashFunctor();
-
-			if (func != null)
-			{
-				func.Damage += 32;
-				func.Radius += 96;
-			}
-			else
-			{
-				ppl.SetSplash(32, 96);
-			}
-
-			for (uint j = ppl.PayloadFunctors.OnDeath.Size() - 1; j >= 0; j--)
-			{
-				if (ppl.PayloadFunctors.OnDeath[j] is 'BIO_PLDF_BFGSpray')
-					ppl.PayloadFunctors.OnDeath.Delete(j);
-			}
-		}
-
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext _) const
-	{
-		return Summary();
-	}
-
-	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
-	{
-		return
-			BIO_WCMF_AMMOUSE_DEC | BIO_WCMF_FIRETIME_DEC,
-			BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_DAMAGE_DEC | BIO_WPMF_SHOTCOUNT_INC |
-			BIO_WPMF_SPLASHRADIUS_INC | BIO_WPMF_SPLASHDAMAGE_INC;
-	}
-
-	final override class<BIO_ModifierGene> GeneType() const
-	{
-		return 'BIORLM_MGene_Tristar';
-	}
-}
-
-class BIORLM_FireFunc_Tristar : BIO_FireFunc_Projectile
-{
-	final override Actor Invoke(BIO_Weapon weap, in out BIO_ShotData shotData) const
-	{
-		if (shotData.Count % 2 == 0) // Even fire count
-		{
-			let ang = shotData.HSpread;
-			let h = shotData.Count / 2;
-			if (shotData.Number - h >= 0) shotData.Number++;
-			shotData.Angle += ((ang / float(h)) * (shotData.Number - h));
-		}
-		else // Odd fire count
-		{
-			let ang = shotData.HSpread * 2.0;
-			let h = shotData.Count - 1;
-			shotData.Angle += (shotData.Number - (h / 2)) * (ang / float(h));
-		}
-
-		shotData.HSpread = 0.0;
-		return super.Invoke(weap, shotData);
-	}
-
-	final override string Description(
-		readOnly<BIO_WeaponPipeline> ppl,
-		readOnly<BIO_WeaponPipeline> pplDef
-	) const
-	{
-		return String.Format(
-			StringTable.Localize("$BIORLM_FIREFUNC_TRISTAR"),
-			BIO_Utils.StatFontColor(ppl.ShotCount, pplDef.ShotCount),
-			ppl.ShotCount,
-			ppl.Payload != pplDef.Payload ?
-				Biomorph.CRESC_STATMODIFIED :
-				Biomorph.CRESC_STATDEFAULT,
-			BIO_Utils.PayloadTag(ppl.Payload, ppl.ShotCount)
-		);
-	}
+    Death:
+		TNT1 A 0 A_ProjectileDeath;
+		TNT1 A 0 A_Jump(25, 'TimeToBeAnnoying');
+		Goto DeathAnimation;
+    DeathAnimation:
+		TNT1 A 0 A_StartSound("spiderovermind/plasmaimpact", CHAN_AUTO, attenuation: 0.8);
+        BBB3 ABCDE 4 Bright;
+        Stop;
+    TimeToBeAnnoying:
+		TNT1 A 0 A_JumpIfTargetInLOS('CanSeeTracer', 0, JLOSF_PROJECTILE, 256);
+		TNT1 A 0 A_RearrangePointers(AAPTR_DEFAULT, AAPTR_DEFAULT, AAPTR_NULL);
+		TNT1 A 0 A_SeekerMissile(0.0, 0.0, SMF_LOOK, 256, 4);
+		TNT1 A 0 A_Stop;
+		TNT1 A 0 A_SeekerMissile(0.0, 0.0, SMF_LOOK, 256, 4);
+		TNT1 A 0 A_Stop;
+		TNT1 A 0 A_JumpIfTargetInLOS('CanSeeTracer', 0, JLOSF_PROJECTILE, 256);
+		Goto DeathAnimation;
+    TimeToBeAnnoying:
+		TNT1 A 0 A_StartSound("rlmonsters/laserhit", CHAN_AUTO, attenuation: 1.5);
+		// (Yholl): I would be greatly amused if it jumped more than once
+		TNT1 A 0 A_SpawnProjectile('RLSpiderOvermindPlasma2', 0,0,0, CMF_TRACKOWNER, 0, AAPTR_TRACER);
+        Stop;
+    }
 }
