@@ -196,7 +196,7 @@ extend class BIO_Player
 		GiveRandomStartingPistol();
 	}
 
-	final override int TakeSpecialDamage(
+	override int TakeSpecialDamage(
 		Actor inflictor, Actor source, int damage, name dmgType
 	)
 	{
