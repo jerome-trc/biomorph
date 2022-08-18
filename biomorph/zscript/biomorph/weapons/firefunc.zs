@@ -11,17 +11,7 @@ class BIO_FireFunctor play abstract
 {
 	abstract Actor Invoke(BIO_Weapon weap, in out BIO_ShotData shotData) const;
 
-	virtual void GetDamageValues(in out Array<int> vals) const {}
-	virtual void SetDamageValues(in out Array<int> vals) {}
-
-	uint DamageValueCount() const
-	{
-		Array<int> dmgVals;
-		GetDamageValues(dmgVals);
-		return dmgVals.Size();
-	}
-
-	abstract string Summary(
+	abstract string Description(
 		readOnly<BIO_WeaponPipeline> pipeline,
 		readOnly<BIO_WeaponPipeline> pipelineDef
 	) const;
@@ -57,7 +47,7 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 		return self;
 	}
 
-	override string Summary(
+	override string Description(
 		readOnly<BIO_WeaponPipeline> pipeline,
 		readOnly<BIO_WeaponPipeline> pipelineDef
 	) const
@@ -87,32 +77,22 @@ class BIO_FireFunc_Projectile : BIO_FireFunctor
 	}
 }
 
-const BULLET_ALWAYS_SPREAD = -1;
-const BULLET_ALWAYS_ACCURATE = 0;
-const BULLET_FIRST_ACCURATE = 1;
-
 class BIO_FireFunc_Bullet : BIO_FireFunctor
 {
-	private int AccuracyType, Flags;
+	double Range;
 
 	override Actor Invoke(BIO_Weapon weap, in out BIO_ShotData shotData) const
 	{
-		return weap.BIO_FireBullet(shotData.HSpread, shotData.VSpread,
-			AccuracyType, shotData.Damage, shotData.Payload, Flags);
+		return weap.BIO_FireBullet(
+			shotData.Payload,
+			shotData.Damage,
+			shotData.Angle + FRandom(-shotData.HSpread, shotData.HSpread),
+			shotData.Pitch + FRandom(-shotData.VSpread, shotData.VSpread),
+			Range
+		);
 	}
 
-	void AlwaysSpread() { AccuracyType = BULLET_ALWAYS_SPREAD; }
-	void AlwaysAccurate() { AccuracyType = BULLET_ALWAYS_ACCURATE; }
-	void FirstAccurate() { AccuracyType = BULLET_FIRST_ACCURATE; }
-
-	BIO_FireFunc_Bullet Setup(int accType = BULLET_ALWAYS_SPREAD, int flagArg = 0)
-	{
-		AccuracyType = accType;
-		Flags = flagArg;
-		return self;
-	}
-
-	override string Summary(
+	override string Description(
 		readOnly<BIO_WeaponPipeline> pipeline,
 		readOnly<BIO_WeaponPipeline> pipelineDef
 		) const
@@ -132,10 +112,7 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 
 	override BIO_FireFunctor Copy() const
 	{
-		let ret = new('BIO_FireFunc_Bullet');
-		ret.AccuracyType = AccuracyType;
-		ret.Flags = Flags;
-		return ret;
+		return new('BIO_FireFunc_Bullet');
 	}
 
 	override BIO_FireFunctorCapabilities Capabilities() const
@@ -146,67 +123,57 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 
 class BIO_FireFunc_Rail : BIO_FireFunctor
 {
-	color Color1, Color2;
 	ERailFlags Flags;
-	int ParticleDuration, SpiralOffset, PierceLimit;
-	double MaxDiff, Range, ParticleSparsity, ParticleDriftSpeed;
+	int PierceLimit;
+	double Range;
+	// Aesthetic
+	color Color1, Color2;
+	int ParticleDuration, SpiralOffset;
+	double MaxDiff, ParticleSparsity, ParticleDriftSpeed;
 
 	override Actor Invoke(BIO_Weapon weap, in out BIO_ShotData shotData) const
 	{
-		class<Actor> puff_t = null, spawnClass = null;
+		class<Actor> puff_t = null, spawn_t = null;
 
 		if (shotData.Payload is 'BIO_RailPuff')
 		{
 			puff_t = shotData.Payload;
-			spawnClass = GetDefaultByType(
-				(class<BIO_RailPuff>)(shotData.Payload)).SpawnClass;
+
+			spawn_t = GetDefaultByType(
+				(class<BIO_RailPuff>)(shotData.Payload)
+			).SpawnClass;
 		}
 		else if (shotData.Payload is 'BIO_RailSpawn')
 		{
-			spawnClass = shotData.Payload;
+			spawn_t = shotData.Payload;
+
 			puff_t = GetDefaultByType(
-				(class<BIO_RailSpawn>)(shotData.Payload)).PuffType;
+				(class<BIO_RailSpawn>)(shotData.Payload)
+			).PuffType;
 		}
 
-		weap.BIO_RailAttack(shotData.Damage,
-			spawnOffs_xy: shotData.Angle,
-			color1: Color1,
-			color2: Color2,
-			flags: Flags,
-			maxDiff: MaxDiff,
-			puff_t: puff_t,
-			spread_xy: shotData.HSpread,
-			spread_z: shotData.VSpread,
-			range: Range,
-			duration: ParticleDuration,
-			sparsity: ParticleSparsity,
-			driftSpeed: ParticleDriftSpeed,
-			spawnClass: spawnClass,
-			spawnOffs_z: shotData.Pitch
+		return weap.BIO_RailAttack(
+			puff_t,
+			spawn_t,
+			shotData.Damage,
+			0.0,
+			0.0,
+			Range,
+			shotData.Angle + FRandom(-shotData.HSpread, shotData.HSpread),
+			shotData.Pitch + FRandom(-shotData.VSpread, shotData.VSpread),
+			Flags,
+			0,
+			Color1,
+			Color2,
+			MaxDiff,
+			ParticleDuration,
+			ParticleSparsity,
+			ParticleDriftSpeed,
+			SpiralOffset
 		);
-
-		return null;
 	}
 
-	BIO_FireFunc_Rail Setup(color color1 = 0, color color2 = 0,
-		ERailFlags flags = RGF_NONE, double maxDiff = 0.0, double range = 0.0,
-		int duration = 0, double sparsity = 1.0, double driftSpeed = 1.0,
-		int spiralOffs = 270)
-	{
-		self.Color1 = color1;
-		self.Color2 = color2;
-		self.Flags = flags;
-		self.MaxDiff = maxDiff;
-		self.Range = range;
-		self.ParticleDuration = duration;
-		self.ParticleSparsity = sparsity;
-		self.ParticleDriftSpeed = driftSpeed;
-		self.SpiralOffset = spiralOffs;
-
-		return self;
-	}
-
-	override string Summary(
+	override string Description(
 		readOnly<BIO_WeaponPipeline> pipeline,
 		readOnly<BIO_WeaponPipeline> pipelineDef
 	) const
@@ -315,7 +282,7 @@ class BIO_FireFunc_Punch : BIO_FireFunc_Melee
 		return weap.BIO_Punch(shotData, Range, Lifesteal, HitSound, MissSound, Flags);
 	}
 
-	override string Summary(
+	override string Description(
 		readOnly<BIO_WeaponPipeline> pipeline,
 		readOnly<BIO_WeaponPipeline> pipelineDef
 	) const
@@ -350,7 +317,7 @@ class BIO_FireFunc_Saw : BIO_FireFunc_Melee
 		return null;
 	}
 
-	override string Summary(
+	override string Description(
 		readOnly<BIO_WeaponPipeline> pipeline,
 		readOnly<BIO_WeaponPipeline> pipelineDef
 	) const
@@ -380,7 +347,7 @@ class BIO_FireFunc_BFGSpray : BIO_FireFunctor
 		return weap.BIO_BFGSpray(shotData);
 	}
 
-	final override string Summary(
+	final override string Description(
 		readOnly<BIO_WeaponPipeline> pipeline,
 		readOnly<BIO_WeaponPipeline> pipelineDef
 	) const

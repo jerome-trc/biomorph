@@ -171,7 +171,7 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 			Affected.Push(compat);
 
 			if (compat)
-				ppl.MultiplyAllDamage(1.2);
+				ppl.DamageEffects.Push(BIO_DmgFx_Multi.Create(1.2));
 		}
 
 		return "";

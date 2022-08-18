@@ -68,9 +68,9 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 				continue;
 
 			let ff = new('BIO_FireFunc_SmartAim');
-			ff.Setup();
 			ff.Init(wafx);
 			ppl.FireFunctor = ff;
+			ppl.PayloadFunctors.Travel.Push(new('BIO_PTF_Smart'));
 		}
 
 		return "";
@@ -202,7 +202,6 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 		proj.BounceFactor = 1.0;
 		proj.WallBounceFactor = 1.0;
 		proj.Tracer = tgt;
-		proj.Functors.Travel.Push(new('BIO_PTF_Smart'));
 	}
 
 	final override void RenderOverlay(BIO_RenderContext context) const

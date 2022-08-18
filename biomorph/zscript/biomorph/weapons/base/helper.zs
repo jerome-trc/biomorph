@@ -172,10 +172,10 @@ extend class BIO_Weapon
 			Owner.FindInventory('PowerInfiniteAmmo', true) != null;
 	}
 
-	bool DealsAnyDamage() const
+	bool DealsHitDamage() const
 	{
 		for (uint i = 0; i < Pipelines.Size(); i++)
-			if (Pipelines[i].DealsAnyDamage())
+			if (Pipelines[i].DealsHitDamage())
 				return true;
 
 		return false;

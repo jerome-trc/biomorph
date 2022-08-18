@@ -137,19 +137,17 @@
 	BIO_FIREFUNC_BFGSPRAY =
 		"\c[MidGrey]Fires %s%d \c[MidGrey]BFG rays";
 
-	BIO_DMGFUNC_RAND =
+	BIO_DMGBASE_RANGE =
 		"\c[MidGrey]Damage: %s%d\c[MidGrey] \cu-\c[MidGrey] %s%d";
-	BIO_DMGFUNC_1DX =
-		"\c[MidGrey]Damage: %s%d\c[MidGrey] x (1 - %d)";
-	BIO_DMGFUNC_XTIMESRAND =
+	BIO_DMGBASE_XTIMESRAND =
 		"\c[MidGrey]Damage: %s%d \c[MidGrey]x (%s%d \c[MidGrey]- %s%d\c[MidGrey])";
-	BIO_DMGFUNC_XPLUS1D3 =
-		"\c[MidGrey]Damage: %s%d \c[MidGrey]+ (1 - 3)";
-	BIO_DMGFUNC_RANDOMPICK =
+	BIO_DMGBASE_XPLUSRAND =
+		"\c[MidGrey]Damage: %s%d \c[MidGrey]+ (%s%d \c[MidGrey]- %s%d\c[MidGrey])";
+	BIO_DMGBASE_RANDOMPICK =
 		"\c[MidGrey]Damage: \c[MidGrey](";
-	BIO_DMGFUNC_SINGLE =
+	BIO_DMGBASE_SINGLE =
 		"\c[MidGrey]Damage: %s%d";
-	BIO_DMGFUNC_NOOP =
+	BIO_DMGBASE_NOOP =
 		"\c[MidGrey]Deals no direct hit damage";
 
 // Weapons (tags, obituaries, pickup strings) //////////////////////////////////
@@ -440,7 +438,7 @@
 		"\c[White]All splash damage is converted into direct hit damage\n"
 		"\c[White]Any pre-existing shrapnel is lost";
 
-	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]20% of minimum damage added";
+	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]Damage increased by 10%";
 	BIO_WMOD_DAMAGEADD_DESC = "\c[White]Damage%s: \c[Green]+%d";
 
 	BIO_MGENE_DEMONSLAYER_TAG = "\c[MGene]Demonslayer\c[White] Gene\c-";

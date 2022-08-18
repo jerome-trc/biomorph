@@ -6,7 +6,7 @@ class BIO_WMod_BerserkDamage : BIO_WeaponModifier
 	{
 		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
 			if (context.Weap.Pipelines[i].IsMelee() &&
-				context.Weap.Pipelines[i].DealsAnyDamage())
+				context.Weap.Pipelines[i].DealsHitDamage())
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_NOMELEEDAMAGE";
@@ -76,26 +76,19 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		return context.Weap.DealsAnyDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
+		return context.Weap.DealsHitDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			let ppl = weap.Pipelines[i];
-			let dmg = DamageIncrease(ppl.AsConst());
-
-			for (uint i = 0; i < context.NodeCount; i++)
-				ppl.AddToAllDamageValues(dmg);
+			weap.Pipelines[i].DamageEffects.Push(
+				BIO_DmgFx_Multi.Create(1.0 + (float(context.NodeCount) * 0.1))
+			);
 		}
 
 		return "";
-	}
-
-	private static int DamageIncrease(readOnly<BIO_WeaponPipeline> ppl)
-	{
-		return Max(0, int(Floor(float(ppl.GetMinDamage()) * 0.2)));
 	}
 
 	final override string Description(BIO_GeneContext context) const
@@ -104,17 +97,12 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 
 		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
 		{
-			let dmg = DamageIncrease(context.Weap.Pipelines[i].AsConst());
-
-			if (dmg == 0)
-				continue;
-
 			let qual = context.Weap.Pipelines[i].GetTagAsQualifier();
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_DAMAGEADD_DESC"),
 				qual.Length() > 0 ? " " .. qual : "",
-				dmg * context.NodeCount
+				10 * context.NodeCount
 			);
 			ret = ret .. "\n";
 		}
@@ -139,7 +127,7 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		return context.Weap.DealsAnyDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
+		return context.Weap.DealsHitDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
@@ -237,7 +225,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 		if (context.Weap.Magazineless())
 			return false, "$BIO_WMOD_INCOMPAT_NOMAGAZINES";
 
-		if (!context.Weap.DealsAnyDamage())
+		if (!context.Weap.DealsHitDamage())
 			return false, "$BIO_WMOD_INCOMPAT_NODAMAGE";
 
 		return
@@ -270,7 +258,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 			else if (!secondary && ppl.UsesSecondaryAmmo())
 				continue;
 
-			if (!ppl.DealsAnyDamage())
+			if (!ppl.DealsHitDamage())
 				continue;
 
 			return true;
@@ -310,7 +298,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 				if (ppl.UsesSecondaryAmmo())
 					continue;
 
-				ppl.MultiplyAllDamage(dmgf);
+				ppl.DamageEffects.Push(BIO_DmgFx_Multi.Create(dmgf));
 			}
 		}
 
@@ -341,7 +329,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 				if (!ppl.UsesSecondaryAmmo())
 					continue;
 
-				ppl.MultiplyAllDamage(dmgf);
+				ppl.DamageEffects.Push(BIO_DmgFx_Multi.Create(dmgf));
 			}
 		}
 
@@ -426,7 +414,7 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 		readOnly<BIO_Weapon> weap,
 		readOnly<BIO_WeaponPipeline> ppl)
 	{
-		if (!ppl.DealsAnyDamage())
+		if (!ppl.DealsHitDamage())
 			return -1;
 
 		if (ppl.UsesPrimaryAmmo() && weap.ShotsPerMagazine(false) < 2)
@@ -459,7 +447,7 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 				else
 					a2 = true;
 
-				ppl.MultiplyAllDamage(2.0);
+				ppl.DamageEffects.Push(BIO_DmgFx_Multi.Create(2.0));
 				PipelineDoubles[j]++;
 			}
 
@@ -559,7 +547,7 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 
 	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
 	{
-		return ppl.DealsAnySplashDamage() && ppl.ExportsDamageValues();
+		return ppl.DealsAnySplashDamage();
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
@@ -575,10 +563,10 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 			let func = weap.Pipelines[i].GetSplashFunctor();
 
 			let dmg = func.Damage / 2;
-			weap.Pipelines[i].AddToAllDamageValues(dmg);
+			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Modify.Create(dmg, true));
 			func.Damage -= dmg;
 			DamageChanges[i] += dmg;
-			
+
 			let prevRad = func.Radius;
 			func.Radius /= 2;
 			RadiusChanges[i] += (prevRad - func.Radius);

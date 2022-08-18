@@ -2,16 +2,6 @@ class BIO_ProjTravelFunctor play abstract
 {
 	abstract void Invoke(BIO_Projectile proj);
 
-	virtual void GetDamageValues(in out Array<int> damages) const {}
-	virtual void SetDamageValues(in out Array<int> damages) {}
-
-	uint DamageValueCount() const
-	{
-		Array<int> dmgVals;
-		GetDamageValues(dmgVals);
-		return dmgVals.Size();
-	}
-
 	abstract BIO_ProjTravelFunctor Copy() const;
 
 	// Context-less, universally-applicable basic information
@@ -29,16 +19,6 @@ class BIO_HitDamageFunctor play abstract
 		Actor target, in out int damage, name dmgType) const {}
 	virtual void InvokePuff(BIO_Puff puff) const {}
 
-	virtual void GetDamageValues(in out Array<int> damages) const {}
-	virtual void SetDamageValues(in out Array<int> damages) {}
-
-	uint DamageValueCount() const
-	{
-		Array<int> dmgVals;
-		GetDamageValues(dmgVals);
-		return dmgVals.Size();
-	}
-
 	abstract BIO_HitDamageFunctor Copy() const;
 
 	// Context-less, universally-applicable basic information
@@ -53,16 +33,6 @@ class BIO_PayloadDeathFunctor play abstract
 	virtual void InvokeSlow(BIO_Projectile proj) const {}
 	virtual void InvokeFast(BIO_FastProjectile proj) const {}
 	virtual void InvokePuff(BIO_Puff puff) const {}
-
-	virtual void GetDamageValues(in out Array<int> damages) const {}
-	virtual void SetDamageValues(in out Array<int> damages) {}
-
-	uint DamageValueCount() const
-	{
-		Array<int> dmgVals;
-		GetDamageValues(dmgVals);
-		return dmgVals.Size();
-	}
 
 	abstract BIO_PayloadDeathFunctor Copy() const;
 
@@ -99,40 +69,40 @@ class BIO_PLDF_Explode : BIO_PayloadDeathFunctor
 		return ret;
 	}
 
+	private void Invoke(Actor thing, BIO_WeaponPipeline ppl) const
+	{
+		// Gross hack to bypass implicit radius damage behaviour
+		let d = thing.Damage;
+		let computed = ppl.ApplyDamageEffects(Damage, Damage, Damage, false);
+		thing.SetDamage(computed);
+
+		thing.A_Explode(
+			computed,
+			Radius,
+			Flags,
+			true,
+			FullDamageDistance,
+			ShrapnelCount,
+			ShrapnelDamage,
+			'BIO_Shrapnel'
+		);
+
+		thing.SetDamage(d);
+	}
+
 	final override void InvokeSlow(BIO_Projectile proj) const
 	{
-		// Temporarily bypass `DoSpecialDamage()`
-		int d = proj.Damage;
-		proj.SetDamage(Damage);
-		proj.A_Explode(Damage, Radius, Flags, true, FullDamageDistance,
-			ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
-		proj.SetDamage(d);
+		Invoke(proj, proj.Pipeline);
 	}
 
 	final override void InvokeFast(BIO_FastProjectile proj) const
 	{
-		// Temporarily bypass `DoSpecialDamage()`
-		int d = proj.Damage;
-		proj.SetDamage(Damage);
-		proj.A_Explode(Damage, Radius, Flags, true, FullDamageDistance,
-			ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
-		proj.SetDamage(d);
+		Invoke(proj, proj.Pipeline);
 	}
 
 	final override void InvokePuff(BIO_Puff puff) const
 	{
-		puff.A_Explode(Damage, Radius, Flags, true, FullDamageDistance,
-			ShrapnelCount, ShrapnelDamage, 'BIO_Shrapnel');
-	}
-
-	final override void GetDamageValues(in out Array<int> damages) const
-	{
-		damages.Push(ShrapnelDamage);
-	}
-
-	final override void SetDamageValues(in out Array<int> damages)
-	{
-		ShrapnelDamage = damages[0];
+		Invoke(puff, puff.Pipeline);
 	}
 
 	final override BIO_PayloadDeathFunctor Copy() const
@@ -217,34 +187,32 @@ class BIO_PLDF_BFGSpray : BIO_PayloadDeathFunctor
 		return ret;
 	}
 
+	private void Invoke(Actor thing, BIO_WeaponPipeline ppl) const
+	{
+		thing.A_BFGSpray(
+			numRays: RayCount,
+			defDamage: ppl.ApplyDamageEffects(
+				Random(MinDamage, MaxDamage),
+				MinDamage,
+				MaxDamage,
+				false
+			)
+		);
+	}
+
 	final override void InvokeSlow(BIO_Projectile proj) const
 	{
-		proj.A_BFGSpray(numRays: RayCount,
-			defDamage: Random(MinDamage, MaxDamage) * proj.DamageMultiply);
+		Invoke(proj, proj.Pipeline);
 	}
 
 	final override void InvokeFast(BIO_FastProjectile proj) const
 	{
-		proj.A_BFGSpray(numRays: RayCount,
-			defDamage: Random(MinDamage, MaxDamage) * proj.DamageMultiply);
+		Invoke(proj, proj.Pipeline);
 	}
 
 	final override void InvokePuff(BIO_Puff puff) const
 	{
-		puff.A_BFGSpray(numRays: RayCount,
-			defDamage: Random(MinDamage, MaxDamage) * puff.DamageMultiply);
-	}
-
-	final override void GetDamageValues(in out Array<int> damages) const
-	{
-		damages.Push(MinDamage);
-		damages.Push(MaxDamage);
-	}
-
-	final override void SetDamageValues(in out Array<int> damages)
-	{
-		MinDamage = damages[0];
-		MaxDamage = damages[1];
+		Invoke(puff, puff.Pipeline);
 	}
 
 	final override BIO_PayloadDeathFunctor Copy() const

@@ -85,7 +85,8 @@ class Biomorph abstract
 #include "zscript/biomorph/utils/string.zs"
 
 #include "zscript/biomorph/weapons/detail.zs"
-#include "zscript/biomorph/weapons/dmgfunc.zs"
+#include "zscript/biomorph/weapons/damage_base.zs"
+#include "zscript/biomorph/weapons/damage_effect.zs"
 #include "zscript/biomorph/weapons/firefunc.zs"
 #include "zscript/biomorph/weapons/magazine.zs"
 #include "zscript/biomorph/weapons/modgraph.zs"

@@ -104,12 +104,12 @@ extend class BIO_BreachingAxe
 
 class BIO_FireFunc_Axe : BIO_FireFunc_Punch
 {
-	final override string Summary(
+	final override string Description(
 		readOnly<BIO_WeaponPipeline> ppl,
 		readOnly<BIO_WeaponPipeline> pplDef
 	) const
 	{
-		return StringTable.Localize("$BIO_FIREFUNC_AXE");
+		return "$BIO_FIREFUNC_AXE";
 	}
 }
 

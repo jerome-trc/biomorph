@@ -38,176 +38,107 @@ extend class BIO_Weapon
 		return misl;
 	}
 
-	/* 	This always returns a puff; if one of `puff_t` doesn't get spawned, a fake
+	/* `angle` and `pitch` are added to the weapon owner's angle and pitch.	
+		This always returns a puff; if one of `puff_t` doesn't get spawned, a fake
 		stand-in will be spawned in its place. This fake puff lasts 2 tics, has
 		the hit thing in its `Target` field, the real damage dealt in its `Damage` field,
 		and `puff_t`'s default damage type.
 	*/
-	Actor BIO_FireBullet(double spread_xy, double spread_z, int numBullets,
-		int bulletDmg, class<Actor> puff_t, EFireBulletsFlags flags = FBF_NONE,
-		double range = 0.0, class<Actor> missile = null,
-		double spawnHeight = 32.0, double spawnOfs_xy = 0.0)
+	Actor BIO_FireBullet(
+		class<Actor> puff_t,
+		int damage,
+		double angle,
+		double pitch,
+		double range = PLAYERMISSILERANGE // 8192.0
+	) const
 	{
-		int i = 0;
-		double bAngle = 0.0, bSlope = 0.0;
-		int laFlags = (flags & FBF_NORANDOMPUFFZ) ? LAF_NORANDOMPUFFZ : 0;
+		Actor ret = null; int realDmg = -1;
+		double bAngle = Owner.Angle + angle;
+		double bSlope = Owner.BulletSlope() + pitch;
 		FTranslatedLineTarget t;
 
-		if (range ~== 0.0) range = PLAYERMISSILERANGE;
+		[ret, realDmg] = Owner.LineAttack(
+			bAngle,
+			range,
+			bSlope,
+			damage,
+			'Hitscan', // TODO: Use `puff_t`'s default damage type?
+			puff_t,
+			LAF_NONE,
+			t
+		);
 
-		if (!(flags & FBF_NOFLASH)) BIO_Player(Owner).PlayAttacking2();
-		if (!(flags & FBF_NOPITCH)) bSlope = Owner.BulletSlope();
-
-		bAngle = Owner.Angle;
-
-		if ((numBullets == 1 && !Owner.Player.Refire) || numBullets == 0)
+		if (ret == null)
 		{
-			int damage = bulletDmg;
-
-			Actor puff = null; int realDmg = -1;
-			[puff, realDmg] = Owner.LineAttack(bAngle, range,
-				bSlope, damage, 'Hitscan', puff_t, laFlags, t);
-			
-			if (puff == null)
-			{
-				FLineTraceData ltd;
-				LineTrace(bAngle, range, bSlope, TRF_NONE, data: ltd);
-				puff = Actor.Spawn('BIO_FakePuff', ltd.HitLocation);
-				puff.DamageType = GetDefaultByType(puff_t).DamageType;
-				puff.Tracer = t.LineTarget;
-			}
-
-			puff.SetDamage(realDmg);
-
-			if (missile != null)
-			{
-				bool temp = false;
-				double ang = Owner.Angle - 90;
-				Vector2 ofs = Owner.AngleToVector(ang, spawnOfs_xy);
-				Actor proj = Owner.SpawnPlayerMissile(missile, bAngle,
-					ofs.X, ofs.Y, spawnHeight);
-
-				if (proj)
-				{
-					if (!puff)
-					{
-						temp = true;
-						puff = Owner.LineAttack(bAngle, range, bSlope, 0,
-							'Hitscan', puff_t, laFlags | LAF_NOINTERACT, t);
-					}
-					Owner.AimBulletMissile(proj, puff, flags, temp, false);
-					if (t.Unlinked)
-					{
-						// Arbitary portals will make angle and pitch calculations 
-						// unreliable. So use the angle and pitch we passed instead.
-						proj.Angle = bAngle;
-						proj.Pitch = bSlope;
-						proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
-					}
-				}
-			}
-
-			return puff;
+			FLineTraceData ltd;
+			Owner.LineTrace(bAngle, range, bSlope, TRF_NONE, data: ltd);
+			ret = Actor.Spawn('BIO_FakePuff', ltd.HitLocation);
+			ret.DamageType = GetDefaultByType(puff_t).DamageType;
+			ret.Tracer = t.LineTarget;
 		}
-		else // `numBullets` -1; all bullets spread
-		{
-			double pAngle = bAngle;
-			double slope = bSlope;
 
-			if (flags & FBF_EXPLICITANGLE)
-			{
-				pAngle += spread_xy;
-				slope += spread_z;
-			}
-			else
-			{
-				pAngle += spread_xy * Random2[cabullet]() / 255.;
-				slope += spread_z * Random2[cabullet]() / 255.;
-			}
-
-			int damage = bulletDmg;
-
-			Actor puff = null; int realDmg = -1;
-			[puff, realDmg] = Owner.LineAttack(pAngle, range, 
-				slope, damage, 'Hitscan', puff_t, laflags, t);
-
-			if (puff == null)
-			{
-				FLineTraceData ltd;
-				LineTrace(pAngle, range, slope, TRF_NONE, data: ltd);
-				puff = Actor.Spawn('BIO_FakePuff', ltd.HitLocation);
-				puff.DamageType = GetDefaultByType(puff_t).DamageType;
-				puff.Tracer = t.LineTarget;
-			}
-
-			puff.SetDamage(realDmg);
-			if (missile == null) return puff;
-
-			bool temp = false;
-			double ang = Owner.Angle - 90;
-			Vector2 ofs = Owner.AngleToVector(ang, spawnOfs_xy);
-			Actor proj = Owner.SpawnPlayerMissile(missile, bAngle, ofs.X, ofs.Y, spawnHeight);
-			
-			if (proj)
-			{
-				if (!puff)
-				{
-					temp = true;
-					puff = Owner.LineAttack(
-						bAngle, range, bSlope, 0, 'Hitscan', puff_t,
-						laFlags | LAF_NOINTERACT, t);
-				}
-				Owner.AimBulletMissile(proj, puff, flags, temp, false);
-				if (t.Unlinked)
-				{
-					// Arbitary portals will make angle and pitch calculations 
-					// unreliable. So use the angle and pitch we passed instead.
-					proj.Angle = bAngle;
-					proj.Pitch = bSlope;
-					proj.Vel3DFromAngle(proj.Speed, proj.Angle, proj.Pitch);
-				}
-			}
-
-			return puff;
-		}
+		ret.SetDamage(realDmg);
+		return ret;
 	}
 
-	void BIO_RailAttack(int damage, int spawnOffs_xy = 0, color color1 = 0,
-		color color2 = 0, int flags = 0, double maxDiff = 0,
-		class<Actor> puff_t = 'BulletPuff', double spread_xy = 0,
-		double spread_z = 0, double range = 0, int duration = 0,
-		double sparsity = 1.0, double driftSpeed = 1.0,
-		class<Actor> spawnClass = 'None', double spawnOffs_z = 0,
-		int spiraloffset = 270, int limit = 0)
+	// `angle` and `pitch` are added to the weapon owner's angle and pitch.
+	Actor BIO_RailAttack(
+		class<Actor> puff_t,
+		class<Actor> spawn_t,
+		int damage,
+		int offset_xy,
+		int offset_z,
+		double range = PLAYERMISSILERANGE, // 8192.0
+		double angle = 0.0,
+		double pitch = 0.0,
+		ERailFlags flags = RGF_NONE,
+		int pierceLimit = 0,
+		// Purely aesthetic parameters
+		color color1 = 0,
+		color color2 = 0,
+		double maxDiff = 0.0,
+		int duration = 0,
+		double sparsity = 1.0,
+		double driftSpeed = 1.0,
+		int spiralOffset = 270
+	) const
 	{
-		if (range == 0) range = 8192;
-		if (sparsity == 0) sparsity = 1.0;
-
-		if (!(flags & RGF_EXPLICITANGLE))
-		{
-			spread_xy = spread_xy * Random2[CRailgun]() / 255.0;
-			spread_z = spread_z * Random2[CRailgun]() / 255.0;
-		}
-
 		FRailParams p;
+		p.Puff = puff_t;
+		p.SpawnClass = spawn_t;
 		p.Damage = damage;
-		p.Offset_xy = spawnOffs_xy;
-		p.Offset_z = spawnOffs_z;
+		p.Offset_XY = offset_xy;
+		p.Offset_Z = offset_z;
+		p.Distance = range;
+		p.AngleOffset = angle;
+		p.PitchOffset = pitch;
+		p.Flags = flags | RGF_SILENT;
+		p.Limit = pierceLimit;
 		p.Color1 = color1;
 		p.Color2 = color2;
 		p.MaxDiff = maxDiff;
-		p.Flags = flags | RGF_SILENT;
-		p.Puff = puff_t;
-		p.AngleOffset = spread_xy;
-		p.PitchOffset = spread_z;
-		p.Distance = range;
 		p.Duration = duration;
 		p.Sparsity = sparsity;
 		p.Drift = driftSpeed;
-		p.SpawnClass = spawnClass;
-		p.SpiralOffset = spiralOffset;
-		p.Limit = limit;
 		Owner.RailAttack(p);
+
+		FLineTraceData ltd;
+
+		Owner.LineTrace(
+			Owner.Angle + angle,
+			range,
+			Owner.BulletSlope() + pitch,
+			p.Limit == 0 ? TRF_THRUACTORS : TRF_NONE,
+			offset_z,
+			offsetside: offset_xy,
+			data: ltd
+		);
+
+		ltd.HitLocation.Z += 32.0; // (Rat): ???
+		let ret = Actor.Spawn('BIO_FakePuff', ltd.HitLocation);
+		ret.Tracer = ltd.HitActor;
+		ret.SetDamage(damage);
+		return ret;
 	}
 
 	/* 	This always returns a puff; if one of `puff_t` doesn't get spawned, a fake

@@ -138,8 +138,21 @@ extend class BIO_EventHandler
 				ppl.Payload.GetClassName()
 			);
 			output.AppendFormat(
-				"\t\tDamage functor: %s\n",
-				ppl.Damage.GetClassName()
+				"\t\tDamage base functor: %s\n",
+				ppl.DamageBase.GetClassName()
+			);
+
+			for (uint j = 0; j < ppl.DamageEffects.Size(); j++)
+				output.AppendFormat(
+					"\t\tDamage effect %d: %s\n",
+					j,
+					ppl.DamageEffects[j].GetClassName()
+				);
+
+			output.AppendFormat(
+				"\t\tMinimum and maximum damage: %d - %d\n",
+				ppl.GetMinDamage(),
+				ppl.GetMaxDamage()	
 			);
 		}
 

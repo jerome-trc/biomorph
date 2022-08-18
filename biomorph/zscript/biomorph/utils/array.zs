@@ -10,6 +10,16 @@ extend class BIO_Utils
 		return ret;
 	}
 
+	static int IntArrayAverage(Array<int> arr)
+	{
+		int ret = 0;
+
+		for (uint i = 0; i < arr.Size(); i++)
+			ret += arr[i];
+
+		return ret / int(arr.Size());
+	}
+
 	// The first return value is the actual maximum.
 	// The second is the first element in the array to be the maximum.
 	static int, uint IntArrayMax(Array<int> arr)

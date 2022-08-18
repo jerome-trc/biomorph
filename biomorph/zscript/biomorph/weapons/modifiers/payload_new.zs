@@ -29,22 +29,17 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 			if (!CompatibleWithPipeline(weap.Pipelines[i].AsConst()))
 				continue;
 
-			let func = weap.Pipelines[i].GetSplashFunctor();
+			let fromSplash = weap.Pipelines[i].CombinedSplashDamage();
+			weap.Pipelines[i].DeletePayloadDeathFunctors('BIO_PLDF_Explode');
 
-			weap.Pipelines[i].FireFunctor = new('BIO_FireFunc_Bullet').Setup();
+			weap.Pipelines[i].FireFunctor = new('BIO_FireFunc_Bullet');
 			weap.Pipelines[i].Payload = 'BIO_ShotPellet';
 			weap.Pipelines[i].ShotCount *= 9;
-			weap.Pipelines[i].AddToAllDamageValues(
-				func.Damage / weap.Pipelines[i].Damage.ValueCount()
-			);
-			weap.Pipelines[i].MultiplyAllDamage(1.0 / 9.0);
+			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Modify.Create(fromSplash));
+			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Multi.Create(1.0 / 9.0));
 			weap.Pipelines[i].HSpread = 3.0;
 			weap.Pipelines[i].VSpread = 3.0;
 			weap.Pipelines[i].FireSound = "bio/puff/canistershot/fire";
-
-			weap.Pipelines[i].PayloadFunctors.OnDeath.Delete(
-				weap.Pipelines[i].PayloadFunctors.OnDeath.Find(func)
-			);
 		}
 
 		return "";
@@ -141,12 +136,12 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 				continue;
 
 			if (!weap.Pipelines[i].CanFirePuffs())
-				weap.Pipelines[i].FireFunctor = new('BIO_FireFunc_Bullet').Setup();
+				weap.Pipelines[i].FireFunctor = new('BIO_FireFunc_Bullet');
 
 			weap.Pipelines[i].Payload = 'BIO_Slug';
 			let fc = float(weap.Pipelines[i].ShotCount);
 			weap.Pipelines[i].ShotCount = 1;
-			weap.Pipelines[i].MultiplyAllDamage(fc);
+			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Multi.Create(fc));
 			weap.Pipelines[i].HSpread = 0.4;
 			weap.Pipelines[i].VSpread = 0.4;
 		}

@@ -18,7 +18,7 @@ mixin class BIO_PayloadCommon
 	meta string PluralTag;
 	property PluralTag: PluralTag;
 
-	BIO_PayloadFunctorTuple Functors;
+	BIO_WeaponPipeline Pipeline;
 
 	Default
 	{
@@ -47,9 +47,9 @@ mixin class BIO_ProjectileCommon
 	{
 		int ret1 = 0, ret2 = 0;
 
-		for (uint i = 0; i < Functors.OnDeath.Size(); i++)
+		for (uint i = 0; i < Pipeline.PayloadFunctors.OnDeath.Size(); i++)
 		{
-			let expl = BIO_PLDF_Explode(Functors.OnDeath[i]);
+			let expl = BIO_PLDF_Explode(Pipeline.PayloadFunctors.OnDeath[i]);
 
 			if (expl == null)
 				continue;
@@ -79,25 +79,23 @@ class BIO_Projectile : Actor abstract
 		BIO_Projectile.PluralTag "$BIO_ROUND_TAGS";
 	}
 
-	// Overriden so projectiles live long enough to receive their data from the
-	// weapon which fired them. If `Damage` is still at the default of -1,
-	// don't expire quite yet.
+	// Overriden so projectiles live long enough
+	// to receive their data from the weapon which fired them.
 	override int SpecialMissileHit(Actor victim)
 	{
 		// (a.k.a. the part which keeps half this mod from toppling over)
-		if (Damage <= -1)
+		if (Pipeline == null)
 			return 1; // Ignored for now
 		else
 			return super.SpecialMissileHit(victim);
 	}
 
-	// Don't multiply damage by `Random(1, 8)`.
 	final override int DoSpecialDamage(Actor target, int dmg, name dmgType)
 	{
 		int ret = Damage;
 
-		for (uint i = 0; i < Functors.HitDamage.Size(); i++)
-			Functors.HitDamage[i].InvokeSlow(
+		for (uint i = 0; i < Pipeline.PayloadFunctors.HitDamage.Size(); i++)
+			Pipeline.PayloadFunctors.HitDamage[i].InvokeSlow(
 				BIO_Projectile(self), target, ret, dmgType
 			);
 
@@ -106,12 +104,12 @@ class BIO_Projectile : Actor abstract
 
 	action void A_Travel()
 	{
-		// Got called before `Functors` could be assigned
-		if (invoker.Functors == null)
+		// Got called before `Pipeline` could be assigned
+		if (invoker.Pipeline == null)
 			return;
 
-		for (uint i = 0; i < invoker.Functors.Travel.Size(); i++)
-			invoker.Functors.Travel[i].Invoke(BIO_Projectile(self));
+		for (uint i = 0; i < invoker.Pipeline.PayloadFunctors.Travel.Size(); i++)
+			invoker.Pipeline.PayloadFunctors.Travel[i].Invoke(BIO_Projectile(self));
 	}
 
 	// Invoked before `A_ProjectileDeath()` does anything else.
@@ -123,12 +121,12 @@ class BIO_Projectile : Actor abstract
 		invoker.OnProjectileDeath();
 		bNoGravity = true;
 
-		// May have hit a surface before `Functors` could be assigned
-		if (invoker.Functors == null)
+		// May have hit a surface before `Pipeline` could be assigned
+		if (invoker.Pipeline == null)
 			return;
 
-		for (uint i = 0; i < invoker.Functors.OnDeath.Size(); i++)
-			invoker.Functors.OnDeath[i].InvokeSlow(BIO_Projectile(self));
+		for (uint i = 0; i < invoker.Pipeline.PayloadFunctors.OnDeath.Size(); i++)
+			invoker.Pipeline.PayloadFunctors.OnDeath[i].InvokeSlow(BIO_Projectile(self));
 	}
 }
 
@@ -149,8 +147,8 @@ class BIO_FastProjectile : FastProjectile abstract
 	{
 		int ret = Damage;
 
-		for (uint i = 0; i < Functors.HitDamage.Size(); i++)
-			Functors.HitDamage[i].InvokeFast(
+		for (uint i = 0; i < Pipeline.PayloadFunctors.HitDamage.Size(); i++)
+			Pipeline.PayloadFunctors.HitDamage[i].InvokeFast(
 				BIO_FastProjectile(self), target, ret, dmgType
 			);
 
@@ -165,8 +163,10 @@ class BIO_FastProjectile : FastProjectile abstract
 	{
 		invoker.OnProjectileDeath();
 
-		for (uint i = 0; i < invoker.Functors.OnDeath.Size(); i++)
-			invoker.Functors.OnDeath[i].InvokeFast(BIO_FastProjectile(self));
+		let fproj = BIO_FastProjectile(self);
+
+		for (uint i = 0; i < invoker.Pipeline.PayloadFunctors.OnDeath.Size(); i++)
+			invoker.Pipeline.PayloadFunctors.OnDeath[i].InvokeFast(fproj);
 	}
 }
 

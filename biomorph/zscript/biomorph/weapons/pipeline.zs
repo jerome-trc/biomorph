@@ -1,3 +1,8 @@
+struct BIO_DamageOutput
+{
+	int Current, Minimum, Maximum;
+}
+
 struct BIO_ShotData
 {
 	uint Pipeline;
@@ -8,7 +13,7 @@ struct BIO_ShotData
 	float HSpread, VSpread, Angle, Pitch;
 }
 
-class BIO_PayloadFunctorTuple
+struct BIO_PayloadFunctorTuple
 {
 	// Not applicable to puffs and `FastProjectile`s.
 	Array<BIO_ProjTravelFunctor> Travel;
@@ -32,14 +37,15 @@ class BIO_WeaponPipeline play
 	BIO_FireFunctor FireFunctor;
 	class<Actor> Payload;
 	uint ShotCount;
-	BIO_DamageFunctor Damage;
+	BIO_DamageBaseFunctor DamageBase;
+	Array<BIO_DamageEffect> DamageEffects;
 	float HSpread, VSpread, Angle, Pitch;
 
 	int AlertFlags;
 	double MaxAlertDistance;
 	sound FireSound;
 
-	BIO_PayloadFunctorTuple PayloadFunctors; // Should never be null.
+	BIO_PayloadFunctorTuple PayloadFunctors;
 
 	void Invoke(BIO_Weapon weap, uint pipelineIndex,
 		uint fireFactor = 1, float spreadFactor = 1.0)
@@ -57,7 +63,7 @@ class BIO_WeaponPipeline play
 		{
 			shotData.Number = i;
 			shotData.Payload = Payload;
-			shotData.Damage = Damage.Invoke();
+			shotData.Damage = ComputeDamage(true);
 			shotData.HSpread = HSpread * spreadFactor;
 			shotData.VSpread = VSpread * spreadFactor;
 			shotData.Angle = Angle;
@@ -84,7 +90,7 @@ class BIO_WeaponPipeline play
 			{
 				let sProj = BIO_Projectile(output);
 				sProj.SetDamage(shotData.Damage);
-				sProj.Functors = PayloadFunctors;
+				sProj.Pipeline = self;
 
 				for (uint i = 0; i < weap.Affixes.Size(); i++)
 					weap.Affixes[i].OnSlowProjectileFired(weap, sProj);
@@ -93,7 +99,7 @@ class BIO_WeaponPipeline play
 			{
 				let fProj = BIO_FastProjectile(output);
 				fProj.SetDamage(shotData.Damage);
-				fProj.Functors = PayloadFunctors;
+				fProj.Pipeline = self;
 
 				for (uint i = 0; i < weap.Affixes.Size(); i++)
 					weap.Affixes[i].OnFastProjectileFired(weap, fProj);
@@ -111,7 +117,11 @@ class BIO_WeaponPipeline play
 
 		ret.FireFunctor = FireFunctor.Copy();
 		ret.Payload = Payload;
-		ret.Damage = Damage.Copy();
+		ret.DamageBase = DamageBase.Copy();
+
+		for (uint i = 0; i < DamageEffects.Size(); i++)
+			ret.DamageEffects.Push(DamageEffects[i].Copy());
+
 		ret.HSpread = HSpread;
 		ret.VSpread = VSpread;
 		ret.Angle = Angle;
@@ -121,22 +131,13 @@ class BIO_WeaponPipeline play
 		ret.MaxAlertDistance = MaxAlertDistance;
 
 		ret.FireSound = FireSound;
-		ret.PayloadFunctors = new('BIO_PayloadFunctorTuple');
 
 		for (uint i = 0; i < PayloadFunctors.Travel.Size(); i++)
-		{
 			ret.PayloadFunctors.Travel.Push(PayloadFunctors.Travel[i].Copy());
-		}
-
 		for (uint i = 0; i < PayloadFunctors.HitDamage.Size(); i++)
-		{
 			ret.PayloadFunctors.HitDamage.Push(PayloadFunctors.HitDamage[i].Copy());
-		}
-
 		for (uint i = 0; i < PayloadFunctors.OnDeath.Size(); i++)
-		{
 			ret.PayloadFunctors.OnDeath.Push(PayloadFunctors.OnDeath[i].Copy());
-		}
 
 		return ret;
 	}
@@ -161,90 +162,75 @@ class BIO_WeaponPipeline play
 		return FireFunctor is 'BIO_FireFunc_Melee';
 	}
 
-	bool DealsAnyDamage() const
+	int, int, int BaseDamage() const
 	{
-		if (Damage == null)
-			return false;
-
-		return GetMinDamage() > 0;
+		int ret1 = -1, ret2 = -1, ret3 = -1;
+		[ret1, ret2, ret3] = DamageBase.Invoke();
+		return ret1, ret2, ret3;
 	}
 
-	bool ExportsDamageValues() const
+	int ComputeDamage(bool directHit) const
 	{
-		Array<int> vals;
-		GetDamageValues(vals);
-		return vals.Size() > 0;
-	}
+		BIO_DamageOutput dmg;
+		[dmg.Current, dmg.Minimum, dmg.Maximum] = DamageBase.Invoke();
 
-	void GetDamageValues(in out Array<int> damages) const
-	{
-		Damage.GetValues(damages);
-		FireFunctor.GetDamageValues(damages);
-		
-		for (uint i = 0; i < PayloadFunctors.Travel.Size(); i++)
-			PayloadFunctors.Travel[i].GetDamageValues(damages);
-		for (uint i = 0; i < PayloadFunctors.HitDamage.Size(); i++)
-			PayloadFunctors.HitDamage[i].GetDamageValues(damages);
-		for (uint i = 0; i < PayloadFunctors.OnDeath.Size(); i++)
-			PayloadFunctors.OnDeath[i].GetDamageValues(damages);
-	}
-
-	int GetMinDamage() const { return Damage.MinOutput(); }
-	int GetMaxDamage() const { return Damage.MaxOutput(); }
-	int GetAverageDamage(uint sampleSize = 200) const
-	{
-		return Damage.AverageOutput(sampleSize);
-	}
-
-	void SetDamageValues(in out Array<int> damages)
-	{
-		Damage.SetValues(damages);
-		damages.Delete(0, Damage.ValueCount());
-
-		FireFunctor.SetDamageValues(damages);
-		damages.Delete(0, FireFunctor.DamageValueCount());
-
-		for (uint i = 0; i < PayloadFunctors.Travel.Size(); i++)
+		for (uint i = 0; i < DamageEffects.Size(); i++)
 		{
-			PayloadFunctors.Travel[i].SetDamageValues(damages);
-			damages.Delete(0, PayloadFunctors.Travel[i].DamageValueCount());
+			if (!DamageEffects[i].HitOnly && !directHit)
+				continue;
+
+			DamageEffects[i].Invoke(dmg);
 		}
 
-		for (uint i = 0; i < PayloadFunctors.HitDamage.Size(); i++)
-		{
-			PayloadFunctors.HitDamage[i].SetDamageValues(damages);
-			damages.Delete(0, PayloadFunctors.HitDamage[i].DamageValueCount());
-		}
-
-		for (uint i = 0; i < PayloadFunctors.OnDeath.Size(); i++)
-		{
-			PayloadFunctors.OnDeath[i].SetDamageValues(damages);
-			damages.Delete(0, PayloadFunctors.OnDeath[i].DamageValueCount());
-		}
+		return dmg.Current;
 	}
 
-	void AddToAllDamageValues(int dmg)
+	int ApplyDamageEffects(
+		int baseDamage, int minDamage, int maxDamage,
+		bool directHit
+	) const
 	{
-		Array<int> vals;
-		GetDamageValues(vals);
+		BIO_DamageOutput dmg;
+		dmg.Current = baseDamage;
+		dmg.Minimum = minDamage;
+		dmg.Maximum = maxDamage;
 
-		for (uint i = 0; i < vals.Size(); i++)
-			vals[i] += dmg;
-
-		SetDamageValues(vals);
-	}
-
-	void MultiplyAllDamage(float multi)
-	{
-		Array<int> vals;
-		GetDamageValues(vals);
-
-		for (uint i = 0; i < vals.Size(); i++)
+		for (uint i = 0; i < DamageEffects.Size(); i++)
 		{
-			vals[i] = Max(float(vals[i]) * multi, 1.0);
+			if (!DamageEffects[i].HitOnly && !directHit)
+				continue;
+
+			DamageEffects[i].Invoke(dmg);
 		}
 
-		SetDamageValues(vals);
+		return dmg.Current;
+	}
+
+	int GetMinDamage() const
+	{
+		BIO_DamageOutput dmg;
+		[dmg.Current, dmg.Minimum, dmg.Maximum] = DamageBase.Invoke();
+
+		for (uint i = 0; i < DamageEffects.Size(); i++)
+			DamageEffects[i].Invoke(dmg);
+
+		return dmg.Minimum;
+	}
+
+	int GetMaxDamage() const
+	{
+		BIO_DamageOutput dmg;
+		[dmg.Current, dmg.Minimum, dmg.Maximum] = DamageBase.Invoke();
+
+		for (uint i = 0; i < DamageEffects.Size(); i++)
+			DamageEffects[i].Invoke(dmg);
+
+		return dmg.Maximum;
+	}
+
+	bool DealsHitDamage() const
+	{
+		return ComputeDamage(true) > 0;
 	}
 
 	BIO_PLDF_Explode GetSplashFunctor() const
@@ -279,10 +265,47 @@ class BIO_WeaponPipeline play
 		return null;
 	}
 
+	void DeletePayloadDeathFunctors(
+		class<BIO_PayloadDeathFunctor> type,
+		bool subclass = false
+	)
+	{
+		for (uint i = PayloadFunctors.OnDeath.Size() - 1; i >= 0; i--)
+		{
+			if (subclass)
+			{
+				if (PayloadFunctors.OnDeath[i] is type)
+					PayloadFunctors.OnDeath.Delete(i);
+			}
+			else
+			{
+				if (PayloadFunctors.OnDeath[i].GetClass() == type)
+					PayloadFunctors.OnDeath.Delete(i);
+			}
+		}
+	}
+
 	bool DealsAnySplashDamage() const
 	{
 		let func = GetSplashFunctor();
 		return func != null && func.Damage > 0 && func.Radius > 0;
+	}
+
+	int CombinedSplashDamage() const
+	{
+		int ret = 0;
+
+		for (uint i = 0; i < PayloadFunctors.OnDeath.Size(); i++)
+		{
+			let expl = BIO_PLDF_Explode(PayloadFunctors.OnDeath[i]);
+
+			if (expl == null)
+				continue;
+
+			ret += expl.Damage;
+		}
+
+		return ret;
 	}
 
 	void SetSplash(int damage, int radius,

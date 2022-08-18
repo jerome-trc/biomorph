@@ -9,7 +9,6 @@ class BIO_WeaponPipelineBuilder play
 		if (existing == null)
 		{
 			ret.Pipeline = new('BIO_WeaponPipeline');
-			ret.Pipeline.PayloadFunctors = new('BIO_PayloadFunctorTuple');
 			ret.Pipeline.Flags = BIO_WPF_PRIMARYAMMO;
 		}
 		else
@@ -20,76 +19,98 @@ class BIO_WeaponPipelineBuilder play
 		return ret;
 	}
 
-	BIO_WeaponPipelineBuilder Bullet(class<Actor> payload = 'BIO_Bullet',
-		uint shotCount = 1, int accuracyType = BULLET_ALWAYS_SPREAD)
+	BIO_WeaponPipelineBuilder Bullet(
+		class<Actor> payload = 'BIO_Bullet',
+		uint shotCount = 1,
+		double range = PLAYERMISSILERANGE // 8192.0
+	)
 	{
-		let fireFunc = new('BIO_FireFunc_Bullet');
-		Pipeline.FireFunctor = fireFunc;
+		let func = new('BIO_FireFunc_Bullet');
+		func.Range = range;
+
+		Pipeline.FireFunctor = func;
 		Pipeline.Payload = payload;
 		Pipeline.ShotCount = shotCount;
 
-		switch (accuracyType)
-		{
-		case BULLET_ALWAYS_SPREAD:
-			fireFunc.AlwaysSpread();
-			break;
-		case BULLET_ALWAYS_ACCURATE:
-			fireFunc.AlwaysAccurate();
-			break;
-		case BULLET_FIRST_ACCURATE:
-			fireFunc.FirstAccurate();
-			break;
-		default:
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Invalid bullet accuracy type given: %d"
-				"(defaulting to always spread)");
-			fireFunc.AlwaysSpread();
-			break;
-		}
-		
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder Projectile(
-		class<Actor> payload, uint shotCount = 1,
-		double spawnOffs_xy = 0.0, int spawnHeight = 0
+		class<Actor> payload,
+		uint shotCount = 1,
+		double spawnOffs_xy = 0.0,
+		int spawnHeight = 0
 	)
 	{
-		Pipeline.FireFunctor = new('BIO_FireFunc_Projectile').Init(
-			spawnOffs_xy, spawnHeight
-		);
-		Pipeline.Payload = payload;
-		Pipeline.ShotCount = shotCount;
-		return self;
-	}
+		let func = new('BIO_FireFunc_Projectile');
+		func.SpawnOffsXY = spawnOffs_xy;
+		func.SpawnHeight = 0;
 
-	BIO_WeaponPipelineBuilder Rail(class<Actor> payload, uint shotCount = 1,
-		color color1 = 0, color color2 = 0, ERailFlags flags = RGF_NONE,
-		double maxDiff = 0.0, double range = 0.0, int duration = 0,
-		double sparsity = 1.0, double driftSpeed = 1.0, int spiralOffset = 270)
-	{
-		Pipeline.FireFunctor = new('BIO_FireFunc_Rail').Setup(
-			color1, color2, flags, maxDiff, range,
-			duration, sparsity, driftSpeed, spiralOffset);
-
+		Pipeline.FireFunctor = func;
 		Pipeline.Payload = payload;
 		Pipeline.ShotCount = shotCount;
 
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Saw(class<Actor> payload = 'BIO_MeleeHit',
-		uint hitCount = 1, float range = SAWRANGE, ESawFlags flags = 0,
-		sound fullSound = "weapons/sawfull", sound hitSound = "weapons/sawhit")
+	BIO_WeaponPipelineBuilder Rail(
+		class<Actor> payload,
+		uint shotCount = 1,
+		ERailFlags flags = RGF_NONE,
+		int pierceLimit = 0,
+		double range = PLAYERMISSILERANGE, // 8192.0
+		int offsex_xy = 0,
+		int offset_z = 0,
+		// Purely aesthetic parameters
+		color color1 = 0,
+		color color2 = 0,
+		double maxDiff = 0.0,
+		int particleDuration = 0,
+		double particleSparsity = 1.0,
+		double particleDriftSpeed = 1.0,
+		int spiralOffset = 270
+	)
 	{
-		let fireFunc = new('BIO_FireFunc_Saw');
-		fireFunc.Range = range;
-		fireFunc.FullSound = fullSound;
-		fireFunc.HitSound = hitSound;
-		fireFunc.Flags = flags;
-		Pipeline.FireFunctor = fireFunc;
+		let func = new('BIO_FireFunc_Rail');
+		func.Flags = flags;
+		func.PierceLimit = Max(0, pierceLimit);
+		func.Range = range;
+
+		func.Color1 = color1;
+		func.Color2 = color2;
+		func.ParticleDuration = particleDuration;
+		func.SpiralOffset = spiralOffset;
+		func.MaxDiff = maxDiff;
+		func.ParticleSparsity = particleSparsity;
+		func.ParticleDriftSpeed = particleDriftSpeed;
+		func.SpiralOffset = spiralOffset;
+
+		Pipeline.FireFunctor = func;
+		Pipeline.Payload = payload;
+		Pipeline.ShotCount = shotCount;
+
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder Saw(
+		class<Actor> payload = 'BIO_MeleeHit',
+		uint hitCount = 1,
+		float range = SAWRANGE,
+		ESawFlags flags = 0,
+		sound fullSound = "weapons/sawfull",
+		sound hitSound = "weapons/sawhit"
+	)
+	{
+		let func = new('BIO_FireFunc_Saw');
+		func.Range = range;
+		func.FullSound = fullSound;
+		func.HitSound = hitSound;
+		func.Flags = flags;
+
+		Pipeline.FireFunctor = func;
 		Pipeline.Payload = payload;
 		Pipeline.ShotCount = hitCount;
+
 		return self;
 	}
 
@@ -150,43 +171,64 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder X1D3Damage(int multi)
 	{
-		Pipeline.Damage = new('BIO_DmgFunc_XTimesRand').Init(multi, 1, 3);
+		let func = new('BIO_DmgBase_XTimesRand');
+		func.Multiplier = multi;
+		func.MinRandom = 1;
+		func.MaxRandom = 3;
+		Pipeline.DamageBase = func;
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder X1D8Damage(int multi)
 	{
-		Pipeline.Damage = new('BIO_DmgFunc_XTimesRand').Init(multi, 1, 8);
+		let func = new('BIO_DmgBase_XTimesRand');
+		func.Multiplier = multi;
+		func.MinRandom = 1;
+		func.MaxRandom = 8;
+		Pipeline.DamageBase = func;
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder RandomDamage(int min, int max)
 	{
-		Pipeline.Damage = new('BIO_DmgFunc_Rand').Init(min, max);
+		let func = new('BIO_DmgBase_Range');
+		func.Minimum = min;
+		func.Maximum = max;
+		Pipeline.DamageBase = func;
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder XPlusRandDamage(int base, int minRand, int maxRand)
 	{
-		Pipeline.Damage = new('BIO_DmgFunc_XPlusRand').Init(base, minRand, maxRand);
+		let func = new('BIO_DmgBase_XPlusRand');
+		func.Baseline = base;
+		func.MinRandom = minRand;
+		func.MaxRandom = maxRand;
+		Pipeline.DamageBase = func;
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder XTimesRandomDamage(int multi, int minRand, int maxRand)
 	{
-		Pipeline.Damage = new('BIO_DmgFunc_XTimesRand').Init(multi, minRand, maxRand);
+		let func = new('BIO_DmgBase_XTimesRand');
+		func.Multiplier = multi;
+		func.MinRandom = minRand;
+		func.MaxRandom = maxRand;
+		Pipeline.DamageBase = func;
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder SingleDamage(int dmg)
 	{
-		Pipeline.Damage = new('BIO_DmgFunc_Single').Init(dmg);
+		let func = new('BIO_DmgBase_Single');
+		func.Value = dmg;
+		Pipeline.DamageBase = func;
 		return self;
 	}
 
 	BIO_WeaponPipelineBuilder NoDamage()
 	{
-		Pipeline.Damage = new('BIO_DmgFunc_Noop');
+		Pipeline.DamageBase = new('BIO_DmgBase_Noop');
 		return self;
 	}
 
@@ -274,10 +316,10 @@ class BIO_WeaponPipelineBuilder play
 				"A weapon pipeline was constructed without a fire functor.");
 		}
 
-		if (Pipeline.Damage == null)
+		if (Pipeline.DamageBase == null)
 		{
 			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"A weapon pipeline was constructed without a damage functor.");
+				"A weapon pipeline was constructed without a damage base functor.");
 		}
 
 		if (Pipeline.Payload == null)
