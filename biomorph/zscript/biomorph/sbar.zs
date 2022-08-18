@@ -125,7 +125,7 @@ class BIO_StatusBar : BaseStatusBar
 					FormatNumber(Level.Killed_Monsters, 1, 5),
 					FormatNumber(Level.Total_Monsters, 1, 5)
 				),
-				(160, -16), 0,
+				(200, -16), 0,
 				Level.Killed_Monsters >= Level.Total_Monsters ?
 					Font.CR_GREEN :
 					Font.CR_WHITE
@@ -138,7 +138,7 @@ class BIO_StatusBar : BaseStatusBar
 					FormatNumber(Level.Found_Secrets, 1, 2),
 					FormatNumber(Level.Total_Secrets, 1, 2)
 				),
-				(160, -8), 0,
+				(200, -8), 0,
 				Level.Found_Secrets >= Level.Total_Secrets ?
 					Font.CR_GREEN :
 					Font.CR_WHITE
