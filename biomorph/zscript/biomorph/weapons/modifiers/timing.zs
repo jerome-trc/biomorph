@@ -187,6 +187,7 @@ class BIO_WMod_Spooling : BIO_WeaponModifier
 
 		weap.OpMode = null;
 		weap.OpMode = BIO_WeaponOperatingMode.Create(opmode_ts[0], weap);
+		weap.OpMode.SideEffects(weap);
 
 		return "";
 	}
