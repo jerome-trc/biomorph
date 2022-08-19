@@ -120,6 +120,7 @@ extend class BIO_BFG
 		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire');
 		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
+		TNT1 A 0 A_ReFire;
 		Goto Ready;
 	}
 }
