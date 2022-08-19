@@ -26,6 +26,11 @@ extend class BIO_EventHandler
 		WEAPMODOP_STOP
 	}
 
+	enum UserNetEvent
+	{
+		USREVENT_NET_GLOBALREGEN
+	}
+
 	const EVENT_WEAPMOD = "bio_wmod";
 
 	final override void NetworkProcess(ConsoleEvent event)
@@ -36,7 +41,7 @@ extend class BIO_EventHandler
 
 		// Debugging events
 
-		NetEvent_GlobalDataRegen(event);
+		NetEvent_User(event);
 	}
 
 	private static void NetEvent_WeapMod(ConsoleEvent event)
@@ -238,16 +243,16 @@ extend class BIO_EventHandler
 		pawn.A_SelectWeapon(morph.Output());
 	}
 
-	private void NetEvent_GlobalDataRegen(ConsoleEvent event)
+	private void NetEvent_User(ConsoleEvent event)
 	{
-		if (!(event.Name ~== "bio_globalregen"))
+		if (!(event.Name ~== "bio_usrnet"))
 			return;
-
+	
 		if (!event.IsManual)
 		{
 			Console.Printf(
 				Biomorph.LOGPFX_INFO ..
-				"Net event `bio_globalregen` can only be manually invoked."
+				"Illegal attempt by a script to invoke `bio_usrnet`."
 			);
 			return;
 		}
@@ -256,13 +261,30 @@ extend class BIO_EventHandler
 		{
 			Console.Printf(
 				Biomorph.LOGPFX_INFO ..
-				"Net event `bio_globalregen` "
+				"Net event `bio_usrnet` "
 				"can only be invoked by the network arbitrator."
 			);
 			return;
 		}
 
 		switch (event.Args[0])
+		{
+		case USREVENT_NET_GLOBALREGEN:
+			NetEvent_GlobalDataRegen(event);
+			break;
+		default:
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal user network event argument: %d",
+				event.Args[0]
+			);
+			return;
+		}
+	}
+
+	private void NetEvent_GlobalDataRegen(ConsoleEvent event)
+	{
+		switch (event.Args[1])
 		{
 		case GLOBALREGEN_LOOTCORE:
 			Console.Printf(

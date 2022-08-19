@@ -1,6 +1,16 @@
 // Console event handling.
 extend class BIO_EventHandler
 {
+	enum UserEvent
+	{
+		USREVENT_HELP,
+		USREVENT_LOOTDIAG,
+		USREVENT_WEAPDIAG,
+		USREVENT_MONSVAL,
+		USREVENT_LOOTSIM,
+		USREVENT_WEAPSERIALIZE
+	}
+
 	final override void ConsoleProcess(ConsoleEvent event)
 	{
 		if (event.Name.Length() < 5 || !(event.Name.Left(4) ~== "bio_"))
@@ -12,76 +22,74 @@ extend class BIO_EventHandler
 
 		// Debugging events
 
-		ConEvent_Help(event);
-		ConEvent_WeapDiag(event);
-		ConEvent_LootDiag(event);
-		ConEvent_MonsVal(event);
-		ConEvent_LootSim(event);
-		ConEvent_WeapSerialize(event);
+		ConEvent_User(event);
 	}
 
-	private static ui void ConEvent_Help(ConsoleEvent event)
+	private ui void ConEvent_User(ConsoleEvent event)
 	{
-		if (!(event.Name ~== "bio_help"))
+		if (!(event.Name ~== "bio_usrcons"))
 			return;
 
 		if (!event.IsManual)
 		{
 			Console.Printf(
 				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt by a script to invoke `bio_help`."
+				"Illegal attempt by a script to invoke `bio_usrcons`."
 			);
 			return;
 		}
 
+		switch (event.Args[0])
+		{
+		case USREVENT_HELP:
+			ConEvent_Help();
+			break;
+		case USREVENT_LOOTDIAG:
+			Globals.PrintLootDiag();
+			break;
+		case USREVENT_WEAPDIAG:
+			ConEvent_WeapDiag();
+			break;
+		case USREVENT_MONSVAL:
+			ConEvent_MonsVal();
+			break;
+		case USREVENT_LOOTSIM:
+			ConEvent_LootSim();
+			break;
+		case USREVENT_WEAPSERIALIZE:
+			ConEvent_WeapSerialize();
+			break;
+		default:
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal user console event argument: %d",
+				event.Args[0]
+			);
+			return;
+		}
+	}
+
+	private static ui void ConEvent_Help()
+	{
 		Console.Printf(
 			Biomorph.LOGPFX_INFO .. "\n"
 			"\c[Gold]Console events:\c-\n"
-			"\tbio_help_\n"
-			"\tbio_lootdiag_\n"
-			"\tbio_weapdiag_\n"
-			"\tbio_monsval_\n"
-			"\tbio_lootsim_\n"
-			"\tbio_weapserialize_\n"
+			"\tbio_help\n"
+			"\tbio_lootdiag\n"
+			"\tbio_weapdiag\n"
+			"\tbio_monsval\n"
+			"\tbio_lootsim\n"
+			"\tbio_weapserialize\n"
 			"\c[Gold]Network events:\c-\n"
-			"\tbio_weaplootregen_\n"
-			"\tbio_mutalootregen_\n"
-			"\tbio_genelootregen_\n"
-			"\tbio_morphregen_"
+			"\tbio_weaplootregen\n"
+			"\tbio_mutalootregen\n"
+			"\tbio_genelootregen\n"
+			"\tbio_morphregen"
 		);
 	}
 
-	private ui void ConEvent_LootDiag(ConsoleEvent event) const
+	private static ui void ConEvent_WeapDiag()
 	{
-		if (!(event.Name ~== "bio_lootdiag"))
-			return;
-
-		if (!event.IsManual)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt by a script to invoke `bio_lootdiag`."
-			);
-			return;
-		}
-
-		Globals.PrintLootDiag();
-	}
-
-	private static ui void ConEvent_WeapDiag(ConsoleEvent event)
-	{
-		if (!(event.Name ~== "bio_weapdiag"))
-			return;
-
-		if (!event.IsManual)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Illegal attempt by a script to invoke `bio_weapdiag`."
-			);
-			return;
-		}
-
 		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
 
 		if (weap == null)
@@ -103,6 +111,57 @@ extend class BIO_EventHandler
 		output.AppendFormat(
 			"\c[Yellow]Switch speeds\c-: %d lower, %d raise\n",
 			weap.LowerSpeed, weap.RaiseSpeed
+		);
+
+		if (weap.AmmoType1 != null)
+		{
+			output.AppendFormat(
+				"\c[Yellow]Ammo type 1:\c- %s\n",
+				weap.AmmoType1.GetClassName()
+			);
+		}
+
+		if (weap.AmmoType2 != null)
+		{
+			output.AppendFormat(
+				"\c[Yellow]Ammo type 2:\c- %s\n",
+				weap.AmmoType2.GetClassName()
+			);
+		}
+
+		output.AppendFormat(
+			"\c[Yellow]Ammo usage: %d primary, %d secondary\n",
+			weap.AmmoUse1, weap.AmmoUse2
+		);
+
+		if (weap.MagazineType1 != null)
+		{
+			output.AppendFormat(
+				"\c[Yellow]Magazine 1:\c- %s size %d\n",
+				weap.MagazineType1.GetClassName(),
+				weap.MagazineSize1
+			);
+		}
+
+		if (weap.MagazineType2 != null)
+		{
+			output.AppendFormat(
+				"\c[Yellow]Magazine 2:\c- %s size %d\n",
+				weap.MagazineType2.GetClassName(),
+				weap.MagazineSize2
+			);
+		}
+
+		output.AppendFormat(
+			"\c[Yellow]Reload ratio 1:\c- %d cost/%d output\n",
+			weap.ReloadCost1,
+			weap.ReloadOutput1
+		);
+
+		output.AppendFormat(
+			"\c[Yellow]Reload ratio 2:\c- %d cost/%d output\n",
+			weap.ReloadCost2,
+			weap.ReloadOutput2
 		);
 
 		// Pipelines
@@ -217,20 +276,8 @@ extend class BIO_EventHandler
 		Menu.SetMenu('BIO_WeaponModMenu');
 	}
 
-	private ui void ConEvent_MonsVal(ConsoleEvent event) const
+	private ui void ConEvent_MonsVal() const
 	{
-		if (!(event.Name ~== "bio_monsval"))
-			return;
-
-		if (!event.IsManual)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_INFO ..
-				"Illegal attempt by a script to invoke `bio_monsval`."
-			);
-			return;
-		}
-
 		let val = MapTotalMonsterValue();
 		let loot = val / BIO_Global.LOOT_VALUE_THRESHOLD;
 
@@ -243,20 +290,8 @@ extend class BIO_EventHandler
 		);
 	}
 
-	private ui void ConEvent_LootSim(ConsoleEvent event) const
+	private ui void ConEvent_LootSim() const
 	{
-		if (!(event.Name ~== "bio_lootsim"))
-			return;
-
-		if (!event.IsManual)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_INFO ..
-				"Illegal attempt by a script to invoke `bio_lootsim`."
-			);
-			return;
-		}
-
 		string output = Biomorph.LOGPFX_INFO .. "running loot simulation...\n";
 
 		Array<class<BIO_Mutagen> > mTypes;
@@ -328,20 +363,8 @@ extend class BIO_EventHandler
 		Console.Printf(output);
 	}
 
-	private static ui void ConEvent_WeapSerialize(ConsoleEvent event)
+	private static ui void ConEvent_WeapSerialize()
 	{
-		if (!(event.Name ~== "bio_weapserialize"))
-			return;
-
-		if (!event.IsManual)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_INFO ..
-				"Illegal attempt by a script to invoke `bio_weapserialize`."
-			);
-			return;
-		}
-
 		let weap = BIO_Weapon(Players[ConsolePlayer].ReadyWeapon);
 
 		if (weap == null)
