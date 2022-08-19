@@ -112,12 +112,19 @@ class BIO_FireFunc_Bullet : BIO_FireFunctor
 
 	override BIO_FireFunctor Copy() const
 	{
-		return new('BIO_FireFunc_Bullet');
+		return Create(Range);
 	}
 
 	override BIO_FireFunctorCapabilities Capabilities() const
 	{
 		return BIO_FFC_PUFF;
+	}
+
+	static BIO_FireFunc_Bullet Create(double range = PLAYERMISSILERANGE) // 8192.0
+	{
+		let ret = new('BIO_FireFunc_Bullet');
+		ret.Range = range;
+		return ret;
 	}
 }
 

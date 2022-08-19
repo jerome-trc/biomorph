@@ -32,12 +32,12 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 			let fromSplash = weap.Pipelines[i].CombinedSplashDamage();
 			weap.Pipelines[i].DeletePayloadDeathFunctors('BIO_PLDF_Explode');
 
-			weap.Pipelines[i].FireFunctor = new('BIO_FireFunc_Bullet');
+			weap.Pipelines[i].FireFunctor = BIO_FireFunc_Bullet.Create();
 			weap.Pipelines[i].Payload = 'BIO_ShotPellet';
 			weap.Pipelines[i].ShotCount *= 9;
 			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Modify.Create(fromSplash));
 			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Multi.Create(1.0 / 9.0));
-			weap.Pipelines[i].HSpread = 3.0;
+			weap.Pipelines[i].HSpread = 5.0;
 			weap.Pipelines[i].VSpread = 3.0;
 			weap.Pipelines[i].FireSound = "bio/puff/canistershot/fire";
 		}
