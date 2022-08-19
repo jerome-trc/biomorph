@@ -770,6 +770,12 @@ extend class BIO_Global
 		PopulateGeneLootTable();
 	}
 
+	void RegenWeaponOpModeCache()
+	{
+		WeaponOpModeCache.Clear();
+		PopulateWeaponOpModeCache();
+	}
+
 	void RegenWeaponMorphCache()
 	{
 		WeaponMorphRecipes.Clear();

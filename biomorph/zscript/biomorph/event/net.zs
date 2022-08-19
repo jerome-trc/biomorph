@@ -7,6 +7,7 @@ extend class BIO_EventHandler
 		GLOBALREGEN_WEAPLOOT,
 		GLOBALREGEN_MUTALOOT,
 		GLOBALREGEN_GENELOOT,
+		GLOBALREGEN_OPMODE,
 		GLOBALREGEN_MORPH
 	}
 
@@ -290,6 +291,13 @@ extend class BIO_EventHandler
 				"Regenerating gene loot table..."
 			);
 			Globals.RegenGeneLoot();
+			return;
+		case GLOBALREGEN_OPMODE:
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Regenerating weapon operating mode prototype cache..."
+			);
+			Globals.RegenWeaponOpModeCache();
 			return;
 		case GLOBALREGEN_MORPH:
 			Console.Printf(
