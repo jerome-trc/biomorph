@@ -1,7 +1,7 @@
 // Death handling.
 extend class BIO_EventHandler
 {
-	const GENE_CHANCE_DENOM = 9;
+	const GENE_CHANCE_DENOM = 8;
 
 	// Assigned in `OnRegister()`
 	// (will be null if LegenDoom or its Lite version isn't loaded).

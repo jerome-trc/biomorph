@@ -562,7 +562,7 @@ class BIO_LootSpawner : BIO_IntangibleActor abstract
 // list of monsters which give 0 value, and monster/loot spawner key-value pairs.
 extend class BIO_Global
 {
-	const LOOT_VALUE_THRESHOLD = 1000;
+	const LOOT_VALUE_THRESHOLD = 1500;
 
 	// Collection of monster types which don't contribute to the loot value buffer.
 	// Ensures there's no incentive to farm Pain Elementals or The Hungry, etc.
