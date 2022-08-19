@@ -34,6 +34,8 @@ AUSG A through F are courtesy of ZDoom forum user Mike12 (redrawn and centered S
 
 BRAX A through Z are courtesy of ZDoom forum user neoworm.
 
+GAMM sprites are courtesy of id Software LLC, zrrion the insect, and Realm667 user Gothic.
+
 MGUNB and SHOTB are edits of the work of id Software LLC.
 
 [MINV A through Z](https://www.realm667.com/en/armory-mainmenu-157-97317/doom-style-mainmenu-158-94349/1364-heavy-chaingun) are courtesy of Eriance, with edits by Realm667 user Z86.

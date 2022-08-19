@@ -196,6 +196,11 @@
 	BIO_COACHGUN_OB = "%k cut %o down with a %s.";
 	BIO_COACHGUN_SCAV = "Scavenged ammo from a dropped %s.";
 
+	BIO_GAMMAPROJECTOR_TAG = "Gamma Projector";
+	BIO_GAMMAPROJECTOR_PKUP = "Procured a %s.";
+	BIO_GAMMAPROJECTOR_OB = "%k exposed a %s to %o.";
+	BIO_GAMMAPROJECTOR_SCAV = "Scavenged ammo from a dropped %s.";
+
 	BIO_MACHINEGUN_TAG = "Machine Gun";
 	BIO_MACHINEGUN_PKUP = "Procured a %s.";
 	BIO_MACHINEGUN_SCAV = "Scavenged ammo from a dropped %s.";

@@ -340,11 +340,31 @@ class BIO_FireFunc_Saw : BIO_FireFunc_Melee
 	}
 }
 
+// Notes:
+// - Given horizontal spread is used for the cone (vanilla is 90.0 degrees).
+// - Given pitch is used as a vertical auto-aim range (vanilla is 32.0).
 class BIO_FireFunc_BFGSpray : BIO_FireFunctor
 {
+	double Range;
+	bool HurtSource;
+
 	final override Actor Invoke(BIO_Weapon weap, in out BIO_ShotData shotData) const
 	{
-		return weap.BIO_BFGSpray(shotData);
+		double angle =
+			weap.Owner.Angle -
+			shotData.HSpread / 2 +
+			shotData.HSpread /
+			shotData.Count *
+			shotData.Number;
+
+		return weap.BIO_BFGSpray(
+			shotData.Payload,
+			shotData.Damage,
+			angle + shotData.Angle,
+			Range,
+			shotData.Pitch,
+			HurtSource
+		);
 	}
 
 	final override string Description(

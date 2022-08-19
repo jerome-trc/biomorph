@@ -259,21 +259,29 @@ extend class BIO_Weapon
 			bJustAttacked = true;
 	}
 
-	// A specialized variation on `A_BFGSpray()`, for use by
-	// `BIO_FireFunc_BFGSpray()`. Shoots only one ray and returns a fake puff.
-	Actor BIO_BFGSpray(in out BIO_ShotData shotData, double distance = 16.0 * 64.0,
-		double vrange = 32.0, EBFGSprayFlags flags = BFGF_NONE)
+	/* 	A specialized variation on `A_BFGSpray()`, for use by `FireFunc_BFGSpray`.
+		Shoots only one ray, originating from the owner, and returns a fake puff
+		only if an actor was hit. This fake puff lasts 2 tics, has the hit thing
+		in its `Target` field, the real damage dealt in its `Damage` field,
+		and the 'BFGSplash' damage type.
+	*/
+	Actor BIO_BFGSpray(
+		class<Actor> payload,
+		int damage,
+		double angle,
+		double range = 16.0 * 64.0,
+		double vertAutoaimRange = 32.0,
+		bool hurtSource = false
+	)
 	{
 		FTranslatedLineTarget t;
-		double an = Owner.Angle - shotData.Angle / 2 + shotData.Angle /
-			shotData.Count * shotData.Number;
+		Owner.AimLineAttack(angle, range, t, vertAutoaimRange);
 
-		Owner.AimLineAttack(an, distance, t, vrange);
-
-		if (t.LineTarget == null) return null;
+		if (t.LineTarget == null)
+			return null;
 
 		Actor
-			spray = Spawn(shotData.Payload, t.LineTarget.Pos +
+			spray = Spawn(payload, t.LineTarget.Pos +
 			(0, 0, t.LineTarget.Height / 4), ALLOW_REPLACE),
 			ret = Spawn('BIO_FakePuff', t.LineTarget.Pos);
 
@@ -285,7 +293,7 @@ extend class BIO_Weapon
 			// [XA] Don't hit oneself unless we say so.
 			if ((spray.bMThruSpecies &&
 				Owner.GetSpecies() == t.LineTarget.GetSpecies()) || 
-				(!(flags & BFGF_HURTSOURCE) && Owner == t.LineTarget)) 
+				(!hurtSource && Owner == t.LineTarget)) 
 			{
 				// [MC] Remove it because technically, the spray isn't trying to "hit" them.
 				spray.Destroy(); 
@@ -299,12 +307,18 @@ extend class BIO_Weapon
 		}
 
 		int newdam = t.LineTarget.DamageMObj(
-			ret, Owner, shotData.Damage, dmgType,
-			dmgFlags | DMG_USEANGLE, t.AngleFromSource);
+			ret,
+			Owner,
+			damage,
+			dmgType,
+			dmgFlags | DMG_USEANGLE,
+			t.AngleFromSource
+		);
+
 		ret.SetDamage(newDam);
 		ret.DamageType = 'BFGSplash';
 		ret.Tracer = t.LineTarget;
-		t.TraceBleed(newdam > 0 ? newdam : shotData.Damage, Owner);
+		t.TraceBleed(newdam > 0 ? newdam : newDam, Owner);
 		return ret;
 	}
 }

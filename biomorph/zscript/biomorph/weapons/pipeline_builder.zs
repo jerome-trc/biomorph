@@ -142,14 +142,23 @@ class BIO_WeaponPipelineBuilder play
 
 	BIO_WeaponPipelineBuilder BFGSpray(
 		int rayCount = 40,
-		int minRayDmg = 49,
-		int maxRayDmg = 87,
+		double cone = 90.0,
+		double vertAutoaimRange = 32.0,
+		double range = 16.0 * 64.0,
+		bool hurtSource = false,
 		class<BIO_FireFunc_BFGSpray> subclass = 'BIO_FireFunc_BFGSpray'
 	)
 	{
-		Pipeline.FireFunctor = BIO_FireFunc_BFGSpray(new(subclass));
+		let func = BIO_FireFunc_BFGSpray(new(subclass));
+		func.Range = range;
+		func.HurtSource = hurtSource;
+
+		Pipeline.FireFunctor = func;
 		Pipeline.Payload = 'BIO_BFGExtra';
 		Pipeline.ShotCount = rayCount;
+		Pipeline.HSpread = cone;
+		Pipeline.Pitch = vertAutoaimRange;
+
 		return self;
 	}
 
@@ -259,15 +268,22 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder Splash(int damage, int radius,	
-		EExplodeFlags flags = XF_HURTSOURCE, int fullDmgDistance = 0)
+	BIO_WeaponPipelineBuilder Splash(
+		int damage,
+		int radius,	
+		EExplodeFlags flags = XF_HURTSOURCE,
+		int fullDmgDistance = 0
+	)
 	{
 		Pipeline.SetSplash(damage, radius, flags, fullDmgDistance);
 		return self;
 	}
 
-	BIO_WeaponPipelineBuilder AddBFGSpray(int rayCount = 40,
-		int minRayDmg = 49, int maxRayDmg = 87)
+	BIO_WeaponPipelineBuilder AddBFGSpray(
+		int rayCount = 40,
+		int minRayDmg = 49,
+		int maxRayDmg = 87
+	)
 	{
 		Pipeline.PayloadFunctors.OnDeath.Push(
 			BIO_PLDF_BFGSpray.Create(rayCount, minRayDmg, maxRayDmg)
