@@ -8,6 +8,7 @@ extend class BIO_Weapon
 		OpMode = null;
 		Pipelines.Clear();
 		Affixes.Clear();
+		ReloadTimeGroups.Clear();
 		SpecialFunc = null;
 
 		bNoAutoFire = Default.bNoAutoFire;
