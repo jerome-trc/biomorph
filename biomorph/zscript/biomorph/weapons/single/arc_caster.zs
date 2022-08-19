@@ -15,7 +15,6 @@ class BIO_ArcCaster : BIO_Weapon
 		Tag "$BIO_ARCCASTER_TAG";
 		
 		Inventory.Icon 'ARCAZ0';
-		Inventory.PickupMessage "$BIO_ARCCASTER_PKUP";
 
 		Weapon.AmmoGive 40;
 		Weapon.AmmoType 'Cell';
@@ -192,7 +191,7 @@ class BIO_FireFunc_ElectricArc : BIO_FireFunc_Rail
 		p.Damage = 0;
 		p.Offset_XY = 0;
 		p.Offset_Z = 0;
-		p.Distance = 8192.0;
+		p.Distance = Range;
 		p.AngleOffset = 0.0;
 		p.PitchOffset = 0.0;
 		p.Flags = RGF_FULLBRIGHT | RGF_SILENT;
