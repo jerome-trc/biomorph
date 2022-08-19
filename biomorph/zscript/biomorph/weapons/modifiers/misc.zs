@@ -63,6 +63,7 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
 			let ppl = weap.Pipelines[i];
+			ppl.PayloadFunctors.Travel.Push(new('BIO_PTF_Smart'));
 
 			if (!CompatibleWithPipeline(ppl.AsConst()))
 				continue;
@@ -70,7 +71,6 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 			let ff = new('BIO_FireFunc_SmartAim');
 			ff.Init(wafx);
 			ppl.FireFunctor = ff;
-			ppl.PayloadFunctors.Travel.Push(new('BIO_PTF_Smart'));
 		}
 
 		return "";
