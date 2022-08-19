@@ -115,7 +115,11 @@ extend class BIO_PlasmaRifle
 	{
 	Rapid.Fire:
 		TNT1 A 0 A_BIO_CheckAmmo;
-		PLSG A 3 A_BIO_PlasmaRifle_Fire;
+		PLSG A 3
+		{
+			A_BIO_SetFireTime(0);
+			A_BIO_PlasmaRifle_Fire();
+		}
 		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
