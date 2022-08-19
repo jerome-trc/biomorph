@@ -20,6 +20,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 		BIO_Weapon.MagazineFlags BIO_MAGF_PLASMA_1;
 		BIO_Weapon.MagazineSize 50;
 		BIO_Weapon.MagazineType 'BIO_RechargingMagazine';
+		BIO_Weapon.EnergyToMatter -3, 5;
 		BIO_Weapon.OperatingMode 'BIO_OpMode_PlasmaRifle_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_PLASMARIFLE_PKUP",

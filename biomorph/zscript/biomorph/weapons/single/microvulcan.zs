@@ -17,6 +17,7 @@ class BIO_Microvulcan : BIO_Weapon
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.GroundHitSound "bio/weap/groundhit/small/0";
 		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
+		BIO_Weapon.EnergyToMatter -3, 5;
 		BIO_Weapon.OperatingMode 'BIO_OpMode_Microvulcan_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_MICROVULCAN_PKUP",
