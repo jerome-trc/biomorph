@@ -57,13 +57,15 @@ class BIO_StateTimeGroup
 	{
 		if (modifier == 0)
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Illegal time modifier of 0 given to state time group %s.", Tag);
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Illegal time modifier of 0 given to state time group %s.",
+				Tag
+			);
 			return;
 		}
 
 		let pr = PossibleReduction();
-
 		uint e = Abs(modifier);
 
 		for (uint i = 0; i < e; i++)
@@ -241,6 +243,7 @@ class BIO_StateTimeGroup
 	// Note that the return value will always have `BIO_STGF_AUXILIARY` set.
 	static BIO_StateTimeGroup RechargeTime(
 		uint tics,
+		uint minimum = 1,
 		string tag = "",
 		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
 	)
@@ -249,6 +252,7 @@ class BIO_StateTimeGroup
 		ret.Tag = Tag;
 		ret.Flags = flags | BIO_STGF_AUXILIARY;
 		ret.Times.Push(tics);
+		ret.Minimums.Push(minimum);
 		return ret;
 	}
 }
