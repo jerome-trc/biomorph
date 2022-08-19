@@ -102,6 +102,8 @@ $random bio/weap/dryfire/ballistic
 	bio/weap/dryfire/ballistic/2
 }
 
+bio/weap/eleccharge/up ELECUP
+bio/weap/eleccharge/down ELECDOWN
 bio/weap/etmf NRG2MATR
 bio/weap/mechreload MECHRELO
 bio/weap/spoolup SPOOLUP
@@ -241,6 +243,25 @@ $random bio/weap/turbovulcan/fire
 	bio/weap/turbovulcan/fire_2
 	bio/weap/turbovulcan/fire_3
 }
+
+// Plasma Rifle
+
+bio/weap/plasrifle/rapid/fire/0 PLAS_RP0
+
+$random bio/weap/plasrifle/rapid/fire
+{
+	bio/weap/plasrifle/rapid/fire/0
+}
+
+bio/weap/plasrifle/spool/fire/0 PLAS_SP0
+
+$random bio/weap/plasrifle/bspool/fire
+{
+	bio/weap/plasrifle/spool/fire/0
+}
+
+$limit bio/weap/plasrifle/rapid/fire 0
+$limit bio/weap/plasrifle/bspool/fire 0
 
 // Arc Caster
 

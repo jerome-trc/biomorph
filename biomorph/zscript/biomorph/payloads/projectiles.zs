@@ -121,7 +121,6 @@ class BIO_PlasmaBall : BIO_Projectile
 		Obituary "$OB_MPPLASMARIFLE";
 		Radius 13;
 		RenderStyle 'Add';
-		SeeSound "weapons/plasmaf";
 		Speed 25;
 		Tag "$BIO_PLASMABALL_TAG";
 

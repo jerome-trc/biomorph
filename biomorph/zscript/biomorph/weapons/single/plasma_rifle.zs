@@ -1,5 +1,7 @@
 class BIO_PlasmaRifle : BIO_Weapon
 {
+	flagdef OtherFlash: DynFlags, 31;
+
 	Default
 	{
 		Tag "$BIO_PLASMARIFLE_TAG";
@@ -33,6 +35,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 			BIO_WeaponPipelineBuilder.Create()
 				.Projectile('BIO_PlasmaBall')
 				.X1D8Damage(5)
+				.FireSound("bio/weap/plasrifle/rapid/fire")
 				.Build()
 		);
 	}
@@ -55,26 +58,18 @@ class BIO_PlasmaRifle : BIO_Weapon
 	Fire:
 		TNT1 A 0 A_BIO_Op_Fire;
 		Stop;
-	Flash:
-		PLSF A 4 Bright
-		{
-			A_BIO_SetFireTime(0, modifier: 1);
-			A_Light(1);
-		}
-		Goto LightDone;
-		PLSF B 4 Bright
-		{
-			A_BIO_SetFireTime(0, modifier: 1);
-			A_Light(1);
-		}
-		Goto LightDone;
 	}
 
-	protected action void A_BIO_PlasmaRifle_Fire()
+	protected action void A_BIO_PlasmaRifle_Fire(statelabel flash)
 	{
 		A_BIO_Fire();
-		A_BIO_FireSound();
-		Player.SetSafeFlash(invoker, ResolveState('Flash'), Random(0, 1));
+		A_BIO_FireSound(CHAN_AUTO);
+		invoker.bOtherFlash = !invoker.bOtherFlash;
+		Player.SetSafeFlash(
+			invoker,
+			ResolveState(flash),
+			invoker.bOtherFlash ? 0 : 1
+		);
 		A_BIO_Recoil('BIO_Recoil_Autogun');
 	}
 }
@@ -118,7 +113,7 @@ extend class BIO_PlasmaRifle
 		PLSG A 3
 		{
 			A_BIO_SetFireTime(0);
-			A_BIO_PlasmaRifle_Fire();
+			A_BIO_PlasmaRifle_Fire('Rapid.Flash');
 		}
 		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
@@ -127,10 +122,24 @@ extend class BIO_PlasmaRifle
 		PLSG B 20
 		{
 			A_BIO_SetFireTime(0, 1);
+			A_StartSound("bio/weap/eleccharge/down");
 			A_ReFire();
 		}
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
+	Rapid.Flash:
+		PLSF A 4 Bright
+		{
+			A_BIO_SetFireTime(0, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
+		PLSF B 4 Bright
+		{
+			A_BIO_SetFireTime(0, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
 	}
 }
 
@@ -181,7 +190,7 @@ extend class BIO_PlasmaRifle
 		PLSG A 1
 		{
 			A_BIO_SetFireTime(0);
-			A_BIO_PlasmaRifle_Fire();
+			A_BIO_PlasmaRifle_Fire('HybridBurst.Flash.Burst');
 		}
 		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'HybridBurst.Fire');
 		TNT1 A 0 A_BIO_AutoReload;
@@ -207,7 +216,7 @@ extend class BIO_PlasmaRifle
 		PLSG A 4
 		{
 			A_BIO_SetFireTime(1, 1);
-			A_BIO_PlasmaRifle_Fire();
+			A_BIO_PlasmaRifle_Fire('HybridBurst.Flash.FAuto');
 		}
 		Goto HybridBurst.Fire.FAuto.End;
 	HybridBurst.Fire.FAuto.End:
@@ -219,9 +228,144 @@ extend class BIO_PlasmaRifle
 		PLSG B 20
 		{
 			A_BIO_SetFireTime(0, 2);
+			A_StartSound("bio/weap/eleccharge/down");
 			A_ReFire();
 		}
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
+	HybridBurst.Flash.Burst:
+		PLSF A 2 Bright
+		{
+			A_BIO_SetFireTime(0, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
+		PLSF B 2 Bright
+		{
+			A_BIO_SetFireTime(0, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
+	HybridBurst.Flash.FAuto:
+		PLSF A 7 Bright
+		{
+			A_BIO_SetFireTime(0, 1, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
+		PLSF B 7 Bright
+		{
+			A_BIO_SetFireTime(0, 1, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
+	}
+}
+
+class BIO_OpMode_PlasmaRifle_BinarySpool : BIO_OpMode_BinarySpool
+{
+	final override class<BIO_Weapon> WeaponType() const
+	{
+		return 'BIO_PlasmaRifle';
+	}
+
+	final override void Init(readOnly<BIO_Weapon> weap)
+	{
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFromRange(
+				'BSpool.Up', 'BSpool.Fire',
+				"$BIO_SPOOLUP",
+				flags: BIO_STGF_AUXILIARY
+			)
+		);
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFrom(
+				'BSpool.Fire'
+			)
+		);
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFrom(
+				'BSpool.Down',
+				"$BIO_SPOOLDOWN",
+				flags: BIO_STGF_AUXILIARY
+			)
+		);
+
+		FireTimeGroups.Push(
+			weap.StateTimeGroupFrom(
+				'BSpool.Cooldown',
+				"$BIO_COOLDOWN",
+				flags: BIO_STGF_AUXILIARY
+			)
+		);
+	}
+
+	final override void SideEffects(BIO_Weapon weap)
+	{
+		if (weap.MagazineType1 != null)
+			weap.MagazineSize1 *= 3;
+
+		if (weap.Pipelines[0].FireSound == "bio/weap/plasrifle/rapid/fire")
+			weap.Pipelines[0].FireSound = "bio/weap/plasrifle/bspool/fire";
+	}
+
+	final override statelabel FireState() const
+	{
+		return 'BSpool.Check';
+	}
+
+	final override statelabel PostFireState() const
+	{
+		return 'BSpool.Cooldown';
+	}
+}
+
+extend class BIO_PlasmaRifle
+{
+	States
+	{
+	BSpool.Check:
+		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'Ready');
+	BSpool.Up:
+		TNT1 A 0 A_StartSound("bio/weap/eleccharge/up", CHAN_7);
+		PLSG A 12 A_BIO_SetFireTime(0);
+		TNT1 A 0 A_StopSound(CHAN_7);
+	BSpool.Fire:
+		TNT1 A 0 A_JumpIf(!invoker.SufficientAmmo(), 'BSpool.Down');
+		PLSG A 1
+		{
+			A_BIO_SetFireTime(0, 1);
+			A_BIO_PlasmaRifle_Fire('BSpool.Flash');
+		}
+		TNT1 A 0 A_JumpIf(!(Player.Cmd.Buttons & BT_ATTACK), 'BSpool.Down');
+		Loop;
+	BSpool.Down:
+		TNT1 A 0 A_StartSound("bio/weap/eleccharge/down", CHAN_7);
+		PLSG A 12 A_BIO_SetFireTime(0, 2);
+		TNT1 A 0 A_StopSound(CHAN_7);
+		TNT1 A 0 A_BIO_Op_PostFire;
+		TNT1 A 0 A_BIO_AutoReload;
+		Goto Ready;
+	BSpool.Cooldown:
+		PLSG B 20
+		{
+			A_BIO_SetFireTime(0, 3);
+			A_ReFire();
+		}
+		TNT1 A 0 A_BIO_AutoReload;
+		Goto Ready;
+	BSpool.Flash:
+		PLSF A 2 Bright
+		{
+			A_BIO_SetFireTime(0, 1, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
+		PLSF B 2 Bright
+		{
+			A_BIO_SetFireTime(0, 1, modifier: 1);
+			A_Light(1);
+		}
+		Goto LightDone;
 	}
 }

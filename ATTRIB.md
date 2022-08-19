@@ -134,7 +134,13 @@ COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/soun
 
 DRY_BAL0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), licensed under Creative Commons 0.
 
+ELECDOWN AND ELECUP are derived from [Electrical Shock (Zap)](https://freesound.org/people/BigKahuna360/sounds/160421/) by freesound user [BigKahuna360](https://freesound.org/people/BigKahuna360/), licensed under Creative Commons 0.
+
 ELECPUFF is courtesy of the Librequake Project.
+
+PLAS_RP0 is derived from ["Energy Cannon 03.wav"](https://freesound.org/people/klangfabrik/sounds/232936/) by freesound user [klangfabrik](https://freesound.org/people/klangfabrik/), licensed under Creative Commons 0.
+
+PLAS_SP0 is derived from [unfa's Laser Weapon Sounds](https://freesound.org/people/unfa/sounds/187119/) by freeound user [unfa](https://freesound.org/people/unfa/), licensed under Creative Commons 0.
 
 PUNCH_0 is derived from ["Punch_02.wav"](https://freesound.org/people/thefsoundman/sounds/118513/) by freesound user [thefsoundman](https://freesound.org/people/thefsoundman), licensed under Creative Commons 0.
 

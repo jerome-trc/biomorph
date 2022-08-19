@@ -32,12 +32,21 @@ extend class BIO_Weapon
 		return true;
 	}
 
-	protected action void A_BIO_FireSound(int channel = CHAN_WEAPON,
-		int flags = CHANF_DEFAULT, double volume = 1.0,
-		double attenuation = ATTN_NORM, uint pipeline = 0)
+	protected action void A_BIO_FireSound(
+		int channel = CHAN_WEAPON,
+		int flags = CHANF_DEFAULT,
+		double volume = 1.0,
+		double attenuation = ATTN_NORM,
+		uint pipeline = 0
+	)
 	{
-		A_StartSound(invoker.Pipelines[pipeline].FireSound,
-			channel, flags, volume, attenuation);
+		A_StartSound(
+			invoker.Pipelines[pipeline].FireSound,
+			channel,
+			flags,
+			volume,
+			attenuation
+		);
 	}
 
 	protected action bool A_BIO_DepleteAmmo(uint pipeline = 0, int fireFactor = 1)
