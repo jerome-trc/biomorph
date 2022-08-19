@@ -7,7 +7,8 @@ enum BIO_StateTimeGroupFlags : uint8
 	// ("attack time" rather than "fire time").
 	BIO_STGF_MELEE = 1 << 1,
 	// This state time group isn't involved in the core action itself.
-	// e.g., a fire time group is for spool up/down but not the actual fire cycle.
+	// e.g., a fire time group is for spool up/down but not the actual fire cycle,
+	// or a reload time group is for recharging instead of actual reloading.
 	BIO_STGF_AUXILIARY = 1 << 1,
 }
 
@@ -234,6 +235,20 @@ class BIO_StateTimeGroup
 			);
 		}
 
+		return ret;
+	}
+
+	// Note that the return value will always have `BIO_STGF_AUXILIARY` set.
+	static BIO_StateTimeGroup RechargeTime(
+		uint tics,
+		string tag = "",
+		BIO_StateTimeGroupFlags flags = BIO_STGF_NONE
+	)
+	{
+		let ret = new('BIO_StateTimeGroup');
+		ret.Tag = Tag;
+		ret.Flags = flags | BIO_STGF_AUXILIARY;
+		ret.Times.Push(tics);
 		return ret;
 	}
 }

@@ -16,7 +16,6 @@ class BIO_GammaProjector : BIO_Weapon
 		BIO_Weapon.MagazineFlags BIO_MAGF_RECHARGING_1;
 		BIO_Weapon.MagazineType 'BIO_RechargingMagazine';
 		BIO_Weapon.MagazineSize 200;
-		BIO_Weapon.ReloadRatio 2, 2; // Speeds up recharging
 		BIO_Weapon.OperatingMode 'BIO_OpMode_GammaProjector_HoldRelease';
 		BIO_Weapon.PickupMessages
 			"$BIO_GAMMAPROJECTOR_PKUP",
@@ -26,6 +25,8 @@ class BIO_GammaProjector : BIO_Weapon
 
 	override void SetDefaults()
 	{
+		ReloadTimeGroups.Push(BIO_StateTimeGroup.RechargeTime(3));
+		
 		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.BFGSpray(cone: 60.0)

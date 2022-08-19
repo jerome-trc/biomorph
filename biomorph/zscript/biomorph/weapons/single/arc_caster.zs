@@ -37,6 +37,8 @@ class BIO_ArcCaster : BIO_Weapon
 
 	override void SetDefaults()
 	{
+		ReloadTimeGroups.Push(BIO_StateTimeGroup.RechargeTime(4));
+
 		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Rail(

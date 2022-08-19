@@ -151,12 +151,21 @@ class BIO_RechargingMagazine : BIO_Magazine
 
 	final override void Tick(BIO_Player owner)
 	{
-		if (Level.MapTime % 7 != 0)
-			return;
-
 		let weap = BIO_Weapon(owner.Player.ReadyWeapon);
 
 		if (weap == null)
+			return;
+
+		BIO_StateTimeGroup rtime = null;
+
+		for (uint i = 0; i < weap.ReloadTimeGroups.Size(); i++)
+			if (weap.ReloadTimeGroups[i].Flags & BIO_STGF_AUXILIARY)
+			{
+				rtime = weap.ReloadTimeGroups[i];
+				break;
+			}
+
+		if (rtime != null && (Level.MapTime % rtime.Times[0]) != 0)
 			return;
 
 		if (weap.Magazine1 == self)
