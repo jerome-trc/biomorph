@@ -161,8 +161,7 @@ class BIO_OpMode_Turbovulcan_BinarySpooled : BIO_OpMode_BinarySpool
 		FireTimeGroups.Push(
 			weap.StateTimeGroupFrom(
 				'BSpool.Fire',
-				"$BIO_PER2ROUNDS",
-				flags: BIO_STGF_AUXILIARY
+				"$BIO_PER2ROUNDS"
 			)
 		);
 		FireTimeGroups.Push(

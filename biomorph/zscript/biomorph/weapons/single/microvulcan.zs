@@ -1,4 +1,3 @@
-// Common member definitions and default assignments.
 class BIO_Microvulcan : BIO_Weapon
 {
 	Default
@@ -172,8 +171,7 @@ class BIO_OpMode_Microvulcan_BinarySpool : BIO_OpMode_BinarySpool
 		FireTimeGroups.Push(
 			weap.StateTimeGroupFrom(
 				'BSpool.Fire',
-				"$BIO_PER2ROUNDS",
-				flags: BIO_STGF_AUXILIARY
+				"$BIO_PER2ROUNDS"
 			)
 		);
 		FireTimeGroups.Push(
@@ -302,8 +300,7 @@ class BIO_OpMode_Microvulcan_StagedSpool : BIO_OpMode_StagedSpool
 		FireTimeGroups.Push(
 			weap.StateTimeGroupFrom(
 				'SSpool.Fire',
-				"$BIO_PER2ROUNDS",
-				flags: BIO_STGF_AUXILIARY
+				"$BIO_PER2ROUNDS"
 			)
 		);
 		FireTimeGroups.Push(

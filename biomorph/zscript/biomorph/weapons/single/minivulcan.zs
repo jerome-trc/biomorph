@@ -173,8 +173,7 @@ class BIO_OpMode_Minivulcan_BinarySpool : BIO_OpMode_BinarySpool
 		);
 		FireTimeGroups.Push(
 			weap.StateTimeGroupFrom(
-				'BSpool.Fire',
-				flags: BIO_STGF_AUXILIARY
+				'BSpool.Fire'
 			)
 		);
 		FireTimeGroups.Push(
