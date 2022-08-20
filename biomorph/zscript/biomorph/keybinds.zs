@@ -43,8 +43,9 @@ class BIO_WeaponDrop : BIO_Keybind
 		{
 			// Flush confirm message off screen
 			pawn.A_Print("", 0.0);
-			Owner.DropInventory(weap, 1);
 			Primed = false;
+
+			Owner.DropInventory(weap, 1);
 		}
 
 		return false;

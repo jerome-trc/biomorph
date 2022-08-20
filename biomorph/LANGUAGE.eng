@@ -672,10 +672,20 @@
 
 	BIO_MUTA_FAIL_NULL = "This weapon doesn't even respond to the mutagen.";
 	BIO_MUTA_FAIL_ALREADYMUTATED = "This weapon has already been mutated.";
+	BIO_MUTA_FAIL_INSUFFICIENTGENES =
+		"This mutagen requires that your inventory be completely full of genes.";
 
 	BIO_MUTA_GENERAL_TAG = "\c[Cyan]C.O.N.T.R.O.L.\c[White] Mutagen";
 	BIO_MUTA_GENERAL_PKUP = "Acquired a sample of \c[Cyan]C.O.N.T.R.O.L.\c- Mutagen.";
 	BIO_MUTA_GENERAL_USE = "\c[Cyan]You feel your weapon integrate with your body.\c-";
+
+	BIO_MUTA_RECYCLE_TAG = "\c[Gold]R.E.C.Y.C.L.E.\c[White] Mutagen";
+	BIO_MUTA_RECYCLE_PKUP = "Acquired a sample of \c[Gold]R.E.C.Y.C.L.E.\c- Mutagen.";
+	BIO_MUTA_RECYCLE_CONFIRM =
+		"\c[White]Destroys all genes in your inventory,\n"
+		"giving a new gene of equal or greater rarity in return.\n\n"
+		"\c-Wait until this message passes, or select a different mutagen, to cancel."
+		"Use again to confirm.";
 
 // Perks (tags, pickup strings, summaries) /////////////////////////////////////
 
