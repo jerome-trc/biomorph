@@ -121,11 +121,9 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (context.Weap.Pipelines[i].Payload is 'BIO_ShotPellet')
-				return true, "";
-
-		return false, "$BIO_WMOD_INCOMPAT_NOSHELLPAYLOAD";
+		return
+			context.Weap.AnyPipelineFiresPayload('BIO_ShotPellet', true),
+			"$BIO_WMOD_INCOMPAT_NOPAYLOAD_SHOTPELLETS";
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const

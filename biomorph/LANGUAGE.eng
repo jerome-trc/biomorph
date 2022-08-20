@@ -393,7 +393,7 @@
 	BIO_WMOD_INCOMPAT_NOPUFFPIPELINES = "This weapon has no hitscan firing modes.";
 	BIO_WMOD_INCOMPAT_NORELOADTIMES =
 		"This weapon has no modifiable reload timings.";
-	BIO_WMOD_INCOMPAT_NOSHELLPAYLOAD = "This weapon doesn't fire shotshells.";
+	BIO_WMOD_INCOMPAT_NOPAYLOAD_SHOTPELLETS = "This weapon doesn't fire shot pellets.";
 	BIO_WMOD_INCOMPAT_NOSPLASH = "This weapon deals no splash damage.";
 	BIO_WMOD_INCOMPAT_NOSPOOL = "This weapon can't be spooled.";
 	BIO_WMOD_INCOMPAT_NOSPREAD = "This weapon has no spread at all.";

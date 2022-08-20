@@ -172,24 +172,6 @@ extend class BIO_Weapon
 			Owner.FindInventory('PowerInfiniteAmmo', true) != null;
 	}
 
-	bool DealsHitDamage() const
-	{
-		for (uint i = 0; i < Pipelines.Size(); i++)
-			if (Pipelines[i].DealsHitDamage())
-				return true;
-
-		return false;
-	}
-
-	bool DealsAnySplashDamage() const
-	{
-		for (uint i = 0; i < Pipelines.Size(); i++)
-			if (Pipelines[i].DealsAnySplashDamage())
-				return true;
-
-		return false;
-	}
-
 	bool MagazineSizeMutable(bool secondary = false) const
 	{
 		if (!secondary)
@@ -230,6 +212,43 @@ extend class BIO_Weapon
 	bool ReloadTimesMutable() const
 	{
 		return ReloadTimeGroups.Size() > 0 && ReloadTimesReducible();
+	}
+
+	bool DealsHitDamage() const
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].DealsHitDamage())
+				return true;
+
+		return false;
+	}
+
+	bool DealsAnySplashDamage() const
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].DealsAnySplashDamage())
+				return true;
+
+		return false;
+	}
+
+	bool AnyPipelineFiresPayload(class<Actor> payload, bool subclass = false)
+	{
+		for (uint i = 0; i < Pipelines.Size(); i++)
+		{
+			if (subclass)
+			{
+				if (Pipelines[i].Payload is payload)
+					return true;
+			}
+			else
+			{
+				if (Pipelines[i].Payload == payload)
+					return true;
+			}
+		}
+
+		return false;
 	}
 
 	private bool ScavengingDestroys() const

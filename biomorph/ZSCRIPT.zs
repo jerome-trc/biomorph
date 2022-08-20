@@ -116,8 +116,8 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/modifiers/timing.zs"
 
 #include "zscript/biomorph/weapons/morph/base.zs"
-#include "zscript/biomorph/weapons/morph/upgrade.zs"
 #include "zscript/biomorph/weapons/morph/downgrade.zs"
+#include "zscript/biomorph/weapons/morph/upgrade.zs"
 
 #include "zscript/biomorph/weapons/single/arc_caster.zs"
 #include "zscript/biomorph/weapons/single/auto_shotgun.zs"
