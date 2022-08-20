@@ -63,9 +63,6 @@ class BIO_NormalMagazine : BIO_Magazine
 
 		if (!Secondary)
 		{
-			if (weap.Ammo1 == null)
-				return true;
-
 			magSize = weap.MagazineSize1;
 			reserve = weap.Ammo1;
 			cost = weap.ReloadCost1;
@@ -73,14 +70,16 @@ class BIO_NormalMagazine : BIO_Magazine
 		}
 		else
 		{
-			if (weap.Ammo2 == null)
-				return true;
-
 			magSize = weap.MagazineSize2;
 			reserve = weap.Ammo2;
 			cost = weap.ReloadCost2;
 			minReserve = weap.MinAmmoReserve2;
 		}
+
+		bool alreadyFull = Amount < magSize;
+
+		if (reserve == null)
+			return alreadyFull;
 
 		int minAmt = minReserve * cost;
 
@@ -88,7 +87,7 @@ class BIO_NormalMagazine : BIO_Magazine
 			return false;
 
 		// Is this magazine already full?
-		return Amount < magSize;
+		return alreadyFull;
 	}
 
 	final override bool IsFull(uint magSize) const
