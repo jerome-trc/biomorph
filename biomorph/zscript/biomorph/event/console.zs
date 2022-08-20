@@ -81,9 +81,11 @@ extend class BIO_EventHandler
 			"\tbio_lootsim\n"
 			"\tbio_weapserialize\n"
 			"\c[Gold]Network events:\c-\n"
+			"\tbio_lootcoreregen\n"
 			"\tbio_weaplootregen\n"
 			"\tbio_mutalootregen\n"
 			"\tbio_genelootregen\n"
+			"\tbio_opmoderegen\n"
 			"\tbio_morphregen"
 		);
 	}
