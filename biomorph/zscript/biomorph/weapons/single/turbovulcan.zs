@@ -273,15 +273,15 @@ extend class BIO_Turbovulcan
 		TRBO C 4;
 		TRBO D 4;
 		TNT1 A 0 A_Refire;
-		TRBO A 5;
-		TRBO B 5;
-		TRBO C 5;
-		TRBO D 5;
+		TRBO A 5 A_WeaponReady(WRF_NOFIRE); // Allow switching
+		TRBO B 5 A_WeaponReady(WRF_NOFIRE);
+		TRBO C 5 A_WeaponReady(WRF_NOFIRE);
+		TRBO D 5 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_Refire;
-		TRBO A 6;
-		TRBO B 6;
-		TRBO C 6;
-		TRBO D 6;
+		TRBO A 6 A_WeaponReady(WRF_NOFIRE);
+		TRBO B 6 A_WeaponReady(WRF_NOFIRE);
+		TRBO C 6 A_WeaponReady(WRF_NOFIRE);
+		TRBO D 6 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_StopSound(CHAN_7);
 		Goto Ready;
 	}

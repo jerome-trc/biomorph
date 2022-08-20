@@ -247,11 +247,11 @@ extend class BIO_Microvulcan
 		CHGG A 4;
 		CHGG B 4;
 		TNT1 A 0 A_Refire;
-		CHGG A 5;
-		CHGG B 5;
+		CHGG A 5 A_WeaponReady(WRF_NOFIRE);
+		CHGG B 5 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_Refire;
-		CHGG A 6;
-		CHGG B 6;
+		CHGG A 6 A_WeaponReady(WRF_NOFIRE);
+		CHGG B 6 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0
 		{
 			A_StopSound(CHAN_7);

@@ -256,13 +256,13 @@ extend class BIO_Minivulcan
 		MINV B 4;
 		MINV C 4;
 		TNT1 A 0 A_Refire;
-		MINV A 5;
-		MINV B 5;
-		MINV C 5;
+		MINV A 5 A_WeaponReady(WRF_NOFIRE); // Allow switching
+		MINV B 5 A_WeaponReady(WRF_NOFIRE);
+		MINV C 5 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_Refire;
-		MINV A 6;
-		MINV B 6;
-		MINV C 6;
+		MINV A 6 A_WeaponReady(WRF_NOFIRE);
+		MINV B 6 A_WeaponReady(WRF_NOFIRE);
+		MINV C 6 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_StopSound(CHAN_7);
 		Goto Ready;
 	BSpool.Flash:
