@@ -99,11 +99,11 @@ extend class BIO_GammaProjector
 		{
 			A_BIO_SetFireTime(0);
 			A_BIO_FireSound();
+			A_GunFlash('HoldRel.Flash');
 		}
 		GAMM D 5 Bright
 		{
 			A_BIO_SetFireTime(1);
-			A_GunFlash();
 		}
 		GAMM E 5 Bright
 		{
@@ -114,5 +114,23 @@ extend class BIO_GammaProjector
 		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
+	HoldRel.Flash:
+		TNT1 A 10
+		{
+			A_BIO_SetFireTime(0);
+			A_Light(3);
+		}
+		TNT1 A 5
+		{
+			A_BIO_SetFireTime(1);
+			A_Light(5);
+		}
+		TNT1 A 5
+		{
+			A_BIO_SetFireTime(2);
+			A_Light(7);
+		}
+		TNT1 A 0 A_Light(1);
+		Goto LightDone;
 	}
 }
