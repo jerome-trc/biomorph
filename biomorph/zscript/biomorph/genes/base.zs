@@ -130,5 +130,5 @@ struct BIO_GeneContext
 	// during a compatibility check or application.
 	bool First;
 
-	bool IsLastNode() const { return Node == Sim.Nodes.Size() - 1; }
+	bool IsLastNode() const { return Node == Sim.RealNodeSize() - 1; }
 }

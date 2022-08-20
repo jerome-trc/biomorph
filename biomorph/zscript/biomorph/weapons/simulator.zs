@@ -1120,6 +1120,18 @@ class BIO_WeaponModSimulator : Thinker
 
 	// Other introspective helpers /////////////////////////////////////////////
 
+	// Skips upgrade nodes.
+	uint RealNodeSize() const
+	{
+		uint ret = 0;
+
+		for (uint i = 0; i < Nodes.Size(); i++)
+			if (!Nodes[i].IsMorph())
+				ret++;
+
+		return ret;
+	}
+
 	// Never returns the home node (0).
 	uint RandomNode(bool accessible = false, bool unoccupied = false) const
 	{
