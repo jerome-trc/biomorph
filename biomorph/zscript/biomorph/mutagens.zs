@@ -145,7 +145,7 @@ class BIO_Muta_Recycle : BIO_ConfirmMutagen
 		Inventory.Icon 'MUTAR0';
 		Inventory.PickupMessage "$BIO_MUTA_RECYCLE_PKUP";
 		Inventory.UseSound "bio/mutation/general";
-		BIO_Mutagen.LootWeight LOOTWEIGHT_MAX / 2;
+		BIO_Mutagen.LootWeight LOOTWEIGHT_MAX / 4;
 	}
 
 	States
