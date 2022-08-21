@@ -36,6 +36,7 @@ class BIO_WeaponDrop : BIO_Keybind
 				Keybindings.NameKeys(k1, k2)
 			);
 			pawn.A_Print(prompt, 3.0);
+			pawn.A_StartSound("bio/ui/beep", CHAN_AUTO);
 			Primed = true;
 			BIO_KeybindDisarmer.Create(self);
 		}
