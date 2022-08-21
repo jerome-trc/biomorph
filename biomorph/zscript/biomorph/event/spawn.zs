@@ -111,6 +111,10 @@ extend class BIO_EventHandler
 
 	final override void CheckReplacement(ReplaceEvent event)
 	{
+		// `DestroyAllThinkers` with CCards can VM abort if not for this check
+		if (Globals == null)
+			return;
+
 		if (!Globals.InValiant())
 			return;
 
