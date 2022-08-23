@@ -11,20 +11,11 @@ extend class BIO_Weapon
 		ReloadTimeGroups.Clear();
 		SpecialFunc = null;
 
-		bNoAutoFire = Default.bNoAutoFire;
-		bNoAlert = Default.bNoAlert;
-		bNoAutoAim = Default.bNoAutoAim;
-		bMeleeWeapon = Default.bMeleeWeapon;
-
 		AmmoType1 = Default.AmmoType1;
 		AmmoType2 = Default.AmmoType2;
 		AmmoUse1 = Default.AmmoUse1;
 		AmmoUse2 = Default.AmmoUse2;
 
-		BobRangeX = Default.BobRangeX;
-		BobRangeY = Default.BobRangeY;
-		BobSpeed = Default.BobSpeed;
-		BobStyle = Default.BobStyle;
 		KickBack = Default.KickBack;
 
 		RaiseSpeed = Default.RaiseSpeed;
