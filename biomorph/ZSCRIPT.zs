@@ -1,7 +1,6 @@
 version "3.7"
 
-// Mod meta-class. If your mod ever needs to check if Biomorph is loaded,
-// you can always rely on this class to exist.
+// Prolific symbols, and a good way to check if this mod is loaded.
 class Biomorph abstract
 {
 	const VERSION_MAJOR = 0;
@@ -95,7 +94,6 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/pipeline_builder.zs"
 #include "zscript/biomorph/weapons/recoil.zs"
 #include "zscript/biomorph/weapons/replacers.zs"
-#include "zscript/biomorph/weapons/simulator.zs"
 #include "zscript/biomorph/weapons/time.zs"
 
 #include "zscript/biomorph/weapons/base/core.zs"
@@ -118,6 +116,10 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/morph/base.zs"
 #include "zscript/biomorph/weapons/morph/downgrade.zs"
 #include "zscript/biomorph/weapons/morph/upgrade.zs"
+
+#include "zscript/biomorph/weapons/sim/core.zs"
+#include "zscript/biomorph/weapons/sim/gene.zs"
+#include "zscript/biomorph/weapons/sim/node.zs"
 
 #include "zscript/biomorph/weapons/single/arc_caster.zs"
 #include "zscript/biomorph/weapons/single/auto_shotgun.zs"

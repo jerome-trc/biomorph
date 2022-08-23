@@ -1,362 +1,4 @@
-// (Rat): My kingdom for some honest-to-god sum types
-
-class BIO_WeaponModSimNode play
-{
-	// This is a reflection of the real state of the weapon's mod graph.
-	// Only gets altered when the simulation gets committed, so it and the graph
-	// are always in perfect sync.
-	BIO_WMGNode Basis;
-
-	uint Multiplier;
-
-	// Null if no gene is being simulated in this node.
-	// Acts as a representative for what will end up in `Basis.GeneType`.
-	BIO_WeaponModSimGene Gene;
-	bool Valid;
-	string Message;
-
-	BIO_WeaponMorphRecipe MorphRecipe;
-
-	// Accessors ///////////////////////////////////////////////////////////////
-
-	bool IsOccupied() const { return Gene != null; }
-	bool IsActive() const { return IsOccupied() || Basis.UUID == 0; }
-	bool IsMorph() const { return MorphRecipe != null; }
-
-	BIO_WeaponModifier GetModifier() const
-	{
-		return Gene == null ? null : Gene.Modifier;
-	}
-
-	bool HasModifier() const
-	{
-		if (Gene == null)
-			return false;
-
-		return Gene.GetType() is 'BIO_ModifierGene';
-	}
-
-	class<BIO_Gene> GetGeneType() const
-	{
-		return Gene == null ? null : Gene.GetType();
-	}
-
-	textureID GetIcon() const
-	{
-		textureID ret;
-		ret.SetNull();
-
-		if (Gene != null)
-			ret = GetDefaultByType(Gene.GetType()).Icon;
-		else if (MorphRecipe != null)
-			ret = GetDefaultByType(MorphRecipe.Output()).Icon;
-
-		return ret;
-	}
-
-	bool Repeatable() const
-	{
-		let mod = GetModifier();
-
-		if (mod == null)
-			return false;
-
-		let defs = GetDefaultByType(mod.GeneType());
-		return defs.RepeatRules != BIO_WMODREPEATRULES_NONE;
-	}
-
-	bool Repeating() const
-	{
-		return Repeatable() && Multiplier > 1;
-	}
-
-	string GetTag() const
-	{
-		let gene_t = Gene.GetType();
-		let defs = GetDefaultByType(gene_t);
-		return defs.GetTag();
-	}
-
-	bool HasTooltip() const { return IsOccupied() || IsMorph(); }
-
-	bool, string Compatible(
-		readOnly<BIO_WeaponModSimulator> sim,
-		BIO_GeneContext context
-	) const
-	{
-		if (Gene == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Attempted to check compatibility of node %d, which lacks a gene.",
-				Basis.UUID
-			);
-			return false, "";
-		}
-
-		let gene_t = Gene.GetType();
-		bool ret1 = false;
-		string ret2 = "";
-
-		if (gene_t is 'BIO_ModifierGene')
-		{
-			let mod = Gene.Modifier;
-			let defs = GetDefaultByType((class<BIO_ModifierGene>)(gene_t));
-
-			switch (defs.RepeatRules)
-			{
-			case BIO_WMODREPEATRULES_NONE:
-			case BIO_WMODREPEATRULES_EXTERNAL:
-				context.NodeCount = 1;
-			case BIO_WMODREPEATRULES_INTERNAL:
-				break;
-			default:
-				Console.Printf(
-					Biomorph.LOGPFX_ERR ..
-					"Invalid repeat rules returned by modifier: %s",
-					mod.GetClassName()
-				);
-				break;
-			}
-
-			[ret1, ret2] = mod.Compatible(context);
-		}
-		else if (gene_t is 'BIO_SupportGene')
-		{
-			let sgene_t = (class<BIO_SupportGene>)(gene_t);
-			let defs = GetDefaultByType(sgene_t);
-			[ret1, ret2] = defs.Compatible(context);
-		}
-		else if (gene_t is 'BIO_ActiveGene')
-		{
-			let agene_t = (class<BIO_ActiveGene>)(gene_t);
-			let defs = GetDefaultByType(agene_t);
-			[ret1, ret2] = defs.Compatible(context);
-		}
-		else
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Attempted to check compatibility of node %d, with illegal gene type %s.",
-				Basis.UUID, gene_t.GetClassName()
-			);
-			return false, "";
-		}
-
-		return ret1, ret2;
-	}
-
-	// Mutators ////////////////////////////////////////////////////////////////
-
-	void Update()
-	{
-		if (Gene != null)
-			Gene.UpdateModifier();
-	}
-
-	string Apply(
-		BIO_Weapon weap, BIO_WeaponModSimulator sim,
-		in out BIO_GeneContext context
-	) const
-	{
-		if (Gene == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Attempted to apply node %d, which lacks a gene.",
-				Basis.UUID
-			);
-			return "";
-		}
-
-		string ret = "";
-		let gene_t = Gene.GetType();
-
-		if (gene_t is 'BIO_ModifierGene')
-		{
-			let mod = Gene.Modifier;
-			let defs = GetDefaultByType((class<BIO_ModifierGene>)(gene_t));
-
-			switch (defs.RepeatRules)
-			{
-			case BIO_WMODREPEATRULES_NONE:
-				context.NodeCount = 1;
-				ret = mod.Apply(weap, context);
-				break;
-			case BIO_WMODREPEATRULES_INTERNAL:
-				ret = mod.Apply(weap, context);
-				break;
-			case BIO_WMODREPEATRULES_EXTERNAL:
-				context.NodeCount = 1;
-
-				for (uint i = 0; i < Multiplier; i++)
-				{
-					let msg = mod.Apply(weap, context);
-
-					if (msg.Length() > 0)
-						ret = msg;
-				}
-
-				break;
-			default:
-				Console.Printf(
-					Biomorph.LOGPFX_ERR ..
-					"Invalid repeat rules returned by modifier: %s",
-					mod.GetClassName()
-				);
-				break;
-			}
-		}
-		else if (gene_t is 'BIO_SupportGene')
-		{
-			let sgene_t = (class<BIO_SupportGene>)(gene_t);
-			let defs = GetDefaultByType(sgene_t);
-			ret = defs.Apply(context);
-		}
-		else if (gene_t is 'BIO_ActiveGene')
-		{
-			let agene_t = (class<BIO_ActiveGene>)(gene_t);
-			let defs = GetDefaultByType(agene_t);
-			ret = defs.Apply(weap, sim, context);
-		}
-
-		return ret;
-	}
-}
-
-class BIO_WeaponModSimGene play abstract
-{
-	BIO_WeaponModifier Modifier;
-
-	abstract void UpdateModifier();
-	abstract class<BIO_Gene> GetType() const;
-
-	string GetSummaryTooltip() const
-	{
-		let defs = GetDefaultByType(GetType());
-		return String.Format("\c[White]%s\n\n%s",
-			defs.GetTag(),
-			StringTable.Localize(defs.Summary)
-		);
-	}
-
-	string GetDescriptionTooltip(
-		readOnly<BIO_Weapon> weap,
-		in out BIO_GeneContext context
-	) const
-	{
-		let gene_t = GetType();
-
-		if (gene_t is 'BIO_ModifierGene')
-		{
-			let defs = GetDefaultByType((class<BIO_ModifierGene>)(gene_t));
-
-			return String.Format(
-				"\c[White]%s\n\n%s",
-				defs.GetTag(),
-				StringTable.Localize(Modifier.Description(context))
-			);
-		}
-		else
-		{
-			return GetSummaryTooltip();
-		}
-	}
-}
-
-// When representing genes that can be moved around the simulated graph, this
-// is used for genes which were in the player's inventory at simulation start.
-class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
-{
-	BIO_Gene Gene;
-
-	final override void UpdateModifier()
-	{
-		// Explicitly check for this case, since it should never happen
-		if (Gene == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"A weapon mod sim gene object has a null internal pointer."
-			);
-			return;
-		}
-
-		if (Gene is 'BIO_ModifierGene')
-		{
-			let mod_t = BIO_ModifierGene(Gene).ModType;
-
-			if (Modifier != null && Modifier.GetClass() == mod_t)
-			{
-				let mod = Modifier.Copy();
-				Modifier = mod;
-			}
-			else
-			{
-				Modifier = BIO_WeaponModifier(new(mod_t));
-			}
-		}
-	}
-
-	BIO_WeaponModSimGeneVirtual VirtualCopy(class<BIO_Gene> newType) const
-	{
-		let ret = new('BIO_WeaponModSimGeneVirtual');
-
-		if (Modifier != null)
-		{
-			ret.Type = Modifier.GeneType();
-			ret.Modifier = Modifier.Copy();
-		}
-		else
-		{
-			ret.Type = newType;
-		}
-
-		return ret;
-	}
-
-	final override class<BIO_Gene> GetType() const { return Gene.GetClass(); }
-}
-
-// When representing genes that can be moved around the simulated graph, this
-// is used for genes which were slotted into the tree at simulation start,
-// since those genes have no associated items.
-class BIO_WeaponModSimGeneVirtual : BIO_WeaponModSimGene
-{
-	class<BIO_Gene> Type;
-
-	final override void UpdateModifier()
-	{
-		// Explicitly check for this case, since it should never happen
-		if (Type == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"A weapon mod sim gene object has a null internal class."
-			);
-			return;
-		}
-
-		if (Type is 'BIO_ModifierGene')
-		{
-			let mgene_t = (class<BIO_ModifierGene>)(Type);
-			let defs = GetDefaultByType(mgene_t);
-			
-			if (Modifier != null && defs.ModType == Modifier.GetClass())
-			{
-				let mod = Modifier.Copy();
-				Modifier = mod;
-			}
-			else
-			{
-				Modifier = BIO_WeaponModifier(new(defs.ModType));
-			}
-		}
-	}
-
-	final override class<BIO_Gene> GetType() const { return Type; }
-}
-
+// Members, some miscellaneous functions.
 class BIO_WeaponModSimulator : Thinker
 {
 	const STATNUM = Thinker.STAT_STATIC + 1;
@@ -370,8 +12,13 @@ class BIO_WeaponModSimulator : Thinker
 	// Upon commit, the weapon's mod graph is rebuilt to reflect this.
 	Array<BIO_WeaponModSimNode> Nodes;
 
-	// Critical path ///////////////////////////////////////////////////////////
+	readOnly<BIO_Weapon> GetWeapon() const { return Weap.AsConst(); }
+	readOnly<BIO_WeaponModSimulator> AsConst() const { return self; }
+}
 
+// Critical path operations.
+extend class BIO_WeaponModSimulator
+{
 	static BIO_WeaponModSimulator Create(BIO_Weapon weap)
 	{
 		if (weap.ModGraph == null)
@@ -700,9 +347,11 @@ class BIO_WeaponModSimulator : Thinker
 		Simulate();
 		CommitAndClose();
 	}
+}
 
-	// Intermediary operations /////////////////////////////////////////////////
-
+// Intermediate (non-critical path) operations.
+extend class BIO_WeaponModSimulator
+{
 	// Take a gene out of the inventory and put it into a node.
 	void InsertGene(uint node, uint slot)
 	{
@@ -908,218 +557,11 @@ class BIO_WeaponModSimulator : Thinker
 			if (Nodes[i].GetGeneType() == type)
 				Nodes[i].Basis.Unlock();
 	}
+}
 
-	// Accessibility checker ///////////////////////////////////////////////////
-
-	bool NodeAccessible(uint node) const
-	{
-		if (node >= Nodes.Size())
-		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Queried accessibility of illegal node %d.", node);
-			return false;
-		}
-
-		if (node == 0) // Home node
-			return true;
-
-		// Completely unconnected nodes are permanently accessible
-		if (Nodes[node].Basis.Neighbors.Size() < 1 ||
-			Nodes[node].Basis.FreeAccess())
-			return true;
-
-		Array<uint> visited;
-
-		if (NodeAccessibleViaFreeAccess(node, visited))
-			return true;
-
-		return NodeAccessibleImpl(node, 0, visited);
-	}
-
-	private bool NodeAccessibleImpl(uint tgt, uint cur,
-		in out Array<uint> visited) const
-	{
-		if (cur == tgt)
-			return true;
-
-		visited.Push(cur);
-		bool curActive = Nodes[cur].IsActive();
-
-		for (uint i = 0; i < Nodes[cur].Basis.Neighbors.Size(); i++)
-		{
-			uint ndx = Nodes[cur].Basis.Neighbors[i];
-
-			if (visited.Find(ndx) != visited.Size())
-				continue;
-
-			for (uint j = 0; j < Nodes[ndx].Basis.Neighbors.Size(); j++)
-			{
-				let nb = Nodes[ndx].Basis.Neighbors[j];
-
-				if (Nodes[nb].IsActive() && curActive &&
-					NodeAccessibleImpl(tgt, ndx, visited))
-					return true;
-			}
-		}
-
-		return false;
-	}
-
-	private bool NodeAccessibleViaFreeAccess(uint tgt,
-		in out Array<uint> visited) const
-	{
-		for (uint i = 0; i < Nodes.Size(); i++)
-		{
-			if (!Nodes[i].Basis.FreeAccess())
-				continue;
-
-			for (uint j = 0; j < Nodes[i].Basis.Neighbors.Size(); j++)
-			{
-				let nb = Nodes[i].Basis.Neighbors[j];
-
-				if (NodeAccessibleImpl(tgt, i, visited))
-					return true;
-			}
-		}
-
-		return false;
-	}
-
-	// Extended accessibility checker //////////////////////////////////////////
-
-	bool NodeAccessibleEx(uint node, in out Array<uint> active) const
-	{
-		if (node >= Nodes.Size())
-		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
-				"Queried accessibility of illegal node %d.", node);
-			return false;
-		}
-
-		if (node == 0) // Home node
-			return true;
-
-		// Completely unconnected nodes are permanently accessible
-		if (Nodes[node].Basis.Neighbors.Size() < 1 ||
-			Nodes[node].Basis.FreeAccess())
-			return true;
-
-		Array<uint> visited;
-
-		if (NodeAccessibleViaFreeAccessEx(node, active, visited))
-			return true;
-
-		return NodeAccessibleExImpl(node, 0, active, visited);
-	}
-
-	private bool NodeAccessibleExImpl(uint tgt, uint cur,
-		in out Array<uint> active, in out Array<uint> visited) const
-	{
-		if (cur == tgt)
-			return true;
-
-		visited.Push(cur);
-		bool curActive = active.Find(cur) != active.Size();
-
-		for (uint i = 0; i < Nodes[cur].Basis.Neighbors.Size(); i++)
-		{
-			uint ndx = Nodes[cur].Basis.Neighbors[i];
-
-			if (visited.Find(ndx) != visited.Size())
-				continue;
-
-			for (uint j = 0; j < Nodes[ndx].Basis.Neighbors.Size(); j++)
-			{
-				let nb = Nodes[ndx].Basis.Neighbors[j];
-
-				if (active.Find(nb) != active.Size() && curActive &&
-					NodeAccessibleExImpl(tgt, ndx, active, visited))
-					return true;
-			}
-		}
-
-		return false;
-	}
-
-	private bool NodeAccessibleViaFreeAccessEx(uint tgt,
-		in out Array<uint> active, in out Array<uint> visited) const
-	{
-		for (uint i = 0; i < Nodes.Size(); i++)
-		{
-			if (!Nodes[i].Basis.FreeAccess())
-				continue;
-
-			for (uint j = 0; j < Nodes[i].Basis.Neighbors.Size(); j++)
-			{
-				let nb = Nodes[i].Basis.Neighbors[j];
-
-				if (NodeAccessibleExImpl(tgt, i, active, visited))
-					return true;
-			}
-		}
-
-		return false;
-	}
-
-	// Helpers specifically for the weapon mod. menu ///////////////////////////
-
-	string GetNodeTooltip(uint node) const
-	{
-		if (Nodes[node].IsMorph())
-			return GetMorphTooltip(node);
-
-		let n = Nodes[node];
-
-		BIO_GeneContext context;
-		context.Sim = AsConst();
-		context.Weap = Weap.AsConst();
-		context.Node = node;
-		context.NodeCount = n.Multiplier;
-		context.TotalCount = CountGene(n.GetGeneType());
-		context.First = NodeHasFirstOfGene(node, n.GetGeneType());
-
-		if (!n.Valid)
-		{
-			return String.Format(
-				StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
-				StringTable.Localize(n.GetTag()),
-				StringTable.Localize(n.Message)
-			);
-		}
-
-		return Nodes[node].Gene.GetDescriptionTooltip(Weap.AsConst(), context);
-	}
-
-	string GetGeneSlotTooltip(uint slot) const
-	{
-		return Genes[slot].GetSummaryTooltip();
-	}
-
-	private string GetMorphTooltip(uint node) const
-	{
-		let morph = Nodes[node].MorphRecipe;
-
-		let ret = String.Format(
-			StringTable.Localize("$BIO_MENU_WEAPMOD_MORPH"),
-			GetDefaultByType(morph.Output()).ColoredTag(),
-			morph.RequirementString(),
-			MorphCost(node),
-			GetDefaultByType('BIO_Muta_General').GetTag()
-		);
-
-		if (morph.QualityAdded() > 0)
-		{
-			ret.AppendFormat(
-				StringTable.Localize("$BIO_MENU_WEAPMOD_MORPH_QUALITY"),
-				morph.QualityAdded()
-			);
-		}
-
-		return ret;
-	}
-
-	// Other introspective helpers /////////////////////////////////////////////
-
+// Introspection.
+extend class BIO_WeaponModSimulator
+{
 	// Skips upgrade nodes.
 	uint RealNodeSize() const
 	{
@@ -1438,9 +880,226 @@ class BIO_WeaponModSimulator : Thinker
 
 		return true;
 	}
+}
 
-	// Other internal implementation details ///////////////////////////////////
+// Accessibility checker.
+extend class BIO_WeaponModSimulator
+{
+	bool NodeAccessible(uint node) const
+	{
+		if (node >= Nodes.Size())
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Queried accessibility of illegal node %d.", node);
+			return false;
+		}
 
+		if (node == 0) // Home node
+			return true;
+
+		// Completely unconnected nodes are permanently accessible
+		if (Nodes[node].Basis.Neighbors.Size() < 1 ||
+			Nodes[node].Basis.FreeAccess())
+			return true;
+
+		Array<uint> visited;
+
+		if (NodeAccessibleViaFreeAccess(node, visited))
+			return true;
+
+		return NodeAccessibleImpl(node, 0, visited);
+	}
+
+	private bool NodeAccessibleImpl(uint tgt, uint cur,
+		in out Array<uint> visited) const
+	{
+		if (cur == tgt)
+			return true;
+
+		visited.Push(cur);
+		bool curActive = Nodes[cur].IsActive();
+
+		for (uint i = 0; i < Nodes[cur].Basis.Neighbors.Size(); i++)
+		{
+			uint ndx = Nodes[cur].Basis.Neighbors[i];
+
+			if (visited.Find(ndx) != visited.Size())
+				continue;
+
+			for (uint j = 0; j < Nodes[ndx].Basis.Neighbors.Size(); j++)
+			{
+				let nb = Nodes[ndx].Basis.Neighbors[j];
+
+				if (Nodes[nb].IsActive() && curActive &&
+					NodeAccessibleImpl(tgt, ndx, visited))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	private bool NodeAccessibleViaFreeAccess(uint tgt,
+		in out Array<uint> visited) const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			if (!Nodes[i].Basis.FreeAccess())
+				continue;
+
+			for (uint j = 0; j < Nodes[i].Basis.Neighbors.Size(); j++)
+			{
+				let nb = Nodes[i].Basis.Neighbors[j];
+
+				if (NodeAccessibleImpl(tgt, i, visited))
+					return true;
+			}
+		}
+
+		return false;
+	}
+}
+
+// Extended accessibility checker.
+extend class BIO_WeaponModSimulator
+{
+	bool NodeAccessibleEx(uint node, in out Array<uint> active) const
+	{
+		if (node >= Nodes.Size())
+		{
+			Console.Printf(Biomorph.LOGPFX_ERR ..
+				"Queried accessibility of illegal node %d.", node);
+			return false;
+		}
+
+		if (node == 0) // Home node
+			return true;
+
+		// Completely unconnected nodes are permanently accessible
+		if (Nodes[node].Basis.Neighbors.Size() < 1 ||
+			Nodes[node].Basis.FreeAccess())
+			return true;
+
+		Array<uint> visited;
+
+		if (NodeAccessibleViaFreeAccessEx(node, active, visited))
+			return true;
+
+		return NodeAccessibleExImpl(node, 0, active, visited);
+	}
+
+	private bool NodeAccessibleExImpl(uint tgt, uint cur,
+		in out Array<uint> active, in out Array<uint> visited) const
+	{
+		if (cur == tgt)
+			return true;
+
+		visited.Push(cur);
+		bool curActive = active.Find(cur) != active.Size();
+
+		for (uint i = 0; i < Nodes[cur].Basis.Neighbors.Size(); i++)
+		{
+			uint ndx = Nodes[cur].Basis.Neighbors[i];
+
+			if (visited.Find(ndx) != visited.Size())
+				continue;
+
+			for (uint j = 0; j < Nodes[ndx].Basis.Neighbors.Size(); j++)
+			{
+				let nb = Nodes[ndx].Basis.Neighbors[j];
+
+				if (active.Find(nb) != active.Size() && curActive &&
+					NodeAccessibleExImpl(tgt, ndx, active, visited))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	private bool NodeAccessibleViaFreeAccessEx(uint tgt,
+		in out Array<uint> active, in out Array<uint> visited) const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+		{
+			if (!Nodes[i].Basis.FreeAccess())
+				continue;
+
+			for (uint j = 0; j < Nodes[i].Basis.Neighbors.Size(); j++)
+			{
+				let nb = Nodes[i].Basis.Neighbors[j];
+
+				if (NodeAccessibleExImpl(tgt, i, active, visited))
+					return true;
+			}
+		}
+
+		return false;
+	}
+}
+
+// Helpers specifically for the weapon mod menu.
+extend class BIO_WeaponModSimulator
+{
+	string GetNodeTooltip(uint node) const
+	{
+		if (Nodes[node].IsMorph())
+			return GetMorphTooltip(node);
+
+		let n = Nodes[node];
+
+		BIO_GeneContext context;
+		context.Sim = AsConst();
+		context.Weap = Weap.AsConst();
+		context.Node = node;
+		context.NodeCount = n.Multiplier;
+		context.TotalCount = CountGene(n.GetGeneType());
+		context.First = NodeHasFirstOfGene(node, n.GetGeneType());
+
+		if (!n.Valid)
+		{
+			return String.Format(
+				StringTable.Localize("$BIO_WMOD_INCOMPAT_TEMPLATE"),
+				StringTable.Localize(n.GetTag()),
+				StringTable.Localize(n.Message)
+			);
+		}
+
+		return Nodes[node].Gene.GetDescriptionTooltip(Weap.AsConst(), context);
+	}
+
+	string GetGeneSlotTooltip(uint slot) const
+	{
+		return Genes[slot].GetSummaryTooltip();
+	}
+
+	private string GetMorphTooltip(uint node) const
+	{
+		let morph = Nodes[node].MorphRecipe;
+
+		let ret = String.Format(
+			StringTable.Localize("$BIO_MENU_WEAPMOD_MORPH"),
+			GetDefaultByType(morph.Output()).ColoredTag(),
+			morph.RequirementString(),
+			MorphCost(node),
+			GetDefaultByType('BIO_Muta_General').GetTag()
+		);
+
+		if (morph.QualityAdded() > 0)
+		{
+			ret.AppendFormat(
+				StringTable.Localize("$BIO_MENU_WEAPMOD_MORPH_QUALITY"),
+				morph.QualityAdded()
+			);
+		}
+
+		return ret;
+	}
+}
+
+// Internal implementation details.
+extend class BIO_WeaponModSimulator
+{
 	final override void OnDestroy()
 	{
 		// Prevent VM exceptions during engine teardown
@@ -1494,9 +1153,4 @@ class BIO_WeaponModSimulator : Thinker
 
 		return nodesWithGene[0] == node;
 	}
-
-	// Miscellaneous ///////////////////////////////////////////////////////////
-
-	readOnly<BIO_Weapon> GetWeapon() const { return Weap.AsConst(); }
-	readOnly<BIO_WeaponModSimulator> AsConst() const { return self; }
 }
