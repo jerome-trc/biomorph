@@ -1,5 +1,3 @@
-// TODO: Fancy custom menu with context-sensitive help messages
-
 AddOptionMenu "OptionsMenu"
 {
 	SubMenu "$BIO_MODTITLE", "BIO_Options"
