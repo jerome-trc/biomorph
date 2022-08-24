@@ -1,4 +1,3 @@
-// Common member definitions and default assignments.
 class BIO_Chainsaw : BIO_Weapon
 {
 	Default
@@ -25,7 +24,7 @@ class BIO_Chainsaw : BIO_Weapon
 
 	final override void SetDefaults()
 	{
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Saw(range: SAWRANGE * 1.5)
 				.RandomDamage(2, 20)
@@ -37,11 +36,7 @@ class BIO_Chainsaw : BIO_Weapon
 	{
 		return super.ModCost(base) * 2;
 	}
-}
 
-// States: core.
-extend class BIO_Chainsaw
-{
 	States
 	{
 	Spawn:
@@ -59,7 +54,10 @@ extend class BIO_Chainsaw
 		SAWG C 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	}
 }
@@ -80,7 +78,7 @@ class BIO_OpMode_Chainsaw_Rapid : BIO_OpMode_Rapid
 		);
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Rapid.Fire';
 	}

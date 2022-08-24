@@ -72,11 +72,13 @@ class BIO_WeaponAffix play abstract
 	virtual ui void RenderOverlay(BIO_RenderContext context) const {}
 
 	abstract string Description(readOnly<BIO_Weapon> weap) const;
+	abstract BIO_WeaponAffix Copy() const;
 }
 
 class BIO_WeaponSpecialFunctor play abstract
 {
 	abstract state Invoke(BIO_Weapon weap) const;
+	abstract BIO_WeaponSpecialFunctor Copy() const;
 }
 
 class BIO_TempEffect : Thinker

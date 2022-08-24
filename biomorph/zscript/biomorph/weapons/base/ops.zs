@@ -5,8 +5,7 @@ extend class BIO_Weapon
 	// Has no effect whatsoever on the mod graph, or `AmmoGive` values.
 	virtual void Reset()
 	{
-		OpMode = null;
-		Pipelines.Clear();
+		OpModes[0] = OpModes[1] = null;
 		Affixes.Clear();
 		ReloadTimeGroups.Clear();
 		SpecialFunc = null;
@@ -42,10 +41,18 @@ extend class BIO_Weapon
 	{
 		if (Uninitialised())
 		{
-			OpMode = BIO_WeaponOperatingMode.Create(OperatingMode, self);
+			if (OperatingMode1 != null)
+				OpModes[0] = BIO_WeaponOperatingMode.Create(OperatingMode1, self);
+			if (OperatingMode2 != null)
+				OpModes[1] = BIO_WeaponOperatingMode.Create(OperatingMode2, self);
+
 			SetDefaults();
 			IntrinsicModGraph(false);
-			OpMode.SideEffects(self);
+
+			if (OpModes[0] != null)
+				OpModes[0].SideEffects(self);
+			if (OpModes[1] != null)
+				OpModes[1].SideEffects(self);
 
 			if (ModGraph != null)
 				SetTag(ColoredTag());

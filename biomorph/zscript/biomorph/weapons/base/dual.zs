@@ -517,18 +517,16 @@ extend class BIO_DualWieldWeapon
 		A_BIO_LoadMag(amt, true);
 	}
 
-	protected action bool A_BIO_Fire_R(uint pipeline = 0,
-		int fireFactor = 1, float spreadFactor = 1.0)
+	protected action bool A_BIO_Fire_R(uint pipeline = 0)
 	{
 		invoker.bAltFire = false;
-		return A_BIO_Fire(pipeline, fireFactor, spreadFactor);
+		return A_BIO_Fire(pipeline);
 	}
 
-	protected action bool A_BIO_Fire_L(uint pipeline = 0,
-		int fireFactor = 1, float spreadFactor = 1.0)
+	protected action bool A_BIO_Fire_L(uint pipeline = 0)
 	{
 		invoker.bAltFire = true;
-		return A_BIO_Fire(pipeline, fireFactor, spreadFactor);
+		return A_BIO_Fire(pipeline);
 	}
 
 	// Note that for all of the below functions, the default assumption is that

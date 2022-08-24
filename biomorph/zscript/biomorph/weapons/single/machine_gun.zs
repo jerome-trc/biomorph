@@ -39,7 +39,7 @@ class BIO_MachineGun : BIO_Weapon
 	{
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
 
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet()
 				.RandomDamage(14, 16)
@@ -53,11 +53,7 @@ class BIO_MachineGun : BIO_Weapon
 	{
 		return super.ModCost(base) * 2;
 	}
-}
 
-// States: core.
-extend class BIO_MachineGun
-{
 	States
 	{
 	Spawn:
@@ -74,7 +70,10 @@ extend class BIO_MachineGun
 		GPMG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	Dryfire:
 		GPMG A 1 Offset(0, 32 + 1);
@@ -89,7 +88,6 @@ extend class BIO_MachineGun
 		GPMG F 1 Bright A_Light(1);
 		Goto LightDone;
 	Reload:
-		// TODO: Reload sounds
 		TNT1 A 0 A_BIO_CheckReload;
 		GPMG A 1 A_WeaponReady(WRF_NOFIRE);
 		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(1);
@@ -111,11 +109,7 @@ extend class BIO_MachineGun
 		#### # 1 Fast Offset(0, 32 + 1) A_BIO_SetReloadTime(13);
 		Goto Ready;
 	}
-}
 
-// Helper functions.
-extend class BIO_MachineGun
-{
 	protected action void A_BIO_MachineGun_Fire()
 	{
 		A_BIO_Fire();
@@ -136,7 +130,7 @@ class BIO_OpMode_MachineGun_Rapid : BIO_OpMode_Rapid
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Rapid.Fire';
 	}
@@ -156,7 +150,7 @@ extend class BIO_MachineGun
 		GPMG C 1 Bright Offset(0, 34) A_BIO_SetFireTime(1);
 		GPMG B 1 Bright Offset(0, 33) A_BIO_SetFireTime(2);
 		GPMG A 1 Fast A_BIO_SetFireTime(3);
-		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire');
+		TNT1 A 0 A_BIO_Op_CheckBurst('Rapid.Fire');
 		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;

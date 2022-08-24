@@ -2,7 +2,7 @@ class BIO_WMod_Kickback : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		return context.Weap.Pipelines.Size() > 0, "$BIO_WMOD_INCOMPAT_NOPIPELINES";
+		return context.Weap.PipelineCount() > 0, "$BIO_WMOD_INCOMPAT_NOPIPELINES";
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
@@ -37,7 +37,7 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 		if (context.Weap.HasAffixOfType('BIO_WAfx_SmartAim'))
 			return false, "$BIO_WMOD_INCOMPAT_ALREADYSMARTAIMING";
 
-		return context.Weap.Pipelines.Size() > 0, "$BIO_WMOD_INCOMPAT_NOPIPELINES";
+		return context.Weap.PipelineCount() > 0, "$BIO_WMOD_INCOMPAT_NOPIPELINES";
 	}
 
 	private static bool CompatibleWithPipeline(readOnly<BIO_WeaponPipeline> ppl)
@@ -60,9 +60,9 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 		wafx.Init(weap);
 		weap.Affixes.Push(wafx);
 
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			let ppl = weap.Pipelines[i];
+			let ppl = weap.GetPipeline(i);
 			ppl.PayloadFunctors.Travel.Push(new('BIO_PTF_Smart'));
 
 			if (!CompatibleWithPipeline(ppl.AsConst()))
@@ -246,6 +246,11 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 	{
 		return GetDefaultByType('BIO_MGene_SmartAim').Summary;
 	}
+
+	final override BIO_WeaponAffix Copy() const
+	{
+		return new('BIO_WAfx_SmartAim');
+	}
 }
 
 class BIO_PTF_Smart : BIO_ProjTravelFunctor
@@ -271,12 +276,14 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
-			if (context.Weap.Pipelines[i].IsMelee())
+			let ppl = context.Weap.GetPipeline(i);
+
+			if (ppl.IsMelee())
 				continue;
 
-			if (context.Weap.Pipelines[i].CombinedSpread() <= 0.01)
+			if (ppl.CombinedSpread() <= 0.01)
 				continue;
 
 			return true, "";
@@ -287,25 +294,29 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		HorizChanges.Clear(); HorizChanges.Resize(weap.Pipelines.Size());
-		VertChanges.Clear(); VertChanges.Resize(weap.Pipelines.Size());
+		let ppl_c = weap.PipelineCount();
 
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		HorizChanges.Clear(); HorizChanges.Resize(ppl_c);
+		VertChanges.Clear(); VertChanges.Resize(ppl_c);
+
+		for (uint i = 0; i < ppl_c; i++)
 		{
+			let ppl = weap.GetPipeline(i);
+
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
-				if (weap.Pipelines[i].CombinedSpread() <= 0.01)
+				if (ppl.CombinedSpread() <= 0.01)
 					continue;
 
 				float
-					h = weap.Pipelines[i].HSpread * 0.33,
-					v = weap.Pipelines[i].VSpread * 0.33;
+					h = ppl.HSpread * 0.33,
+					v = ppl.VSpread * 0.33;
 
 				HorizChanges[i] -= h;
 				VertChanges[i] -= v;
 
-				weap.Pipelines[i].HSpread -= h;
-				weap.Pipelines[i].VSpread -= v;
+				ppl.HSpread -= h;
+				ppl.VSpread -= v;
 			}
 		}
 
@@ -316,15 +327,15 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 	{
 		string ret = "";
 
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
 			if (HorizChanges[i] >= -0.01 && VertChanges[i] >= -0.01)
 				continue;
 
 			string qual = "";
 
-			if (context.Weap.Pipelines.Size() > 1)
-				qual = " " .. context.Weap.Pipelines[i].GetTagAsQualifier();
+			if (context.Weap.PipelineCount() > 1)
+				qual = " " .. context.Weap.GetPipeline(i).GetTagAsQualifier();
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_SPREAD_DESC"), qual,
@@ -362,8 +373,8 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (context.Weap.Pipelines[i].HSpread >= 0.02)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
+			if (context.Weap.GetPipeline(i).HSpread >= 0.02)
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_TRIVIALHSPREAD";
@@ -371,23 +382,27 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		HorizChanges.Clear(); HorizChanges.Resize(weap.Pipelines.Size());
-		VertChanges.Clear(); VertChanges.Resize(weap.Pipelines.Size());
+		let ppl_c = weap.PipelineCount();
 
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		HorizChanges.Clear(); HorizChanges.Resize(ppl_c);
+		VertChanges.Clear(); VertChanges.Resize(ppl_c);
+
+		for (uint i = 0; i < ppl_c; i++)
 		{
+			let ppl = weap.GetPipeline(i);
+
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
-				if (weap.Pipelines[i].HSpread < 0.02)
+				if (ppl.HSpread < 0.02)
 					continue;
 
-				float h = weap.Pipelines[i].HSpread / 2.0;
+				float h = ppl.HSpread / 2.0;
 
 				HorizChanges[i] -= h;
 				VertChanges[i] += h;
 
-				weap.Pipelines[i].HSpread -= h;
-				weap.Pipelines[i].VSpread += h;
+				ppl.HSpread -= h;
+				ppl.VSpread += h;
 			}
 		}
 
@@ -398,15 +413,15 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 	{
 		string ret = "";
 
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
 			if (HorizChanges[i] >= -0.01 && VertChanges[i] <= 0.01)
 				continue;
 
 			string qual = "";
 
-			if (context.Weap.Pipelines.Size() > 1)
-				qual = " " .. context.Weap.Pipelines[i].GetTagAsQualifier();
+			if (context.Weap.PipelineCount() > 1)
+				qual = " " .. context.Weap.GetPipeline(i).GetTagAsQualifier();
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_SPREADNARROW_DESC"), qual,
@@ -444,8 +459,8 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (context.Weap.Pipelines[i].VSpread >= 0.02)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
+			if (context.Weap.GetPipeline(i).VSpread >= 0.02)
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_TRIVIALVSPREAD";
@@ -453,23 +468,27 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		HorizChanges.Clear(); HorizChanges.Resize(weap.Pipelines.Size());
-		VertChanges.Clear(); VertChanges.Resize(weap.Pipelines.Size());
+		let ppl_c = weap.PipelineCount();
 
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		HorizChanges.Clear(); HorizChanges.Resize(ppl_c);
+		VertChanges.Clear(); VertChanges.Resize(ppl_c);
+
+		for (uint i = 0; i < ppl_c; i++)
 		{
+			let ppl = weap.GetPipeline(i);
+
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
-				if (weap.Pipelines[i].VSpread < 0.02)
+				if (ppl.VSpread < 0.02)
 					continue;
 
-				float v = weap.Pipelines[i].VSpread / 2.0;
+				float v = ppl.VSpread / 2.0;
 
 				HorizChanges[i] += v;
 				VertChanges[i] -= v;
 
-				weap.Pipelines[i].HSpread += v;
-				weap.Pipelines[i].VSpread -= v;
+				ppl.HSpread += v;
+				ppl.VSpread -= v;
 			}
 		}
 
@@ -480,15 +499,15 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 	{
 		string ret = "";
 
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
 			if (HorizChanges[i] <= 0.01 && VertChanges[i] >= -0.01)
 				continue;
 
 			string qual = "";
 
-			if (context.Weap.Pipelines.Size() > 1)
-				qual = " " .. context.Weap.Pipelines[i].GetTagAsQualifier();
+			if (context.Weap.PipelineCount() > 1)
+				qual = " " .. context.Weap.GetPipeline(i).GetTagAsQualifier();
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_SPREADWIDEN_DESC"), qual,

@@ -167,6 +167,16 @@ class BIO_StateTimeGroup
 				parenthClr, StringTable.Localize(Tag), parenthClr);
 	}
 
+	BIO_StateTimeGroup Copy() const
+	{
+		let ret = new('BIO_StateTimeGroup');
+		ret.Flags = Flags;
+		ret.Tag = Tag;
+		ret.Times.Copy(Times);
+		ret.Minimums.Copy(Minimums);
+		return ret;
+	}
+
 	// Add the tic times from all states in a contiguous sequence from `basis`
 	// to this group. Beware that this will skip labels, and treats
 	// `Goto MyState; MyState:` as contiguous.

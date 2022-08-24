@@ -2,8 +2,8 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
+			if (CompatibleWithPipeline(context.Weap.GetPipeline(i).AsConst()))
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_PAYLOADTOOSMALL";
@@ -24,22 +24,24 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
 	{
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			if (!CompatibleWithPipeline(weap.Pipelines[i].AsConst()))
+			let ppl = weap.GetPipeline(i);
+
+			if (!CompatibleWithPipeline(ppl.AsConst()))
 				continue;
 
-			let fromSplash = weap.Pipelines[i].CombinedSplashDamage();
-			weap.Pipelines[i].DeletePayloadDeathFunctors('BIO_PLDF_Explode');
+			let fromSplash = ppl.CombinedSplashDamage();
+			ppl.DeletePayloadDeathFunctors('BIO_PLDF_Explode');
 
-			weap.Pipelines[i].FireFunctor = BIO_FireFunc_Bullet.Create();
-			weap.Pipelines[i].Payload = 'BIO_ShotPellet';
-			weap.Pipelines[i].ShotCount *= 9;
-			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Modify.Create(fromSplash));
-			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Multi.Create(1.0 / 9.0));
-			weap.Pipelines[i].HSpread = 5.0;
-			weap.Pipelines[i].VSpread = 3.0;
-			weap.Pipelines[i].FireSound = "bio/puff/canistershot/fire";
+			ppl.FireFunctor = BIO_FireFunc_Bullet.Create();
+			ppl.Payload = 'BIO_ShotPellet';
+			ppl.ShotCount *= 9;
+			ppl.DamageEffects.Push(BIO_DmgFx_Modify.Create(fromSplash));
+			ppl.DamageEffects.Push(BIO_DmgFx_Multi.Create(1.0 / 9.0));
+			ppl.HSpread = 5.0;
+			ppl.VSpread = 3.0;
+			ppl.FireSound = "bio/puff/canistershot/fire";
 		}
 
 		return "";
@@ -67,8 +69,8 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
+			if (CompatibleWithPipeline(context.Weap.GetPipeline(i).AsConst()))
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_PAYLOADTOOSMALL";
@@ -89,13 +91,15 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
 	{
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			if (!CompatibleWithPipeline(weap.Pipelines[i].AsConst()))
+			let ppl = weap.GetPipeline(i);
+
+			if (!CompatibleWithPipeline(ppl.AsConst()))
 				continue;
 
-			weap.Pipelines[i].Payload = 'BIO_ProxMineProj';
-			weap.Pipelines[i].FireSound = "bio/proj/proxmine/fire";
+			ppl.Payload = 'BIO_ProxMineProj';
+			ppl.FireSound = "bio/proj/proxmine/fire";
 		}
 
 		return "";
@@ -128,20 +132,22 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
 	{
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			if (!(weap.Pipelines[i].Payload is 'BIO_ShotPellet'))
+			let ppl = weap.GetPipeline(i);
+
+			if (!(ppl.Payload is 'BIO_ShotPellet'))
 				continue;
 
-			if (!weap.Pipelines[i].CanFirePuffs())
-				weap.Pipelines[i].FireFunctor = new('BIO_FireFunc_Bullet');
+			if (!ppl.CanFirePuffs())
+				ppl.FireFunctor = new('BIO_FireFunc_Bullet');
 
-			weap.Pipelines[i].Payload = 'BIO_Slug';
-			let fc = float(weap.Pipelines[i].ShotCount);
-			weap.Pipelines[i].ShotCount = 1;
-			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Multi.Create(fc));
-			weap.Pipelines[i].HSpread = 0.4;
-			weap.Pipelines[i].VSpread = 0.4;
+			ppl.Payload = 'BIO_Slug';
+			let fc = float(ppl.ShotCount);
+			ppl.ShotCount = 1;
+			ppl.DamageEffects.Push(BIO_DmgFx_Multi.Create(fc));
+			ppl.HSpread = 0.4;
+			ppl.VSpread = 0.4;
 		}
 
 		return "";

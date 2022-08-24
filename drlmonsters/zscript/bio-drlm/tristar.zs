@@ -52,9 +52,9 @@ class BIORLM_WMod_Tristar : BIO_WeaponModifier
 	{
 		weap.AmmoUse1 *= 0.375; // e.g. 40 becomes 15
 
-		for (uint i = 0; i < weap.OpMode.FireTimeGroups.Size(); i++)
+		for (uint i = 0; i < weap.OpModes[0].FireTimeGroups.Size(); i++)
 		{
-			let ftg = weap.OpMode.FireTimeGroups[i];
+			let ftg = weap.OpModes[0].FireTimeGroups[i];
 
 			if (ftg.IsAuxiliary())
 				continue;
@@ -62,9 +62,9 @@ class BIORLM_WMod_Tristar : BIO_WeaponModifier
 				ftg.SetTotalTime(36);
 		}
 
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			let ppl = weap.Pipelines[i];
+			let ppl = weap.GetPipeline(i);
 
 			ppl.FireFunctor = new('BIORLM_FireFunc_Tristar').Init();
 			let dmg = new('BIO_DmgBase_XTimesRand');

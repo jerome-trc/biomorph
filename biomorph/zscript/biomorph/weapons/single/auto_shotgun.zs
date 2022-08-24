@@ -32,7 +32,7 @@ class BIO_AutoShotgun : BIO_Weapon
 	{
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
 
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet('BIO_ShotPellet', 7)
 				.RandomDamage(10, 15)
@@ -46,11 +46,7 @@ class BIO_AutoShotgun : BIO_Weapon
 	{
 		return super.ModCost(base) * 3;
 	}
-}
 
-// States: core.
-extend class BIO_AutoShotgun
-{
 	States
 	{
 	Spawn:
@@ -67,7 +63,10 @@ extend class BIO_AutoShotgun
 		AUSG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	Dryfire:
 		AUSG A 1 Offset(0, 32 + 1);
@@ -126,7 +125,7 @@ class BIO_OpMode_AutoShotgun_Rapid : BIO_OpMode_Rapid
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Rapid.Fire';
 	}
@@ -150,7 +149,7 @@ extend class BIO_AutoShotgun
 		AUSG D 2 A_BIO_SetFireTime(2);
 		AUSG E 2 A_BIO_SetFireTime(3);
 		AUSG F 2 A_BIO_SetFireTime(4);
-		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire');
+		TNT1 A 0 A_BIO_Op_CheckBurst('Rapid.Fire');
 		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;

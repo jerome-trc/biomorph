@@ -32,7 +32,7 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 	{
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
 
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Projectile('BIO_Rocket')
 				.X1D3Damage(50)
@@ -63,7 +63,10 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		MISG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	Flash:
 		MISF A 1 Bright A_Light(1);
@@ -101,7 +104,7 @@ class BIO_OpMode_RocketAutoLauncher_SmallMag : BIO_OpMode_SmallMag
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Rapid.Fire';
 	}
@@ -125,7 +128,7 @@ extend class BIO_RocketAutoLauncher
 			A_BIO_FireSound();
 			A_BIO_Recoil('BIO_Recoil_RocketLauncher');
 		}
-		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire');
+		TNT1 A 0 A_BIO_Op_CheckBurst('Rapid.Fire');
 		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload(single: true);
 		Goto Ready;

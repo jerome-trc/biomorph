@@ -341,6 +341,14 @@ class BIO_WAfx_NthRoundCost : BIO_WeaponAffix
 			Interval
 		);
 	}
+
+	final override BIO_WeaponAffix Copy() const
+	{
+		let ret = new('BIO_WAfx_NthRoundCost');
+		ret.EveryNCosts = EveryNCosts;
+		ret.Interval = Interval;
+		return ret;
+	}
 }
 
 class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier

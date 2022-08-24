@@ -314,7 +314,7 @@ extend class BIO_Player
 				{
 					BIO_WeaponModSimulator.Create(weap).CommitAndClose();
 				}
-			}		
+			}
 		}
 	}
 }

@@ -119,4 +119,12 @@ class BIO_WSF_NodeToggle : BIO_WeaponSpecialFunctor
 		weap.Owner.A_StartSound("bio/ui/beep");
 		return state(null);
 	}
+
+	final override BIO_WeaponSpecialFunctor Copy() const
+	{
+		let ret = new('BIO_WSF_NodeToggle');
+		ret.NodesToToggle.Copy(NodesToToggle);
+		ret.NodeState.Copy(NodeState);
+		return ret;
+	}
 }

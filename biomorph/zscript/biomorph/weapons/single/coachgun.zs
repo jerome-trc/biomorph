@@ -1,5 +1,10 @@
 class BIO_Coachgun : BIO_Weapon
 {
+	const DAMAGE_MIN = 10;
+	const DAMAGE_MAX = 15;
+	const SPREAD_HORIZ = 12.0;
+	const SPREAD_VERT = 7.5;
+
 	Default
 	{
 		Tag "$BIO_COACHGUN_TAG";
@@ -19,7 +24,9 @@ class BIO_Coachgun : BIO_Weapon
 		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
 		BIO_Weapon.MagazineSize 2;
 		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
-		BIO_Weapon.OperatingMode 'BIO_OpMode_Coachgun_SmallMag';
+		BIO_Weapon.OperatingModes
+			'BIO_OpMode_Coachgun_SmallMag',
+			'BIO_OpMode_Coachgun_SmallMag';
 		BIO_Weapon.PickupMessages
 			"$BIO_COACHGUN_PKUP",
 			"$BIO_COACHGUN_SCAV";
@@ -30,12 +37,22 @@ class BIO_Coachgun : BIO_Weapon
 	{
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
 
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
-				.Bullet('BIO_ShotPellet', 7) // Per barrel
-				.RandomDamage(10, 15)
-				.Spread(12.0, 7.5)
+				.Bullet('BIO_ShotPellet', 20)
+				.RandomDamage(DAMAGE_MIN, DAMAGE_MAX)
+				.Spread(SPREAD_HORIZ, SPREAD_VERT)
 				.FireSound("bio/weap/coachgun/fire")
+				.AmmoUseMulti(2)
+				.Build()
+		);
+
+		OpModes[1].Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.Bullet('BIO_ShotPellet', 10)
+				.RandomDamage(DAMAGE_MIN, DAMAGE_MAX)
+				.Spread(SPREAD_HORIZ, SPREAD_VERT)
+				.FireSound("bio/weap/pumpshotgun/fire")
 				.Build()
 		);
 	}
@@ -44,11 +61,7 @@ class BIO_Coachgun : BIO_Weapon
 	{
 		return super.ModCost(base) * 2;
 	}
-}
 
-// States: core.
-extend class BIO_Coachgun
-{
 	States
 	{
 	Spawn:
@@ -65,32 +78,37 @@ extend class BIO_Coachgun
 		SHT2 A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	Fire.Common:
 		TNT1 A 0
 		{
-			if (BIO_CVar.MultiBarrelPrimary(Player))
-				return ResolveState('Fire.Double');
+			if (!invoker.bAltFire)
+			{
+				if (BIO_CVar.MultiBarrelPrimary(Player))
+					return ResolveState('Fire.Double');
+				else
+					return ResolveState('Fire.Single');
+			}
 			else
-				return ResolveState('Fire.Single');
+			{
+				if (BIO_CVar.MultiBarrelPrimary(Player))
+					return ResolveState('Fire.Single');
+				else
+					return ResolveState('Fire.Double');
+			}
 		}
-	AltFire:
-		TNT1 A 0
-		{
-			invoker.bAltFire = false;
-			if (BIO_CVar.MultiBarrelPrimary(Player))
-				return ResolveState('Fire.Single');
-			else
-				return ResolveState('Fire.Double');
-		}
+		Stop;
 	Fire.Single:
 		TNT1 A 0 A_BIO_CheckAmmo;
 		SHT2 A 3 Fast A_BIO_SetFireTime(0);
 		SHT2 A 1 Offset(0, 32 + 7)
 		{
 			A_BIO_SetFireTime(1);
-			A_BIO_Fire(spreadFactor: 0.5);
+			A_BIO_Fire();
 			A_BIO_Recoil('BIO_Recoil_Shotgun');
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
 			A_BIO_FireSound(CHAN_AUTO);
@@ -115,10 +133,9 @@ extend class BIO_Coachgun
 		SHT2 A 1 Offset(0, 32 + 13)
 		{
 			A_BIO_SetFireTime(1);
-			A_BIO_Fire(fireFactor: 2);
+			A_BIO_Fire();
 			A_BIO_Recoil('BIO_Recoil_DoubleShotgun');
 			Player.SetPSprite(PSP_FLASH, invoker.FindState('Flash'), true);
-			A_BIO_FireSound(CHAN_AUTO);
 			A_BIO_FireSound(CHAN_AUTO);
 		}
 		SHT2 A 1 Offset(0, 32 + 9) Fast A_BIO_SetFireTime(2);
@@ -194,7 +211,7 @@ class BIO_OpMode_Coachgun_SmallMag : BIO_OpMode_SmallMag
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('Fire.Single'));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Fire.Common';
 	}

@@ -48,7 +48,7 @@ class BIORLM_WMod_Overmind : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		if (context.Weap.Pipelines.Size() < 1)
+		if (context.Weap.PipelineCount() < 1)
 			return false, "$BIO_WMOD_INCOMPAT_NOPIPELINES";
 
 		return context.IsLastNode(), "$BIO_WMOD_INCOMPAT_NOTLASTNODE";
@@ -65,9 +65,9 @@ class BIORLM_WMod_Overmind : BIO_WeaponModifier
 			weap.Affixes.Push(afx);
 		}
 
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			let ppl = weap.Pipelines[i];
+			let ppl = weap.GetPipeline(i);
 
 			if (!ppl.CanFireProjectiles())
 				ppl.FireFunctor = new('BIO_FireFunc_Projectile').Init();
@@ -141,9 +141,9 @@ class BIORLM_WAfx_Overmind : BIO_WeaponAffix
 			StringTable.Localize(GetDefaultByType('BIORLM_MGene_Overmind').Summary)
 		);
 
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			let ppl = weap.Pipelines[i];
+			let ppl = weap.GetPipeline(i);
 
 			uint dec = PayloadCost(ppl.Payload) * ppl.ShotCount;
 			let shotsLeft = Tracker.Remaining() / dec;
@@ -177,6 +177,11 @@ class BIORLM_WAfx_Overmind : BIO_WeaponAffix
 		case BIO_PLSC_XLARGE:
 			return 40;
 		}
+	}
+
+	final override BIO_WeaponAffix Copy() const
+	{
+		return new('BIORLM_WAfx_Overmind');
 	}
 }
 

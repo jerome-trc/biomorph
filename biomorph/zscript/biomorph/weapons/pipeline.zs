@@ -33,6 +33,7 @@ class BIO_WeaponPipeline play
 	string Tag;
 
 	BIO_WeaponPipelineFlags Flags;
+	uint AmmoUseMulti;
 
 	BIO_FireFunctor FireFunctor;
 	class<Actor> Payload;
@@ -47,25 +48,22 @@ class BIO_WeaponPipeline play
 
 	BIO_PayloadFunctorTuple PayloadFunctors;
 
-	void Invoke(BIO_Weapon weap, uint pipelineIndex,
-		uint fireFactor = 1, float spreadFactor = 1.0)
+	void Invoke(BIO_Weapon weap, uint pipelineIndex)
 	{
-		uint sc = ShotCount * fireFactor;
-
 		BIO_ShotData shotData;
 		shotData.Pipeline = pipelineIndex;
-		shotData.Count = sc;
+		shotData.Count = ShotCount;
 
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
 			weap.Affixes[i].BeforeAllShots(weap, shotData);
 
-		for (uint i = 0; i < sc; i++)
+		for (uint i = 0; i < ShotCount; i++)
 		{
 			shotData.Number = i;
 			shotData.Payload = Payload;
 			shotData.Damage = ComputeDamage(true);
-			shotData.HSpread = HSpread * spreadFactor;
-			shotData.VSpread = VSpread * spreadFactor;
+			shotData.HSpread = HSpread;
+			shotData.VSpread = VSpread;
 			shotData.Angle = Angle;
 			shotData.Pitch = Pitch;
 
@@ -228,7 +226,7 @@ class BIO_WeaponPipeline play
 		return dmg.Maximum;
 	}
 
-	bool DealsHitDamage() const
+	bool DealsAnyHitDamage() const
 	{
 		return ComputeDamage(true) > 0;
 	}

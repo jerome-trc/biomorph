@@ -27,7 +27,7 @@ class BIO_GammaProjector : BIO_Weapon
 	{
 		ReloadTimeGroups.Push(BIO_StateTimeGroup.RechargeTime(3));
 		
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.BFGSpray(cone: 60.0)
 				.X1D8Damage(13)
@@ -53,7 +53,10 @@ class BIO_GammaProjector : BIO_Weapon
 		GAMM A 1 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	}
 }
@@ -72,7 +75,7 @@ class BIO_OpMode_GammaProjector_HoldRelease : BIO_OpMode_HoldRelease
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('HoldRel.Fire'));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'HoldRel.Hold';
 	}
@@ -110,7 +113,7 @@ extend class BIO_GammaProjector
 			A_BIO_SetFireTime(2);
 			A_BIO_Fire();
 		}
-		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'HoldRel.Fire');
+		TNT1 A 0 A_BIO_Op_CheckBurst('HoldRel.Fire');
 		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;

@@ -1,34 +1,53 @@
 extend class BIO_Weapon
 {
-	protected action state A_BIO_Op_Fire()
+	protected action state A_BIO_Op_Primary()
 	{
-		return invoker.ResolveState(invoker.OpMode.FireState());
+		invoker.bAltFire = false;
+
+		if (invoker.OpModes[0] == null)
+			return ResolveState('Ready');
+		else
+			return invoker.ResolveState(invoker.OpModes[0].EntryState());
+	}
+
+	protected action state A_BIO_Op_Secondary()
+	{
+		invoker.bAltFire = true;
+
+		if (invoker.OpModes[1] == null)
+			return ResolveState('Ready');
+		else
+			return invoker.ResolveState(invoker.OpModes[1].EntryState());
 	}
 
 	protected action state A_BIO_Op_PostFire()
 	{
-		let postfire = invoker.ResolveState(invoker.OpMode.PostFireState());
+		let postfire = invoker.ResolveState(invoker.CurOpMode().ClosingState());
 
 		if (postfire != null)
 			return postfire;
-
-		return state(null);
+		else
+			return state(null);
 	}
 
-	// `fireFactor` multiplies shot count and ammo usage.
-	protected action bool A_BIO_Fire(
-		uint pipeline = 0,
-		int fireFactor = 1,
-		float spreadFactor = 1.0
-	)
+	protected action state A_BIO_Op_CheckBurst(statelabel refire)
 	{
-		if (!A_BIO_DepleteAmmo(pipeline, fireFactor))
+		if (!invoker.CurOpMode().CheckBurst())
+			return ResolveState(refire);
+		else
+			return state(null);
+	}
+
+	protected action bool A_BIO_Fire(uint pipeline = 0)
+	{
+		if (!A_BIO_DepleteAmmo(pipeline))
 			return false;
 
-		invoker.Pipelines[pipeline].Invoke(
-			invoker, pipeline, fireFactor, spreadFactor
-		);
+		let ppl = !invoker.bAltFire ?
+			invoker.OpModes[0].Pipelines[pipeline] :
+			invoker.OpModes[1].Pipelines[pipeline];
 
+		ppl.Invoke(invoker, pipeline);
 		return true;
 	}
 
@@ -41,7 +60,7 @@ extend class BIO_Weapon
 	)
 	{
 		A_StartSound(
-			invoker.Pipelines[pipeline].FireSound,
+			invoker.CurOpMode().Pipelines[pipeline].FireSound,
 			channel,
 			flags,
 			volume,
@@ -49,17 +68,21 @@ extend class BIO_Weapon
 		);
 	}
 
-	protected action bool A_BIO_DepleteAmmo(uint pipeline = 0, int fireFactor = 1)
+	protected action bool A_BIO_DepleteAmmo(uint pipeline = 0)
 	{
-		if (invoker.Pipelines[pipeline].Flags & BIO_WPF_PRIMARYAMMO)
+		let ppl = !invoker.bAltFire ?
+			invoker.OpModes[0].Pipelines[pipeline] :
+			invoker.OpModes[1].Pipelines[pipeline];
+
+		if (ppl.Flags & BIO_WPF_PRIMARYAMMO)
 		{
-			if (!invoker.DepleteAmmo(false, true, invoker.AmmoUse1 * fireFactor))
+			if (!invoker.DepleteAmmo(false, true, invoker.AmmoUse1 * ppl.AmmoUseMulti))
 				return false;
 		}
 
-		if (invoker.Pipelines[pipeline].Flags & BIO_WPF_SECONDARYAMMO)
+		if (ppl.Flags & BIO_WPF_SECONDARYAMMO)
 		{
-			if (!invoker.DepleteAmmo(true, true, invoker.AmmoUse2 * fireFactor))
+			if (!invoker.DepleteAmmo(true, true, invoker.AmmoUse2 * ppl.AmmoUseMulti))
 				return false;
 		}
 
@@ -140,9 +163,14 @@ extend class BIO_Weapon
 
 	// Conventionally called on a `TNT1 A 0` state at the
 	// very beginning of a fire/altfire state.
-	protected action state A_BIO_CheckAmmo(bool secondary = false,
-		statelabel fallback = 'Ready', statelabel reload = 'Reload',
-		statelabel dryfire = 'Dryfire', int multi = 1, bool single = false)
+	protected action state A_BIO_CheckAmmo(
+		bool secondary = false,
+		statelabel fallback = 'Ready',
+		statelabel reload = 'Reload',
+		statelabel dryfire = 'Dryfire',
+		int multi = 1,
+		bool single = false
+	)
 	{
 		if (invoker.SufficientAmmo(secondary, multi))
 			return state(null);
@@ -176,8 +204,12 @@ extend class BIO_Weapon
 	}
 
 	// To be called at the end of a fire/altfire state.
-	protected action state A_BIO_AutoReload(bool secondary = false,
-		statelabel reload = 'Reload', int multi = 1, bool single = false)
+	protected action state A_BIO_AutoReload(
+		bool secondary = false,
+		statelabel reload = 'Reload',
+		int multi = 1,
+		bool single = false
+	)
 	{
 		if (invoker.SufficientAmmo(secondary, multi))
 			return state(null);
@@ -196,7 +228,9 @@ extend class BIO_Weapon
 
 	// Call on a `TNT1 A 0` state before a `Reload` state sequence begins.
 	protected action state A_BIO_CheckReload(
-		bool secondary = false, statelabel fallback = 'Ready')
+		bool secondary = false,
+		statelabel fallback = 'Ready'
+	)
 	{
 		if (invoker.CanReload(secondary))
 			return state(null);
@@ -251,15 +285,21 @@ extend class BIO_Weapon
 	}
 
 	protected action void A_BIO_SetFireTime(
-		uint index, uint group = 0, int modifier = 0)
+		uint index,
+		uint group = 0,
+		int modifier = 0
+	)
 	{
 		A_SetTics(
-			Max(modifier + invoker.OpMode.FireTimeGroups[group].Times[index], 0)
+			Max(modifier + invoker.CurOpMode().FireTimeGroups[group].Times[index], 0)
 		);
 	}
 
 	protected action void A_BIO_SetReloadTime(
-		uint index, uint group = 0, int modifier = 0)
+		uint index,
+		uint group = 0,
+		int modifier = 0
+	)
 	{
 		A_SetTics(
 			Max(modifier + invoker.ReloadTimeGroups[group].Times[index], 0)

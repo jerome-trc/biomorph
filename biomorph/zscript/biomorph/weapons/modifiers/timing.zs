@@ -8,26 +8,26 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 			return false, "$BIO_WMOD_INCOMPAT_MINFIRETIMES";
 
 		return
-			context.Weap.OpMode.FireTimeGroups.Size() > 0,
+			context.Weap.FireTimeGroupCount() > 0,
 			"$BIO_WMOD_INCOMPAT_NOFIRETIMES";
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
 		Changes.Clear();
-		Changes.Resize(weap.OpMode.FireTimeGroups.Size());
+		Changes.Resize(weap.FireTimeGroupCount());
 
 		for (uint i = 0; i < Changes.Size(); i++)
 		{
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
-				int delta = Min(3, weap.OpMode.FireTimeGroups[i].PossibleReduction());
+				int delta = Min(3, weap.GetFireTimeGroup(i).PossibleReduction());
 
 				if (delta <= 0)
 					break;
 
 				Changes[i] -= delta;
-				weap.OpMode.FireTimeGroups[i].Modify(-delta);
+				weap.GetFireTimeGroup(i).Modify(-delta);
 			}
 		}
 
@@ -43,10 +43,10 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 			if (Changes[i] == 0)
 				continue;
 
-			if (context.Weap.OpMode.FireTimeGroups[i].IsHidden())
+			if (context.Weap.GetFireTimeGroup(i).IsHidden())
 				continue;
 
-			let qual = context.Weap.OpMode.FireTimeGroups[i].GetTagAsQualifier();
+			let qual = context.Weap.GetFireTimeGroup(i).GetTagAsQualifier();
 			
 			if (qual.Length() > 1)
 				qual = " " .. qual;
@@ -185,9 +185,9 @@ class BIO_WMod_Spooling : BIO_WeaponModifier
 			'BIO_OpMode_BinarySpool'
 		);
 
-		weap.OpMode = null;
-		weap.OpMode = BIO_WeaponOperatingMode.Create(opmode_ts[0], weap);
-		weap.OpMode.SideEffects(weap);
+		// TODO: Gene/modifier rework needs to split this into primary/secondary
+		weap.OpModes[0] = BIO_WeaponOperatingMode.Create(opmode_ts[0], weap);
+		weap.OpModes[0].SideEffects(weap);
 
 		return "";
 	}

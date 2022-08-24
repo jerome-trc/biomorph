@@ -4,8 +4,8 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (context.Weap.Pipelines[i].IsMelee())
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
+			if (context.Weap.GetPipeline(i).IsMelee())
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_NOMELEEDAMAGE";
@@ -13,25 +13,29 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		AddPercents.Clear();
-		AddPercents.Resize(weap.Pipelines.Size());
+		let ppl_c = weap.PipelineCount();
 
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		AddPercents.Clear();
+		AddPercents.Resize(ppl_c);
+
+		for (uint i = 0; i < ppl_c; i++)
 		{
+			let ppl = weap.GetPipeline(i);
+
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
-				if (!weap.Pipelines[i].IsMelee())
+				if (!ppl.IsMelee())
 					continue;
 
 				let ls = 0.1;
-				let md = weap.Pipelines[i].GetMinDamage(); // Before berserk
+				let md = ppl.GetMinDamage(); // Before berserk
 
 				if (md > 100)
 					ls = 0.01;
 				else if (md > 50)
 					ls = 0.05;
 
-				let ff = BIO_FireFunc_Melee(weap.Pipelines[i].FireFunctor);
+				let ff = BIO_FireFunc_Melee(ppl.FireFunctor);
 				ff.Lifesteal += ls;
 				AddPercents[i] += ls;
 			}
@@ -52,7 +56,7 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 			string qual = "";
 
 			if (AddPercents.Size() > 1)
-				qual = " " .. context.Weap.Pipelines[i].GetTagAsQualifier();
+				qual = " " .. context.Weap.GetPipeline(i).GetTagAsQualifier();
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_LIFESTEAL_DESC"),

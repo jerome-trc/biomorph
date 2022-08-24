@@ -1,4 +1,3 @@
-// Common member definitions and default assignments.
 class BIO_Turbovulcan : BIO_Weapon
 {
 	Default
@@ -25,6 +24,23 @@ class BIO_Turbovulcan : BIO_Weapon
 		BIO_Weapon.Summary "$BIO_TURBOVULCAN_SUMM";
 	}
 
+	override void SetDefaults()
+	{
+		OpModes[0].Pipelines.Push(
+			BIO_WeaponPipelineBuilder.Create()
+				.Bullet()
+				.RandomDamage(14, 16)
+				.Spread(4.0, 2.0)
+				.FireSound("bio/weap/turbovulcan/fire")
+				.Build()
+		);
+	}
+
+	override uint ModCost(uint base) const
+	{
+		return super.ModCost(base) * 3;
+	}
+
 	States
 	{
 	Ready:
@@ -37,38 +53,11 @@ class BIO_Turbovulcan : BIO_Weapon
 		TRBO A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
 		Stop;
 	AltFire:
-		TNT1 A 0 A_BIO_CheckAmmo;
-		TRBO E 3 Bright
-		{
-			A_BIO_SetFireTime(0, 3);
-			A_GunFlash('Flash.I');
-			A_BIO_Fire(spreadFactor: 0.75);
-			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
-			A_BIO_FireSound(CHAN_AUTO);
-		}
-		TRBO F 3 Bright
-		{
-			A_BIO_SetFireTime(1, 3);
-			A_GunFlash('Flash.J');
-		}
-		TRBO G 3 Bright
-		{
-			A_BIO_SetFireTime(2, 3);
-			A_GunFlash('Flash.K');
-			A_BIO_Fire(spreadFactor: 0.75);
-			A_BIO_Recoil(Random(0, 1) ? 'BIO_Recoil_Autogun' : 'BIO_Recoil_RapidFire');
-			A_BIO_FireSound(CHAN_AUTO);
-		}
-		TRBO H 3 Bright
-		{
-			A_BIO_SetFireTime(3, 3);
-			A_GunFlash('Flash.L');
-		}
-		TNT1 A 0 A_BIO_AutoReload;
-		Goto Ready;
+		TNT1 A 0 A_BIO_Op_Secondary;
+		Stop;
 	Flash:
 		TNT1 A 0;
 		Goto LightDone;
@@ -121,23 +110,6 @@ class BIO_Turbovulcan : BIO_Weapon
 		TRBO Z 0 A_BIO_Spawn;
 		Loop;
 	}
-
-	override void SetDefaults()
-	{
-		Pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
-				.Bullet()
-				.RandomDamage(14, 16)
-				.Spread(4.0, 2.0)
-				.FireSound("bio/weap/turbovulcan/fire")
-				.Build()
-		);
-	}
-
-	override uint ModCost(uint base) const
-	{
-		return super.ModCost(base) * 3;
-	}
 }
 
 // Operating modes /////////////////////////////////////////////////////////////
@@ -175,7 +147,7 @@ class BIO_OpMode_Turbovulcan_BinarySpooled : BIO_OpMode_BinarySpool
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('AltFire', "$BIO_SLOW"));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'BSpool.Check';
 	}

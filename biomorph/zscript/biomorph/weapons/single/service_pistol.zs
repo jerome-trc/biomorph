@@ -1,4 +1,3 @@
-// Common member definitions and default assignments.
 class BIO_ServicePistol : BIO_Weapon
 {
 	flagdef RoundChambered: DynFlags, 31;
@@ -33,7 +32,7 @@ class BIO_ServicePistol : BIO_Weapon
 	{
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.FromEmpty'));
 
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet()
 				.RandomDamage(10, 12)
@@ -64,7 +63,10 @@ class BIO_ServicePistol : BIO_Weapon
 		SVCP B 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	Dryfire:
 		SVCP B 1 Offset(0, 32 + 1);
@@ -139,7 +141,7 @@ class BIO_OpMode_ServicePistol_Rapid : BIO_OpMode_Rapid
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Rapid.Fire';
 	}
@@ -163,7 +165,7 @@ extend class BIO_ServicePistol
 				invoker.bRoundChambered = false;
 		}
 		SVCP D 4 A_BIO_SetFireTime(1);
-		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire');
+		TNT1 A 0 A_BIO_Op_CheckBurst('Rapid.Fire');
 		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;

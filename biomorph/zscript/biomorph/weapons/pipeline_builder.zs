@@ -9,6 +9,7 @@ class BIO_WeaponPipelineBuilder play
 		if (existing == null)
 		{
 			ret.Pipeline = new('BIO_WeaponPipeline');
+			ret.Pipeline.AmmoUseMulti = 1;
 			ret.Pipeline.Flags = BIO_WPF_PRIMARYAMMO;
 		}
 		else
@@ -325,9 +326,21 @@ class BIO_WeaponPipelineBuilder play
 		return self;
 	}
 
+	BIO_WeaponPipelineBuilder AmmoUseMulti(uint multi)
+	{
+		Pipeline.AmmoUseMulti = Clamp(multi, 0, 255);
+		return self;
+	}
+
 	BIO_WeaponPipelineBuilder UseNoAmmo()
 	{
 		Pipeline.Flags &= ~(BIO_WPF_PRIMARYAMMO | BIO_WPF_SECONDARYAMMO);
+		return self;
+	}
+
+	BIO_WeaponPipelineBuilder AddFlag(BIO_WeaponPipelineFlags flag)
+	{
+		Pipeline.Flags |= flag;
 		return self;
 	}
 

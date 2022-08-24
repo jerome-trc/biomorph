@@ -28,7 +28,9 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 		BIO_Weapon.MagazineSizes
 			BIO_MachineGun.BASE_MAGSIZE,
 			BIO_MachineGun.BASE_MAGSIZE;
-		BIO_Weapon.OperatingMode 'BIO_OpMode_MachineGunDual_Rapid';
+		BIO_Weapon.OperatingModes
+			'BIO_OpMode_MachineGunDual_Rapid',
+			'BIO_OpMode_MachineGunDual_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_DUALMACHINEGUN_PKUP",
 			"$BIO_DUALMACHINEGUN_SCAV";
@@ -38,7 +40,7 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 	{
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Left'));
 
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet()
 				.RandomDamage(14, 16)
@@ -48,7 +50,7 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 				.Build()
 		);
 
-		Pipelines.Push(
+		OpModes[1].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet()
 				.RandomDamage(14, 16)
@@ -108,10 +110,10 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 		GPMG A 1 A_Raise_L;
 		Loop;
 	Fire.Right:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	Fire.Left:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
 		Stop;
 	Flash.Left:
 	Flash.Right:
@@ -157,7 +159,6 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 		TNT1 A 0 A_AddOverlayOffset_Y(-1.0);
 		Goto Ready.Left;
 	Reload.Right:
-		// TODO: Reload sounds
 		TNT1 A 0 A_BIO_CheckReload_L;
 		GPMG A 1 Fast
 		{
@@ -224,7 +225,6 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 		TNT1 A 0 A_AddOverlayOffset_Y(-1.0);
 		Goto Ready.Right;
 	Reload.Left:
-		// TODO: Reload sounds
 		TNT1 A 0 A_BIO_CheckReload_L;
 		GPMG A 1 Fast
 		{
@@ -295,14 +295,17 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 
 class BIO_OpMode_MachineGunDual_Rapid : BIO_OpMode_Rapid
 {
-	final override class<BIO_Weapon> WeaponType() const { return 'BIO_DualMachineGun'; }
+	final override class<BIO_Weapon> WeaponType() const
+	{
+		return 'BIO_DualMachineGun';
+	}
 
 	final override void Init(readOnly<BIO_Weapon> weap)
 	{
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire.Right'));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Rapid.Fire';
 	}
@@ -330,7 +333,7 @@ extend class BIO_DualMachineGun
 		{
 			A_BIO_SetFireTime(0);
 			A_AddOverlayOffset_Y(1.0);
-			A_BIO_Fire(1);
+			A_BIO_Fire();
 			A_GunFlash_L();
 			A_BIO_FireSound(CHAN_AUTO);
 			A_BIO_Recoil('BIO_Recoil_Autogun');
@@ -350,7 +353,7 @@ extend class BIO_DualMachineGun
 			A_BIO_SetFireTime(3);
 			A_AddOverlayOffset_Y(-1.0);
 		}
-		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire.Left');
+		TNT1 A 0 A_JumpIf(!invoker.CurOpMode().CheckBurst(), 'Rapid.Fire.Left');
 		TNT1 A 0 A_BIO_AutoReload_L;
 		TNT1 A 0 A_BIO_Op_PostFire;
 		Goto Ready.Left;
@@ -360,7 +363,7 @@ extend class BIO_DualMachineGun
 		{
 			A_BIO_SetFireTime(0);
 			A_AddOverlayOffset_Y(1.0);
-			A_BIO_Fire(0);
+			A_BIO_Fire();
 			A_GunFlash_R();
 			A_BIO_FireSound(CHAN_AUTO);
 			A_BIO_Recoil('BIO_Recoil_Autogun');
@@ -380,7 +383,7 @@ extend class BIO_DualMachineGun
 			A_BIO_SetFireTime(3);
 			A_AddOverlayOffset_Y(-1.0);
 		}
-		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire.Right');
+		TNT1 A 0 A_JumpIf(!invoker.CurOpMode().CheckBurst(), 'Rapid.Fire.Right');
 		TNT1 A 0 A_BIO_AutoReload_R;
 		TNT1 A 0 A_BIO_Op_PostFire;
 		Goto Ready.Right;

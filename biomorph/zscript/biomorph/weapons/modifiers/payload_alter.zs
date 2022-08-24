@@ -80,6 +80,13 @@ class BIO_WAfx_ForcePain : BIO_WeaponAffix
 			Count * BIO_WMod_ForcePain.FORCEPAIN_MULTI
 		);
 	}
+
+	final override BIO_WeaponAffix Copy() const
+	{
+		let ret = new('BIO_WAfx_ForcePain');
+		ret.Count = Count;
+		return ret;
+	}
 }
 
 class BIO_WMod_ForceRadiusDmg : BIO_WeaponModifier
@@ -134,6 +141,11 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 	{
 		return "$BIO_WMOD_FORCERADIUSDMG_SUMM";
 	}
+
+	final override BIO_WeaponAffix Copy() const
+	{
+		return new('BIO_WAfx_ForceRadiusDmg');
+	}
 }
 
 class BIO_WMod_ProjGravity : BIO_WeaponModifier
@@ -145,8 +157,8 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 		if (context.Sim.HasModifierWithPipelineFlags(BIO_WPMF_GRAVITY_ADD))
 			return false, "$BIO_WMOD_INCOMPAT_PROJGRAVITYMOD";
 
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
+			if (CompatibleWithPipeline(context.Weap.GetPipeline(i).AsConst()))
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_PROJGRAVITY";
@@ -164,9 +176,9 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 
 		weap.Affixes.Push(new('BIO_WAfx_ProjGravity'));
 
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
-			let ppl = context.Weap.Pipelines[i];
+			let ppl = context.Weap.GetPipeline(i);
 			let compat = CompatibleWithPipeline(ppl.AsConst());
 			Affected.Push(compat);
 
@@ -213,5 +225,10 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 	final override string Description(readOnly<BIO_Weapon> _) const
 	{
 		return GetDefaultByType('BIO_MGene_ProjGravity').Summary;
+	}
+
+	final override BIO_WeaponAffix Copy() const
+	{
+		return new('BIO_Wafx_ProjGravity');
 	}
 }

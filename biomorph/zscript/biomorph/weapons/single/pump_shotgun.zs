@@ -1,7 +1,6 @@
-// Default assignments.
 class BIO_PumpShotgun : BIO_Weapon
 {
-	protected bool Overloaded;
+	flagdef Overloaded: DynFlags, 31; 
 
 	Default
 	{
@@ -33,7 +32,9 @@ class BIO_PumpShotgun : BIO_Weapon
 
 	override void SetDefaults()
 	{
-		Pipelines.Push(
+		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
+
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet('BIO_ShotPellet', 7)
 				.RandomDamage(10, 15)
@@ -41,8 +42,6 @@ class BIO_PumpShotgun : BIO_Weapon
 				.FireSound("bio/weap/pumpshotgun/fire")
 				.Build()
 		);
-
-		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
 	}
 
 	States
@@ -61,7 +60,10 @@ class BIO_PumpShotgun : BIO_Weapon
 		PASG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	Fire.Common:
 		TNT1 A 0 A_BIO_CheckAmmo(single: true);
@@ -116,7 +118,7 @@ class BIO_PumpShotgun : BIO_Weapon
 		Goto Reload.Repeat;
 	Reload:
 		TNT1 A 0 A_BIO_CheckReload;
-		TNT1 A 0 { if (invoker.MagazineEmpty()) invoker.Overloaded = true; }
+		TNT1 A 0 { if (invoker.MagazineEmpty()) invoker.bOverloaded = true; }
 		PASG A 1 Fast A_BIO_SetReloadTime(0);
 		PASG B 5 A_BIO_SetReloadTime(1);
 	Reload.Repeat:
@@ -133,7 +135,7 @@ class BIO_PumpShotgun : BIO_Weapon
 			A_BIO_SetReloadTime(4);
 			A_StartSound("bio/weap/pumpshotgun/pumpforward", CHAN_AUTO, volume: 0.7);
 		}
-		PASG A 0 A_JumpIf(invoker.Overloaded, 2);
+		PASG A 0 A_JumpIf(invoker.bOverloaded, 2);
 		PASG A 0 A_ReFire('Reload.End');
 		PASG A 0
 		{
@@ -143,7 +145,7 @@ class BIO_PumpShotgun : BIO_Weapon
 				return ResolveState('Reload.Repeat');
 		}
 	Reload.End:
-		TNT1 A 0 { invoker.Overloaded = false; }
+		TNT1 A 0 { invoker.bOverloaded = false; }
 		PASG B 5 A_BIO_SetReloadTime(5);
 		PASG A 3 A_BIO_SetReloadTime(6);
 		PASG A 0 A_ReFire;
@@ -157,6 +159,8 @@ class BIO_PumpShotgun : BIO_Weapon
 	}
 }
 
+// Operating modes /////////////////////////////////////////////////////////////
+
 class BIO_OpMode_PumpShotgun_SmallMag : BIO_OpMode_SmallMag
 {
 	final override class<BIO_Weapon> WeaponType() const { return 'BIO_PumpShotgun'; }
@@ -166,7 +170,7 @@ class BIO_OpMode_PumpShotgun_SmallMag : BIO_OpMode_SmallMag
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('Fire.Common'));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Fire.Common';
 	}

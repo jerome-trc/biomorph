@@ -26,7 +26,7 @@ class BIO_Minivulcan : BIO_Weapon
 
 	override void SetDefaults()
 	{
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet()
 				.RandomDamage(24, 28)
@@ -57,7 +57,10 @@ class BIO_Minivulcan : BIO_Weapon
 		MINV A 1 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	}
 
@@ -84,7 +87,7 @@ class BIO_OpMode_Minivulcan_Rapid : BIO_OpMode_Rapid
 		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Rapid.Fire';
 	}
@@ -104,7 +107,7 @@ extend class BIO_Minivulcan
 		MINV B 1 Offset(0, 32 + 3) Fast A_BIO_SetFireTime(1);
 		MINV C 2 Offset(0, 32 + 2) A_BIO_SetFireTime(2);
 		MINV D 1 Offset(0, 32 + 1) Fast A_BIO_SetFireTime(3);
-		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'Rapid.Fire');
+		TNT1 A 0 A_BIO_Op_CheckBurst('Rapid.Fire');
 		TNT1 A 0 A_BIO_Op_Postfire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
@@ -185,7 +188,7 @@ class BIO_OpMode_Minivulcan_BinarySpool : BIO_OpMode_BinarySpool
 		);
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'BSpool.Check';
 	}

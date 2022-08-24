@@ -32,7 +32,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 	{
 		ReloadTimeGroups.Push(BIO_StateTimeGroup.RechargeTime(4));
 
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Projectile('BIO_PlasmaBall')
 				.X1D8Damage(5)
@@ -57,7 +57,10 @@ class BIO_PlasmaRifle : BIO_Weapon
 		PLSG A 1 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	}
 
@@ -94,12 +97,12 @@ class BIO_OpMode_PlasmaRifle_Rapid : BIO_OpMode_Rapid
 		);
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Rapid.Fire';
 	}
 
-	final override statelabel PostFireState() const
+	final override statelabel ClosingState() const
 	{
 		return 'Rapid.Cooldown';
 	}
@@ -171,12 +174,12 @@ class BIO_OpMode_PlasmaRifle_HybridBurst : BIO_OpMode_HybridBurst
 		);
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'HybridBurst.Fire';
 	}
 
-	final override statelabel PostFireState() const
+	final override statelabel ClosingState() const
 	{
 		return 'HybridBurst.Cooldown';
 	}
@@ -193,23 +196,23 @@ extend class BIO_PlasmaRifle
 			A_BIO_SetFireTime(0);
 			A_BIO_PlasmaRifle_Fire('HybridBurst.Flash.Burst');
 		}
-		TNT1 A 0 A_JumpIf(!invoker.OpMode.CheckBurst(), 'HybridBurst.Fire');
+		TNT1 A 0 A_JumpIf(!invoker.CurOpMode().CheckBurst(), 'HybridBurst.Fire');
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto HybridBurst.Fire.Interlude;
 	HybridBurst.Fire.Interlude:
 		PLSG A 1;
 		TNT1 A 0 A_JumpIf(
-			invoker.OpMode.CheckInterlude(),
+			invoker.CurOpMode().CheckInterlude(),
 			'HybridBurst.Fire.FAuto.Start'
 		);
 		TNT1 A 0 A_ReFire('HybridBurst.Fire.Interlude');
-		TNT1 A 0 { invoker.OpMode.ResetInterlude(); }
+		TNT1 A 0 { invoker.CurOpMode().ResetInterlude(); }
 		PLSG A 7;
 		PLSG AAAAAA 1 A_WeaponReady(WRF_NOBOB);
 		// Post-fire gets omitted if only bursting
 		Goto Ready;
 	HybridBurst.Fire.FAuto.Start:
-		PLSG A 1 { invoker.OpMode.ResetInterlude(); }
+		PLSG A 1 { invoker.CurOpMode().ResetInterlude(); }
 		Goto HybridBurst.Fire.FAuto;
 	HybridBurst.Fire.FAuto:
 		PLSG A 2 A_BIO_SetFireTime(0, 1);
@@ -306,16 +309,16 @@ class BIO_OpMode_PlasmaRifle_BinarySpool : BIO_OpMode_BinarySpool
 		if (weap.MagazineType1 != null)
 			weap.MagazineSize1 *= 3;
 
-		if (weap.Pipelines[0].FireSound == "bio/weap/plasrifle/rapid/fire")
-			weap.Pipelines[0].FireSound = "bio/weap/plasrifle/bspool/fire";
+		if (Pipelines[0].FireSound == "bio/weap/plasrifle/rapid/fire")
+			Pipelines[0].FireSound = "bio/weap/plasrifle/bspool/fire";
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'BSpool.Check';
 	}
 
-	final override statelabel PostFireState() const
+	final override statelabel ClosingState() const
 	{
 		return 'BSpool.Cooldown';
 	}

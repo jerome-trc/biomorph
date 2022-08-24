@@ -24,7 +24,7 @@ class BIO_BreachingAxe : BIO_Weapon
 
 	override void SetDefaults()
 	{
-		Pipelines.Push(
+		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Punch(
 					range: DEFMELEERANGE * 1.5,
@@ -46,11 +46,7 @@ class BIO_BreachingAxe : BIO_Weapon
 	{
 		return super.ModCost(base) * 2;
 	}
-}
 
-// States: core.
-extend class BIO_BreachingAxe
-{
 	States
 	{
 	Spawn:
@@ -67,7 +63,10 @@ extend class BIO_BreachingAxe
 		BRAX A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Fire;
+		TNT1 A 0 A_BIO_Op_Primary;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_BIO_Op_Secondary;
 		Stop;
 	Fire.Hold:
 		BRAX A 2 A_BIO_SetFireTime(0);
@@ -130,7 +129,7 @@ class BIO_OpMode_BreachingAxe_HoldRelease : BIO_OpMode_HoldRelease
 		);
 	}
 
-	final override statelabel FireState() const
+	final override statelabel EntryState() const
 	{
 		return 'Fire.Hold';
 	}

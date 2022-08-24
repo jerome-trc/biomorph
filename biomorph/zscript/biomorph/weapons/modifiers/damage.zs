@@ -4,9 +4,9 @@ class BIO_WMod_BerserkDamage : BIO_WeaponModifier
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (context.Weap.Pipelines[i].IsMelee() &&
-				context.Weap.Pipelines[i].DealsHitDamage())
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
+			if (context.Weap.GetPipeline(i).IsMelee() &&
+				context.Weap.GetPipeline(i).DealsAnyHitDamage())
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_NOMELEEDAMAGE";
@@ -53,13 +53,15 @@ class BIO_WAfx_BerserkDamage : BIO_WeaponAffix
 {
 	uint Count;
 
-	final override void BeforeEachShot(BIO_Weapon weap,
-		in out BIO_ShotData shotData)
+	final override void BeforeEachShot(
+		BIO_Weapon weap,
+		in out BIO_ShotData shotData
+	)
 	{
 		if (weap.Owner.FindInventory('PowerStrength', true) == null)
 			return;
 
-		if (weap.Pipelines[shotData.Pipeline].IsMelee())
+		if (weap.GetCurPipeline(shotData.Pipeline).IsMelee())
 			shotData.Damage *= (BIO_WMod_BerserkDamage.DAMAGE_MULTI * Count);
 	}
 
@@ -70,20 +72,27 @@ class BIO_WAfx_BerserkDamage : BIO_WeaponAffix
 			Count * int(BIO_WMod_BerserkDamage.DAMAGE_MULTI * 100)
 		);
 	}
+
+	final override BIO_WeaponAffix Copy() const
+	{
+		let ret = new('BIO_WAfx_BerserkDamage');
+		ret.Count = Count;
+		return ret;
+	}
 }
 
 class BIO_WMod_DamageAdd : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		return context.Weap.DealsHitDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
+		return context.Weap.DealsAnyHitDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			weap.Pipelines[i].DamageEffects.Push(
+			weap.GetPipeline(i).DamageEffects.Push(
 				BIO_DmgFx_Multi.Create(1.0 + (float(context.NodeCount) * 0.1))
 			);
 		}
@@ -95,9 +104,9 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 	{
 		string ret = "";
 
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
-			let qual = context.Weap.Pipelines[i].GetTagAsQualifier();
+			let qual = context.Weap.GetPipeline(i).GetTagAsQualifier();
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_DAMAGEADD_DESC"),
@@ -127,14 +136,14 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		return context.Weap.DealsHitDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
+		return context.Weap.DealsAnyHitDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
 	}
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
 	{
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			let func = weap.Pipelines[i].GetHitDamageFunctor('BIO_HDF_DemonSlayer');
+			let func = weap.GetPipeline(i).GetHitDamageFunctor('BIO_HDF_DemonSlayer');
 
 			if (func != null)
 			{
@@ -144,7 +153,7 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 			{
 				func = new('BIO_HDF_DemonSlayer');
 				BIO_HDF_DemonSlayer(func).Count = 1;
-				weap.Pipelines[i].PayloadFunctors.HitDamage.Push(func);
+				weap.GetPipeline(i).PayloadFunctors.HitDamage.Push(func);
 			}
 		}
 
@@ -225,7 +234,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 		if (context.Weap.Magazineless())
 			return false, "$BIO_WMOD_INCOMPAT_NOMAGAZINES";
 
-		if (!context.Weap.DealsHitDamage())
+		if (!context.Weap.DealsAnyHitDamage())
 			return false, "$BIO_WMOD_INCOMPAT_NODAMAGE";
 
 		return
@@ -249,16 +258,16 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 		if (reduced == magsize || reduced <= 0)
 			return false;
 
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
-			let ppl = context.Weap.Pipelines[i];
+			let ppl = context.Weap.GetPipeline(i);
 
 			if (secondary && !ppl.UsesSecondaryAmmo())
 				continue;
 			else if (!secondary && ppl.UsesSecondaryAmmo())
 				continue;
 
-			if (!ppl.DealsHitDamage())
+			if (!ppl.DealsAnyHitDamage())
 				continue;
 
 			return true;
@@ -291,9 +300,9 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 
 			weap.MagazineSize1 = reduced;
 
-			for (uint j = 0; j < weap.Pipelines.Size(); j++)
+			for (uint j = 0; j < weap.PipelineCount(); j++)
 			{
-				let ppl = weap.Pipelines[j];
+				let ppl = weap.GetPipeline(j);
 
 				if (ppl.UsesSecondaryAmmo())
 					continue;
@@ -322,9 +331,9 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 
 			weap.MagazineSize2 = reduced;
 
-			for (uint j = 0; j < weap.Pipelines.Size(); j++)
+			for (uint j = 0; j < weap.PipelineCount(); j++)
 			{
-				let ppl = weap.Pipelines[j];
+				let ppl = weap.GetPipeline(j);
 
 				if (!ppl.UsesSecondaryAmmo())
 					continue;
@@ -390,9 +399,9 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 	{
 		uint invalidDamage = 0, invalidSPM = 0;
 
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
-			let ppl = context.Weap.Pipelines[i].AsConst();
+			let ppl = context.Weap.GetPipeline(i).AsConst();
 
 			switch (PipelineCompatibility(context.Weap, ppl))
 			{
@@ -402,9 +411,9 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 			}
 		}
 
-		if (invalidDamage == context.Weap.Pipelines.Size())
+		if (invalidDamage == context.Weap.PipelineCount())
 			return false, "$BIO_WMOD_INCOMPAT_NODAMAGE";
-		else if (invalidSPM == context.Weap.Pipelines.Size())
+		else if (invalidSPM == context.Weap.PipelineCount())
 			return false, "$BIO_WMOD_INCOMPAT_SPMOVERRUN";
 		else
 			return true, "";
@@ -414,7 +423,7 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 		readOnly<BIO_Weapon> weap,
 		readOnly<BIO_WeaponPipeline> ppl)
 	{
-		if (!ppl.DealsHitDamage())
+		if (!ppl.DealsAnyHitDamage())
 			return -1;
 
 		if (ppl.UsesPrimaryAmmo() && weap.ShotsPerMagazine(false) < 2)
@@ -428,16 +437,16 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
 		PipelineDoubles.Clear();
-		PipelineDoubles.Resize(weap.Pipelines.Size());
+		PipelineDoubles.Resize(weap.PipelineCount());
 		PrimaryDoubles = SecondaryDoubles = 0;
 
 		for (uint i = 0; i < context.NodeCount; i++)
 		{
 			bool a1 = false, a2 = false;
 
-			for (uint j = 0; j < weap.Pipelines.Size(); j++)
+			for (uint j = 0; j < weap.PipelineCount(); j++)
 			{
-				let ppl = weap.Pipelines[j];
+				let ppl = weap.GetPipeline(j);
 
 				if (PipelineCompatibility(weap.AsConst(), ppl.AsConst()) != 0)
 					continue;
@@ -499,7 +508,7 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 				100 * 2 ** (PipelineDoubles[i] - 1)
 			);
 
-			let qual = context.Weap.Pipelines[i].GetTagAsQualifier();
+			let qual = context.Weap.GetPipeline(i).GetTagAsQualifier();
 
 			if (qual.Length() > 0 && PipelineDoubles.Size() > 1)
 				ret.AppendFormat(" %s", qual);
@@ -538,8 +547,8 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
-			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
+		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
+			if (CompatibleWithPipeline(context.Weap.GetPipeline(i).AsConst()))
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_SPLASHTOHIT";
@@ -552,18 +561,18 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		DamageChanges.Clear(); DamageChanges.Resize(weap.Pipelines.Size());
-		RadiusChanges.Clear(); RadiusChanges.Resize(weap.Pipelines.Size());
+		DamageChanges.Clear(); DamageChanges.Resize(weap.PipelineCount());
+		RadiusChanges.Clear(); RadiusChanges.Resize(weap.PipelineCount());
 
-		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
-			if (!CompatibleWithPipeline(weap.Pipelines[i].AsConst()))
+			if (!CompatibleWithPipeline(weap.GetPipeline(i).AsConst()))
 				continue;
 
-			let func = weap.Pipelines[i].GetSplashFunctor();
+			let func = weap.GetPipeline(i).GetSplashFunctor();
 
 			let dmg = func.Damage / 2;
-			weap.Pipelines[i].DamageEffects.Push(BIO_DmgFx_Modify.Create(dmg, true));
+			weap.GetPipeline(i).DamageEffects.Push(BIO_DmgFx_Modify.Create(dmg, true));
 			func.Damage -= dmg;
 			DamageChanges[i] += dmg;
 
@@ -584,7 +593,7 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 			if (DamageChanges[i] == 0)
 				continue;
 
-			let qual = context.Weap.Pipelines[i].GetTagAsQualifier();
+			let qual = context.Weap.GetPipeline(i).GetTagAsQualifier();
 
 			if (qual.Length() > 1)
 				qual = " " .. qual;
