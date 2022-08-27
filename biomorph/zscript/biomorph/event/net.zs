@@ -115,7 +115,7 @@ extend class BIO_EventHandler
 			BIO_WeaponModSimulator.Get(weap).Simulate();
 			break;
 		case WEAPMODOP_COMMIT:
-			WeapMod_Commit(pawn, event.Args[1]);
+			WeapMod_Commit(pawn);
 			break;
 		case WEAPMODOP_REVERT:
 			BIO_WeaponModSimulator.Get(weap).Revert();
@@ -136,7 +136,7 @@ extend class BIO_EventHandler
 		}
 	}
 
-	private static void WeapMod_Commit(BIO_Player pawn, int geneTID)
+	private static void WeapMod_Commit(BIO_Player pawn)
 	{
 		let weap = BIO_Weapon(pawn.Player.ReadyWeapon);
 		let sim = BIO_WeaponModSimulator.Get(weap);
