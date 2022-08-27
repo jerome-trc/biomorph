@@ -128,6 +128,12 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/morph/upgrade.zs"
 
 #include "zscript/biomorph/weapons/sim/core.zs"
+#include "zscript/biomorph/weapons/sim/access_ex.zs"
+#include "zscript/biomorph/weapons/sim/access.zs"
+#include "zscript/biomorph/weapons/sim/helpers.zs"
+#include "zscript/biomorph/weapons/sim/menu.zs"
+#include "zscript/biomorph/weapons/sim/ops_crit.zs"
+#include "zscript/biomorph/weapons/sim/ops_inter.zs"
 #include "zscript/biomorph/weapons/sim/gene.zs"
 #include "zscript/biomorph/weapons/sim/node.zs"
 
