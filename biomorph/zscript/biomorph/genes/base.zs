@@ -121,7 +121,7 @@ struct BIO_GeneContext
 
 	// More specifically, the node's UUID.
 	uint Node;
-	// Loaded with `BIO_WeaponModSimNode::Multiplier`.
+	// Loaded with `BIO_WMS_Node::Multiplier`.
 	uint NodeCount;
 	// Total number of times this gene type is present on the graph,
 	// including the gene receiving the argument.

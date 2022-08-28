@@ -1,6 +1,6 @@
 // (Rat): My kingdom for some honest-to-god sum types
 
-class BIO_WeaponModSimGene play abstract
+class BIO_WMS_Gene play abstract
 {
 	BIO_WeaponModifier Modifier;
 
@@ -20,7 +20,7 @@ class BIO_WeaponModSimGene play abstract
 
 // When representing genes that can be moved around the simulated graph, this
 // is used for genes which were in the player's inventory at simulation start.
-class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
+class BIO_WMS_GeneReal : BIO_WMS_Gene
 {
 	BIO_Gene Gene;
 
@@ -43,9 +43,9 @@ class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
 		}
 	}
 
-	BIO_WeaponModSimGeneVirtual VirtualCopy(class<BIO_Gene> newType) const
+	BIO_WMS_GeneVirtual VirtualCopy(class<BIO_Gene> newType) const
 	{
-		let ret = new('BIO_WeaponModSimGeneVirtual');
+		let ret = new('BIO_WMS_GeneVirtual');
 
 		if (Modifier != null)
 		{
@@ -66,7 +66,7 @@ class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
 // When representing genes that can be moved around the simulated graph, this
 // is used for genes which were slotted into the tree at simulation start,
 // since those genes have no associated items.
-class BIO_WeaponModSimGeneVirtual : BIO_WeaponModSimGene
+class BIO_WMS_GeneVirtual : BIO_WMS_Gene
 {
 	class<BIO_Gene> Type;
 

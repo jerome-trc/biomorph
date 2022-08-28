@@ -1,5 +1,4 @@
-
-class BIO_WeaponModSimNode play
+class BIO_WMS_Node play
 {
 	// This is a reflection of the real state of the weapon's mod graph.
 	// Only gets altered when the simulation gets committed, so it and the graph
@@ -10,7 +9,7 @@ class BIO_WeaponModSimNode play
 
 	// Null if no gene is being simulated in this node.
 	// Acts as a representative for what will end up in `Basis.GeneType`.
-	BIO_WeaponModSimGene Gene;
+	BIO_WMS_Gene Gene;
 	bool Valid;
 	string Message;
 

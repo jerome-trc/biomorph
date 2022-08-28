@@ -130,7 +130,7 @@ extend class BIO_WeaponModSimulator
 
 	void InsertNewGene(class<BIO_Gene> type, uint node)
 	{
-		let g = new('BIO_WeaponModSimGeneVirtual');
+		let g = new('BIO_WMS_GeneVirtual');
 		g.Type = type;
 		Nodes[node].Gene = g;
 		Nodes[node].Update();

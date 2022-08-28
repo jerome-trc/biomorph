@@ -20,13 +20,13 @@ extend class BIO_WeaponModSimulator
 
 		for (uint i = 0; i < graph.Nodes.Size(); i++)
 		{
-			let simNode = new('BIO_WeaponModSimNode');
+			let simNode = new('BIO_WMS_Node');
 			simNode.Basis = graph.Nodes[i].Copy();
 			simNode.Basis.Flags &= ~BIO_WMGNF_MUTED;
 
 			if (simNode.Basis.GeneType != null)
 			{
-				let g = new('BIO_WeaponModSimGeneVirtual');
+				let g = new('BIO_WMS_GeneVirtual');
 				g.Type = simNode.Basis.GeneType;
 				simNode.Gene = g;
 			}
@@ -43,7 +43,7 @@ extend class BIO_WeaponModSimulator
 
 		for (uint i = 0; i < recipes.Size(); i++)
 		{
-			let simNode = new('BIO_WeaponModSimNode');
+			let simNode = new('BIO_WMS_Node');
 			simNode.Basis = new('BIO_WMGNode');
 			[simNode.Basis.PosX, simNode.Basis.PosY] =
 				graph.RandomAvailableAdjacency();
@@ -293,7 +293,7 @@ extend class BIO_WeaponModSimulator
 
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			let rGene = BIO_WeaponModSimGeneReal(Nodes[i].Gene);
+			let rGene = BIO_WMS_GeneReal(Nodes[i].Gene);
 
 			if (rGene == null)
 				continue;
@@ -309,12 +309,12 @@ extend class BIO_WeaponModSimulator
 
 		for (uint i = 0; i < Weap.ModGraph.Nodes.Size(); i++)
 		{
-			Nodes[i] = new('BIO_WeaponModSimNode');
+			Nodes[i] = new('BIO_WMS_Node');
 			Nodes[i].Basis = Weap.ModGraph.Nodes[i].Copy();
 
 			if (Nodes[i].Basis.GeneType != null)
 			{
-				let g = new('BIO_WeaponModSimGeneVirtual');
+				let g = new('BIO_WMS_GeneVirtual');
 				g.Type = Nodes[i].Basis.GeneType;
 				Nodes[i].Gene = g;
 			}

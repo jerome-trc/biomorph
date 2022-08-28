@@ -8,9 +8,9 @@ class BIO_WeaponModSimulator : Thinker
 	// Representation for the state of the player's gene inventory. Upon commit,
 	// genes are given to/taken away from the player according to this.
 	// Is sized against `BIO_Player::MaxGenesHeld`.
-	Array<BIO_WeaponModSimGene> Genes;
+	Array<BIO_WMS_Gene> Genes;
 	// Upon commit, the weapon's mod graph is rebuilt to reflect this.
-	Array<BIO_WeaponModSimNode> Nodes;
+	Array<BIO_WMS_Node> Nodes;
 
 	final override void OnDestroy()
 	{
@@ -39,7 +39,7 @@ class BIO_WeaponModSimulator : Thinker
 			if (gene == null)
 				continue;
 
-			let simGene = new('BIO_WeaponModSimGeneReal');
+			let simGene = new('BIO_WMS_GeneReal');
 			simGene.Gene = gene;
 			simGene.UpdateModifier();
 			Genes.Push(simGene);

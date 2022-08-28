@@ -245,7 +245,7 @@ extend class BIO_WeaponModSimulator
 		return nodesWithGene[0] == node;
 	}
 
-	BIO_WeaponModSimNode GetNodeByPosition(int x, int y, bool includeFake = false)
+	BIO_WMS_Node GetNodeByPosition(int x, int y, bool includeFake = false)
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
