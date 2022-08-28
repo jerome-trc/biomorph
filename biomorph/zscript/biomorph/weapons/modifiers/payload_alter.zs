@@ -20,13 +20,6 @@ class BIO_WMod_ForcePain : BIO_WeaponModifier
 		for (uint i = 0; i < context.NodeCount; i++)
 			BIO_WAfx_ForcePain(afx).Count++;
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
-		let afx = context.Weap.GetAffixByType('BIO_WAfx_ForcePain');
-
 		return String.Format(
 			StringTable.Localize("$BIO_WMOD_FORCEPAIN_DESC"),
 			context.NodeCount * FORCEPAIN_MULTI
@@ -101,11 +94,6 @@ class BIO_WMod_ForceRadiusDmg : BIO_WeaponModifier
 		if (!weap.HasAffixOfType('BIO_WAfx_ForceRadiusDmg'))
 			weap.Affixes.Push(new('BIO_WAfx_ForceRadiusDmg'));
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		return Summary();
 	}
 
@@ -150,8 +138,6 @@ class BIO_WAfx_ForceRadiusDmg : BIO_WeaponAffix
 
 class BIO_WMod_ProjGravity : BIO_WeaponModifier
 {
-	private Array<bool> Affected;
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		if (context.Sim.HasModifierWithPipelineFlags(BIO_WPMF_GRAVITY_ADD))
@@ -172,25 +158,17 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		Affected.Clear();
-
 		weap.Affixes.Push(new('BIO_WAfx_ProjGravity'));
 
 		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
 			let ppl = context.Weap.GetPipeline(i);
 			let compat = CompatibleWithPipeline(ppl.AsConst());
-			Affected.Push(compat);
 
 			if (compat)
 				ppl.DamageEffects.Push(BIO_DmgFx_Multi.Create(1.2));
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext _) const
-	{
 		return Summary();
 	}
 
@@ -205,13 +183,6 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 	final override class<BIO_ModifierGene> GeneType() const
 	{
 		return 'BIO_MGene_ProjGravity';
-	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_ProjGravity');
-		ret.Affected.Copy(Affected);
-		return ret;
 	}
 }
 

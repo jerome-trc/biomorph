@@ -5,14 +5,10 @@ class BIO_WMod_Kickback : BIO_WeaponModifier
 		return context.Weap.PipelineCount() > 0, "$BIO_WMOD_INCOMPAT_NOPIPELINES";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
 		weap.Kickback += (weap.Default.Kickback * 2);
-		return "";
-	}
 
-	final override string Description(BIO_GeneContext context) const
-	{
 		return String.Format(
 			StringTable.Localize("$BIO_WMOD_KICKBACK_DESC"),
 			context.NodeCount * 200
@@ -73,11 +69,6 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 			ppl.FireFunctor = ff;
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		return Summary();
 	}
 
@@ -272,8 +263,6 @@ class BIO_PTF_Smart : BIO_ProjTravelFunctor
 
 class BIO_WMod_Spread : BIO_WeaponModifier
 {
-	private Array<float> HorizChanges, VertChanges;
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
@@ -296,8 +285,9 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 	{
 		let ppl_c = weap.PipelineCount();
 
-		HorizChanges.Clear(); HorizChanges.Resize(ppl_c);
-		VertChanges.Clear(); VertChanges.Resize(ppl_c);
+		Array<float> horizChanges, vertChanges;
+		horizChanges.Resize(ppl_c);
+		vertChanges.Resize(ppl_c);
 
 		for (uint i = 0; i < ppl_c; i++)
 		{
@@ -312,24 +302,19 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 					h = ppl.HSpread * 0.33,
 					v = ppl.VSpread * 0.33;
 
-				HorizChanges[i] -= h;
-				VertChanges[i] -= v;
+				horizChanges[i] -= h;
+				vertChanges[i] -= v;
 
 				ppl.HSpread -= h;
 				ppl.VSpread -= v;
 			}
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		string ret = "";
 
 		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
-			if (HorizChanges[i] >= -0.01 && VertChanges[i] >= -0.01)
+			if (horizChanges[i] >= -0.01 && vertChanges[i] >= -0.01)
 				continue;
 
 			string qual = "";
@@ -339,7 +324,7 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_SPREAD_DESC"), qual,
-				HorizChanges[i], VertChanges[i]
+				horizChanges[i], vertChanges[i]
 			);
 			ret = ret .. "\n";
 		}
@@ -357,20 +342,10 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 	{
 		return 'BIO_MGene_Spread';
 	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_Spread');
-		ret.HorizChanges.Copy(HorizChanges);
-		ret.VertChanges.Copy(VertChanges);
-		return ret;
-	}
 }
 
 class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 {
-	private Array<float> HorizChanges, VertChanges;
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
@@ -384,8 +359,9 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 	{
 		let ppl_c = weap.PipelineCount();
 
-		HorizChanges.Clear(); HorizChanges.Resize(ppl_c);
-		VertChanges.Clear(); VertChanges.Resize(ppl_c);
+		Array<float> horizChanges, vertChanges;
+		horizChanges.Resize(ppl_c);
+		vertChanges.Resize(ppl_c);
 
 		for (uint i = 0; i < ppl_c; i++)
 		{
@@ -398,24 +374,19 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 
 				float h = ppl.HSpread / 2.0;
 
-				HorizChanges[i] -= h;
-				VertChanges[i] += h;
+				horizChanges[i] -= h;
+				vertChanges[i] += h;
 
 				ppl.HSpread -= h;
 				ppl.VSpread += h;
 			}
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		string ret = "";
 
 		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
-			if (HorizChanges[i] >= -0.01 && VertChanges[i] <= 0.01)
+			if (horizChanges[i] >= -0.01 && vertChanges[i] <= 0.01)
 				continue;
 
 			string qual = "";
@@ -425,7 +396,7 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_SPREADNARROW_DESC"), qual,
-				HorizChanges[i], VertChanges[i]
+				horizChanges[i], vertChanges[i]
 			);
 			ret = ret .. "\n";
 		}
@@ -443,20 +414,10 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 	{
 		return 'BIO_MGene_SpreadNarrow';
 	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_SpreadNarrow');
-		ret.HorizChanges.Copy(HorizChanges);
-		ret.VertChanges.Copy(VertChanges);
-		return ret;
-	}
 }
 
 class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 {
-	private Array<float> HorizChanges, VertChanges;
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
@@ -470,8 +431,9 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 	{
 		let ppl_c = weap.PipelineCount();
 
-		HorizChanges.Clear(); HorizChanges.Resize(ppl_c);
-		VertChanges.Clear(); VertChanges.Resize(ppl_c);
+		Array<float> horizChanges, vertChanges;
+		horizChanges.Resize(ppl_c);
+		vertChanges.Resize(ppl_c);
 
 		for (uint i = 0; i < ppl_c; i++)
 		{
@@ -484,24 +446,19 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 
 				float v = ppl.VSpread / 2.0;
 
-				HorizChanges[i] += v;
-				VertChanges[i] -= v;
+				horizChanges[i] += v;
+				vertChanges[i] -= v;
 
 				ppl.HSpread += v;
 				ppl.VSpread -= v;
 			}
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		string ret = "";
 
 		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
 		{
-			if (HorizChanges[i] <= 0.01 && VertChanges[i] >= -0.01)
+			if (horizChanges[i] <= 0.01 && vertChanges[i] >= -0.01)
 				continue;
 
 			string qual = "";
@@ -511,7 +468,7 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_SPREADWIDEN_DESC"), qual,
-				HorizChanges[i], VertChanges[i]
+				horizChanges[i], vertChanges[i]
 			);
 			ret = ret .. "\n";
 		}
@@ -529,14 +486,6 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 	{
 		return 'BIO_MGene_SpreadWiden';
 	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_SpreadWiden');
-		ret.HorizChanges.Copy(HorizChanges);
-		ret.VertChanges.Copy(VertChanges);
-		return ret;
-	}
 }
 
 class BIO_WMod_SwitchSpeed : BIO_WeaponModifier
@@ -552,11 +501,6 @@ class BIO_WMod_SwitchSpeed : BIO_WeaponModifier
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
 	{
 		weap.RaiseSpeed = weap.LowerSpeed = BIO_Weapon.SWITCHSPEED_MAX;
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext _) const
-	{
 		return Summary();
 	}
 

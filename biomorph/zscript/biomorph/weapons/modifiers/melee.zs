@@ -1,7 +1,5 @@
 class BIO_WMod_Lifesteal : BIO_WeaponModifier
 {
-	private Array<float> AddPercents; // One per pipeline (might be 0.0)
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
@@ -15,8 +13,8 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 	{
 		let ppl_c = weap.PipelineCount();
 
-		AddPercents.Clear();
-		AddPercents.Resize(ppl_c);
+		Array<float> addPercents; // One per pipeline (might be 0.0)
+		addPercents.Resize(ppl_c);
 
 		for (uint i = 0; i < ppl_c; i++)
 		{
@@ -37,30 +35,25 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 
 				let ff = BIO_FireFunc_Melee(ppl.FireFunctor);
 				ff.Lifesteal += ls;
-				AddPercents[i] += ls;
+				addPercents[i] += ls;
 			}
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		string ret = "";
 
-		for (uint i = 0; i < AddPercents.Size(); i++)
+		for (uint i = 0; i < addPercents.Size(); i++)
 		{
-			if (AddPercents[i] == 0.0)
+			if (addPercents[i] == 0.0)
 				continue;
 
 			string qual = "";
 
-			if (AddPercents.Size() > 1)
+			if (addPercents.Size() > 1)
 				qual = " " .. context.Weap.GetPipeline(i).GetTagAsQualifier();
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_LIFESTEAL_DESC"),
-				int(AddPercents[i] * 100.0), qual
+				int(addPercents[i] * 100.0), qual
 			);
 			ret = ret .. "\n";
 		}
@@ -77,12 +70,5 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 	final override class<BIO_ModifierGene> GeneType() const
 	{
 		return 'BIO_MGene_Lifesteal';
-	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_Lifesteal');
-		ret.AddPercents.Copy(AddPercents);
-		return ret;
 	}
 }

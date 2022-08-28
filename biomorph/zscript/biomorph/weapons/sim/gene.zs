@@ -10,33 +10,11 @@ class BIO_WeaponModSimGene play abstract
 	string GetSummaryTooltip() const
 	{
 		let defs = GetDefaultByType(GetType());
+
 		return String.Format("\c[White]%s\n\n%s",
 			defs.GetTag(),
 			StringTable.Localize(defs.Summary)
 		);
-	}
-
-	string GetDescriptionTooltip(
-		readOnly<BIO_Weapon> weap,
-		in out BIO_GeneContext context
-	) const
-	{
-		let gene_t = GetType();
-
-		if (gene_t is 'BIO_ModifierGene')
-		{
-			let defs = GetDefaultByType((class<BIO_ModifierGene>)(gene_t));
-
-			return String.Format(
-				"\c[White]%s\n\n%s",
-				defs.GetTag(),
-				StringTable.Localize(Modifier.Description(context))
-			);
-		}
-		else
-		{
-			return GetSummaryTooltip();
-		}
 	}
 }
 
@@ -61,16 +39,7 @@ class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
 		if (Gene is 'BIO_ModifierGene')
 		{
 			let mod_t = BIO_ModifierGene(Gene).ModType;
-
-			if (Modifier != null && Modifier.GetClass() == mod_t)
-			{
-				let mod = Modifier.Copy();
-				Modifier = mod;
-			}
-			else
-			{
-				Modifier = BIO_WeaponModifier(new(mod_t));
-			}
+			Modifier = BIO_WeaponModifier(new(mod_t));
 		}
 	}
 
@@ -81,7 +50,7 @@ class BIO_WeaponModSimGeneReal : BIO_WeaponModSimGene
 		if (Modifier != null)
 		{
 			ret.Type = Modifier.GeneType();
-			ret.Modifier = Modifier.Copy();
+			ret.Modifier = BIO_WeaponModifier(new(Modifier.GetClass()));
 		}
 		else
 		{
@@ -117,16 +86,7 @@ class BIO_WeaponModSimGeneVirtual : BIO_WeaponModSimGene
 		{
 			let mgene_t = (class<BIO_ModifierGene>)(Type);
 			let defs = GetDefaultByType(mgene_t);
-			
-			if (Modifier != null && defs.ModType == Modifier.GetClass())
-			{
-				let mod = Modifier.Copy();
-				Modifier = mod;
-			}
-			else
-			{
-				Modifier = BIO_WeaponModifier(new(defs.ModType));
-			}
+			Modifier = BIO_WeaponModifier(new(defs.ModType));
 		}
 	}
 

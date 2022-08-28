@@ -77,22 +77,14 @@ class BIO_WeaponModifier play abstract
 	abstract bool, string Compatible(BIO_GeneContext context) const;
 
 	// Effects have to be deterministic.
-	// Optionally return a message to attach to the node.
+	// Return a description of what the modifier did to the weapon
+	// (generally as an elaboration of the summary).
+	// If the modifier did nothing, also alert the user of this.
 	abstract string Apply(BIO_Weapon weap, BIO_GeneContext context) const;
-
-	// Explains what this modifier is doing to the weapon at the moment.
-	abstract string Description(BIO_GeneContext context) const;
 
 	abstract BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const;
 
 	abstract class<BIO_ModifierGene> GeneType() const;
-
-	// If your modifier keeps data to facilitate writing its description,
-	// make sure this transfers a copy of that data.
-	virtual BIO_WeaponModifier Copy() const
-	{
-		return BIO_WeaponModifier(new(GetClass()));
-	}
 
 	readOnly<BIO_WeaponModifier> AsConst() const { return self; }
 

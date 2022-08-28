@@ -25,13 +25,6 @@ class BIO_WMod_BerserkDamage : BIO_WeaponModifier
 		for (uint i = 0; i < context.NodeCount; i++)
 			BIO_WAfx_BerserkDamage(afx).Count++;
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
-		let afx = context.Weap.GetAffixByType('BIO_WAfx_BerserkDamage');
-
 		return String.Format(
 			StringTable.Localize("$BIO_WMOD_BERSERKDAMAGE_DESC"),
 			context.NodeCount * int(DAMAGE_MULTI * 100)
@@ -90,22 +83,14 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
+		string ret = "";
+
 		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
 			weap.GetPipeline(i).DamageEffects.Push(
 				BIO_DmgFx_Multi.Create(1.0 + (float(context.NodeCount) * 0.1))
 			);
-		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
-		string ret = "";
-
-		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
-		{
 			let qual = context.Weap.GetPipeline(i).GetTagAsQualifier();
 
 			ret.AppendFormat(
@@ -139,29 +124,28 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 		return context.Weap.DealsAnyHitDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
 		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
 			let func = weap.GetPipeline(i).GetHitDamageFunctor('BIO_HDF_DemonSlayer');
+			uint c = 0;
 
-			if (func != null)
+			while (c++ < context.NodeCount)
 			{
-				BIO_HDF_DemonSlayer(func).Count++;
-			}	
-			else
-			{
-				func = new('BIO_HDF_DemonSlayer');
-				BIO_HDF_DemonSlayer(func).Count = 1;
-				weap.GetPipeline(i).PayloadFunctors.HitDamage.Push(func);
+				if (func != null)
+				{
+					BIO_HDF_DemonSlayer(func).Count++;
+				}
+				else
+				{
+					func = new('BIO_HDF_DemonSlayer');
+					BIO_HDF_DemonSlayer(func).Count = 1;
+					weap.GetPipeline(i).PayloadFunctors.HitDamage.Push(func);
+				}
 			}
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		return String.Format(
 			StringTable.Localize("$BIO_WMOD_DEMONSLAYER_DESC"),
 			context.NodeCount * 100
@@ -227,8 +211,6 @@ class BIO_HDF_DemonSlayer : BIO_HitDamageFunctor
 
 class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 {
-	private uint ChangeCounts[2];
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		if (context.Weap.Magazineless())
@@ -278,7 +260,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		ChangeCounts[0] = ChangeCounts[1] = 0;
+		uint changeCounts[2];
 
 		if (MagazineCompatible(context, false))
 		{
@@ -294,7 +276,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 				if (reduced == weap.MagazineSize1 || reduced <= 0)
 					break;
 
-				if (ChangeCounts[0]++ >= 4)
+				if (changeCounts[0]++ >= 4)
 					break;
 			}
 
@@ -325,7 +307,7 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 				if (reduced == weap.MagazineSize2 || reduced <= 0)
 					break;
 
-				if (ChangeCounts[1]++ >= 4)
+				if (changeCounts[1]++ >= 4)
 					break;
 			}
 
@@ -342,29 +324,24 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 			}
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		string ret = "";
 
-		if (ChangeCounts[0] > 0)
+		if (changeCounts[0] > 0)
 		{
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_MAGSIZETODAMAGE_DESC_1"),
-				ChangeCounts[0] * 20, ChangeCounts[0] * 20
+				changeCounts[0] * 20, changeCounts[0] * 20
 			);
 		}
 
-		if (ChangeCounts[1] > 0)
+		if (changeCounts[1] > 0)
 		{
-			if (ChangeCounts[0] > 0)
+			if (changeCounts[0] > 0)
 				ret = ret .."\n";
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_MAGSIZETODAMAGE_DESC_2"),
-				ChangeCounts[1] * 20, ChangeCounts[1] * 20
+				changeCounts[1] * 20, changeCounts[1] * 20
 			);
 		}
 
@@ -380,21 +357,10 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 	{
 		return 'BIO_MGene_MagSizeToDamage';
 	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_MagSizeToDamage');
-		ret.ChangeCounts[0] = ChangeCounts[0];
-		ret.ChangeCounts[1] = ChangeCounts[1];
-		return ret;
-	}
 }
 
 class BIO_WMod_RechamberUp : BIO_WeaponModifier
 {
-	private Array<uint> PipelineDoubles;
-	private uint PrimaryDoubles, SecondaryDoubles;
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		uint invalidDamage = 0, invalidSPM = 0;
@@ -436,9 +402,10 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		PipelineDoubles.Clear();
-		PipelineDoubles.Resize(weap.PipelineCount());
-		PrimaryDoubles = SecondaryDoubles = 0;
+		Array<uint> pipelineDoubles;
+		uint primaryDoubles, secondaryDoubles;
+
+		pipelineDoubles.Resize(weap.PipelineCount());
 
 		for (uint i = 0; i < context.NodeCount; i++)
 		{
@@ -457,60 +424,55 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 					a2 = true;
 
 				ppl.DamageEffects.Push(BIO_DmgFx_Multi.Create(2.0));
-				PipelineDoubles[j]++;
+				pipelineDoubles[j]++;
 			}
 
 			if (a1)
 			{
 				weap.AmmoUse1 *= 2;
-				PrimaryDoubles++;
+				primaryDoubles++;
 			}
 
 			if (a2)
 			{
 				weap.AmmoUse2 *= 2;
-				SecondaryDoubles++;
+				secondaryDoubles++;
 			}
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		string ret = "";
 
-		if (PrimaryDoubles > 0)
+		if (primaryDoubles > 0)
 		{
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_RECHAMBERUP_DESC_AMMO1"),
-				100 * 2 ** (PrimaryDoubles - 1)
+				100 * 2 ** (primaryDoubles - 1)
 			);
 			ret = ret .. "\n";
 		}
 
-		if (SecondaryDoubles > 0)
+		if (secondaryDoubles > 0)
 		{
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_RECHAMBERUP_DESC_AMMO2"),
-				100 * 2 ** (SecondaryDoubles - 1)
+				100 * 2 ** (secondaryDoubles - 1)
 			);
 			ret = ret .. "\n";
 		}
 
-		for (uint i = 0; i < PipelineDoubles.Size(); i++)
+		for (uint i = 0; i < pipelineDoubles.Size(); i++)
 		{
-			if (PipelineDoubles[i] < 1)
+			if (pipelineDoubles[i] < 1)
 				continue;
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_RECHAMBERUP_DESC_PIPELINE"),
-				100 * 2 ** (PipelineDoubles[i] - 1)
+				100 * 2 ** (pipelineDoubles[i] - 1)
 			);
 
 			let qual = context.Weap.GetPipeline(i).GetTagAsQualifier();
 
-			if (qual.Length() > 0 && PipelineDoubles.Size() > 1)
+			if (qual.Length() > 0 && pipelineDoubles.Size() > 1)
 				ret.AppendFormat(" %s", qual);
 
 			ret = ret .. "\n";
@@ -529,22 +491,10 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 	{
 		return 'BIO_MGene_RechamberUp';
 	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_RechamberUp');
-		ret.PipelineDoubles.Copy(PipelineDoubles);
-		ret.PrimaryDoubles = PrimaryDoubles;
-		ret.SecondaryDoubles = SecondaryDoubles;
-		return ret;
-	}
 }
 
 class BIO_WMod_SplashToHit : BIO_WeaponModifier
 {
-	// One element per pipeline, always positive
-	private Array<int> DamageChanges, RadiusChanges;
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
@@ -561,8 +511,11 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		DamageChanges.Clear(); DamageChanges.Resize(weap.PipelineCount());
-		RadiusChanges.Clear(); RadiusChanges.Resize(weap.PipelineCount());
+		// One element per pipeline, always positive
+		Array<int> damageChanges, radiusChanges;
+
+		damageChanges.Resize(weap.PipelineCount());
+		radiusChanges.Resize(weap.PipelineCount());
 
 		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
@@ -574,23 +527,18 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 			let dmg = func.Damage / 2;
 			weap.GetPipeline(i).DamageEffects.Push(BIO_DmgFx_Modify.Create(dmg, true));
 			func.Damage -= dmg;
-			DamageChanges[i] += dmg;
+			damageChanges[i] += dmg;
 
 			let prevRad = func.Radius;
 			func.Radius /= 2;
-			RadiusChanges[i] += (prevRad - func.Radius);
+			radiusChanges[i] += (prevRad - func.Radius);
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext context) const
-	{
 		string ret = "";
 
-		for (uint i = 0; i < DamageChanges.Size(); i++)
+		for (uint i = 0; i < damageChanges.Size(); i++)
 		{
-			if (DamageChanges[i] == 0)
+			if (damageChanges[i] == 0)
 				continue;
 
 			let qual = context.Weap.GetPipeline(i).GetTagAsQualifier();
@@ -600,7 +548,7 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_SPLASHTOHIT_DESC"),
-				DamageChanges[i], RadiusChanges[i], qual
+				damageChanges[i], radiusChanges[i], qual
 			);
 			ret = ret .. "\n";
 		}
@@ -619,13 +567,5 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 	final override class<BIO_ModifierGene> GeneType() const
 	{
 		return 'BIO_MGene_SplashToHit';
-	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_SplashToHit');
-		ret.DamageChanges.Copy(DamageChanges);
-		ret.RadiusChanges.Copy(RadiusChanges);
-		return ret;
 	}
 }

@@ -44,11 +44,6 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 			ppl.FireSound = "bio/puff/canistershot/fire";
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext _) const
-	{
 		return Summary();
 	}
 
@@ -102,11 +97,6 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 			ppl.FireSound = "bio/proj/proxmine/fire";
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext _) const
-	{
 		return Summary();
 	}
 
@@ -150,11 +140,6 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 			ppl.VSpread = 0.4;
 		}
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext _) const
-	{
 		return Summary();
 	}
 

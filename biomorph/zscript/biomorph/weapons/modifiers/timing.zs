@@ -1,7 +1,5 @@
 class BIO_WMod_FireTime : BIO_WeaponModifier
 {
-	private Array<int> Changes; // One per group
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		if (!context.Weap.FireTimesReducible())
@@ -14,10 +12,10 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		Changes.Clear();
-		Changes.Resize(weap.FireTimeGroupCount());
+		Array<int> changes; // One per group
+		changes.Resize(weap.FireTimeGroupCount());
 
-		for (uint i = 0; i < Changes.Size(); i++)
+		for (uint i = 0; i < changes.Size(); i++)
 		{
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
@@ -26,21 +24,16 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 				if (delta <= 0)
 					break;
 
-				Changes[i] -= delta;
+				changes[i] -= delta;
 				weap.GetFireTimeGroup(i).Modify(-delta);
 			}
 		}
 
-		return "";
-	}
+		let ret = "";
 
-	final override string Description(BIO_GeneContext context) const
-	{
-		string ret = "";
-
-		for (uint i = 0; i < Changes.Size(); i++)
+		for (uint i = 0; i < changes.Size(); i++)
 		{
-			if (Changes[i] == 0)
+			if (changes[i] == 0)
 				continue;
 
 			if (context.Weap.GetFireTimeGroup(i).IsHidden())
@@ -54,7 +47,7 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_FIRETIME_DESC"),
 				qual,
-				float(Changes[i]) / float(TICRATE)
+				float(changes[i]) / float(TICRATE)
 			);
 			ret = ret .. "\n";
 		}
@@ -72,19 +65,10 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 	{
 		return 'BIO_MGene_FireTime';
 	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_FireTime');
-		ret.Changes.Copy(Changes);
-		return ret;
-	}
 }
 
 class BIO_WMod_ReloadTime : BIO_WeaponModifier
 {
-	private Array<int> Changes; // One per group
-
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
 		if (!context.Weap.ReloadTimesReducible())
@@ -97,10 +81,10 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		Changes.Clear();
-		Changes.Resize(weap.ReloadTimeGroups.Size());
+		Array<int> changes; // One per group
+		changes.Resize(weap.ReloadTimeGroups.Size());
 
-		for (uint i = 0; i < Changes.Size(); i++)
+		for (uint i = 0; i < changes.Size(); i++)
 		{
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
@@ -109,21 +93,16 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 				if (delta <= 0)
 					break;
 
-				Changes[i] -= delta;
+				changes[i] -= delta;
 				weap.ReloadTimeGroups[i].Modify(-delta);
 			}
 		}
 
-		return "";
-	}
+		let ret = "";
 
-	final override string Description(BIO_GeneContext context) const
-	{
-		string ret = "";
-
-		for (uint i = 0; i < Changes.Size(); i++)
+		for (uint i = 0; i < changes.Size(); i++)
 		{
-			if (Changes[i] == 0)
+			if (changes[i] == 0)
 				continue;
 
 			if (context.Weap.ReloadTimeGroups[i].IsHidden())
@@ -137,7 +116,7 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_RELOADTIME_DESC"),
 				qual,
-				float(Changes[i]) / float(TICRATE)
+				float(changes[i]) / float(TICRATE)
 			);
 			ret = ret .. "\n";
 		}
@@ -154,13 +133,6 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 	final override class<BIO_ModifierGene> GeneType() const
 	{
 		return 'BIO_MGene_ReloadTime';
-	}
-
-	final override BIO_WeaponModifier Copy() const
-	{
-		let ret = new('BIO_WMod_ReloadTime');
-		ret.Changes.Copy(Changes);
-		return ret;
 	}
 }
 
@@ -189,11 +161,6 @@ class BIO_WMod_Spooling : BIO_WeaponModifier
 		weap.OpModes[0] = BIO_WeaponOperatingMode.Create(opmode_ts[0], weap);
 		weap.OpModes[0].SideEffects(weap);
 
-		return "";
-	}
-
-	final override string Description(BIO_GeneContext _) const
-	{
 		return Summary();
 	}
 

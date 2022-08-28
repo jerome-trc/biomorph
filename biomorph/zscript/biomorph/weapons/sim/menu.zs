@@ -8,14 +8,6 @@ extend class BIO_WeaponModSimulator
 
 		let n = Nodes[node];
 
-		BIO_GeneContext context;
-		context.Sim = AsConst();
-		context.Weap = Weap.AsConst();
-		context.Node = node;
-		context.NodeCount = n.Multiplier;
-		context.TotalCount = CountGene(n.GetGeneType());
-		context.First = NodeHasFirstOfGene(node, n.GetGeneType());
-
 		if (!n.Valid)
 		{
 			return String.Format(
@@ -25,7 +17,11 @@ extend class BIO_WeaponModSimulator
 			);
 		}
 
-		return Nodes[node].Gene.GetDescriptionTooltip(Weap.AsConst(), context);
+		return String.Format(
+			"%s\n\n%s",
+			StringTable.Localize(n.GetTag()),
+			StringTable.Localize(n.Message)	
+		);
 	}
 
 	string GetGeneSlotTooltip(uint slot) const
