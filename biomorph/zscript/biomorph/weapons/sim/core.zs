@@ -11,6 +11,11 @@ class BIO_WeaponModSimulator : Thinker
 	Array<BIO_WMS_Gene> Genes;
 	// Upon commit, the weapon's mod graph is rebuilt to reflect this.
 	Array<BIO_WMS_Node> Nodes;
+	// One for each node, including home. Home (elem. [0]) reflects
+	// the state of the real weapon actor before modifiers.
+	// Each snapshot N reflects the simulated state of the weapon after
+	// applying the gene in node N, allowing undoes and resets.
+	Array<BIO_WeaponSnapshot> Snapshots;
 
 	final override void OnDestroy()
 	{

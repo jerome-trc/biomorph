@@ -35,6 +35,7 @@ extend class BIO_WeaponModSimulator
 			simNode.Valid = true;
 			simNode.Update();
 			ret.Nodes.Push(simNode);
+			ret.Snapshots.Push(BIO_WeaponSnapshot.FromReal(weap.AsConst()));
 		}
 
 		let globals = BIO_Global.Get();
@@ -202,15 +203,13 @@ extend class BIO_WeaponModSimulator
 
 			[node.Valid, node.Message] = node.Compatible(AsConst(), context);
 
-			if (!node.Valid)
+			if (!node.Valid || node.Basis.IsMuted())
 				continue;
 
-			if (!node.Basis.IsMuted())
-			{
-				node.Message = node.Apply(Weap, self, context);
-				Weap.SetupAmmo();
-				Weap.SetupMagazines();
-			}
+			node.Message = node.Apply(Weap, self, context);
+			Weap.SetupAmmo();
+			Weap.SetupMagazines();
+			Snapshots[i].ImitateReal(Weap.AsConst());
 		}
 
 		// Fourth pass applies actives
@@ -242,6 +241,7 @@ extend class BIO_WeaponModSimulator
 				continue;
 
 			node.Message = node.Apply(Weap, self, context);
+			Snapshots[i].ImitateReal(Weap.AsConst());
 		}
 	}
 
