@@ -1,5 +1,13 @@
 extend class BIO_Weapon
 {
+	// Considers `bAltFire`.
+	BIO_WeaponPipeline GetCurPipeline(uint index) const
+	{
+		return !bAltFire ?
+			OpModes[0].Pipelines[index] :
+			OpModes[1].Pipelines[index];
+	}
+
 	uint PipelineCount() const
 	{
 		uint ret = 0;
@@ -22,6 +30,7 @@ extend class BIO_Weapon
 			{
 				if (OpModes[1] != null)
 				{
+					index -= OpModes[0].Pipelines.Size();
 					return OpModes[1].Pipelines[index];
 				}
 				else
@@ -36,14 +45,6 @@ extend class BIO_Weapon
 		}
 
 		return null;
-	}
-
-	// Considers `bAltFire`.
-	BIO_WeaponPipeline GetCurPipeline(uint index) const
-	{
-		return !bAltFire ?
-			OpModes[0].Pipelines[index] :
-			OpModes[1].Pipelines[index];
 	}
 
 	uint FireTimeGroupCount() const
@@ -68,6 +69,7 @@ extend class BIO_Weapon
 			{
 				if (OpModes[1] != null)
 				{
+					index -= OpModes[0].FireTimeGroups.Size();
 					return OpModes[1].FireTimeGroups[index];
 				}
 				else
