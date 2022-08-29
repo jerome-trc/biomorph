@@ -23,6 +23,8 @@ class BIO_ArmorBonus : ArmorBonus replaces ArmorBonus
 		let armor = BasicArmor(Owner.FindInventory('BasicArmor'));
 		let spct = Clamp(SavePercent, 0.0, 100.0) / 100.0;
 
+		// No null check here. I'd prefer to catch VM aborts early in testing
+
 		if (armor.SavePercent < spct)
 		{
 			armor.ArmorType = GetClassName();
@@ -32,8 +34,6 @@ class BIO_ArmorBonus : ArmorBonus replaces ArmorBonus
 			armor.SavePercent = spct;
 			armor.ActualSaveAmount = MaxSaveAmount;
 		}
-
-		// No null check here. I'd prefer to catch VM aborts early in testing
 
 		if (armor.Amount < MaxSaveAmount)
 		{

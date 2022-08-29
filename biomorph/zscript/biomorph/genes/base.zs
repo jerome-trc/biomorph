@@ -33,13 +33,6 @@ class BIO_Gene : Inventory abstract
 		BIO_Gene.Limit uint16.MAX;
 	}
 
-	override void PostBeginPlay()
-	{
-		super.PostBeginPlay();
-		// Needed for network event communication
-		ChangeTID(Level.FindUniqueTID(int.MIN, int.MAX));
-	}
-
 	override bool CanPickup(Actor toucher)
 	{
 		// Fundamental checks (toucher isn't null, class restrictions)
@@ -55,12 +48,6 @@ class BIO_Gene : Inventory abstract
 
 	// This gene will never drop as loot if this returns `false`.
 	virtual bool CanGenerate() const { return true; }
-
-	static BIO_Gene FindByTID(int tid)
-	{
-		let iter = Level.CreateActorIterator(tid, 'BIO_Gene');
-		return BIO_Gene(iter.Next());
-	}
 
 	final override string PickupMessage()
 	{
