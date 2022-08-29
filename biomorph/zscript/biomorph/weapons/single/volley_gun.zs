@@ -37,6 +37,7 @@ class BIO_VolleyGun : BIO_Weapon
 				.Spread(BIO_Coachgun.SPREAD_HORIZ, BIO_Coachgun.SPREAD_VERT)
 				.FireSound("bio/weap/volleygun/fire")
 				.AmmoUseMulti(4)
+				.Tag("$BIO_4BARRELS")
 				.Build()
 		);
 
@@ -47,6 +48,7 @@ class BIO_VolleyGun : BIO_Weapon
 				.Spread(BIO_Coachgun.SPREAD_HORIZ, BIO_Coachgun.SPREAD_VERT)
 				.FireSound("bio/weap/coachgun/fire")
 				.AmmoUseMulti(2)
+				.Tag("$BIO_2BARRELS")
 				.Build()
 		);
 	}

@@ -854,6 +854,9 @@
 	BIO_LEFT = "left";
 	BIO_SLOW = "slow";
 	BIO_PER2ROUNDS = "per 2 rounds";
+	BIO_1BARREL = "1 barrel";
+	BIO_2BARRELS = "2 barrels";
+	BIO_4BARRELS = "4 barrels";
 	BIO_SPOOLUP = "spoolup";
 	BIO_SPOOLED = "spooled";
 	BIO_SPOOLDOWN = "spooldown";

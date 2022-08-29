@@ -44,6 +44,7 @@ class BIO_Coachgun : BIO_Weapon
 				.Spread(SPREAD_HORIZ, SPREAD_VERT)
 				.FireSound("bio/weap/coachgun/fire")
 				.AmmoUseMulti(2)
+				.Tag("$BIO_2BARRELS")
 				.Build()
 		);
 
@@ -53,6 +54,7 @@ class BIO_Coachgun : BIO_Weapon
 				.RandomDamage(DAMAGE_MIN, DAMAGE_MAX)
 				.Spread(SPREAD_HORIZ, SPREAD_VERT)
 				.FireSound("bio/weap/pumpshotgun/fire")
+				.Tag("$BIO_1BARREL")
 				.Build()
 		);
 	}
