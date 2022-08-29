@@ -86,9 +86,9 @@ class BIO_WeaponModifier play abstract
 
 	abstract class<BIO_ModifierGene> GeneType() const;
 
-	readOnly<BIO_WeaponModifier> AsConst() const { return self; }
-
 	// Helpers /////////////////////////////////////////////////////////////////
+
+	readOnly<BIO_WeaponModifier> AsConst() const { return self; }
 
 	string Summary() const
 	{

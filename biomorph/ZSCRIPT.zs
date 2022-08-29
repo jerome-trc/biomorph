@@ -68,6 +68,7 @@ class Biomorph abstract
 #include "zscript/biomorph/global/genes.zs"
 #include "zscript/biomorph/global/inv_reset.zs"
 #include "zscript/biomorph/global/loot.zs"
+#include "zscript/biomorph/global/modifiers.zs"
 #include "zscript/biomorph/global/morph.zs"
 #include "zscript/biomorph/global/mutagens.zs"
 #include "zscript/biomorph/global/opmodes.zs"
