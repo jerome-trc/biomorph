@@ -7,7 +7,7 @@ class BIO_WMod_Kickback : BIO_WeaponModifier
 
 	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
 	{
-		weap.Kickback += (weap.Default.Kickback * 2);
+		weap.Kickback += (weap.Default.Kickback * 2 * context.NodeCount);
 
 		return String.Format(
 			StringTable.Localize("$BIO_WMOD_KICKBACK_DESC"),

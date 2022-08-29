@@ -59,14 +59,6 @@ class BIO_ModifierGene : BIO_Gene abstract
 	meta class<BIO_WeaponModifier> ModType;
 	property ModType: ModType;
 
-	meta BIO_WeapModRepeatRules RepeatRules;
-	property RepeatRules: RepeatRules;
-
-	Default
-	{
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
-	}
-
 	final override uint Limit() const
 	{
 		return BIO_Global.Get().GetWeaponModifierByType(ModType).Limit();

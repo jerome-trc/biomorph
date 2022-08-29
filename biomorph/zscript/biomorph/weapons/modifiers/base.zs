@@ -1,13 +1,3 @@
-enum BIO_WeapModRepeatRules : uint8
-{
-	// This weapon modifier can not or should not be repeated.
-	BIO_WMODREPEATRULES_NONE,
-	// This weapon modifier will be repeated by calling `Apply()` multiple times.
-	BIO_WMODREPEATRULES_EXTERNAL,
-	// `Apply()` will only get called once and handle `Count` on its own.
-	BIO_WMODREPEATRULES_INTERNAL
-}
-
 // Flags exist so that modifiers can inspect if, for instance, a weapon has already
 // had gravity or bounce applied to it, and so weapon morph recipes can check 
 // how many of a graph's modifiers affect one particular facet of the weapon.

@@ -7,7 +7,6 @@ class BIO_MGene_BerserkDamage : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_BERSERKDAMAGE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
 		BIO_ModifierGene.ModType 'BIO_WMod_BerserkDamage';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -28,7 +27,6 @@ class BIO_MGene_CanisterShot : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_CANISTERSHOT_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_CanisterShot';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -49,7 +47,6 @@ class BIO_MGene_DamageAdd : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_DAMAGEADD_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYRARE;
 		BIO_ModifierGene.ModType 'BIO_WMod_DamageAdd';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	final override bool CanGenerate() const
@@ -69,7 +66,6 @@ class BIO_MGene_DemonSlayer : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_DEMONSLAYER_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_DemonSlayer';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_EXTERNAL;
 	}
 
 	States
@@ -95,7 +91,6 @@ class BIO_MGene_ETMF : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_ETMF_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
 		BIO_ModifierGene.ModType 'BIO_WMod_ETMF';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -116,7 +111,6 @@ class BIO_MGene_FireTime : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_FIRETIME_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON + LOOTWEIGHT_MIN;
 		BIO_ModifierGene.ModType 'BIO_WMod_FireTime';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -137,7 +131,6 @@ class BIO_MGene_ForcePain : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_FORCEPAIN_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
 		BIO_ModifierGene.ModType 'BIO_WMod_ForcePain';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -158,7 +151,6 @@ class BIO_MGene_ForceRadiusDmg : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_FORCERADIUSDMG_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_ForceRadiusDmg';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -179,7 +171,6 @@ class BIO_MGene_Kickback : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_KICKBACK_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_Kickback';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_EXTERNAL;
 	}
 
 	States
@@ -200,7 +191,6 @@ class BIO_MGene_Lifesteal : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_LIFESTEAL_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_Lifesteal';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -221,7 +211,6 @@ class BIO_MGene_MagSize : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_MagSize';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_EXTERNAL;
 	}
 
 	States
@@ -242,7 +231,6 @@ class BIO_MGene_MagSizeToDamage : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_MAGSIZETODAMAGE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_MagSizeToDamage';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -263,7 +251,6 @@ class BIO_MGene_NthRoundCost : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_NTHROUNDCOST_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_NthRoundCost';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -284,7 +271,6 @@ class BIO_MGene_InfiniteAmmo : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_MIN;
 		BIO_ModifierGene.ModType 'BIO_WMod_InfiniteAmmo';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -305,7 +291,6 @@ class BIO_MGene_ProjGravity : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_PROJGRAVITY_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_ProjGravity';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -326,7 +311,6 @@ class BIO_MGene_ProxMine : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_PROXMINE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_ProxMine';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -347,7 +331,6 @@ class BIO_MGene_RechamberUp : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_RECHAMBERUP_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_RechamberUp';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -368,7 +351,6 @@ class BIO_MGene_ReserveFeed : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_RESERVEFEED_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYRARE;
 		BIO_ModifierGene.ModType 'BIO_WMod_ReserveFeed';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -389,7 +371,6 @@ class BIO_MGene_ReloadTime : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_RELOADTIME_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_ReloadTime';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -410,7 +391,6 @@ class BIO_MGene_ShellToSlug : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_SHELLTOSLUG_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_ShellToSlug';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -431,7 +411,6 @@ class BIO_MGene_SmartAim : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_SMARTAIM_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
 		BIO_ModifierGene.ModType 'BIO_WMod_SmartAim';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -452,7 +431,6 @@ class BIO_MGene_SplashToHit : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_SPLASHTOHIT_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_SplashToHit';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -473,7 +451,6 @@ class BIO_MGene_Spooling : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_SPOOLING_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_Spooling';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -494,7 +471,6 @@ class BIO_MGene_Spread : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_SPREAD_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_Spread';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -515,7 +491,6 @@ class BIO_MGene_SpreadNarrow : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_SPREADNARROW_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_SpreadNarrow';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -536,7 +511,6 @@ class BIO_MGene_SpreadWiden : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_SPREADWIDEN_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_SpreadWiden';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_INTERNAL;
 	}
 
 	States
@@ -557,7 +531,6 @@ class BIO_MGene_SwitchSpeed : BIO_ModifierGene
 		Inventory.PickupMessage "$BIO_MGENE_SWITCHSPEED_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
 		BIO_ModifierGene.ModType 'BIO_WMod_SwitchSpeed';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States

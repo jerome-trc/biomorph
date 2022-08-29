@@ -143,12 +143,13 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 
 		if (compatP)
 		{
-			weap.MagazineSize1 += MagazineSizeIncrease(weap.AsConst(), false);
-
-			ret.AppendFormat(
-				StringTable.Localize("$BIO_WMOD_MAGSIZE_DESC_1"),
-				MagazineSizeIncrease(context.Weap, false) * context.NodeCount
+			let inc = MagazineSizeIncrease(
+				weap.AsConst(), false, context.NodeCount
 			);
+
+			weap.MagazineSize1 += inc;
+
+			ret.AppendFormat(StringTable.Localize("$BIO_WMOD_MAGSIZE_DESC_1"), inc);
 
 			if (compatP && compatS)
 			{
@@ -160,12 +161,13 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 
 		if (compatS)
 		{
-			weap.MagazineSize2 += MagazineSizeIncrease(weap.AsConst(), true);
-
-			ret.AppendFormat(
-				StringTable.Localize("$BIO_WMOD_MAGSIZE_DESC_2"),
-				MagazineSizeIncrease(context.Weap, true) * context.NodeCount
+			let inc = MagazineSizeIncrease(
+				weap.AsConst(), true, context.NodeCount
 			);
+
+			weap.MagazineSize2 += inc;
+
+			ret.AppendFormat(StringTable.Localize("$BIO_WMOD_MAGSIZE_DESC_2"), inc);
 
 			if (compatP && compatS)
 			{
@@ -178,7 +180,11 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 		return ret;
 	}
 
-	private static uint MagazineSizeIncrease(readOnly<BIO_Weapon> weap, bool secondary)
+	private static uint MagazineSizeIncrease(
+		readOnly<BIO_Weapon> weap,
+		bool secondary,
+		uint multiplier
+	)
 	{
 		uint magSize = !secondary ?
 			weap.Default.MagazineSize1 :
@@ -189,9 +195,9 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 		case 0: return 0;
 		case 1:
 		case 2:
-		case 3: return 1;
-		case 4: return 2;
-		default: return uint(Ceil(float(magSize) * 0.33));
+		case 3: return 1 * multiplier;
+		case 4: return 2 * multiplier;
+		default: return uint(Ceil(float(magSize) * 0.33)) * multiplier;
 		}
 	}
 

@@ -59,8 +59,7 @@ class BIO_WMS_Node play
 		if (mod == null)
 			return false;
 
-		let defs = GetDefaultByType(mod.GeneType());
-		return defs.RepeatRules != BIO_WMODREPEATRULES_NONE;
+		return mod.Limit() > 1;
 	}
 
 	bool Repeating() const
@@ -98,26 +97,7 @@ class BIO_WMS_Node play
 
 		if (gene_t is 'BIO_ModifierGene')
 		{
-			let mod = Gene.Modifier;
-			let defs = GetDefaultByType((class<BIO_ModifierGene>)(gene_t));
-
-			switch (defs.RepeatRules)
-			{
-			case BIO_WMODREPEATRULES_NONE:
-			case BIO_WMODREPEATRULES_EXTERNAL:
-				context.NodeCount = 1;
-			case BIO_WMODREPEATRULES_INTERNAL:
-				break;
-			default:
-				Console.Printf(
-					Biomorph.LOGPFX_ERR ..
-					"Invalid repeat rules returned by modifier: %s",
-					mod.GetClassName()
-				);
-				break;
-			}
-
-			[ret1, ret2] = mod.Compatible(context);
+			[ret1, ret2] = Gene.Modifier.Compatible(context);
 		}
 		else if (gene_t is 'BIO_SupportGene')
 		{
@@ -173,37 +153,7 @@ class BIO_WMS_Node play
 		if (gene_t is 'BIO_ModifierGene')
 		{
 			let mod = Gene.Modifier;
-			let defs = GetDefaultByType((class<BIO_ModifierGene>)(gene_t));
-
-			switch (defs.RepeatRules)
-			{
-			case BIO_WMODREPEATRULES_NONE:
-				context.NodeCount = 1;
-				ret = mod.Apply(weap, context);
-				break;
-			case BIO_WMODREPEATRULES_INTERNAL:
-				ret = mod.Apply(weap, context);
-				break;
-			case BIO_WMODREPEATRULES_EXTERNAL:
-				context.NodeCount = 1;
-
-				for (uint i = 0; i < Multiplier; i++)
-				{
-					let msg = mod.Apply(weap, context);
-
-					if (msg.Length() > 0)
-						ret = msg;
-				}
-
-				break;
-			default:
-				Console.Printf(
-					Biomorph.LOGPFX_ERR ..
-					"Invalid repeat rules returned by modifier: %s",
-					mod.GetClassName()
-				);
-				break;
-			}
+			ret = mod.Apply(weap, context);
 		}
 		else if (gene_t is 'BIO_SupportGene')
 		{
