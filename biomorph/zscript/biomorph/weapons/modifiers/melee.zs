@@ -67,8 +67,8 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_LIFESTEAL_INC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_Lifesteal';
+		return "$BIO_WMOD_LIFESTEAL_SUMM";
 	}
 }

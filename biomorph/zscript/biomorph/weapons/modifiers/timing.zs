@@ -61,9 +61,9 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 		return BIO_WCMF_FIRETIME_DEC, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_FireTime';
+		return "$BIO_WMOD_FIRETIME_SUMM";
 	}
 }
 
@@ -130,9 +130,9 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 		return BIO_WCMF_RELOADTIME_DEC, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_ReloadTime';
+		return "$BIO_WMOD_RELOADTIME_SUMM";
 	}
 }
 
@@ -169,8 +169,13 @@ class BIO_WMod_Spooling : BIO_WeaponModifier
 		return BIO_WCMF_FIRETIME_DEC, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override uint Limit() const
 	{
-		return 'BIO_MGene_Spooling';
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_SPOOLING_SUMM";
 	}
 }

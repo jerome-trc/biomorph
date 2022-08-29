@@ -36,9 +36,9 @@ class BIO_WMod_BerserkDamage : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_DAMAGE_INC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_BerserkDamage';
+		return "$BIO_WMOD_BERSERKDAMAGE_SUMM";
 	}
 }
 
@@ -110,9 +110,9 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_DAMAGE_INC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_DamageAdd';
+		return "$BIO_WMOD_DAMAGEADD_SUMM";
 	}
 }
 
@@ -157,9 +157,9 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_DAMAGE_INC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_DemonSlayer';
+		return "$BIO_WMOD_DEMONSLAYER_SUMM";
 	}
 }
 
@@ -353,9 +353,9 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 		return BIO_WCMF_MAGSIZE_DEC, BIO_WPMF_DAMAGE_INC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_MagSizeToDamage';
+		return "$BIO_WMOD_MAGSIZETODAMAGE_SUMM";
 	}
 }
 
@@ -487,9 +487,9 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 		return BIO_WCMF_AMMOUSE_INC, BIO_WPMF_DAMAGE_INC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_RechamberUp';
+		return "$BIO_WMOD_RECHAMBERUP_SUMM";
 	}
 }
 
@@ -564,8 +564,8 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 			BIO_WPMF_SPLASHDAMAGE_DEC | BIO_WPMF_SPLASHRADIUS_DEC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_SplashToHit';
+		return "$BIO_WMOD_SPLASHTOHIT_SUMM";
 	}
 }

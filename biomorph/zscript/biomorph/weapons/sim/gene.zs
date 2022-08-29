@@ -13,7 +13,7 @@ class BIO_WMS_Gene play abstract
 
 		return String.Format("\c[White]%s\n\n%s",
 			defs.GetTag(),
-			StringTable.Localize(defs.Summary)
+			StringTable.Localize(defs.Summary())
 		);
 	}
 }

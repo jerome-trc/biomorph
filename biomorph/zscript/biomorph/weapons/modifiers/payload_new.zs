@@ -54,9 +54,14 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 			BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_SHOTCOUNT_INC | BIO_WPMF_SPLASHREMOVE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override uint Limit() const
 	{
-		return 'BIO_MGene_CanisterShot';
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_CANISTERSHOT_SUMM";
 	}
 }
 
@@ -105,9 +110,14 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_NEW;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override uint Limit() const
 	{
-		return 'BIO_MGene_ProxMine';
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_PROXMINE_SUMM";
 	}
 }
 
@@ -150,8 +160,13 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 			BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_SPREAD_DEC | BIO_WPMF_SHOTCOUNT_DEC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override uint Limit() const
 	{
-		return 'BIO_MGene_ShellToSlug';
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_SHELLTOSLUG_SUMM";
 	}
 }

@@ -20,9 +20,9 @@ class BIO_WMod_Kickback : BIO_WeaponModifier
 		return BIO_WCMF_KICKBACK_INC, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_Kickback';
+		return "$BIO_WMOD_KICKBACK_SUMM";
 	}
 }
 
@@ -77,9 +77,14 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override uint Limit() const
 	{
-		return 'BIO_MGene_SmartAim';
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_SMARTAIM_SUMM";
 	}
 }
 
@@ -235,7 +240,7 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 
 	final override string Description(readOnly<BIO_Weapon> _) const
 	{
-		return GetDefaultByType('BIO_MGene_SmartAim').Summary;
+		return GetDefaultByType('BIO_MGene_SmartAim').Summary();
 	}
 
 	final override BIO_WeaponAffix Copy() const
@@ -338,9 +343,9 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_SPREAD_DEC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_Spread';
+		return "$BIO_WMOD_SPREAD_SUMM";
 	}
 }
 
@@ -410,9 +415,9 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_SPREAD_DEC | BIO_WPMF_SPREAD_INC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_SpreadNarrow';
+		return "$BIO_WMOD_SPREADNARROW_SUMM";
 	}
 }
 
@@ -482,9 +487,9 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_SPREAD_DEC | BIO_WPMF_SPREAD_INC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_SpreadWiden';
+		return "$BIO_WMOD_SPREADWIDEN_SUMM";
 	}
 }
 
@@ -509,8 +514,13 @@ class BIO_WMod_SwitchSpeed : BIO_WeaponModifier
 		return BIO_WCMF_SWITCHSPEED_INC, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override uint Limit() const
 	{
-		return 'BIO_MGene_SwitchSpeed';
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_SWITCHSPEED_SUMM";
 	}
 }

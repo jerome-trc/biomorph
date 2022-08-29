@@ -133,16 +133,16 @@ extend class BIO_WeaponModSimulator
 					genecounts.Push(0);
 				}
 
-				let defs = GetDefaultByType(gene_t);
+				let limit = GetDefaultByType(gene_t).Limit();
 
-				if (++genecounts[gtc] > defs.Limit)
+				if (++genecounts[gtc] > limit)
 				{
-					let template = defs.Limit == 1 ?
+					let template = limit == 1 ?
 						StringTable.Localize("$BIO_MENU_WEAPMOD_OVERLIMIT_SINGULAR") :
 						StringTable.Localize("$BIO_MENU_WEAPMOD_OVERLIMIT_PLURAL");
 
 					Nodes[i].Valid = false;
-					Nodes[i].Message = String.Format(template, defs.Limit);
+					Nodes[i].Message = String.Format(template, limit);
 				}
 			}
 		}

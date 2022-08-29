@@ -5,15 +5,8 @@ class BIO_Gene : Inventory abstract
 	meta uint LootWeight;
 	property LootWeight: LootWeight;
 
-	meta uint Limit;
-	property Limit: Limit;
-
 	meta bool LockOnCommit;
 	property LockOnCommit: LockOnCommit;
-
-	// Explains in short-form and without context what the modifier does.
-	meta string Summary;
-	property Summary: Summary;
 
 	Default
 	{
@@ -29,8 +22,6 @@ class BIO_Gene : Inventory abstract
 
 		Inventory.PickupMessage "$BIO_GENE_PKUP";
 		Inventory.RestrictedTo 'BIO_Player';
-
-		BIO_Gene.Limit uint16.MAX;
 	}
 
 	override bool CanPickup(Actor toucher)
@@ -46,13 +37,21 @@ class BIO_Gene : Inventory abstract
 	// Prevent gene pickups from being folded together.
 	override bool HandlePickup(Inventory item) { return false; }
 
-	// This gene will never drop as loot if this returns `false`.
-	virtual bool CanGenerate() const { return true; }
 
 	final override string PickupMessage()
 	{
 		return String.Format(StringTable.Localize(PickupMsg), GetTag());
 	}
+	
+	// Virtuals/abstracts //////////////////////////////////////////////////////
+
+	// This gene will never drop as loot if this returns `false`.
+	virtual bool CanGenerate() const { return true; }
+
+	abstract uint Limit() const;
+
+	// Explains in short-form and without context what this gene does.
+	abstract string Summary() const;
 }
 
 class BIO_ModifierGene : BIO_Gene abstract
@@ -67,19 +66,54 @@ class BIO_ModifierGene : BIO_Gene abstract
 	{
 		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
+
+	final override uint Limit() const
+	{
+		return BIO_Global.Get().GetWeaponModifierByType(ModType).Limit();
+	}
+
+	final override string Summary() const
+	{
+		return BIO_Global.Get().GetWeaponModifierByType(ModType).Summary();
+	}
 }
 
 // Support genes have effects on other nodes, rather than imparting a modifier.
 class BIO_SupportGene : BIO_Gene abstract
 {
+	meta uint LimitProp;
+	property Limit: LimitProp;
+
+	meta string SummaryProp;
+	property Summary: SummaryProp;
+
+	Default
+	{
+		BIO_SupportGene.Limit uint16.MAX;
+	}
+
 	abstract bool, string Compatible(BIO_GeneContext context) const;
 	abstract string Apply(BIO_GeneContext context) const;
+
+	final override uint Limit() const { return LimitProp; }
+	final override string Summary() const { return SummaryProp; }
 }
 
 // Active genes do something to the graph upon being committed, sometimes
 // being destroyed in the process.
 class BIO_ActiveGene : BIO_Gene abstract
 {
+	meta uint LimitProp;
+	property Limit: LimitProp;
+
+	meta string SummaryProp;
+	property Summary: SummaryProp;
+
+	Default
+	{
+		BIO_ActiveGene.Limit uint16.MAX;
+	}
+
 	abstract bool, string Compatible(BIO_GeneContext context) const;
 
 	abstract string Apply(
@@ -87,6 +121,9 @@ class BIO_ActiveGene : BIO_Gene abstract
 		BIO_WeaponModSimulator sim,
 		BIO_GeneContext context
 	) const;
+
+	final override uint Limit() const { return LimitProp; }
+	final override string Summary() const { return SummaryProp; }
 }
 
 // General symbolic constants for loot weights, kept in one place.

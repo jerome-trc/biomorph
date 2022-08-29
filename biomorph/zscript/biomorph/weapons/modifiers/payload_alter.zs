@@ -31,9 +31,9 @@ class BIO_WMod_ForcePain : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_ALTER;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_ForcePain';
+		return "$BIO_WMOD_FORCEPAIN_SUMM";
 	}
 }
 
@@ -102,9 +102,9 @@ class BIO_WMod_ForceRadiusDmg : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_ALTER;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_ForceRadiusDmg';
+		return "$BIO_WMOD_FORCERADIUSDMG_SUMM";
 	}
 }
 
@@ -180,9 +180,14 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 			BIO_WPMF_DAMAGE_INC;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override uint Limit() const
 	{
-		return 'BIO_MGene_ProjGravity';
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_PROJGRAVITY_SUMM";
 	}
 }
 
@@ -195,7 +200,7 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 
 	final override string Description(readOnly<BIO_Weapon> _) const
 	{
-		return GetDefaultByType('BIO_MGene_ProjGravity').Summary;
+		return GetDefaultByType('BIO_MGene_ProjGravity').Summary();
 	}
 
 	final override BIO_WeaponAffix Copy() const

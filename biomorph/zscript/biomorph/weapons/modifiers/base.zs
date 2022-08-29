@@ -82,16 +82,32 @@ class BIO_WeaponModifier play abstract
 	// If the modifier did nothing, also alert the user of this.
 	abstract string Apply(BIO_Weapon weap, BIO_GeneContext context) const;
 
-	abstract BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const;
+	abstract string Summary() const;
 
-	abstract class<BIO_ModifierGene> GeneType() const;
+	virtual uint Limit() const { return uint16.MAX; }
+
+	abstract BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const;
 
 	// Helpers /////////////////////////////////////////////////////////////////
 
-	readOnly<BIO_WeaponModifier> AsConst() const { return self; }
-
-	string Summary() const
+	// XXX: Very temporary.
+	class<BIO_ModifierGene> GeneType() const
 	{
-		return GetDefaultByType(GeneType()).Summary;
+		for (uint i = 0; i < AllActorClasses.Size(); i++)
+		{
+			let gene_t = (class<BIO_ModifierGene>)(AllActorClasses[i]);
+
+			if (gene_t == null || gene_t.IsAbstract())
+				continue;
+
+			let defs = GetDefaultByType(gene_t);
+
+			if (defs.ModType == GetClass())
+				return gene_t;
+		}
+		
+		return null;
 	}
+
+	readOnly<BIO_WeaponModifier> AsConst() const { return self; }
 }

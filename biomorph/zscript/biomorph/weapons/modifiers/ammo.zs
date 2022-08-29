@@ -113,9 +113,14 @@ class BIO_WMod_ETMF : BIO_WeaponModifier
 		return BIO_WCMF_AMMOTYPE, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override uint Limit() const
 	{
-		return 'BIO_MGene_ETMF';
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_ETMF_SUMM";
 	}
 }
 
@@ -195,9 +200,9 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 		return BIO_WCMF_MAGSIZE_INC, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_MagSize';
+		return "$BIO_WMOD_MAGSIZE_SUMM";
 	}
 }
 
@@ -229,9 +234,9 @@ class BIO_WMod_NthRoundCost : BIO_WeaponModifier
 		return BIO_WCMF_AMMOUSE_DEC, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_NthRoundCost';
+		return "$BIO_WMOD_NTHROUNDCOST_SUMM";
 	}
 }
 
@@ -341,9 +346,14 @@ class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 		return BIO_WCMF_MAGTYPE | BIO_WCMF_AMMOTYPE, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override string Summary() const
 	{
-		return 'BIO_MGene_InfiniteAmmo';
+		return "$BIO_WMOD_INFINITEAMMO_SUMM";
+	}
+
+	final override uint Limit() const
+	{
+		return 1;
 	}
 }
 
@@ -386,8 +396,13 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 		return BIO_WCMF_MAGTYPE, BIO_WPMF_NONE;
 	}
 
-	final override class<BIO_ModifierGene> GeneType() const
+	final override uint Limit() const
 	{
-		return 'BIO_MGene_ReserveFeed';
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_RESERVEFEED_SUMM";
 	}
 }

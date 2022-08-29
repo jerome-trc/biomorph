@@ -6,7 +6,7 @@ class BIO_SGene_AddEast : BIO_SupportGene
 		Inventory.Icon 'GENXB0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDEAST_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
-		BIO_Gene.Summary "$BIO_MODSUP_ADDEAST_SUMM";
+		BIO_SupportGene.Summary "$BIO_MODSUP_ADDEAST_SUMM";
 	}
 
 	States
@@ -56,7 +56,7 @@ class BIO_SGene_AddNorth : BIO_SupportGene
 		Inventory.Icon 'GENXA0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDNORTH_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
-		BIO_Gene.Summary "$BIO_MODSUP_ADDNORTH_SUMM";
+		BIO_SupportGene.Summary "$BIO_MODSUP_ADDNORTH_SUMM";
 	}
 
 	States
@@ -106,7 +106,7 @@ class BIO_SGene_AddSouth : BIO_SupportGene
 		Inventory.Icon 'GENXC0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDSOUTH_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
-		BIO_Gene.Summary "$BIO_MODSUP_ADDSOUTH_SUMM";
+		BIO_SupportGene.Summary "$BIO_MODSUP_ADDSOUTH_SUMM";
 	}
 
 	States
@@ -156,7 +156,7 @@ class BIO_SGene_AddWest : BIO_SupportGene
 		Inventory.Icon 'GENXD0';
 		Inventory.PickupMessage "$BIO_SGENE_ADDWEST_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
-		BIO_Gene.Summary "$BIO_MODSUP_ADDWEST_SUMM";
+		BIO_SupportGene.Summary "$BIO_MODSUP_ADDWEST_SUMM";
 	}
 
 	States
