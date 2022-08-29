@@ -149,9 +149,9 @@ extend class BIO_EventHandler
 				);
 
 			output.AppendFormat(
-				"\t\tMinimum and maximum damage: %d - %d\n",
-				ppl.GetMinDamage(),
-				ppl.GetMaxDamage()	
+				"\t\tMinimum and maximum hit damage: %d - %d\n",
+				ppl.GetMinDamage(true),
+				ppl.GetMaxDamage(true)	
 			);
 		}
 	}

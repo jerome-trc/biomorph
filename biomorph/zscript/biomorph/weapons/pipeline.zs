@@ -183,6 +183,22 @@ class BIO_WeaponPipeline play
 		return dmg.Current;
 	}
 
+	int, int, int ComputeDamageTuple(bool directHit) const
+	{
+		BIO_DamageOutput dmg;
+		[dmg.Current, dmg.Minimum, dmg.Maximum] = DamageBase.Invoke();
+
+		for (uint i = 0; i < DamageEffects.Size(); i++)
+		{
+			if (!DamageEffects[i].HitOnly && !directHit)
+				continue;
+
+			DamageEffects[i].Invoke(dmg);
+		}
+
+		return dmg.Current, dmg.Minimum, dmg.Maximum;
+	}
+
 	int ApplyDamageEffects(
 		int baseDamage, int minDamage, int maxDamage,
 		bool directHit
@@ -204,31 +220,23 @@ class BIO_WeaponPipeline play
 		return dmg.Current;
 	}
 
-	int GetMinDamage() const
+	int GetMinDamage(bool directHit) const
 	{
-		BIO_DamageOutput dmg;
-		[dmg.Current, dmg.Minimum, dmg.Maximum] = DamageBase.Invoke();
-
-		for (uint i = 0; i < DamageEffects.Size(); i++)
-			DamageEffects[i].Invoke(dmg);
-
-		return dmg.Minimum;
+		int c = -1, mn = -1, mx = -1;
+		[c, mn, mx] = ComputeDamageTuple(directHit);
+		return mn;
 	}
 
-	int GetMaxDamage() const
+	int GetMaxDamage(bool directHit) const
 	{
-		BIO_DamageOutput dmg;
-		[dmg.Current, dmg.Minimum, dmg.Maximum] = DamageBase.Invoke();
-
-		for (uint i = 0; i < DamageEffects.Size(); i++)
-			DamageEffects[i].Invoke(dmg);
-
-		return dmg.Maximum;
+		int c = -1, mn = -1, mx = -1;
+		[c, mn, mx] = ComputeDamageTuple(directHit);
+		return mx;
 	}
 
 	bool DealsAnyHitDamage() const
 	{
-		return ComputeDamage(true) > 0;
+		return GetMinDamage(true) > 0;
 	}
 
 	BIO_PLDF_Explode GetSplashFunctor() const

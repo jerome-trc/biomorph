@@ -26,7 +26,7 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 					continue;
 
 				let ls = 0.1;
-				let md = ppl.GetMinDamage(); // Before berserk
+				let md = ppl.GetMinDamage(true); // Before berserk
 
 				if (md > 100)
 					ls = 0.01;
