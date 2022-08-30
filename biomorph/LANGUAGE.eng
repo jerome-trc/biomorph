@@ -350,14 +350,7 @@
 		"\c[Green]Extra %d%% chance of firing a neurotoxic payload\n"
 		"\c[White]\tNeurotoxic payloads always make monsters flinch";
 
-// Genes (tags, pickups, summaries, descriptions, incompatibility) /////////////
-
-	// Generic
-
-	BIO_GENE_TAG = "\c[White]Gene\c-";
-	BIO_GENE_PKUP = "Collected a \c[White]gene\c-.";
-
-	// Incompatibility
+// Weapon modifiers (tags, summaries, descriptions, incompatibility) ///////////
 
 	BIO_WMOD_INCOMPAT_TEMPLATE = "\c[White]%s\n\n\c[Yellow]Incompatible:\c[Gold]\n%s";
 
@@ -416,6 +409,170 @@
 	BIO_WMOD_INCOMPAT_TRIVIALHSPREAD = "This weapon has almost no horizontal spread.";
 	BIO_WMOD_INCOMPAT_TRIVIALVSPREAD = "This weapon has almost no vertical spread.";
 
+	// (If a grouping has no description, assume the summary doubles as one)
+
+	BIO_WMOD_BERSERKDAMAGE_TAG = "\c[MGene]Frenzying\c-";
+	BIO_WMOD_BERSERKDAMAGE_SUMM =
+		"\c[Green]250% damage \c[White]dealt after collecting a Berserk Pack";
+	BIO_WMOD_BERSERKDAMAGE_DESC =
+		"\c[Green]%d%% damage \c[White]dealt after collecting a Berserk Pack";
+
+	BIO_WMOD_CANISTERSHOT_TAG = "\c[MGene]Refit: Canister Shot\c-";
+	BIO_WMOD_CANISTERSHOT_SUMM =
+		"\c[White]Change from firing rockets/grenades to a shot pellet blast\n"
+		"\c[White]All splash damage is converted into direct hit damage\n"
+		"\c[White]Any pre-existing shrapnel is lost";
+
+	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]Damage increased by 10%";
+	BIO_WMOD_DAMAGEADD_DESC = "\c[White]Damage%s: \c[Green]+%d";
+
+	BIO_WMOD_DEMONSLAYER_TAG = "\c[MGene]Demonslayer\c-";
+	BIO_WMOD_DEMONSLAYER_SUMM =
+		"\c[Green]+100% damage\c[White] dealt to Legendary monsters";
+	BIO_WMOD_DEMONSLAYER_DESC =
+		"\c[Green]+%d%% damage\c[White] dealt to Legendary monsters";
+
+	BIO_WMOD_ETMF_TAG = "\c[MGene]Energy-to-Matter Feed\c-";
+	BIO_WMOD_ETMF_SUMM =
+		"\c[White]Change to consuming cells for a few seconds of free firing";
+	BIO_WMOD_ETMF_DESC =
+		"\c[White]Consumes %d cells for %.1f second(s) of free firing";
+
+	BIO_WMOD_FIRETIME_TAG = "\c[MGene]Rapid Refire\c-";
+	BIO_WMOD_FIRETIME_SUMM = "\c[Green]Increased fire rates";
+	BIO_WMOD_FIRETIME_DESC = "\c[White]Fire time%s: \c[Green]%.2f seconds";
+
+	BIO_WMOD_FORCEPAIN_TAG = "\c[MGene]Neurotoxic\c-";
+	BIO_WMOD_FORCEPAIN_SUMM =
+		"\c[Green]Extra 20% chance of firing a neurotoxic payload\n"
+		"\c[White]Neurotoxic payloads always make monsters flinch\n"
+		"\c[Gold]Some monsters are immune to this effect!";
+	BIO_WMOD_FORCEPAIN_DESC =
+		"\c[Green]Extra %d%% chance of firing a neurotoxic payload\n"
+		"\c[White]Neurotoxic payloads always make monsters flinch\n"
+		"\c[Gold]Some monsters are immune to this effect!";
+
+	BIO_WMOD_FORCERADIUSDMG_TAG = "\c[MGene]Squash Head\c-";
+	BIO_WMOD_FORCERADIUSDMG_SUMM =
+		"\c[Green]Payloads ignore monster splash damage immunity";
+
+	BIO_WMOD_INFINITEAMMO_TAG = "\c[MGene]Ammo Apparition\c-";
+	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
+
+	BIO_WMOD_KICKBACK_TAG = "\c[MGene]Stopping\c-";
+	BIO_WMOD_KICKBACK_SUMM = "\c[Green]+200% knockback";
+	BIO_WMOD_KICKBACK_DESC = "\c[Green]+%d%% knockback";
+
+	BIO_WMOD_LIFESTEAL_TAG = "\c[MGene]Parasitic\c-";
+	BIO_WMOD_LIFESTEAL_SUMM = "\c[Green]Small percentage of melee damage dealt gained as health";
+	BIO_WMOD_LIFESTEAL_DESC = "\c[Green]%d%% of damage dealt gained as health%s";
+
+	BIO_WMOD_MAGSIZE_TAG = "\c[MGene]High-Capacity\c-";
+	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
+	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
+	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
+
+	BIO_WMOD_MAGSIZETODAMAGE_TAG = "\c[MGene]Skirmisher\c-";
+	BIO_WMOD_MAGSIZETODAMAGE_SUMM =
+		"\c[Brick]20% reduced magazine size\n"
+		"\c[Green]20% increased damage";
+	BIO_WMOD_MAGSIZETODAMAGE_DESC_1 =
+		"\c[Brick]%d% reduced \c[White]primary magazine size\n"
+		"\c[Green]%d%% increased damage \c[White]for applicable firing modes";
+	BIO_WMOD_MAGSIZETODAMAGE_DESC_2 =
+		"\c[Brick]%d% reduced \c[White]secondary magazine size\n"
+		"\c[Green]%d%% increased damage \c[White]for applicable firing modes";
+
+	BIO_WMOD_NTHROUNDCOST_TAG = "\c[MGene]Ammo Thrift\c-";
+	BIO_WMOD_NTHROUNDCOST_SUMM = "\c[Green]Every 5th shot costs no ammo";
+	BIO_WMOD_NTHROUNDCOST_DESC_NTHFREE = "\c[Green]Free shot every %d rounds";
+	BIO_WMOD_NTHROUNDCOST_DESC_NTHCOST = "\c[Green]Ammo is only consumed every %d shots";
+
+	BIO_WMOD_PROJGRAVITY_TAG = "\c[MGene]Dense Payload\c-";
+	BIO_WMOD_PROJGRAVITY_SUMM =
+		"\c[White]Projectile payloads are affected by gravity\n"
+		"\c[Green]+20% damage to affected projectiles";
+
+	BIO_WMOD_PROXMINE_TAG = "\c[MGene]Refit: Proximity Mine\c-";
+	BIO_WMOD_PROXMINE_SUMM = "\c[White]Change to firing bouncy proximity mines";
+
+	BIO_WMOD_RECHAMBERUP_TAG = "\c[MGene]Upscale Rechamber\c-";
+	BIO_WMOD_RECHAMBERUP_SUMM =
+		"\c[Brick]Double ammo usage\c[White] but \c[Green]double damage";
+	BIO_WMOD_RECHAMBERUP_DESC_PIPELINE =
+		"\c[White]Damage \c[Green]increased by %d%%";
+	BIO_WMOD_RECHAMBERUP_DESC_AMMO1 =
+		"\c[White]Primary ammo usage \c[Brick]increased by %d%%";
+	BIO_WMOD_RECHAMBERUP_DESC_AMMO2 =
+		"\c[White]Secondary ammo usage \c[Brick]increased by %d%%";
+
+	BIO_WMOD_RELOADTIME_TAG = "\c[MGene]Ergonomic\c-";
+	BIO_WMOD_RELOADTIME_SUMM = "\c[Green]Increased reload speeds";
+	BIO_WMOD_RELOADTIME_DESC = "\c[White]Reload time%s: \c[Green]%.2f seconds";
+
+	BIO_WMOD_RESERVEFEED_TAG = "\c[MGene]Ammochain\c-";
+	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
+
+	BIO_WMOD_SHELLTOSLUG_TAG = "\c[MGene]Refit: Slug\c-";
+	BIO_WMOD_SHELLTOSLUG_SUMM =
+		"\c[White]Change from firing shells to highly-accurate solid slugs";
+
+	BIO_WMOD_SMARTAIM_TAG = "\c[MGene]Smart Fire Control\c-";
+	BIO_WMOD_SMARTAIM_SUMM =
+		"\c[Green]Smart aim functionality\n\n"
+		"\c[White]Hitscan bullet attacks \c[Green]cannot miss\c[White] while a target is locked\n\n"
+		"\c[White]Low-mid speed projectiles \c[Green]relentlessly seek targets";
+
+	BIO_WMOD_SPLASHTOHIT_TAG = "\c[MGene]Shaped Charge\c-";
+	BIO_WMOD_SPLASHTOHIT_SUMM =
+		"\c[White]Converts 50% of splash damage into hit damage\n"
+		"\c[White]50% splash radius reduction per application";
+	BIO_WMOD_SPLASHTOHIT_DESC =
+		"\c[White]%d damage converted; radius reduced by %d%s";
+
+	BIO_WMOD_SPOOLING_TAG = "\c[MGene]Rotary Turbocharge\c-";
+	BIO_WMOD_SPOOLING_SUMM =
+		"\c[White]Converts this weapon to use the "
+		"\c[Yellow]Spooling\c[White] operating mode\n"
+		"\c[Brick]Weapon has to be spooled before firing\n"
+		"\c[Green]Dramatic increase in fire rate";
+
+	BIO_WMOD_SPREAD_TAG = "\c[MGene]Accurised\c-";
+	BIO_WMOD_SPREAD_SUMM = "\c[Green]Reduces firing spread";
+	BIO_WMOD_SPREAD_DESC =
+		"\c[White]Spread%s: "
+		"\c[Green]%.2f\c[White] horizontal, "
+		"\c[Green]%.2f\c[White] vertical";
+
+	BIO_WMOD_SPREADNARROW_TAG = "\c[MGene]Crab-claw Choke\c-";
+	BIO_WMOD_SPREADNARROW_SUMM =
+		"\c[White]Converts 50% of horizontal spread into vertical spread";
+	BIO_WMOD_SPREADNARROW_DESC =
+		"\c[White]Spread%s: "
+		"\c[Green]%.2f\c[White] horizontal, "
+		"\c[Brick]+%.2f\c[White] vertical";
+
+	BIO_WMOD_SPREADWIDEN_TAG = "\c[MGene]Duckbill Choke\c-";
+	BIO_WMOD_SPREADWIDEN_SUMM =
+		"\c[White]Converts 50% of vertical spread into horizontal spread";
+	BIO_WMOD_SPREADWIDEN_DESC =
+		"\c[White]Spread%s: "
+		"\c[Brick]+%.2f\c[White] horizontal, "
+		"\c[Green]%.2f\c[White] vertical";
+
+	BIO_WMOD_SWITCHSPEED_TAG = "\c[MGene]Speed Sling\c-";
+	BIO_WMOD_SWITCHSPEED_SUMM =
+		"\c[Green]Weapon raises and lowers almost instantly";
+
+// Genes (tags, pickups, summaries, descriptions, incompatibility) /////////////
+
+	// Generic
+
+	BIO_GENE_TAG = "\c[White]Gene\c-";
+	BIO_GENE_PKUP = "Collected a \c[White]gene\c-.";
+
+	// Incompatibility
+
 	BIO_MODSUP_INCOMPAT_NONODEEAST = "No node to the east.";
 	BIO_MODSUP_INCOMPAT_NOMODEAST = "No modifier in the eastern node.";
 	BIO_MODSUP_INCOMPAT_NONODENORTH = "No node to the north.";
@@ -429,184 +586,34 @@
 
 	// Modifier
 
-	BIO_MGENE_BERSERKDAMAGE_TAG = "\c[MGene]Frenzying\c[White] Gene\c-";
+	BIO_MGENE_TAGTEMPLATE = "%s\c[White] Gene\c-";
+
 	BIO_MGENE_BERSERKDAMAGE_PKUP = "Collected a %s.";
-	BIO_WMOD_BERSERKDAMAGE_SUMM =
-		"\c[Green]250% damage \c[White]dealt after collecting a Berserk Pack";
-	BIO_WMOD_BERSERKDAMAGE_DESC =
-		"\c[Green]%d%% damage \c[White]dealt after collecting a Berserk Pack";
-
-	BIO_MGENE_CANISTERSHOT_TAG = "\c[MGene]Refit: Canister Shot\c[White] Gene\c-";
 	BIO_MGENE_CANISTERSHOT_PKUP = "Collected a %s.";
-	BIO_WMOD_CANISTERSHOT_SUMM =
-		"\c[White]Change from firing rockets/grenades to a shot pellet blast\n"
-		"\c[White]All splash damage is converted into direct hit damage\n"
-		"\c[White]Any pre-existing shrapnel is lost";
-
-	BIO_WMOD_DAMAGEADD_SUMM = "\c[Green]Damage increased by 10%";
-	BIO_WMOD_DAMAGEADD_DESC = "\c[White]Damage%s: \c[Green]+%d";
-
-	BIO_MGENE_DEMONSLAYER_TAG = "\c[MGene]Demonslayer\c[White] Gene\c-";
 	BIO_MGENE_DEMONSLAYER_PKUP = "Collected a %s.";
-	BIO_WMOD_DEMONSLAYER_SUMM =
-		"\c[Green]+100% damage\c[White] dealt to Legendary monsters";
-	BIO_WMOD_DEMONSLAYER_DESC =
-		"\c[Green]+%d%% damage\c[White] dealt to Legendary monsters";
-
-	BIO_MGENE_ETMF_TAG = "\c[MGene]Energy-to-Matter Feed\c[White] Gene\c-";
 	BIO_MGENE_ETMF_PKUP = "Collected a %s.";
-	BIO_WMOD_ETMF_SUMM =
-		"\c[White]Change to consuming cells for a few seconds of free firing";
-	BIO_WMOD_ETMF_DESC =
-		"\c[White]Consumes %d cells for %.1f second(s) of free firing";
-
-	BIO_MGENE_FIRETIME_TAG = "\c[MGene]Rapid Refire\c[White] Gene\c-";
 	BIO_MGENE_FIRETIME_PKUP = "Collected a %s.";
-	BIO_WMOD_FIRETIME_SUMM = "\c[Green]Increased fire rates";
-	BIO_WMOD_FIRETIME_DESC = "\c[White]Fire time%s: \c[Green]%.2f seconds";
-
-	BIO_MGENE_FORCEPAIN_TAG = "\c[MGene]Neurotoxic\c[White] Gene\c-";
 	BIO_MGENE_FORCEPAIN_PKUP = "Collected a %s.";
-	BIO_WMOD_FORCEPAIN_SUMM =
-		"\c[Green]Extra 20% chance of firing a neurotoxic payload\n"
-		"\c[White]Neurotoxic payloads always make monsters flinch\n"
-		"\c[Gold]Some monsters are immune to this effect!";
-	BIO_WMOD_FORCEPAIN_DESC =
-		"\c[Green]Extra %d%% chance of firing a neurotoxic payload\n"
-		"\c[White]Neurotoxic payloads always make monsters flinch\n"
-		"\c[Gold]Some monsters are immune to this effect!";
-
-	BIO_MGENE_FORCERADIUSDMG_TAG = "\c[MGene]Squash Head\c[White] Gene\c-";
 	BIO_MGENE_FORCERADIUSDMG_PKUP = "Collected a %s.";
-	BIO_WMOD_FORCERADIUSDMG_SUMM =
-		"\c[Green]Payloads ignore monster splash damage immunity";
-
-	BIO_MGENE_INFINITEAMMO_TAG = "\c[MGene]Ammo Apparition\c[White] Gene\c-";
 	BIO_MGENE_INFINITEAMMO_PKUP = "Collected an %s.";
-	BIO_WMOD_INFINITEAMMO_SUMM = "\c[Green]Weapon requires and consumes no ammo";
-
-	BIO_MGENE_KICKBACK_TAG = "\c[MGene]Stopping\c[White] Gene\c-";
 	BIO_MGENE_KICKBACK_PKUP = "Collected a %s.";
-	BIO_WMOD_KICKBACK_SUMM = "\c[Green]+200% knockback";
-	BIO_WMOD_KICKBACK_DESC = "\c[Green]+%d%% knockback";
-
-	BIO_MGENE_LIFESTEAL_TAG = "\c[MGene]Parasitic\c[White] Gene\c-";
 	BIO_MGENE_LIFESTEAL_PKUP = "Collected a %s.";
-	BIO_WMOD_LIFESTEAL_SUMM = "\c[Green]Small percentage of melee damage dealt gained as health";
-	BIO_WMOD_LIFESTEAL_DESC = "\c[Green]%d%% of damage dealt gained as health%s";
-
-	BIO_MGENE_MAGSIZE_TAG = "\c[MGene]High-Capacity\c[White] Gene\c-";
 	BIO_MGENE_MAGSIZE_PKUP = "Collected a %s.";
-	BIO_WMOD_MAGSIZE_SUMM = "\c[Green]Increases magazine capacity";
-	BIO_WMOD_MAGSIZE_DESC_1 = "\c[Green]+%d\c[White] primary magazine capacity";
-	BIO_WMOD_MAGSIZE_DESC_2 = "\c[Green]+%d\c[White] secondary magazine capacity";
-
-	BIO_MGENE_MAGSIZETODAMAGE_TAG = "\c[MGene]Skirmisher\c[White] Gene\c-";
 	BIO_MGENE_MAGSIZETODAMAGE_PKUP = "Collected a %s.";
-	BIO_WMOD_MAGSIZETODAMAGE_SUMM =
-		"\c[Brick]20% reduced magazine size\n"
-		"\c[Green]20% increased damage";
-	BIO_WMOD_MAGSIZETODAMAGE_DESC_1 =
-		"\c[Brick]%d% reduced \c[White]primary magazine size\n"
-		"\c[Green]%d%% increased damage \c[White]for applicable firing modes";
-	BIO_WMOD_MAGSIZETODAMAGE_DESC_2 =
-		"\c[Brick]%d% reduced \c[White]secondary magazine size\n"
-		"\c[Green]%d%% increased damage \c[White]for applicable firing modes";
-
-	BIO_MGENE_NTHROUNDCOST_TAG = "\c[MGene]Ammo Thrift\c[White] Gene\c-";
 	BIO_MGENE_NTHROUNDCOST_PKUP = "Collected an %s.";
-	BIO_WMOD_NTHROUNDCOST_SUMM = "\c[Green]Every 5th shot costs no ammo";
-	BIO_WMOD_NTHROUNDCOST_DESC_NTHFREE = "\c[Green]Free shot every %d rounds";
-	BIO_WMOD_NTHROUNDCOST_DESC_NTHCOST = "\c[Green]Ammo is only consumed every %d shots";
-
-	BIO_MGENE_PROJGRAVITY_TAG = "\c[MGene]Dense Payload\c[White] Gene\c-";
 	BIO_MGENE_PROJGRAVITY_PKUP = "Collected a %s.";
-	BIO_WMOD_PROJGRAVITY_SUMM =
-		"\c[White]Projectile payloads are affected by gravity\n"
-		"\c[Green]+20% damage to affected projectiles";
-
-	BIO_MGENE_PROXMINE_TAG = "\c[MGene]Refit: Proximity Mine\c[White] Gene\c-";
 	BIO_MGENE_PROXMINE_PKUP = "Collected a %s.";
-	BIO_WMOD_PROXMINE_SUMM = "\c[White]Change to firing bouncy proximity mines";
-
-	BIO_MGENE_RECHAMBERUP_TAG = "\c[MGene]Upscale Rechamber\c[White] Gene\c-";
 	BIO_MGENE_RECHAMBERUP_PKUP = "Collected an %s.";
-	BIO_WMOD_RECHAMBERUP_SUMM =
-		"\c[Brick]Double ammo usage\c[White] but \c[Green]double damage";
-	BIO_WMOD_RECHAMBERUP_DESC_PIPELINE =
-		"\c[White]Damage \c[Green]increased by %d%%";
-	BIO_WMOD_RECHAMBERUP_DESC_AMMO1 =
-		"\c[White]Primary ammo usage \c[Brick]increased by %d%%";
-	BIO_WMOD_RECHAMBERUP_DESC_AMMO2 =
-		"\c[White]Secondary ammo usage \c[Brick]increased by %d%%";
-
-	BIO_MGENE_RELOADTIME_TAG = "\c[MGene]Ergonomic\c[White] Gene\c-";
 	BIO_MGENE_RELOADTIME_PKUP = "Collected an %s.";
-	BIO_WMOD_RELOADTIME_SUMM = "\c[Green]Increased reload speeds";
-	BIO_WMOD_RELOADTIME_DESC = "\c[White]Reload time%s: \c[Green]%.2f seconds";
-
-	BIO_MGENE_RESERVEFEED_TAG = "\c[MGene]Ammochain\c[White] Gene\c-";
 	BIO_MGENE_RESERVEFEED_PKUP = "Collected an %s.";
-	BIO_WMOD_RESERVEFEED_SUMM = "\c[Green]Feeds from reserve instead of magazine";
-
-	BIO_MGENE_SHELLTOSLUG_TAG = "\c[MGene]Refit: Slug\c[White] Gene\c-";
 	BIO_MGENE_SHELLTOSLUG_PKUP = "Collected a %s.";
-	BIO_WMOD_SHELLTOSLUG_SUMM =
-		"\c[White]Change from firing shells to highly-accurate solid slugs";
-
-	BIO_MGENE_SMARTAIM_TAG = "\c[MGene]Smart Fire Control\c[White] Gene\c-";
 	BIO_MGENE_SMARTAIM_PKUP = "Collected a %s.";
-	BIO_WMOD_SMARTAIM_SUMM =
-		"\c[Green]Smart aim functionality\n\n"
-		"\c[White]Hitscan bullet attacks \c[Green]cannot miss\c[White] while a target is locked\n\n"
-		"\c[White]Low-mid speed projectiles \c[Green]relentlessly seek targets";
-
-	BIO_MGENE_SPLASHTOHIT_TAG = "\c[MGene]Shaped Charge\c[White] Gene\c-";
 	BIO_MGENE_SPLASHTOHIT_PKUP = "Collected a %s.";
-	BIO_WMOD_SPLASHTOHIT_SUMM =
-		"\c[White]Converts 50% of splash damage into hit damage\n"
-		"\c[White]50% splash radius reduction per application";
-	BIO_WMOD_SPLASHTOHIT_DESC =
-		"\c[White]%d damage converted; radius reduced by %d%s";
-
-	BIO_MGENE_SPOOLING_TAG = "\c[MGene]Rotary Turbocharge\c[White] Gene\c-";
 	BIO_MGENE_SPOOLING_PKUP = "Collected a %s.";
-	BIO_WMOD_SPOOLING_SUMM =
-		"\c[White]Converts this weapon to use the "
-		"\c[Yellow]Spooling\c[White] operating mode\n"
-		"\c[Brick]Weapon has to be spooled before firing\n"
-		"\c[Green]Dramatic increase in fire rate";
-
-	BIO_MGENE_SPREAD_TAG = "\c[MGene]Accurised\c[White] Gene\c-";
 	BIO_MGENE_SPREAD_PKUP = "Collected an %s.";
-	BIO_WMOD_SPREAD_SUMM = "\c[Green]Reduces firing spread";
-	BIO_WMOD_SPREAD_DESC =
-		"\c[White]Spread%s: "
-		"\c[Green]%.2f\c[White] horizontal, "
-		"\c[Green]%.2f\c[White] vertical";
-
-	BIO_MGENE_SPREADNARROW_TAG = "\c[MGene]Crab-claw Choke\c[White] Gene\c-";
 	BIO_MGENE_SPREADNARROW_PKUP = "Collected a %s.";
-	BIO_WMOD_SPREADNARROW_SUMM =
-		"\c[White]Converts 50% of horizontal spread into vertical spread";
-	BIO_WMOD_SPREADNARROW_DESC =
-		"\c[White]Spread%s: "
-		"\c[Green]%.2f\c[White] horizontal, "
-		"\c[Brick]+%.2f\c[White] vertical";
-
-	BIO_MGENE_SPREADWIDEN_TAG = "\c[MGene]Duckbill Choke\c[White] Gene\c-";
 	BIO_MGENE_SPREADWIDEN_PKUP = "Collected a %s.";
-	BIO_WMOD_SPREADWIDEN_SUMM =
-		"\c[White]Converts 50% of vertical spread into horizontal spread";
-	BIO_WMOD_SPREADWIDEN_DESC =
-		"\c[White]Spread%s: "
-		"\c[Brick]+%.2f\c[White] horizontal, "
-		"\c[Green]%.2f\c[White] vertical";
-
-	BIO_MGENE_SWITCHSPEED_TAG = "\c[MGene]Speed Sling\c[White] Gene\c-";
 	BIO_MGENE_SWITCHSPEED_PKUP = "Collected a %s.";
-	BIO_WMOD_SWITCHSPEED_SUMM =
-		"\c[Green]Weapon raises and lowers almost instantly";
 
 	// Support
 

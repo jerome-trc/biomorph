@@ -61,6 +61,11 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 		return BIO_WCMF_FIRETIME_DEC, BIO_WPMF_NONE;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_FIRETIME_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_FIRETIME_SUMM";
@@ -130,6 +135,11 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 		return BIO_WCMF_RELOADTIME_DEC, BIO_WPMF_NONE;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_RELOADTIME_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_RELOADTIME_SUMM";
@@ -164,14 +174,19 @@ class BIO_WMod_Spooling : BIO_WeaponModifier
 		return Summary();
 	}
 
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_FIRETIME_DEC, BIO_WPMF_NONE;
 	}
 
-	final override uint Limit() const
+	final override string Tag() const
 	{
-		return 1;
+		return "$BIO_WMOD_SPOOLING_TAG";
 	}
 
 	final override string Summary() const

@@ -47,6 +47,11 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 		return Summary();
 	}
 
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return
@@ -54,9 +59,9 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 			BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_SHOTCOUNT_INC | BIO_WPMF_SPLASHREMOVE;
 	}
 
-	final override uint Limit() const
+	final override string Tag() const
 	{
-		return 1;
+		return "$BIO_WMOD_CANISTERSHOT_TAG";
 	}
 
 	final override string Summary() const
@@ -105,14 +110,19 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 		return Summary();
 	}
 
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_NEW;
 	}
 
-	final override uint Limit() const
+	final override string Tag() const
 	{
-		return 1;
+		return "$BIO_WMOD_PROXMINE_TAG";
 	}
 
 	final override string Summary() const
@@ -153,6 +163,11 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 		return Summary();
 	}
 
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return
@@ -160,9 +175,9 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 			BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_SPREAD_DEC | BIO_WPMF_SHOTCOUNT_DEC;
 	}
 
-	final override uint Limit() const
+	final override string Tag() const
 	{
-		return 1;
+		return "$BIO_WMOD_SHELLTOSLUG_TAG";
 	}
 
 	final override string Summary() const

@@ -72,11 +72,11 @@ class BIO_WeaponModifier play abstract
 	// If the modifier did nothing, also alert the user of this.
 	abstract string Apply(BIO_Weapon weap, BIO_GeneContext context) const;
 
-	abstract string Summary() const;
-
 	virtual uint Limit() const { return uint16.MAX; }
-
 	abstract BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const;
+
+	abstract string Tag() const;
+	abstract string Summary() const;
 
 	// Helpers /////////////////////////////////////////////////////////////////
 

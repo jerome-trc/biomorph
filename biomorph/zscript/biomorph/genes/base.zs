@@ -59,6 +59,20 @@ class BIO_ModifierGene : BIO_Gene abstract
 	meta class<BIO_WeaponModifier> ModType;
 	property ModType: ModType;
 
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+
+		let modTag = BIO_Global.Get().GetWeaponModifierByType(ModType).Tag();
+
+		SetTag(
+			String.Format(
+				StringTable.Localize("$BIO_MGENE_TAGTEMPLATE"),
+				StringTable.Localize(modTag)
+			)
+		);
+	}
+
 	final override uint Limit() const
 	{
 		return BIO_Global.Get().GetWeaponModifierByType(ModType).Limit();

@@ -2,7 +2,6 @@ class BIO_MGene_BerserkDamage : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_BERSERKDAMAGE_TAG";
 		Inventory.Icon 'GENDB0';
 		Inventory.PickupMessage "$BIO_MGENE_BERSERKDAMAGE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
@@ -22,7 +21,6 @@ class BIO_MGene_CanisterShot : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_CANISTERSHOT_TAG";
 		Inventory.Icon 'GENNC0';
 		Inventory.PickupMessage "$BIO_MGENE_CANISTERSHOT_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
@@ -42,7 +40,6 @@ class BIO_MGene_DamageAdd : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_DAMAGEADD_TAG";
 		Inventory.Icon '';
 		Inventory.PickupMessage "$BIO_MGENE_DAMAGEADD_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYRARE;
@@ -61,7 +58,6 @@ class BIO_MGene_DemonSlayer : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_DEMONSLAYER_TAG";
 		Inventory.Icon 'GENDA0';
 		Inventory.PickupMessage "$BIO_MGENE_DEMONSLAYER_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
@@ -86,7 +82,6 @@ class BIO_MGene_ETMF : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_ETMF_TAG";
 		Inventory.Icon 'GENAC0';
 		Inventory.PickupMessage "$BIO_MGENE_ETMF_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
@@ -106,7 +101,6 @@ class BIO_MGene_FireTime : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_FIRETIME_TAG";
 		Inventory.Icon 'GENTA0';
 		Inventory.PickupMessage "$BIO_MGENE_FIRETIME_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON + LOOTWEIGHT_MIN;
@@ -126,7 +120,6 @@ class BIO_MGene_ForcePain : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_FORCEPAIN_TAG";
 		Inventory.Icon 'GENPA0';
 		Inventory.PickupMessage "$BIO_MGENE_FORCEPAIN_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
@@ -146,7 +139,6 @@ class BIO_MGene_ForceRadiusDmg : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_FORCERADIUSDMG_TAG";
 		Inventory.Icon 'GENPB0';
 		Inventory.PickupMessage "$BIO_MGENE_FORCERADIUSDMG_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
@@ -166,7 +158,6 @@ class BIO_MGene_Kickback : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_KICKBACK_TAG";
 		Inventory.Icon 'GENMC0';
 		Inventory.PickupMessage "$BIO_MGENE_KICKBACK_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
@@ -186,7 +177,6 @@ class BIO_MGene_Lifesteal : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_LIFESTEAL_TAG";
 		Inventory.Icon 'GENEA0';
 		Inventory.PickupMessage "$BIO_MGENE_LIFESTEAL_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
@@ -206,7 +196,6 @@ class BIO_MGene_MagSize : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_MAGSIZE_TAG";
 		Inventory.Icon 'GENAA0';
 		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
@@ -226,7 +215,6 @@ class BIO_MGene_MagSizeToDamage : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_MAGSIZETODAMAGE_TAG";
 		Inventory.Icon 'GENDE0';
 		Inventory.PickupMessage "$BIO_MGENE_MAGSIZETODAMAGE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
@@ -246,7 +234,6 @@ class BIO_MGene_NthRoundCost : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_NTHROUNDCOST_TAG";
 		Inventory.Icon 'GENAE0';
 		Inventory.PickupMessage "$BIO_MGENE_NTHROUNDCOST_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
@@ -266,7 +253,6 @@ class BIO_MGene_InfiniteAmmo : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_INFINITEAMMO_TAG";
 		Inventory.Icon 'GENAD0';
 		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_MIN;
@@ -286,7 +272,6 @@ class BIO_MGene_ProjGravity : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_PROJGRAVITY_TAG";
 		Inventory.Icon 'GENPC0';
 		Inventory.PickupMessage "$BIO_MGENE_PROJGRAVITY_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
@@ -306,7 +291,6 @@ class BIO_MGene_ProxMine : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_PROXMINE_TAG";
 		Inventory.Icon 'GENNB0';
 		Inventory.PickupMessage "$BIO_MGENE_PROXMINE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
@@ -326,7 +310,6 @@ class BIO_MGene_RechamberUp : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_RECHAMBERUP_TAG";
 		Inventory.Icon 'GENDD0';
 		Inventory.PickupMessage "$BIO_MGENE_RECHAMBERUP_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
@@ -346,7 +329,6 @@ class BIO_MGene_ReserveFeed : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_RESERVEFEED_TAG";
 		Inventory.Icon 'GENAB0';
 		Inventory.PickupMessage "$BIO_MGENE_RESERVEFEED_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYRARE;
@@ -366,7 +348,6 @@ class BIO_MGene_ReloadTime : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_RELOADTIME_TAG";
 		Inventory.Icon 'GENTB0';
 		Inventory.PickupMessage "$BIO_MGENE_RELOADTIME_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
@@ -386,7 +367,6 @@ class BIO_MGene_ShellToSlug : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_SHELLTOSLUG_TAG";
 		Inventory.Icon 'GENNA0';
 		Inventory.PickupMessage "$BIO_MGENE_SHELLTOSLUG_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
@@ -406,7 +386,6 @@ class BIO_MGene_SmartAim : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_SMARTAIM_TAG";
 		Inventory.Icon 'GENMF0';
 		Inventory.PickupMessage "$BIO_MGENE_SMARTAIM_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
@@ -426,7 +405,6 @@ class BIO_MGene_SplashToHit : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_SPLASHTOHIT_TAG";
 		Inventory.Icon 'GENDC0';
 		Inventory.PickupMessage "$BIO_MGENE_SPLASHTOHIT_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
@@ -446,7 +424,6 @@ class BIO_MGene_Spooling : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_SPOOLING_TAG";
 		Inventory.Icon 'GENTC0';
 		Inventory.PickupMessage "$BIO_MGENE_SPOOLING_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
@@ -466,7 +443,6 @@ class BIO_MGene_Spread : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_SPREAD_TAG";
 		Inventory.Icon 'GENMA0';
 		Inventory.PickupMessage "$BIO_MGENE_SPREAD_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
@@ -486,7 +462,6 @@ class BIO_MGene_SpreadNarrow : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_SPREADNARROW_TAG";
 		Inventory.Icon 'GENMD0';
 		Inventory.PickupMessage "$BIO_MGENE_SPREADNARROW_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
@@ -506,7 +481,6 @@ class BIO_MGene_SpreadWiden : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_SPREADWIDEN_TAG";
 		Inventory.Icon 'GENME0';
 		Inventory.PickupMessage "$BIO_MGENE_SPREADWIDEN_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
@@ -526,7 +500,6 @@ class BIO_MGene_SwitchSpeed : BIO_ModifierGene
 {
 	Default
 	{
-		Tag "$BIO_MGENE_SWITCHSPEED_TAG";
 		Inventory.Icon 'GENMB0';
 		Inventory.PickupMessage "$BIO_MGENE_SWITCHSPEED_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;

@@ -31,6 +31,11 @@ class BIO_WMod_ForcePain : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_ALTER;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_FORCEPAIN_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_FORCEPAIN_SUMM";
@@ -100,6 +105,11 @@ class BIO_WMod_ForceRadiusDmg : BIO_WeaponModifier
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_ALTER;
+	}
+
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_FORCERADIUSDMG_TAG";
 	}
 
 	final override string Summary() const
@@ -172,6 +182,11 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 		return Summary();
 	}
 
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_NONE,
@@ -180,9 +195,9 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 			BIO_WPMF_DAMAGE_INC;
 	}
 
-	final override uint Limit() const
+	final override string Tag() const
 	{
-		return 1;
+		return "$BIO_WMOD_PROJGRAVITY_TAG";
 	}
 
 	final override string Summary() const

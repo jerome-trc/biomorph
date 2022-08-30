@@ -36,6 +36,11 @@ class BIO_WMod_BerserkDamage : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_DAMAGE_INC;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_BERSERKDAMAGE_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_BERSERKDAMAGE_SUMM";
@@ -110,6 +115,11 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_DAMAGE_INC;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_DAMAGEADD_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_DAMAGEADD_SUMM";
@@ -155,6 +165,11 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_NONE, BIO_WPMF_DAMAGE_INC;
+	}
+
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_DEMONSLAYER_TAG";
 	}
 
 	final override string Summary() const
@@ -353,6 +368,11 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 		return BIO_WCMF_MAGSIZE_DEC, BIO_WPMF_DAMAGE_INC;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_MAGSIZETODAMAGE_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_MAGSIZETODAMAGE_SUMM";
@@ -487,6 +507,11 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 		return BIO_WCMF_AMMOUSE_INC, BIO_WPMF_DAMAGE_INC;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_RECHAMBERUP_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_RECHAMBERUP_SUMM";
@@ -562,6 +587,11 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 		return BIO_WCMF_NONE,
 			BIO_WPMF_DAMAGE_INC |
 			BIO_WPMF_SPLASHDAMAGE_DEC | BIO_WPMF_SPLASHRADIUS_DEC;
+	}
+
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_SPLASHTOHIT_TAG";
 	}
 
 	final override string Summary() const

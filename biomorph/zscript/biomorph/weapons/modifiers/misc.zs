@@ -20,6 +20,11 @@ class BIO_WMod_Kickback : BIO_WeaponModifier
 		return BIO_WCMF_KICKBACK_INC, BIO_WPMF_NONE;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_KICKBACK_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_KICKBACK_SUMM";
@@ -72,14 +77,19 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 		return Summary();
 	}
 
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_NONE, BIO_WPMF_NONE;
 	}
 
-	final override uint Limit() const
+	final override string Tag() const
 	{
-		return 1;
+		return "$BIO_WMOD_SMARTAIM_TAG";
 	}
 
 	final override string Summary() const
@@ -343,6 +353,11 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_SPREAD_DEC;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_SPREAD_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_SPREAD_SUMM";
@@ -413,6 +428,11 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_NONE, BIO_WPMF_SPREAD_DEC | BIO_WPMF_SPREAD_INC;
+	}
+
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_SPREADNARROW_TAG";
 	}
 
 	final override string Summary() const
@@ -487,6 +507,11 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 		return BIO_WCMF_NONE, BIO_WPMF_SPREAD_DEC | BIO_WPMF_SPREAD_INC;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_SPREADWIDEN_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_SPREADWIDEN_SUMM";
@@ -509,14 +534,19 @@ class BIO_WMod_SwitchSpeed : BIO_WeaponModifier
 		return Summary();
 	}
 
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_SWITCHSPEED_INC, BIO_WPMF_NONE;
 	}
 
-	final override uint Limit() const
+	final override string Tag() const
 	{
-		return 1;
+		return "$BIO_WMOD_SWITCHSPEED_TAG";
 	}
 
 	final override string Summary() const

@@ -118,6 +118,11 @@ class BIO_WMod_ETMF : BIO_WeaponModifier
 		return 1;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_ETMF_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_ETMF_SUMM";
@@ -206,6 +211,11 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 		return BIO_WCMF_MAGSIZE_INC, BIO_WPMF_NONE;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_MAGSIZE_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_MAGSIZE_SUMM";
@@ -238,6 +248,11 @@ class BIO_WMod_NthRoundCost : BIO_WeaponModifier
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_AMMOUSE_DEC, BIO_WPMF_NONE;
+	}
+
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_NTHROUNDCOST_TAG";
 	}
 
 	final override string Summary() const
@@ -347,19 +362,24 @@ class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 		return Summary();
 	}
 
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_MAGTYPE | BIO_WCMF_AMMOTYPE, BIO_WPMF_NONE;
 	}
 
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_INFINITEAMMO_TAG";
+	}
+
 	final override string Summary() const
 	{
 		return "$BIO_WMOD_INFINITEAMMO_SUMM";
-	}
-
-	final override uint Limit() const
-	{
-		return 1;
 	}
 }
 
@@ -397,14 +417,19 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 		return Summary();
 	}
 
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_MAGTYPE, BIO_WPMF_NONE;
 	}
 
-	final override uint Limit() const
+	final override string Tag() const
 	{
-		return 1;
+		return "$BIO_WMOD_RESERVEFEED_TAG";
 	}
 
 	final override string Summary() const
