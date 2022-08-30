@@ -22,10 +22,7 @@ class BIORLM_MGene_Tristar : BIO_ModifierGene
 		Tag "$BIORLM_MGENE_TRISTAR_TAG";
 		Inventory.Icon 'GEN1A0';
 		Inventory.PickupMessage "$BIORLM_MGENE_TRISTAR_PKUP";
-		BIO_Gene.Limit 1;
-		BIO_Gene.Summary "$BIORLM_WMOD_TRISTAR_SUMM";
 		BIO_ModifierGene.ModType 'BIORLM_WMod_Tristar';
-		BIO_ModifierGene.RepeatRules BIO_WMODREPEATRULES_NONE;
 	}
 
 	States
@@ -95,12 +92,17 @@ class BIORLM_WMod_Tristar : BIO_WeaponModifier
 			}
 		}
 
-		return "";
+		return Summary();
 	}
 
-	final override string Description(BIO_GeneContext _) const
+	final override uint Limit() const
 	{
-		return Summary();
+		return 1;
+	}
+
+	final override string Summary() const
+	{
+		return "$BIORLM_WMOD_TRISTAR_SUMM";
 	}
 
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
@@ -109,11 +111,6 @@ class BIORLM_WMod_Tristar : BIO_WeaponModifier
 			BIO_WCMF_AMMOUSE_DEC | BIO_WCMF_FIRETIME_DEC,
 			BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_DAMAGE_DEC | BIO_WPMF_SHOTCOUNT_INC |
 			BIO_WPMF_SPLASHRADIUS_INC | BIO_WPMF_SPLASHDAMAGE_INC;
-	}
-
-	final override class<BIO_ModifierGene> GeneType() const
-	{
-		return 'BIORLM_MGene_Tristar';
 	}
 }
 
