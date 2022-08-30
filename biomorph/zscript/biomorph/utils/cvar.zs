@@ -96,7 +96,7 @@ enum BIO_CVar_LegenDoomLite : int
 	BIO_CV_LDL_WEAP = 2
 }
 
-// For the Double Shotgun and similar weapons, does primary fire multiple
+// For double-/quad-barreled shotguns and similar, does primary fire multiple
 // barrels while secondary fires one, or vice versa? Default is 0, the former.
 enum BIO_CVar_MultiBarrelFire : int
 {

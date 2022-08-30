@@ -1,4 +1,4 @@
-// See zscript/biomorph/utils.zs for value enumerations where applicable.
+// See zscript/biomorph/utils/cvar.zs for value enumerations where applicable.
 
 server noarchive bool BIO_debug = false;
 server int BIO_ldl = 2;
