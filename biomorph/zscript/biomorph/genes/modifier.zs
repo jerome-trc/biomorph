@@ -514,3 +514,22 @@ class BIO_MGene_SwitchSpeed : BIO_ModifierGene
 		Loop;
 	}
 }
+
+class BIO_MGene_ToggleConnected : BIO_ModifierGene
+{
+	Default
+	{
+		Inventory.Icon 'GENMG0';
+		Inventory.PickupMessage "$BIO_MGENE_TOGGLECONNECTED_PKUP";
+		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
+		BIO_ModifierGene.ModType 'BIO_WMod_ToggleConnected';
+	}
+
+	States
+	{
+	Spawn:
+		GENM G 6;
+		#### # 6 Bright Light("BIO_MutaGene_LightRed");
+		Loop;
+	}
+}

@@ -554,3 +554,132 @@ class BIO_WMod_SwitchSpeed : BIO_WeaponModifier
 		return "$BIO_WMOD_SWITCHSPEED_SUMM";
 	}
 }
+
+class BIO_WMod_ToggleConnected : BIO_WeaponModifier
+{
+	final override bool, string Compatible(BIO_GeneContext context) const
+	{
+		let weap = context.Weap;
+
+		if (weap.SpecialFunc != null)
+			return false, "$BIO_WMOD_INCOMPAT_EXISTINGSPECIAL";
+
+		let n = context.Sim.Nodes[context.Node];
+
+		for (uint i = 0; i < n.Basis.Neighbors.Size(); i++)
+		{
+			let nbi = n.Basis.Neighbors[i];
+			let nb = context.Sim.Nodes[nbi];
+
+			if (nb.Basis.Neighbors.Size() == 1)
+				return true, "";
+		}
+
+		return false, "$BIO_WMOD_INCOMPAT_ALLNEIGHBORSHAVENEIGHBORS";
+	}
+
+	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	{
+		let func = new('BIO_WSF_NodeToggle');
+		weap.SpecialFunc = func;
+		let n = context.Sim.Nodes[context.Node];
+		
+		for (uint i = 0; i < n.Basis.Neighbors.Size(); i++)
+		{
+			let nbi = n.Basis.Neighbors[i];
+			let nb = context.Sim.Nodes[nbi];
+
+			if (nb.Basis.Neighbors.Size() > 1)
+				continue;
+
+			if (!nb.HasModifier())
+				continue;
+
+			func.AddNode(nbi, nb.Basis.Flags & BIO_WMGNF_MUTED);
+		}
+
+		return Summary();
+	}
+
+	final override uint Limit() const
+	{
+		return 1;
+	}
+
+	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
+	{
+		return BIO_WCMF_SPECIALFUNC_ADD, BIO_WPMF_NONE;
+	}
+
+	final override string Tag() const
+	{
+		return "$BIO_WMOD_TOGGLECONNECTED_TAG";
+	}
+
+	final override string Summary() const
+	{
+		return "$BIO_WMOD_TOGGLECONNECTED_SUMM";
+	}
+}
+
+class BIO_WSF_NodeToggle : BIO_WeaponSpecialFunctor
+{
+	Array<uint> NodesToToggle;
+	private Array<bool> NodeState; // `true` if the corresponding node is muted.
+
+	void AddNode(uint uuid, bool alreadyMuted)
+	{
+		NodesToToggle.Push(uuid);
+		NodeState.Push(alreadyMuted);
+	}
+
+	final override state Invoke(BIO_Weapon weap) const
+	{
+		let sim = BIO_WeaponModSimulator.Create(weap);
+
+		for (uint i = 0; i < NodesToToggle.Size(); i++)
+		{
+			let node = sim.Nodes[NodesToToggle[i]];
+			let gene_tag = GetDefaultByType(node.Basis.GeneType).GetTag();
+
+			if (!NodeState[i])
+			{
+				node.Basis.Flags |= BIO_WMGNF_MUTED;
+
+				weap.PrintPickupMessage(
+					weap.Owner.CheckLocalView(),
+					String.Format(
+						StringTable.Localize("$BIO_WMOD_TOGGLECONNECTED_TOAST_MUTED"),
+						gene_tag
+					)
+				);
+			}
+			else
+			{
+				node.Basis.Flags &= ~BIO_WMGNF_MUTED;
+
+				weap.PrintPickupMessage(
+					weap.Owner.CheckLocalView(),
+					String.Format(
+						StringTable.Localize("$BIO_WMOD_TOGGLECONNECTED_TOAST_UNMUTED"),
+						gene_tag
+					)
+				);
+			}
+
+			NodeState[i] = node.Basis.Flags & BIO_WMGNF_MUTED;
+		}
+
+		sim.RunAndClose();
+		weap.Owner.A_StartSound("bio/ui/beep");
+		return state(null);
+	}
+
+	final override BIO_WeaponSpecialFunctor Copy() const
+	{
+		let ret = new('BIO_WSF_NodeToggle');
+		ret.NodesToToggle.Copy(NodesToToggle);
+		ret.NodeState.Copy(NodeState);
+		return ret;
+	}
+}

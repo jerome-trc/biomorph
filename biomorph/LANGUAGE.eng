@@ -354,6 +354,8 @@
 
 	BIO_WMOD_INCOMPAT_TEMPLATE = "\c[White]%s\n\n\c[Yellow]Incompatible:\c[Gold]\n%s";
 
+	BIO_WMOD_INCOMPAT_ALLNEIGHBORSHAVENEIGHBORS =
+		"This gene needs at least one of its neighbours to be a dead-end.";
 	BIO_WMOD_INCOMPAT_ALREADYSMARTAIMING =
 		"This weapon already has smart aim functionality.";
 	BIO_WMOD_INCOMPAT_ALREADYSPOOLING =
@@ -363,9 +365,7 @@
 		"This weapon doesn't use ammunition, "
 		"doesn't fire real matter, or is "
 		"otherwise unsuited to energy-to-matter conversion.";
-	BIO_WMOD_INCOMPAT_PROJGRAVITY =
-		"This weapon fires no projectiles, "
-		"or all its projectiles are already affected by gravity.";
+	BIO_WMOD_INCOMPAT_EXISTINGSPECIAL = "This weapon already has a special function.";
 	BIO_WMOD_INCOMPAT_MAGSIZETODAMAGE =
 		"This weapon needs either a primary or secondary magazine "
 		"that can be reduced by at least 20% and feeds one of its firing modes.";
@@ -394,6 +394,9 @@
 		"This gene can only be put in the last node.";
 	BIO_WMOD_INCOMPAT_PAYLOADTOOSMALL =
 		"None of this weapon's firing modes emits a large enough payload.";
+	BIO_WMOD_INCOMPAT_PROJGRAVITY =
+		"This weapon fires no projectiles, "
+		"or all its projectiles are already affected by gravity.";
 	BIO_WMOD_INCOMPAT_PROJGRAVITYMOD =
 		"This weapon has already been modified to add projectile gravity.";
 	BIO_WMOD_INCOMPAT_RESERVEFEED =
@@ -564,6 +567,14 @@
 	BIO_WMOD_SWITCHSPEED_SUMM =
 		"\c[Green]Weapon raises and lowers almost instantly";
 
+	BIO_WMOD_TOGGLECONNECTED_TAG = "\c[MGene]Overseer\c-";
+	BIO_WMOD_TOGGLECONNECTED_SUMM =
+		"\c[White]Connected dead-end nodes can be toggled with \c[LightBlue]Zoom\c[White]";
+	BIO_WMOD_TOGGLECONNECTED_TOAST_MUTED =
+		"\c[White]Disabled: \c[Yellow]%s";
+	BIO_WMOD_TOGGLECONNECTED_TOAST_UNMUTED =
+		"\c[White]Enabled: \c[Yellow]%s";
+
 // Genes (tags, pickups, summaries, descriptions, incompatibility) /////////////
 
 	// Generic
@@ -614,6 +625,7 @@
 	BIO_MGENE_SPREADNARROW_PKUP = "Collected a %s.";
 	BIO_MGENE_SPREADWIDEN_PKUP = "Collected a %s.";
 	BIO_MGENE_SWITCHSPEED_PKUP = "Collected a %s.";
+	BIO_MGENE_TOGGLECONNECTED_PKUP = "Collected an %s.";
 
 	// Support
 
@@ -640,21 +652,6 @@
 	BIO_MODSUP_ADDWEST_SUMM =
 		"\c[Green]Modifier in node to west is applied one extra time\n"
 		"\c[White]Node does not need to be connected";
-
-	// Active
-
-	BIO_AGENE_INCOMPAT_EXISTINGSPECIAL = "This weapon already has a special function.";
-	BIO_AGENE_INCOMPAT_ALLNEIGHBORSHAVENEIGHBORS =
-		"This gene needs at least one of its neighbours to be a dead-end.";
-
-	BIO_AGENE_TOGGLECONNECTED_TAG = "\c[AGene]Overseer\c[White] Gene\c-";
-	BIO_AGENE_TOGGLECONNECTED_PKUP = "Collected an %s.";
-	BIO_AGENE_TOGGLECONNECTED_SUMM =
-		"\c[White]Connected dead-end nodes can be toggled with \c[LightBlue]Zoom\c[White]";
-	BIO_AGENE_TOGGLECONNECTED_TOAST_MUTED =
-		"\c[White]Disabled: \c[Yellow]%s";
-	BIO_AGENE_TOGGLECONNECTED_TOAST_UNMUTED =
-		"\c[White]Enabled: \c[Yellow]%s";
 
 // Weapon morph recipe requirement strings /////////////////////////////////////
 
