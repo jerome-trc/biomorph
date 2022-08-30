@@ -3,35 +3,35 @@ class BIO_SupplyBox : Actor
 	private bool Opened;
 
 	Default
-    {
-        +DONTGIB
-        +NOBLOCKMONST
+	{
+		+DONTGIB
+		+NOBLOCKMONST
 
-        Height 8;
+		Height 8;
 		Radius 16;
-        Scale 0.75;
+		Scale 0.75;
 		Tag "$BIO_SUPPLYBOX_TAG";
-    }
+	}
 
-    States
-    {
-    Spawn:
-        SUPP A 5 A_JumpIf(invoker.Opened, 'Spawn.Opened');
-        Loop;
+	States
+	{
+	Spawn:
+		SUPP A 5 A_JumpIf(invoker.Opened, 'Spawn.Opened');
+		Loop;
 	Spawn.Opened:
 		SUPP B -1;
 		Stop;
-    }
+	}
 
 	final override bool Used(Actor user)
 	{
 		if (Opened)
 			return false;
 
-        if (!(user is 'BIO_Player'))
+		if (!(user is 'BIO_Player'))
 			return false;
 
-        let choice = Random[BIO_Loot](1, 8);
+		let choice = Random[BIO_Loot](1, 8);
 
 		if (choice == 1)
 		{
@@ -77,6 +77,6 @@ class BIO_SupplyBox : Actor
 		}
 
 		Opened = true;
-        return true;
+		return true;
 	}
 }
