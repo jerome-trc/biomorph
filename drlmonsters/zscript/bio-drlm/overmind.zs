@@ -247,10 +247,11 @@ class BIORLM_OvermindPlasma : BIO_FastProjectile
 
 			for (uint i = 1; i < 16; i++)
 			{
-				A_SpawnItemEx(TRAIL_TYPES[i - 1],
+				A_SpawnItemEx(
+					TRAIL_TYPES[i - 1],
 					(float(i) * Vel.X) / -35.0,
 					-(float(i) * Vel.Y) / -35.0,
-					2.0 + (0.01 * Vel.Z) / -35.0,
+					2.0 + (float(i) * Vel.Z) / -35.0,
 					flags: SXF_ABSOLUTEANGLE | SXF_NOCHECKPOSITION
 				);
 			}
