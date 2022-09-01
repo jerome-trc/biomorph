@@ -12,8 +12,9 @@ class BIORLM_Loot_SSG : BIO_LootSpawner
 		exact.Push(true);
 	}
 
-	final override void SpawnLoot() const
+	final override bool, bool Invoke(Actor victim) const
 	{
-		Actor.Spawn(BIO_Global.Get().LootWeaponType(BIO_WSCAT_SSG), Pos);
+		Actor.Spawn(BIO_Global.Get().LootWeaponType(BIO_WSCAT_SSG), victim.Pos);
+		return false, false;
 	}
 }

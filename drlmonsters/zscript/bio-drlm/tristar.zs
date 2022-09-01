@@ -9,9 +9,10 @@ class BIORLM_Loot_EliteCaptainTristarBlaster : BIO_LootSpawner
 		exact.Push(true);
 	}
 
-	final override void SpawnLoot() const
+	final override bool, bool Invoke(Actor victim) const
 	{
-		Actor.Spawn('BIORLM_MGene_Tristar', Pos);
+		Actor.Spawn('BIORLM_MGene_Tristar', victim.Pos);
+		return false, false;
 	}
 }
 

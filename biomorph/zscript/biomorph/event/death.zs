@@ -55,6 +55,8 @@ extend class BIO_EventHandler
 				break;
 			}
 		}
+		
+		bool noval = false, noloot = false;
 
 		for (uint i = 0; i < Globals.MonsterLoot.Size(); i++)
 		{
@@ -69,34 +71,17 @@ extend class BIO_EventHandler
 					continue;
 			}
 
-			bool success = false;
-			Actor spawned = null;
-
-			let spawner_t = Globals.MonsterLoot[i].SpawnerType;
-
-			[success, spawned] = event.Thing.A_SpawnItemEx(
-				spawner_t,
-				0.0, 0.0, 32.0,
-				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
-				FRandom(0.0, 360.0)
-			);
-
-			if (success && spawned != null)
-			{
-				BIO_LootSpawner(spawned).Target = event.Thing;
-			}
-			else
-			{
-				Console.Printf(
-					Biomorph.LOGPFX_ERR ..
-					"Failed to create loot spawner of type `%s` "
-					"upon death of monster of type `%s`.",
-					spawner_t.GetClassName(), event.Thing.GetClassName()
-				);
-			}
+			bool nv = false, nl = false;
+			[nv, nl] = Globals.MonsterLoot[i].Spawner.Invoke(event.Thing);
+			noval |= nv;
+			noloot |= nl;
 		}
 
-		Globals.LootValueBuffer += Globals.GetMonsterValue(event.Thing);
+		if (!noval)
+			Globals.LootValueBuffer += Globals.GetMonsterValue(event.Thing);
+
+		if (noloot)
+			return;
 
 		while (Globals.DrainLootValueBuffer())
 		{

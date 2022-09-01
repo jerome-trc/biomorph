@@ -60,7 +60,7 @@ extend class BIO_Global
 				mloot.AppendFormat(
 					"\t%s - %s (exact: %s)\n",
 					MonsterLoot[i].MonsterType.GetClassName(),
-					MonsterLoot[i].SpawnerType.GetClassName(),
+					MonsterLoot[i].Spawner.GetClassName(),
 					MonsterLoot[i].Exact ? "true" : "false"
 				);
 			}

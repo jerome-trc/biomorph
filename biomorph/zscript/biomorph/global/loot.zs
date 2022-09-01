@@ -9,41 +9,39 @@ class BIO_LootTable : BIO_WeightedRandomTable
 class BIO_MonsterLootPair
 {
 	class<Actor> MonsterType;
-	class<BIO_LootSpawner> SpawnerType;
+	BIO_LootSpawner Spawner;
 	// If `true`, check `GetClass() == MonsterType`.
 	// Else, check `Monster is MonsterType`.
 	bool Exact;
 }
 
 // After being spawned, `Target` will point to the killed monster.
-class BIO_LootSpawner : BIO_IntangibleActor abstract
+class BIO_LootSpawner play abstract
 {
-	States
-	{
-	Spawn:
-		TNT1 A 0;
-		TNT1 A 1 { invoker.SpawnLoot(); }
-		Stop;
-	}
-
-	// If returning `false`, this type will not be cached at new-game.
-	virtual bool CanSpawn() const { return true; }
-
 	abstract void AssociatedMonsters(
 		in out Array<class<Actor> > types,
 		in out Array<bool> exact
 	) const;
 
-	protected abstract void SpawnLoot() const;
+	// The first return value should be true
+	// if the monster should not give any loot value.
+	// The second return value should be true
+	// if the monster should not drop any other loot.
+	// Use if the given items are so valuable 
+	// that giving mutagen/gene loot in addition would be too much.
+	abstract bool, bool Invoke(Actor victim) const;
 
-	protected void PlayRareSound() const
+	// If returning `false`, this type will not be cached at new-game.
+	virtual bool CanSpawn() const { return true; }
+
+	protected void PlayRareSound(Actor victim) const
 	{
-		A_StartSound("bio/loot/rare", CHAN_AUTO);
+		victim.A_StartSound("bio/loot/rare", CHAN_AUTO);
 	}
 
-	protected void PlayVeryRareSound() const
+	protected void PlayVeryRareSound(Actor victim) const
 	{
-		A_StartSound("bio/loot/veryrare", CHAN_AUTO);
+		victim.A_StartSound("bio/loot/veryrare", CHAN_AUTO);
 	}
 }
 
@@ -115,22 +113,22 @@ extend class BIO_Global
 	{
 		LootValueMultiplier = 1.0;
 
-		for (uint i = 0; i < AllActorClasses.Size(); i++)
+		for (uint i = 0; i < AllClasses.Size(); i++)
 		{
-			let loot_t = (class<BIO_LootSpawner>)(AllActorClasses[i]);
+			let loot_t = (class<BIO_LootSpawner>)(AllClasses[i]);
 
 			if (loot_t == null || loot_t.IsAbstract())
 				continue;
 
-			let defs = GetDefaultByType(loot_t);
+			let spawner = BIO_LootSpawner(new(loot_t));
 
-			if (!defs.CanSpawn())
+			if (!spawner.CanSpawn())
 				continue;
 
 			Array<class<Actor> > monstypes;
 			Array<bool> exact;
 
-			defs.AssociatedMonsters(monstypes, exact);
+			spawner.AssociatedMonsters(monstypes, exact);
 
 			if (monstypes.Size() < 1)
 			{
@@ -168,7 +166,7 @@ extend class BIO_Global
 
 				let pair = new('BIO_MonsterLootPair');
 				pair.MonsterType = monstypes[j];
-				pair.SpawnerType = loot_t;
+				pair.Spawner = spawner;
 				pair.Exact = exact[j];
 				MonsterLoot.Push(pair);
 			}
