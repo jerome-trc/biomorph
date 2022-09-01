@@ -1,43 +1,23 @@
 class BIO_WMS_Node play
 {
 	// This is a reflection of the real state of the weapon's mod graph.
-	// Only gets altered when the simulation gets committed, so it and the graph
-	// are always in perfect sync.
+	// Only gets altered when the simulation gets committed,
+	// so it and the real graph are always in perfect sync.
 	BIO_WMGNode Basis;
 
 	uint Multiplier;
 
 	// Null if no gene is being simulated in this node.
-	// Acts as a representative for what will end up in `Basis.GeneType`.
+	// Acts as a wrapper, representing what will end up in `Basis.Gene`.
 	BIO_WMS_Gene Gene;
 	bool Valid;
 	string Message;
 
 	BIO_WeaponMorphRecipe MorphRecipe;
 
-	// Accessors ///////////////////////////////////////////////////////////////
-
 	bool IsOccupied() const { return Gene != null; }
 	bool IsActive() const { return IsOccupied() || Basis.UUID == 0; }
 	bool IsMorph() const { return MorphRecipe != null; }
-
-	BIO_WeaponModifier GetModifier() const
-	{
-		return Gene == null ? null : Gene.Modifier;
-	}
-
-	bool HasModifier() const
-	{
-		if (Gene == null)
-			return false;
-
-		return Gene.GetType() is 'BIO_ModifierGene';
-	}
-
-	class<BIO_Gene> GetGeneType() const
-	{
-		return Gene == null ? null : Gene.GetType();
-	}
 
 	textureID GetIcon() const
 	{
@@ -45,7 +25,7 @@ class BIO_WMS_Node play
 		ret.SetNull();
 
 		if (Gene != null)
-			ret = GetDefaultByType(Gene.GetType()).Icon;
+			ret = GetDefaultByType(Gene.Data().GetActorType()).Icon;
 		else if (MorphRecipe != null)
 			ret = GetDefaultByType(MorphRecipe.Output()).Icon;
 
@@ -54,12 +34,10 @@ class BIO_WMS_Node play
 
 	bool Repeatable() const
 	{
-		let mod = GetModifier();
-
-		if (mod == null)
+		if (Gene == null)
 			return false;
 
-		return mod.Limit() > 1;
+		return Gene.Data().Limit() > 1;
 	}
 
 	bool Repeating() const
@@ -67,107 +45,108 @@ class BIO_WMS_Node play
 		return Repeatable() && Multiplier > 1;
 	}
 
+	BIO_GeneData GetGeneData() const
+	{
+		if (Gene == null)
+			return null;
+		else
+			return Gene.Data();
+	}
+
+	class<BIO_Gene> GetGeneActorType() const
+	{
+		if (Gene == null)
+			return null;
+		else
+			return Gene.Data().GetActorType();
+	}
+
 	string GetTag() const
 	{
-		let gene_t = Gene.GetType();
-		let defs = GetDefaultByType(gene_t);
-		return defs.GetTag();
+		return Gene.Data().GetTag();
+	}
+
+	BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags CombinedModifierFlags() const
+	{
+		if (Gene == null)
+			return BIO_WCMF_NONE, BIO_WPMF_NONE;
+
+		return Gene.Data().CombinedModifierFlags();
+	}
+
+	uint CountCoreModFlags(
+		BIO_WeaponCoreModFlags flags,
+		bool ignoreMultiplier = false
+	) const
+	{
+		if (Gene == null)
+			return 0;
+
+		let ret = Gene.Data().CountCoreModFlags(flags);
+
+		if (!ignoreMultiplier)
+			ret *= Multiplier;
+
+		return ret;
+	}
+
+	uint CountPipelineModFlags(
+		BIO_WeaponPipelineModFlags flags,
+		bool ignoreMultiplier = false
+	) const
+	{
+		if (Gene == null)
+			return 0;
+
+		let ret = Gene.Data().CountPipelineModFlags(flags);
+
+		if (!ignoreMultiplier)
+			ret *= Multiplier;
+
+		return ret;
+	}
+
+	uint CountModifierFlags(
+		BIO_WeaponCoreModFlags coreFlags,
+		BIO_WeaponPipelineModFlags pipelineFlags,
+		bool ignoreMultiplier = true
+	) const
+	{
+		if (Gene == null)
+			return 0;
+
+		let ret = Gene.Data().CountModifierFlags(coreFlags, pipelineFlags);
+
+		if (!ignoreMultiplier)
+			ret *= Multiplier;
+
+		return ret;
+	}
+
+	bool ContainsModifierOfType(class<BIO_WeaponModifier> type) const
+	{
+		if (Gene == null)
+			return false;
+
+		return Gene.Data().ContainsModifierOfType(type);
 	}
 
 	bool HasTooltip() const { return IsOccupied() || IsMorph(); }
 
-	bool, string Compatible(
-		readOnly<BIO_WeaponModSimulator> sim,
-		BIO_GeneContext context
-	) const
+	void Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		in out BIO_GeneContext context,
+		BIO_WeaponModSimPass simPass
+	)
 	{
-		if (Gene == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Attempted to check compatibility of node %d, which lacks a gene.",
-				Basis.UUID
-			);
-			return false, "";
-		}
-
-		let gene_t = Gene.GetType();
-		bool ret1 = false;
-		string ret2 = "";
-
-		if (gene_t is 'BIO_ModifierGene')
-		{
-			[ret1, ret2] = Gene.Modifier.Compatible(context);
-		}
-		else if (gene_t is 'BIO_SupportGene')
-		{
-			let sgene_t = (class<BIO_SupportGene>)(gene_t);
-			let defs = GetDefaultByType(sgene_t);
-			[ret1, ret2] = defs.Compatible(context);
-		}
-		else if (gene_t is 'BIO_ActiveGene')
-		{
-			let agene_t = (class<BIO_ActiveGene>)(gene_t);
-			let defs = GetDefaultByType(agene_t);
-			[ret1, ret2] = defs.Compatible(context);
-		}
-		else
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Attempted to check compatibility of node %d, with illegal gene type %s.",
-				Basis.UUID, gene_t.GetClassName()
-			);
-			return false, "";
-		}
-
-		return ret1, ret2;
+		[Valid, Message] = Gene.Data().Apply(weap, sim, context, simPass);
 	}
 
-	// Mutators ////////////////////////////////////////////////////////////////
-
-	void Update()
+	void Reset()
 	{
-		if (Gene != null)
-			Gene.UpdateModifier();
-	}
-
-	string Apply(
-		BIO_Weapon weap, BIO_WeaponModSimulator sim,
-		in out BIO_GeneContext context
-	) const
-	{
-		if (Gene == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Attempted to apply node %d, which lacks a gene.",
-				Basis.UUID
-			);
-			return "";
-		}
-
-		string ret = "";
-		let gene_t = Gene.GetType();
-
-		if (gene_t is 'BIO_ModifierGene')
-		{
-			let mod = Gene.Modifier;
-			ret = mod.Apply(weap, context);
-		}
-		else if (gene_t is 'BIO_SupportGene')
-		{
-			let sgene_t = (class<BIO_SupportGene>)(gene_t);
-			let defs = GetDefaultByType(sgene_t);
-			ret = defs.Apply(context);
-		}
-		else if (gene_t is 'BIO_ActiveGene')
-		{
-			let agene_t = (class<BIO_ActiveGene>)(gene_t);
-			let defs = GetDefaultByType(agene_t);
-			ret = defs.Apply(weap, sim, context);
-		}
-
-		return ret;
+		Multiplier = 1;
+		Valid = true;
+		Message = "";
 	}
 }

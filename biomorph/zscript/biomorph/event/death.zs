@@ -124,12 +124,27 @@ extend class BIO_EventHandler
 		let gene_t = Globals.RandomGeneType();
 		BIO_Gene.PlayRaritySound(GetDefaultByType(gene_t).LootWeight);
 
-		mons.A_SpawnItemEx(
+		bool success = false;
+		Actor spawned = null;
+
+		[success, spawned] = mons.A_SpawnItemEx(
 			gene_t,
 			0.0, 0.0, 32.0,
 			FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
 			FRandom(0.0, 360.0)
 		);
+
+		if (!success)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_ERR ..
+				"Failed to spawn loot gene for dead monster: %s",
+				mons.GetClassName()
+			);
+			return;
+		}
+
+		BIO_Gene(spawned).Initialize();
 	}
 
 	private void SpawnLegendaryLootWeapon(Actor mons)

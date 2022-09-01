@@ -24,16 +24,14 @@ extend class BIO_WeaponModSimulator
 			simNode.Basis = graph.Nodes[i].Copy();
 			simNode.Basis.Flags &= ~BIO_WMGNF_MUTED;
 
-			if (simNode.Basis.GeneType != null)
+			if (simNode.Basis.Gene != null)
 			{
 				let g = new('BIO_WMS_GeneVirtual');
-				g.Type = simNode.Basis.GeneType;
+				g.Gene = simNode.Basis.Gene;
 				simNode.Gene = g;
 			}
 
-			simNode.Multiplier = 1;
-			simNode.Valid = true;
-			simNode.Update();
+			simNode.Reset();
 			ret.Nodes.Push(simNode);
 			ret.Snapshots.Push(BIO_WeaponSnapshot.FromReal(weap.AsConst()));
 		}
@@ -61,7 +59,9 @@ extend class BIO_WeaponModSimulator
 	}
 
 	static clearscope BIO_WeaponModSimulator Get(
-		BIO_Weapon weap, bool fallible = false)
+		BIO_Weapon weap,
+		bool fallible = false
+	)
 	{
 		let iter = ThinkerIterator.Create('BIO_WeaponModSimulator', STATNUM);
 		BIO_WeaponModSimulator ret = null;
@@ -102,146 +102,71 @@ extend class BIO_WeaponModSimulator
 
 		Weap.SetupAmmo();
 		Weap.SetupMagazines();
+		Snapshots[0].ImitateReal(Weap.AsConst());
 
-		// First pass sets node defaults
+		// Pass 0: set node defaults
 		// Additionally, check if any nodes are disconnected,
-		// and if any per-gene-type limits are being exceeded
+		// and if any per-modifier-type limits are being exceeded
 
-		Array<class<BIO_Gene> > genetypes;
-		Array<uint> genecounts;
+		Array<class<BIO_WeaponModifier> > modTypes;
+		Array<uint> modCounts;
 
 		for (uint i = 1; i < Nodes.Size(); i++)
 		{
-			Nodes[i].Multiplier = 1;
-			Nodes[i].Valid = true;
-			Nodes[i].Message = "";
+			Nodes[i].Reset();
 
-			if (Nodes[i].IsOccupied())
+			if (!Nodes[i].IsOccupied())
+				continue;
+
+			if (!NodeAccessible(i))
 			{
-				if (!NodeAccessible(i))
-				{
-					Nodes[i].Valid = false;
-					Nodes[i].Message = "$BIO_MENU_WEAPMOD_INACCESSIBLE";
-				}
+				Nodes[i].Valid = false;
+				Nodes[i].Message = "$BIO_MENU_WEAPMOD_INACCESSIBLE";
+			}
 
-				let gene_t = Nodes[i].GetGeneType();
-				let gtc = genetypes.Find(gene_t);
+			if (Nodes[i].Gene.IncrementModTypeCounts(modTypes, modCounts))
+			{
+				let limit = Nodes[i].Gene.Data().Limit();
 
-				if (gtc == genetypes.Size())
-				{
-					gtc = genetypes.Push(gene_t);
-					genecounts.Push(0);
-				}
+				let template = limit == 1 ?
+					StringTable.Localize("$BIO_MENU_WEAPMOD_OVERLIMIT_SINGULAR") :
+					StringTable.Localize("$BIO_MENU_WEAPMOD_OVERLIMIT_PLURAL");
 
-				let limit = GetDefaultByType(gene_t).Limit();
-
-				if (++genecounts[gtc] > limit)
-				{
-					let template = limit == 1 ?
-						StringTable.Localize("$BIO_MENU_WEAPMOD_OVERLIMIT_SINGULAR") :
-						StringTable.Localize("$BIO_MENU_WEAPMOD_OVERLIMIT_PLURAL");
-
-					Nodes[i].Valid = false;
-					Nodes[i].Message = String.Format(template, limit);
-				}
+				Nodes[i].Valid = false;
+				Nodes[i].Message = String.Format(template, limit);
 			}
 		}
 
-		// Second pass invokes supports
+		BIO_GeneContext context;
+		SimPass(BIO_SIMPASS_GRAPHMOD, context); // For node multipliers, flags
+		SimPass(BIO_SIMPASS_WEAPMOD, context); // Everything else
+	}
 
+	private void SimPass(
+		BIO_WeaponModSimPass pass,
+		in out BIO_GeneContext context
+	)
+	{
 		for (uint i = 1; i < Nodes.Size(); i++)
 		{
-			if (!Nodes[i].Valid)
+			if (!Nodes[i].Valid || !Nodes[i].IsOccupied())
 				continue;
+			if (Nodes[i].IsMorph())
+				break;
 
-			let gene_t = Nodes[i].GetGeneType();
-
-			if (!(gene_t is 'BIO_SupportGene'))
-				continue;
-
-			let node = Nodes[i];
-
-			BIO_GeneContext context;
 			context.Sim = AsConst();
 			context.Weap = Weap.AsConst();
 			context.Node = i;
-			context.NodeCount = node.Multiplier;
-			context.TotalCount = CountGene(gene_t);
-			context.First = NodeHasFirstOfGene(i, gene_t);
+			context.NodeCount = Nodes[i].Multiplier;
 
-			string _ = "";
-			[node.Valid, node.Message] = node.Compatible(AsConst(), context);
+			Nodes[i].Apply(Weap, self, context, pass);
 
-			if (!node.Valid)
-				continue;
-
-			node.Message = node.Apply(Weap, self, context);
-		}
-
-		// Third pass applies modifiers
-
-		for (uint i = 1; i < Nodes.Size(); i++)
-		{
-			if (!Nodes[i].Valid)
-				continue;
-
-			let gene_t = Nodes[i].GetGeneType();
-
-			if (!(gene_t is 'BIO_ModifierGene'))
-				continue;
-
-			let node = Nodes[i];
-			string _ = "";
-
-			BIO_GeneContext context;
-			context.Sim = AsConst();
-			context.Weap = Weap.AsConst();
-			context.Node = i;
-			context.NodeCount = node.Multiplier;
-			context.TotalCount = CountGene(gene_t);
-			context.First = NodeHasFirstOfGene(i, gene_t);
-
-			[node.Valid, node.Message] = node.Compatible(AsConst(), context);
-
-			if (!node.Valid || node.Basis.IsMuted())
-				continue;
-
-			node.Message = node.Apply(Weap, self, context);
-			Weap.SetupAmmo();
-			Weap.SetupMagazines();
-			Snapshots[i].ImitateReal(Weap.AsConst());
-		}
-
-		// Fourth pass applies actives
-
-		for (uint i = 1; i < Nodes.Size(); i++)
-		{
-			if (!Nodes[i].Valid)
-				continue;
-
-			let gene_t =  Nodes[i].GetGeneType();
-
-			if (!(gene_t is 'BIO_ActiveGene'))
-				continue;
-
-			let node = Nodes[i];
-			string _ = "";
-
-			BIO_GeneContext context;
-			context.Sim = AsConst();
-			context.Weap = Weap.AsConst();
-			context.Node = i;
-			context.NodeCount = node.Multiplier;
-			context.TotalCount = CountGene(gene_t);
-			context.First = NodeHasFirstOfGene(i, gene_t);
-
-			[node.Valid, node.Message] = node.Compatible(AsConst(), context);
-
-			if (!node.Valid)
-				continue;
-
-			node.Message = node.Apply(Weap, self, context);
-			Snapshots[i].ImitateReal(Weap.AsConst());
+			if (pass == BIO_SIMPASS_WEAPMOD)
+			{
+				Weap.SetupAmmo();
+				Weap.SetupMagazines();
+				Snapshots[i].ImitateReal(Weap.AsConst());
+			}
 		}
 	}
 
@@ -249,35 +174,41 @@ extend class BIO_WeaponModSimulator
 	{
 		if (!IsValid())
 		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Attempted to commit a weapon mod simulator in an invalid state."
-			);
+			string msg =
+				"Attempted to commit a weapon mod simulator in an invalid state.";
+			
+			msg = msg .. "\n\tGenes:\n";
+
+			for (uint i = 1; i < Nodes.Size(); i++)
+			{
+				let data = Nodes[i].GetGeneData();
+			
+				if (data == null)
+					continue;
+
+				msg.AppendFormat("\t\t%s", data.Repr());
+
+				if (!Nodes[i].Valid)
+					msg.AppendFormat(" (%s)", Nodes[i].Message);
+
+				msg = msg .. "\n";
+			}
+
+			msg.DeleteLastCharacter();
+			Console.Printf(Biomorph.LOGPFX_ERR .. msg);
 			return;
 		}
 
-		weap.ModGraph.Nodes.Clear();
+		BIO_GeneContext context;
+		SimPass(BIO_SIMPASS_ONCOMMIT, context);
 
-		for (uint i = 0; i < Nodes.Size(); i++)
+		for (uint i = 1; i < Nodes.Size(); i++)
 		{
 			if (Nodes[i].IsMorph())
 				break;
 
-			let gene_t = Nodes[i].GetGeneType();
-
-			Nodes[i].Basis.GeneType = gene_t;
-
-			if (gene_t != null)
-			{
-				let defs = GetDefaultByType(gene_t);
-
-				if (defs.LockOnCommit)
-				{
-					Nodes[i].Basis.Lock();
-				}
-			}
-
-			weap.ModGraph.Nodes.Push(Nodes[i].Basis.Copy());
+			Nodes[i].Basis.Gene = Nodes[i].GetGeneData();
+			Weap.ModGraph.Nodes[i].Imitate(Nodes[i].Basis);
 		}
 
 		Simulate();
@@ -291,7 +222,7 @@ extend class BIO_WeaponModSimulator
 		// their data invalidated by whoever manipulates the player's inventory
 		// after calling `Commit()`. Convert them to virtual genes
 
-		for (uint i = 0; i < Nodes.Size(); i++)
+		for (uint i = 1; i < Nodes.Size(); i++)
 		{
 			let rGene = BIO_WMS_GeneReal(Nodes[i].Gene);
 
@@ -299,7 +230,11 @@ extend class BIO_WeaponModSimulator
 				continue;
 
 			if (rGene.Gene == null)
-				Nodes[i].Gene = rGene.VirtualCopy(Nodes[i].Basis.GeneType);
+			{
+				let virt = new('BIO_WMS_GeneVirtual');
+				virt.Gene = Nodes[i].Basis.Gene;
+				Nodes[i].Gene = virt;
+			}
 		}
 	}
 
@@ -312,16 +247,14 @@ extend class BIO_WeaponModSimulator
 			Nodes[i] = new('BIO_WMS_Node');
 			Nodes[i].Basis = Weap.ModGraph.Nodes[i].Copy();
 
-			if (Nodes[i].Basis.GeneType != null)
+			if (Nodes[i].Basis.Gene != null)
 			{
 				let g = new('BIO_WMS_GeneVirtual');
-				g.Type = Nodes[i].Basis.GeneType;
+				g.Gene = Nodes[i].Basis.Gene;
 				Nodes[i].Gene = g;
 			}
 
-			Nodes[i].Multiplier = 1;
-			Nodes[i].Valid = true;
-			Nodes[i].Update();
+			Nodes[i].Reset();
 		}
 
 		Simulate();

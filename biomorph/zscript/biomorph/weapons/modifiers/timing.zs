@@ -10,7 +10,11 @@ class BIO_WMod_FireTime : BIO_WeaponModifier
 			"$BIO_WMOD_INCOMPAT_NOFIRETIMES";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		Array<int> changes; // One per group
 		changes.Resize(weap.FireTimeGroupCount());
@@ -84,7 +88,11 @@ class BIO_WMod_ReloadTime : BIO_WeaponModifier
 			"$BIO_WMOD_INCOMPAT_NORELOADTIMES";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		Array<int> changes; // One per group
 		changes.Resize(weap.ReloadTimeGroups.Size());
@@ -156,7 +164,11 @@ class BIO_WMod_Spooling : BIO_WeaponModifier
 		), "$BIO_WMOD_INCOMPAT_NOSPOOL";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let globals = BIO_Global.Get();
 

@@ -22,7 +22,11 @@ class BIO_WMod_ETMF : BIO_WeaponModifier
 			weap.MagazineType2 != 'BIO_ETMFMagazine';
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let ret = "";
 		uint count = context.NodeCount;
@@ -139,7 +143,11 @@ class BIO_WMod_MagSize : BIO_WeaponModifier
 			"$BIO_WMOD_INCOMPAT_NOMUTABLEMAGS";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		string ret = "";
 		bool
@@ -229,7 +237,11 @@ class BIO_WMod_NthRoundCost : BIO_WeaponModifier
 		return !context.Weap.Ammoless(), "$BIO_WMOD_INCOMPAT_AMMOLESS";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let afx = weap.GetAffixByType('BIO_WAfx_NthRoundCost');
 
@@ -353,7 +365,11 @@ class BIO_WMod_InfiniteAmmo : BIO_WeaponModifier
 		return !context.Weap.Ammoless(), "$BIO_WMOD_INCOMPAT_AMMOLESS";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		weap.AmmoType1 = weap.AmmoType2 = null;
 		weap.AmmoUse1 = weap.AmmoUse2 = 0;
@@ -407,7 +423,11 @@ class BIO_WMod_ReserveFeed : BIO_WeaponModifier
 			weap.MagazineSize2 > 0 && weap.ReloadCost2 > 0;	
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		if (PrimaryCompatible(weap.AsConst()))
 			weap.MagazineType1 = null;

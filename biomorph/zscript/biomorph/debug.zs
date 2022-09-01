@@ -58,3 +58,27 @@ class BIO_All : Inventory
 		return true;
 	}
 }
+
+// Summon a random procedural gene that gets initialized.
+class BIO_ProcGene : BIO_IntangibleActor
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 1 {
+			let globals = BIO_Global.Get();
+
+			let gene = BIO_ProceduralGene(
+				Actor.Spawn(
+					globals.RandomGeneType(),
+					invoker.Pos
+				)
+			);
+
+			if (gene != null)
+				gene.Initialize();
+		}
+		Stop;
+	}
+}

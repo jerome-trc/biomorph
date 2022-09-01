@@ -11,17 +11,29 @@ class BIO_WMGNode play
 	// Corresponds to this node's place in `BIO_WeaponModGraph::Nodes`.
 	// Also dictates modifier application order.
 	uint UUID;
-	uint HomeDistance; // 0 for the home node, of course.
 	int PosX, PosY; // Home is (0, 0), adjacent west is (-1, 0), etc.
+	uint HomeDistance; // 0 for the home node, of course.
 	Array<uint> Neighbors; // Each element is another node's UUID.
 	BIO_WeaponModGraphNodeFlags Flags;
 
-	class<BIO_Gene> GeneType;
+	BIO_GeneData Gene;
 
-	bool Active() const { return GeneType != null || UUID == 0; }
+	bool Active() const { return Gene != null || UUID == 0; }
 	bool FreeAccess() const { return Flags & BIO_WMGNF_FREEACCESS; }
 	bool IsLocked() const { return Flags & BIO_WMGNF_LOCKED; }
 	bool IsMuted() const { return Flags & BIO_WMGNF_MUTED; }
+
+	void Imitate(BIO_WMGNode other)
+	{
+		UUID = other.UUID;
+		HomeDistance = other.HomeDistance;
+		PosX = other.PosX;
+		PosY = other.PosY;
+		Neighbors.Clear();
+		Neighbors.Copy(other.Neighbors);
+		Flags = other.Flags;
+		Gene = other.Gene;
+	}
 
 	BIO_WMGNode Copy() const
 	{
@@ -32,63 +44,19 @@ class BIO_WMGNode play
 		ret.PosY = PosY;
 		ret.Neighbors.Copy(Neighbors);
 		ret.Flags = Flags;
-		ret.GeneType = GeneType;
+		ret.Gene = Gene;
 		return ret;
 	}
 
 	void Serialize(in out Dictionary dict) const
 	{
-		string base = String.Format("modgraph.%d.", UUID);
-
-		dict.Insert(base .. "home_distance", String.Format("%d", HomeDistance));
-		dict.Insert(base .. "pos_x", String.Format("%d", PosX));
-		dict.Insert(base .. "pos_y", String.Format("%d", PosY));
-		dict.Insert(base .. "flags", String.Format("%d", Flags));
-		
-		if (GeneType != null)
-			dict.Insert(base .. "gene_type", GeneType.GetClassName());
-		else
-			dict.Insert(base .. "gene_type", "null");
-
-		for (uint i = 0; i < Neighbors.Size(); i++)
-		{
-			dict.Insert(
-				String.Format(base .. "neighbors.%d", i),
-				String.Format("%d", Neighbors[i])
-			);
-		}
+		ThrowAbortException("Serialization/deserialization is unimplemented.");
 	}
 
 	static BIO_WMGNode Deserialize(Dictionary dict, uint uuid)
 	{
-		string base = String.Format("modgraph.%d.", uuid);
-		let ret = new('BIO_WMGNode');
-
-		ret.UUID = uuid;
-		ret.HomeDistance = dict.At(base .. "home_distance").ToInt();
-		ret.PosX = dict.At(base .. "pos_x").ToInt();
-		ret.PosY = dict.At(base .. "pos_y").ToInt();
-		ret.Flags = dict.At(base .. "flags").ToInt();
-		
-		let gene_tn = dict.At(base .. "gene_type");
-		
-		if (gene_tn != "null")
-			ret.GeneType = gene_tn;
-
-		uint nbi = 0;
-
-		do
-		{
-			let key = base .. String.Format("neighbors.%d", nbi++);
-			let val = dict.At(key);
-
-			if (val.Length() < 1)
-				break;
-
-			ret.Neighbors.Push(val.ToInt());
-		} while (true);
-
-		return ret;
+		ThrowAbortException("Serialization/deserialization is unimplemented.");
+		return null;
 	}
 
 	void Lock() { Flags |= BIO_WMGNF_LOCKED; }

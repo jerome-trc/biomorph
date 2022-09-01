@@ -128,12 +128,11 @@ extend class BIO_WeaponModSimulator
 		Nodes[node].Gene = null;
 	}
 
-	void InsertNewGene(class<BIO_Gene> type, uint node)
+	void InsertNewGene(class<BIO_ProceduralGene> type, uint node)
 	{
 		let g = new('BIO_WMS_GeneVirtual');
-		g.Type = type;
+		g.Gene = BIO_ProceduralGene.DefaultData(type);
 		Nodes[node].Gene = g;
-		Nodes[node].Update();
 	}
 
 	void InsertNewGenesAtRandom(uint count = 1, bool noDuplication = false)
@@ -147,7 +146,7 @@ extend class BIO_WeaponModSimulator
 
 			do
 			{
-				class<BIO_Gene> gene_t = null;
+				class<BIO_ProceduralGene> gene_t = null;
 
 				if (noDuplication)
 				{
@@ -161,7 +160,6 @@ extend class BIO_WeaponModSimulator
 					if (ContainsGeneOfType(gene_t))
 					{
 						Nodes[r].Gene = null;
-						Nodes[r].Update();
 						return;
 					}
 				}
@@ -187,7 +185,6 @@ extend class BIO_WeaponModSimulator
 				}
 
 				Nodes[r].Gene = null;
-				Nodes[r].Update();
 				return;
 			}
 		}
@@ -196,14 +193,14 @@ extend class BIO_WeaponModSimulator
 	void GraphRemoveByType(class<BIO_Gene> type)
 	{
 		for (uint i = 1; i < Nodes.Size(); i++)
-			if (Nodes[i].GetGeneType() == type)
+			if (Nodes[i].GetGeneActorType() == type)
 				Nodes[i].Gene = null;
 	}
 
 	void GraphUnlockByType(class<BIO_Gene> type)
 	{
 		for (uint i = 1; i < Nodes.Size(); i++)
-			if (Nodes[i].GetGeneType() == type)
+			if (Nodes[i].GetGeneActorType() == type)
 				Nodes[i].Basis.Unlock();
 	}
 }

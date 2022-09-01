@@ -1,27 +1,6 @@
 MidGrey { #292929 #cacaca }
 
-MGene // Ice, but lighter
-{
-	#343450  #ACACFF    0 94
-	#7C7C98  #E0E0E0   95 256
-Console:
-	#343450  #7C7C98    0 127
-	#7C7C98  #E0E0E0  128 256
-Flat:
-	#7C7C98
-}
-
-SGene // Olive, but lighter
-{
-	#373F07  #EBEFC0
-Console:
-	#373F27  #7B7F63    0 127
-	#676B4F  #D1D8A8  128 256
-Flat:
-	#D1D8A8
-}
-
-AGene // Purple, but lighter
+Pink
 {
 	#331033  #FF60FF
 Console:

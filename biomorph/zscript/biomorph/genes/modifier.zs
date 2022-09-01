@@ -1,11 +1,10 @@
-class BIO_MGene_BerserkDamage : BIO_ModifierGene
+class BIO_MGene_BerserkDamage : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENDB0';
-		Inventory.PickupMessage "$BIO_MGENE_BERSERKDAMAGE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
-		BIO_ModifierGene.ModType 'BIO_WMod_BerserkDamage';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_BerserkDamage';
 	}
 
 	States
@@ -17,14 +16,13 @@ class BIO_MGene_BerserkDamage : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_CanisterShot : BIO_ModifierGene
+class BIO_MGene_CanisterShot : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENNC0';
-		Inventory.PickupMessage "$BIO_MGENE_CANISTERSHOT_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_CanisterShot';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_CanisterShot';
 	}
 
 	States
@@ -36,14 +34,13 @@ class BIO_MGene_CanisterShot : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_DamageAdd : BIO_ModifierGene
+class BIO_MGene_DamageAdd : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon '';
-		Inventory.PickupMessage "$BIO_MGENE_DAMAGEADD_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYRARE;
-		BIO_ModifierGene.ModType 'BIO_WMod_DamageAdd';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_DamageAdd';
 	}
 
 	final override bool CanGenerate() const
@@ -54,14 +51,13 @@ class BIO_MGene_DamageAdd : BIO_ModifierGene
 }
 
 // LegenDoom(Lite) exclusive. 400% damage to Legendary enemies.
-class BIO_MGene_DemonSlayer : BIO_ModifierGene
+class BIO_MGene_DemonSlayer : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENDA0';
-		Inventory.PickupMessage "$BIO_MGENE_DEMONSLAYER_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_DemonSlayer';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_DemonSlayer';
 	}
 
 	States
@@ -78,14 +74,13 @@ class BIO_MGene_DemonSlayer : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_ETMF : BIO_ModifierGene
+class BIO_MGene_ETMF : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENAC0';
-		Inventory.PickupMessage "$BIO_MGENE_ETMF_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
-		BIO_ModifierGene.ModType 'BIO_WMod_ETMF';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_ETMF';
 	}
 
 	States
@@ -97,14 +92,13 @@ class BIO_MGene_ETMF : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_FireTime : BIO_ModifierGene
+class BIO_MGene_FireTime : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENTA0';
-		Inventory.PickupMessage "$BIO_MGENE_FIRETIME_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON + LOOTWEIGHT_MIN;
-		BIO_ModifierGene.ModType 'BIO_WMod_FireTime';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_FireTime';
 	}
 
 	States
@@ -116,14 +110,13 @@ class BIO_MGene_FireTime : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_ForcePain : BIO_ModifierGene
+class BIO_MGene_ForcePain : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENPA0';
-		Inventory.PickupMessage "$BIO_MGENE_FORCEPAIN_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
-		BIO_ModifierGene.ModType 'BIO_WMod_ForcePain';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_ForcePain';
 	}
 
 	States
@@ -135,14 +128,13 @@ class BIO_MGene_ForcePain : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_ForceRadiusDmg : BIO_ModifierGene
+class BIO_MGene_ForceRadiusDmg : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENPB0';
-		Inventory.PickupMessage "$BIO_MGENE_FORCERADIUSDMG_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_ForceRadiusDmg';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_ForceRadiusDmg';
 	}
 
 	States
@@ -154,14 +146,13 @@ class BIO_MGene_ForceRadiusDmg : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_Kickback : BIO_ModifierGene
+class BIO_MGene_Kickback : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENMC0';
-		Inventory.PickupMessage "$BIO_MGENE_KICKBACK_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_Kickback';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_Kickback';
 	}
 
 	States
@@ -173,14 +164,13 @@ class BIO_MGene_Kickback : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_Lifesteal : BIO_ModifierGene
+class BIO_MGene_Lifesteal : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENEA0';
-		Inventory.PickupMessage "$BIO_MGENE_LIFESTEAL_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_Lifesteal';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_Lifesteal';
 	}
 
 	States
@@ -192,14 +182,13 @@ class BIO_MGene_Lifesteal : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_MagSize : BIO_ModifierGene
+class BIO_MGene_MagSize : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENAA0';
-		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_MagSize';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_MagSize';
 	}
 
 	States
@@ -211,14 +200,13 @@ class BIO_MGene_MagSize : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_MagSizeToDamage : BIO_ModifierGene
+class BIO_MGene_MagSizeToDamage : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENDE0';
-		Inventory.PickupMessage "$BIO_MGENE_MAGSIZETODAMAGE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_MagSizeToDamage';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_MagSizeToDamage';
 	}
 
 	States
@@ -230,14 +218,13 @@ class BIO_MGene_MagSizeToDamage : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_NthRoundCost : BIO_ModifierGene
+class BIO_MGene_NthRoundCost : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENAE0';
-		Inventory.PickupMessage "$BIO_MGENE_NTHROUNDCOST_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_NthRoundCost';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_NthRoundCost';
 	}
 
 	States
@@ -249,14 +236,13 @@ class BIO_MGene_NthRoundCost : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_InfiniteAmmo : BIO_ModifierGene
+class BIO_MGene_InfiniteAmmo : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENAD0';
-		Inventory.PickupMessage "$BIO_MGENE_MAGSIZE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_MIN;
-		BIO_ModifierGene.ModType 'BIO_WMod_InfiniteAmmo';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_InfiniteAmmo';
 	}
 
 	States
@@ -268,14 +254,13 @@ class BIO_MGene_InfiniteAmmo : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_ProjGravity : BIO_ModifierGene
+class BIO_MGene_ProjGravity : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENPC0';
-		Inventory.PickupMessage "$BIO_MGENE_PROJGRAVITY_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_ProjGravity';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_ProjGravity';
 	}
 
 	States
@@ -287,14 +272,13 @@ class BIO_MGene_ProjGravity : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_ProxMine : BIO_ModifierGene
+class BIO_MGene_ProxMine : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENNB0';
-		Inventory.PickupMessage "$BIO_MGENE_PROXMINE_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_ProxMine';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_ProxMine';
 	}
 
 	States
@@ -306,14 +290,13 @@ class BIO_MGene_ProxMine : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_RechamberUp : BIO_ModifierGene
+class BIO_MGene_RechamberUp : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENDD0';
-		Inventory.PickupMessage "$BIO_MGENE_RECHAMBERUP_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_RechamberUp';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_RechamberUp';
 	}
 
 	States
@@ -325,14 +308,13 @@ class BIO_MGene_RechamberUp : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_ReserveFeed : BIO_ModifierGene
+class BIO_MGene_ReserveFeed : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENAB0';
-		Inventory.PickupMessage "$BIO_MGENE_RESERVEFEED_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYRARE;
-		BIO_ModifierGene.ModType 'BIO_WMod_ReserveFeed';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_ReserveFeed';
 	}
 
 	States
@@ -344,14 +326,13 @@ class BIO_MGene_ReserveFeed : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_ReloadTime : BIO_ModifierGene
+class BIO_MGene_ReloadTime : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENTB0';
-		Inventory.PickupMessage "$BIO_MGENE_RELOADTIME_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_ReloadTime';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_ReloadTime';
 	}
 
 	States
@@ -363,14 +344,13 @@ class BIO_MGene_ReloadTime : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_ShellToSlug : BIO_ModifierGene
+class BIO_MGene_ShellToSlug : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENNA0';
-		Inventory.PickupMessage "$BIO_MGENE_SHELLTOSLUG_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_ShellToSlug';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_ShellToSlug';
 	}
 
 	States
@@ -382,14 +362,13 @@ class BIO_MGene_ShellToSlug : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_SmartAim : BIO_ModifierGene
+class BIO_MGene_SmartAim : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENMF0';
-		Inventory.PickupMessage "$BIO_MGENE_SMARTAIM_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_RARE;
-		BIO_ModifierGene.ModType 'BIO_WMod_SmartAim';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_SmartAim';
 	}
 
 	States
@@ -401,14 +380,13 @@ class BIO_MGene_SmartAim : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_SplashToHit : BIO_ModifierGene
+class BIO_MGene_SplashToHit : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENDC0';
-		Inventory.PickupMessage "$BIO_MGENE_SPLASHTOHIT_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_UNCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_SplashToHit';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_SplashToHit';
 	}
 
 	States
@@ -420,14 +398,13 @@ class BIO_MGene_SplashToHit : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_Spooling : BIO_ModifierGene
+class BIO_MGene_Spooling : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENTC0';
-		Inventory.PickupMessage "$BIO_MGENE_SPOOLING_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_Spooling';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_Spooling';
 	}
 
 	States
@@ -439,14 +416,13 @@ class BIO_MGene_Spooling : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_Spread : BIO_ModifierGene
+class BIO_MGene_Spread : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENMA0';
-		Inventory.PickupMessage "$BIO_MGENE_SPREAD_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_Spread';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_Spread';
 	}
 
 	States
@@ -458,14 +434,13 @@ class BIO_MGene_Spread : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_SpreadNarrow : BIO_ModifierGene
+class BIO_MGene_SpreadNarrow : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENMD0';
-		Inventory.PickupMessage "$BIO_MGENE_SPREADNARROW_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_SpreadNarrow';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_SpreadNarrow';
 	}
 
 	States
@@ -477,14 +452,13 @@ class BIO_MGene_SpreadNarrow : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_SpreadWiden : BIO_ModifierGene
+class BIO_MGene_SpreadWiden : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENME0';
-		Inventory.PickupMessage "$BIO_MGENE_SPREADWIDEN_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_SpreadWiden';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_SpreadWiden';
 	}
 
 	States
@@ -496,14 +470,13 @@ class BIO_MGene_SpreadWiden : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_SwitchSpeed : BIO_ModifierGene
+class BIO_MGene_SwitchSpeed : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENMB0';
-		Inventory.PickupMessage "$BIO_MGENE_SWITCHSPEED_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_VERYCOMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_SwitchSpeed';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_SwitchSpeed';
 	}
 
 	States
@@ -515,14 +488,13 @@ class BIO_MGene_SwitchSpeed : BIO_ModifierGene
 	}
 }
 
-class BIO_MGene_ToggleConnected : BIO_ModifierGene
+class BIO_MGene_ToggleConnected : BIO_ProceduralGene
 {
 	Default
 	{
 		Inventory.Icon 'GENMG0';
-		Inventory.PickupMessage "$BIO_MGENE_TOGGLECONNECTED_PKUP";
 		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
-		BIO_ModifierGene.ModType 'BIO_WMod_ToggleConnected';
+		BIO_ProceduralGene.Modifier 'BIO_WMod_ToggleConnected';
 	}
 
 	States

@@ -5,7 +5,11 @@ class BIO_WMod_Kickback : BIO_WeaponModifier
 		return context.Weap.PipelineCount() > 0, "$BIO_WMOD_INCOMPAT_NOPIPELINES";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		weap.Kickback += (weap.Default.Kickback * 2 * context.NodeCount);
 
@@ -55,7 +59,11 @@ class BIO_WMod_SmartAim : BIO_WeaponModifier
 		return true;
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let wafx = new('BIO_WAfx_SmartAim');
 		wafx.Init(weap);
@@ -250,7 +258,8 @@ class BIO_WAfx_SmartAim : BIO_WeaponAffix
 
 	final override string Description(readOnly<BIO_Weapon> _) const
 	{
-		return GetDefaultByType('BIO_MGene_SmartAim').Summary();
+		let mod = BIO_Global.Get().GetWeaponModifierByType('BIO_WMod_SmartAim');
+		return mod.Summary();
 	}
 
 	final override BIO_WeaponAffix Copy() const
@@ -296,7 +305,11 @@ class BIO_WMod_Spread : BIO_WeaponModifier
 		return false, "$BIO_WMOD_INCOMPAT_NOSPREAD";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let ppl_c = weap.PipelineCount();
 
@@ -375,7 +388,11 @@ class BIO_WMod_SpreadNarrow : BIO_WeaponModifier
 		return false, "$BIO_WMOD_INCOMPAT_TRIVIALHSPREAD";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let ppl_c = weap.PipelineCount();
 
@@ -452,7 +469,11 @@ class BIO_WMod_SpreadWiden : BIO_WeaponModifier
 		return false, "$BIO_WMOD_INCOMPAT_TRIVIALVSPREAD";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let ppl_c = weap.PipelineCount();
 
@@ -528,7 +549,11 @@ class BIO_WMod_SwitchSpeed : BIO_WeaponModifier
 			"$BIO_WMOD_INCOMPAT_SWITCHSPEEDMAX";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		weap.RaiseSpeed = weap.LowerSpeed = BIO_Weapon.SWITCHSPEED_MAX;
 		return Summary();
@@ -578,7 +603,11 @@ class BIO_WMod_ToggleConnected : BIO_WeaponModifier
 		return false, "$BIO_WMOD_INCOMPAT_ALLNEIGHBORSHAVENEIGHBORS";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let func = new('BIO_WSF_NodeToggle');
 		weap.SpecialFunc = func;
@@ -592,7 +621,7 @@ class BIO_WMod_ToggleConnected : BIO_WeaponModifier
 			if (nb.Basis.Neighbors.Size() > 1)
 				continue;
 
-			if (!nb.HasModifier())
+			if (!nb.IsOccupied())
 				continue;
 
 			func.AddNode(nbi, nb.Basis.Flags & BIO_WMGNF_MUTED);
@@ -640,7 +669,7 @@ class BIO_WSF_NodeToggle : BIO_WeaponSpecialFunctor
 		for (uint i = 0; i < NodesToToggle.Size(); i++)
 		{
 			let node = sim.Nodes[NodesToToggle[i]];
-			let gene_tag = GetDefaultByType(node.Basis.GeneType).GetTag();
+			let gene_tag = node.GetTag();
 
 			if (!NodeState[i])
 			{

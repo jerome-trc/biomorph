@@ -19,15 +19,12 @@ class BIORLM_Loot_SpiderOvermind : BIO_LootSpawner
 	}
 }
 
-class BIORLM_MGene_Overmind : BIO_ModifierGene
+class BIORLM_MGene_Overmind : BIO_ProceduralGene
 {
 	Default
 	{
-		Tag "$BIORLM_MGENE_OVERMIND_TAG";
 		Inventory.Icon 'GEN1B0';
-		Inventory.PickupMessage "$BIORLM_MGENE_OVERMIND_PKUP";
-		BIO_Gene.LockOnCommit true;
-		BIO_ModifierGene.ModType 'BIORLM_WMod_Overmind';
+		BIO_ProceduralGene.Modifier 'BIORLM_WMod_Overmind';
 	}
 
 	States
@@ -51,7 +48,11 @@ class BIORLM_WMod_Overmind : BIO_WeaponModifier
 		return context.IsLastNode(), "$BIO_WMOD_INCOMPAT_NOTLASTNODE";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let afx = weap.GetAffixByType('BIORLM_WAfx_Overmind');
 
@@ -90,14 +91,19 @@ class BIORLM_WMod_Overmind : BIO_WeaponModifier
 		return 1;
 	}
 
-	final override string Summary() const
-	{
-		return "$BIORLM_WMOD_OVERMIND_SUMM";
-	}
-
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return BIO_WCMF_NONE, BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_SPREAD_INC;
+	}
+
+	final override string Tag() const
+	{
+		return "$BIORLM_WMOD_OVERMIND_TAG";
+	}
+
+	final override string Summary() const
+	{
+		return "$BIORLM_WMOD_OVERMIND_SUMM";
 	}
 }
 
@@ -132,9 +138,11 @@ class BIORLM_WAfx_Overmind : BIO_WeaponAffix
 
 	final override string Description(readOnly<BIO_Weapon> weap) const
 	{
+		let mod = BIO_Global.Get().GetWeaponModifierByType('BIORLM_WMod_Overmind');
+
 		let ret = String.Format(
 			StringTable.Localize("$BIORLM_WMOD_OVERMIND_DESC"),
-			StringTable.Localize(GetDefaultByType('BIORLM_MGene_Overmind').Summary())
+			StringTable.Localize(mod.Summary())
 		);
 
 		for (uint i = 0; i < weap.PipelineCount(); i++)

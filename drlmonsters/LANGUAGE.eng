@@ -2,8 +2,12 @@
 
 // Genes (tags, pickup strings, modifier summaries and descriptions) ///////////
 
-BIORLM_MGENE_OVERMIND_TAG = "\c[MGene]Spider Overmind\c[White] Gene\c-";
 BIORLM_MGENE_OVERMIND_PKUP = "Collected a %s.";
+BIORLM_MGENE_TRISTAR_PKUP = "Collected a %s.";
+
+// Weapon modifiers (tags, summaries, descriptions, incompatibility) ///////////
+
+BIORLM_WMOD_OVERMIND_TAG = "\c[Cyan]Spider Overmind\c-";
 BIORLM_WMOD_OVERMIND_SUMM =
 	"\c[White]Convert to firing Spider Overmind plasma bolts\n"
 	"\c[Green]High projectile speed\n"
@@ -14,8 +18,7 @@ BIORLM_WMOD_OVERMIND_DESC = // Also used for affix
 	"%s\n" // Gene summary
 	"\c[Yellow]Expires after:\n\c[White]";
 
-BIORLM_MGENE_TRISTAR_TAG = "\c[MGene]Tristar Blaster\c[White] Gene\c-";
-BIORLM_MGENE_TRISTAR_PKUP = "Collected a %s.";
+BIORLM_WMOD_TRISTAR_TAG = "\c[Cyan]Tristar Blaster\c-";
 BIORLM_WMOD_TRISTAR_SUMM =
 	"\c[White]Convert to firing a 15-degree cone of explosive plasma globes\n"
 	"\c[White]Removes gamma spray, adds splash damage\n"

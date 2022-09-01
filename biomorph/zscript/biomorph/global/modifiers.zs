@@ -16,13 +16,11 @@ extend class BIO_Global
 		}
 	}
 
-	readOnly<BIO_WeaponModifier> GetWeaponModifierByType(
-		class<BIO_WeaponModifier> mod_t
-	) const
+	BIO_WeaponModifier GetWeaponModifierByType(class<BIO_WeaponModifier> mod_t) const
 	{
 		for (uint i = 0; i < WeaponModifiers.Size(); i++)
 			if (WeaponModifiers[i].GetClass() == mod_t)
-				return WeaponModifiers[i].AsConst();
+				return WeaponModifiers[i];
 
 		Console.Printf(
 			Biomorph.LOGPFX_ERR ..
@@ -32,8 +30,8 @@ extend class BIO_Global
 		return null;
 	}
 
-	readOnly<BIO_WeaponModifier> GetWeaponModifier(uint index) const
+	BIO_WeaponModifier GetWeaponModifier(uint index) const
 	{
-		return WeaponModifiers[index].AsConst();
+		return WeaponModifiers[index];
 	}
 }

@@ -7,7 +7,11 @@ class BIO_WMod_ForcePain : BIO_WeaponModifier
 		return true, "";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let afx = weap.GetAffixByType('BIO_WAfx_ForcePain');
 
@@ -94,7 +98,11 @@ class BIO_WMod_ForceRadiusDmg : BIO_WeaponModifier
 		return context.Weap.DealsAnySplashDamage(), "$BIO_WMOD_INCOMPAT_NOSPLASH";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		if (!weap.HasAffixOfType('BIO_WAfx_ForceRadiusDmg'))
 			weap.Affixes.Push(new('BIO_WAfx_ForceRadiusDmg'));
@@ -166,7 +174,11 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 		return ppl.Payload is 'BIO_Projectile' && defs.bNoGravity;
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		weap.Affixes.Push(new('BIO_WAfx_ProjGravity'));
 
@@ -215,7 +227,8 @@ class BIO_WAfx_ProjGravity : BIO_WeaponAffix
 
 	final override string Description(readOnly<BIO_Weapon> _) const
 	{
-		return GetDefaultByType('BIO_MGene_ProjGravity').Summary();
+		let mod = BIO_Global.Get().GetWeaponModifierByType('BIO_WMod_SmartAim');
+		return mod.Summary();
 	}
 
 	final override BIO_WeaponAffix Copy() const

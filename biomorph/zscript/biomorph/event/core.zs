@@ -106,6 +106,6 @@ class BIO_EventHandler : EventHandler
 				Biomorph.LOGPFX_DEBUG ..
 				"Handling event: `WorldUnloaded`..."
 			);
-		}		
+		}
 	}
 }

@@ -15,14 +15,12 @@ class BIORLM_Loot_EliteCaptainTristarBlaster : BIO_LootSpawner
 	}
 }
 
-class BIORLM_MGene_Tristar : BIO_ModifierGene
+class BIORLM_MGene_Tristar : BIO_ProceduralGene
 {
 	Default
 	{
-		Tag "$BIORLM_MGENE_TRISTAR_TAG";
 		Inventory.Icon 'GEN1A0';
-		Inventory.PickupMessage "$BIORLM_MGENE_TRISTAR_PKUP";
-		BIO_ModifierGene.ModType 'BIORLM_WMod_Tristar';
+		BIO_ProceduralGene.Modifier 'BIORLM_WMod_Tristar';
 	}
 
 	States
@@ -45,7 +43,11 @@ class BIORLM_WMod_Tristar : BIO_WeaponModifier
 			"$BIO_WMOD_INCOMPAT_NOTBFG";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext _
+	) const
 	{
 		weap.AmmoUse1 *= 0.375; // e.g. 40 becomes 15
 
@@ -100,17 +102,22 @@ class BIORLM_WMod_Tristar : BIO_WeaponModifier
 		return 1;
 	}
 
-	final override string Summary() const
-	{
-		return "$BIORLM_WMOD_TRISTAR_SUMM";
-	}
-
 	final override BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const
 	{
 		return
 			BIO_WCMF_AMMOUSE_DEC | BIO_WCMF_FIRETIME_DEC,
 			BIO_WPMF_PAYLOAD_NEW | BIO_WPMF_DAMAGE_DEC | BIO_WPMF_SHOTCOUNT_INC |
 			BIO_WPMF_SPLASHRADIUS_INC | BIO_WPMF_SPLASHDAMAGE_INC;
+	}
+
+	final override string Tag() const
+	{
+		return "$BIORLM_WMOD_TRISTAR_TAG";
+	}
+
+	final override string Summary() const
+	{
+		return "$BIORLM_WMOD_TRISTAR_SUMM";
 	}
 }
 

@@ -62,6 +62,13 @@ enum BIO_WeaponPipelineModFlags : uint
 	BIO_WPMF_MELEERANGE_DEC = 1 << 31
 }
 
+enum BIO_WeaponModSimPass : uint8
+{
+	BIO_SIMPASS_GRAPHMOD,
+	BIO_SIMPASS_WEAPMOD,
+	BIO_SIMPASS_ONCOMMIT
+}
+
 class BIO_WeaponModifier play abstract
 {
 	// If returning `false`, also return a string (localization not necessary)
@@ -72,34 +79,20 @@ class BIO_WeaponModifier play abstract
 	// Return a description of what the modifier did to the weapon
 	// (generally as an elaboration of the summary).
 	// If the modifier did nothing, also alert the user of this.
-	abstract string Apply(BIO_Weapon weap, BIO_GeneContext context) const;
+	abstract string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const;
 
 	virtual uint Limit() const { return uint16.MAX; }
 	abstract BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const;
+	virtual BIO_WeaponModSimPass SimPass() const { return BIO_SIMPASS_WEAPMOD; }
 
 	abstract string Tag() const;
 	abstract string Summary() const;
 
 	// Helpers /////////////////////////////////////////////////////////////////
-
-	// XXX: Very temporary.
-	class<BIO_ModifierGene> GeneType() const
-	{
-		for (uint i = 0; i < AllActorClasses.Size(); i++)
-		{
-			let gene_t = (class<BIO_ModifierGene>)(AllActorClasses[i]);
-
-			if (gene_t == null || gene_t.IsAbstract())
-				continue;
-
-			let defs = GetDefaultByType(gene_t);
-
-			if (defs.ModType == GetClass())
-				return gene_t;
-		}
-		
-		return null;
-	}
 
 	readOnly<BIO_WeaponModifier> AsConst() const { return self; }
 }

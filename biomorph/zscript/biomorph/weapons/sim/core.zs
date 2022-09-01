@@ -10,6 +10,8 @@ class BIO_WeaponModSimulator : Thinker
 	// Is sized against `BIO_Player::MaxGenesHeld`.
 	Array<BIO_WMS_Gene> Genes;
 	// Upon commit, the weapon's mod graph is rebuilt to reflect this.
+	// Special nodes, e.g. those the user clicks to perform metamorphosis,
+	// are always in a contiguous sequence after "real" nodes.
 	Array<BIO_WMS_Node> Nodes;
 	// One for each node, including home. Home (elem. [0]) reflects
 	// the state of the real weapon actor before modifiers.
@@ -46,7 +48,6 @@ class BIO_WeaponModSimulator : Thinker
 
 			let simGene = new('BIO_WMS_GeneReal');
 			simGene.Gene = gene;
-			simGene.UpdateModifier();
 			Genes.Push(simGene);
 		}
 

@@ -397,12 +397,12 @@ class BIO_StatusBar : BaseStatusBar
 
 		for (uint i = 1; i < weap.ModGraph.Nodes.Size(); i++)
 		{
-			if (weap.ModGraph.Nodes[i].GeneType == null)
+			if (weap.ModGraph.Nodes[i].Gene == null)
 				continue;
 
 			DrawString(
 				Font_Small,
-				GetDefaultByType(weap.ModGraph.Nodes[i].GeneType).GetTag(),
+				weap.ModGraph.Nodes[i].Gene.GetTag(),
 				(xPos, weapInfoY),
 				align,
 				Font.CR_UNTRANSLATED

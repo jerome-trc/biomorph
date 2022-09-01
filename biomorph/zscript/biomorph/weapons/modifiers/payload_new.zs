@@ -22,7 +22,11 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 		return true;
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
@@ -94,7 +98,11 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 		return true;
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
@@ -140,7 +148,11 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 			"$BIO_WMOD_INCOMPAT_NOPAYLOAD_SHOTPELLETS";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext _) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{

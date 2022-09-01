@@ -250,7 +250,8 @@ extend class BIO_WeaponModMenu
 					overlay = COLOR_INVALID;
 			}
 
-			Screen.DrawTexture(Tex_Node, false,
+			Screen.DrawTexture(
+				Tex_Node, false,
 				NodeDrawState[i].DrawPos.X, NodeDrawState[i].DrawPos.Y,
 				DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
@@ -259,7 +260,8 @@ extend class BIO_WeaponModMenu
 
 			if (Simulator.Nodes[i].IsMorph())
 			{
-				Screen.DrawTexture(Tex_NodeRing, false,
+				Screen.DrawTexture(
+					Tex_NodeRing, false,
 					NodeDrawState[i].DrawPos.X, NodeDrawState[i].DrawPos.Y,
 					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
@@ -273,7 +275,8 @@ extend class BIO_WeaponModMenu
 			{
 				bool isDragged = DraggedGene != null && DraggedGene.IsFromNode(i);
 
-				Screen.DrawTexture(icon, false,
+				Screen.DrawTexture(
+					icon, false,
 					NodeDrawState[i].DrawPos.X, NodeDrawState[i].DrawPos.Y,
 					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
 					DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
@@ -284,7 +287,8 @@ extend class BIO_WeaponModMenu
 			if (Simulator.Nodes[i].IsMorph())
 				continue;
 
-			Screen.DrawText(SmallFont, Font.CR_WHITE,
+			Screen.DrawText(
+				SmallFont, Font.CR_WHITE,
 				NodeDrawState[i].DrawPos.X + (VIRT_W * 0.03),
 				NodeDrawState[i].DrawPos.Y + (VIRT_H * 0.04),
 				String.Format("%d", Simulator.Nodes[i].Basis.UUID),
@@ -294,7 +298,8 @@ extend class BIO_WeaponModMenu
 
 			if (Simulator.Nodes[i].Repeating())
 			{
-				Screen.DrawText(SmallFont, Font.CR_GREEN,
+				Screen.DrawText(
+					SmallFont, Font.CR_GREEN,
 					NodeDrawState[i].DrawPos.X + (VIRT_W * 0.03),
 					NodeDrawState[i].DrawPos.Y + (VIRT_H * 0.01),
 					String.Format("x%d", Simulator.Nodes[i].Multiplier),
@@ -305,7 +310,8 @@ extend class BIO_WeaponModMenu
 
 			if (Simulator.Nodes[i].Basis.IsLocked())
 			{
-				Screen.DrawTexture(Tex_Padlock, false,
+				Screen.DrawTexture(
+					Tex_Padlock, false,
 					NodeDrawState[i].DrawPos.X + (VIRT_W * 0.035),
 					NodeDrawState[i].DrawPos.Y - (VIRT_H * 0.07),
 					DTA_VIRTUALWIDTHF, Size.X, DTA_VIRTUALHEIGHTF, Size.Y,
@@ -406,11 +412,11 @@ extend class BIO_WeaponModMenu
 			if (Simulator.Genes[i] == null)
 				continue;
 
-			let defs = GetDefaultByType(Simulator.Genes[i].GetType());
-
+			let defs = GetDefaultByType(Simulator.Genes[i].Data().GetActorType());
 			bool isDragged = DraggedGene != null && DraggedGene.IsFromInvSlot(i);
 
-			Screen.DrawTexture(defs.Icon, false,
+			Screen.DrawTexture(
+				defs.Icon, false,
 				drawPos.X, drawPos.Y,
 				DTA_VIRTUALWIDTHF, VIRT_W, DTA_VIRTUALHEIGHTF, VIRT_H,
 				DTA_CENTEROFFSET, true, DTA_KEEPRATIO, true,
@@ -633,10 +639,13 @@ extend class BIO_WeaponModMenu
 
 		if (DraggedGene != null)
 		{
-			let gene_t = Simulator.GetGeneType(
-				DraggedGene.GetOrigin(),
-				DraggedGene.OriginIsNode()
-			);
+			class<BIO_Gene> gene_t = null;
+
+			if (DraggedGene.OriginIsNode())
+				gene_t = Simulator.GetNodeGeneType(DraggedGene.GetOrigin());
+			else
+				gene_t = Simulator.GetSlotGeneType(DraggedGene.GetOrigin());
+
 			ret = GetDefaultByType(gene_t).Icon;
 		}
 

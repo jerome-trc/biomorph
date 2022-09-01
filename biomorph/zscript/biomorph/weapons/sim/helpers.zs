@@ -53,7 +53,7 @@ extend class BIO_WeaponModSimulator
 			let simNode = Nodes[i];
 
 			// Is this node pending occupation or extraction?
-			if (realNode.GeneType != simNode.GetGeneType())
+			if (realNode.Gene != simNode.GetGeneData())
 				ret += 1;
 		}
 
@@ -69,16 +69,14 @@ extend class BIO_WeaponModSimulator
 		return ret;
 	}
 
-	class<BIO_Gene> GetGeneType(uint gene, bool node) const
+	class<BIO_Gene> GetNodeGeneType(uint node) const
 	{
-		class<BIO_Gene> ret = null;
+		return Nodes[node].Gene.ActorType();
+	}
 
-		if (node)
-			ret = Nodes[gene].Gene.GetType();
-		else
-			ret = Genes[gene].GetType();
-
-		return ret;
+	class<BIO_Gene> GetSlotGeneType(uint slot) const
+	{
+		return Genes[slot].ActorType();
 	}
 
 	uint LowestGeneLootWeight() const
@@ -87,7 +85,7 @@ extend class BIO_WeaponModSimulator
 
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			let gene_t = Nodes[i].GetGeneType();
+			let gene_t = Nodes[i].GetGeneActorType();
 
 			if (gene_t == null)
 				continue;
@@ -104,64 +102,45 @@ extend class BIO_WeaponModSimulator
 	bool ContainsGeneOfType(class<BIO_Gene> type) const
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)
-			if (Nodes[i].GetGeneType() == type)
+			if (Nodes[i].GetGeneActorType() == type)
 				return true;
 
 		return false;
 	}
 
-	bool HasModifierWithCoreFlags(BIO_WeaponCoreModFlags flags,
-		uint count = 1, bool ignoreMultiplier = true) const
+	bool ContainsModifierOfType(class<BIO_WeaponModifier> type) const
+	{
+		for (uint i = 0; i < Nodes.Size(); i++)
+			if (Nodes[i].ContainsModifierOfType(type))
+				return true;
+
+		return false;
+	}
+
+	bool HasModifierWithCoreFlags(
+		BIO_WeaponCoreModFlags flags,
+		uint count = 1,
+		bool ignoreMultiplier = true
+	) const
 	{
 		uint c = 0;
 
 		for (uint i = 0; i < Nodes.Size(); i++)
-		{
-			let mod = Nodes[i].GetModifier();
-
-			if (mod == null)
-				continue;
-
-			BIO_WeaponCoreModFlags cf = BIO_WCMF_NONE;
-			BIO_WeaponPipelineModFlags _ = BIO_WPMF_NONE;
-			[cf, _] = mod.Flags();
-
-			if ((cf & flags) == flags)
-			{
-				if (ignoreMultiplier)
-					c++;
-				else
-					c += Nodes[i].Multiplier;
-			}
-		}
+			c += Nodes[i].CountCoreModFlags(flags, ignoreMultiplier);
 
 		return c >= count;
 	}
 
-	bool HasModifierWithPipelineFlags(BIO_WeaponPipelineModFlags flags,
-		uint count = 1, bool ignoreMultiplier = true) const
+	bool HasModifierWithPipelineFlags(
+		BIO_WeaponPipelineModFlags flags,
+		uint count = 1,
+		bool ignoreMultiplier = true
+	) const
 	{
 		uint c = 0;
 
 		for (uint i = 0; i < Nodes.Size(); i++)
-		{
-			let mod = Nodes[i].GetModifier();
-
-			if (mod == null)
-				continue;
-
-			BIO_WeaponCoreModFlags _ = BIO_WCMF_NONE;
-			BIO_WeaponPipelineModFlags pf = BIO_WPMF_NONE;
-			[_, pf] = mod.Flags();
-
-			if ((pf & flags) == flags)
-			{
-				if (ignoreMultiplier)
-					c++;
-				else
-					c += Nodes[i].Multiplier;
-			}
-		}
+			c += Nodes[i].CountPipelineModFlags(flags, ignoreMultiplier);
 
 		return c >= count;
 	}
@@ -169,30 +148,13 @@ extend class BIO_WeaponModSimulator
 	bool HasModifierWithFlags(
 		BIO_WeaponCoreModFlags coreFlags,
 		BIO_WeaponPipelineModFlags pipelineFlags,
-		uint count = 1, bool ignoreMultiplier = true) const
+		uint count = 1, bool ignoreMultiplier = true
+	) const
 	{
 		uint c = 0;
 
 		for (uint i = 0; i < Nodes.Size(); i++)
-		{
-			let mod = Nodes[i].GetModifier();
-
-			if (mod == null)
-				continue;
-
-			BIO_WeaponCoreModFlags cf = BIO_WCMF_NONE;
-			BIO_WeaponPipelineModFlags pf = BIO_WPMF_NONE;
-			[cf, pf] = mod.Flags();
-
-			if (((cf & coreFlags) == coreFlags) &&
-				((pf & pipelineFlags) == pipelineFlags))
-			{
-				if (ignoreMultiplier)
-					c++;
-				else
-					c += Nodes[i].Multiplier;
-			}
-		}
+			c += Nodes[i].CountModifierFlags(coreFlags, pipelineFlags, ignoreMultiplier);
 
 		return c >= count;
 	}
@@ -202,12 +164,10 @@ extend class BIO_WeaponModSimulator
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			let gene_t = Nodes[i].GetGeneType();
-
-			if (gene_t == null)
+			if (Nodes[i].IsOccupied())
 				continue;
 
-			let defs = GetDefaultByType(gene_t);
+			let defs = GetDefaultByType(Nodes[i].Gene.Data().GetActorType());
 
 			if (defs.LootWeight <= lootWeight)
 				return true;
@@ -222,7 +182,7 @@ extend class BIO_WeaponModSimulator
 		uint ret = 0;
 
 		for (uint i = 0; i < Nodes.Size(); i++)
-			if (Nodes[i].GetGeneType() == type)
+			if (Nodes[i].GetGeneActorType() == type)
 				ret += Nodes[i].Multiplier;
 
 		return ret;
@@ -230,7 +190,7 @@ extend class BIO_WeaponModSimulator
 
 	bool NodeHasFirstOfGene(uint node, class<BIO_Gene> type) const
 	{
-		if (Nodes[node].GetGeneType() != type)
+		if (Nodes[node].GetGeneActorType() != type)
 			return false;
 
 		bool ret = true;
@@ -238,7 +198,7 @@ extend class BIO_WeaponModSimulator
 
 		for (uint i = 0; i < Nodes.Size(); i++)
 		{
-			if (Nodes[i].GetGeneType() == type)
+			if (Nodes[i].GetGeneActorType() == type)
 				nodesWithGene.Push(i);
 		}
 
@@ -309,8 +269,8 @@ extend class BIO_WeaponModSimulator
 		{
 			if (Nodes[i].IsMorph())
 				continue;
-		
-			let gene_t = Nodes[i].GetGeneType();
+
+			let gene_t = Nodes[i].GetGeneActorType();
 
 			if (types.Find(gene_t) == types.Size())
 				types.Push(gene_t);
@@ -322,7 +282,7 @@ extend class BIO_WeaponModSimulator
 	bool AnyPendingGraphChanges() const
 	{
 		for (uint i = 0; i < Nodes.Size(); i++)
-			if (Nodes[i].Basis.GeneType != Nodes[i].GetGeneType())
+			if (Nodes[i].Basis.Gene != Nodes[i].GetGeneData())
 				return true;
 
 		return false;

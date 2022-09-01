@@ -9,7 +9,11 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 		return false, "$BIO_WMOD_INCOMPAT_NOMELEEDAMAGE";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let ppl_c = weap.PipelineCount();
 

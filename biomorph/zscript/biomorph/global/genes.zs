@@ -10,7 +10,7 @@ extend class BIO_Global
 
 		for (uint i = 0; i < AllActorClasses.Size(); i++)
 		{
-			let gene_t = (class<BIO_Gene>)(AllActorClasses[i]);
+			let gene_t = (class<BIO_ProceduralGene>)(AllActorClasses[i]);
 
 			if (gene_t == null || gene_t.IsAbstract())
 				continue;
@@ -35,8 +35,46 @@ extend class BIO_Global
 		}
 	}
 
-	class<BIO_Gene> RandomGeneType() const
+	class<BIO_ProceduralGene> RandomGeneType() const
 	{
-		return (class<BIO_Gene>)(GeneLoot.Result());
+		return (class<BIO_ProceduralGene>)(GeneLoot.Result());
+	}
+}
+
+class BIO_ProcGeneBase
+{
+	string Tag;
+	Array<BIO_WeaponModifier> Modifiers;
+}
+
+// Procedural modifier gene permutation queue.
+extend class BIO_Global
+{
+	private Array<BIO_ProcGeneBase> ProcGeneQueue;
+
+	void GenerateProcGenePermutations(uint count)
+	{
+		for (uint i = 0; i < count; i++)
+		{
+			Array<BIO_WeaponModifier> mods;
+			let p = new('BIO_ProcGeneBase');
+			p.Tag = BIO_ProceduralGene.GenerateTag();
+			// TODO: When negative modifiers are implemented, push
+			// one of those instead of another positive
+			let m = Random[BIO_Loot](0, WeaponModifiers.Size() - 1);
+			mods.Push(WeaponModifiers[m]);
+			p.Modifiers.Move(mods);
+			ProcGeneQueue.Push(p);
+		}
+	}
+
+	BIO_ProcGeneBase PopProcGenePermutation()
+	{
+		if (ProcGeneQueue.Size() < 1)
+			GenerateProcGenePermutations(5);
+
+		let ret = ProcGeneQueue[ProcGeneQueue.Size() - 1];
+		ProcGeneQueue.Pop();
+		return ret;
 	}
 }

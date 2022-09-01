@@ -2,18 +2,28 @@
 
 class BIO_WMS_Gene play abstract
 {
-	BIO_WeaponModifier Modifier;
+	abstract BIO_GeneData Data() const;
+	abstract BIO_GeneData Drain();
 
-	abstract void UpdateModifier();
-	abstract class<BIO_Gene> GetType() const;
+	class<BIO_Gene> ActorType() const { return Data().GetActorType(); }
+	string Tag() const { return Data().GetTag(); }
+
+	// Returns `true` if a modifier within pushes the host node
+	// over that modifier's limit.
+	bool IncrementModTypeCounts(
+		in out Array<class<BIO_WeaponModifier> > modTypes,
+		in out Array<uint> modCounts
+	) const
+	{
+		return Data().IncrementModTypeCounts(modTypes, modCounts);
+	}
 
 	string GetSummaryTooltip() const
 	{
-		let defs = GetDefaultByType(GetType());
-
-		return String.Format("\c[White]%s\n\n%s",
-			defs.GetTag(),
-			StringTable.Localize(defs.Summary())
+		return String.Format(
+			"\c[White]%s\n\n%s",
+			StringTable.Localize(Data().GetTag()),
+			StringTable.Localize(Data().Summary())
 		);
 	}
 }
@@ -24,43 +34,8 @@ class BIO_WMS_GeneReal : BIO_WMS_Gene
 {
 	BIO_Gene Gene;
 
-	final override void UpdateModifier()
-	{
-		// Explicitly check for this case, since it should never happen
-		if (Gene == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"A weapon mod sim gene object has a null internal pointer."
-			);
-			return;
-		}
-
-		if (Gene is 'BIO_ModifierGene')
-		{
-			let mod_t = BIO_ModifierGene(Gene).ModType;
-			Modifier = BIO_WeaponModifier(new(mod_t));
-		}
-	}
-
-	BIO_WMS_GeneVirtual VirtualCopy(class<BIO_Gene> newType) const
-	{
-		let ret = new('BIO_WMS_GeneVirtual');
-
-		if (Modifier != null)
-		{
-			ret.Type = Modifier.GeneType();
-			ret.Modifier = BIO_WeaponModifier(new(Modifier.GetClass()));
-		}
-		else
-		{
-			ret.Type = newType;
-		}
-
-		return ret;
-	}
-
-	final override class<BIO_Gene> GetType() const { return Gene.GetClass(); }
+	final override BIO_GeneData Data() const { return Gene.Inner(); }
+	final override BIO_GeneData Drain() { return Gene.Drain(); }
 }
 
 // When representing genes that can be moved around the simulated graph, this
@@ -68,27 +43,14 @@ class BIO_WMS_GeneReal : BIO_WMS_Gene
 // since those genes have no associated items.
 class BIO_WMS_GeneVirtual : BIO_WMS_Gene
 {
-	class<BIO_Gene> Type;
+	BIO_GeneData Gene;
 
-	final override void UpdateModifier()
+	final override BIO_GeneData Data() const { return Gene; }
+
+	final override BIO_GeneData Drain()
 	{
-		// Explicitly check for this case, since it should never happen
-		if (Type == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"A weapon mod sim gene object has a null internal class."
-			);
-			return;
-		}
-
-		if (Type is 'BIO_ModifierGene')
-		{
-			let mgene_t = (class<BIO_ModifierGene>)(Type);
-			let defs = GetDefaultByType(mgene_t);
-			Modifier = BIO_WeaponModifier(new(defs.ModType));
-		}
+		let ret = Gene;
+		Gene = null;
+		return ret;
 	}
-
-	final override class<BIO_Gene> GetType() const { return Type; }
 }

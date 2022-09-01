@@ -152,7 +152,7 @@ extend class BIO_EventHandler
 			return;
 		}
 
-		Array<class<BIO_Gene> > toGive;
+		Array<BIO_GeneData> toGive;
 		Array<Inventory> toDestroy;
 
 		for (uint i = 0; i < sim.Genes.Size(); i++)
@@ -160,14 +160,12 @@ extend class BIO_EventHandler
 			if (sim.Genes[i] == null)
 				continue;
 
-			toGive.Push(sim.Genes[i].GetType());
+			toGive.Push(sim.Genes[i].Drain());
 		}
 
 		for (Inventory i = pawn.Inv; i != null; i = i.Inv)
-		{
 			if (i is 'BIO_Gene')
 				toDestroy.Push(i);
-		}
 
 		sim.Commit();
 
@@ -178,7 +176,11 @@ extend class BIO_EventHandler
 		}
 
 		for (uint i = 0; i < toGive.Size(); i++)
-			pawn.GiveInventory(toGive[i], 1);
+		{
+			let given = BIO_Gene(Actor.Spawn(toGive[i].GetActorType(), pawn.Pos));
+			given.Fill(toGive[i]);
+			given.AttachToOwner(pawn);
+		}
 
 		sim.PostCommit();
 		pawn.TakeInventory('BIO_Muta_General', cost);
@@ -202,7 +204,7 @@ extend class BIO_EventHandler
 		}
 
 		let morph = sim.Nodes[node].MorphRecipe;
-		Array<class<BIO_Gene> > toGive;
+		Array<BIO_GeneData> toGive;
 		Array<Inventory> toDestroy;
 
 		for (uint i = 0; i < sim.Genes.Size(); i++)
@@ -210,14 +212,12 @@ extend class BIO_EventHandler
 			if (sim.Genes[i] == null)
 				continue;
 
-			toGive.Push(sim.Genes[i].GetType());
+			toGive.Push(sim.Genes[i].Drain());
 		}
 
 		for (Inventory i = pawn.Inv; i != null; i = i.Inv)
-		{
 			if (i is 'BIO_Gene')
 				toDestroy.Push(i);
-		}
 
 		for (uint i = 0; i < toDestroy.Size(); i++)	
 		{
@@ -226,7 +226,11 @@ extend class BIO_EventHandler
 		}
 
 		for (uint i = 0; i < toGive.Size(); i++)
-			pawn.GiveInventory(toGive[i], 1);
+		{
+			let given = BIO_Gene(Actor.Spawn(toGive[i].GetActorType(), pawn.Pos));
+			given.AttachToOwner(pawn);
+			given.Fill(toGive[i]);
+		}
 
 		uint qual = weap.InheritedGraphQuality() + morph.QualityAdded();
 

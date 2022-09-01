@@ -84,14 +84,12 @@ class BIO_WeaponMorphRecipe abstract
 
 		for (uint i = 0; i < sim.Nodes.Size(); i++)
 		{
-			let mod = sim.Nodes[i].GetModifier();
-
-			if (mod == null)
+			if (!sim.Nodes[i].IsOccupied())
 				continue;
 
 			BIO_WeaponCoreModFlags cf = BIO_WCMF_NONE;
 			BIO_WeaponPipelineModFlags pf = BIO_WPMF_NONE;
-			[cf, pf] = mod.Flags();
+			[cf, pf] = sim.Nodes[i].CombinedModifierFlags();
 
 			coreFlags |= cf;
 			pplFlags |= pf;

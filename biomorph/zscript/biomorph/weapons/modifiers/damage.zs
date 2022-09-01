@@ -12,7 +12,11 @@ class BIO_WMod_BerserkDamage : BIO_WeaponModifier
 		return false, "$BIO_WMOD_INCOMPAT_NOMELEEDAMAGE";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		let afx = weap.GetAffixByType('BIO_WAfx_BerserkDamage');
 
@@ -86,7 +90,11 @@ class BIO_WMod_DamageAdd : BIO_WeaponModifier
 		return context.Weap.DealsAnyHitDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		string ret = "";
 
@@ -134,7 +142,11 @@ class BIO_WMod_DemonSlayer : BIO_WeaponModifier
 		return context.Weap.DealsAnyHitDamage(), "$BIO_WMOD_INCOMPAT_NODAMAGE";
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		for (uint i = 0; i < weap.PipelineCount(); i++)
 		{
@@ -273,7 +285,11 @@ class BIO_WMod_MagSizeToDamage : BIO_WeaponModifier
 		return false;
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		uint changeCounts[2];
 
@@ -420,7 +436,11 @@ class BIO_WMod_RechamberUp : BIO_WeaponModifier
 		return 0;
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		Array<uint> pipelineDoubles;
 		uint primaryDoubles, secondaryDoubles;
@@ -534,7 +554,11 @@ class BIO_WMod_SplashToHit : BIO_WeaponModifier
 		return ppl.DealsAnySplashDamage();
 	}
 
-	final override string Apply(BIO_Weapon weap, BIO_GeneContext context) const
+	final override string Apply(
+		BIO_Weapon weap,
+		BIO_WeaponModSimulator sim,
+		BIO_GeneContext context
+	) const
 	{
 		// One element per pipeline, always positive
 		Array<int> damageChanges, radiusChanges;
