@@ -216,34 +216,6 @@ $random bio/weap/microvulcan/fire
 	bio/weap/microvulcan/fire/2
 }
 
-bio/weap/minivulcan/fire/0 MINV_FR0
-bio/weap/minivulcan/fire/1 MINV_FR1
-bio/weap/minivulcan/fire/2 MINV_FR2
-bio/weap/minivulcan/fire/3 MINV_FR3
-
-$random bio/weap/minivulcan/fire
-{
-	bio/weap/minivulcan/fire/0
-	bio/weap/minivulcan/fire/1
-	bio/weap/minivulcan/fire/2
-	bio/weap/minivulcan/fire/3
-}
-
-// Turbovulcan
-
-bio/weap/turbovulcan/fire_0 TRBO_FR0
-bio/weap/turbovulcan/fire_1 TRBO_FR1
-bio/weap/turbovulcan/fire_2 TRBO_FR2
-bio/weap/turbovulcan/fire_3 TRBO_FR3
-
-$random bio/weap/turbovulcan/fire
-{
-	bio/weap/turbovulcan/fire_0
-	bio/weap/turbovulcan/fire_1
-	bio/weap/turbovulcan/fire_2
-	bio/weap/turbovulcan/fire_3
-}
-
 // Plasma Rifle
 
 bio/weap/plasrifle/rapid/fire/0 PLAS_RP0

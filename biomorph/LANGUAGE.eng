@@ -218,15 +218,6 @@
 		"\c[White]High rate-of-fire\n"
 		"\c[White]Feeds from bullet reserves";
 
-	BIO_MINIVULCAN_TAG = "Minivulcan";
-	BIO_MINIVULCAN_PKUP = "Procured a %s.";
-	BIO_MINIVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_MINIVULCAN_OB = "%k honeycombed %o with a %s.";
-	BIO_MINIVULCAN_SUMM =
-		"\c[White]High rate-of-fire\n"
-		"\c[White]Significantly more damaging than Microvulcan\n"
-		"\c[White]Feeds from bullet reserves";
-
 	BIO_PLASMARIFLE_TAG = "Plasma Rifle";
 	BIO_PLASMARIFLE_PKUP = "Procured a %s.";
 	BIO_PLASMARIFLE_SCAV = "Scavenged ammo from a dropped %s.";
@@ -249,15 +240,6 @@
 		"\c[White]Magazine-fed with infinite ammo reserve\n"
 		"\c[White]Mid-high rate-of-fire\n"
 		"\c[White]Accurate";
-
-	BIO_TURBOVULCAN_TAG = "Turbovulcan";
-	BIO_TURBOVULCAN_PKUP = "Procured a %s.";
-	BIO_TURBOVULCAN_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_TURBOVULCAN_OB = "%k perforated %o with a %s.";
-	BIO_TURBOVULCAN_SUMM =
-		"\c[White]Very high rate-of-fire\n"
-		"\c[White]Requires spooling before firing\n"
-		"\c[White]Feeds from bullet reserves";
 
 	BIO_VOLLEYGUN_TAG = "Volley Gun";
 	BIO_VOLLEYGUN_PKUP = "Procured a %s.";
