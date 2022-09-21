@@ -26,7 +26,6 @@ class BIO_MachineGun : BIO_Weapon
 		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
 		BIO_Weapon.MagazineSize BASE_MAGSIZE;
 		BIO_Weapon.EnergyToMatter -3, 5;
-		BIO_Weapon.OperatingMode 'BIO_OpMode_MachineGun_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_MACHINEGUN_PKUP",
 			"$BIO_MACHINEGUN_SCAV";
@@ -37,9 +36,10 @@ class BIO_MachineGun : BIO_Weapon
 
 	override void SetDefaults()
 	{
+		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
 
-		OpModes[0].Pipelines.Push(
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet()
 				.RandomDamage(14, 16)
@@ -70,11 +70,17 @@ class BIO_MachineGun : BIO_Weapon
 		GPMG A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
-	AltFire:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
+		TNT1 A 0 A_BIO_CheckAmmo;
+		GPMG B 1 Bright Offset(0, 33)
+		{
+			A_BIO_SetFireTime(0);
+			A_BIO_MachineGun_Fire();
+		}
+		GPMG C 1 Bright Offset(0, 34) A_BIO_SetFireTime(1);
+		GPMG B 1 Bright Offset(0, 33) A_BIO_SetFireTime(2);
+		GPMG A 1 Fast A_BIO_SetFireTime(3);
+		TNT1 A 0 A_BIO_AutoReload;
+		Goto Ready;
 	Dryfire:
 		GPMG A 1 Offset(0, 32 + 1);
 		#### # 1 Offset(0, 32 + 2);
@@ -116,43 +122,5 @@ class BIO_MachineGun : BIO_Weapon
 		A_GunFlash();
 		A_BIO_FireSound(CHAN_AUTO);
 		A_BIO_Recoil('BIO_Recoil_Autogun');
-	}
-}
-
-// Operating modes /////////////////////////////////////////////////////////////
-
-class BIO_OpMode_MachineGun_Rapid : BIO_OpMode_Rapid
-{
-	final override class<BIO_Weapon> WeaponType() const { return 'BIO_MachineGun'; }
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'Rapid.Fire';
-	}
-}
-
-extend class BIO_MachineGun
-{
-	States
-	{
-	Rapid.Fire:
-		TNT1 A 0 A_BIO_CheckAmmo;
-		GPMG B 1 Bright Offset(0, 33)
-		{
-			A_BIO_SetFireTime(0);
-			A_BIO_MachineGun_Fire();
-		}
-		GPMG C 1 Bright Offset(0, 34) A_BIO_SetFireTime(1);
-		GPMG B 1 Bright Offset(0, 33) A_BIO_SetFireTime(2);
-		GPMG A 1 Fast A_BIO_SetFireTime(3);
-		TNT1 A 0 A_BIO_Op_CheckBurst('Rapid.Fire');
-		TNT1 A 0 A_BIO_Op_PostFire;
-		TNT1 A 0 A_BIO_AutoReload;
-		Goto Ready;
 	}
 }

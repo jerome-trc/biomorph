@@ -525,13 +525,6 @@
 	BIO_WMOD_SPLASHTOHIT_DESC =
 		"\c[White]%d damage converted; radius reduced by %d%s";
 
-	BIO_WMOD_SPOOLING_TAG = "\c[Cyan]Rotary Turbocharge\c-";
-	BIO_WMOD_SPOOLING_SUMM =
-		"\c[White]Converts this weapon to use the "
-		"\c[Yellow]Spooling\c[White] operating mode\n"
-		"\c[Brick]Weapon has to be spooled before firing\n"
-		"\c[Green]Dramatic increase in fire rate";
-
 	BIO_WMOD_SPREAD_TAG = "\c[Cyan]Accurised\c-";
 	BIO_WMOD_SPREAD_SUMM = "\c[Green]Reduces firing spread";
 	BIO_WMOD_SPREAD_DESC =

@@ -21,7 +21,6 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
 		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
 		BIO_Weapon.MagazineSize 1;
-		BIO_Weapon.OperatingMode 'BIO_OpMode_RocketAutoLauncher_SmallMag';
 		BIO_Weapon.PickupMessages
 			"$BIO_ROCKETAUTOLAUNCHER_PKUP",
 			"$BIO_ROCKETAUTOLAUNCHER_SCAV";
@@ -30,9 +29,10 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 
 	override void SetDefaults()
 	{
+		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload'));
 
-		OpModes[0].Pipelines.Push(
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Projectile('BIO_Rocket')
 				.X1D3Damage(50)
@@ -63,11 +63,21 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		MISG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
-	AltFire:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
+		TNT1 A 0 A_BIO_CheckAmmo(single: true);
+		MISG B 8
+		{
+			A_BIO_SetFireTime(0);
+			A_GunFlash();
+		}
+		MISG B 12
+		{
+			A_BIO_SetFireTime(1);
+			A_BIO_Fire();
+			A_BIO_FireSound();
+			A_BIO_Recoil('BIO_Recoil_RocketLauncher');
+		}
+		TNT1 A 0 A_BIO_AutoReload(single: true);
+		Goto Ready;
 	Flash:
 		MISF A 1 Bright A_Light(1);
 		MISF B 2 Bright;
@@ -86,51 +96,6 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 			A_BIO_Recoil('BIO_Recoil_ShotgunPump');
 		}
 		#### # 3 Offset(0, 32 + 3) A_BIO_SetReloadTime(4);
-		Goto Ready;
-	}
-}
-
-// Operating modes /////////////////////////////////////////////////////////////
-
-class BIO_OpMode_RocketAutoLauncher_SmallMag : BIO_OpMode_SmallMag
-{
-	final override class<BIO_Weapon> WeaponType() const 
-	{
-		return 'BIO_RocketAutoLauncher';
-	}
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'Rapid.Fire';
-	}
-}
-
-extend class BIO_RocketAutoLauncher
-{
-	States
-	{
-	Rapid.Fire:
-		TNT1 A 0 A_BIO_CheckAmmo(single: true);
-		MISG B 8
-		{
-			A_BIO_SetFireTime(0);
-			A_GunFlash();
-		}
-		MISG B 12
-		{
-			A_BIO_SetFireTime(1);
-			A_BIO_Fire();
-			A_BIO_FireSound();
-			A_BIO_Recoil('BIO_Recoil_RocketLauncher');
-		}
-		TNT1 A 0 A_BIO_Op_CheckBurst('Rapid.Fire');
-		TNT1 A 0 A_BIO_Op_PostFire;
-		TNT1 A 0 A_BIO_AutoReload(single: true);
 		Goto Ready;
 	}
 }

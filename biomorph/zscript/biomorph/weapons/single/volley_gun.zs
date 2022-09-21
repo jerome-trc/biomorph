@@ -24,7 +24,6 @@ class BIO_VolleyGun : BIO_Weapon
 		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
 		BIO_Weapon.MagazineSize 4;
 		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
-		BIO_Weapon.OperatingMode 'BIO_OpMode_VolleyGun_SmallMag';
 		BIO_Weapon.PickupMessages
 			"$BIO_VOLLEYGUN_PKUP",
 			"$BIO_VOLLEYGUN_SCAV";
@@ -32,10 +31,12 @@ class BIO_VolleyGun : BIO_Weapon
 
 	override void SetDefaults()
 	{
+		FireTimeGroups.Push(StateTimeGroupFrom('Fire.Quad'));
+
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Four', "$BIO_ALLFOUR"));
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Two', "$BIO_TWO"));
 
-		OpModes[0].Pipelines.Push(
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet('BIO_ShotPellet', 40)
 				.RandomDamage(DAMAGE_MIN, DAMAGE_MAX)
@@ -46,7 +47,7 @@ class BIO_VolleyGun : BIO_Weapon
 				.Build()
 		);
 
-		OpModes[1].Pipelines.Push(
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet('BIO_Shotpellet', 20)
 				.RandomDamage(DAMAGE_MIN, DAMAGE_MAX)
@@ -79,30 +80,23 @@ class BIO_VolleyGun : BIO_Weapon
 		VOLL A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
-	AltFire:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
-	Fire.Common:
 		TNT1 A 0
 		{
-			if (!invoker.bAltFire)
-			{
-				if (BIO_CVar.MultiBarrelPrimary(Player))
-					return ResolveState('Fire.Quad');
-				else
-					return ResolveState('Fire.Double');
-			}
+			if (BIO_CVar.MultiBarrelPrimary(Player))
+				return ResolveState('Fire.Quad');
 			else
-			{
-				if (BIO_CVar.MultiBarrelPrimary(Player))
-					return ResolveState('Fire.Double');
-				else
-					return ResolveState('Fire.Quad');
-			}
+				return ResolveState('Fire.Double');
 		}
-		Stop;
+	AltFire:
+		TNT1 A 0
+		{
+			invoker.bAltFire = false;
+
+			if (BIO_CVar.MultiBarrelPrimary(Player))
+				return ResolveState('Fire.Double');
+			else
+				return ResolveState('Fire.Quad');
+		}
 	Fire.Quad:
 		TNT1 A 0 A_BIO_CheckAmmo(multi: 4, single: true);
 		VOLL A 3;
@@ -207,37 +201,5 @@ class BIO_VolleyGun : BIO_Weapon
 			A_BIO_Recoil('BIO_Recoil_ReloadSSG', invert: true);
 		}
 		Goto Ready;
-	}
-}
-
-// Operating modes /////////////////////////////////////////////////////////////
-
-class BIO_OpMode_VolleyGun_SmallMag : BIO_OpMode_SmallMag
-{
-	final override class<BIO_Weapon> WeaponType() const { return 'BIO_VolleyGun'; }
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(weap.StateTimeGroupFrom('Fire.Quad'));
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'Fire.Common';
-	}
-}
-
-extend class BIO_VolleyGun
-{
-	States
-	{
-	Fire.Common:
-		TNT1 A 0
-		{
-			if (BIO_CVar.MultiBarrelPrimary(Player))
-				return ResolveState('Fire.Quad');
-			else
-				return ResolveState('Fire.Double');
-		}
 	}
 }

@@ -14,8 +14,8 @@ class BIO_WeaponSnapshot
 	uint8 ReloadCost1, ReloadCost2, ReloadOutput1, ReloadOutput2;
 	uint16 MinAmmoReserve1, MinAmmoReserve2;
 
-	BIO_WeaponOperatingMode OpModes[2];
-	Array<BIO_StateTimeGroup> ReloadTimeGroups;
+	Array<BIO_WeaponPipeline> Pipelines;
+	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
 	Array<BIO_WeaponAffix> Affixes;
 	BIO_WeaponSpecialFunctor SpecialFunc;
 
@@ -49,13 +49,14 @@ class BIO_WeaponSnapshot
 		MinAmmoReserve1 = weap.MinAmmoReserve1;
 		MinAmmoReserve2 = weap.MinAmmoReserve2;
 
-		if (weap.OpModes[0] != null)
-			OpModes[0] = weap.OpModes[0].Copy();
-		if (weap.OpModes[1] != null)
-			OpModes[1] = weap.OpModes[1].Copy();
-
 		for (uint i = 0; i < weap.Affixes.Size(); i++)
 			Affixes.Push(weap.Affixes[i].Copy());
+
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
+			Pipelines.Push(weap.Pipelines[i].Copy());
+
+		for (uint i = 0; i < weap.FireTimeGroups.Size(); i++)
+			FireTimeGroups.Push(weap.FireTimeGroups[i].Copy());
 
 		for (uint i = 0; i < weap.ReloadTimeGroups.Size(); i++)
 			ReloadTimeGroups.Push(weap.ReloadTimeGroups[i].Copy());
@@ -85,13 +86,14 @@ class BIO_WeaponSnapshot
 		MinAmmoReserve1 = other.MinAmmoReserve1;
 		MinAmmoReserve2 = other.MinAmmoReserve2;
 
-		if (other.OpModes[0] != null)
-			OpModes[0] = other.OpModes[0].Copy();
-		if (other.OpModes[1] != null)
-			OpModes[1] = other.OpModes[1].Copy();
-
 		for (uint i = 0; i < other.Affixes.Size(); i++)
 			Affixes.Push(other.Affixes[i].Copy());
+
+		for (uint i = 0; i < other.Pipelines.Size(); i++)
+			Pipelines.Push(other.Pipelines[i].Copy());
+
+		for (uint i = 0; i < other.FireTimeGroups.Size(); i++)
+			FireTimeGroups.Push(other.FireTimeGroups[i].Copy());
 
 		for (uint i = 0; i < other.ReloadTimeGroups.Size(); i++)
 			ReloadTimeGroups.Push(other.ReloadTimeGroups[i].Copy());

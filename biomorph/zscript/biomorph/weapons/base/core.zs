@@ -121,14 +121,8 @@ class BIO_Weapon : DoomWeapon abstract
 	flagdef Zoomed: DynFlags, 2;
 	// The last 4 flags (28 to 31) are reserved for derived classes.
 
-	meta class<BIO_WeaponOperatingMode> OperatingMode1, OperatingMode2;
-	property OperatingMode: OperatingMode1;
-	property OperatingMode1: OperatingMode1;
-	property OperatingMode2: OperatingMode2;
-	property OperatingModes: OperatingMode1, OperatingMode2;
-
-	BIO_WeaponOperatingMode OpModes[2];
-	Array<BIO_StateTimeGroup> ReloadTimeGroups;
+	Array<BIO_WeaponPipeline> Pipelines;
+	Array<BIO_StateTimeGroup> FireTimeGroups, ReloadTimeGroups;
 	Array<BIO_WeaponAffix> Affixes;
 	BIO_WeaponModGraph ModGraph;
 	BIO_WeaponSpecialFunctor SpecialFunc; // Invoked via the `Zoom` input.

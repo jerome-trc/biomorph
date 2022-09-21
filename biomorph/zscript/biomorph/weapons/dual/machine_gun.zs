@@ -28,9 +28,6 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 		BIO_Weapon.MagazineSizes
 			BIO_MachineGun.BASE_MAGSIZE,
 			BIO_MachineGun.BASE_MAGSIZE;
-		BIO_Weapon.OperatingModes
-			'BIO_OpMode_MachineGunDual_Rapid',
-			'BIO_OpMode_MachineGunDual_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_DUALMACHINEGUN_PKUP",
 			"$BIO_DUALMACHINEGUN_SCAV";
@@ -38,27 +35,24 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 
 	override void SetDefaults()
 	{
+		FireTimeGroups.Push(StateTimeGroupFrom('Fire.Right'));
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.Left'));
 
-		OpModes[0].Pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
+		for (uint i = 0; i < 2; i++)
+		{
+			let builder = BIO_WeaponPipelineBuilder.Create()
 				.Bullet()
 				.RandomDamage(14, 16)
 				.Spread(2.0, 1.0)
-				.FireSound("bio/weap/machinegun/fire")
-				.UsePrimaryAmmo()
-				.Build()
-		);
+				.FireSound("bio/weap/machinegun/fire");
 
-		OpModes[1].Pipelines.Push(
-			BIO_WeaponPipelineBuilder.Create()
-				.Bullet()
-				.RandomDamage(14, 16)
-				.Spread(2.0, 1.0)
-				.FireSound("bio/weap/machinegun/fire")
-				.UseSecondaryAmmo()
-				.Build()
-		);
+			if (i == 1)
+				builder.UseSecondaryAmmo();
+			else
+				builder.UsePrimaryAmmo();
+
+			Pipelines.Push(builder.Build());
+		}
 	}
 
 	States
@@ -110,11 +104,61 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 		GPMG A 1 A_Raise_L;
 		Loop;
 	Fire.Right:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
+		TNT1 A 0 A_BIO_CheckAmmo_R;
+		GPMG B 1 Bright
+		{
+			A_BIO_SetFireTime(0);
+			A_AddOverlayOffset_Y(1.0);
+			A_BIO_Fire();
+			A_GunFlash_R();
+			A_BIO_FireSound(CHAN_AUTO);
+			A_BIO_Recoil('BIO_Recoil_Autogun');
+		}
+		GPMG C 1 Bright
+		{
+			A_BIO_SetFireTime(1);
+			A_AddOverlayOffset_Y(1.0);
+		}
+		GPMG B 1 Bright
+		{
+			A_BIO_SetFireTime(2);
+			A_AddOverlayOffset_Y(-1.0);
+		}
+		GPMG A 1 Fast
+		{
+			A_BIO_SetFireTime(3);
+			A_AddOverlayOffset_Y(-1.0);
+		}
+		TNT1 A 0 A_BIO_AutoReload_R;
+		Goto Ready.Right;
 	Fire.Left:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
+		TNT1 A 0 A_BIO_CheckAmmo_L;
+		GPMG B 1 Bright
+		{
+			A_BIO_SetFireTime(0);
+			A_AddOverlayOffset_Y(1.0);
+			A_BIO_Fire(1);
+			A_GunFlash_L();
+			A_BIO_FireSound(CHAN_AUTO);
+			A_BIO_Recoil('BIO_Recoil_Autogun');
+		}
+		GPMG C 1 Bright
+		{
+			A_BIO_SetFireTime(1);
+			A_AddOverlayOffset_Y(1.0);
+		}
+		GPMG B 1 Bright
+		{
+			A_BIO_SetFireTime(2);
+			A_AddOverlayOffset_Y(-1.0);
+		}
+		GPMG A 1 Fast
+		{
+			A_BIO_SetFireTime(3);
+			A_AddOverlayOffset_Y(-1.0);
+		}
+		TNT1 A 0 A_BIO_AutoReload_L;
+		Goto Ready.Left;
 	Flash.Left:
 	Flash.Right:
 		GPMG D 1 Bright
@@ -290,102 +334,5 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 		}
 		TNT1 A 0 A_AddOverlayOffset_Y(-1.0);
 		Goto Ready.Left;
-	}
-}
-
-class BIO_OpMode_MachineGunDual_Rapid : BIO_OpMode_Rapid
-{
-	final override class<BIO_Weapon> WeaponType() const
-	{
-		return 'BIO_DualMachineGun';
-	}
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire.Right'));
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'Rapid.Fire';
-	}
-}
-
-extend class BIO_DualMachineGun
-{
-	States
-	{
-	Rapid.Fire:
-		TNT1 A 0
-		{
-			switch (OverlayID())
-			{
-			case PSP_LEFTWEAP: return ResolveState('Rapid.Fire.Left');
-			case PSP_RIGHTWEAP: return ResolveState('Rapid.Fire.Right');
-			default:
-				Biomorph.Unreachable("Illegal dual-wield overlay ID.");
-				return ResolveState('Null');
-			}
-		}
-	Rapid.Fire.Left:
-		TNT1 A 0 A_BIO_CheckAmmo_L;
-		GPMG B 1 Bright
-		{
-			A_BIO_SetFireTime(0);
-			A_AddOverlayOffset_Y(1.0);
-			A_BIO_Fire();
-			A_GunFlash_L();
-			A_BIO_FireSound(CHAN_AUTO);
-			A_BIO_Recoil('BIO_Recoil_Autogun');
-		}
-		GPMG C 1 Bright
-		{
-			A_BIO_SetFireTime(1);
-			A_AddOverlayOffset_Y(1.0);
-		}
-		GPMG B 1 Bright
-		{
-			A_BIO_SetFireTime(2);
-			A_AddOverlayOffset_Y(-1.0);
-		}
-		GPMG A 1 Fast
-		{
-			A_BIO_SetFireTime(3);
-			A_AddOverlayOffset_Y(-1.0);
-		}
-		TNT1 A 0 A_JumpIf(!invoker.CurOpMode().CheckBurst(), 'Rapid.Fire.Left');
-		TNT1 A 0 A_BIO_AutoReload_L;
-		TNT1 A 0 A_BIO_Op_PostFire;
-		Goto Ready.Left;
-	Rapid.Fire.Right:
-		TNT1 A 0 A_BIO_CheckAmmo_R;
-		GPMG B 1 Bright
-		{
-			A_BIO_SetFireTime(0);
-			A_AddOverlayOffset_Y(1.0);
-			A_BIO_Fire();
-			A_GunFlash_R();
-			A_BIO_FireSound(CHAN_AUTO);
-			A_BIO_Recoil('BIO_Recoil_Autogun');
-		}
-		GPMG C 1 Bright
-		{
-			A_BIO_SetFireTime(1);
-			A_AddOverlayOffset_Y(1.0);
-		}
-		GPMG B 1 Bright
-		{
-			A_BIO_SetFireTime(2);
-			A_AddOverlayOffset_Y(-1.0);
-		}
-		GPMG A 1 Fast
-		{
-			A_BIO_SetFireTime(3);
-			A_AddOverlayOffset_Y(-1.0);
-		}
-		TNT1 A 0 A_JumpIf(!invoker.CurOpMode().CheckBurst(), 'Rapid.Fire.Right');
-		TNT1 A 0 A_BIO_AutoReload_R;
-		TNT1 A 0 A_BIO_Op_PostFire;
-		Goto Ready.Right;
 	}
 }

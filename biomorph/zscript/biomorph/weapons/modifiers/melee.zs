@@ -2,8 +2,8 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
-			if (context.Weap.GetPipeline(i).IsMelee())
+		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+			if (context.Weap.Pipelines[i].IsMelee())
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_NOMELEEDAMAGE";
@@ -15,14 +15,14 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 		BIO_GeneContext context
 	) const
 	{
-		let ppl_c = weap.PipelineCount();
+		let ppl_c = weap.Pipelines.Size();
 
 		Array<float> addPercents; // One per pipeline (might be 0.0)
 		addPercents.Resize(ppl_c);
 
 		for (uint i = 0; i < ppl_c; i++)
 		{
-			let ppl = weap.GetPipeline(i);
+			let ppl = weap.Pipelines[i];
 
 			for (uint j = 0; j < context.NodeCount; j++)
 			{
@@ -53,7 +53,7 @@ class BIO_WMod_Lifesteal : BIO_WeaponModifier
 			string qual = "";
 
 			if (addPercents.Size() > 1)
-				qual = " " .. context.Weap.GetPipeline(i).GetTagAsQualifier();
+				qual = " " .. context.Weap.Pipelines[i].GetTagAsQualifier();
 
 			ret.AppendFormat(
 				StringTable.Localize("$BIO_WMOD_LIFESTEAL_DESC"),

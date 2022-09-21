@@ -19,7 +19,6 @@ class BIO_ServicePistol : BIO_Weapon
 		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
 		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
 		BIO_Weapon.MagazineSize 15;
-		BIO_Weapon.OperatingMode 'BIO_OpMode_ServicePistol_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_SERVICEPISTOL_PKUP",
 			"";
@@ -30,9 +29,10 @@ class BIO_ServicePistol : BIO_Weapon
 
 	override void SetDefaults()
 	{
+		FireTimeGroups.Push(StateTimeGroupFrom('Fire'));
 		ReloadTimeGroups.Push(StateTimeGroupFrom('Reload.FromEmpty'));
 
-		OpModes[0].Pipelines.Push(
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet()
 				.RandomDamage(10, 12)
@@ -63,11 +63,18 @@ class BIO_ServicePistol : BIO_Weapon
 		SVCP B 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
-	AltFire:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
+		TNT1 A 0 A_BIO_CheckAmmo;
+		SVCP C 4
+		{
+			A_BIO_SetFireTime(0);
+			A_BIO_Fire();
+			A_GunFlash();
+			A_BIO_FireSound();
+			A_BIO_Recoil('BIO_Recoil_Handgun');
+		}
+		SVCP D 4 A_BIO_SetFireTime(1);
+		TNT1 A 0 A_BIO_AutoReload;
+		Goto Ready;
 	Dryfire:
 		SVCP B 1 Offset(0, 32 + 1);
 		#### # 1 Offset(0, 32 + 2);
@@ -118,48 +125,6 @@ class BIO_ServicePistol : BIO_Weapon
 				invoker.bSlideBack = false;
 			}
 		}
-		Goto Ready;
-	}
-}
-
-// Operating modes /////////////////////////////////////////////////////////////
-
-class BIO_OpMode_ServicePistol_Rapid : BIO_OpMode_Rapid
-{
-	final override class<BIO_Weapon> WeaponType() const
-	{
-		return 'BIO_ServicePistol';
-	}
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(weap.StateTimeGroupFrom('Rapid.Fire'));
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'Rapid.Fire';
-	}
-}
-
-extend class BIO_ServicePistol
-{
-	States
-	{
-	Rapid.Fire:
-		TNT1 A 0 A_BIO_CheckAmmo;
-		SVCP C 4
-		{
-			A_BIO_SetFireTime(0);
-			A_BIO_Fire();
-			A_GunFlash();
-			A_BIO_FireSound();
-			A_BIO_Recoil('BIO_Recoil_Handgun');
-		}
-		SVCP D 4 A_BIO_SetFireTime(1);
-		TNT1 A 0 A_BIO_Op_CheckBurst('Rapid.Fire');
-		TNT1 A 0 A_BIO_Op_PostFire;
-		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
 	}
 }

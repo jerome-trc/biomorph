@@ -1,96 +1,13 @@
 extend class BIO_Weapon
 {
-	// Considers `bAltFire`.
-	BIO_WeaponPipeline GetCurPipeline(uint index) const
-	{
-		return !bAltFire ?
-			OpModes[0].Pipelines[index] :
-			OpModes[1].Pipelines[index];
-	}
-
-	uint PipelineCount() const
-	{
-		uint ret = 0;
-
-		if (OpModes[0] != null)
-			ret += OpModes[0].Pipelines.Size();
-		if (OpModes[1] != null)
-			ret += OpModes[1].Pipelines.Size();
-
-		return ret;
-	}
-
-	// Combine with `PipelineCount()` for conveniently accessing any and all
-	// pipelines had by this weapon's two operating modes.
-	BIO_WeaponPipeline GetPipeline(uint index) const
-	{
-		if (OpModes[0] != null)
-		{
-			if (index >= OpModes[0].Pipelines.Size())
-			{
-				if (OpModes[1] != null)
-				{
-					index -= OpModes[0].Pipelines.Size();
-					return OpModes[1].Pipelines[index];
-				}
-				else
-				{
-					return null;
-				}
-			}
-			else
-			{
-				return OpModes[0].Pipelines[index];
-			}
-		}
-
-		return null;
-	}
-
-	uint FireTimeGroupCount() const
-	{
-		uint ret = 0;
-
-		if (OpModes[0] != null)
-			ret += OpModes[0].FireTimeGroups.Size();
-		if (OpModes[1] != null)
-			ret += OpModes[1].FireTimeGroups.Size();
-
-		return ret;
-	}
-
-	// Combine with `FireTimeGroupCount()` for conveniently accessing any and all
-	// fire time groups had by this weapon's two operating modes.
-	BIO_StateTimeGroup GetFireTimeGroup(uint index) const
-	{
-		if (OpModes[0] != null)
-		{
-			if (index >= OpModes[0].FireTimeGroups.Size())
-			{
-				if (OpModes[1] != null)
-				{
-					index -= OpModes[0].FireTimeGroups.Size();
-					return OpModes[1].FireTimeGroups[index];
-				}
-				else
-				{
-					return null;
-				}
-			}
-			else
-			{
-				return OpModes[0].FireTimeGroups[index];
-			}
-		}
-
-		return null;	
-	}
-
 	bool Uninitialised() const
 	{
 		return
-			OpModes[0] == null && OpModes[1] == null &&
-			Affixes.Size() < 1 && ModGraph == null;
+			Pipelines.Size() < 1 &&
+			Affixes.Size() < 1 &&
+			FireTimeGroups.Size() < 1 &&
+			ReloadTimeGroups.Size() < 1 &&
+			ModGraph == null;
 	}
 
 	// Doesn't do much, but will ease refactoring if the condition needs to change.
@@ -256,11 +173,6 @@ extend class BIO_Weapon
 			Owner.FindInventory('PowerInfiniteAmmo', true) != null;
 	}
 
-	BIO_WeaponOperatingMode CurOpMode() const
-	{
-		return !bAltFire ? OpModes[0] : OpModes[1];
-	}
-
 	bool MagazineSizeMutable(bool secondary = false) const
 	{
 		if (!secondary)
@@ -271,26 +183,19 @@ extend class BIO_Weapon
 
 	bool FireTimesReducible(bool alt = false) const
 	{
-		bool ret = false;
+		// State sequences can't have all of their tic times reduced to 0.
+		// Fire rate-affecting affixes must know in advance if
+		// they can even have any effect, given this caveat.
+		for (uint i = 0; i < FireTimeGroups.Size(); i++)
+			if (FireTimeGroups[i].PossibleReduction() > 1)
+				return true;
 
-		if (OpModes[0] != null)
-			ret |= OpModes[0].FireTimesReducible();
-		if (OpModes[1] != null)
-			ret |= OpModes[1].FireTimesReducible();
-
-		return ret;
+		return false;
 	}
 
 	bool FireTimesMutable() const
 	{
-		bool ret = false;
-
-		if (OpModes[0] != null)
-			ret |= OpModes[0].FireTimesMutable();
-		if (OpModes[1] != null)
-			ret |= OpModes[1].FireTimesMutable();
-
-		return ret;
+		return FireTimeGroups.Size() > 0 && FireTimesReducible();
 	}
 
 	bool ReloadTimesReducible() const
@@ -312,36 +217,37 @@ extend class BIO_Weapon
 
 	bool DealsAnyHitDamage() const
 	{
-		bool ret = false;
-
-		if (OpModes[0] != null)
-			ret |= OpModes[0].DealsAnyHitDamage();
-		if (OpModes[1] != null)
-			ret |= OpModes[1].DealsAnyHitDamage();
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].DealsAnyHitDamage())
+				return true;
 
 		return false;
 	}
 
 	bool DealsAnySplashDamage() const
 	{
-		bool ret = false;
-
-		if (OpModes[0] != null)
-			ret |= OpModes[0].DealsAnySplashDamage();
-		if (OpModes[1] != null)
-			ret |= OpModes[1].DealsAnySplashDamage();
+		for (uint i = 0; i < Pipelines.Size(); i++)
+			if (Pipelines[i].DealsAnySplashDamage())
+				return true;
 
 		return false;
-	}
+}
 
-	bool AnyPipelineFiresPayload(class<Actor> payload, bool subclass = false)
+	bool AnyPipelineFiresPayload(class<Actor> payload, bool subclass = false) const
 	{
-		bool ret = false;
-
-		if (OpModes[0] != null)
-			ret |= OpModes[0].AnyPipelineFiresPayload(payload, subclass);
-		if (OpModes[1] != null)
-			ret |= OpModes[1].AnyPipelineFiresPayload(payload, subclass);
+		for (uint i = 0; i < Pipelines.Size(); i++)
+		{
+			if (subclass)
+			{
+				if (Pipelines[i].Payload is payload)
+					return true;
+			}
+			else
+			{
+				if (Pipelines[i].Payload == payload)
+					return true;
+			}
+		}
 
 		return false;
 	}

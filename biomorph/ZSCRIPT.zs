@@ -71,7 +71,6 @@ class Biomorph abstract
 #include "zscript/biomorph/global/modifiers.zs"
 #include "zscript/biomorph/global/morph.zs"
 #include "zscript/biomorph/global/mutagens.zs"
-#include "zscript/biomorph/global/opmodes.zs"
 #include "zscript/biomorph/global/perks.zs"
 #include "zscript/biomorph/global/weapons.zs"
 
@@ -100,7 +99,6 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/firefunc.zs"
 #include "zscript/biomorph/weapons/magazine.zs"
 #include "zscript/biomorph/weapons/modgraph.zs"
-#include "zscript/biomorph/weapons/opmode.zs"
 #include "zscript/biomorph/weapons/pipeline.zs"
 #include "zscript/biomorph/weapons/pipeline_builder.zs"
 #include "zscript/biomorph/weapons/recoil.zs"

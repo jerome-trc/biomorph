@@ -15,13 +15,14 @@ class BIO_Unarmed : BIO_Weapon
 
 		BIO_Weapon.Family BIO_WEAPFAM_UNARMED;
 		BIO_Weapon.GraphQuality 8;
-		BIO_Weapon.OperatingMode 'BIO_OpMode_Unarmed_Rapid';
 		BIO_Weapon.SwitchSpeeds 14, 14;
 	}
 
 	override void SetDefaults()
 	{
-		OpModes[0].Pipelines.Push(
+		FireTimeGroups.Push(StateTimeGroupFrom('Jab.Right', flags: BIO_STGF_MELEE));
+
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Punch()
 				.RandomDamage(2, 20)
@@ -69,11 +70,8 @@ class BIO_Unarmed : BIO_Weapon
 		H2HC A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
-	AltFire:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
+		TNT1 A 0 A_JumpIf(invoker.bLeftHand, 'Jab.Left');
+		Goto Jab.Right;
 	Jab.Right:
 		TNT1 A 0 { invoker.bLeftHand = true; }
 		JABR A 1 A_BIO_SetFireTime(0);
@@ -119,32 +117,5 @@ class BIO_Unarmed : BIO_Weapon
 
 		if (BIO_quake)
 			A_Quake(1, 5, 0, 5);
-	}
-}
-
-// Operating modes /////////////////////////////////////////////////////////////
-
-class BIO_OpMode_Unarmed_Rapid : BIO_OpMode_Rapid
-{
-	final override class<BIO_Weapon> WeaponType() const { return 'BIO_Unarmed'; }
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(weap.StateTimeGroupFrom('Jab.Right'));
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'Rapid.Fire';
-	}
-}
-
-extend class BIO_Unarmed
-{
-	States
-	{
-	Rapid.Fire:
-		TNT1 A 0 A_JumpIf(invoker.bLeftHand, 'Jab.Left');
-		Goto Jab.Right;
 	}
 }

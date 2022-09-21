@@ -161,8 +161,8 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 		if (context.Sim.HasModifierWithPipelineFlags(BIO_WPMF_GRAVITY_ADD))
 			return false, "$BIO_WMOD_INCOMPAT_PROJGRAVITYMOD";
 
-		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
-			if (CompatibleWithPipeline(context.Weap.GetPipeline(i).AsConst()))
+		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_PROJGRAVITY";
@@ -182,9 +182,9 @@ class BIO_WMod_ProjGravity : BIO_WeaponModifier
 	{
 		weap.Affixes.Push(new('BIO_WAfx_ProjGravity'));
 
-		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
+		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
 		{
-			let ppl = context.Weap.GetPipeline(i);
+			let ppl = context.Weap.Pipelines[i];
 			let compat = CompatibleWithPipeline(ppl.AsConst());
 
 			if (compat)

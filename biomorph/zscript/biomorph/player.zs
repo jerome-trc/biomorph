@@ -183,8 +183,7 @@ extend class BIO_Player
 		{
 			// The player has already had their inventory initialised for the
 			// first time, but the map has attempted to force a reset
-			GiveInventory('BIO_Unarmed', 1);
-			GiveRandomStartingPistol();
+			GiveDefaultWeapons();
 			return;
 		}
 
@@ -192,6 +191,11 @@ extend class BIO_Player
 			return;
 
 		super.GiveDefaultInventory();
+		GiveDefaultWeapons();
+	}
+
+	private void GiveDefaultWeapons()
+	{
 		GiveInventory('BIO_Unarmed', 1);
 		GiveRandomStartingPistol();
 	}

@@ -87,19 +87,7 @@ extend class BIO_WeaponModSimulator
 	void Simulate()
 	{
 		Weap.Reset();
-
-		if (Weap.OperatingMode1 != null)
-			Weap.OpModes[0] = BIO_WeaponOperatingMode.Create(Weap.OperatingMode1, Weap);
-		if (Weap.OperatingMode2 != null)
-			Weap.OpModes[1] = BIO_WeaponOperatingMode.Create(Weap.OperatingMode2, Weap);
-
 		Weap.SetDefaults();
-
-		if (Weap.OpModes[0] != null)
-			Weap.OpModes[0].SideEffects(Weap);
-		if (Weap.OpModes[1] != null)
-			Weap.OpModes[1].SideEffects(Weap);
-
 		Weap.SetupAmmo();
 		Weap.SetupMagazines();
 		Snapshots[0].ImitateReal(Weap.AsConst());

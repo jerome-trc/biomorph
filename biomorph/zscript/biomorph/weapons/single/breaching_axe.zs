@@ -15,7 +15,6 @@ class BIO_BreachingAxe : BIO_Weapon
 		Weapon.SlotPriority SLOTPRIO_HIGH;
 
 		BIO_Weapon.GraphQuality 8;
-		BIO_Weapon.OperatingMode 'BIO_OpMode_BreachingAxe_HoldRelease';
 		BIO_Weapon.PickupMessages
 			"$BIO_BREACHINGAXE_PKUP",
 			"";
@@ -24,7 +23,14 @@ class BIO_BreachingAxe : BIO_Weapon
 
 	override void SetDefaults()
 	{
-		OpModes[0].Pipelines.Push(
+		FireTimeGroups.Push(
+			StateTimeGroupFrom('Fire.Hold', "$BIO_CHARGE", flags: BIO_STGF_MELEE)
+		);
+		FireTimeGroups.Push(
+			StateTimeGroupFrom('Swing', "$BIO_SWING", flags: BIO_STGF_MELEE)
+		);
+
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Punch(
 					range: DEFMELEERANGE * 1.5,
@@ -63,12 +69,6 @@ class BIO_BreachingAxe : BIO_Weapon
 		BRAX A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
-	AltFire:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
-	Fire.Hold:
 		BRAX A 2 A_BIO_SetFireTime(0);
 		BRAX B 2 A_BIO_SetFireTime(1);
 		BRAX C 2 A_BIO_SetFireTime(2);
@@ -107,30 +107,5 @@ class BIO_FireFunc_Axe : BIO_FireFunc_Punch
 	) const
 	{
 		return "$BIO_FIREFUNC_AXE";
-	}
-}
-
-// Operating modes /////////////////////////////////////////////////////////////
-
-class BIO_OpMode_BreachingAxe_HoldRelease : BIO_OpMode_HoldRelease
-{
-	final override class<BIO_Weapon> WeaponType() const
-	{
-		return 'BIO_BreachingAxe';
-	}
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(
-			weap.StateTimeGroupFrom('Fire.Hold', "$BIO_CHARGE", flags: BIO_STGF_MELEE)
-		);
-		FireTimeGroups.Push(
-			weap.StateTimeGroupFrom('Swing', "$BIO_SWING", flags: BIO_STGF_MELEE)
-		);
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'Fire.Hold';
 	}
 }

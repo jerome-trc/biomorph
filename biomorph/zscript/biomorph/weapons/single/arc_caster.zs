@@ -27,7 +27,6 @@ class BIO_ArcCaster : BIO_Weapon
 		BIO_Weapon.MagazineFlags BIO_MAGF_RECHARGING_1;
 		BIO_Weapon.MagazineType 'BIO_RechargingMagazine';
 		BIO_Weapon.MagazineSize 50;
-		BIO_Weapon.OperatingMode 'BIO_OpMode_ArcCaster_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_ARCCASTER_PKUP",
 			"$BIO_ARCCASTER_SCAV";
@@ -38,8 +37,9 @@ class BIO_ArcCaster : BIO_Weapon
 	override void SetDefaults()
 	{
 		ReloadTimeGroups.Push(BIO_StateTimeGroup.RechargeTime(4));
+		FireTimeGroups.Push(StateTimeGroupFrom('Fire.B'));
 
-		OpModes[0].Pipelines.Push(
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Rail(
 					'BIO_ElectricPuff',
@@ -81,11 +81,18 @@ class BIO_ArcCaster : BIO_Weapon
 		ARCA A 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
-	AltFire:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
+		TNT1 A 0 A_BIO_CheckAmmo;
+		TNT1 A 0
+		{
+			switch (invoker.FireSprite)
+			{
+			default:
+			case FIRE_SPRITE_B: return state(null);
+			case FIRE_SPRITE_C: return ResolveState('Fire.C');
+			case FIRE_SPRITE_D: return ResolveState('Fire.D');
+			case FIRE_SPRITE_E: return ResolveState('Fire.E');
+			}
+		}
 	Fire.B:
 		ARCA B 2 Bright
 		{
@@ -93,7 +100,6 @@ class BIO_ArcCaster : BIO_Weapon
 			A_BIO_FireSound(CHAN_AUTO);
 			A_BIO_ArcCaster_Fire(FIRE_SPRITE_C);
 		}
-		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
 	Fire.C:
@@ -102,7 +108,6 @@ class BIO_ArcCaster : BIO_Weapon
 			A_BIO_SetFireTime(0);
 			A_BIO_ArcCaster_Fire(FIRE_SPRITE_D);
 		}
-		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
 	Fire.D:
@@ -111,7 +116,6 @@ class BIO_ArcCaster : BIO_Weapon
 			A_BIO_SetFireTime(0);
 			A_BIO_ArcCaster_Fire(FIRE_SPRITE_E);
 		}
-		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
 	Fire.E:
@@ -120,7 +124,6 @@ class BIO_ArcCaster : BIO_Weapon
 			A_BIO_SetFireTime(0);
 			A_BIO_ArcCaster_Fire(FIRE_SPRITE_B);
 		}
-		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
 	Flash:
@@ -138,27 +141,7 @@ class BIO_ArcCaster : BIO_Weapon
 		A_GunFlash();
 		invoker.FireSprite = fireSprite;
 	}
-}
 
-// Operating modes /////////////////////////////////////////////////////////////
-
-class BIO_OpMode_ArcCaster_Rapid : BIO_OpMode_Rapid
-{
-	final override class<BIO_Weapon> WeaponType() const { return 'BIO_ArcCaster'; }
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(weap.StateTimeGroupFrom('Fire.B'));
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'Rapid.Fire';
-	}
-}
-
-extend class BIO_ArcCaster
-{
 	States
 	{
 	Rapid.Fire:

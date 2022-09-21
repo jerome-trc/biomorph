@@ -18,7 +18,6 @@ class BIO_Global : Thinker
 		ret.DetectContext();
 		ret.PopulateWeaponLootTables();
 		ret.PopulateWeaponMorphCache();
-		ret.PopulateWeaponOpModeCache();
 		ret.PopulateWeaponModifierCache();
 		ret.PopulateMutagenLootTable();
 		ret.PopulateGeneLootTable();

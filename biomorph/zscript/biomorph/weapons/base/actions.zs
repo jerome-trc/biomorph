@@ -1,53 +1,11 @@
 extend class BIO_Weapon
 {
-	protected action state A_BIO_Op_Primary()
-	{
-		invoker.bAltFire = false;
-
-		if (invoker.OpModes[0] == null)
-			return ResolveState('Ready');
-		else
-			return invoker.ResolveState(invoker.OpModes[0].EntryState());
-	}
-
-	protected action state A_BIO_Op_Secondary()
-	{
-		invoker.bAltFire = true;
-
-		if (invoker.OpModes[1] == null)
-			return ResolveState('Ready');
-		else
-			return invoker.ResolveState(invoker.OpModes[1].EntryState());
-	}
-
-	protected action state A_BIO_Op_PostFire()
-	{
-		let postfire = invoker.ResolveState(invoker.CurOpMode().ClosingState());
-
-		if (postfire != null)
-			return postfire;
-		else
-			return state(null);
-	}
-
-	protected action state A_BIO_Op_CheckBurst(statelabel refire)
-	{
-		if (!invoker.CurOpMode().CheckBurst())
-			return ResolveState(refire);
-		else
-			return state(null);
-	}
-
 	protected action bool A_BIO_Fire(uint pipeline = 0)
 	{
 		if (!A_BIO_DepleteAmmo(pipeline))
 			return false;
 
-		let ppl = !invoker.bAltFire ?
-			invoker.OpModes[0].Pipelines[pipeline] :
-			invoker.OpModes[1].Pipelines[pipeline];
-
-		ppl.Invoke(invoker, pipeline);
+		invoker.Pipelines[pipeline].Invoke(invoker, pipeline);
 		return true;
 	}
 
@@ -60,7 +18,7 @@ extend class BIO_Weapon
 	)
 	{
 		A_StartSound(
-			invoker.CurOpMode().Pipelines[pipeline].FireSound,
+			invoker.Pipelines[pipeline].FireSound,
 			channel,
 			flags,
 			volume,
@@ -70,9 +28,7 @@ extend class BIO_Weapon
 
 	protected action bool A_BIO_DepleteAmmo(uint pipeline = 0)
 	{
-		let ppl = !invoker.bAltFire ?
-			invoker.OpModes[0].Pipelines[pipeline] :
-			invoker.OpModes[1].Pipelines[pipeline];
+		let ppl = invoker.Pipelines[pipeline];
 
 		if (ppl.Flags & BIO_WPF_PRIMARYAMMO)
 		{
@@ -291,7 +247,7 @@ extend class BIO_Weapon
 	)
 	{
 		A_SetTics(
-			Max(modifier + invoker.CurOpMode().FireTimeGroups[group].Times[index], 0)
+			Max(modifier + invoker.FireTimeGroups[group].Times[index], 0)
 		);
 	}
 

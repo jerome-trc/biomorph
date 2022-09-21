@@ -15,7 +15,6 @@ class BIO_Chainsaw : BIO_Weapon
 		Weapon.UpSound "weapons/sawup";
 
 		BIO_Weapon.GraphQuality 10;
-		BIO_Weapon.OperatingMode 'BIO_OpMode_Chainsaw_Rapid';
 		BIO_Weapon.PickupMessages
 			"$BIO_CHAINSAW_PKUP",
 			"";
@@ -24,7 +23,9 @@ class BIO_Chainsaw : BIO_Weapon
 
 	final override void SetDefaults()
 	{
-		OpModes[0].Pipelines.Push(
+		FireTimeGroups.Push(StateTimeGroupFrom('Fire', flags: BIO_STGF_MELEE));
+
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Saw(range: SAWRANGE * 1.5)
 				.RandomDamage(2, 20)
@@ -54,45 +55,17 @@ class BIO_Chainsaw : BIO_Weapon
 		SAWG C 0 A_BIO_Select;
 		Stop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
-	AltFire:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
-	}
-}
-
-// Operating modes /////////////////////////////////////////////////////////////
-
-class BIO_OpMode_Chainsaw_Rapid : BIO_OpMode_Rapid
-{
-	final override class<BIO_Weapon> WeaponType() const
-	{
-		return 'BIO_Chainsaw';
-	}
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(
-			weap.StateTimeGroupFrom('Rapid.Fire', flags: BIO_STGF_MELEE)
-		);
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'Rapid.Fire';
-	}
-}
-
-extend class BIO_Chainsaw
-{
-	States
-	{
-	Rapid.Fire:
-		SAWG A 2 A_BIO_Fire;
-		SAWG B 2 A_BIO_Fire;
+		SAWG A 2
+		{
+			A_BIO_SetFireTime(0);
+			A_BIO_Fire();
+		}
+		SAWG B 2
+		{
+			A_BIO_SetFireTime(1);
+			A_BIO_Fire();
+		}
 		SAWG B 0 A_ReFire;
-		TNT1 A 0 A_BIO_Op_PostFire;
 		Goto Ready;
 	}
 }

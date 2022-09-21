@@ -2,8 +2,8 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
-			if (CompatibleWithPipeline(context.Weap.GetPipeline(i).AsConst()))
+		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_PAYLOADTOOSMALL";
@@ -28,9 +28,9 @@ class BIO_WMod_CanisterShot : BIO_WeaponModifier
 		BIO_GeneContext context
 	) const
 	{
-		for (uint i = 0; i < weap.PipelineCount(); i++)
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			let ppl = weap.GetPipeline(i);
+			let ppl = weap.Pipelines[i];
 
 			if (!CompatibleWithPipeline(ppl.AsConst()))
 				continue;
@@ -78,8 +78,8 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 {
 	final override bool, string Compatible(BIO_GeneContext context) const
 	{
-		for (uint i = 0; i < context.Weap.PipelineCount(); i++)
-			if (CompatibleWithPipeline(context.Weap.GetPipeline(i).AsConst()))
+		for (uint i = 0; i < context.Weap.Pipelines.Size(); i++)
+			if (CompatibleWithPipeline(context.Weap.Pipelines[i].AsConst()))
 				return true, "";
 
 		return false, "$BIO_WMOD_INCOMPAT_PAYLOADTOOSMALL";
@@ -104,9 +104,9 @@ class BIO_WMod_ProxMine : BIO_WeaponModifier
 		BIO_GeneContext context
 	) const
 	{
-		for (uint i = 0; i < weap.PipelineCount(); i++)
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			let ppl = weap.GetPipeline(i);
+			let ppl = weap.Pipelines[i];
 
 			if (!CompatibleWithPipeline(ppl.AsConst()))
 				continue;
@@ -154,9 +154,9 @@ class BIO_WMod_ShellToSlug : BIO_WeaponModifier
 		BIO_GeneContext context
 	) const
 	{
-		for (uint i = 0; i < weap.PipelineCount(); i++)
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
-			let ppl = weap.GetPipeline(i);
+			let ppl = weap.Pipelines[i];
 
 			if (!(ppl.Payload is 'BIO_ShotPellet'))
 				continue;

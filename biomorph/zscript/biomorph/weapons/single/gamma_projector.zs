@@ -16,7 +16,6 @@ class BIO_GammaProjector : BIO_Weapon
 		BIO_Weapon.MagazineFlags BIO_MAGF_RECHARGING_1;
 		BIO_Weapon.MagazineType 'BIO_RechargingMagazine';
 		BIO_Weapon.MagazineSize 200;
-		BIO_Weapon.OperatingMode 'BIO_OpMode_GammaProjector_HoldRelease';
 		BIO_Weapon.PickupMessages
 			"$BIO_GAMMAPROJECTOR_PKUP",
 			"$BIO_GAMMAPROJECTOR_SCAV";
@@ -25,9 +24,10 @@ class BIO_GammaProjector : BIO_Weapon
 
 	override void SetDefaults()
 	{
+		FireTimeGroups.Push(StateTimeGroupFrom('Release'));
 		ReloadTimeGroups.Push(BIO_StateTimeGroup.RechargeTime(3));
 		
-		OpModes[0].Pipelines.Push(
+		Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.BFGSpray(cone: 60.0)
 				.X1D8Damage(13)
@@ -53,39 +53,9 @@ class BIO_GammaProjector : BIO_Weapon
 		GAMM A 1 A_WeaponReady(WRF_ALLOWZOOM);
 		Loop;
 	Fire:
-		TNT1 A 0 A_BIO_Op_Primary;
-		Stop;
-	AltFire:
-		TNT1 A 0 A_BIO_Op_Secondary;
-		Stop;
-	}
-}
-
-// Operating modes /////////////////////////////////////////////////////////////
-
-class BIO_OpMode_GammaProjector_HoldRelease : BIO_OpMode_HoldRelease
-{
-	final override class<BIO_Weapon> WeaponType() const
-	{
-		return 'BIO_GammaProjector';
-	}
-
-	final override void Init(readOnly<BIO_Weapon> weap)
-	{
-		FireTimeGroups.Push(weap.StateTimeGroupFrom('HoldRel.Fire'));
-	}
-
-	final override statelabel EntryState() const
-	{
-		return 'HoldRel.Hold';
-	}
-}
-
-extend class BIO_GammaProjector
-{
-	States
-	{
-	HoldRel.Hold:
+		TNT1 A 0 A_BIO_CheckAmmo;
+		Goto Hold;
+	Hold:
 		GAMM B 1
 		{
 			A_StartSound("bio/weap/arccaster/ready", CHAN_AUTO);
@@ -93,11 +63,11 @@ extend class BIO_GammaProjector
 			return A_JumpIf(
 				!invoker.bAltFire && !(Player.Cmd.Buttons & BT_ATTACK) ||
 				invoker.bAltFire && !(Player.Cmd.Buttons & BT_ALTATTACK),
-				'HoldRel.Fire'
+				'Release'
 			);
 		}
 		Loop;
-	HoldRel.Fire:
+	Release:
 		GAMM C 10 Bright
 		{
 			A_BIO_SetFireTime(0);
@@ -113,11 +83,9 @@ extend class BIO_GammaProjector
 			A_BIO_SetFireTime(2);
 			A_BIO_Fire();
 		}
-		TNT1 A 0 A_BIO_Op_CheckBurst('HoldRel.Fire');
-		TNT1 A 0 A_BIO_Op_PostFire;
 		TNT1 A 0 A_BIO_AutoReload;
 		Goto Ready;
-	HoldRel.Flash:
+	Flash:
 		TNT1 A 10
 		{
 			A_BIO_SetFireTime(0);

@@ -398,24 +398,6 @@ class BIO_MGene_SplashToHit : BIO_ProceduralGene
 	}
 }
 
-class BIO_MGene_Spooling : BIO_ProceduralGene
-{
-	Default
-	{
-		Inventory.Icon 'GENTC0';
-		BIO_Gene.LootWeight LOOTWEIGHT_COMMON;
-		BIO_ProceduralGene.Modifier 'BIO_WMod_Spooling';
-	}
-
-	States
-	{
-	Spawn:
-		GENT C 6;
-		#### # 6 Bright Light("BIO_MutaGene_Orange");
-		Loop;
-	}
-}
-
 class BIO_MGene_Spread : BIO_ProceduralGene
 {
 	Default

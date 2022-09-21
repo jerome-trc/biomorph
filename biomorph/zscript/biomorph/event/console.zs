@@ -85,75 +85,8 @@ extend class BIO_EventHandler
 			"\tbio_weaplootregen\n"
 			"\tbio_mutalootregen\n"
 			"\tbio_genelootregen\n"
-			"\tbio_opmoderegen\n"
 			"\tbio_morphregen"
 		);
-	}
-
-	private static ui void WeaponOpModeToString(
-		in out string output,
-		BIO_WeaponOperatingMode opmode
-	)
-	{
-		if (opmode.FireTimeGroups.Size() > 0)
-			output.AppendFormat("\c[Yellow]Fire time groups:\c-\n");
-
-		for (uint i = 0; i < opmode.FireTimeGroups.Size(); i++)
-		{
-			let ftg = opmode.FireTimeGroups[i];
-			string tag = ftg.Tag.Length() > 0 ? ftg.Tag : "num. " .. i;
-			output.AppendFormat("\t-> \c[Green]Group %s\c-\n", tag);
-
-			for (uint j = 0; j < ftg.Times.Size(); j++)
-				output.AppendFormat("\t\t%d, min. %d\n", ftg.Times[j], ftg.Minimums[j]);
-		}
-
-		if (opmode.Pipelines.Size() > 0)
-			output.AppendFormat("\c[Yellow]Pipelines\c-:\n");
-
-		for (uint i = 0; i < opmode.Pipelines.Size(); i++)
-		{
-			let ppl = opmode.Pipelines[i];
-
-			if (ppl.Tag.Length() > 0)
-				output.AppendFormat("\t-> \c[Green]Pipeline: %s\c-\n", ppl.Tag);
-			else
-				output.AppendFormat("\t-> \c[Green]Pipeline: %d\c-\n", i);
-
-			output.AppendFormat(
-				"\t\tUses primary amo: %s\n",
-				ppl.UsesPrimaryAmmo() ? "yes" : "no"
-			);
-			output.AppendFormat(
-				"\t\tUses secondary ammo: %s\n",
-				ppl.UsesSecondaryAmmo() ? "yes" : "no"
-			);
-			output.AppendFormat(
-				"\t\tFiring functor: %s\n",
-				ppl.FireFunctor.GetClassName()
-			);
-			output.AppendFormat(
-				"\t\tPayload: %s\n",
-				ppl.Payload.GetClassName()
-			);
-			output.AppendFormat(
-				"\t\tDamage base functor: %s\n",
-				ppl.DamageBase.GetClassName()
-			);
-
-			for (uint j = 0; j < ppl.DamageEffects.Size(); j++)
-				output.AppendFormat(
-					"\t\tDamage effect %d: %s\n",
-					j,
-					ppl.DamageEffects[j].GetClassName()
-				);
-
-			output.AppendFormat(
-				"\t\tMinimum and maximum hit damage: %d - %d\n",
-				ppl.GetMinDamage(true),
-				ppl.GetMaxDamage(true)	
-			);
-		}
 	}
 
 	private static ui void ConEvent_WeapDiag()
@@ -232,26 +165,68 @@ extend class BIO_EventHandler
 			weap.ReloadOutput2
 		);
 
-		// Operating modes
+		// Pipelines
 
-		if (weap.OpModes[0] != null)
+		if (weap.Pipelines.Size() > 0)
+			output.AppendFormat("\c[Yellow]Pipelines\c-:\n");
+
+		for (uint i = 0; i < weap.Pipelines.Size(); i++)
 		{
+			let ppl = weap.Pipelines[i];
+
+			if (ppl.Tag.Length() > 0)
+				output.AppendFormat("\t-> \c[Green]Pipeline: %s\c-\n", ppl.Tag);
+			else
+				output.AppendFormat("\t-> \c[Green]Pipeline: %d\c-\n", i);
+
 			output.AppendFormat(
-				"\c[Yellow]Operating mode 1\c-: %s",
-				weap.OpModes[0].GetClassName()
+				"\t\tUses primary amo: %s\n",
+				ppl.UsesPrimaryAmmo() ? "yes" : "no"
+			);
+			output.AppendFormat(
+				"\t\tUses secondary ammo: %s\n",
+				ppl.UsesSecondaryAmmo() ? "yes" : "no"
+			);
+			output.AppendFormat(
+				"\t\tFiring functor: %s\n",
+				ppl.FireFunctor.GetClassName()
+			);
+			output.AppendFormat(
+				"\t\tPayload: %s\n",
+				ppl.Payload.GetClassName()
+			);
+			output.AppendFormat(
+				"\t\tDamage base functor: %s\n",
+				ppl.DamageBase.GetClassName()
 			);
 
-			WeaponOpModeToString(output, weap.OpModes[0]);
+			for (uint j = 0; j < ppl.DamageEffects.Size(); j++)
+				output.AppendFormat(
+					"\t\tDamage effect %d: %s\n",
+					j,
+					ppl.DamageEffects[j].GetClassName()
+				);
+
+			output.AppendFormat(
+				"\t\tMinimum and maximum hit damage: %d - %d\n",
+				ppl.GetMinDamage(true),
+				ppl.GetMaxDamage(true)	
+			);
 		}
 
-		if (weap.OpModes[1] != null)
-		{
-			output.AppendFormat(
-				"\c[Yellow]Operating mode 1\c-: %s",
-				weap.OpModes[1].GetClassName()
-			);
+		// Timing
 
-			WeaponOpModeToString(output, weap.OpModes[1]);
+		if (weap.FireTimeGroups.Size() > 0)
+			output.AppendFormat("\c[Yellow]Fire time groups:\c-\n");
+
+		for (uint i = 0; i < weap.FireTimeGroups.Size(); i++)
+		{
+			let ftg = weap.FireTimeGroups[i];
+			string tag = ftg.Tag.Length() > 0 ? ftg.Tag : "num. " .. i;
+			output.AppendFormat("\t-> \c[Green]Group %s\c-\n", tag);
+
+			for (uint j = 0; j < ftg.Times.Size(); j++)
+				output.AppendFormat("\t\t%d, min. %d\n", ftg.Times[j], ftg.Minimums[j]);
 		}
 
 		if (weap.ReloadTimeGroups.Size() > 0)
