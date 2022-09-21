@@ -25,7 +25,7 @@ extend class BIO_Global
 		Console.Printf(
 			Biomorph.LOGPFX_ERR ..
 			"Failed to find weapon modifier instance by type: %s",
-			mod_t
+			mod_t.GetClassName()
 		);
 		return null;
 	}
