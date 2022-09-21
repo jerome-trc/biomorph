@@ -1,5 +1,10 @@
 class BIO_VolleyGun : BIO_Weapon
 {
+	const DAMAGE_MIN = 10;
+	const DAMAGE_MAX = 15;
+	const SPREAD_HORIZ = 12.0;
+	const SPREAD_VERT = 7.5;
+
 	Default
 	{
 		Tag "$BIO_VOLLEYGUN_TAG";
@@ -33,8 +38,8 @@ class BIO_VolleyGun : BIO_Weapon
 		OpModes[0].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet('BIO_ShotPellet', 40)
-				.RandomDamage(BIO_Coachgun.DAMAGE_MIN, BIO_Coachgun.DAMAGE_MAX)
-				.Spread(BIO_Coachgun.SPREAD_HORIZ, BIO_Coachgun.SPREAD_VERT)
+				.RandomDamage(DAMAGE_MIN, DAMAGE_MAX)
+				.Spread(SPREAD_HORIZ, SPREAD_VERT)
 				.FireSound("bio/weap/volleygun/fire")
 				.AmmoUseMulti(4)
 				.Tag("$BIO_4BARRELS")
@@ -44,8 +49,8 @@ class BIO_VolleyGun : BIO_Weapon
 		OpModes[1].Pipelines.Push(
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet('BIO_Shotpellet', 20)
-				.RandomDamage(BIO_Coachgun.DAMAGE_MIN, BIO_Coachgun.DAMAGE_MAX)
-				.Spread(BIO_Coachgun.SPREAD_HORIZ, BIO_Coachgun.SPREAD_VERT)
+				.RandomDamage(DAMAGE_MIN, DAMAGE_MAX)
+				.Spread(SPREAD_HORIZ, SPREAD_VERT)
 				.FireSound("bio/weap/coachgun/fire")
 				.AmmoUseMulti(2)
 				.Tag("$BIO_2BARRELS")

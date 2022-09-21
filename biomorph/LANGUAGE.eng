@@ -169,15 +169,6 @@
 		"\c[White]Feeds from cell reserves\n"
 		"\c[White]Very high rate-of-fire";
 
-	BIO_AUTOSHOTGUN_TAG = "Auto Shotgun";
-	BIO_AUTOSHOTGUN_PKUP = "Procured an %s.";
-	BIO_AUTOSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_AUTOSHOTGUN_OB = "%k ploughed %o down with an %s.";
-	BIO_AUTOSHOTGUN_SUMM =
-		"\c[White]High rate-of-fire\n"
-		"\c[White]Same accuracy as the Pump Shotgun\n"
-		"\c[White]8-round magazine, long reload time";
-
 	BIO_BFG_TAG = "BFG9000";
 	BIO_BFG_PKUP = "Procured a %s.";
 	BIO_BFG_SCAV = "Scavenged ammo from a dropped %s.";
@@ -190,11 +181,6 @@
 	BIO_CHAINSAW_TAG = "Chainsaw";
 	BIO_CHAINSAW_PKUP = "Procured a %s.";
 	BIO_CHAINSAW_OB = "%k sawed %o in half with a %s.";
-
-	BIO_COACHGUN_TAG = "Coachgun";
-	BIO_COACHGUN_PKUP = "Procured a %s.";
-	BIO_COACHGUN_OB = "%k cut %o down with a %s.";
-	BIO_COACHGUN_SCAV = "Scavenged ammo from a dropped %s.";
 
 	BIO_GAMMAPROJECTOR_TAG = "Gamma Projector";
 	BIO_GAMMAPROJECTOR_PKUP = "Procured a %s.";
@@ -222,11 +208,6 @@
 	BIO_PLASMARIFLE_PKUP = "Procured a %s.";
 	BIO_PLASMARIFLE_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_PLASMARIFLE_OB = "%k burned %o with a %s.";
-
-	BIO_PUMPSHOTGUN_TAG = "Pump Shotgun";
-	BIO_PUMPSHOTGUN_PKUP = "Procured a %s.";
-	BIO_PUMPSHOTGUN_OB = "%k wasted %o with a %s.";
-	BIO_PUMPSHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
 
 	BIO_ROCKETAUTOLAUNCHER_TAG = "Rocket Auto-Launcher";
 	BIO_ROCKETAUTOLAUNCHER_PKUP = "Procured a %s.";

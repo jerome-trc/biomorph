@@ -1,8 +1,2 @@
-BIO_WMR_AutoShotgun
-	BIO_PumpShotgun
-
 BIO_WMR_DualMachineGun
 	BIO_MachineGun
-
-BIO_WMR_VolleyGun
-	BIO_Coachgun
