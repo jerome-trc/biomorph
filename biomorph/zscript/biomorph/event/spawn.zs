@@ -12,11 +12,43 @@ extend class BIO_EventHandler
 					return;
 			}
 
-			OnAmmoSpawn(event);
+			if (event.Thing.GetClass() == 'Clip')
+			{
+				if (Random[BIO_Loot](1, 50) == 1)
+				{
+					Actor.Spawn(
+						Globals.LootWeaponType(BIO_WSCAT_PISTOL),
+						event.Thing.Pos
+					);
+				}
+
+				FinalizeSpawn('BIO_Clip', event.Thing);
+			}
+			else if (event.Thing.GetClass() == 'Shell')
+				FinalizeSpawn('BIO_Shell', event.Thing);
+			else if (event.Thing.GetClass() == 'RocketAmmo')
+				FinalizeSpawn('BIO_RocketAmmo', event.Thing);
+			else if (event.Thing.GetClass() == 'Cell')
+				FinalizeSpawn('BIO_Cell', event.Thing);
+			else if (event.Thing.GetClass() == 'ClipBox')
+				FinalizeSpawn('BIO_ClipBox', event.Thing);
+			else if (event.Thing.GetClass() == 'ShellBox')
+				FinalizeSpawn('BIO_ShellBox', event.Thing);
+			else if (event.Thing.GetClass() == 'RocketBox')
+				FinalizeSpawn('BIO_RocketBox', event.Thing);
+			else if (event.Thing.GetClass() == 'CellPack')
+				FinalizeSpawn('BIO_CellPack', event.Thing);
 		}
 		else if (event.Thing is 'BIO_WeaponReplacer')
 		{
-			OnWeaponSpawn(event);
+			class<BIO_Weapon> lwt = Globals.LootWeaponType(
+				BIO_WeaponReplacer(event.Thing).SpawnCategory
+			);
+
+			if (GetDefaultByType(lwt).Unique)
+				S_StartSound("bio/loot/unique", CHAN_AUTO);
+
+			FinalizeSpawn(lwt, event.Thing);
 		}
 	}
 
@@ -41,55 +73,6 @@ extend class BIO_EventHandler
 
 			eventThing.Destroy();
 		}
-	}
-
-	private void OnWeaponSpawn(WorldEvent event) const
-	{
-		let replacer = BIO_WeaponReplacer(event.Thing);
-
-		if (replacer == null)
-			return;
-
-		class<BIO_Weapon> lwt = Globals.LootWeaponType(replacer.SpawnCategory);
-
-		if (GetDefaultByType(lwt).Unique)
-			S_StartSound("bio/loot/unique", CHAN_AUTO);
-
-		FinalizeSpawn(lwt, event.Thing);
-	}
-
-	private bool OnAmmoSpawn(WorldEvent event) const
-	{
-		if (event.Thing.GetClass() == 'Clip')
-		{
-			if (Random[BIO_Loot](1, 50) == 1)
-			{
-				Actor.Spawn(
-					Globals.LootWeaponType(BIO_WSCAT_PISTOL),
-					event.Thing.Pos
-				);
-			}
-
-			FinalizeSpawn('BIO_Clip', event.Thing);
-		}
-		else if (event.Thing.GetClass() == 'Shell')
-			FinalizeSpawn('BIO_Shell', event.Thing);
-		else if (event.Thing.GetClass() == 'RocketAmmo')
-			FinalizeSpawn('BIO_RocketAmmo', event.Thing);
-		else if (event.Thing.GetClass() == 'Cell')
-			FinalizeSpawn('BIO_Cell', event.Thing);
-		else if (event.Thing.GetClass() == 'ClipBox')
-			FinalizeSpawn('BIO_ClipBox', event.Thing);
-		else if (event.Thing.GetClass() == 'ShellBox')
-			FinalizeSpawn('BIO_ShellBox', event.Thing);
-		else if (event.Thing.GetClass() == 'RocketBox')
-			FinalizeSpawn('BIO_RocketBox', event.Thing);
-		else if (event.Thing.GetClass() == 'CellPack')
-			FinalizeSpawn('BIO_CellPack', event.Thing);
-		else
-			return false;
-
-		return true;
 	}
 }
 
