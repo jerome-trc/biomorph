@@ -37,7 +37,7 @@ class BIO_Stormgun : BIO_Weapon
 			BIO_WeaponPipelineBuilder.Create()
 				.Bullet('BIO_ShotPellet', 2)
 				.RandomDamage(10, 15)
-				.Spread(9.0, 9.0)
+				.Spread(7.5, 3.0)
 				.FireSound("bio/weap/stormgun/fire")
 				.AmmoUseMulti(2)
 				.Build()
