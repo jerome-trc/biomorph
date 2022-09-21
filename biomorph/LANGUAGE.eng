@@ -222,6 +222,20 @@
 		"\c[White]Mid-high rate-of-fire\n"
 		"\c[White]Accurate";
 
+	BIO_SHOTGUN_TAG = "Shotgun";
+	BIO_SHOTGUN_PKUP = "Procured a %s.";
+	BIO_SHOTGUN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_SHOTGUN_OB = "%k wasted %o with a %s.";
+
+	BIO_STORMGUN_TAG = "Stormgun";
+	BIO_STORMGUN_PKUP = "Procured a %s.";
+	BIO_STORMGUN_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_STORMGUN_OB = "%k hit %o with a metal hail from a %s.";
+	BIO_STORMGUN_SUMM =	
+		"\c[White]Superposed-load automatic pseudo-shotgun\n"
+		"\c[White]Feeds shotshells; 2-round magazine\n"
+		"\c[White]Slow to reload";
+
 	BIO_VOLLEYGUN_TAG = "Volley Gun";
 	BIO_VOLLEYGUN_PKUP = "Procured a %s.";
 	BIO_VOLLEYGUN_SCAV = "Scavenged ammo from a dropped %s.";

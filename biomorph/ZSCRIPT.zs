@@ -148,6 +148,8 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/single/plasma_rifle.zs"
 #include "zscript/biomorph/weapons/single/ralauncher.zs"
 #include "zscript/biomorph/weapons/single/service_pistol.zs"
+#include "zscript/biomorph/weapons/single/shotgun.zs"
+#include "zscript/biomorph/weapons/single/stormgun.zs"
 #include "zscript/biomorph/weapons/single/unarmed.zs"
 #include "zscript/biomorph/weapons/single/volley_gun.zs"
 

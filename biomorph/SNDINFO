@@ -135,22 +135,6 @@ $random bio/weap/servicepistol/fire
 
 bio/weap/servicepistol/reload/end SVCP_RLE
 
-// Pump Shotgun
-
-bio/weap/pumpshotgun/fire/0 PASG_FR0
-bio/weap/pumpshotgun/fire/1 PASG_FR1
-bio/weap/pumpshotgun/fire/2 PASG_FR2
-
-$random bio/weap/pumpshotgun/fire
-{
-	bio/weap/pumpshotgun/fire/0
-	bio/weap/pumpshotgun/fire/1
-	bio/weap/pumpshotgun/fire/2
-}
-
-bio/weap/pumpshotgun/pumpback PUMPBACK
-bio/weap/pumpshotgun/pumpforward PUMPFORW
-
 // Coachgun
 
 bio/weap/coachgun/fire/0 COAC_FR0
@@ -175,19 +159,6 @@ $random bio/weap/volleygun/fire
 	bio/weap/volleygun/fire/0
 	bio/weap/volleygun/fire/1
 	bio/weap/volleygun/fire/2
-}
-
-// Auto Shotgun
-
-bio/weap/autoshotgun/fire/0 AUSG_FR0
-bio/weap/autoshotgun/fire/1 AUSG_FR1
-bio/weap/autoshotgun/fire/2 AUSG_FR2
-
-$random bio/weap/autoshotgun/fire
-{
-	bio/weap/autoshotgun/fire/0
-	bio/weap/autoshotgun/fire/1
-	bio/weap/autoshotgun/fire/2
 }
 
 // Machine Gun
@@ -250,6 +221,36 @@ $random bio/weap/arccaster/fire
 }
 
 $limit bio/weap/arccaster/fire 1
+
+// Shotgun
+
+bio/weap/shotgun/fire/0 KKSG_FR0
+bio/weap/shotgun/fire/1 KKSG_FR1
+bio/weap/shotgun/fire/2 KKSG_FR2
+
+$random bio/weap/shotgun/fire
+{
+	bio/weap/shotgun/fire/0
+	bio/weap/shotgun/fire/1
+	bio/weap/shotgun/fire/2
+}
+
+bio/weap/shotgun/pumpback PUMPBACK
+bio/weap/shotgun/pumpforward PUMPFORW
+
+// Stormgun
+
+bio/weap/stormgun/fire/0 TYPH_FR0
+bio/weap/stormgun/fire/1 TYPH_FR1
+bio/weap/stormgun/fire/2 TYPH_FR2
+bio/weap/stormgun/fire/3 TYPH_FR3
+
+$random bio/weap/stormgun/fire
+{
+	bio/weap/stormgun/fire/0
+	bio/weap/stormgun/fire/1
+	bio/weap/stormgun/fire/2
+}
 
 // Payloads ////////////////////////////////////////////////////////////////////
 

@@ -30,7 +30,7 @@ ARCAZ is courtesy of the Librequake Project, id Software LLC, and Banjo Software
 
 ARSD A through D are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
-AUSG A through F are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
+TYPH A through F are courtesy of ZDoom forum user Mike12 (redrawn and centered Shadow Warrior Riot Gun sprites. Shadow Warrior, the Riot Gun, and its original sprites are the sole copyright of 3D Realms).
 
 BRAX A through Z are courtesy of ZDoom forum user neoworm.
 
@@ -46,7 +46,7 @@ RZAP A through I are courtesy of the Librequake Project, id Software LLC, and Ba
 
 TRBO A through L and GPMG A through F are courtesy of ZDoom forum user Sonik.o.fan.
 
-Muzzle flash sprites used in SVCPY and PASGB are derived from the sheet at [this ZDoom forum post](https://forum.zdoom.org/viewtopic.php?t=37753#p718629) courtesy of forum user Sgt. Shivers.
+Muzzle flash sprites used in SVCPY and KKSGB are derived from the sheet at [this ZDoom forum post](https://forum.zdoom.org/viewtopic.php?t=37753#p718629) courtesy of forum user Sgt. Shivers.
 
 SUPPA and B are derived from Sonik.o.fan's reshading of Doom 64's rocket box sprite, which is itself courtesy of Midway Games Inc.
 
@@ -63,17 +63,17 @@ https://forum.zdoom.org/viewtopic.php?f=37&t=65362
 The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY 3.0:
 
 - joblaudiopack.zip/
-	- g_ithaca_nopump_1.wav (PASG_FR0)
-	- g_ithaca_nopump_2.wav (PASG_FR1)
-	- g_ithaca_nopump_3.wav (PASG_FR2)
+	- g_ithaca_nopump_1.wav (KKSG_FR0)
+	- g_ithaca_nopump_2.wav (KKSG_FR1)
+	- g_ithaca_nopump_3.wav (KKSG_FR2)
 	- g_thompson_1.wav (GPMG_FR0)
 	- g_thompson_2.wav (GPMG_FR1)
 	- g_thompson_3.wav (GPMG_FR2)
 - jobl_snd_pack_2.zip/
 	- shotguns/
-		- autoshotgun-1.wav (AUSG_FR0)
-		- autoshotgun-2.wav (AUSG_FR1)
-		- autoshotgun-3.wav (AUSG_FR2)
+		- autoshotgun-1.wav (TYPH_FR0)
+		- autoshotgun-2.wav (TYPH_FR1)
+		- autoshotgun-3.wav (TYPH_FR2)
 		- remington870-1.wav (COAC_FR0)
 		- remington870-2.wav (COAC_FR1)
 		- remington870-3.wav (COAC_FR2)
