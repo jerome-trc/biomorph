@@ -33,9 +33,6 @@ extend class BIO_Weapon
 
 		MinAmmoReserve1 = Default.MinAmmoReserve1;
 		MinAmmoReserve2 = Default.MinAmmoReserve2;
-
-		Ammo1 = Ammo2 = null;
-		Magazine1 = Magazine2 = null;
 	}
 
 	void LazyInit()
@@ -48,6 +45,12 @@ extend class BIO_Weapon
 			if (ModGraph != null)
 				SetTag(ColoredTag());
 		}
+	}
+
+	void PostSimCommit()
+	{
+		SetupAmmo();
+		SetupMagazines();
 	}
 
 	void SetupAmmo()

@@ -88,8 +88,6 @@ extend class BIO_WeaponModSimulator
 	{
 		Weap.Reset();
 		Weap.SetDefaults();
-		Weap.SetupAmmo();
-		Weap.SetupMagazines();
 		Snapshots[0].ImitateReal(Weap.AsConst());
 
 		// Pass 0: set node defaults
@@ -150,11 +148,7 @@ extend class BIO_WeaponModSimulator
 			Nodes[i].Apply(Weap, self, context, pass);
 
 			if (pass == BIO_SIMPASS_WEAPMOD)
-			{
-				Weap.SetupAmmo();
-				Weap.SetupMagazines();
 				Snapshots[i].ImitateReal(Weap.AsConst());
-			}
 		}
 	}
 
@@ -204,6 +198,7 @@ extend class BIO_WeaponModSimulator
 
 	void PostCommit()
 	{
+		Weap.PostSimCommit();
 		RebuildGeneInventory();
 
 		// Nodes which contained a pointer to a real gene item will have had

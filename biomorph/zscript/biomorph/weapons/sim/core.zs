@@ -25,8 +25,7 @@ class BIO_WeaponModSimulator : Thinker
 		if (Weap != null && Weap.Owner != null)
 		{
 			Revert();
-			Weap.SetupAmmo();
-			Weap.SetupMagazines();
+			weap.PostSimCommit();
 		}
 
 		super.OnDestroy();

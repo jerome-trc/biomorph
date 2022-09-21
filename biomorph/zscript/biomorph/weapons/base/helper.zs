@@ -111,8 +111,15 @@ extend class BIO_Weapon
 		}
 	}
 
-	bool Ammoless() const { return Ammo1 == null && Ammo2 == null; }
-	bool Magazineless() const { return Magazine1 == null && Magazine2 == null; }
+	bool Ammoless() const
+	{
+		return AmmoType1 == null && AmmoType2 == null;
+	}
+
+	bool Magazineless() const
+	{
+		return MagazineType1 == null && MagazineType2 == null;
+	}
 
 	bool CanReload(bool secondary = false) const
 	{
