@@ -142,7 +142,6 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/single/bfg.zs"
 #include "zscript/biomorph/weapons/single/breaching_axe.zs"
 #include "zscript/biomorph/weapons/single/chainsaw.zs"
-#include "zscript/biomorph/weapons/single/gamma_projector.zs"
 #include "zscript/biomorph/weapons/single/machine_gun.zs"
 #include "zscript/biomorph/weapons/single/microvulcan.zs"
 #include "zscript/biomorph/weapons/single/plasma_rifle.zs"
