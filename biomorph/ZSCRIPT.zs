@@ -49,6 +49,7 @@ class Biomorph abstract
 #include "zscript/biomorph/powerups.zs"
 #include "zscript/biomorph/sbar.zs"
 #include "zscript/biomorph/supply_box.zs"
+#include "zscript/biomorph/toggle_inv.zs"
 
 #include "zscript/biomorph/event/core.zs"
 #include "zscript/biomorph/event/console.zs"
