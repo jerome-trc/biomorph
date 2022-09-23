@@ -1,5 +1,7 @@
 class BIO_Stormgun : BIO_Weapon
 {
+	protected uint8 FireClock;
+
 	Default
 	{
 		Tag "$BIO_STORMGUN_TAG";
@@ -17,12 +19,11 @@ class BIO_Stormgun : BIO_Weapon
 		BIO_Weapon.GraphQuality 8;
 		BIO_Weapon.EnergyToMatter -1, 8;
 		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
-		BIO_Weapon.MagazineSize 20;
+		BIO_Weapon.MagazineSize 2;
 		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
 		BIO_Weapon.PickupMessages
 			"$BIO_STORMGUN_PKUP",
 			"$BIO_STORMGUN_SCAV";
-		BIO_Weapon.ReloadRatio 1, 10;
 		BIO_Weapon.SpawnCategory BIO_WSCAT_SSG;
 	}
 
@@ -71,11 +72,13 @@ class BIO_Stormgun : BIO_Weapon
 			A_GunFlash();
 			A_BIO_FireSound();
 			A_BIO_Recoil('BIO_Recoil_Autogun');
+			invoker.FireClock += 1;
 		}
 		TYPH C 1 A_BIO_SetFireTime(1);
-		TNT1 A 0 A_JumpIf(invoker.MagazineEmpty(), 'Fire.Finish');
+		TNT1 A 0 A_JumpIf(invoker.FireClock >= 10, 'Fire.Finish');
 		Loop;
 	Fire.Finish:
+		TNT1 A 0 { invoker.FireClock = 0; }
 		TYPH D 3 A_BIO_SetFireTime(0, 1);
 		TYPH E 3 A_BIO_SetFireTime(1, 1);
 		TYPH F 3 A_BIO_SetFireTime(2, 1);
