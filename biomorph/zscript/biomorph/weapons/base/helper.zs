@@ -276,7 +276,7 @@ extend class BIO_Weapon
 		else if (IsMutated())
 			crEsc = "\c[Cyan]";
 
-		return String.Format("%s%s\c-", crEsc, Default.GetTag());
+		return String.Format("%s%s\c-", crEsc, GetTag());
 	}
 
 	readOnly<BIO_Weapon> AsConst() const { return self; }
