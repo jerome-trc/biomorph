@@ -137,6 +137,8 @@ extend class BIO_WeaponModSimulator
 		{
 			if (!Nodes[i].Valid || !Nodes[i].IsOccupied())
 				continue;
+			if (Nodes[i].Basis.Flags & BIO_WMGNF_MUTED)
+				continue;
 			if (Nodes[i].IsMorph())
 				break;
 
