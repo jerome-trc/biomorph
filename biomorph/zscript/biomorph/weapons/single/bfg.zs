@@ -58,7 +58,7 @@ class BIO_BFG : BIO_Weapon
 		Loop;
 	Fire: // Default 60 tics
 		TNT1 A 0 A_BIO_CheckAmmo;
-		BBFG B 36
+		BBFG B 18
 		{
 			A_BIO_SetFireTime(0);
 			A_BIO_FireSound();
@@ -73,6 +73,11 @@ class BIO_BFG : BIO_Weapon
 		}
 		BBFG D 4 Bright A_BIO_SetFireTime(4);
 		BBFG C 7 Bright A_BIO_SetFireTime(5);
+		BBFG B 18
+		{
+			A_BIO_SetFireTime(6);
+			A_Refire();
+		}
 		TNT1 A 0 A_BIO_AutoReload;
 		TNT1 A 0 A_ReFire;
 		Goto Ready;
