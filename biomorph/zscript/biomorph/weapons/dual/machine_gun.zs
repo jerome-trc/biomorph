@@ -110,6 +110,7 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 			A_BIO_SetFireTime(0);
 			A_AddOverlayOffset_Y(1.0);
 			A_BIO_Fire();
+			A_BIO_DepleteAmmo();
 			A_GunFlash_R();
 			A_BIO_FireSound(CHAN_AUTO);
 			A_BIO_Recoil('BIO_Recoil_Autogun');
@@ -138,6 +139,7 @@ class BIO_DualMachineGun : BIO_DualWieldWeapon
 			A_BIO_SetFireTime(0);
 			A_AddOverlayOffset_Y(1.0);
 			A_BIO_Fire(1);
+			A_BIO_DepleteAmmo(1);
 			A_GunFlash_L();
 			A_BIO_FireSound(CHAN_AUTO);
 			A_BIO_Recoil('BIO_Recoil_Autogun');

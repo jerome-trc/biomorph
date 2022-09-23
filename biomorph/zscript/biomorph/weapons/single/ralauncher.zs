@@ -72,6 +72,7 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		MISG B 12
 		{
 			A_BIO_SetFireTime(1);
+			A_BIO_DepleteAmmo();
 			A_BIO_Fire();
 			A_BIO_FireSound();
 			A_BIO_Recoil('BIO_Recoil_RocketLauncher');

@@ -138,6 +138,7 @@ class BIO_ArcCaster : BIO_Weapon
 	protected action void A_BIO_ArcCaster_Fire(FireSpriteIndex fireSprite)
 	{
 		A_BIO_Fire();
+		A_BIO_DepleteAmmo();
 		A_GunFlash();
 		invoker.FireSprite = fireSprite;
 	}

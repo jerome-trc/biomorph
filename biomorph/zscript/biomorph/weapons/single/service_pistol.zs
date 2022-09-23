@@ -67,6 +67,7 @@ class BIO_ServicePistol : BIO_Weapon
 		SVCP C 4
 		{
 			A_BIO_SetFireTime(0);
+			A_BIO_DepleteAmmo();
 			A_BIO_Fire();
 			A_GunFlash();
 			A_BIO_FireSound();

@@ -119,6 +119,7 @@ class BIO_MachineGun : BIO_Weapon
 	protected action void A_BIO_MachineGun_Fire()
 	{
 		A_BIO_Fire();
+		A_BIO_DepleteAmmo();
 		A_GunFlash();
 		A_BIO_FireSound(CHAN_AUTO);
 		A_BIO_Recoil('BIO_Recoil_Autogun');

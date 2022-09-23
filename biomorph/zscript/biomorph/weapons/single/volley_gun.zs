@@ -100,25 +100,13 @@ class BIO_VolleyGun : BIO_Weapon
 	Fire.Quad:
 		TNT1 A 0 A_BIO_CheckAmmo(multi: 4, single: true);
 		VOLL A 3;
-		VOLL A 7 Bright
-		{
-			A_BIO_Fire();
-			A_BIO_Recoil('BIO_Recoil_DoubleShotgun', scale: 2.0);
-			A_GunFlash('Flash.Quad');
-			A_BIO_FireSound(CHAN_AUTO);
-		}
+		VOLL A 7 Bright A_BIO_VolleyGun_Fire(0, 2.0, 'Flash.Quad');
 		TNT1 A 0 A_BIO_AutoReload(multi: 4, single: true);
 		Goto Ready;
 	Fire.Double:
 		TNT1 A 0 A_BIO_CheckAmmo(multi: 2);
 		VOLL A 3;
-		VOLL A 7 Bright
-		{
-			A_BIO_Fire();
-			A_BIO_Recoil('BIO_Recoil_DoubleShotgun');
-			A_GunFlash('Flash.Double');
-			A_BIO_FireSound();
-		}
+		VOLL A 7 Bright A_BIO_VolleyGun_Fire(1, 1.0, 'Flash.Double');
 		TNT1 A 0 A_BIO_AutoReload(multi: 2);
 		Goto Ready;
 	Dryfire:
@@ -201,5 +189,18 @@ class BIO_VolleyGun : BIO_Weapon
 			A_BIO_Recoil('BIO_Recoil_ReloadSSG', invert: true);
 		}
 		Goto Ready;
+	}
+
+	protected action void A_BIO_VolleyGun_Fire(
+		uint pipeline,
+		float recoilScale,
+		statelabel flash
+	)
+	{
+		A_BIO_DepleteAmmo(pipeline);
+		A_BIO_Fire(pipeline);
+		A_BIO_Recoil('BIO_Recoil_DoubleShotgun', scale: recoilScale);
+		A_GunFlash(flash);
+		A_BIO_FireSound(CHAN_AUTO);
 	}
 }

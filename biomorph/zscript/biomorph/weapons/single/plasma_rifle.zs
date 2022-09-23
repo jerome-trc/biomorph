@@ -67,10 +67,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 		PLSG A 3
 		{
 			A_BIO_SetFireTime(0);
-			A_BIO_Fire();
-			A_BIO_FireSound();
-			Player.SetSafeFlash(invoker, ResolveState('Flash'), Random(0, 1));
-			A_BIO_Recoil('BIO_Recoil_Autogun');
+			A_BIO_PlasmaRifle_Fire('Flash');
 		}
 	Cooldown:
 		PLSG B 20
@@ -97,6 +94,7 @@ class BIO_PlasmaRifle : BIO_Weapon
 
 	protected action void A_BIO_PlasmaRifle_Fire(statelabel flash)
 	{
+		A_BIO_DepleteAmmo();
 		A_BIO_Fire();
 		A_BIO_FireSound(CHAN_AUTO);
 		invoker.bOtherFlash = !invoker.bOtherFlash;

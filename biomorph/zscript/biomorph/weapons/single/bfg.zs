@@ -69,6 +69,7 @@ class BIO_BFG : BIO_Weapon
 		{
 			A_BIO_SetFireTime(3);
 			A_BIO_Fire();
+			A_BIO_DepleteAmmo();
 			A_BIO_Recoil('BIO_Recoil_BFG');
 		}
 		BBFG D 4 Bright A_BIO_SetFireTime(4);

@@ -74,6 +74,7 @@ class BIO_Shotgun : BIO_Weapon
 		KKSG A 1 Offset(0 + 7, 32 + 7)
 		{
 			A_BIO_SetFireTime(1);
+			A_BIO_DepleteAmmo();
 			A_BIO_Fire();
 			A_GunFlash();
 			A_BIO_FireSound();

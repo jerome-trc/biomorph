@@ -1,12 +1,8 @@
 extend class BIO_Weapon
 {
-	protected action bool A_BIO_Fire(uint pipeline = 0)
+	protected action void A_BIO_Fire(uint pipeline = 0)
 	{
-		if (!A_BIO_DepleteAmmo(pipeline))
-			return false;
-
 		invoker.Pipelines[pipeline].Invoke(invoker, pipeline);
-		return true;
 	}
 
 	protected action void A_BIO_FireSound(

@@ -169,6 +169,7 @@ class BIO_Microvulcan : BIO_Weapon
 
 	protected action void A_BIO_Microvulcan_Fire(statelabel flash, int flashOffset)
 	{
+		A_BIO_DepleteAmmo();
 		A_BIO_Fire();
 		Player.SetSafeFlash(invoker, ResolveState(flash), flashOffset);
 		A_BIO_FireSound(CHAN_AUTO);
