@@ -217,6 +217,8 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Build pipelines and reload time groups.
 	// Called by `LazyInit()` after the operating mode has been instantiated.
+	// Also gets called for every operation in a weapon mod. sim, so
+	// this must be deterministic.
 	abstract void SetDefaults();
 
 	/*	Intrinsic mod graphs can't be created in `SetDefaults()`, since that
@@ -232,6 +234,10 @@ class BIO_Weapon : DoomWeapon abstract
 		properties implicitly upon mutation, act upon the latter.
 	*/
 	virtual void IntrinsicModGraph(bool onMutate) {}
+
+	// Change the tag, firing sound, flash color, etc.
+	// Called when a mod. sim. is committed.
+	virtual void FlavorRules() {}
 
 	// Each is called once before starting its respective loop.
 	virtual void OnDeselect()

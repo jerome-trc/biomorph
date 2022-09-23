@@ -41,8 +41,10 @@ extend class BIO_Weapon
 		{
 			SetDefaults();
 			IntrinsicModGraph(false);
+			FlavorRules();
 
-			if (ModGraph != null)
+			// Add cyan color tags if necessary
+			if (IsMutated())
 				SetTag(ColoredTag());
 		}
 	}
@@ -51,6 +53,7 @@ extend class BIO_Weapon
 	{
 		SetupAmmo();
 		SetupMagazines();
+		FlavorRules();
 	}
 
 	void SetupAmmo()
