@@ -25,7 +25,7 @@ class BIO_MachineGun : BIO_Weapon
 		BIO_Weapon.MagazineFlags BIO_MAGF_BALLISTIC_1;
 		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
 		BIO_Weapon.MagazineSize BASE_MAGSIZE;
-		BIO_Weapon.EnergyToMatter -3, 5;
+		BIO_Weapon.EnergyToMatter ETMF_DURATION, ETMF_COST;
 		BIO_Weapon.PickupMessages
 			"$BIO_MACHINEGUN_PKUP",
 			"$BIO_MACHINEGUN_SCAV";
