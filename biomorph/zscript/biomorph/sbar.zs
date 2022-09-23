@@ -232,9 +232,7 @@ class BIO_StatusBar : BaseStatusBar
 				String.Format(
 					"%s / %s",
 					FormatNumber(weap.Magazine1.GetAmount(), 3, 6),
-					FormatNumber(weap.Magazine1.MaxAmount(
-						weap.MagazineSize1
-					), 3, 6)
+					FormatNumber(weap.Magazine1.MaxAmount(weap.MagazineSize1), 3, 6)
 				),
 				(-36, invY + 4), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD
 			);
@@ -249,9 +247,7 @@ class BIO_StatusBar : BaseStatusBar
 				String.Format(
 					"%s / %s",
 					FormatNumber(weap.Magazine2.GetAmount(), 3, 6),
-					FormatNumber(weap.Magazine2.MaxAmount(
-						weap.MagazineSize2
-					), 3, 6)
+					FormatNumber(weap.Magazine2.MaxAmount(weap.MagazineSize2), 3, 6)
 				),
 				(-36, invY + 4), DI_TEXT_ALIGN_RIGHT, Font.CR_GOLD
 			);

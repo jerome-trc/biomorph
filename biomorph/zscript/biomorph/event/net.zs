@@ -1,13 +1,14 @@
 // Network event handling.
 extend class BIO_EventHandler
 {
-	enum GlobalRegen
+	enum Regen
 	{
-		GLOBALREGEN_LOOTCORE,
-		GLOBALREGEN_WEAPLOOT,
-		GLOBALREGEN_MUTALOOT,
-		GLOBALREGEN_GENELOOT,
-		GLOBALREGEN_MORPH
+		REGEN_GLOBAL_LOOTCORE,
+		REGEN_GLOBAL_WEAPLOOT,
+		REGEN_GLOBAL_MUTALOOT,
+		REGEN_GLOBAL_GENELOOT,
+		REGEN_GLOBAL_MORPH,
+		REGEN_MAGAZINES
 	}
 
 	enum WeapModOp
@@ -273,7 +274,7 @@ extend class BIO_EventHandler
 		switch (event.Args[0])
 		{
 		case USREVENT_NET_GLOBALREGEN:
-			NetEvent_GlobalDataRegen(event);
+			NetEvent_Regen(event);
 			break;
 		default:
 			Console.Printf(
@@ -285,44 +286,55 @@ extend class BIO_EventHandler
 		}
 	}
 
-	private void NetEvent_GlobalDataRegen(ConsoleEvent event)
+	private void NetEvent_Regen(ConsoleEvent event)
 	{
 		switch (event.Args[1])
 		{
-		case GLOBALREGEN_LOOTCORE:
+		case REGEN_GLOBAL_LOOTCORE:
 			Console.Printf(
 				Biomorph.LOGPFX_INFO ..
 				"Regenerating loot core subsystem..."
 			);
 			Globals.RegenLootCore();
 			return;
-		case GLOBALREGEN_WEAPLOOT:
+		case REGEN_GLOBAL_WEAPLOOT:
 			Console.Printf(
 				Biomorph.LOGPFX_INFO ..
 				"Regenerating weapon loot tables..."
 			);
 			Globals.RegenWeaponLoot();
 			return;
-		case GLOBALREGEN_MUTALOOT:
+		case REGEN_GLOBAL_MUTALOOT:
 			Console.Printf(
 				Biomorph.LOGPFX_INFO ..
 				"Regenerating mutagen loot table..."
 			);
 			Globals.RegenMutagenLoot();
 			return;
-		case GLOBALREGEN_GENELOOT:
+		case REGEN_GLOBAL_GENELOOT:
 			Console.Printf(
 				Biomorph.LOGPFX_INFO ..
 				"Regenerating gene loot table..."
 			);
 			Globals.RegenGeneLoot();
 			return;
-		case GLOBALREGEN_MORPH:
+		case REGEN_GLOBAL_MORPH:
 			Console.Printf(
 				Biomorph.LOGPFX_INFO ..
 				"Regenerating weapon morph recipe cache..."
 			);
 			Globals.RegenWeaponMorphCache();
+			return;
+		case REGEN_MAGAZINES:
+			Console.Printf(
+				Biomorph.LOGPFX_INFO ..
+				"Regenerating all players' magazine collections..."
+			);
+
+			for (uint i = 0; i < MAXPLAYERS; i++)
+				if (PlayerInGame[i] && Players[i].MO is 'BIO_Player')
+					BIO_Player(Players[i].MO).RegenMagazines();
+
 			return;
 		default:
 			Console.Printf(

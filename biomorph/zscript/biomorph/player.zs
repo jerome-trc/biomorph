@@ -372,6 +372,23 @@ extend class BIO_Player
 				Magazines.Push(BIO_ETMFMagazine.Create(weap_t, true));
 		}
 	}
+
+	void RegenMagazines()
+	{
+		Magazines.Clear();
+		GenerateMagazines();
+
+		for (Inventory i = Inv; i != null; i = i.Inv)
+		{
+			let weap = BIO_Weapon(i);
+
+			if (weap == null)
+				continue;
+
+			weap.Magazine1 = weap.Magazine2 = null;
+			weap.SetupMagazines();
+		}
+	}
 }
 
 // Callbacks.

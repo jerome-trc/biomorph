@@ -85,7 +85,8 @@ extend class BIO_EventHandler
 			"\tbio_weaplootregen\n"
 			"\tbio_mutalootregen\n"
 			"\tbio_genelootregen\n"
-			"\tbio_morphregen"
+			"\tbio_morphregen\n"
+			"\tbio_magregen"
 		);
 	}
 
