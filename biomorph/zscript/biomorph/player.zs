@@ -137,7 +137,7 @@ extend class BIO_Player
 			// Bump up the player's speed to compensate for the deceleration
 			// TODO (Nash): math here is shit and wrong, please fix
 			double s = 1.0 + (1.0 - DECEL_MULT);
-			Speed = s * 2.0;
+			Speed = s * 2.1;
 
 			// Decelerate the player, if not in pain
 			Vel.X *= DECEL_MULT;
