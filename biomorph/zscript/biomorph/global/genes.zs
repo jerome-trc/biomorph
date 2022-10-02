@@ -59,10 +59,6 @@ extend class BIO_Global
 			Array<BIO_WeaponModifier> mods;
 			let p = new('BIO_ProcGeneBase');
 			p.Tag = BIO_ProceduralGene.GenerateTag();
-			// TODO: When negative modifiers are implemented, push
-			// one of those instead of another positive
-			let m = Random[BIO_Loot](0, WeaponModifiers.Size() - 1);
-			mods.Push(WeaponModifiers[m]);
 			p.Modifiers.Move(mods);
 			ProcGeneQueue.Push(p);
 		}

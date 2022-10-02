@@ -29,9 +29,4 @@ extend class BIO_Global
 		);
 		return null;
 	}
-
-	BIO_WeaponModifier GetWeaponModifier(uint index) const
-	{
-		return WeaponModifiers[index];
-	}
 }
