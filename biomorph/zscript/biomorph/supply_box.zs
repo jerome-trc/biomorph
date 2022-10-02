@@ -31,50 +31,15 @@ class BIO_SupplyBox : Actor
 		if (!(user is 'BIO_Player'))
 			return false;
 
-		let choice = Random[BIO_Loot](1, 8);
+		let perk_t = BIO_Global.Get().RandomPerkType();
+		BIO_Perk.PlayRaritySound(GetDefaultByType(perk_t).LootWeight);
 
-		if (choice == 1)
-		{
-			let perk_t = BIO_Global.Get().RandomPerkType();
-			BIO_Perk.PlayRaritySound(GetDefaultByType(perk_t).LootWeight);
-
-			A_SpawnItemEx(
-				perk_t,
-				0.0, 0.0, 32.0,
-				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
-				FRandom(0.0, 360.0)
-			);
-		}
-		else
-		{
-			bool success = false;
-			Actor spawned = null;
-
-			[success, spawned] = A_SpawnItemEx(
-				BIO_Global.Get().AnyLootWeaponType(),
-				0.0, 0.0, 32.0,
-				FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
-				FRandom(0.0, 360.0)
-			);
-
-			if (!success || spawned == null)
-			{
-				Console.Printf(
-					Biomorph.LOGPFX_ERR ..
-					"Failed to spawn a weapon loot drop from a supply box."
-				);
-				return true;
-			}
-
-			let weap = BIO_Weapon(spawned);
-
-			weap.SpecialLootMutate(
-				extraNodes: 0,
-				geneCount: 2,
-				noDuplicateGenes: true,
-				raritySound: true
-			);
-		}
+		A_SpawnItemEx(
+			perk_t,
+			0.0, 0.0, 32.0,
+			FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
+			FRandom(0.0, 360.0)
+		);
 
 		Opened = true;
 		return true;

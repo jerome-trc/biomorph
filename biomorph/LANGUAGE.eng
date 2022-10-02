@@ -727,7 +727,6 @@
 		"to generic LegenDoomLite loot.";
 	BIO_OPTVAL_LDL_NONE = "Nothing";
 	BIO_OPTVAL_LDL_GENE = "Gene(s)";
-	BIO_OPTVAL_LDL_WEAP = "Mutated Weapon";
 
 	BIO_OPTLBL_MULTIBARRELFIRE = "Multi-Barrel Fire Mode";
 	BIO_OPTVAL_MBF_PRIM = "Primary Fires Multiple Barrels";

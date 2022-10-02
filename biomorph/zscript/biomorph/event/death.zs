@@ -42,9 +42,6 @@ extend class BIO_EventHandler
 		{
 			switch (BIO_ldl)
 			{
-			case BIO_CV_LDL_WEAP:
-				SpawnLegendaryLootWeapon(event.Thing);
-				break;
 			case BIO_CV_LDL_GENE:
 				SpawnLootGene(event.Thing);
 
@@ -55,7 +52,7 @@ extend class BIO_EventHandler
 				break;
 			}
 		}
-		
+
 		bool noval = false, noloot = false;
 
 		for (uint i = 0; i < Globals.MonsterLoot.Size(); i++)
@@ -130,44 +127,5 @@ extend class BIO_EventHandler
 		}
 
 		BIO_Gene(spawned).Initialize();
-	}
-
-	private void SpawnLegendaryLootWeapon(Actor mons)
-	{
-		bool success = false;
-		Actor spawned = null;
-
-		[success, spawned] = mons.A_SpawnItemEx(
-			Globals.AnyLootWeaponType(),
-			0.0, 0.0, 32.0,
-			FRandom(1.0, 6.0), 0.0, FRandom(1.0, 6.0),
-			FRandom(0.0, 360.0)
-		);
-
-		if (!success || spawned == null)
-		{
-			Console.Printf(
-				Biomorph.LOGPFX_ERR ..
-				"Failed to spawn a weapon loot drop from a dead Legendary."
-			);
-			return;
-		}
-
-		let weap = BIO_Weapon(spawned);
-
-		uint gcf = 1, gcc = 1;
-
-		if (mons.bBoss)
-			gcf++;
-
-		if (BIO_Utils.DoomRLMonsterPack())
-			gcc++;
-
-		weap.SpecialLootMutate(
-			extraNodes: mons.bBoss ? 1 : 0,
-			geneCount: uint(Random[BIO_Loot](gcf, gcc)),
-			noDuplicateGenes: true,
-			raritySound: true
-		);
 	}
 }

@@ -86,14 +86,13 @@ enum BIO_CVar_InvClear : int
 {
 	BIO_CV_INVCLEAR_PERMIT = 0,
 	BIO_CV_INVCLEAR_SCHEDULED = 1,
-	BIO_CV_INVCLEAR_RESTRICT = 2,
+	BIO_CV_INVCLEAR_RESTRICT = 2
 }
 
 enum BIO_CVar_LegenDoomLite : int
 {
 	BIO_CV_LDL_NONE = 0,
-	BIO_CV_LDL_GENE = 1,
-	BIO_CV_LDL_WEAP = 2
+	BIO_CV_LDL_GENE = 1
 }
 
 // For double-/quad-barreled shotguns and similar, does primary fire multiple

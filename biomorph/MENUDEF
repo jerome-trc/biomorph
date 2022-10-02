@@ -78,7 +78,6 @@ OptionValue "BIO_LegenDoomLite"
 {
 	0, "$BIO_OPTVAL_LDL_NONE"
 	1, "$BIO_OPTVAL_LDL_GENE"
-	2, "$BIO_OPTVAL_LDL_WEAP"
 }
 
 OptionValue "BIO_MultiBarrelFire"
