@@ -209,10 +209,10 @@
 	BIO_PLASMARIFLE_SCAV = "Scavenged ammo from a dropped %s.";
 	BIO_PLASMARIFLE_OB = "%k burned %o with a %s.";
 
-	BIO_ROCKETAUTOLAUNCHER_TAG = "Rocket Auto-Launcher";
-	BIO_ROCKETAUTOLAUNCHER_PKUP = "Procured a %s.";
-	BIO_ROCKETAUTOLAUNCHER_SCAV = "Scavenged ammo from a dropped %s.";
-	BIO_ROCKETAUTOLAUNCHER_OB = "%k blew %o away with a %s.";
+	BIO_MANPAT_TAG = "M.A.N.P.A.T.";
+	BIO_MANPAT_PKUP = "Procured a %s";
+	BIO_MANPAT_SCAV = "Scavenged ammo from a dropped %s.";
+	BIO_MANPAT_OB = "%k blew %o away with a %s.";
 
 	BIO_SERVICEPISTOL_TAG = "Service Pistol";
 	BIO_SERVICEPISTOL_PKUP = "Procured a %s.";

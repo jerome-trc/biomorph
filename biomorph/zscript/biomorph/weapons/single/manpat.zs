@@ -1,11 +1,10 @@
-// Common member definitions and default assignments.
-class BIO_RocketAutoLauncher : BIO_Weapon
+class BIO_MANPAT : BIO_Weapon
 {
 	Default
 	{
 		+WEAPON.EXPLOSIVE
 
-		Tag "$BIO_ROCKETAUTOLAUNCHER_TAG";
+		Tag "$BIO_MANPAT_TAG";
 
 		Inventory.Icon 'LAUNA0';
 
@@ -22,8 +21,8 @@ class BIO_RocketAutoLauncher : BIO_Weapon
 		BIO_Weapon.MagazineType 'BIO_NormalMagazine';
 		BIO_Weapon.MagazineSize 1;
 		BIO_Weapon.PickupMessages
-			"$BIO_ROCKETAUTOLAUNCHER_PKUP",
-			"$BIO_ROCKETAUTOLAUNCHER_SCAV";
+			"$BIO_MANPAT_PKUP",
+			"$BIO_MANPAT_SCAV";
 		BIO_Weapon.SpawnCategory BIO_WSCAT_RLAUNCHER;
 	}
 

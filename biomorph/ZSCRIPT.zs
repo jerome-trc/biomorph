@@ -146,7 +146,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/single/machine_gun.zs"
 #include "zscript/biomorph/weapons/single/microvulcan.zs"
 #include "zscript/biomorph/weapons/single/plasma_rifle.zs"
-#include "zscript/biomorph/weapons/single/ralauncher.zs"
+#include "zscript/biomorph/weapons/single/manpat.zs"
 #include "zscript/biomorph/weapons/single/service_pistol.zs"
 #include "zscript/biomorph/weapons/single/shotgun.zs"
 #include "zscript/biomorph/weapons/single/stormgun.zs"
