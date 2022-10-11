@@ -237,7 +237,7 @@ class BIO_Weapon : DoomWeapon abstract
 
 	// Change the tag, firing sound, flash color, etc.
 	// Called when a mod. sim. is committed.
-	virtual void FlavorRules() {}
+	protected virtual void FlavorRules(Dictionary dict) {}
 
 	// Each is called once before starting its respective loop.
 	virtual void OnDeselect()

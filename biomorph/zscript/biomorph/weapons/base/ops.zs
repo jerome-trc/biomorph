@@ -41,7 +41,7 @@ extend class BIO_Weapon
 		{
 			SetDefaults();
 			IntrinsicModGraph(false);
-			FlavorRules();
+			InvokeFlavorRules();
 
 			// Add cyan color tags if necessary
 			if (IsMutated())
@@ -53,7 +53,25 @@ extend class BIO_Weapon
 	{
 		SetupAmmo();
 		SetupMagazines();
-		FlavorRules();
+		InvokeFlavorRules();
+	}
+
+	private void InvokeFlavorRules()
+	{
+		let dict = Dictionary.Create();
+
+		if (IsMutated())
+		{
+			for (uint i = 0; i < ModGraph.Nodes.Size(); i++)
+			{
+				if (ModGraph.Nodes[i].Gene == null)
+					break;
+
+				ModGraph.Nodes[i].Gene.FlavorRules(dict);
+			}
+		}
+
+		FlavorRules(dict);
 	}
 
 	void SetupAmmo()

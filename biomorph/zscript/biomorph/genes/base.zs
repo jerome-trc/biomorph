@@ -221,6 +221,12 @@ class BIO_GeneData
 		return ret;
 	}
 
+	void FlavorRules(Dictionary dict) const
+	{
+		for (uint i = 0; i < Modifiers.Size(); i++)
+			Modifiers[i].FlavorRules(dict);
+	}
+
 	BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags CombinedModifierFlags() const
 	{
 		BIO_WeaponCoreModFlags ret1 = BIO_WCMF_NONE;

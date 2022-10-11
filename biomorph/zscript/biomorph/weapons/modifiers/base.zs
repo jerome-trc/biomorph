@@ -89,7 +89,7 @@ class BIO_WeaponModifier play abstract
 	abstract BIO_WeaponCoreModFlags, BIO_WeaponPipelineModFlags Flags() const;
 	virtual BIO_WeaponModSimPass SimPass() const { return BIO_SIMPASS_WEAPMOD; }
 
-	virtual void FlavorRules(Dictionary rules) const {}
+	virtual void FlavorRules(Dictionary dict) const {}
 
 	abstract string Tag() const;
 	abstract string Summary() const;
