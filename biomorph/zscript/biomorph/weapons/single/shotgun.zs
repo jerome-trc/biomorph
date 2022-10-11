@@ -48,9 +48,15 @@ class BIO_Shotgun : BIO_Weapon
 				.Bullet('BIO_ShotPellet', 7)
 				.RandomDamage(10, 15)
 				.Spread(3.0, 3.0)
-				.FireSound("bio/weap/shotgun/fire")
+				.FireSound("bio/weap/shotgun/pellet")
 				.Build()
 		);
+	}
+
+	override void FlavorRules(Dictionary dict)
+	{
+		if (Pipelines[0].Payload is 'BIO_Slug')
+			Pipelines[0].FireSound = "bio/weap/shotgun/slug";
 	}
 
 	States

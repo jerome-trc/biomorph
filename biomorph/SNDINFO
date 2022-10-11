@@ -109,57 +109,21 @@ bio/weap/mechreload MECHRELO
 bio/weap/spoolup SPOOLUP
 bio/weap/spooldown SPOOLDN
 
-// Unarmed
+// Arc Caster
 
-bio/punch/hit/0 PUNCH_0
-bio/punch/hit/1 PUNCH_1
+bio/weap/arccaster/ready ARCA_RD
+bio/weap/arccaster/fire/0 ARCA_FR0
+bio/weap/arccaster/fire/1 ARCA_FR1
+bio/weap/arccaster/fire/2 ARCA_FR2
 
-$random bio/punch/hit
+$random bio/weap/arccaster/fire
 {
-	bio/punch/hit/0
-	bio/punch/hit/1
+	bio/weap/arccaster/fire/0
+	bio/weap/arccaster/fire/1
+	bio/weap/arccaster/fire/2
 }
 
-// Service Pistol
-
-bio/weap/servicepistol/fire/0 SVCP_FR0
-bio/weap/servicepistol/fire/1 SVCP_FR1
-bio/weap/servicepistol/fire/2 SVCP_FR2
-
-$random bio/weap/servicepistol/fire
-{
-	bio/weap/servicepistol/fire/0
-	bio/weap/servicepistol/fire/1
-	bio/weap/servicepistol/fire/2
-}
-
-bio/weap/servicepistol/reload/end SVCP_RLE
-
-// Coachgun
-
-bio/weap/coachgun/fire/0 COAC_FR0
-bio/weap/coachgun/fire/1 COAC_FR1
-bio/weap/coachgun/fire/2 COAC_FR2
-
-$random bio/weap/coachgun/fire
-{
-	bio/weap/coachgun/fire/0
-	bio/weap/coachgun/fire/1
-	bio/weap/coachgun/fire/2
-}
-
-// Volley Gun
-
-bio/weap/volleygun/fire/0 VOLL_FR0
-bio/weap/volleygun/fire/1 VOLL_FR1
-bio/weap/volleygun/fire/2 VOLL_FR2
-
-$random bio/weap/volleygun/fire
-{
-	bio/weap/volleygun/fire/0
-	bio/weap/volleygun/fire/1
-	bio/weap/volleygun/fire/2
-}
+$limit bio/weap/arccaster/fire 1
 
 // Machine Gun
 
@@ -206,33 +170,43 @@ $random bio/weap/plasrifle/bspool/fire
 $limit bio/weap/plasrifle/rapid/fire 0
 $limit bio/weap/plasrifle/bspool/fire 0
 
-// Arc Caster
+// Service Pistol
 
-bio/weap/arccaster/ready ARCA_RD
-bio/weap/arccaster/fire_0 ARCA_FR0
-bio/weap/arccaster/fire_1 ARCA_FR1
-bio/weap/arccaster/fire_2 ARCA_FR2
+bio/weap/servicepistol/fire/0 SVCP_FR0
+bio/weap/servicepistol/fire/1 SVCP_FR1
+bio/weap/servicepistol/fire/2 SVCP_FR2
 
-$random bio/weap/arccaster/fire
+$random bio/weap/servicepistol/fire
 {
-	bio/weap/arccaster/fire_0
-	bio/weap/arccaster/fire_1
-	bio/weap/arccaster/fire_2
+	bio/weap/servicepistol/fire/0
+	bio/weap/servicepistol/fire/1
+	bio/weap/servicepistol/fire/2
 }
 
-$limit bio/weap/arccaster/fire 1
+bio/weap/servicepistol/reload/end SVCP_RLE
 
 // Shotgun
 
-bio/weap/shotgun/fire/0 KKSG_FR0
-bio/weap/shotgun/fire/1 KKSG_FR1
-bio/weap/shotgun/fire/2 KKSG_FR2
+bio/weap/shotgun/pellet/0 KKSG_PL0
+bio/weap/shotgun/pellet/1 KKSG_PL1
+bio/weap/shotgun/pellet/2 KKSG_PL2
 
-$random bio/weap/shotgun/fire
+$random bio/weap/shotgun/pellet
 {
-	bio/weap/shotgun/fire/0
-	bio/weap/shotgun/fire/1
-	bio/weap/shotgun/fire/2
+	bio/weap/shotgun/pellet/0
+	bio/weap/shotgun/pellet/1
+	bio/weap/shotgun/pellet/2
+}
+
+bio/weap/shotgun/slug/0 KKSG_SL0
+bio/weap/shotgun/slug/1 KKSG_SL1
+bio/weap/shotgun/slug/2 KKSG_SL2
+
+$random bio/weap/shotgun/slug
+{
+	bio/weap/shotgun/slug/0
+	bio/weap/shotgun/slug/1
+	bio/weap/shotgun/slug/2
 }
 
 bio/weap/shotgun/pumpback PUMPBACK
@@ -250,6 +224,41 @@ $random bio/weap/stormgun/fire
 	bio/weap/stormgun/fire/0
 	bio/weap/stormgun/fire/1
 	bio/weap/stormgun/fire/2
+}
+
+// Unarmed
+
+bio/punch/hit/0 PUNCH_0
+bio/punch/hit/1 PUNCH_1
+
+$random bio/punch/hit
+{
+	bio/punch/hit/0
+	bio/punch/hit/1
+}
+
+// Volley Gun
+
+bio/weap/volleygun/fire2/0 VOLL_FR0
+bio/weap/volleygun/fire2/1 VOLL_FR1
+bio/weap/volleygun/fire2/2 VOLL_FR2
+
+$random bio/weap/volleygun/fire2
+{
+	bio/weap/volleygun/fire2/0
+	bio/weap/volleygun/fire2/1
+	bio/weap/volleygun/fire2/2
+}
+
+bio/weap/volleygun/fire4/0 COAC_FR0
+bio/weap/volleygun/fire4/1 COAC_FR1
+bio/weap/volleygun/fire4/2 COAC_FR2
+
+$random bio/weap/volleygun/fire4
+{
+	bio/weap/volleygun/fire4/0
+	bio/weap/volleygun/fire4/1
+	bio/weap/volleygun/fire4/2
 }
 
 // Payloads ////////////////////////////////////////////////////////////////////

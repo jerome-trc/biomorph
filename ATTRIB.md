@@ -63,25 +63,25 @@ https://forum.zdoom.org/viewtopic.php?f=37&t=65362
 The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY 3.0:
 
 - joblaudiopack.zip/
-	- g_ithaca_nopump_1.wav (KKSG_FR0)
-	- g_ithaca_nopump_2.wav (KKSG_FR1)
-	- g_ithaca_nopump_3.wav (KKSG_FR2)
+	- g_ithaca_nopump_1.wav (KKSG_PL0)
+	- g_ithaca_nopump_2.wav (KKSG_PL1)
+	- g_ithaca_nopump_3.wav (KKSG_PL2)
 	- g_thompson_1.wav (GPMG_FR0)
 	- g_thompson_2.wav (GPMG_FR1)
 	- g_thompson_3.wav (GPMG_FR2)
 - jobl_snd_pack_2.zip/
 	- shotguns/
-		- autoshotgun-1.wav (TYPH_FR0)
-		- autoshotgun-2.wav (TYPH_FR1)
-		- autoshotgun-3.wav (TYPH_FR2)
-		- remington870-1.wav (COAC_FR0)
-		- remington870-2.wav (COAC_FR1)
-		- remington870-3.wav (COAC_FR2)
+		- autoshotgun-1.wav (KKSG_SL0)
+		- autoshotgun-2.wav (KKSG_SL1)
+		- autoshotgun-3.wav (KKSG_SL2)
+		- remington870-1.wav (VOLL2PL0)
+		- remington870-2.wav (VOLL2PL1)
+		- remington870-3.wav (VOLL2PL2)
 		- shotpumpback.wav (PUMPBACK)
 		- shotpumpfor.wav (PUMPFORW)
-		- trenchgun-1.wav (VOLL_FR0)
-		- trenchgun-2.wav (VOLL_FR1)
-		- trenchgun-3.wav (VOLL_FR2)
+		- trenchgun-1.wav (VOLL4PL0)
+		- trenchgun-2.wav (VOLL4PL1)
+		- trenchgun-3.wav (VOLL4PL2)
 
 #### CturiX Kemilon
 
