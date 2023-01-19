@@ -1,3 +1,4 @@
+/// Functionality needed for waste-proof pickups.
 mixin class BIO_Pickup
 {
 	Default
@@ -10,33 +11,49 @@ mixin class BIO_Pickup
 	meta string CollectedMessage;
 	property CollectedMessage: CollectedMessage;
 
+	/// Duplicates the behavior of `Inventory::PlayPickupSound()`.
+	private void PlayCollectedSound(Actor collector)
+	{
+		double atten = self.bNoAttenPickupSound ? ATTN_NONE : ATTN_NORM;
+		int chan = CHAN_AUTO;
+		int flags = CHANF_DEFAULT;
+
+		if (collector != null && collector.CheckLocalView())
+			flags = CHANF_NOPAUSE | CHANF_MAYBE_LOCAL;
+		else
+			flags = CHANF_MAYBE_LOCAL;
+
+		collector.A_StartSound("bio/countitem", chan, flags, 1, atten);
+	}
+
 	private void MarkAsCollected(Actor collector)
 	{
-		PrintPickupMessage(collector.CheckLocalView(), CollectedMessage);
-		bCountItem = false;
+		self.PlayCollectedSound(collector);
+		self.PrintPickupMessage(collector.CheckLocalView(), self.collectedMessage);
+		self.bCountItem = false;
 		Level.Found_Items++;
-		A_SetTranslation('BIO_Pkup_Counted');
+		self.A_SetTranslation('BIO_Pkup_Counted');
 	}
 
 	private void OnPartialPickup(Actor picker)
 	{
-		if (PickupFlash != null)
-			Actor.Spawn(PickupFlash, Pos, ALLOW_REPLACE);
+		if (self.pickupFlash != null)
+			Actor.Spawn(self.pickupFlash, self.pos, ALLOW_REPLACE);
 
 		// Special check so voodoo dolls picking up items cause the
 		// real player to make noise
-		if (picker.Player != null)
-			PlayPickupSound(picker.Player.MO);
+		if (picker.player != null)
+			self.PlayPickupSound(picker.player.mo);
 		else
-			PlayPickupSound(picker);
+			self.PlayPickupSound(picker);
 
-		PrintPickupMessage(picker.CheckLocalView(), PartialPickupMessage);
+		self.PrintPickupMessage(picker.CheckLocalView(), self.partialPickupMessage);
 
-		if (Amount <= (Default.Amount * 0.25))
-			A_SetTranslation('BIO_Pkup_25');
-		else if (Amount <= (Default.Amount * 0.5))
-			A_SetTranslation('BIO_Pkup_50');
-		else if (Amount <= (Default.Amount * 0.75))
-			A_SetTranslation('BIO_Pkup_75');
+		if (self.amount <= (self.default.Amount * 0.25))
+			self.A_SetTranslation('BIO_Pkup_25');
+		else if (self.amount <= (self.default.Amount * 0.5))
+			self.A_SetTranslation('BIO_Pkup_50');
+		else if (self.amount <= (self.default.Amount * 0.75))
+			self.A_SetTranslation('BIO_Pkup_75');
 	}
 }

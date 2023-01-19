@@ -1,8 +1,13 @@
 GameInfo
 {
 	AddEventHandlers = "BIO_EventHandler"
+   BackpackType = "BIO_Backpack"
    PlayerClasses = "BIO_Player"
 	StatusBarClass = "BIO_StatusBar"
+
+   QuitMessages =
+      // Flavour
+      "$BIO_QUITMSG_DRONES"
 }
 
 DamageType BIO_NullDamage

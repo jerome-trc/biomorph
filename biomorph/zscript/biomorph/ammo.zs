@@ -1,151 +1,192 @@
-mixin class BIO_Ammo
+class BIO_Slot3Ammo : Ammo
 {
-	final override bool TryPickup(in out Actor other)
-	{
-		// If this returns null, either GZDoom or `BIO_Player` is really broken
-		let tgt = other.FindInventory(GetParentAmmo());
-		let prev = tgt.Amount;
-		let cap = tgt.MaxAmount - tgt.Amount;
-		let amt = Min(Amount, cap);
-		tgt.Amount = Clamp(tgt.Amount + amt, 0, tgt.MaxAmount);
-		Amount -= amt;
-
-		// If the player previously had this ammo but ran out, possibly switch
-		// to a weapon that uses it, but only if the player doesn't already
-		// have a weapon pending
-		if (prev == 0 && other.Player != null)
-		{
-			PlayerPawn(other).CheckWeaponSwitch(GetClass());
-		}
-
-		if (Amount <= 0)
-		{
-			GoAwayAndDie();
-			return true;
-		}
-
-		if (amt > 0)
-			OnPartialPickup(other);
-
-		if (bCountItem)
-		{
-			PrintPickupMessage(other.CheckLocalView(), CollectedMessage);
-			bCountItem = false;
-			Level.Found_Items++;
-			A_SetTranslation('BIO_Pkup_Counted');
-		}
-
-		return false;
-	}
-}
-
-// Small pickups ///////////////////////////////////////////////////////////////
-
-class BIO_Clip : Clip
-{
-	mixin BIO_Pickup;
-	mixin BIO_Ammo;
-
 	Default
 	{
-		Tag "$BIO_CLIP_TAG";
-		Inventory.PickupMessage "$BIO_CLIP_PKUP";
-		BIO_Clip.PartialPickupMessage "$BIO_CLIP_PARTIAL";
+		Tag "$BIO_SLOT3AMMO_TAG";
+		Inventory.Icon 'SHELA0';
+		Inventory.MaxAmount 50;
+		Ammo.BackpackAmount 4;
+		Ammo.BackpackMaxAmount 100;
 	}
 }
 
-class BIO_Shell : Shell
+class BIO_Slot4Ammo : Ammo
 {
-	mixin BIO_Pickup;
-	mixin BIO_Ammo;
-
 	Default
 	{
-		Tag "$BIO_SHELL_TAG";
-		Inventory.PickupMessage "$BIO_SHELL_PKUP";
-		BIO_Shell.PartialPickupMessage "$BIO_SHELL_PARTIAL";
+		Tag "$BIO_SLOT4AMMO_TAG";
+		Inventory.Icon 'CLIPA0';
+		Inventory.MaxAmount 200;
+		Ammo.BackpackAmount 10;
+		Ammo.BackpackMaxAmount 400;
 	}
 }
 
-class BIO_RocketAmmo : RocketAmmo
+class BIO_Slot5Ammo : Ammo
 {
-	mixin BIO_Pickup;
-	mixin BIO_Ammo;
-
 	Default
 	{
-		Tag "$BIO_ROCKETAMMO_TAG";
-		Inventory.PickupMessage "$BIO_ROCKETAMMO_PKUP";
-		BIO_RocketAmmo.PartialPickupMessage "$BIO_ROCKETAMMO_PARTIAL";
+		Tag "$BIO_SLOT5AMMO_TAG";
+		Inventory.Icon 'ROCKA0';
+		Inventory.MaxAmount 50;
+		Ammo.BackpackAmount 1;
+		Ammo.BackpackMaxAmount 100;
 	}
 }
 
-class BIO_Cell : Cell
+class BIO_Slot67Ammo : Ammo
 {
-	mixin BIO_Pickup;
-	mixin BIO_Ammo;
-
 	Default
 	{
-		Tag "$BIO_CELL_TAG";
-		Inventory.PickupMessage "$BIO_CELL_PKUP";
-		BIO_Cell.PartialPickupMessage "$BIO_CELL_PARTIAL";
+		Tag "$BIO_SLOT67AMMO_TAG";
+		Inventory.Icon 'CELLA0';
+		Inventory.MaxAmount 300;
+		Ammo.BackpackAmount 20;
+		Ammo.BackpackMaxAmount 600;
 	}
 }
 
-// Large pickups ///////////////////////////////////////////////////////////////
+// Pickups, small //////////////////////////////////////////////////////////////
 
-class BIO_ClipBox : ClipBox
+class BIO_Slot3Ammo_Small : BIO_Slot3Ammo replaces Shell
 {
-	mixin BIO_Pickup;
-	mixin BIO_Ammo;
-
 	Default
 	{
-		Tag "$BIO_CLIPBOX_TAG";
-		Inventory.PickupMessage "$BIO_CLIPBOX_PKUP";
-		BIO_ClipBox.PartialPickupMessage "$BIO_CLIPBOX_PARTIAL";
+		Tag "$BIO_SLOT3AMMO_SMALL_TAG";
+		Inventory.Amount 4;
+		Inventory.PickupMessage "$BIO_SLOT3AMMO_SMALL_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		SHEL A -1;
+		Stop;
 	}
 }
 
-class BIO_ShellBox : ShellBox
+class BIO_Slot4Ammo_Small : BIO_Slot4Ammo replaces Clip
 {
-	mixin BIO_Pickup;
-	mixin BIO_Ammo;
-
 	Default
 	{
-		Tag "$BIO_SHELLBOX_TAG";
-		Inventory.PickupMessage "$BIO_SHELLBOX_PKUP";
-		BIO_ShellBox.PartialPickupMessage "$BIO_SHELLBOX_PARTIAL";
+		Tag "$BIO_SLOT4AMMO_SMALL_TAG";
+		Inventory.Amount 10;
+		Inventory.PickupMessage "$BIO_SLOT4AMMO_SMALL_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		CLIP A -1;
+		Stop;
 	}
 }
 
-class BIO_RocketBox : RocketBox
+class BIO_Slot5Ammo_Small : BIO_Slot5Ammo replaces RocketAmmo
 {
-	mixin BIO_Pickup;
-	mixin BIO_Ammo;
-
 	Default
 	{
-		Tag "$BIO_ROCKETBOX_TAG";
-		Inventory.PickupMessage "$BIO_ROCKETBOX_PKUP";
-		BIO_RocketBox.PartialPickupMessage "$BIO_ROCKETBOX_PARTIAL";
+		Tag "$BIO_SLOT5AMMO_SMALL_TAG";
+		Inventory.Amount 1;
+		Inventory.PickupMessage "$BIO_SLOT5AMMO_SMALL_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		ROCK A -1;
+		Stop;
 	}
 }
 
-class BIO_CellPack : CellPack
+class BIO_Slot67Ammo_Small : BIO_Slot67Ammo replaces Cell
 {
-	mixin BIO_Pickup;
-	mixin BIO_Ammo;
-
 	Default
 	{
-		Tag "$BIO_CELLPACK_TAG";
-		Inventory.PickupMessage "$BIO_CELLPACK_PKUP";
-		BIO_CellPack.PartialPickupMessage "$BIO_CELLPACK_PARTIAL";
+		Tag "$BIO_SLOT67AMMO_SMALL_TAG";
+		Inventory.Amount 20;
+		Inventory.PickupMessage "$BIO_SLOT67AMMO_SMALL_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		CELL A -1;
+		Stop;
 	}
 }
+
+// Pickups, big ////////////////////////////////////////////////////////////////
+
+class BIO_Slot3Ammo_Big : BIO_Slot3Ammo replaces ShellBox
+{
+	Default
+	{
+		Tag "$BIO_SLOT3AMMO_BIG_TAG";
+		Inventory.Amount 20;
+		Inventory.PickupMessage "$BIO_SLOT3AMMO_BIG_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		SBOX A -1;
+		Stop;
+	}
+}
+
+class BIO_Slot4Ammo_Big : BIO_Slot4Ammo replaces ClipBox
+{
+	Default
+	{
+		Tag "$BIO_SLOT4AMMO_BIG_TAG";
+		Inventory.Amount 50;
+		Inventory.PickupMessage "$BIO_SLOT4AMMO_BIG_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		AMMO A -1;
+		Stop;
+	}
+}
+
+class BIO_Slot5Ammo_Big : BIO_Slot5Ammo replaces RocketBox
+{
+	Default
+	{
+		Tag "$BIO_SLOT5AMMO_BIG_TAG";
+		Inventory.Amount 5;
+		Inventory.PickupMessage "$BIO_SLOT5AMMO_BIG_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		BROK A -1;
+		Stop;
+	}
+}
+
+class BIO_Slot67Ammo_Big : BIO_Slot67Ammo replaces CellPack
+{
+	Default
+	{
+		Tag "$BIO_SLOT67AMMO_BIG_TAG";
+		Inventory.Amount 100;
+		Inventory.PickupMessage "$BIO_SLOT67AMMO_BIG_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		CELP A -1;
+		Stop;
+	}
+}
+
+// Backpack ////////////////////////////////////////////////////////////////////
 
 class BIO_Backpack : BackpackItem replaces Backpack
 {
@@ -159,52 +200,17 @@ class BIO_Backpack : BackpackItem replaces Backpack
 	States
 	{
 	Spawn:
-		BPAK A -1;
+		RUCK A -1;
 		Stop;
 	}
 
-	override bool HandlePickup(Inventory item)
+	final override void Touch(Actor toucher)
 	{
-		if (!(item is 'BackpackItem'))
-			return false;
+		let preexisting = toucher.FindInventory(self.GetClass()) != null;
 
-		bool overflow = false;
+		super.Touch(toucher);
 
-		for (let i = Owner.Inv; i != null; i = i.Inv)
-		{
-			let a = Ammo(i);
-
-			if (a == null || a.GetParentAmmo() != a.GetClass())
-				continue;
-
-			if (a.Amount < a.MaxAmount || sv_unlimited_pickup)
-			{
-				int amt = a.Default.BackpackAmount;
-
-				if (!bIgnoreSkill)
-					amt = int(amt * G_SkillPropertyFloat(SKILLP_AmmoFactor));
-				
-				a.Amount += amt;
-
-				if (!sv_unlimited_pickup)
-					a.Amount = Min(a.Amount, a.MaxAmount);
-			}
-			else
-			{
-				overflow = true;
-				Actor.Spawn(a.GetClass(), item.Pos, ALLOW_REPLACE);
-			}
-		}
-
-		if (overflow)
-		{
-			PrintPickupMessage(
-				Owner.CheckLocalView(),
-				"$BIO_BACKPACK_OVERFLOW"
-			);
-		}
-
-		item.bPickupGood = true;
-		return true;
+		if (!preexisting)
+			self.PrintPickupMessage(toucher.CheckLocalView(), "$BIO_BACKPACK_FIRSTPKUP");
 	}
 }

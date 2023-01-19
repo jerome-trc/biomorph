@@ -3,7 +3,7 @@ mixin class BIO_Health
 	private void OnFirstBerserkPickup(in out Actor other)
 	{
 		other.GiveInventory('PowerStrength', 1);
-		PrintPickupMessage(other.CheckLocalView(), "$BIO_BERSERK_PKUPFIRST");
+		self.PrintPickupMessage(other.CheckLocalView(), "$BIO_BERSERK_PKUPFIRST");
 
 		let pawn = BIO_Player(other);
 
@@ -15,55 +15,55 @@ mixin class BIO_Health
 			select |= (bsks == BIO_CV_BSKS_ONLYFIRST && !prev);
 
 			if (select)
-				pawn.A_SelectWeapon('Fist');
+				pawn.A_SelectWeapon('BIO_Melee');
 		}
 	}
 
 	final override bool TryPickup(in out Actor other)
 	{
-		if (self is 'BIO_Berserk' && bCountItem)
-			OnFirstBerserkPickup(other);
+		if (self is 'BIO_Berserk' && self.bCountItem)
+			self.OnFirstBerserkPickup(other);
 
 		int amt = 0;
 
 		if (other.Player != null)
 		{
-			PrevHealth = other.Player.Health;
+			self.prevHealth = other.Player.Health;
 			let cap = other.GetMaxHealth() - other.Player.Health;
-			cap = Max(cap, 0);
 
-			if (self is 'BIO_HealthBonus' || self is 'BIO_Soulsphere')
+			if (self is 'BIO_HealthBonus' || self is 'BIO_SuperHealth')
 				cap += 100;
 
-			amt = Min(Amount, cap);
-			other.GiveBody(amt, MaxAmount);
-			Amount -= amt;
+			cap = Max(cap, 0);
+			amt = Min(self.amount, cap);
+			other.GiveBody(amt, self.maxAmount);
+			self.amount -= amt;
 		}
 		else
 		{
-			PrevHealth = other.Health;
+			self.prevHealth = other.Health;
 			let cap = other.GetMaxHealth() - other.Health;
 			cap = Max(cap, 0);
 
-			if (self is 'BIO_HealthBonus' || self is 'BIO_Soulsphere')
+			if (self is 'BIO_HealthBonus' || self is 'BIO_SuperHealth')
 				cap += 100;
 
-			amt = Min(Amount, cap);
-			other.GiveBody(amt, MaxAmount);
-			Amount -= amt;
+			amt = Min(self.amount, cap);
+			other.GiveBody(amt, self.maxAmount);
+			self.amount -= amt;
 		}
 
-		if (Amount <= 0)
+		if (self.amount <= 0)
 		{
-			GoAwayAndDie();
+			self.GoAwayAndDie();
 			return true;
 		}
 
 		if (amt > 0)
-			OnPartialPickup(other);
+			self.OnPartialPickup(other);
 
 		if (bCountItem)
-			MarkAsCollected(other);
+			self.MarkAsCollected(other);
 
 		return false;
 	}
@@ -83,35 +83,49 @@ class BIO_HealthBonus : HealthBonus replaces HealthBonus
 	}
 }
 
-class BIO_Stimpack : Stimpack replaces Stimpack
+class BIO_SmallHealth : Stimpack replaces Stimpack
 {
 	mixin BIO_Pickup;
 	mixin BIO_Health;
 
 	Default
 	{
-		Tag "$BIO_STIMPACK_TAG";
-		Inventory.PickupMessage "$BIO_STIMPACK_PKUP";
-		BIO_Stimpack.PartialPickupMessage "$BIO_STIMPACK_PARTIAL";
-		Health.LowMessage 25, "$BIO_STIMPACK_PKUPLOW";
+		Tag "$BIO_SMALLHEALTH_TAG";
+		Inventory.PickupMessage "$BIO_SMALLHEALTH_PKUP";
+		BIO_SmallHealth.PartialPickupMessage "$BIO_SMALLHEALTH_PARTIAL";
+		Health.LowMessage 25, "$BIO_SMALLHEALTH_PKUPLOW";
+	}
+
+	States
+	{
+	Spawn:
+		PILS A -1;
+		Stop;
 	}
 }
 
-class BIO_Medikit : Medikit replaces Medikit
+class BIO_BigHealth : Medikit replaces Medikit
 {
 	mixin BIO_Pickup;
 	mixin BIO_Health;
 
 	Default
 	{
-		Tag "$BIO_MEDIKIT_TAG";
-		Inventory.PickupMessage "$BIO_MEDIKIT_PKUP";
-		BIO_Medikit.PartialPickupMessage "$BIO_MEDIKIT_PARTIAL";
-		Health.LowMessage 25, "$BIO_MEDIKIT_PKUPLOW";
+		Tag "$BIO_BIGHEALTH_TAG";
+		Inventory.PickupMessage "$BIO_BIGHEALTH_PKUP";
+		BIO_BigHealth.PartialPickupMessage "$BIO_BIGHEALTH_PARTIAL";
+		Health.LowMessage 25, "$BIO_BIGHEALTH_PKUPLOW";
+	}
+
+	States
+	{
+	Spawn:
+		TRAU A -1;
+		Stop;
 	}
 }
 
-class BIO_Soulsphere : Soulsphere replaces Soulsphere
+class BIO_SuperHealth : Soulsphere replaces Soulsphere
 {
 	mixin BIO_Pickup;
 	mixin BIO_Health;
@@ -121,10 +135,10 @@ class BIO_Soulsphere : Soulsphere replaces Soulsphere
 		-INVENTORY.AUTOACTIVATE;
 		-INVENTORY.ALWAYSPICKUP;
 
-		Tag "$BIO_SOULSPHERE_TAG";
-		Inventory.PickupMessage "$BIO_SOULSPHERE_PKUP";
-		Health.LowMessage 25, "$BIO_SOULSPHERE_PKUPLOW";
-		BIO_Soulsphere.PartialPickupMessage "$BIO_SOULSPHERE_PARTIAL";
-		BIO_Soulsphere.CollectedMessage "$BIO_SOULSPHERE_COLLECTED";
+		Tag "$BIO_SUPERHEALTH_TAG";
+		Inventory.PickupMessage "$BIO_SUPERHEALTH_PKUP";
+		Health.LowMessage 25, "$BIO_SUPERHEALTH_PKUPLOW";
+		BIO_SuperHealth.PartialPickupMessage "$BIO_SUPERHEALTH_PARTIAL";
+		BIO_SuperHealth.CollectedMessage "$BIO_SUPERHEALTH_COLLECTED";
 	}
 }

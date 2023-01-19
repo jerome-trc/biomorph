@@ -1,6 +1,0 @@
-// Indicate how much quantity is left in a pickup
-
-BIO_Pkup_75 = "0:255 = @35[255, 255, 0]"
-BIO_Pkup_50 = "0:255 = @35[255, 80, 0]"
-BIO_Pkup_25 = "0:255 = @35[127, 0, 0]"
-BIO_Pkup_Counted = "0:255 = @15[0, 255, 0]"

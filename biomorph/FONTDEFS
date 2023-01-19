@@ -1,0 +1,9 @@
+JenocideFontRed
+{
+	Template JNCRD%03d
+}
+
+JenocideBoldRed
+{
+	Template JNBRD%03d
+}

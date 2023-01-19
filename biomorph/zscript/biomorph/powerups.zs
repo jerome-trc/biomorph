@@ -1,5 +1,5 @@
-// This subclass only exists so that `TakeInventory()` is guaranteed to only
-// remove items of exactly this class and no other `PowerupGiver` items.
+/// This subclass only exists so that `TakeInventory()` is guaranteed to only
+/// remove items of exactly this class and no other `PowerupGiver` items.
 class BIO_PowerupGiver : PowerupGiver {}
 
 class BIO_Berserk : Health replaces Berserk
@@ -24,7 +24,7 @@ class BIO_Berserk : Health replaces Berserk
 	States
 	{
 	Spawn:
-		PSTR A -1 Bright;
+		RKIT A -1;
 		Stop;
 	}
 }
@@ -77,6 +77,13 @@ class BIO_RadSuit : RadSuit replaces RadSuit
 		Tag "$BIO_RADSUIT_TAG";
 		Inventory.PickupMessage "$BIO_RADSUIT_PKUP";
 		Powerup.Type 'BIO_PowerIronFeet';
+	}
+
+	States
+	{
+	Spawn:
+		NBCS A -1;
+		Stop;
 	}
 }
 
@@ -144,7 +151,7 @@ class BIO_PowerLightAmp : PowerLightAmp
 	}
 }
 
-// Provides an infinitely-lasting variant of `PowerScanner` for perks.
+/// Provides an infinitely-lasting variant of `PowerScanner`.
 class BIO_PowerScanner : PowerScanner
 {
 	Default

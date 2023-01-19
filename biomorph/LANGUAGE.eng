@@ -8,6 +8,7 @@
 	solution which doesn't break when moved from English to, for instance, French.
 	- Don't be surprised if an internal name doesn't line up with a flavour name.
 	- Color escape codes often get substituted at runtime.
+	- Yes, I am a fiend for coloured text.
 */
 
 [eng default]
@@ -18,20 +19,20 @@
 
 	BIO_HEALTHBONUS_TAG = "Health Flask";
 	BIO_HEALTHBONUS_PKUP = "Drank the contents of a health flask.";
-	BIO_HEALTHBONUS_COLLECTED = "Didn't pick up a Health Flask, but counted it as collected.";
-	BIO_STIMPACK_TAG = "Stimpack";
-	BIO_STIMPACK_PKUP = "Used a stimpack.";
-	BIO_STIMPACK_PARTIAL = "Partially used a stimpack.";
-	BIO_STIMPACK_PKUPLOW = "Used a badly-needed stimpack.";
-	BIO_MEDIKIT_TAG = "First-Aid Kit";
-	BIO_MEDIKIT_PKUP = "Used a first-aid kit.";
-	BIO_MEDIKIT_PARTIAL = "Partially used a first-aid kit.";
-	BIO_MEDIKIT_PKUPLOW = "Used a badly-needed first-aid kit.";
-	BIO_SOULSPHERE_TAG = "Soulsphere";
-	BIO_SOULSPHERE_PKUP = "Absorbed a Soulsphere.";
-	BIO_SOULSPHERE_PARTIAL = "Partially absorbed a Soulsphere.";
-	BIO_SOULSPHERE_PKUPLOW = "Absorbed a much-needed Soulsphere.";
-	BIO_SOULSPHERE_COLLECTED = "Didn't pick up a Soulsphere, but counted it as collected.";
+	BIO_HEALTHBONUS_COLLECTED = "Did not pick up a health flask, but counted it as collected.";
+	BIO_SMALLHEALTH_TAG = "Stimpack";
+	BIO_SMALLHEALTH_PKUP = "Used a stimpack.";
+	BIO_SMALLHEALTH_PARTIAL = "Partially used a stimpack.";
+	BIO_SMALLHEALTH_PKUPLOW = "Used a badly-needed stimpack.";
+	BIO_BIGHEALTH_TAG = "Trauma Kit";
+	BIO_BIGHEALTH_PKUP = "Used a trauma kit.";
+	BIO_BIGHEALTH_PARTIAL = "Partially used a trauma kit.";
+	BIO_BIGHEALTH_PKUPLOW = "Used an urgently-needed trauma kit.";
+	BIO_SUPERHEALTH_TAG = "Soulsphere";
+	BIO_SUPERHEALTH_PKUP = "Absorbed a Soulsphere.";
+	BIO_SUPERHEALTH_PARTIAL = "Partially absorbed a Soulsphere.";
+	BIO_SUPERHEALTH_PKUPLOW = "Absorbed a much-needed Soulsphere.";
+	BIO_SUPERHEALTH_COLLECTED = "Did not absorb a Soulsphere, but counted it as collected.";
 
 // Armour //////////////////////////////////////////////////////////////////////
 
@@ -49,32 +50,29 @@
 
 // Ammo ////////////////////////////////////////////////////////////////////////
 
-	BIO_CLIP_TAG = "Magazine";
-	BIO_CLIP_PKUP = "Picked up a bullet magazine.";
-	BIO_CLIP_PARTIAL = "Partially emptied a bullet magazine.";
-	BIO_CLIPBOX_TAG = "Bullet Box";
-	BIO_CLIPBOX_PKUP = "Picked up a bullet box.";
-	BIO_CLIPBOX_PARTIAL = "Partially emptied a bullet box.";
-	BIO_SHELL_TAG = "Shotshells";
-	BIO_SHELL_PKUP = "Picked up a handful of shotshells.";
-	BIO_SHELL_PARTIAL = "Picked up part of a handful of shotshells.";
-	BIO_SHELLBOX_TAG = "Shell Box";
-	BIO_SHELLBOX_PKUP = "Picked up a box of shotshells.";
-	BIO_SHELLBOX_PARTIAL = "Partially emptied a box of shotshells.";
-	BIO_ROCKETAMMO_TAG = "Rocket";
-	BIO_ROCKETAMMO_PKUP = "Picked up a rocket.";
-	BIO_ROCKETBOX_TAG = "Rocket Box";
-	BIO_ROCKETBOX_PKUP = "Picked up a rocket box.";
-	BIO_ROCKETBOX_PARTIAL = "Partially emptied a rocket box.";
-	BIO_CELL_TAG = "Energy Cell";
-	BIO_CELL_PKUP = "Picked up an energy cell.";
-	BIO_CELL_PARTIAL = "Partially drained an energy cell.";
-	BIO_CELLPACK_TAG = "Energy Cell Pack";
-	BIO_CELLPACK_PKUP = "Picked up an energy cell pack.";
-	BIO_CELLPACK_PARTIAL = "Partially drained an energy cell pack.";
+	BIO_SLOT3AMMO_TAG = "Stormgun Cell";
+	BIO_SLOT3AMMO_SMALL_PKUP = "Picked up a stormgun cell.";
+	BIO_SLOT3AMMO_BIG_TAG = "Stormgun Cell Pack";
+	BIO_SLOT3AMMO_BIG_PKUP = "Picked up a stormgun cell pack.";
+
+	BIO_SLOT4AMMO_TAG = "Rifle Cell";
+	BIO_SLOT4AMMO_SMALL_PKUP = "Picked up a rifle cell.";
+	BIO_SLOT4AMMO_BIG_TAG = "Rifle Cell Pack";
+	BIO_SLOT4AMMO_BIG_PKUP = "Picked up a rifle cell pack.";
+
+	BIO_SLOT5AMMO_TAG = "Superdischarge Cell";
+	BIO_SLOT5AMMO_SMALL_PKUP = "Picked up a superdischarge cell.";
+	BIO_SLOT5AMMO_BIG_TAG = "Superdischarge Cell Pack";
+	BIO_SLOT5AMMO_BIG_PKUP = "Picked up a superdischarge cell pack.";
+
+	BIO_SLOT67AMMO_TAG = "Nanotube Cell";
+	BIO_SLOT67AMMO_SMALL_PKUP = "Picked up a nanotube cell.";
+	BIO_SLOT67AMMO_BIG_TAG = "Nanotube Cell Pack";
+	BIO_SLOT67AMMO_BIG_PKUP = "Picked up a nanotube cell pack.";
 
 	BIO_BACKPACK_TAG = "Backpack";
-	BIO_BACKPACK_PKUP = "Obtained a backpack full of ammo.";
+	BIO_BACKPACK_PKUP = "Obtained a backpack with some ammo.";
+	BIO_BACKPACK_FIRSTPKUP = "Your ammo capacity is doubled.";
 	BIO_BACKPACK_OVERFLOW = "Left some excess ammo behind from a backpack.";
 
 // Powerups ////////////////////////////////////////////////////////////////////
@@ -99,7 +97,42 @@
 	BIO_RADSUIT_TAG = "N.B.C. Suit";
 	BIO_RADSUIT_PKUP = "Donned an N.B.C. suit; you're safe from environmental hazards.";
 
+// Weapons /////////////////////////////////////////////////////////////////////
+
+	BIO_BITERIFLE_TAG = "Bite Rifle";
+	BIO_BITERIFLE_PKUP = "Procured a bite rifle.";
+	BIO_BITERIFLE_OB = "%k tickled %o to death.";
+
+	BIO_CASTERCANNON_TAG = "Caster Cannon";
+	BIO_CASTERCANNON_PKUP = "Procured a caster cannon.";
+	BIO_CASTERCANNON_OB = "%k field-tested a caster cannon on %o.";
+
+	BIO_COMBATSTORMGUN_TAG = "Combat Stormgun";
+	BIO_COMBATSTORMGUN_PKUP = "Procured a combat stormgun.";
+	BIO_COMBATSTORMGUN_OB = "%k perforated %o";
+
+	BIO_GPMG_TAG = "G.P.M.G.";
+	BIO_GPMG_PKUP = "Procured a general-purpose machine gun.";
+	BIO_GPMG_OB = "%k riddled %o.";
+
+	BIO_MANPAT_TAG = "M.A.N.P.A.T.";
+	BIO_MANPAT_PKUP = "Procured a man-portable anti-tank system.";
+	BIO_MANPAT_OB = "%k blew %o into chunks.";
+
+	BIO_MELEE_TAG = "Combatives";
+	BIO_MELEE_OB = "%k beat %o to death.";
+
+	BIO_PISTOL_TAG = "Service Pistol";
+	BIO_PISTOL_PKUP = "Procured a service pistol.";
+	BIO_PISTOL_OB = "%k served %o summary execution.";
+
+	BIO_RIOTSTORMGUN_TAG = "Riot Stormgun";
+	BIO_RIOTSTORMGUN_PKUP = "Procured a riot stormgun.";
+	BIO_RIOTSTORMGUN_OB = "%k suppressed %o to death.";
+
 // Menu, game options //////////////////////////////////////////////////////////
+
+	BIO_OPTTITLE = "\c[Cyan]Biomorph:\c[White] Preferences";
 
 	BIO_OPTLBL_AUTORELOAD_PRE = "Firing an empty weapon reloads it";
 	BIO_OPTLBL_AUTORELOAD_POST = "Auto-reload after emptying magazine";
@@ -128,9 +161,56 @@
 
 	BIO_UNASSIGNED_KEY = "\c[Gray]Unassigned Key\c-";
 
-	BIO_KB_DROPWEAP = "Drop Weapon";
-	BIO_KB_INVENTORYMENU = "Inventory Menu";
-
 // Quit messages ///////////////////////////////////////////////////////////////
 
-	// SOON
+	BIO_QUITMSG_DRONES =
+		"\c[Purple]Please don't go. The nanites need you. They look up to you.\c-";
+
+// Lore ////////////////////////////////////////////////////////////////////////
+
+	BIO_LORE_MAGICIAN =
+		"MAGICIAN was the name given to a research and development project worked"
+		"on jointly by the United States Navy and DARPA to engineer a system for"
+		"rapidly converting electricity into immediately-useful forms of matter."
+		"\n"
+		"MAGICIAN's success has given rise to an entirely new discipline of weapons and "
+		"logistical systems known by the colloquialism \"magic-print\" or \"m-print\".";
+	BIO_LORE_BITETECH =
+		"BiteTech is the trademark name given to Oxbow Technologies' particular"
+		"configuration of weaponised nanites, based on innovations resulting from"
+		"United States Marines Corps research carried out as part of Project Ticklish."
+		"\n"
+		"BiteTech projectiles can be fired directly from weapons, carried as the "
+		"payload of more conventional munitions like shotgun shells, or used similarly "
+		"to shrapnel in fragmentation grenades. Additionally, a BiteTech projectile "
+		"can be set to form flagella, allowing it to autonomously seek out targets, "
+		"albeit with a limited aspect and turning capability. Once a BiteTech globule "
+		"makes contact with a warm or moving object, it \"crawls\" using microscopic "
+		"hooks along surfaces and through any material softer than keratin to "
+		"maneuever towards sources of heat and oscillations; generally, a \"biter\" "
+		"only needs to touch a part of a living animal to determine the origin of "
+		"a heartbeat and move on it."
+		"\n"
+		"BiteTech, like all Ticklish-derived weapons, is covered by Schedule 1 of "
+		"the Nanorobotic Warfare Convention. Use of BiteTech is almost always "
+		"regarded as a war crime due to the unpredictable nature of a so-called "
+		"\"pseudo-living\" ordnance.";
+
+	BIO_LORE_RIOTSTORMGUN =
+		"Silverglass Industries' P11 Suppressor Carbine fits into a novel pattern"
+		"of weapons known commonly as \"stormguns\". By ";
+	BIO_LORE_COMBATSTORMGUN =
+		"Silverglass Industries offers the M11 Suppressor Rifle as a military-grade "
+		"counterpart to its successful P11 line. This weapon is fully interoperable "
+		"with the police-grade m-print fusion cells used by its smaller cousin.";
+	BIO_LORE_GPMG =
+		"The Anvil Solutions M83 Squad Automatic Weapon is a general-purpose"
+		"machine gun designed on contract for the United States Army.";
+	BIO_LORE_BITERIFLE =
+		"The Oxbow Technologies Nanite Rifle Platform is an experimental weapon"
+		"system which leverages the now-ubiquitous m-print paradigm for ammunition"
+		"supply to rapidly breed semi-organic BiteTech projectiles."
+		"\n"
+		"While making a significant trade-off in muzzle velocity, these \"biters\" "
+		"can deal much greater damage upon actually hitting a target by guaranteeing "
+		"damage to vital parts of the body.";
