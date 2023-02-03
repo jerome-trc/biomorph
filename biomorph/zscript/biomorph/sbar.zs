@@ -10,7 +10,7 @@ class BIOM_StatusBar : BaseStatusBar
 	/// Resource acquisition.
 	final override void Init()
 	{
-		if (BIOM_debug)
+		if (developer >= 1)
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Initialising status bar...");
 
 		super.Init();

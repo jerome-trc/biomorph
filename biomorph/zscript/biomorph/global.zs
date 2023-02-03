@@ -17,7 +17,7 @@ class BIOM_Global : Thinker
 		let ret = new('BIOM_Global');
 		ret.ChangeStatNum(STAT_STATIC);
 
-		if (BIOM_debug)
+		if (developer >= 1)
 		{
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Global init done (took %d ms).", MsTime() - ms);
@@ -34,7 +34,7 @@ class BIOM_Global : Thinker
 
 	final override void OnDestroy()
 	{
-		if (BIOM_debug)
+		if (developer >= 1)
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Global data teardown.");
 
 		super.OnDestroy();

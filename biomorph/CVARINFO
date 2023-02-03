@@ -1,6 +1,5 @@
 // See zscript/biomorph/utils.zs for value enumerations where applicable.
 
-server noarchive bool BIOM_debug = false;
 server bool BIOM_quake = true;
 
 ////////////////////////////////////////////////////////////////////////////////
