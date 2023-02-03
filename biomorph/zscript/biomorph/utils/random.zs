@@ -1,16 +1,16 @@
-class BIO_WeightedRandomTableEntry
+class BIOM_WeightedRandomTableEntry
 {
 	class<Object> type;
 	/// May be null.
-	BIO_WeightedRandomTable subtable;
+	BIOM_WeightedRandomTable subtable;
 	uint weight;
 }
 
 /// Simple running-sum weighted random class picker with nesting support.
-class BIO_WeightedRandomTable
+class BIOM_WeightedRandomTable
 {
 	string label;
-	protected array<BIO_WeightedRandomTableEntry> entries;
+	protected array<BIOM_WeightedRandomTableEntry> entries;
 	protected uint weightSum;
 
 	virtual protected uint RandomImpl() const
@@ -43,13 +43,13 @@ class BIO_WeightedRandomTable
 			return;
 		}
 
-		uint end = self.entries.Push(new('BIO_WeightedRandomTableEntry'));
+		uint end = self.entries.Push(new('BIOM_WeightedRandomTableEntry'));
 		self.entries[end].type = type;
 		self.entries[end].weight = weight;
 		self.weightSum += weight;
 	}
 
-	BIO_WeightedRandomTable EmplaceLayer(uint weight)
+	BIOM_WeightedRandomTable EmplaceLayer(uint weight)
 	{
 		if (weight <= 0)
 		{
@@ -62,14 +62,14 @@ class BIO_WeightedRandomTable
 			return null;
 		}
 
-		uint end = self.entries.Push(new('BIO_WeightedRandomTableEntry'));
-		self.entries[end].subTable = BIO_WeightedRandomTable(new(GetClass()));
+		uint end = self.entries.Push(new('BIOM_WeightedRandomTableEntry'));
+		self.entries[end].subTable = BIOM_WeightedRandomTable(new(GetClass()));
 		self.entries[end].weight = weight;
 		self.weightSum += weight;
 		return self.entries[end].subTable;
 	}
 
-	void PushLayer(BIO_WeightedRandomTable wrt, uint weight)
+	void PushLayer(BIOM_WeightedRandomTable wrt, uint weight)
 	{
 		if (wrt == self)
 		{
@@ -93,7 +93,7 @@ class BIO_WeightedRandomTable
 			return;
 		}
 
-		uint end  = self.entries.Push(new('BIO_WeightedRandomTableEntry'));
+		uint end  = self.entries.Push(new('BIOM_WeightedRandomTableEntry'));
 		self.entries[end].subTable = wrt;
 		self.entries[end].weight = weight;
 		self.weightSum += weight;

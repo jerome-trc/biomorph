@@ -1,5 +1,5 @@
 /// Functions for easily dealing with actor types which may not exist.
-extend class BIO_Utils
+extend class BIOM_Utils
 {
 	static class<Inventory> ExtInv(name tName)
 	{
@@ -66,12 +66,12 @@ extend class BIO_Utils
 
 	static play bool IsLegendary(Actor monster)
 	{
-		return BIO_Utils.TryFindInv(monster, 'LDLegendaryMonsterToken') != null;
+		return BIOM_Utils.TryFindInv(monster, 'LDLegendaryMonsterToken') != null;
 	}
 }
 
 /// Functions for checking which level set is being played.
-extend class BIO_Utils
+extend class BIOM_Utils
 {
 	static bool Lexicon()
 	{

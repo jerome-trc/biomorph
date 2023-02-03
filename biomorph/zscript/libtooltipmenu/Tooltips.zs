@@ -1,6 +1,6 @@
 // Common code shared between the TooltipListMenu and TooltipOptionMenu.
 
-class BIO_Tooltip : Object ui {
+class BIOM_Tooltip : Object ui {
   double x, y, w, xpad, ypad, scale; // Geometry
   uint first, last; // First and last menuitems this applies to
   Font font;
@@ -8,7 +8,7 @@ class BIO_Tooltip : Object ui {
   TextureID texture;
   string text;
 
-  void CopyFrom(BIO_Tooltip settings) {
+  void CopyFrom(BIOM_Tooltip settings) {
     self.x = settings.x;
     self.y = settings.y;
     self.w = settings.w;
@@ -86,17 +86,17 @@ class BIO_Tooltip : Object ui {
 }
 
 // Mixin classes used for the menu and menu items.
-mixin class BIO_TooltipMenu {
-  array<BIO_Tooltip> tooltips;
-  BIO_Tooltip tooltip_settings;
+mixin class BIOM_TooltipMenu {
+  array<BIOM_Tooltip> tooltips;
+  BIOM_Tooltip tooltip_settings;
 
   // Default settings:
   // - top left corner
   // - 30% of the screen width
   // - 1em horizontal margin and 0.5lh vertical margin
   // - white text using newsmallfont
-  BIO_Tooltip GetDefaults() {
-    let tt = BIO_Tooltip(new("BIO_Tooltip"));
+  BIOM_Tooltip GetDefaults() {
+    let tt = BIOM_Tooltip(new("BIOM_Tooltip"));
     tt.x = tt.y = 0.0;
     tt.w = 0.3;
     tt.xpad = 1.0;
@@ -107,7 +107,7 @@ mixin class BIO_TooltipMenu {
     return tt;
   }
 
-  BIO_Tooltip AppendableTooltip(uint first, uint last) {
+  BIOM_Tooltip AppendableTooltip(uint first, uint last) {
     if (tooltips.size() <= 0) return null;
     let tt = tooltips[tooltips.size()-1];
     if (tt.first == first) return tt;
@@ -124,7 +124,7 @@ mixin class BIO_TooltipMenu {
       return;
     }
     // No existing tooltip for these menu entries, create a new one.
-    tt = new("BIO_Tooltip");
+    tt = new("BIOM_Tooltip");
     tt.CopyFrom(tooltip_settings);
     tt.first = first;
     tt.last = last;
@@ -132,7 +132,7 @@ mixin class BIO_TooltipMenu {
     tooltips.push(tt);
   }
 
-  BIO_Tooltip FindTooltipFor(int item) {
+  BIOM_Tooltip FindTooltipFor(int item) {
     // console.printf("FindTooltipFor(%d)", item);
     if (item < 0 || item >= mDesc.mItems.size()) return null;
     if (!mDesc.mItems[item].Selectable()) return null;
@@ -178,10 +178,10 @@ mixin class BIO_TooltipMenu {
   }
 }
 
-mixin class BIO_TooltipHolder {
-  array<BIO_Tooltip> tooltips;
+mixin class BIOM_TooltipHolder {
+  array<BIOM_Tooltip> tooltips;
 
-  Object Init(array<BIO_Tooltip> tts) {
+  Object Init(array<BIOM_Tooltip> tts) {
     self.tooltips.copy(tts);
     return self;
   }
@@ -189,7 +189,7 @@ mixin class BIO_TooltipHolder {
   override bool Selectable() { return false; }
 }
 
-mixin class BIO_TooltipItem {
+mixin class BIOM_TooltipItem {
   string tooltip;
 
   Object Init(string tooltip) {
@@ -198,7 +198,7 @@ mixin class BIO_TooltipItem {
   }
 }
 
-mixin class BIO_TooltipGeometry {
+mixin class BIOM_TooltipGeometry {
   double x, y, w, xpad, ypad, scale;
 
   Object Init(
@@ -211,7 +211,7 @@ mixin class BIO_TooltipGeometry {
     return self;
   }
 
-  void CopyTo(BIO_Tooltip settings) {
+  void CopyTo(BIOM_Tooltip settings) {
     if (self.x >= 0) settings.x = self.x;
     if (self.y >= 0) settings.y = self.y;
     if (self.w >= 0) settings.w = self.w;
@@ -221,7 +221,7 @@ mixin class BIO_TooltipGeometry {
   }
 }
 
-mixin class BIO_TooltipAppearance {
+mixin class BIOM_TooltipAppearance {
   Font myfont;
   Color colour;
   TextureID texture;
@@ -233,7 +233,7 @@ mixin class BIO_TooltipAppearance {
     return self;
   }
 
-  void CopyTo(BIO_Tooltip settings) {
+  void CopyTo(BIOM_Tooltip settings) {
     if (self.myfont) settings.font = self.myfont;
     if (self.colour) settings.colour = self.colour;
     if (self.texture) settings.texture = self.texture;

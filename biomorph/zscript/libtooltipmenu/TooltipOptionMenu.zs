@@ -7,8 +7,8 @@
 // menu pseudo-items to add and configure tooltips.
 // For details, see the included README.
 
-class BIO_TooltipOptionMenu : OptionMenu {
-  mixin BIO_TooltipMenu;
+class BIOM_TooltipOptionMenu : OptionMenu {
+  mixin BIOM_TooltipMenu;
 
   void InitDynamic(Menu parent, OptionMenuDescriptor desc) {
     desc.mItems.Clear();
@@ -23,7 +23,7 @@ class BIO_TooltipOptionMenu : OptionMenu {
 
     // If there's already a TooltipHolder in tail position, we've already been
     // initialized and just need to retrieve our saved tooltips from it.
-    let tail = OptionMenuItemBIO_TooltipHolder(desc.mItems[desc.mItems.size()-1]);
+    let tail = OptionMenuItemBIOM_TooltipHolder(desc.mItems[desc.mItems.size()-1]);
     if (tail) {
       tooltips.copy(tail.tooltips);
       return;
@@ -41,8 +41,8 @@ class BIO_TooltipOptionMenu : OptionMenu {
     // items.
     bool tooltip_mode = true;
     for (uint i = 0; i < items.size(); ++i) {
-      if (items[i] is "OptionMenuItemBIO_Tooltip") {
-        let tt = OptionMenuItemBIO_Tooltip(items[i]);
+      if (items[i] is "OptionMenuItemBIOM_Tooltip") {
+        let tt = OptionMenuItemBIOM_Tooltip(items[i]);
         if (tt.tooltip == "" && !tooltip_mode) {
           // Explicit marker that the above items should have no tooltips.
           startblock = desc.mItems.size();
@@ -50,10 +50,10 @@ class BIO_TooltipOptionMenu : OptionMenu {
           AddTooltip(startblock, desc.mItems.size()-1, tt.tooltip);
           tooltip_mode = true;
         }
-      } else if (items[i] is "OptionMenuItemBIO_TooltipGeometry") {
-        OptionMenuItemBIO_TooltipGeometry(items[i]).CopyTo(tooltip_settings);
-      } else if (items[i] is "OptionMenuItemBIO_TooltipAppearance") {
-        OptionMenuItemBIO_TooltipAppearance(items[i]).CopyTo(tooltip_settings);
+      } else if (items[i] is "OptionMenuItemBIOM_TooltipGeometry") {
+        OptionMenuItemBIOM_TooltipGeometry(items[i]).CopyTo(tooltip_settings);
+      } else if (items[i] is "OptionMenuItemBIOM_TooltipAppearance") {
+        OptionMenuItemBIOM_TooltipAppearance(items[i]).CopyTo(tooltip_settings);
       } else {
         if (tooltip_mode) {
           // Just finished a run of tooltips.
@@ -66,22 +66,22 @@ class BIO_TooltipOptionMenu : OptionMenu {
 
     // Store our tooltips inside the menu descriptor so we can recover them when
     // the menu is redisplayed.
-    desc.mItems.push(OptionMenuItemBIO_TooltipHolder(new("OptionMenuItemBIO_TooltipHolder").Init(tooltips)));
+    desc.mItems.push(OptionMenuItemBIOM_TooltipHolder(new("OptionMenuItemBIOM_TooltipHolder").Init(tooltips)));
   }
 }
 
-class OptionMenuItemBIO_TooltipHolder : OptionMenuItem {
-  mixin BIO_TooltipHolder;
+class OptionMenuItemBIOM_TooltipHolder : OptionMenuItem {
+  mixin BIOM_TooltipHolder;
 }
 
-class OptionMenuItemBIO_Tooltip : OptionMenuItem {
-  mixin BIO_TooltipItem;
+class OptionMenuItemBIOM_Tooltip : OptionMenuItem {
+  mixin BIOM_TooltipItem;
 }
 
-class OptionMenuItemBIO_TooltipGeometry : OptionMenuItem {
-  mixin BIO_TooltipGeometry;
+class OptionMenuItemBIOM_TooltipGeometry : OptionMenuItem {
+  mixin BIOM_TooltipGeometry;
 }
 
-class OptionMenuItemBIO_TooltipAppearance : OptionMenuItem {
-  mixin BIO_TooltipAppearance;
+class OptionMenuItemBIOM_TooltipAppearance : OptionMenuItem {
+  mixin BIOM_TooltipAppearance;
 }

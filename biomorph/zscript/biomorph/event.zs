@@ -1,4 +1,4 @@
-class BIO_EventHandler : EventHandler
+class BIOM_EventHandler : EventHandler
 {
 	// ???
 }

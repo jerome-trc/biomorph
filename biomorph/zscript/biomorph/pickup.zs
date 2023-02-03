@@ -1,5 +1,5 @@
 /// Functionality needed for waste-proof pickups.
-mixin class BIO_Pickup
+mixin class BIOM_Pickup
 {
 	Default
 	{
@@ -32,7 +32,7 @@ mixin class BIO_Pickup
 		self.PrintPickupMessage(collector.CheckLocalView(), self.collectedMessage);
 		self.bCountItem = false;
 		Level.Found_Items++;
-		self.A_SetTranslation('BIO_Pkup_Counted');
+		self.A_SetTranslation('BIOM_Pkup_Counted');
 	}
 
 	private void OnPartialPickup(Actor picker)
@@ -50,10 +50,10 @@ mixin class BIO_Pickup
 		self.PrintPickupMessage(picker.CheckLocalView(), self.partialPickupMessage);
 
 		if (self.amount <= (self.default.Amount * 0.25))
-			self.A_SetTranslation('BIO_Pkup_25');
+			self.A_SetTranslation('BIOM_Pkup_25');
 		else if (self.amount <= (self.default.Amount * 0.5))
-			self.A_SetTranslation('BIO_Pkup_50');
+			self.A_SetTranslation('BIOM_Pkup_50');
 		else if (self.amount <= (self.default.Amount * 0.75))
-			self.A_SetTranslation('BIO_Pkup_75');
+			self.A_SetTranslation('BIOM_Pkup_75');
 	}
 }

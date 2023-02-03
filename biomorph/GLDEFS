@@ -1,33 +1,33 @@
 // Armor bonus /////////////////////////////////////////////////////////////////
 
-pointlight BIO_ArmorBonus_A
+pointlight BIOM_ArmorBonus_A
 {
 	color 0.0 0.7 0.0
 	size 6
 }
 
-pointlight BIO_ArmorBonus_B
+pointlight BIOM_ArmorBonus_B
 {
 	color 0.0 0.7 0.0
 	size 7
 }
 
-pointlight BIO_ArmorBonus_C
+pointlight BIOM_ArmorBonus_C
 {
 	color 0.0 0.7 0.0
 	size 8
 }
 
-pointlight BIO_ArmorBonus_D
+pointlight BIOM_ArmorBonus_D
 {
 	color 0.0 0.7 0.0
 	size 9
 }
 
-object BIO_ArmorBonus
+object BIOM_ArmorBonus
 {
-	frame ARSDA { light BIO_ArmorBonus_A }
-	frame ARSDB { light BIO_ArmorBonus_B }
-	frame ARSDC { light BIO_ArmorBonus_C }
-	frame ARSDD { light BIO_ArmorBonus_D }
+	frame ARSDA { light BIOM_ArmorBonus_A }
+	frame ARSDB { light BIOM_ArmorBonus_B }
+	frame ARSDC { light BIOM_ArmorBonus_C }
+	frame ARSDD { light BIOM_ArmorBonus_D }
 }

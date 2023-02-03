@@ -1,10 +1,10 @@
 // Note to reader: classes are defined using `extend` blocks for code folding.
 
-class BIO_Global : Thinker
+class BIOM_Global : Thinker
 {
-	static BIO_Global Create()
+	static BIOM_Global Create()
 	{
-		let iter = ThinkerIterator.Create('BIO_Global', STAT_STATIC);
+		let iter = ThinkerIterator.Create('BIOM_Global', STAT_STATIC);
 
 		if (iter.Next(true) != null)
 		{
@@ -14,10 +14,10 @@ class BIO_Global : Thinker
 		}
 
 		uint ms = MsTime();
-		let ret = new('BIO_Global');
+		let ret = new('BIOM_Global');
 		ret.ChangeStatNum(STAT_STATIC);
 
-		if (BIO_debug)
+		if (BIOM_debug)
 		{
 			Console.Printf(Biomorph.LOGPFX_DEBUG ..
 				"Global init done (took %d ms).", MsTime() - ms);
@@ -26,17 +26,17 @@ class BIO_Global : Thinker
 		return ret;
 	}
 
-	static clearscope BIO_Global Get()
+	static clearscope BIOM_Global Get()
 	{
-		let iter = ThinkerIterator.Create('BIO_Global', STAT_STATIC);
-		return BIO_Global(iter.Next(true));
+		let iter = ThinkerIterator.Create('BIOM_Global', STAT_STATIC);
+		return BIOM_Global(iter.Next(true));
 	}
 
 	final override void OnDestroy()
 	{
-		if (BIO_debug)
+		if (BIOM_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Global data teardown.");
-		
+
 		super.OnDestroy();
 	}
 }

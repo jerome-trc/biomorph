@@ -1,8 +1,8 @@
-class BIO_Slot3Ammo : Ammo
+class BIOM_Slot3Ammo : Ammo
 {
 	Default
 	{
-		Tag "$BIO_SLOT3AMMO_TAG";
+		Tag "$BIOM_SLOT3AMMO_TAG";
 		Inventory.Icon 'SHELA0';
 		Inventory.MaxAmount 50;
 		Ammo.BackpackAmount 4;
@@ -10,11 +10,11 @@ class BIO_Slot3Ammo : Ammo
 	}
 }
 
-class BIO_Slot4Ammo : Ammo
+class BIOM_Slot4Ammo : Ammo
 {
 	Default
 	{
-		Tag "$BIO_SLOT4AMMO_TAG";
+		Tag "$BIOM_SLOT4AMMO_TAG";
 		Inventory.Icon 'CLIPA0';
 		Inventory.MaxAmount 200;
 		Ammo.BackpackAmount 10;
@@ -22,11 +22,11 @@ class BIO_Slot4Ammo : Ammo
 	}
 }
 
-class BIO_Slot5Ammo : Ammo
+class BIOM_Slot5Ammo : Ammo
 {
 	Default
 	{
-		Tag "$BIO_SLOT5AMMO_TAG";
+		Tag "$BIOM_SLOT5AMMO_TAG";
 		Inventory.Icon 'ROCKA0';
 		Inventory.MaxAmount 50;
 		Ammo.BackpackAmount 1;
@@ -34,11 +34,11 @@ class BIO_Slot5Ammo : Ammo
 	}
 }
 
-class BIO_Slot67Ammo : Ammo
+class BIOM_Slot67Ammo : Ammo
 {
 	Default
 	{
-		Tag "$BIO_SLOT67AMMO_TAG";
+		Tag "$BIOM_SLOT67AMMO_TAG";
 		Inventory.Icon 'CELLA0';
 		Inventory.MaxAmount 300;
 		Ammo.BackpackAmount 20;
@@ -48,13 +48,13 @@ class BIO_Slot67Ammo : Ammo
 
 // Pickups, small //////////////////////////////////////////////////////////////
 
-class BIO_Slot3Ammo_Small : BIO_Slot3Ammo replaces Shell
+class BIOM_Slot3Ammo_Small : BIOM_Slot3Ammo replaces Shell
 {
 	Default
 	{
-		Tag "$BIO_SLOT3AMMO_SMALL_TAG";
+		Tag "$BIOM_SLOT3AMMO_SMALL_TAG";
 		Inventory.Amount 4;
-		Inventory.PickupMessage "$BIO_SLOT3AMMO_SMALL_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT3AMMO_SMALL_PKUP";
 	}
 
 	States
@@ -65,13 +65,13 @@ class BIO_Slot3Ammo_Small : BIO_Slot3Ammo replaces Shell
 	}
 }
 
-class BIO_Slot4Ammo_Small : BIO_Slot4Ammo replaces Clip
+class BIOM_Slot4Ammo_Small : BIOM_Slot4Ammo replaces Clip
 {
 	Default
 	{
-		Tag "$BIO_SLOT4AMMO_SMALL_TAG";
+		Tag "$BIOM_SLOT4AMMO_SMALL_TAG";
 		Inventory.Amount 10;
-		Inventory.PickupMessage "$BIO_SLOT4AMMO_SMALL_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT4AMMO_SMALL_PKUP";
 	}
 
 	States
@@ -82,13 +82,13 @@ class BIO_Slot4Ammo_Small : BIO_Slot4Ammo replaces Clip
 	}
 }
 
-class BIO_Slot5Ammo_Small : BIO_Slot5Ammo replaces RocketAmmo
+class BIOM_Slot5Ammo_Small : BIOM_Slot5Ammo replaces RocketAmmo
 {
 	Default
 	{
-		Tag "$BIO_SLOT5AMMO_SMALL_TAG";
+		Tag "$BIOM_SLOT5AMMO_SMALL_TAG";
 		Inventory.Amount 1;
-		Inventory.PickupMessage "$BIO_SLOT5AMMO_SMALL_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT5AMMO_SMALL_PKUP";
 	}
 
 	States
@@ -99,13 +99,13 @@ class BIO_Slot5Ammo_Small : BIO_Slot5Ammo replaces RocketAmmo
 	}
 }
 
-class BIO_Slot67Ammo_Small : BIO_Slot67Ammo replaces Cell
+class BIOM_Slot67Ammo_Small : BIOM_Slot67Ammo replaces Cell
 {
 	Default
 	{
-		Tag "$BIO_SLOT67AMMO_SMALL_TAG";
+		Tag "$BIOM_SLOT67AMMO_SMALL_TAG";
 		Inventory.Amount 20;
-		Inventory.PickupMessage "$BIO_SLOT67AMMO_SMALL_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT67AMMO_SMALL_PKUP";
 	}
 
 	States
@@ -118,13 +118,13 @@ class BIO_Slot67Ammo_Small : BIO_Slot67Ammo replaces Cell
 
 // Pickups, big ////////////////////////////////////////////////////////////////
 
-class BIO_Slot3Ammo_Big : BIO_Slot3Ammo replaces ShellBox
+class BIOM_Slot3Ammo_Big : BIOM_Slot3Ammo replaces ShellBox
 {
 	Default
 	{
-		Tag "$BIO_SLOT3AMMO_BIG_TAG";
+		Tag "$BIOM_SLOT3AMMO_BIG_TAG";
 		Inventory.Amount 20;
-		Inventory.PickupMessage "$BIO_SLOT3AMMO_BIG_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT3AMMO_BIG_PKUP";
 	}
 
 	States
@@ -135,13 +135,13 @@ class BIO_Slot3Ammo_Big : BIO_Slot3Ammo replaces ShellBox
 	}
 }
 
-class BIO_Slot4Ammo_Big : BIO_Slot4Ammo replaces ClipBox
+class BIOM_Slot4Ammo_Big : BIOM_Slot4Ammo replaces ClipBox
 {
 	Default
 	{
-		Tag "$BIO_SLOT4AMMO_BIG_TAG";
+		Tag "$BIOM_SLOT4AMMO_BIG_TAG";
 		Inventory.Amount 50;
-		Inventory.PickupMessage "$BIO_SLOT4AMMO_BIG_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT4AMMO_BIG_PKUP";
 	}
 
 	States
@@ -152,13 +152,13 @@ class BIO_Slot4Ammo_Big : BIO_Slot4Ammo replaces ClipBox
 	}
 }
 
-class BIO_Slot5Ammo_Big : BIO_Slot5Ammo replaces RocketBox
+class BIOM_Slot5Ammo_Big : BIOM_Slot5Ammo replaces RocketBox
 {
 	Default
 	{
-		Tag "$BIO_SLOT5AMMO_BIG_TAG";
+		Tag "$BIOM_SLOT5AMMO_BIG_TAG";
 		Inventory.Amount 5;
-		Inventory.PickupMessage "$BIO_SLOT5AMMO_BIG_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT5AMMO_BIG_PKUP";
 	}
 
 	States
@@ -169,13 +169,13 @@ class BIO_Slot5Ammo_Big : BIO_Slot5Ammo replaces RocketBox
 	}
 }
 
-class BIO_Slot67Ammo_Big : BIO_Slot67Ammo replaces CellPack
+class BIOM_Slot67Ammo_Big : BIOM_Slot67Ammo replaces CellPack
 {
 	Default
 	{
-		Tag "$BIO_SLOT67AMMO_BIG_TAG";
+		Tag "$BIOM_SLOT67AMMO_BIG_TAG";
 		Inventory.Amount 100;
-		Inventory.PickupMessage "$BIO_SLOT67AMMO_BIG_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT67AMMO_BIG_PKUP";
 	}
 
 	States
@@ -188,13 +188,13 @@ class BIO_Slot67Ammo_Big : BIO_Slot67Ammo replaces CellPack
 
 // Backpack ////////////////////////////////////////////////////////////////////
 
-class BIO_Backpack : BackpackItem replaces Backpack
+class BIOM_Backpack : BackpackItem replaces Backpack
 {
 	Default
 	{
 		Height 26;
-		Tag "$BIO_BACKPACK_TAG";
-		Inventory.PickupMessage "$BIO_BACKPACK_PKUP";
+		Tag "$BIOM_BACKPACK_TAG";
+		Inventory.PickupMessage "$BIOM_BACKPACK_PKUP";
 	}
 
 	States
@@ -211,6 +211,6 @@ class BIO_Backpack : BackpackItem replaces Backpack
 		super.Touch(toucher);
 
 		if (!preexisting)
-			self.PrintPickupMessage(toucher.CheckLocalView(), "$BIO_BACKPACK_FIRSTPKUP");
+			self.PrintPickupMessage(toucher.CheckLocalView(), "$BIOM_BACKPACK_FIRSTPKUP");
 	}
 }

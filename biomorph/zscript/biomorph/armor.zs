@@ -1,14 +1,14 @@
-class BIO_ArmorBonus : ArmorBonus replaces ArmorBonus
+class BIOM_ArmorBonus : ArmorBonus replaces ArmorBonus
 {
-	mixin BIO_Pickup;
+	mixin BIOM_Pickup;
 
 	Default
 	{
 		-INVENTORY.ALWAYSPICKUP
-		Tag "$BIO_ARMORBONUS_TAG";
-		Inventory.PickupMessage "$BIO_ARMORBONUS_PKUP";
+		Tag "$BIOM_ARMORBONUS_TAG";
+		Inventory.PickupMessage "$BIOM_ARMORBONUS_PKUP";
 		Inventory.PickupSound "bio/armorbonus/pkup";
-		BIO_ArmorBonus.CollectedMessage "$BIO_ARMORBONUS_COLLECTED";
+		BIOM_ArmorBonus.CollectedMessage "$BIOM_ARMORBONUS_COLLECTED";
 	}
 
 	States
@@ -54,7 +54,7 @@ class BIO_ArmorBonus : ArmorBonus replaces ArmorBonus
 	}
 }
 
-mixin class BIO_Armor
+mixin class BIOM_Armor
 {
 	final override bool Use(bool pickup)
 	{
@@ -132,17 +132,17 @@ mixin class BIO_Armor
 	}
 }
 
-class BIO_LightArmor : GreenArmor replaces GreenArmor
+class BIOM_LightArmor : GreenArmor replaces GreenArmor
 {
-	mixin BIO_Pickup;
-	mixin BIO_Armor;
+	mixin BIOM_Pickup;
+	mixin BIOM_Armor;
 
 	Default
 	{
-		Tag "$BIO_LIGHTARMOR_TAG";
-		Inventory.PickupMessage "$BIO_LIGHTARMOR_PKUP";
-		BIO_LightArmor.PartialPickupMessage "$BIO_LIGHTARMOR_PARTIAL";
-		BIO_LightArmor.CollectedMessage "$BIO_LIGHTARMOR_COLLECTED";
+		Tag "$BIOM_LIGHTARMOR_TAG";
+		Inventory.PickupMessage "$BIOM_LIGHTARMOR_PKUP";
+		BIOM_LightArmor.PartialPickupMessage "$BIOM_LIGHTARMOR_PARTIAL";
+		BIOM_LightArmor.CollectedMessage "$BIOM_LIGHTARMOR_COLLECTED";
 	}
 
 	States
@@ -154,17 +154,17 @@ class BIO_LightArmor : GreenArmor replaces GreenArmor
 	}
 }
 
-class BIO_HeavyArmor : BlueArmor replaces BlueArmor
+class BIOM_HeavyArmor : BlueArmor replaces BlueArmor
 {
-	mixin BIO_Pickup;
-	mixin BIO_Armor;
+	mixin BIOM_Pickup;
+	mixin BIOM_Armor;
 
 	Default
 	{
-		Tag "$BIO_HEAVYARMOR_TAG";
-		Inventory.PickupMessage "$BIO_HEAVYARMOR_PKUP";
-		BIO_HeavyArmor.PartialPickupMessage "$BIO_HEAVYARMOR_PARTIAL";
-		BIO_HeavyArmor.CollectedMessage "$BIO_HEAVYARMOR_COLLECTED";
+		Tag "$BIOM_HEAVYARMOR_TAG";
+		Inventory.PickupMessage "$BIOM_HEAVYARMOR_PKUP";
+		BIOM_HeavyArmor.PartialPickupMessage "$BIOM_HEAVYARMOR_PARTIAL";
+		BIOM_HeavyArmor.CollectedMessage "$BIOM_HEAVYARMOR_COLLECTED";
 	}
 
 	States

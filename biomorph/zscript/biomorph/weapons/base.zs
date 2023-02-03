@@ -1,4 +1,4 @@
-class BIO_Weapon : DoomWeapon abstract
+class BIOM_Weapon : DoomWeapon abstract
 {
 	// `SelectionOrder` is for when ammo runs out; lower number, higher priority
 
@@ -38,19 +38,19 @@ class BIO_Weapon : DoomWeapon abstract
 		Radius 16;
 
 		Inventory.PickupMessage "";
-		Inventory.RestrictedTo 'BIO_Player';
+		Inventory.RestrictedTo 'BIOM_Player';
 
 		Weapon.BobStyle 'InverseSmooth';
 		Weapon.BobRangeX 0.3;
 		Weapon.BobRangeY 0.5;
 		Weapon.BobSpeed 2.0;
 
-		BIO_Weapon.ScavengePersist true;
+		BIOM_Weapon.ScavengePersist true;
 	}
 
 	final override bool HandlePickup(Inventory item)
 	{
-		let weap = BIO_Weapon(item);
+		let weap = BIOM_Weapon(item);
 
 		if (weap == null || item.GetClass() != self.GetClass())
 			return false;

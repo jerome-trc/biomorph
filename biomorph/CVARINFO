@@ -1,14 +1,14 @@
 // See zscript/biomorph/utils.zs for value enumerations where applicable.
 
-server noarchive bool BIO_debug = false;
-server bool BIO_quake = true;
+server noarchive bool BIOM_debug = false;
+server bool BIOM_quake = true;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-user int BIO_autoreload_pre = 0;
-user int BIO_autoreload_post = 0;
-user int BIO_berserkswitch = 1;
-user int BIO_invbarslots = 7;
-user int BIO_multibarrelfire = 0;
-user int BIO_multireload = 0;
-user bool BIO_postreloadzoom = false;
+user int BIOM_autoreload_pre = 0;
+user int BIOM_autoreload_post = 0;
+user int BIOM_berserkswitch = 1;
+user int BIOM_invbarslots = 7;
+user int BIOM_multibarrelfire = 0;
+user int BIOM_multireload = 0;
+user bool BIOM_postreloadzoom = false;

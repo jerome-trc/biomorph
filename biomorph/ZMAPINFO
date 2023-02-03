@@ -1,16 +1,16 @@
 GameInfo
 {
-	AddEventHandlers = "BIO_EventHandler"
-   BackpackType = "BIO_Backpack"
-   PlayerClasses = "BIO_Player"
-	StatusBarClass = "BIO_StatusBar"
+	AddEventHandlers = "BIOM_EventHandler"
+   BackpackType = "BIOM_Backpack"
+   PlayerClasses = "BIOM_Player"
+	StatusBarClass = "BIOM_StatusBar"
 
    QuitMessages =
       // Flavour
-      "$BIO_QUITMSG_DRONES"
+      "$BIOM_QUITMSG_DRONES"
 }
 
-DamageType BIO_NullDamage
+DamageType BIOM_NullDamage
 {
    Factor = 0
    NoArmor

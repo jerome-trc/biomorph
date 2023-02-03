@@ -1,60 +1,60 @@
 AddOptionMenu "OptionsMenu"
 {
-	SubMenu "$BIO_MODTITLE", "BIO_Options"
+	SubMenu "$BIOM_MODTITLE", "BIOM_Options"
 }
 
-OptionMenu "BIO_Options"
+OptionMenu "BIOM_Options"
 {
-	class BIO_TooltipOptionMenu
-	BIO_TooltipGeometry 0.0, 0.0, 0.15, 0.1, 0.1, 0.5
+	class BIOM_TooltipOptionMenu
+	BIOM_TooltipGeometry 0.0, 0.0, 0.15, 0.1, 0.1, 0.5
 
-	Title "$BIO_OPTTITLE"
+	Title "$BIOM_OPTTITLE"
 
 	StaticText ""
-	StaticText "$BIO_OPTCAT_BALANCE"
+	StaticText "$BIOM_OPTCAT_BALANCE"
 
 	StaticText ""
-	StaticText "$BIO_OPTCAT_CONTROL"
+	StaticText "$BIOM_OPTCAT_CONTROL"
 
-	Option "$BIO_OPTLBL_AUTORELOAD_PRE", "BIO_autoreload_pre", "BIO_AutoReload"
-	Option "$BIO_OPTLBL_AUTORELOAD_POST", "BIO_autoreload_post", "BIO_AutoReload"
-	Option "$BIO_OPTLBL_BERSERKSWITCH", "BIO_berserkswitch", "BIO_BerserkSwitch"
-	Option "$BIO_OPTLBL_MULTIBARRELFIRE", "BIO_multibarrelfire", "BIO_MultiBarrelFire"
-	Option "$BIO_OPTLBL_MULTIRELOADMODE", "BIO_multireload", "BIO_MultiReloadMode"
-
-	StaticText ""
-	StaticText "$BIO_OPTCAT_GUI"
-
-	Slider "$BIO_OPTLBL_INVBARSLOTS", "BIO_invbarslots", 1, 32, 1, 0
+	Option "$BIOM_OPTLBL_AUTORELOAD_PRE", "BIOM_autoreload_pre", "BIOM_AutoReload"
+	Option "$BIOM_OPTLBL_AUTORELOAD_POST", "BIOM_autoreload_post", "BIOM_AutoReload"
+	Option "$BIOM_OPTLBL_BERSERKSWITCH", "BIOM_berserkswitch", "BIOM_BerserkSwitch"
+	Option "$BIOM_OPTLBL_MULTIBARRELFIRE", "BIOM_multibarrelfire", "BIOM_MultiBarrelFire"
+	Option "$BIOM_OPTLBL_MULTIRELOADMODE", "BIOM_multireload", "BIOM_MultiReloadMode"
 
 	StaticText ""
-	StaticText "$BIO_OPTCAT_AUDIOVIS"
+	StaticText "$BIOM_OPTCAT_GUI"
 
-	Option "$BIO_OPTLBL_QUAKE", "BIO_quake", "OnOff"
+	Slider "$BIOM_OPTLBL_INVBARSLOTS", "BIOM_invbarslots", 1, 32, 1, 0
+
+	StaticText ""
+	StaticText "$BIOM_OPTCAT_AUDIOVIS"
+
+	Option "$BIOM_OPTLBL_QUAKE", "BIOM_quake", "OnOff"
 }
 
-OptionValue "BIO_AutoReload"
+OptionValue "BIOM_AutoReload"
 {
-	0, "$BIO_OPTVAL_AUTOREL_ALWAYS"
-	1, "$BIO_OPTVAL_AUTOREL_SINGLE"
-	2, "$BIO_OPTVAL_AUTOREL_NEVER"
+	0, "$BIOM_OPTVAL_AUTOREL_ALWAYS"
+	1, "$BIOM_OPTVAL_AUTOREL_SINGLE"
+	2, "$BIOM_OPTVAL_AUTOREL_NEVER"
 }
 
-OptionValue "BIO_BerserkSwitch"
+OptionValue "BIOM_BerserkSwitch"
 {
-	0, "$BIO_OPTVAL_BSKS_NONE"
-	1, "$BIO_OPTVAL_BSKS_MELEE"
-	2, "$BIO_OPTVAL_BSKS_FIRSTONLY"
+	0, "$BIOM_OPTVAL_BSKS_NONE"
+	1, "$BIOM_OPTVAL_BSKS_MELEE"
+	2, "$BIOM_OPTVAL_BSKS_FIRSTONLY"
 }
 
-OptionValue "BIO_MultiBarrelFire"
+OptionValue "BIOM_MultiBarrelFire"
 {
-	0, "$BIO_OPTVAL_MBF_PRIM"
-	1, "$BIO_OPTVAL_MBF_SEC"
+	0, "$BIOM_OPTVAL_MBF_PRIM"
+	1, "$BIOM_OPTVAL_MBF_SEC"
 }
 
-OptionValue "BIO_MultiReloadMode"
+OptionValue "BIOM_MultiReloadMode"
 {
-	0, "$BIO_OPTVAL_MRM_AUTO"
-	1, "$BIO_OPTVAL_MRM_HOLD"
+	0, "$BIOM_OPTVAL_MRM_AUTO"
+	1, "$BIOM_OPTVAL_MRM_HOLD"
 }

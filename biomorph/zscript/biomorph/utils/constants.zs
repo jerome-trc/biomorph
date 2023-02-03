@@ -1,5 +1,5 @@
 // Symbolic constants which pretend to be a part of certain gzdoom.pk3 enums
-// (zscript/constants.zs), for better clarity what arguments really mean. 
+// (zscript/constants.zs), for better clarity what arguments really mean.
 
 const BFGF_NONE = 0; // EBFGSprayFlags
 const CPF_NONE = 0; // ECustomPunchFlags
@@ -10,7 +10,7 @@ const TRF_NONE = 0; // ELineTraceFlags
 const SXF_NONE = 0; // ESpawnItemFlags
 const XF_NONE = 0; // EExplodeFlags
 
-extend class BIO_Utils
+extend class BIOM_Utils
 {
 	enum TranslucencyStyle : int
 	{

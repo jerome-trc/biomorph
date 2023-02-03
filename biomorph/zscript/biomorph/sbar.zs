@@ -1,7 +1,7 @@
-class BIO_StatusBar : BaseStatusBar
+class BIOM_StatusBar : BaseStatusBar
 {
 	private CVar invBarSlots, notifyLineCount;
-	private BIO_Player pawn;
+	private BIOM_Player pawn;
 	private InventoryBarState invBarState;
 
 	private HUDFont fontBig, fontIndex, fontSmall;
@@ -10,7 +10,7 @@ class BIO_StatusBar : BaseStatusBar
 	/// Resource acquisition.
 	final override void Init()
 	{
-		if (BIO_debug)
+		if (BIOM_debug)
 			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Initialising status bar...");
 
 		super.Init();
@@ -35,7 +35,7 @@ class BIO_StatusBar : BaseStatusBar
 	{
 		super.AttachToPlayer(player);
 
-		self.pawn = BIO_Player(self.cPlayer.mo);
+		self.pawn = BIOM_Player(self.cPlayer.mo);
 
 		if (self.cPlayer.mo != null && self.pawn == null)
 		{
@@ -48,7 +48,7 @@ class BIO_StatusBar : BaseStatusBar
 		}
 
 		self.notifyLineCount = CVar.GetCVar("con_notifylines", self.cPlayer);
-		self.invBarSlots = CVar.GetCVar("BIO_invbarslots", self.cPlayer);
+		self.invBarSlots = CVar.GetCVar("BIOM_invbarslots", self.cPlayer);
 	}
 
 	final override void Draw(int state, double ticFrac)
@@ -74,7 +74,7 @@ class BIO_StatusBar : BaseStatusBar
 				"%s / %s",
 				FormatNumber(self.cPlayer.Health, 3, 5),
 				FormatNumber(self.pawn.GetMaxHealth(true), 3, 5)
-			), 
+			),
 			(44, -18),
 			0,
 			!berserk ? Font.CR_WHITE : Font.CR_DARKRED
@@ -82,7 +82,7 @@ class BIO_StatusBar : BaseStatusBar
 
 		if (berserk)
 			self.DrawImage('graphics/bang_small.png', (36, -2));
-	
+
 		let armor = self.cPlayer.mo.FindInventory('BasicArmor');
 
 		if (armor != null && armor.Amount > 0)
@@ -102,7 +102,7 @@ class BIO_StatusBar : BaseStatusBar
 		}
 	}
 
-	/// Draw powerup icons at top left, along with the 
+	/// Draw powerup icons at top left, along with the
 	/// durations remaining on their effects in seconds.
 	final override void DrawPowerups()
 	{
@@ -135,14 +135,14 @@ class BIO_StatusBar : BaseStatusBar
 
 /// The Doom status bar is left as-is; this code is a nearly-verbatim copy-paste
 /// from gzdoom.pk3/zscript/ui/statusbar/doom_sbar.zs.
-extend class BIO_StatusBar
+extend class BIOM_StatusBar
 {
 	private void DrawMainBar(double ticFrac)
 	{
 		self.DrawImage('STBAR', (0, 168), DI_ITEM_OFFSETS);
 		self.DrawImage('STTPRCNT', (90, 171), DI_ITEM_OFFSETS);
 		self.DrawImage('STTPRCNT', (221, 171), DI_ITEM_OFFSETS);
-		
+
 		Inventory a1 = self.GetCurrentAmmo();
 
 		if (a1 != null)
@@ -161,7 +161,7 @@ extend class BIO_StatusBar
 			(90, 171),
 			DI_TEXT_ALIGN_RIGHT | DI_NOSHADOW
 		);
-	
+
 		self.DrawString(
 			self.fontDoomBig,
 			FormatNumber(self.GetArmorAmount(), 3),
@@ -264,7 +264,7 @@ extend class BIO_StatusBar
 	{
 		int amt1 = 0, maxamt = 0;
 
-		[amt1, maxamt] = self.GetAmount('BIO_Slot4Ammo');
+		[amt1, maxamt] = self.GetAmount('BIOM_Slot4Ammo');
 		self.DrawString(
 			self.fontDoomIndex,
 			FormatNumber(amt1, 3),
@@ -278,7 +278,7 @@ extend class BIO_StatusBar
 			DI_TEXT_ALIGN_RIGHT
 		);
 
-		[amt1, maxamt] = self.GetAmount('BIO_Slot3Ammo');
+		[amt1, maxamt] = self.GetAmount('BIOM_Slot3Ammo');
 		self.DrawString(
 			self.fontDoomIndex,
 			FormatNumber(amt1, 3),
@@ -292,7 +292,7 @@ extend class BIO_StatusBar
 			DI_TEXT_ALIGN_RIGHT
 		);
 
-		[amt1, maxamt] = self.GetAmount('BIO_Slot5Ammo');
+		[amt1, maxamt] = self.GetAmount('BIOM_Slot5Ammo');
 		self.DrawString(
 			self.fontDoomIndex,
 			FormatNumber(amt1, 3),
@@ -306,7 +306,7 @@ extend class BIO_StatusBar
 			DI_TEXT_ALIGN_RIGHT
 		);
 
-		[amt1, maxamt] = self.GetAmount('BIO_Slot67Ammo');
+		[amt1, maxamt] = self.GetAmount('BIOM_Slot67Ammo');
 		self.DrawString(
 			self.fontDoomIndex,
 			FormatNumber(amt1, 3),

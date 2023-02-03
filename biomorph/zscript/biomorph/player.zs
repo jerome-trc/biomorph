@@ -1,21 +1,21 @@
-class BIO_Player : DoomPlayer
+class BIOM_Player : DoomPlayer
 {
 	Default
 	{
-		Tag "$BIO_MODTITLE";
+		Tag "$BIOM_MODTITLE";
 		Species 'Player';
 		BloodColor 'Cyan';
 
-		Player.DisplayName "$BIO_MODTITLE";
+		Player.DisplayName "$BIOM_MODTITLE";
 		Player.SoundClass 'biomorph';
 
-		Player.StartItem 'BIO_Slot3Ammo', 0;
-		Player.StartItem 'BIO_Slot4Ammo', 0;
-		Player.StartItem 'BIO_Slot5Ammo', 0;
-		Player.StartItem 'BIO_Slot67Ammo', 0;
+		Player.StartItem 'BIOM_Slot3Ammo', 0;
+		Player.StartItem 'BIOM_Slot4Ammo', 0;
+		Player.StartItem 'BIOM_Slot5Ammo', 0;
+		Player.StartItem 'BIOM_Slot67Ammo', 0;
 
-		Player.StartItem 'BIO_Melee';
-		Player.StartItem 'BIO_Pistol';
+		Player.StartItem 'BIOM_Melee';
+		Player.StartItem 'BIOM_Pistol';
 	}
 
 	/// Inversely proportional to added movement inertia;
