@@ -31,3 +31,37 @@ object BIOM_ArmorBonus
 	frame ARSDC { light BIOM_ArmorBonus_C }
 	frame ARSDD { light BIOM_ArmorBonus_D }
 }
+
+// Mutagens/antigens ///////////////////////////////////////////////////////////
+
+pointlight BIOM_Mutagen
+{
+	color 0.1 1.0 0.97
+	size 18
+}
+
+pointlight BIOM_Antigen
+{
+	color 1.0 1.0 1.0
+	size 20
+}
+
+// Weapon pickups //////////////////////////////////////////////////////////////
+
+pointlight BIOM_WeaponPickup_Small
+{
+	color 1.0 1.0 1.0
+	size 16
+}
+
+pointlight BIOM_WeaponPickup_Medium
+{
+	color 1.0 1.0 1.0
+	size 20
+}
+
+pointlight BIOM_WeaponPickup_Large
+{
+	color 1.0 1.0 1.0
+	size 24
+}

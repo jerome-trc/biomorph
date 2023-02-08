@@ -130,6 +130,13 @@
 	BIOM_RIOTSTORMGUN_PKUP = "Procured a riot stormgun.";
 	BIOM_RIOTSTORMGUN_OB = "%k suppressed %o to death.";
 
+// Mutators ////////////////////////////////////////////////////////////////////
+
+	BIOM_MUT_STORMGUNSLUG_TAG =
+		"\c[Cyan]Refit: Slug\c-";
+	BIOM_MUT_STORMGUNSLUG_SUMM =
+		"\c[White]All Stormguns change from firing shells to highly-accurate solid slugs.\c-";
+
 // Menu, game options //////////////////////////////////////////////////////////
 
 	BIOM_OPTTITLE = "\c[Cyan]Biomorph:\c[White] Preferences";
@@ -160,6 +167,8 @@
 // Keybindings /////////////////////////////////////////////////////////////////
 
 	BIOM_UNASSIGNED_KEY = "\c[Gray]Unassigned Key\c-";
+
+	BIOM_KB_MUTMENU = "Mutator Menu";
 
 // Quit messages ///////////////////////////////////////////////////////////////
 

@@ -18,9 +18,10 @@ The GLDEFS for the Armour Bonus were devised by Realm667 user Infirnex.
 
 ## Graphics
 
-The following sprites are edits of the work of id Software LLC:
+The following graphics are edits of the work of id Software LLC:
 - powup_infiniteammo.png
 - powup_radsuit.png
+- All variants of PWKP
 
 The following are edits of the work of [Ac!d](https://forum.zdoom.org/viewtopic.php?f=37&t=69513) (which are themselves edits of the works of 3D Realms Entertainment ApS):
 - PILSA0.png

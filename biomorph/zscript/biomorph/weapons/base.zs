@@ -19,10 +19,12 @@ class BIOM_Weapon : DoomWeapon abstract
 	const SLOTPRIO_LOW = 0.3;
 	const SLOTPRIO_MIN = 0.0;
 
-	/// If this weapon has this set to `false`, it will
-	/// be destroyed if both of its `ammoGive` values are drained.
-	meta bool ScavengePersist;
-	property ScavengePersist: ScavengePersist;
+	meta BIOM_WeaponGrade grade;
+	property Grade: grade;
+
+	/// Should never be `null`.
+	meta class<BIOM_WeaponData> dataClass;
+	property DataClass: dataClass;
 
 	Default
 	{
@@ -30,6 +32,7 @@ class BIOM_Weapon : DoomWeapon abstract
 		+DONTGIB
 		+NOBLOCKMONST
 		+THRUACTORS
+		+INVENTORY.UNDROPPABLE
 		+WEAPON.ALT_AMMO_OPTIONAL
 		+WEAPON.AMMO_OPTIONAL
 		+WEAPON.NOALERT
@@ -45,109 +48,37 @@ class BIOM_Weapon : DoomWeapon abstract
 		Weapon.BobRangeY 0.5;
 		Weapon.BobSpeed 2.0;
 
-		BIOM_Weapon.ScavengePersist true;
+		BIOM_Weapon.Grade BIOM_WEAPGRADE_NONE;
 	}
+}
 
-	final override bool HandlePickup(Inventory item)
+/// An approximate measure of how "good" a weapon is on a 1-to-5 scale. Used by
+/// mutators to determine whether they constitute upgrades, downgrades, or
+/// sidegrades relative to what the player is currently using.
+enum BIOM_WeaponGrade : uint8
+{
+	/// The default; should only ever appear in normal code because someone forgot
+	/// to set it. Considered invalid by other code and is cause for exception.
+	BIOM_WEAPGRADE_NONE,
+	BIOM_WEAPGRADE_1,
+	BIOM_WEAPGRADE_2,
+	/// An "average" weapon. Vanilla weapons would have this grade, and
+	/// therefore it's the grade for all the player's normal starting weapons.
+	BIOM_WEAPGRADE_3,
+	BIOM_WEAPGRADE_4,
+	BIOM_WEAPGRADE_5,
+}
+
+/// The source of truth for a weapon's stats and behavior.
+/// - Every weapon subclasses this once.
+/// - Every player has one per weapon.
+class BIOM_WeaponData abstract
+{
+	/// For setting values to their defaults.
+	abstract void Reset();
+
+	readonly<BIOM_WeaponData> AsConst() const
 	{
-		let weap = BIOM_Weapon(item);
-
-		if (weap == null || item.GetClass() != self.GetClass())
-			return false;
-
-		if (self.maxAmount > 1)
-			return Inventory.HandlePickup(item);
-
-		if (self.ammoType1 != null || self.ammoType2 != null)
-		{
-			int
-				amt1 = self.owner.CountInv(self.ammoType1),
-				amt2 = self.owner.CountInv(self.ammoType2);
-			weap.bPickupGood = weap.PickupForAmmo(self);
-			int given1 = self.owner.CountInv(self.ammoType1) - amt1,
-				given2 = self.owner.CountInv(self.ammoType2) - amt2;
-			weap.ammoGive1 -= given1;
-			weap.ammoGive2 -= given2;
-			weap.bPickupGood &= weap.ScavengingDestroys();
-
-			if (!self.bQuiet && (given1 > 0 || given2 > 0))
-			{
-				weap.PrintPickupMessage(self.owner.CheckLocalView(), weap.PickupMessage());
-				weap.PlayPickupSound(self.owner.player.mo);
-			}
-		}
-
-		return true;
-	}
-
-	final override bool TryPickupRestricted(in out Actor toucher)
-	{
-		if (self.ammoType1 == null && self.ammoType2 == null)
-			return false;
-
-		// Weapon has ammo types but default ammogives are both 0
-		if (self.default.ammoGive1 <= 0 && self.default.ammoGive1 <= 0)
-			return false;
-
-		int given1 = 0, given2 = 0;
-
-		if (self.ammoType1 != null && self.ammoGive1 > 0)
-		{
-			let ammoItem = toucher.FindInventory(self.ammoType1);
-			int amt = toucher.CountInv(self.ammoType1),
-				toGive = self.ammoGive1 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR);
-			ammoItem.Amount = Min(ammoItem.Amount + toGive, ammoItem.MaxAmount);
-			given1 = ammoItem.Amount - amt;
-			self.ammoGive1 -= given1;
-		}
-
-		if (self.ammoType2 != null && self.ammoGive2 > 0)
-		{
-			let ammoItem = toucher.FindInventory(self.ammoType2);
-			int amt = toucher.CountInv(self.ammoType2),
-				toGive = self.ammoGive2 * G_SkillPropertyFloat(SKILLP_AMMOFACTOR);
-			ammoItem.Amount = Min(ammoItem.Amount + toGive, ammoItem.MaxAmount);
-			given2 = ammoItem.Amount - amt;
-			self.ammoGive2 -= given2;
-		}
-
-		if (ScavengingDestroys())
-		{
-			GoAwayAndDie();
-			return true;
-		}
-
-		return given1 > 0 || given2 > 0;
-	}
-
-	override void AttachToOwner(Actor newOwner)
-	{
-		int
-			prevAmmo1 = newOwner.CountInv(self.ammoType1),
-			prevAmmo2 = newOwner.CountInv(self.ammoType2);
-
-		super.AttachToOwner(newOwner);
-		self.ammoGive1 -= (newOwner.CountInv(self.ammoType1) - prevAmmo1);
-		self.ammoGive2 -= (newOwner.CountInv(self.ammoType2) - prevAmmo2);
-	}
-
-	/// The parent variant of this function clears both `AmmoGive` fields to
-	/// prevent exploitation; Biomorph solves this problem differently.
-	/// This override fixes dropped weapons being impossible to scavenge as such.
-	final override Inventory CreateTossable(int amt)
-	{
-		int ag1 = self.ammoGive1, ag2 = self.ammoGive2;
-		let ret = Weapon(super.CreateTossable(amt));
-		ret.ammoGive1 = ag1;
-		ret.ammoGive2 = ag2;
-		return ret;
-	}
-
-	private bool ScavengingDestroys() const
-	{
-		return
-			(self.ammoType1 != null || self.ammoType2 != null) &&
-			self.ammoGive1 <= 0 && self.ammoGive2 <= 0 &&
-			!self.scavengePersist;
+		return self;
 	}
 }

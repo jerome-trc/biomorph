@@ -1,5 +1,7 @@
 class BIOM_Player : DoomPlayer
 {
+	protected readonly<BIOM_PlayerData> data;
+
 	Default
 	{
 		Tag "$BIOM_MODTITLE";
@@ -21,6 +23,12 @@ class BIOM_Player : DoomPlayer
 	/// Inversely proportional to added movement inertia;
 	/// lower number means less slippery.
 	const DECEL_MULT = 0.85;
+
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+		self.data = BIOM_Global.Get().FindPlayerData(self.player);
+	}
 
 	override void Tick()
 	{
@@ -82,5 +90,15 @@ class BIOM_Player : DoomPlayer
 			if (self.special1 > 2)
 				self.special1 = 0;
 		}
+	}
+
+	readonly<BIOM_PlayerData> GetData() const
+	{
+		return self.data;
+	}
+
+	readonly<BIOM_Player> AsConst() const
+	{
+		return self;
 	}
 }

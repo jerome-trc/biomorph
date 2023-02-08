@@ -1,6 +1,11 @@
 addkeysection "$BIOM_MODTITLE" BIOM_Section
 
-// Debug event aliases
+// Controls ////////////////////////////////////////////////////////////////////
 
-alias biom_help_ "event biom_help"
-alias biom_monsval_ "event biom_monsval"
+addmenukey "$BIOM_KB_MUTMENU" "event biom_console 1"
+defaultbind M "event biom_console 1"
+
+// Debug event aliases /////////////////////////////////////////////////////////
+
+// Prints a list of all available debug event aliases.
+alias biom_help "event biom_console 0"
