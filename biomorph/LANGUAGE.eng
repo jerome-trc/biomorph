@@ -94,8 +94,8 @@
 	BIOM_INFRARED_PKUP = "Donned a light amplification visor; the dark is illuminated.";
 	BIOM_MEGASPHERE_TAG = "Megasphere";
 	BIOM_MEGASPHERE_PKUP = "Absorbed a Megasphere! You feel rejuvenated.";
-	BIOM_RADSUIT_TAG = "N.B.C. Suit";
-	BIOM_RADSUIT_PKUP = "Donned an N.B.C. suit; you're safe from environmental hazards.";
+	BIOM_RADSUIT_TAG = "C.B.R.N. Suit";
+	BIOM_RADSUIT_PKUP = "Donned a C.B.R.N. suit; you're safe from environmental hazards.";
 
 // Weapons /////////////////////////////////////////////////////////////////////
 
