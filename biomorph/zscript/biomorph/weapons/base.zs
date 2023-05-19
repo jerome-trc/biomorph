@@ -26,6 +26,10 @@ class BIOM_Weapon : DoomWeapon abstract
 	meta class<BIOM_WeaponData> dataClass;
 	property DataClass: dataClass;
 
+	private uint DynFlags;
+	flagdef HitGround: DynFlags, 0;
+	// The last 4 flags (28 to 31) are reserved for derived classes.
+
 	Default
 	{
 		-SPECIAL
