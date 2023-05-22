@@ -22,8 +22,9 @@ class BIOM_WeaponPickup : Inventory abstract
 		+INVENTORY.AUTOACTIVATE
 		+INVENTORY.NEVERRESPAWN
 
-		Radius 16.0;
 		Height 14.0;
+		Radius 16.0;
+		Scale 0.65;
 
 		Inventory.Amount 0;
 		Inventory.PickupMessage "";
