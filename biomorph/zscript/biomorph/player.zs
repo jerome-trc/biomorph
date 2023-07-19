@@ -72,10 +72,10 @@ class BIOM_Player : DoomPlayer
 	{
 		super.PreTravelled();
 
-		// Suppress death exists if the user prefers to do so
-		// This block courtesy of Marisa the Magician
-		// See SWWMGZ's counterpart: `Demolitionist::PreTravelled`
-		// Used under the MIT License
+		// Suppress death exists if the user prefers to do so.
+		// This block below is courtesy of Marisa the Magician.
+		// See SWWMGZ's counterpart: `Demolitionist::PreTravelled`.
+		// Used under the MIT License.
 		// https://github.com/OrdinaryMagician/swwmgz_m/blob/master/LICENSE.code
 		if ((self.player != null) &&
 			(self.player.PlayerState == PST_DEAD))

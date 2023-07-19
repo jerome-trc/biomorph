@@ -41,7 +41,7 @@ mixin class BIOM_Pickup
 			Actor.Spawn(self.pickupFlash, self.pos, ALLOW_REPLACE);
 
 		// Special check so voodoo dolls picking up items cause the
-		// real player to make noise
+		// real player to make noise.
 		if (picker.player != null)
 			self.PlayPickupSound(picker.player.mo);
 		else

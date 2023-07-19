@@ -57,12 +57,12 @@ class BIOM_MutationMenu : GenericMenu
 
 	final override void Drawer()
 	{
-		super.Drawer(); // Draw the back button
+		super.Drawer(); // Draw the back button.
 
 		self.UpdateNodeState();
 
 		Screen.Dim(
-			// `Font.CR_CYAN` is...not very cyan
+			// `Font.CR_CYAN` is...not very cyan.
 			Color(255, 0, 255, 255), 0.2,
 			0, 0,
 			Screen.GetWidth(), Screen.GetHeight()
@@ -79,6 +79,7 @@ class BIOM_MutationMenu : GenericMenu
 			DTA_CENTEROFFSET, true,
 			DTA_KEEPRATIO, true
 		);
+
 		// TODO: What icon does the root node use?
 
 		for (int r = 1; r < self.rings.Size(); ++r)
@@ -231,7 +232,7 @@ class BIOM_MutationMenu : GenericMenu
 		case UIEvent.TYPE_LBUTTONDOWN:
 			res = self.MouseEventBack(MOUSE_CLICK, event.mouseX, y);
 			// Make the menu's mouse handler believe that the
-			// current coordinate is outside the valid range
+			// current coordinate is outside the valid range.
 			if (res)
 				y = -1;
 
@@ -350,7 +351,7 @@ class BIOM_MutationMenu : GenericMenu
 					self.mousePos.x > realTL.x && self.mousePos.x < realBR.x &&
 					self.mousePos.y > realTL.y && self.mousePos.y < realBR.y &&
 					!self.panning &&
-					!(r == 0 && n == 0) // Can't hover the home node
+					!(r == 0 && n == 0) // Can't hover the home node.
 				)
 				{
 					self.hoveredNode = rNode;

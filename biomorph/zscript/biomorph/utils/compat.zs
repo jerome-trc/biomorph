@@ -73,6 +73,8 @@ extend class BIOM_Utils
 /// Functions for checking which level set is being played.
 extend class BIOM_Utils
 {
+	/// Checks if the game is currently in the Sentinel's Lexicon.
+	/// See https://forum.zdoom.org/viewtopic.php?t=62724.
 	static bool Lexicon()
 	{
 		name lxvg_tn = 'Lexicon_VoteGun';

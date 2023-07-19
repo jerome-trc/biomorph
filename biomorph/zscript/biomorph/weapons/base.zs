@@ -1,6 +1,6 @@
 class BIOM_Weapon : DoomWeapon abstract
 {
-	// `SelectionOrder` is for when ammo runs out; lower number, higher priority
+	// `SelectionOrder` is for when ammo runs out; lower number, higher priority.
 
 	const SELORDER_PLASRIFLE = 100;
 	const SELORDER_SSG = 400;
@@ -12,7 +12,7 @@ class BIOM_Weapon : DoomWeapon abstract
 	const SELORDER_BFG = 2800;
 	const SELORDER_FIST = 3700;
 
-	// `SlotPriority` is for manual selection; higher number, higher priority
+	// `SlotPriority` is for manual selection; higher number, higher priority.
 
 	const SLOTPRIO_MAX = 1.0;
 	const SLOTPRIO_HIGH = 0.6;
