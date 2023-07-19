@@ -21,21 +21,24 @@ The GLDEFS for the Armour Bonus were devised by Realm667 user Infirnex.
 The following graphics are edits of the work of id Software LLC:
 - powup_infiniteammo.png
 - powup_radsuit.png
-- All variants of PWKP
+- All variants of sprite PWKP
 
 The following are edits of the work of [Ac!d](https://forum.zdoom.org/viewtopic.php?f=37&t=69513) (which are themselves edits of the works of 3D Realms Entertainment ApS):
-- PILSA0.png
-- RKITA0.png
-- TRAUA0.png
+- Sprite PILSA0
+- Sprite RKITA0
+- Sprite TRAUA0
 
 The following are edits of the work of [zrrion the insect](https://forum.zdoom.org/viewtopic.php?f=37&t=35797):
-- KVLR A through D
+- Sprites KVLR A through D
 
-KVLR E through H are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
+Sprites KVLR E through H are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
-NBCSA is courtesy of [Dr. Cosmobyte](https://forum.zdoom.org/viewtopic.php?p=975041#p975041).
+Sprite CBRNA is courtesy of [Dr. Cosmobyte](https://forum.zdoom.org/viewtopic.php?p=975041#p975041).
 
-RUCKA is derived from Sonik.o.fan's reshading of Doom 64's backpack sprite, which itself is courtesy of Midway Games Inc.
+Sprite RUCKA is derived from Sonik.o.fan's reshading of Doom 64's backpack sprite, which itself is courtesy of Midway Games Inc.
+
+[This spritesheet](https://forum.zdoom.org/viewtopic.php?p=1240563#p1240563) by Sonik.o.fan provided the basis for the following graphics:
+- Sprites CBRN A through D
 
 ## Fonts
 

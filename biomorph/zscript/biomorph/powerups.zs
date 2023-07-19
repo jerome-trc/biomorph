@@ -82,7 +82,40 @@ class BIOM_RadSuit : RadSuit replaces RadSuit
 	States
 	{
 	Spawn:
-		NBCS A -1;
+		TNT1 A 0;
+		TNT1 A 0 {
+			switch (RandomPick[biom_RadSuitState](0, 1, 2, 3, 4))
+			{
+			case 0:
+				return ResolveState('Spawn.A');
+			case 1:
+				return ResolveState('Spawn.D');
+			case 2:
+				return ResolveState('Spawn.C');
+			case 3:
+				return ResolveState('Spawn.D');
+			case 4:
+				return ResolveState('Spawn.E');
+			default:
+				Biomorph.Unreachable();
+				return ResolveState('Null');
+			}
+		}
+		Stop;
+	Spawn.A:
+		CBRN A -1;
+		Stop;
+	Spawn.B:
+		CBRN B -1;
+		Stop;
+	Spawn.C:
+		CBRN C -1;
+		Stop;
+	Spawn.D:
+		CBRN D -1;
+		Stop;
+	Spawn.E:
+		CBRN E -1;
 		Stop;
 	}
 }
