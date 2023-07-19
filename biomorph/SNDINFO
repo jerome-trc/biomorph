@@ -1,53 +1,53 @@
 // User interface //////////////////////////////////////////////////////////////
 
-bio/ui/beep USRINPT0
-bio/ui/cancel USRINPT1 // Same as above, but pitched down
-bio/ui/fail USRFAIL0
+biom/ui/beep USRINPT0
+biom/ui/cancel USRINPT1 // Same as above, but pitched down
+biom/ui/fail USRFAIL0
 
 // Pickups /////////////////////////////////////////////////////////////////////
 
-bio/countitem COUNTIT
+biom/countitem COUNTIT
 
-bio/armorbonus/pkup ARMRBON
-bio/backpack/pkup RUCKSACK
+biom/armorbonus/pkup ARMRBON
+biom/backpack/pkup RUCKSACK
 
 // Player pawn /////////////////////////////////////////////////////////////////
 
-$playeralias biomorph other *land bio/pawn/land
-bio/pawn/land BIOMLAND
-$playeralias biomorph other *usefail bio/pawn/usefail
-bio/pawn/usefail BIOMFAIL
+$playeralias biomorph other *land biom/pawn/land
+biom/pawn/land BIOMLAND
+$playeralias biomorph other *usefail biom/pawn/usefail
+biom/pawn/usefail BIOMFAIL
 
-$playeralias biomorph other *pain25 bio/pawn/pain/25
-$playeralias biomorph other *pain50 bio/pawn/pain/50
-$playeralias biomorph other *pain75 bio/pawn/pain/75
-$playeralias biomorph other *pain100 bio/pawn/pain/100
-bio/pawn/pain/25 BIOPAIN0
-bio/pawn/pain/50 BIOPAIN1
-bio/pawn/pain/75 BIOPAIN2
-bio/pawn/pain/100 BIOPAIN3
+$playeralias biomorph other *pain25 biom/pawn/pain/25
+$playeralias biomorph other *pain50 biom/pawn/pain/50
+$playeralias biomorph other *pain75 biom/pawn/pain/75
+$playeralias biomorph other *pain100 biom/pawn/pain/100
+biom/pawn/pain/25 BIOPAIN0
+biom/pawn/pain/50 BIOPAIN1
+biom/pawn/pain/75 BIOPAIN2
+biom/pawn/pain/100 BIOPAIN3
 
-bio/pawn/footstep/normal/0 BIOSTEP0
-bio/pawn/footstep/normal/1 BIOSTEP1
-bio/pawn/footstep/normal/2 BIOSTEP2
-bio/pawn/footstep/normal/3 BIOSTEP3
-bio/pawn/footstep/normal/4 BIOSTEP4
-bio/pawn/footstep/normal/5 BIOSTEP5
-bio/pawn/footstep/normal/6 BIOSTEP6
-bio/pawn/footstep/normal/7 BIOSTEP7
-bio/pawn/footstep/normal/8 BIOSTEP8
-bio/pawn/footstep/normal/9 BIOSTEP9
+biom/pawn/footstep/normal/0 BIOSTEP0
+biom/pawn/footstep/normal/1 BIOSTEP1
+biom/pawn/footstep/normal/2 BIOSTEP2
+biom/pawn/footstep/normal/3 BIOSTEP3
+biom/pawn/footstep/normal/4 BIOSTEP4
+biom/pawn/footstep/normal/5 BIOSTEP5
+biom/pawn/footstep/normal/6 BIOSTEP6
+biom/pawn/footstep/normal/7 BIOSTEP7
+biom/pawn/footstep/normal/8 BIOSTEP8
+biom/pawn/footstep/normal/9 BIOSTEP9
 
-$random bio/pawn/footstep/normal
+$random biom/pawn/footstep/normal
 {
-	bio/pawn/footstep/normal/0
-	bio/pawn/footstep/normal/1
-	bio/pawn/footstep/normal/2
-	bio/pawn/footstep/normal/3
-	bio/pawn/footstep/normal/4
-	bio/pawn/footstep/normal/5
-	bio/pawn/footstep/normal/6
-	bio/pawn/footstep/normal/7
-	bio/pawn/footstep/normal/8
-	bio/pawn/footstep/normal/9
+	biom/pawn/footstep/normal/0
+	biom/pawn/footstep/normal/1
+	biom/pawn/footstep/normal/2
+	biom/pawn/footstep/normal/3
+	biom/pawn/footstep/normal/4
+	biom/pawn/footstep/normal/5
+	biom/pawn/footstep/normal/6
+	biom/pawn/footstep/normal/7
+	biom/pawn/footstep/normal/8
+	biom/pawn/footstep/normal/9
 }

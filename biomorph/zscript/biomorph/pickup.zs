@@ -23,7 +23,7 @@ mixin class BIOM_Pickup
 		else
 			flags = CHANF_MAYBE_LOCAL;
 
-		collector.A_StartSound("bio/countitem", chan, flags, 1, atten);
+		collector.A_StartSound("biom/countitem", chan, flags, 1, atten);
 	}
 
 	private void MarkAsCollected(Actor collector)

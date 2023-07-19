@@ -65,7 +65,7 @@ class BIOM_Player : DoomPlayer
 		if ((Level.MapTime % interval) != 0)
 			return;
 
-		self.A_StartSound("bio/pawn/footstep/normal", CHAN_AUTO);
+		self.A_StartSound("biom/pawn/footstep/normal", CHAN_AUTO);
 	}
 
 	override void PreTravelled()

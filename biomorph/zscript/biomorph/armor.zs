@@ -7,7 +7,7 @@ class BIOM_ArmorBonus : ArmorBonus replaces ArmorBonus
 		-INVENTORY.ALWAYSPICKUP
 		Tag "$BIOM_ARMORBONUS_TAG";
 		Inventory.PickupMessage "$BIOM_ARMORBONUS_PKUP";
-		Inventory.PickupSound "bio/armorbonus/pkup";
+		Inventory.PickupSound "biom/armorbonus/pkup";
 		BIOM_ArmorBonus.CollectedMessage "$BIOM_ARMORBONUS_COLLECTED";
 	}
 
