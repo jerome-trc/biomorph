@@ -46,8 +46,8 @@ class BIOM_IntangibleActor : Actor abstract
 
 class BIOM_WanderingSpawner : BIOM_IntangibleActor
 {
-	private class<Actor> ToSpawn;
-	private uint WanderCount;
+	private class<Actor> toSpawn;
+	private uint wanderCount;
 
 	Default
 	{
@@ -60,13 +60,13 @@ class BIOM_WanderingSpawner : BIOM_IntangibleActor
 		TNT1 A 0;
 		TNT1 A 1
 		{
-			if (invoker.WanderCount <= 0 || invoker.ToSpawn == null)
+			if (invoker.wanderCount <= 0 || invoker.toSpawn == null)
 				return ResolveState('Spawn');
 
-			for (uint i = 0; i < invoker.WanderCount; i++)
+			for (uint i = 0; i < invoker.wanderCount; i++)
 				A_Wander();
 
-			Actor.Spawn(ToSpawn, invoker.pos);
+			Actor.Spawn(invoker.toSpawn, invoker.pos);
 			return state(null);
 		}
 		Stop;
