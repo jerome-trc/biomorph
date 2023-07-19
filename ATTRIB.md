@@ -70,18 +70,18 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 
 ARMRBON is courtesy of id Software LLC.
 
-The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), and are all provided under the Attribution 4.0 License:
+The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), and are all used under the Attribution 4.0 License:
 - BIOPAIN 0 through to 3 (all amplified, 0 slowed down, 1 to 3 sped up) (["Heartbeat, Regular, Single, 01-01, LOOP.wav"](https://freesound.org/people/InspectorJ/sounds/485076/))
 
-BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people/Slave2theLight/sounds/157023/) by freesound user [Slave2theLight](https://freesound.org/people/Slave2theLight), licensed under the Attribution 4.0 License.
+BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people/Slave2theLight/sounds/157023/) by freesound user [Slave2theLight](https://freesound.org/people/Slave2theLight), used under the Attribution 4.0 License.
 
-COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/sounds/33781/) by freesound user [jobro](https://freesound.org/people/jobro), licensed under the Attribution 3.0 License.
+COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/sounds/33781/) by freesound user [jobro](https://freesound.org/people/jobro), used under the Attribution 3.0 License.
 
-RUCKSACK is derived from ["zipping backback and rustling papers.wav"](https://freesound.org/people/TheSupremeMuffinPooter/sounds/333519/) by freesound user [TheSupremeMuffinPooter](https://freesound.org/people/TheSupremeMuffinPooter/), licensed under Creative Commons 0.
+RUCKSACK is derived from ["zipping backback and rustling papers.wav"](https://freesound.org/people/TheSupremeMuffinPooter/sounds/333519/) by freesound user [TheSupremeMuffinPooter](https://freesound.org/people/TheSupremeMuffinPooter/), used under Creative Commons 0.
 
-USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/), licensed under Creative Commons 0.
+USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/), used under Creative Commons 0.
 
-USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/), licensed under Creative Commons Attribution 3.0 Unported.
+USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/), used under Creative Commons Attribution 3.0 Unported.
 
 ## Blender (Materials, Meshes)
 
