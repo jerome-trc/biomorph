@@ -81,6 +81,13 @@ class BIOM_HealthBonus : HealthBonus replaces HealthBonus
 		Inventory.PickupMessage "$BIOM_HEALTHBONUS_PKUP";
 		BIOM_HealthBonus.CollectedMessage "$BIOM_HEALTHBONUS_COLLECTED";
 	}
+
+	States
+	{
+	Spawn:
+		MEPI A -1;
+		stop;
+	}
 }
 
 class BIOM_SmallHealth : Stimpack replaces Stimpack

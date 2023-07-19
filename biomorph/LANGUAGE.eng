@@ -17,9 +17,9 @@
 
 // Health //////////////////////////////////////////////////////////////////////
 
-	BIOM_HEALTHBONUS_TAG = "Health Flask";
-	BIOM_HEALTHBONUS_PKUP = "Drank the contents of a health flask.";
-	BIOM_HEALTHBONUS_COLLECTED = "Did not pick up a health flask, but counted it as collected.";
+	BIOM_HEALTHBONUS_TAG = "Health Cocktail";
+	BIOM_HEALTHBONUS_PKUP = "Took a health cocktail.";
+	BIOM_HEALTHBONUS_COLLECTED = "Did not use a health cocktail, but counted it as collected.";
 	BIOM_SMALLHEALTH_TAG = "Stimpack";
 	BIOM_SMALLHEALTH_PKUP = "Used a stimpack.";
 	BIOM_SMALLHEALTH_PARTIAL = "Partially used a stimpack.";
