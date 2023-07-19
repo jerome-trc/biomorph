@@ -39,6 +39,7 @@ Sprite RUCKA is derived from Sonik.o.fan's reshading of Doom 64's backpack sprit
 
 [This spritesheet](https://forum.zdoom.org/viewtopic.php?p=1240563#p1240563) by Sonik.o.fan provided the basis for the following graphics:
 - Sprites CBRN A through D
+- Sprites PNVG A and B
 
 ## Fonts
 

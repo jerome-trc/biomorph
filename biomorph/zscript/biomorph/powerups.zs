@@ -129,6 +129,14 @@ class BIOM_Infrared : Infrared replaces Infrared
 		Inventory.PickupMessage "$BIOM_INFRARED_PKUP";
 		Powerup.Type 'BIOM_PowerLightAmp';
 	}
+
+	States
+	{
+	Spawn:
+		PNVG A 6 bright;
+		PNVG B 6 bright;
+		loop;
+	}
 }
 
 class BIOM_Allmap : Allmap replaces Allmap
