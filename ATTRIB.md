@@ -35,7 +35,7 @@ The following are edits of the work of [zrrion the insect](https://forum.zdoom.o
 
 Sprites KVLR E through H are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
-Sprite CBRNA is courtesy of [Dr. Cosmobyte](https://forum.zdoom.org/viewtopic.php?p=975041#p975041).
+Sprite CBRNE is courtesy of [Dr. Cosmobyte](https://forum.zdoom.org/viewtopic.php?p=975041#p975041).
 
 Sprite RUCKA is derived from Sonik.o.fan's reshading of Doom 64's backpack sprite, which itself is courtesy of Midway Games Inc.
 
