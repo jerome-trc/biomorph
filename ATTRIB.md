@@ -48,7 +48,7 @@ Sprites STYX A through D use the work of Realm667 user CaptainToenail ("Adrenali
 
 ## Fonts
 
-The "Jenocide" family of fonts is the work of James "Jimmy" Paddock and are derived from "Archery Black" by ShyFonts.
+The "Jenocide" family of fonts is the work of James "Jimmy" Paddock and is derived from "Archery Black" by ShyFonts.
 
 ## Audio
 
