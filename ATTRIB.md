@@ -72,6 +72,8 @@ BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people
 
 COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/sounds/33781/) by freesound user [jobro](https://freesound.org/people/jobro), licensed under the Attribution 3.0 License.
 
+RUCKSACK is derived from ["zipping backback and rustling papers.wav"](https://freesound.org/people/TheSupremeMuffinPooter/sounds/333519/) by freesound user [TheSupremeMuffinPooter](https://freesound.org/people/TheSupremeMuffinPooter/), licensed under Creative Commons 0.
+
 USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/), licensed under Creative Commons 0.
 
 USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/), licensed under Creative Commons Attribution 3.0 Unported.

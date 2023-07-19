@@ -9,6 +9,7 @@ bio/ui/fail USRFAIL0
 bio/countitem COUNTIT
 
 bio/armorbonus/pkup ARMRBON
+bio/backpack/pkup RUCKSACK
 
 // Player pawn /////////////////////////////////////////////////////////////////
 

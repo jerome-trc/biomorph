@@ -195,6 +195,7 @@ class BIOM_Backpack : BackpackItem replaces Backpack
 		Height 26;
 		Tag "$BIOM_BACKPACK_TAG";
 		Inventory.PickupMessage "$BIOM_BACKPACK_PKUP";
+		Inventory.PickupSound "bio/backpack/pkup";
 	}
 
 	States
