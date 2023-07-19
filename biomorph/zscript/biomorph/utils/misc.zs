@@ -6,7 +6,7 @@ class BIOM_Utils abstract
 
 		if (giver == null)
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
+			Console.PrintF(Biomorph.LOGPFX_ERR ..
 				"Failed to grant powerup %s to %s.",
 				target.GetClassName(), type.GetClassName()
 			);

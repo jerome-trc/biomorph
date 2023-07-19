@@ -11,7 +11,7 @@ class BIOM_StatusBar : BaseStatusBar
 	final override void Init()
 	{
 		if (developer >= 1)
-			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Initialising status bar...");
+			Console.PrintF(Biomorph.LOGPFX_DEBUG .. "Initialising status bar...");
 
 		super.Init();
 		self.SetSize(32, 320, 200);

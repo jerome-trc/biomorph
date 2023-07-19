@@ -14,7 +14,7 @@ class BIOM_EventHandler : EventHandler
 	final override void OnRegister()
 	{
 		if (developer >= 1)
-			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Registering event handler...");
+			Console.PrintF(Biomorph.LOGPFX_DEBUG .. "Registering event handler...");
 
 		if (self.globals == null)
 			self.globals = BIOM_Global.Get();
@@ -23,14 +23,14 @@ class BIOM_EventHandler : EventHandler
 	final override void OnUnregister()
 	{
 		if (developer >= 1)
-			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Unregistering event handler...");
+			Console.PrintF(Biomorph.LOGPFX_DEBUG .. "Unregistering event handler...");
 	}
 
 	final override void NewGame()
 	{
 		if (developer >= 1)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_DEBUG ..
 				"Handling event: `NewGame`..."
 			);
@@ -43,7 +43,7 @@ class BIOM_EventHandler : EventHandler
 	{
 		if (developer >= 1)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_DEBUG ..
 				"Handling event: `WorldLoaded`..."
 			);
@@ -54,7 +54,7 @@ class BIOM_EventHandler : EventHandler
 	{
 		if (developer >= 1)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_DEBUG ..
 				"Handling event: `WorldUnloaded`..."
 			);
@@ -71,7 +71,7 @@ class BIOM_EventHandler : EventHandler
 		case USREVENT_HELP:
 			if (!event.isManual)
 			{
-				Console.Printf(
+				Console.PrintF(
 					Biomorph.LOGPFX_ERR ..
 					"Illegal attempt by a script to invoke the `biom_console` event. "
 					"Argument 0: %d",
@@ -81,7 +81,7 @@ class BIOM_EventHandler : EventHandler
 				return;
 			}
 
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_INFO .. "\n"
 				"\c[Gold]Console events:\c-"
 				"\n"
@@ -107,7 +107,7 @@ class BIOM_EventHandler : EventHandler
 			Menu.SetMenu('BIOM_MutationMenu');
 			break;
 		default:
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_ERR ..
 				"Illegal user console event argument: %d",
 				event.args[0]

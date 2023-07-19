@@ -22,7 +22,7 @@ class BIOM_WeightedRandomTable
 	{
 		if (type == null)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_ERR ..
 				"Tried to push `null` onto WeightedRandomTable `%s`.",
 				self.label.Length() > 0 ? self.label : String.Format("%p", self)
@@ -33,7 +33,7 @@ class BIOM_WeightedRandomTable
 
 		if (weight <= 0)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_ERR ..
 				"Tried to push a weight of 0 onto WeightedRandomTable `%s` (%s).",
 				self.label.Length() > 0 ? self.label : String.Format("%p", self),
@@ -53,7 +53,7 @@ class BIOM_WeightedRandomTable
 	{
 		if (weight <= 0)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_ERR ..
 				"Tried to add a layer with a weight of 0 onto WeightedRandomTable `%s`.",
 				self.label.Length() > 0 ? self.label : String.Format("%p", self)
@@ -73,7 +73,7 @@ class BIOM_WeightedRandomTable
 	{
 		if (wrt == self)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_ERR ..
 				"Attempted to nest WeightedRandomTable `%s` within itself.",
 				self.label.Length() > 0 ? self.label : String.Format("%p", self)
@@ -84,7 +84,7 @@ class BIOM_WeightedRandomTable
 
 		if (weight <= 0)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_ERR ..
 				"Tried to push a layer with a weight of 0 onto WeightedRandomTable `%s`.",
 				self.label.Length() > 0 ? self.label : String.Format("%p", self)
@@ -103,7 +103,7 @@ class BIOM_WeightedRandomTable
 	{
 		if (self.entries.Size() < 1)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_ERR ..
 				"Tried to get a result from an empty WeightedRandomTable (`%s`).",
 				self.label.Length() > 0 ? self.label : String.Format("%p", self)
@@ -137,7 +137,7 @@ class BIOM_WeightedRandomTable
 			iters++;
 		}
 
-		Console.Printf(
+		Console.PrintF(
 			Biomorph.LOGPFX_ERR ..
 			"Failed to make a weighted random choice after 10000 tries (`%s`).",
 			self.label.Length() > 0 ? self.label : String.Format("%p", self)
@@ -152,7 +152,7 @@ class BIOM_WeightedRandomTable
 	{
 		if (arr.Size() != weights.Size())
 		{
-			Console.Printf(Biomorph.LOGPFX_ERR ..
+			Console.PrintF(Biomorph.LOGPFX_ERR ..
 				"WeightedRandomTable::FromArray() received unequal-sized "
 				"parallel arrays.");
 			return;

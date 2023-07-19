@@ -30,7 +30,7 @@ class BIOM_Global : Thinker
 
 		if (iter.Next(true) != null)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_WARN ..
 				"Attempted to re-create global data."
 			);
@@ -53,7 +53,7 @@ class BIOM_Global : Thinker
 
 		if (developer >= 1)
 		{
-			Console.Printf(
+			Console.PrintF(
 				Biomorph.LOGPFX_DEBUG ..
 				"Global init done (took %d ms).",
 				MsTime() - ms
@@ -72,7 +72,7 @@ class BIOM_Global : Thinker
 	final override void OnDestroy()
 	{
 		if (developer >= 1)
-			Console.Printf(Biomorph.LOGPFX_DEBUG .. "Global data teardown.");
+			Console.PrintF(Biomorph.LOGPFX_DEBUG .. "Global data teardown.");
 
 		super.OnDestroy();
 	}
