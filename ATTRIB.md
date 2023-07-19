@@ -22,6 +22,7 @@ The following graphics are edits of the work of id Software LLC:
 - powup_infiniteammo.png
 - powup_radsuit.png
 - All variants of sprite PWKP
+- All variants of sprite STYX
 
 The following are edits of the work of [Ac!d](https://forum.zdoom.org/viewtopic.php?f=37&t=69513) (which are themselves edits of the works of 3D Realms Entertainment ApS):
 - Sprite PILSA0
@@ -37,9 +38,12 @@ Sprite CBRNA is courtesy of [Dr. Cosmobyte](https://forum.zdoom.org/viewtopic.ph
 
 Sprite RUCKA is derived from Sonik.o.fan's reshading of Doom 64's backpack sprite, which itself is courtesy of Midway Games Inc.
 
+Sprites STYX A through D use the work of Realm667 user CaptainToenail ("Adrenaline Kit").
+
 [This spritesheet](https://forum.zdoom.org/viewtopic.php?p=1240563#p1240563) by Sonik.o.fan provided the basis for the following graphics:
 - Sprites CBRN A through D
 - Sprites PNVG A and B
+- Sprites STYX A through D
 
 ## Fonts
 

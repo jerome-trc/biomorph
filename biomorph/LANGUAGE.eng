@@ -88,8 +88,8 @@
 	BIOM_ALLMAP_PKUP = "Obtained a computer area map; your surroundings become clear.";
 	BIOM_BLURSPHERE_TAG = "Blursphere";
 	BIOM_BLURSPHERE_PKUP = "Absorbed a blursphere; you fade and shimmer.";
-	BIOM_INVULNSPHERE_TAG = "Invulnerability Sphere";
-	BIOM_INVULNSPHERE_PKUP = "Absorbed an invulnerability sphere! You are irrepressible!";
+	BIOM_INVULNERABILITY_TAG = "Styx Kit";
+	BIOM_INVULNERABILITY_PKUP = "Used a Styx Kit! You are invulnerable!";
 	BIOM_INFRARED_TAG = "Light-Amp Visor";
 	BIOM_INFRARED_PKUP = "Donned a light amplification visor; the dark is illuminated.";
 	BIOM_MEGASPHERE_TAG = "Megasphere";

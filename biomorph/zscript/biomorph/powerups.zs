@@ -50,13 +50,13 @@ class BIOM_Megasphere : Megasphere replaces Megasphere
 	}
 }
 
-class BIOM_InvulnSphere : InvulnerabilitySphere replaces InvulnerabilitySphere
+class BIOM_Invuln : InvulnerabilitySphere replaces InvulnerabilitySphere
 {
 	Default
 	{
 		+DONTGIB
-		Tag "$BIOM_INVULNSPHERE_TAG";
-		Inventory.PickupMessage "$BIOM_INVULNSPHERE_PKUP";
+		Tag "$BIOM_INVULNERABILITY_TAG";
+		Inventory.PickupMessage "$BIOM_INVULNERABILITY_PKUP";
 		Powerup.Type 'BIOM_PowerInvulnerable';
 	}
 
@@ -66,6 +66,13 @@ class BIOM_InvulnSphere : InvulnerabilitySphere replaces InvulnerabilitySphere
 
 		if (BIOM_Utils.Eviternity())
 			BlendColor = Color(0, 182, 0, 3);
+	}
+
+	States
+	{
+	Spawn:
+		STYX ABCD 6 bright;
+		Loop;
 	}
 }
 
@@ -133,8 +140,7 @@ class BIOM_Infrared : Infrared replaces Infrared
 	States
 	{
 	Spawn:
-		PNVG A 6 bright;
-		PNVG B 6 bright;
+		PNVG AB 6 bright;
 		loop;
 	}
 }
