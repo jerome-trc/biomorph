@@ -5,9 +5,9 @@ class BIOM_Global : Thinker
 	/// The monster value threshold between mutagen drops is divided by this.
 	private uint playerCount;
 	/// One per active player.
-	private Array<BIOM_PlayerData> playerData;
+	private array<BIOM_PlayerData> playerData;
 	/// The prototype data that all the other code points back to.
-	private Array<BIOM_Mutator> mutators;
+	private array<BIOM_Mutator> mutators;
 
 	readonly<BIOM_PlayerData> GetPlayerData(uint player) const
 	{
@@ -85,13 +85,13 @@ class BIOM_PlayerData
 	/// pickup? No element will ever be `null`.
 	class<BIOM_Weapon> weapons[__BIOM_WEAPSLOT_COUNT__];
 	/// Each subclass of `BIOM_WeaponData` appears in this array exactly once.
-	Array<BIOM_WeaponData> weaponData;
+	array<BIOM_WeaponData> weaponData;
 	/// Invariants:
 	/// - Nodes are in a k-tree.
 	/// - Element 0 always has only the root node.
 	/// - Append-only. Removal only happens during a reset, at which point only
 	/// layer 0 with its root is left behind. Indices are otherwise always valid.
-	Array<BIOM_MutatorNodeLayer> mutTree;
+	array<BIOM_MutatorNodeLayer> mutTree;
 
 	static BIOM_PlayerData Create()
 	{
@@ -139,7 +139,7 @@ class BIOM_PlayerData
 /// Maps to one concentric ring in the mutation menu.
 class BIOM_MutatorNodeLayer
 {
-	Array<BIOM_MutatorNode> nodes;
+	array<BIOM_MutatorNode> nodes;
 }
 
 class BIOM_MutatorNode
@@ -156,7 +156,7 @@ class BIOM_MutatorNode
 	BIOM_MutatorNode parent;
 	/// Each element corresponds to an element in `BIOM_MutatorNodeLayer::nodes`,
 	/// and always points into the next layer.
-	Array<uint> children;
+	array<uint> children;
 }
 
 /// Each variant corresponds to an element in `BIOM_PlayerData::weapons`.

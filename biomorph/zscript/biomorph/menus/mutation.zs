@@ -13,7 +13,7 @@ class BIOM_MutationMenu : GenericMenu
 	private textureID nodeTexture;
 
 	private readonly<BIOM_PlayerData> data;
-	private Array<BIOM_MutMenuNodeRing> rings;
+	private array<BIOM_MutMenuNodeRing> rings;
 
 	private bool panning;
 	/// Used as virtual width/height to provide zooming.
@@ -364,7 +364,7 @@ class BIOM_MutationMenu : GenericMenu
 /// Maps to a `BIOM_MutatorNodeLayer` in `BIOM_PlayerData::mutTree`.
 class BIOM_MutMenuNodeRing
 {
-	Array<BIOM_MutMenuNode> nodes;
+	array<BIOM_MutMenuNode> nodes;
 }
 
 /// Rendering state.
