@@ -1,82 +1,84 @@
+// Indented in hopes that your text editor of choice provides folding (YMMV).
+
 // User interface //////////////////////////////////////////////////////////////
 
-biom/ui/beep USRINPT0
-biom/ui/cancel USRINPT1 // Same as above, but pitched down.
-biom/ui/fail USRFAIL0
+	biom/ui/beep USRINPT0
+	biom/ui/cancel USRINPT1 // Same as above, but pitched down.
+	biom/ui/fail USRFAIL0
 
 // Pickups /////////////////////////////////////////////////////////////////////
 
-biom/countitem COUNTIT
+	biom/countitem COUNTIT
 
-biom/armorbonus/pkup ARMRBON
-biom/backpack/pkup RUCKSACK
+	biom/armorbonus/pkup ARMRBON
+	biom/backpack/pkup RUCKSACK
 
 // Player pawn /////////////////////////////////////////////////////////////////
 
-$playeralias biomorph other *land biom/pawn/land
-biom/pawn/land BIOMLAND
-$playeralias biomorph other *usefail biom/pawn/usefail
-biom/pawn/usefail BIOMFAIL
+	$playeralias biomorph other *land biom/pawn/land
+	biom/pawn/land BIOMLAND
+	$playeralias biomorph other *usefail biom/pawn/usefail
+	biom/pawn/usefail BIOMFAIL
 
-$playeralias biomorph other *pain25 biom/pawn/pain/25
-$playeralias biomorph other *pain50 biom/pawn/pain/50
-$playeralias biomorph other *pain75 biom/pawn/pain/75
-$playeralias biomorph other *pain100 biom/pawn/pain/100
-biom/pawn/pain/25 BIOPAIN0
-biom/pawn/pain/50 BIOPAIN1
-biom/pawn/pain/75 BIOPAIN2
-biom/pawn/pain/100 BIOPAIN3
+	$playeralias biomorph other *pain25 biom/pawn/pain/25
+	$playeralias biomorph other *pain50 biom/pawn/pain/50
+	$playeralias biomorph other *pain75 biom/pawn/pain/75
+	$playeralias biomorph other *pain100 biom/pawn/pain/100
+	biom/pawn/pain/25 BIOPAIN0
+	biom/pawn/pain/50 BIOPAIN1
+	biom/pawn/pain/75 BIOPAIN2
+	biom/pawn/pain/100 BIOPAIN3
 
-biom/pawn/footstep/normal/0 BIOSTEP0
-biom/pawn/footstep/normal/1 BIOSTEP1
-biom/pawn/footstep/normal/2 BIOSTEP2
-biom/pawn/footstep/normal/3 BIOSTEP3
-biom/pawn/footstep/normal/4 BIOSTEP4
-biom/pawn/footstep/normal/5 BIOSTEP5
-biom/pawn/footstep/normal/6 BIOSTEP6
-biom/pawn/footstep/normal/7 BIOSTEP7
-biom/pawn/footstep/normal/8 BIOSTEP8
-biom/pawn/footstep/normal/9 BIOSTEP9
+	biom/pawn/footstep/normal/0 BIOSTEP0
+	biom/pawn/footstep/normal/1 BIOSTEP1
+	biom/pawn/footstep/normal/2 BIOSTEP2
+	biom/pawn/footstep/normal/3 BIOSTEP3
+	biom/pawn/footstep/normal/4 BIOSTEP4
+	biom/pawn/footstep/normal/5 BIOSTEP5
+	biom/pawn/footstep/normal/6 BIOSTEP6
+	biom/pawn/footstep/normal/7 BIOSTEP7
+	biom/pawn/footstep/normal/8 BIOSTEP8
+	biom/pawn/footstep/normal/9 BIOSTEP9
 
-$random biom/pawn/footstep/normal
-{
-	biom/pawn/footstep/normal/0
-	biom/pawn/footstep/normal/1
-	biom/pawn/footstep/normal/2
-	biom/pawn/footstep/normal/3
-	biom/pawn/footstep/normal/4
-	biom/pawn/footstep/normal/5
-	biom/pawn/footstep/normal/6
-	biom/pawn/footstep/normal/7
-	biom/pawn/footstep/normal/8
-	biom/pawn/footstep/normal/9
-}
+	$random biom/pawn/footstep/normal
+	{
+		biom/pawn/footstep/normal/0
+		biom/pawn/footstep/normal/1
+		biom/pawn/footstep/normal/2
+		biom/pawn/footstep/normal/3
+		biom/pawn/footstep/normal/4
+		biom/pawn/footstep/normal/5
+		biom/pawn/footstep/normal/6
+		biom/pawn/footstep/normal/7
+		biom/pawn/footstep/normal/8
+		biom/pawn/footstep/normal/9
+	}
 
 // Weapons, common /////////////////////////////////////////////////////////////
 
-biom/weap/dryfire/ballistic/0 DRYFBAL0
-biom/weap/dryfire/ballistic/1 DRYFBAL1
-biom/weap/dryfire/ballistic/2 DRYFBAL2
+	biom/weap/dryfire/ballistic/0 DRYFBAL0
+	biom/weap/dryfire/ballistic/1 DRYFBAL1
+	biom/weap/dryfire/ballistic/2 DRYFBAL2
 
-$random biom/weap/dryfire/ballistic
-{
-	biom/weap/dryfire/ballistic/0
-	biom/weap/dryfire/ballistic/1
-	biom/weap/dryfire/ballistic/2
-}
+	$random biom/weap/dryfire/ballistic
+	{
+		biom/weap/dryfire/ballistic/0
+		biom/weap/dryfire/ballistic/1
+		biom/weap/dryfire/ballistic/2
+	}
 
 // Weapons, pump shotgun ///////////////////////////////////////////////////////
 
-biom/weap/pumpshotgun/fire/0 870F_0
-biom/weap/pumpshotgun/fire/1 870F_1
-biom/weap/pumpshotgun/fire/2 870F_2
+	biom/weap/pumpshotgun/fire/0 870F_0
+	biom/weap/pumpshotgun/fire/1 870F_1
+	biom/weap/pumpshotgun/fire/2 870F_2
 
-$random biom/weap/pumpshotgun/fire
-{
-	biom/weap/pumpshotgun/fire/0
-	biom/weap/pumpshotgun/fire/1
-	biom/weap/pumpshotgun/fire/2
-}
+	$random biom/weap/pumpshotgun/fire
+	{
+		biom/weap/pumpshotgun/fire/0
+		biom/weap/pumpshotgun/fire/1
+		biom/weap/pumpshotgun/fire/2
+	}
 
-biom/weap/pumpshotgun/pumpback PUMPBACK
-biom/weap/pumpshotgun/pumpforward PUMPFORW
+	biom/weap/pumpshotgun/pumpback PUMPBACK
+	biom/weap/pumpshotgun/pumpforward PUMPFORW
