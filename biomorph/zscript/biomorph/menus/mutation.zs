@@ -62,8 +62,8 @@ class biom_MutationMenu : GenericMenu
 		self.UpdateNodeState();
 
 		Screen.Dim(
-			// `Font.CR_CYAN` is...not very cyan.
-			Color(255, 0, 255, 255), 0.2,
+			Color(255, 0, 0, 0),
+			0.2,
 			0, 0,
 			Screen.GetWidth(), Screen.GetHeight()
 		);
