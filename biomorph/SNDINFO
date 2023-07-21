@@ -1,7 +1,7 @@
 // User interface //////////////////////////////////////////////////////////////
 
 biom/ui/beep USRINPT0
-biom/ui/cancel USRINPT1 // Same as above, but pitched down
+biom/ui/cancel USRINPT1 // Same as above, but pitched down.
 biom/ui/fail USRFAIL0
 
 // Pickups /////////////////////////////////////////////////////////////////////
@@ -51,3 +51,32 @@ $random biom/pawn/footstep/normal
 	biom/pawn/footstep/normal/8
 	biom/pawn/footstep/normal/9
 }
+
+// Weapons, common /////////////////////////////////////////////////////////////
+
+biom/weap/dryfire/ballistic/0 DRYFBAL0
+biom/weap/dryfire/ballistic/1 DRYFBAL1
+biom/weap/dryfire/ballistic/2 DRYFBAL2
+
+$random biom/weap/dryfire/ballistic
+{
+	biom/weap/dryfire/ballistic/0
+	biom/weap/dryfire/ballistic/1
+	biom/weap/dryfire/ballistic/2
+}
+
+// Weapons, pump shotgun ///////////////////////////////////////////////////////
+
+biom/weap/pumpshotgun/fire/0 870F_0
+biom/weap/pumpshotgun/fire/1 870F_1
+biom/weap/pumpshotgun/fire/2 870F_2
+
+$random biom/weap/pumpshotgun/fire
+{
+	biom/weap/pumpshotgun/fire/0
+	biom/weap/pumpshotgun/fire/1
+	biom/weap/pumpshotgun/fire/2
+}
+
+biom/weap/pumpshotgun/pumpback PUMPBACK
+biom/weap/pumpshotgun/pumpforward PUMPFORW

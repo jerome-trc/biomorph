@@ -126,9 +126,9 @@
 	BIOM_PISTOL_PKUP = "Procured a service pistol.";
 	BIOM_PISTOL_OB = "%k served %o summary execution.";
 
-	BIOM_RIOTSTORMGUN_TAG = "Riot Stormgun";
-	BIOM_RIOTSTORMGUN_PKUP = "Procured a riot stormgun.";
-	BIOM_RIOTSTORMGUN_OB = "%k suppressed %o to death.";
+	BIOM_PUMPSHOTGUN_TAG = "Pump Shotgun";
+	BIOM_PUMPSHOTGUN_PKUP = "Procured a pump shotgun.";
+	BIOM_PUMPSHOTGUN_OB = "%k oppressed %o with a pump shotgun.";
 
 // Mutators ////////////////////////////////////////////////////////////////////
 

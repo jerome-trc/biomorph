@@ -99,7 +99,7 @@ class BIOM_PlayerData
 
 		ret.weapons[BIOM_WEAPSLOT_1] = 'BIOM_Melee';
 		ret.weapons[BIOM_WEAPSLOT_2] = 'BIOM_Pistol';
-		ret.weapons[BIOM_WEAPSLOT_3] = 'BIOM_RiotStormgun';
+		ret.weapons[BIOM_WEAPSLOT_3] = 'BIOM_PumpShotgun';
 		ret.weapons[BIOM_WEAPSLOT_3_SUPER] = 'BIOM_CombatStormgun';
 		ret.weapons[BIOM_WEAPSLOT_4] = 'BIOM_GPMG';
 		ret.weapons[BIOM_WEAPSLOT_5] = 'BIOM_MANPAT';

@@ -46,6 +46,9 @@ Sprites STYX A through D use the work of Realm667 user CaptainToenail ("Adrenali
 - PNVG A and B
 - STYX A through D
 
+[This spritesheet](https://forum.zdoom.org/viewtopic.php?t=37753) by Sgt. Shivers provided the basis used to create muzzle flashes for:
+- The Pump Shotgun (sprite set 870F)
+
 ## Fonts
 
 The "Jenocide" family of fonts is the work of James "Jimmy" Paddock and is derived from "Archery Black" by ShyFonts.
@@ -53,6 +56,21 @@ The "Jenocide" family of fonts is the work of James "Jimmy" Paddock and is deriv
 ## Audio
 
 Doom and Doom II's base sounds are the sole property of id Software LLC.
+
+#### Joblez_I
+
+https://forum.zdoom.org/viewtopic.php?f=37&t=65362
+
+The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY 3.0:
+
+- joblaudiopack.zip/
+	- g_ithaca_nopump_1.wav (870F_0)
+	- g_ithaca_nopump_2.wav (870F_1)
+	- g_ithaca_nopump_3.wav (870F_2)
+- jobl_snd_pack_2.zip/
+	- shotguns/
+		- shotpumpback.wav (PUMPBACK)
+		- shotpumpfor.wav (PUMPFORW)
 
 #### CturiX Kemilon
 
@@ -75,6 +93,8 @@ The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), 
 
 BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people/Slave2theLight/sounds/157023/) by freesound user [Slave2theLight](https://freesound.org/people/Slave2theLight), used under the Attribution 4.0 License.
 
+DRYFBAL 0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), licensed under Creative Commons 0.
+
 COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/sounds/33781/) by freesound user [jobro](https://freesound.org/people/jobro), used under the Attribution 3.0 License.
 
 RUCKSACK is derived from ["zipping backback and rustling papers.wav"](https://freesound.org/people/TheSupremeMuffinPooter/sounds/333519/) by freesound user [TheSupremeMuffinPooter](https://freesound.org/people/TheSupremeMuffinPooter/), used under Creative Commons 0.
@@ -83,9 +103,13 @@ USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://fre
 
 USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/), used under Creative Commons Attribution 3.0 Unported.
 
-## Blender (Materials, Meshes)
+## 3D Meshes
 
 ["Female Body Base Character Mesh"](https://www.blendswap.com/blend/4458) (used to render the arms of first-person view sprites) is provided by [cgcookie](https://www.blendswap.com/profile/8267https://www.blendswap.com/profile/8267) under the Creative Commons Attribution 2.0 Generic License.
+
+["Remington 870 with Magpul furniture"](https://sketchfab.com/3d-models/remington-870-with-magpul-furniture-07d1fce010ef4127931e8ddd516713f8) (used to render sprites for the Pump Shotgun) is provided by [Medji](https://sketchfab.com/Medji) under the Creative Commons Attribution 4.0 License.
+
+## 3D Materials
 
 ["SoftFabric.Black"](https://www.blenderkit.com/asset-gallery-detail/aa03d318-d285-48fd-92bc-9b8671d74a4c/?page=3) (used to texture the gloves of the Blender model) is provided by [Share Textures](https://www.sharetextures.com/) under Creative Commons 0.
 
