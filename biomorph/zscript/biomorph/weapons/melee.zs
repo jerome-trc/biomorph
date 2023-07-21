@@ -2,7 +2,7 @@
 /// that replaces Chainsaw pickups is just an upgrade for the player's melee.
 class biom_Melee : biom_Weapon
 {
-	flagdef RightHand: DynFlags, 31;
+	flagdef rightHand: DynFlags, 31;
 
 	protected biom_wdat_Melee data;
 
