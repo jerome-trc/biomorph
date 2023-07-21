@@ -25,7 +25,7 @@ class biom_Berserk : Health replaces Berserk
 	{
 	Spawn:
 		RKIT A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -87,7 +87,7 @@ class biom_Invuln : InvulnerabilitySphere replaces InvulnerabilitySphere
 	{
 	Spawn:
 		STYX ABCD 6 bright;
-		Loop;
+		loop;
 	}
 }
 
@@ -123,22 +123,22 @@ class biom_RadSuit : RadSuit replaces RadSuit
 				return ResolveState('Null');
 			}
 		}
-		Stop;
+		stop;
 	Spawn.A:
 		CBRN A -1;
-		Stop;
+		stop;
 	Spawn.B:
 		CBRN B -1;
-		Stop;
+		stop;
 	Spawn.C:
 		CBRN C -1;
-		Stop;
+		stop;
 	Spawn.D:
 		CBRN D -1;
-		Stop;
+		stop;
 	Spawn.E:
 		CBRN E -1;
-		Stop;
+		stop;
 	}
 }
 

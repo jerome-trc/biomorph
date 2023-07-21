@@ -61,7 +61,7 @@ class biom_Slot3Ammo_Small : biom_Slot3Ammo replaces Shell
 	{
 	Spawn:
 		SHEL A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -78,7 +78,7 @@ class biom_Slot4Ammo_Small : biom_Slot4Ammo replaces Clip
 	{
 	Spawn:
 		CLIP A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -95,7 +95,7 @@ class biom_Slot5Ammo_Small : biom_Slot5Ammo replaces RocketAmmo
 	{
 	Spawn:
 		ROCK A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -112,7 +112,7 @@ class biom_Slot67Ammo_Small : biom_Slot67Ammo replaces Cell
 	{
 	Spawn:
 		CELL A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -131,7 +131,7 @@ class biom_Slot3Ammo_Big : biom_Slot3Ammo replaces ShellBox
 	{
 	Spawn:
 		SBOX A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -148,7 +148,7 @@ class biom_Slot4Ammo_Big : biom_Slot4Ammo replaces ClipBox
 	{
 	Spawn:
 		AMMO A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -165,7 +165,7 @@ class biom_Slot5Ammo_Big : biom_Slot5Ammo replaces RocketBox
 	{
 	Spawn:
 		BROK A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -182,7 +182,7 @@ class biom_Slot67Ammo_Big : biom_Slot67Ammo replaces CellPack
 	{
 	Spawn:
 		CELP A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -202,7 +202,7 @@ class biom_Backpack : BackpackItem replaces Backpack
 	{
 	Spawn:
 		RUCK A -1;
-		Stop;
+		stop;
 	}
 
 	final override void Touch(Actor toucher)

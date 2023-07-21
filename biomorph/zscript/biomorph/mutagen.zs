@@ -22,7 +22,7 @@ class biom_Mutagen : Inventory
 	Spawn:
 		MUTA G 6;
 		#### # 6 bright light("biom_Mutagen");
-		Loop;
+		loop;
 	}
 }
 
@@ -50,6 +50,6 @@ class biom_Antigen : Inventory
 	Spawn:
 		ANTG A 6;
 		#### B 6 bright light("biom_Antigen");
-		Loop;
+		loop;
 	}
 }

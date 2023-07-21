@@ -15,7 +15,7 @@ class biom_ArmorBonus : ArmorBonus replaces ArmorBonus
 	{
 	Spawn:
 		KVLR EFGHGF 6;
-		Loop;
+		loop;
 	}
 
 	final override bool Use(bool pickup)
@@ -150,7 +150,7 @@ class biom_LightArmor : GreenArmor replaces GreenArmor
 	Spawn:
 		KVLR A 6;
 		KVLR B 6 Bright;
-		Loop;
+		loop;
 	}
 }
 
@@ -172,6 +172,6 @@ class biom_HeavyArmor : BlueArmor replaces BlueArmor
 	Spawn:
 		KVLR C 6;
 		KVLR D 6 Bright;
-		Loop;
+		loop;
 	}
 }

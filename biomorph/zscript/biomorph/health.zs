@@ -107,7 +107,7 @@ class biom_SmallHealth : Stimpack replaces Stimpack
 	{
 	Spawn:
 		PILS A -1;
-		Stop;
+		stop;
 	}
 }
 
@@ -128,7 +128,7 @@ class biom_BigHealth : Medikit replaces Medikit
 	{
 	Spawn:
 		TRAU A -1;
-		Stop;
+		stop;
 	}
 }
 

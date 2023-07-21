@@ -92,7 +92,7 @@ class biom_WeapPickup_Slot1 : biom_WeaponPickup replaces Chainsaw
 	Spawn:
 		WPKP A 6;
 		#### # 6 Bright Light("biom_WeaponPickup_Medium");
-		Loop;
+		loop;
 	}
 }
 
@@ -108,7 +108,7 @@ class biom_WeapPickup_Slot2 : biom_WeaponPickup replaces Pistol
 	Spawn:
 		WPKP B 6;
 		#### # 6 Bright Light("biom_WeaponPickup_Small");
-		Loop;
+		loop;
 	}
 }
 
@@ -125,7 +125,7 @@ class biom_WeapPickup_Slot3 : biom_WeaponPickup replaces Shotgun
 	Spawn:
 		WPKP C 6;
 		#### # 6 Bright Light("biom_WeaponPickup_Medium");
-		Loop;
+		loop;
 	}
 }
 
@@ -142,7 +142,7 @@ class biom_WeapPickup_Slot3Super : biom_WeaponPickup replaces SuperShotgun
 	Spawn:
 		WPKP D 6;
 		#### # 6 Bright Light("biom_WeaponPickup_Medium");
-		Loop;
+		loop;
 	}
 }
 
@@ -159,7 +159,7 @@ class biom_WeapPickup_Slot4 : biom_WeaponPickup replaces Chaingun
 	Spawn:
 		WPKP E 6;
 		#### # 6 Bright Light("biom_WeaponPickup_Medium");
-		Loop;
+		loop;
 	}
 }
 
@@ -176,7 +176,7 @@ class biom_WeapPickup_Slot5 : biom_WeaponPickup replaces RocketLauncher
 	Spawn:
 		WPKP F 6;
 		#### # 6 Bright Light("biom_WeaponPickup_Large");
-		Loop;
+		loop;
 	}
 }
 
@@ -193,7 +193,7 @@ class biom_WeapPickup_Slot6 : biom_WeaponPickup replaces PlasmaRifle
 	Spawn:
 		WPKP G 6;
 		#### # 6 Bright Light("biom_WeaponPickup_Medium");
-		Loop;
+		loop;
 	}
 }
 
@@ -210,6 +210,6 @@ class biom_WeapPickup_Slot7 : biom_WeaponPickup replaces BFG9000
 	Spawn:
 		WPKP H 6;
 		#### # 6 Bright Light("biom_WeaponPickup_Large");
-		Loop;
+		loop;
 	}
 }

@@ -19,7 +19,7 @@ class biom_PermanentInventory : Inventory abstract
 	{
 	Spawn:
 		TNT1 A -1;
-		Loop;
+		loop;
 	}
 }
 
@@ -69,7 +69,7 @@ class biom_WanderingSpawner : biom_IntangibleActor
 			Actor.Spawn(invoker.toSpawn, invoker.pos);
 			return state(null);
 		}
-		Stop;
+		stop;
 	}
 
 	void Initialize(class<Actor> toSpawn, uint wanderCount)
