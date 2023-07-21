@@ -1,6 +1,6 @@
-class BIOM_Player : DoomPlayer
+class biom_Player : DoomPlayer
 {
-	protected readonly<BIOM_PlayerData> data;
+	protected readonly<biom_PlayerData> data;
 
 	Default
 	{
@@ -11,13 +11,13 @@ class BIOM_Player : DoomPlayer
 		Player.DisplayName "$BIOM_MODTITLE";
 		Player.SoundClass 'biomorph';
 
-		Player.StartItem 'BIOM_Slot3Ammo', 0;
-		Player.StartItem 'BIOM_Slot4Ammo', 0;
-		Player.StartItem 'BIOM_Slot5Ammo', 0;
-		Player.StartItem 'BIOM_Slot67Ammo', 0;
+		Player.StartItem 'biom_Slot3Ammo', 0;
+		Player.StartItem 'biom_Slot4Ammo', 0;
+		Player.StartItem 'biom_Slot5Ammo', 0;
+		Player.StartItem 'biom_Slot67Ammo', 0;
 
-		Player.StartItem 'BIOM_Melee';
-		Player.StartItem 'BIOM_Pistol';
+		Player.StartItem 'biom_Melee';
+		Player.StartItem 'biom_Pistol';
 	}
 
 	/// Inversely proportional to added movement inertia;
@@ -27,7 +27,7 @@ class BIOM_Player : DoomPlayer
 	override void PostBeginPlay()
 	{
 		super.PostBeginPlay();
-		self.data = BIOM_Global.Get().FindPlayerData(self.player);
+		self.data = biom_Global.Get().FindPlayerData(self.player);
 	}
 
 	override void Tick()
@@ -92,12 +92,12 @@ class BIOM_Player : DoomPlayer
 		}
 	}
 
-	readonly<BIOM_PlayerData> GetData() const
+	readonly<biom_PlayerData> GetData() const
 	{
 		return self.data;
 	}
 
-	readonly<BIOM_Player> AsConst() const
+	readonly<biom_Player> AsConst() const
 	{
 		return self;
 	}

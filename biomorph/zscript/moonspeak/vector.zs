@@ -3,7 +3,7 @@
 	How to make rotation matrices 101.
 */
 
-struct BIOM_Vec {
+struct biom_Vec {
 
 	static vector3 Direction (double ang, double vang) {
 		double cosvang = cos(vang);
@@ -165,7 +165,7 @@ struct BIOM_Vec {
 	}
 }
 
-struct BIOM_Ang {
+struct biom_Ang {
 	// kd: This is for pixel stretch handling.
 	static double Stretch (double f, double ang) {
 		return VectorAngle(cos(ang), f * sin(ang));

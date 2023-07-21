@@ -10,7 +10,7 @@ const TRF_NONE = 0; // ELineTraceFlags
 const SXF_NONE = 0; // ESpawnItemFlags
 const XF_NONE = 0; // EExplodeFlags
 
-extend class BIOM_Utils
+extend class biom_Utils
 {
 	enum TranslucencyStyle : int
 	{

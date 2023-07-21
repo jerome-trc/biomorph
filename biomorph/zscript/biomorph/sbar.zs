@@ -1,7 +1,7 @@
-class BIOM_StatusBar : BaseStatusBar
+class biom_StatusBar : BaseStatusBar
 {
 	private CVar invBarSlots, notifyLineCount;
-	private BIOM_Player pawn;
+	private biom_Player pawn;
 	private InventoryBarState invBarState;
 
 	private HUDFont fontBig, fontIndex, fontSmall;
@@ -35,7 +35,7 @@ class BIOM_StatusBar : BaseStatusBar
 	{
 		super.AttachToPlayer(player);
 
-		self.pawn = BIOM_Player(self.cPlayer.mo);
+		self.pawn = biom_Player(self.cPlayer.mo);
 
 		if (self.cPlayer.mo != null && self.pawn == null)
 		{
@@ -169,7 +169,7 @@ class BIOM_StatusBar : BaseStatusBar
 
 /// The Doom status bar is left as-is; this code is a nearly-verbatim copy-paste
 /// from gzdoom.pk3/zscript/ui/statusbar/doom_sbar.zs.
-extend class BIOM_StatusBar
+extend class biom_StatusBar
 {
 	private void DrawMainBar(double ticFrac)
 	{
@@ -298,7 +298,7 @@ extend class BIOM_StatusBar
 	{
 		int amt1 = 0, maxamt = 0;
 
-		[amt1, maxamt] = self.GetAmount('BIOM_Slot4Ammo');
+		[amt1, maxamt] = self.GetAmount('biom_Slot4Ammo');
 		self.DrawString(
 			self.fontDoomIndex,
 			FormatNumber(amt1, 3),
@@ -312,7 +312,7 @@ extend class BIOM_StatusBar
 			DI_TEXT_ALIGN_RIGHT
 		);
 
-		[amt1, maxamt] = self.GetAmount('BIOM_Slot3Ammo');
+		[amt1, maxamt] = self.GetAmount('biom_Slot3Ammo');
 		self.DrawString(
 			self.fontDoomIndex,
 			FormatNumber(amt1, 3),
@@ -326,7 +326,7 @@ extend class BIOM_StatusBar
 			DI_TEXT_ALIGN_RIGHT
 		);
 
-		[amt1, maxamt] = self.GetAmount('BIOM_Slot5Ammo');
+		[amt1, maxamt] = self.GetAmount('biom_Slot5Ammo');
 		self.DrawString(
 			self.fontDoomIndex,
 			FormatNumber(amt1, 3),
@@ -340,7 +340,7 @@ extend class BIOM_StatusBar
 			DI_TEXT_ALIGN_RIGHT
 		);
 
-		[amt1, maxamt] = self.GetAmount('BIOM_Slot67Ammo');
+		[amt1, maxamt] = self.GetAmount('biom_Slot67Ammo');
 		self.DrawString(
 			self.fontDoomIndex,
 			FormatNumber(amt1, 3),

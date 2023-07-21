@@ -1,5 +1,5 @@
 /// Where the player applies new mutators.
-class BIOM_MutationMenu : GenericMenu
+class biom_MutationMenu : GenericMenu
 {
 	/// An initial value for `Self::size::x`.
 	const DEFAULT_VIRT_WIDTH = 640.0;
@@ -12,8 +12,8 @@ class BIOM_MutationMenu : GenericMenu
 	private Font tooltipFont;
 	private textureID nodeTexture;
 
-	private readonly<BIOM_PlayerData> data;
-	private array<BIOM_MutMenuNodeRing> rings;
+	private readonly<biom_PlayerData> data;
+	private array<biom_MutMenuNodeRing> rings;
 
 	private bool panning;
 	/// Used as virtual width/height to provide zooming.
@@ -25,7 +25,7 @@ class BIOM_MutationMenu : GenericMenu
 	/// Used for panning.
 	private Vector2 prevMousePos;
 	/// Alias into `Self::rings::nodes`. Is `null` if nothing is hovered.
-	private BIOM_MutMenuNode hoveredNode;
+	private biom_MutMenuNode hoveredNode;
 
 	/// Alter configuration and acquire graphics resources.
 	final override void Init(Menu parent)
@@ -42,7 +42,7 @@ class BIOM_MutationMenu : GenericMenu
 			TexMan.TYPE_ANY
 		);
 
-		let globals = BIOM_Global.Get();
+		let globals = biom_Global.Get();
 		self.data = globals.GetPlayerData(consolePlayer);
 	}
 
@@ -292,7 +292,7 @@ class BIOM_MutationMenu : GenericMenu
 		for (int r = 0; r < self.data.mutTree.Size(); ++r)
 		{
 			if (self.rings[r] == null)
-				self.rings[r] = new('BIOM_MutMenuNodeRing');
+				self.rings[r] = new('biom_MutMenuNodeRing');
 
 			let layer = self.data.mutTree[r];
 			let ring = self.rings[r];
@@ -308,7 +308,7 @@ class BIOM_MutationMenu : GenericMenu
 			{
 				if (self.rings[r].nodes[n] == null)
 				{
-					self.rings[r].nodes[n] = new('BIOM_MutMenuNode');
+					self.rings[r].nodes[n] = new('biom_MutMenuNode');
 					self.rings[r].nodes[n].data = layer.nodes[n];
 				}
 
@@ -362,17 +362,17 @@ class BIOM_MutationMenu : GenericMenu
 }
 
 /// Rendering state.
-/// Maps to a `BIOM_MutatorNodeLayer` in `BIOM_PlayerData::mutTree`.
-class BIOM_MutMenuNodeRing
+/// Maps to a `biom_MutatorNodeLayer` in `biom_PlayerData::mutTree`.
+class biom_MutMenuNodeRing
 {
-	array<BIOM_MutMenuNode> nodes;
+	array<biom_MutMenuNode> nodes;
 }
 
 /// Rendering state.
-/// Maps to a `BIOM_MutatorNode` in `BIOM_MutatorNodeLayer::nodes`.
-class BIOM_MutMenuNode
+/// Maps to a `biom_MutatorNode` in `biom_MutatorNodeLayer::nodes`.
+class biom_MutMenuNode
 {
-	BIOM_MutatorNode data;
+	biom_MutatorNode data;
 	Vector2 drawPos;
 	Vector2 screenPos;
 }

@@ -1,11 +1,11 @@
 /// This subclass only exists so that `TakeInventory()` is guaranteed to only
 /// remove items of exactly this class and no other `PowerupGiver` items.
-class BIOM_PowerupGiver : PowerupGiver {}
+class biom_PowerupGiver : PowerupGiver {}
 
-class BIOM_Berserk : Health replaces Berserk
+class biom_Berserk : Health replaces Berserk
 {
-	mixin BIOM_Pickup;
-	mixin BIOM_Health;
+	mixin biom_Pickup;
+	mixin biom_Health;
 
 	Default
 	{
@@ -17,8 +17,8 @@ class BIOM_Berserk : Health replaces Berserk
 		Inventory.PickupMessage "$BIOM_BERSERK_PKUP";
 		Inventory.PickupSound "misc/p_pkup";
 		Health.LowMessage 25, "$BIOM_BERSERK_PKUPLOW";
-		BIOM_Berserk.CollectedMessage "$BIOM_BERSERK_COLLECTED";
-		BIOM_Berserk.PartialPickupMessage "$BIOM_BERSERK_PARTIAL";
+		biom_Berserk.CollectedMessage "$BIOM_BERSERK_COLLECTED";
+		biom_Berserk.PartialPickupMessage "$BIOM_BERSERK_PARTIAL";
 	}
 
 	States
@@ -29,7 +29,7 @@ class BIOM_Berserk : Health replaces Berserk
 	}
 }
 
-class BIOM_BlurSphere : BlurSphere replaces BlurSphere
+class biom_BlurSphere : BlurSphere replaces BlurSphere
 {
 	Default
 	{
@@ -37,7 +37,7 @@ class BIOM_BlurSphere : BlurSphere replaces BlurSphere
 		Tag "$BIOM_BLURSPHERE_TAG";
 		RenderStyle 'Normal';
 		Inventory.PickupMessage "$BIOM_BLURSPHERE_PKUP";
-		Powerup.Type 'BIOM_PowerInvisibility';
+		Powerup.Type 'biom_PowerInvisibility';
 	}
 
 	States
@@ -48,7 +48,7 @@ class BIOM_BlurSphere : BlurSphere replaces BlurSphere
 	}
 }
 
-class BIOM_Megasphere : Megasphere replaces Megasphere
+class biom_Megasphere : Megasphere replaces Megasphere
 {
 	Default
 	{
@@ -65,21 +65,21 @@ class BIOM_Megasphere : Megasphere replaces Megasphere
 	}
 }
 
-class BIOM_Invuln : InvulnerabilitySphere replaces InvulnerabilitySphere
+class biom_Invuln : InvulnerabilitySphere replaces InvulnerabilitySphere
 {
 	Default
 	{
 		+DONTGIB
 		Tag "$BIOM_INVULNERABILITY_TAG";
 		Inventory.PickupMessage "$BIOM_INVULNERABILITY_PKUP";
-		Powerup.Type 'BIOM_PowerInvulnerable';
+		Powerup.Type 'biom_PowerInvulnerable';
 	}
 
 	final override void BeginPlay()
 	{
 		super.BeginPlay();
 
-		if (BIOM_Utils.Eviternity())
+		if (biom_Utils.Eviternity())
 			BlendColor = Color(0, 182, 0, 3);
 	}
 
@@ -91,14 +91,14 @@ class BIOM_Invuln : InvulnerabilitySphere replaces InvulnerabilitySphere
 	}
 }
 
-class BIOM_RadSuit : RadSuit replaces RadSuit
+class biom_RadSuit : RadSuit replaces RadSuit
 {
 	Default
 	{
 		+DONTGIB
 		Tag "$BIOM_RADSUIT_TAG";
 		Inventory.PickupMessage "$BIOM_RADSUIT_PKUP";
-		Powerup.Type 'BIOM_PowerIronFeet';
+		Powerup.Type 'biom_PowerIronFeet';
 	}
 
 	States
@@ -142,14 +142,14 @@ class BIOM_RadSuit : RadSuit replaces RadSuit
 	}
 }
 
-class BIOM_Infrared : Infrared replaces Infrared
+class biom_Infrared : Infrared replaces Infrared
 {
 	Default
 	{
 		+DONTGIB
 		Tag "$BIOM_INFRARED_TAG";
 		Inventory.PickupMessage "$BIOM_INFRARED_PKUP";
-		Powerup.Type 'BIOM_PowerLightAmp';
+		Powerup.Type 'biom_PowerLightAmp';
 	}
 
 	States
@@ -160,7 +160,7 @@ class BIOM_Infrared : Infrared replaces Infrared
 	}
 }
 
-class BIOM_Allmap : Allmap replaces Allmap
+class biom_Allmap : Allmap replaces Allmap
 {
 	Default
 	{
@@ -172,7 +172,7 @@ class BIOM_Allmap : Allmap replaces Allmap
 
 // Powerup replacements ////////////////////////////////////////////////////////
 
-class BIOM_PowerInfiniteAmmo : PowerInfiniteAmmo
+class biom_PowerInfiniteAmmo : PowerInfiniteAmmo
 {
 	Default
 	{
@@ -181,7 +181,7 @@ class BIOM_PowerInfiniteAmmo : PowerInfiniteAmmo
 	}
 }
 
-class BIOM_PowerInvisibility : PowerInvisibility
+class biom_PowerInvisibility : PowerInvisibility
 {
 	Default
 	{
@@ -189,7 +189,7 @@ class BIOM_PowerInvisibility : PowerInvisibility
 	}
 }
 
-class BIOM_PowerInvulnerable : PowerInvulnerable
+class biom_PowerInvulnerable : PowerInvulnerable
 {
 	Default
 	{
@@ -197,7 +197,7 @@ class BIOM_PowerInvulnerable : PowerInvulnerable
 	}
 }
 
-class BIOM_PowerIronFeet : PowerIronFeet
+class biom_PowerIronFeet : PowerIronFeet
 {
 	Default
 	{
@@ -205,7 +205,7 @@ class BIOM_PowerIronFeet : PowerIronFeet
 	}
 }
 
-class BIOM_PowerLightAmp : PowerLightAmp
+class biom_PowerLightAmp : PowerLightAmp
 {
 	Default
 	{
@@ -214,7 +214,7 @@ class BIOM_PowerLightAmp : PowerLightAmp
 }
 
 /// Provides an infinitely-lasting variant of `PowerScanner`.
-class BIOM_PowerScanner : PowerScanner
+class biom_PowerScanner : PowerScanner
 {
 	Default
 	{

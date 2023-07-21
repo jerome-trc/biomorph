@@ -1,5 +1,5 @@
 /// Functions for easily dealing with actor types which may not exist.
-extend class BIOM_Utils
+extend class biom_Utils
 {
 	static class<Inventory> ExtInv(name tName)
 	{
@@ -66,12 +66,12 @@ extend class BIOM_Utils
 
 	static play bool IsLegendary(Actor monster)
 	{
-		return BIOM_Utils.TryFindInv(monster, 'LDLegendaryMonsterToken') != null;
+		return biom_Utils.TryFindInv(monster, 'LDLegendaryMonsterToken') != null;
 	}
 }
 
 /// Functions for checking which level set is being played.
-extend class BIOM_Utils
+extend class biom_Utils
 {
 	/// Checks if the game is currently in the Sentinel's Lexicon.
 	/// See https://forum.zdoom.org/viewtopic.php?t=62724.

@@ -4,7 +4,7 @@
 	in fov or something.
 */
 
-struct BIOM_Pos play {
+struct biom_Pos play {
 	private vector3						view_pos;
 	private vector3						forw, right, down;
 	private vector3						diff;
@@ -14,7 +14,7 @@ struct BIOM_Pos play {
 
 		view_pos = mo.vec3offset(0, 0, player.viewheight);
 		[forw, right, down] =
-			BIOM_Vec.RolledViewOnb(mo.angle, -mo.pitch, -mo.roll);
+			biom_Vec.RolledViewOnb(mo.angle, -mo.pitch, -mo.roll);
 	}
 
 	void FromActor (Actor mo, double height_f = 0.5) {

@@ -3,14 +3,14 @@
 	You can use this as a timer and as a fader for few animations.
 */
 
-struct BIOM_FadeTick {
+struct biom_FadeTick {
 	private int					ticks;
 	private int					start;
 	private int					target;
 	private int					tick_dir;
 	private int					old_delta;
 
-	void Copy (BIOM_FadeTick source) {
+	void Copy (biom_FadeTick source) {
 		ticks		= source.ticks;
 		start		= source.start;
 		target		= source.target;
@@ -146,7 +146,7 @@ struct BIOM_FadeTick {
 	}
 
 	private void SetTickDir () {
-		tick_dir = BIOM_MiscOps.IntSign(target - ticks);
+		tick_dir = biom_MiscOps.IntSign(target - ticks);
 	}
 }
 
@@ -155,7 +155,7 @@ struct BIOM_FadeTick {
 	Same as the above, but can use floats.
 */
 
-struct BIOM_FadeTickF {
+struct biom_FadeTickF {
 	private double				ticks;
 	private double				start;
 	private double				target;
@@ -164,7 +164,7 @@ struct BIOM_FadeTickF {
 	private int					tick_delta;
 	private bool				is_done; // not so good...
 
-	void Copy (BIOM_FadeTickF source) {
+	void Copy (biom_FadeTickF source) {
 		ticks		= source.ticks;
 		start		= source.start;
 		target		= source.target;
@@ -249,6 +249,6 @@ struct BIOM_FadeTickF {
 	}
 
 	private void SetTickDir () {
-		tick_dir = BIOM_MiscOps.IntSign(target - ticks);
+		tick_dir = biom_MiscOps.IntSign(target - ticks);
 	}
 }

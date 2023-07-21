@@ -1,46 +1,46 @@
 // Armor bonus /////////////////////////////////////////////////////////////////
 
-pointlight BIOM_ArmorBonus_A
+pointlight biom_ArmorBonusA
 {
 	color 0.0 0.7 0.0
 	size 6
 }
 
-pointlight BIOM_ArmorBonus_B
+pointlight biom_ArmorBonusB
 {
 	color 0.0 0.7 0.0
 	size 7
 }
 
-pointlight BIOM_ArmorBonus_C
+pointlight biom_ArmorBonusC
 {
 	color 0.0 0.7 0.0
 	size 8
 }
 
-pointlight BIOM_ArmorBonus_D
+pointlight biom_ArmorBonusD
 {
 	color 0.0 0.7 0.0
 	size 9
 }
 
-object BIOM_ArmorBonus
+object biom_ArmorBonus
 {
-	frame ARSDA { light BIOM_ArmorBonus_A }
-	frame ARSDB { light BIOM_ArmorBonus_B }
-	frame ARSDC { light BIOM_ArmorBonus_C }
-	frame ARSDD { light BIOM_ArmorBonus_D }
+	frame ARSDA { light biom_ArmorBonusA }
+	frame ARSDB { light biom_ArmorBonusB }
+	frame ARSDC { light biom_ArmorBonusC }
+	frame ARSDD { light biom_ArmorBonusD }
 }
 
 // Mutagens/antigens ///////////////////////////////////////////////////////////
 
-pointlight BIOM_Mutagen
+pointlight biom_Mutagen
 {
 	color 0.1 1.0 0.97
 	size 18
 }
 
-pointlight BIOM_Antigen
+pointlight biom_Antigen
 {
 	color 1.0 1.0 1.0
 	size 20
@@ -48,19 +48,19 @@ pointlight BIOM_Antigen
 
 // Weapon pickups //////////////////////////////////////////////////////////////
 
-pointlight BIOM_WeaponPickup_Small
+pointlight biom_WeaponPickupSmall
 {
 	color 1.0 1.0 1.0
 	size 16
 }
 
-pointlight BIOM_WeaponPickup_Medium
+pointlight biom_WeaponPickupMedium
 {
 	color 1.0 1.0 1.0
 	size 20
 }
 
-pointlight BIOM_WeaponPickup_Large
+pointlight biom_WeaponPickupLarge
 {
 	color 1.0 1.0 1.0
 	size 24

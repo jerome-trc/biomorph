@@ -1,12 +1,12 @@
 AddOptionMenu "OptionsMenu"
 {
-	SubMenu "$BIOM_MODTITLE", "BIOM_Options"
+	SubMenu "$BIOM_MODTITLE", "biom_Options"
 }
 
-OptionMenu "BIOM_Options"
+OptionMenu "biom_Options"
 {
-	class BIOM_TooltipOptionMenu
-	BIOM_TooltipGeometry 0.0, 0.0, 0.15, 0.1, 0.1, 0.5
+	class biom_TooltipOptionMenu
+	biom_TooltipGeometry 0.0, 0.0, 0.15, 0.1, 0.1, 0.5
 
 	Title "$BIOM_OPTTITLE"
 
@@ -16,11 +16,11 @@ OptionMenu "BIOM_Options"
 	StaticText ""
 	StaticText "$BIOM_OPTCAT_CONTROL"
 
-	Option "$BIOM_OPTLBL_AUTORELOAD_PRE", "BIOM_autoreload_pre", "BIOM_AutoReload"
-	Option "$BIOM_OPTLBL_AUTORELOAD_POST", "BIOM_autoreload_post", "BIOM_AutoReload"
-	Option "$BIOM_OPTLBL_BERSERKSWITCH", "BIOM_berserkswitch", "BIOM_BerserkSwitch"
-	Option "$BIOM_OPTLBL_MULTIBARRELFIRE", "BIOM_multibarrelfire", "BIOM_MultiBarrelFire"
-	Option "$BIOM_OPTLBL_MULTIRELOADMODE", "BIOM_multireload", "BIOM_MultiReloadMode"
+	Option "$BIOM_OPTLBL_AUTORELOAD_PRE", "BIOM_autoreload_pre", "biom_AutoReload"
+	Option "$BIOM_OPTLBL_AUTORELOAD_POST", "BIOM_autoreload_post", "biom_AutoReload"
+	Option "$BIOM_OPTLBL_BERSERKSWITCH", "BIOM_berserkswitch", "biom_BerserkSwitch"
+	Option "$BIOM_OPTLBL_MULTIBARRELFIRE", "BIOM_multibarrelfire", "biom_MultiBarrelFire"
+	Option "$BIOM_OPTLBL_MULTIRELOADMODE", "BIOM_multireload", "biom_MultiReloadMode"
 
 	StaticText ""
 	StaticText "$BIOM_OPTCAT_GUI"
@@ -33,27 +33,27 @@ OptionMenu "BIOM_Options"
 	Option "$BIOM_OPTLBL_QUAKE", "BIOM_quake", "OnOff"
 }
 
-OptionValue "BIOM_AutoReload"
+OptionValue "biom_AutoReload"
 {
 	0, "$BIOM_OPTVAL_AUTOREL_ALWAYS"
 	1, "$BIOM_OPTVAL_AUTOREL_SINGLE"
 	2, "$BIOM_OPTVAL_AUTOREL_NEVER"
 }
 
-OptionValue "BIOM_BerserkSwitch"
+OptionValue "biom_BerserkSwitch"
 {
 	0, "$BIOM_OPTVAL_BSKS_NONE"
 	1, "$BIOM_OPTVAL_BSKS_MELEE"
 	2, "$BIOM_OPTVAL_BSKS_FIRSTONLY"
 }
 
-OptionValue "BIOM_MultiBarrelFire"
+OptionValue "biom_MultiBarrelFire"
 {
 	0, "$BIOM_OPTVAL_MBF_PRIM"
 	1, "$BIOM_OPTVAL_MBF_SEC"
 }
 
-OptionValue "BIOM_MultiReloadMode"
+OptionValue "biom_MultiReloadMode"
 {
 	0, "$BIOM_OPTVAL_MRM_AUTO"
 	1, "$BIOM_OPTVAL_MRM_HOLD"

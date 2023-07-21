@@ -1,4 +1,4 @@
-class BIOM_Slot3Ammo : Ammo
+class biom_Slot3Ammo : Ammo
 {
 	Default
 	{
@@ -10,7 +10,7 @@ class BIOM_Slot3Ammo : Ammo
 	}
 }
 
-class BIOM_Slot4Ammo : Ammo
+class biom_Slot4Ammo : Ammo
 {
 	Default
 	{
@@ -22,7 +22,7 @@ class BIOM_Slot4Ammo : Ammo
 	}
 }
 
-class BIOM_Slot5Ammo : Ammo
+class biom_Slot5Ammo : Ammo
 {
 	Default
 	{
@@ -34,7 +34,7 @@ class BIOM_Slot5Ammo : Ammo
 	}
 }
 
-class BIOM_Slot67Ammo : Ammo
+class biom_Slot67Ammo : Ammo
 {
 	Default
 	{
@@ -48,7 +48,7 @@ class BIOM_Slot67Ammo : Ammo
 
 // Pickups, small //////////////////////////////////////////////////////////////
 
-class BIOM_Slot3Ammo_Small : BIOM_Slot3Ammo replaces Shell
+class biom_Slot3Ammo_Small : biom_Slot3Ammo replaces Shell
 {
 	Default
 	{
@@ -65,7 +65,7 @@ class BIOM_Slot3Ammo_Small : BIOM_Slot3Ammo replaces Shell
 	}
 }
 
-class BIOM_Slot4Ammo_Small : BIOM_Slot4Ammo replaces Clip
+class biom_Slot4Ammo_Small : biom_Slot4Ammo replaces Clip
 {
 	Default
 	{
@@ -82,7 +82,7 @@ class BIOM_Slot4Ammo_Small : BIOM_Slot4Ammo replaces Clip
 	}
 }
 
-class BIOM_Slot5Ammo_Small : BIOM_Slot5Ammo replaces RocketAmmo
+class biom_Slot5Ammo_Small : biom_Slot5Ammo replaces RocketAmmo
 {
 	Default
 	{
@@ -99,7 +99,7 @@ class BIOM_Slot5Ammo_Small : BIOM_Slot5Ammo replaces RocketAmmo
 	}
 }
 
-class BIOM_Slot67Ammo_Small : BIOM_Slot67Ammo replaces Cell
+class biom_Slot67Ammo_Small : biom_Slot67Ammo replaces Cell
 {
 	Default
 	{
@@ -118,7 +118,7 @@ class BIOM_Slot67Ammo_Small : BIOM_Slot67Ammo replaces Cell
 
 // Pickups, big ////////////////////////////////////////////////////////////////
 
-class BIOM_Slot3Ammo_Big : BIOM_Slot3Ammo replaces ShellBox
+class biom_Slot3Ammo_Big : biom_Slot3Ammo replaces ShellBox
 {
 	Default
 	{
@@ -135,7 +135,7 @@ class BIOM_Slot3Ammo_Big : BIOM_Slot3Ammo replaces ShellBox
 	}
 }
 
-class BIOM_Slot4Ammo_Big : BIOM_Slot4Ammo replaces ClipBox
+class biom_Slot4Ammo_Big : biom_Slot4Ammo replaces ClipBox
 {
 	Default
 	{
@@ -152,7 +152,7 @@ class BIOM_Slot4Ammo_Big : BIOM_Slot4Ammo replaces ClipBox
 	}
 }
 
-class BIOM_Slot5Ammo_Big : BIOM_Slot5Ammo replaces RocketBox
+class biom_Slot5Ammo_Big : biom_Slot5Ammo replaces RocketBox
 {
 	Default
 	{
@@ -169,7 +169,7 @@ class BIOM_Slot5Ammo_Big : BIOM_Slot5Ammo replaces RocketBox
 	}
 }
 
-class BIOM_Slot67Ammo_Big : BIOM_Slot67Ammo replaces CellPack
+class biom_Slot67Ammo_Big : biom_Slot67Ammo replaces CellPack
 {
 	Default
 	{
@@ -188,7 +188,7 @@ class BIOM_Slot67Ammo_Big : BIOM_Slot67Ammo replaces CellPack
 
 // Backpack ////////////////////////////////////////////////////////////////////
 
-class BIOM_Backpack : BackpackItem replaces Backpack
+class biom_Backpack : BackpackItem replaces Backpack
 {
 	Default
 	{

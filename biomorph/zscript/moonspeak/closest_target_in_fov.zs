@@ -4,11 +4,11 @@
 	closest target in your fov and properly regards view tilting and rolling.
 */
 
-struct BIOM_TargetInfo {
+struct biom_TargetInfo {
 	Actor							mo;
 	double							dist;
 
-	void Copy (BIOM_TargetInfo source) {
+	void Copy (biom_TargetInfo source) {
 		mo		= source.mo;
 		dist	= source.dist;
 	}
@@ -26,7 +26,7 @@ struct BIOM_TargetInfo {
 	}
 }
 
-struct BIOM_ClosestMonsterTracer play {
+struct biom_ClosestMonsterTracer play {
 
 	private vector3						forw, right, down;
 	private PlayerInfo					player_info;
@@ -37,14 +37,14 @@ struct BIOM_ClosestMonsterTracer play {
 	private transient FLineTraceData	trace_data;
 
 	// Current target info:
-	private BIOM_TargetInfo					target, new_target;
+	private biom_TargetInfo					target, new_target;
 
 	void Reset () {
 		target.Reset();
 		new_target.Reset();
 	}
 
-	void Copy (BIOM_ClosestMonsterTracer source) {
+	void Copy (biom_ClosestMonsterTracer source) {
 		forw			= source.forw;
 		right			= source.right;
 		down			= source.down;
@@ -60,7 +60,7 @@ struct BIOM_ClosestMonsterTracer play {
 	}
 
 	private void OrientForPlayer (PlayerInfo player) {
-		[forw, right, down] = BIOM_Vec.RolledViewOnb(
+		[forw, right, down] = biom_Vec.RolledViewOnb(
 			player.mo.angle,
 		-	player.mo.pitch,
 		-	player.mo.roll);
@@ -105,9 +105,9 @@ struct BIOM_ClosestMonsterTracer play {
 			vector3 trace_dir 	= row_left  + normal.x * (row_right    - row_left);
 
 			player_mo.LineTrace(
-				BIOM_Vec.Angle3(trace_dir),
+				biom_Vec.Angle3(trace_dir),
 				dist,
-			-	BIOM_Vec.Pitch(trace_dir),
+			-	biom_Vec.Pitch(trace_dir),
 				flags: TRF_THRUBLOCK,
 				offsetz: player_info.viewheight,
 				data: trace_data);
@@ -133,7 +133,7 @@ struct BIOM_ClosestMonsterTracer play {
 	void SaveSpottedIfCloserThreat () {
 		if(new_target.mo && player_mo) {
 			if(	target.mo == NULL || (
-				BIOM_ActorEx.IsKillableLiveThing(new_target.mo, player_mo) &&
+				biom_ActorEx.IsKillableLiveThing(new_target.mo, player_mo) &&
 				(new_target.dist < target.dist || target.mo.health < 1) ) ) {
 				target.Copy(new_target);
 			}
@@ -149,9 +149,9 @@ struct BIOM_ClosestMonsterTracer play {
 	}
 }
 
-struct BIOM_FovClosestMonster play {
+struct biom_FovClosestMonster play {
 	private PlayerInfo					player_info;
-	private BIOM_ClosestMonsterTracer		tracer;
+	private biom_ClosestMonsterTracer		tracer;
 	private	double						current_hor;
 	private	double						current_ver;
 	private double						hor_step;

@@ -1,5 +1,5 @@
 /// The currency with which new mutators can be applied.
-class BIOM_Mutagen : Inventory
+class biom_Mutagen : Inventory
 {
 	Default
 	{
@@ -21,13 +21,13 @@ class BIOM_Mutagen : Inventory
 	{
 	Spawn:
 		MUTA G 6;
-		#### # 6 bright light("BIOM_Mutagen");
+		#### # 6 bright light("biom_Mutagen");
 		Loop;
 	}
 }
 
 /// Usable by a player to completely reset their mutation tree.
-class BIOM_Antigen : Inventory
+class biom_Antigen : Inventory
 {
 	Default
 	{
@@ -49,7 +49,7 @@ class BIOM_Antigen : Inventory
 	{
 	Spawn:
 		ANTG A 6;
-		#### B 6 bright light("BIOM_Antigen");
+		#### B 6 bright light("biom_Antigen");
 		Loop;
 	}
 }

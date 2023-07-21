@@ -1,4 +1,4 @@
-extend class BIOM_Utils
+extend class biom_Utils
 {
 	static int IntArraySum(array<int> arr)
 	{

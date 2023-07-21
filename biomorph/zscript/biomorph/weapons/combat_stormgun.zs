@@ -1,8 +1,8 @@
 /// A Super Shotgun counterpart.
 /// Collecting one overrides the currently-head Shotgun counterpart, if any.
-class BIOM_CombatStormgun : BIOM_Weapon
+class biom_CombatStormgun : biom_Weapon
 {
-	protected BIOM_WeapDat_CombatStormgun data;
+	protected biom_wdat_CombatStormgun data;
 
 	Default
 	{
@@ -15,8 +15,8 @@ class BIOM_CombatStormgun : BIOM_Weapon
 		Weapon.SelectionOrder SELORDER_SSG;
 		Weapon.SlotNumber 3;
 
-		BIOM_Weapon.DataClass 'BIOM_WeapDat_CombatStormgun';
-		BIOM_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.DataClass 'biom_wdat_CombatStormgun';
+		biom_Weapon.Grade BIOM_WEAPGRADE_3;
 	}
 
 	States
@@ -25,7 +25,7 @@ class BIOM_CombatStormgun : BIOM_Weapon
 	}
 }
 
-class BIOM_WeapDat_CombatStormgun : BIOM_WeaponData
+class biom_wdat_CombatStormgun : biom_WeaponData
 {
 	final override void Reset()
 	{

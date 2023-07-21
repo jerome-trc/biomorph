@@ -1,4 +1,4 @@
-class BIOM_PermanentInventory : Inventory abstract
+class biom_PermanentInventory : Inventory abstract
 {
 	Default
 	{
@@ -23,7 +23,7 @@ class BIOM_PermanentInventory : Inventory abstract
 	}
 }
 
-class BIOM_IntangibleActor : Actor abstract
+class biom_IntangibleActor : Actor abstract
 {
 	Default
 	{
@@ -44,7 +44,7 @@ class BIOM_IntangibleActor : Actor abstract
 	}
 }
 
-class BIOM_WanderingSpawner : BIOM_IntangibleActor
+class biom_WanderingSpawner : biom_IntangibleActor
 {
 	private class<Actor> toSpawn;
 	private uint wanderCount;

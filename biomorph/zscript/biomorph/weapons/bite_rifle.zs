@@ -1,7 +1,7 @@
 /// A Plasma Rifle counterpart.
-class BIOM_BiteRifle : BIOM_Weapon
+class biom_BiteRifle : biom_Weapon
 {
-	protected BIOM_WeapDat_BiteRifle data;
+	protected biom_wdat_BiteRifle data;
 
 	Default
 	{
@@ -14,8 +14,8 @@ class BIOM_BiteRifle : BIOM_Weapon
 		Weapon.SelectionOrder SELORDER_PLASRIFLE;
 		Weapon.SlotNumber 6;
 
-		BIOM_Weapon.DataClass 'BIOM_WeapDat_BiteRifle';
-		BIOM_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.DataClass 'biom_wdat_BiteRifle';
+		biom_Weapon.Grade BIOM_WEAPGRADE_3;
 	}
 
 	States
@@ -24,7 +24,7 @@ class BIOM_BiteRifle : BIOM_Weapon
 	}
 }
 
-class BIOM_WeapDat_BiteRifle : BIOM_WeaponData
+class biom_wdat_BiteRifle : biom_WeaponData
 {
 	final override void Reset()
 	{

@@ -1,8 +1,8 @@
-class BIOM_Utils abstract
+class biom_Utils abstract
 {
 	static play void GivePowerup(Actor target, class<Powerup> type, int tics)
 	{
-		let giver = BIOM_PowerupGiver(Actor.Spawn('BIOM_PowerupGiver', target.pos));
+		let giver = biom_PowerupGiver(Actor.Spawn('biom_PowerupGiver', target.pos));
 
 		if (giver == null)
 		{
@@ -18,7 +18,7 @@ class BIOM_Utils abstract
 		giver.effectTics = tics;
 		giver.AttachToOwner(target);
 		giver.Use(false);
-		target.TakeInventory('BIOM_PowerupGiver', 1);
+		target.TakeInventory('biom_PowerupGiver', 1);
 	}
 
 	/// Use to ensure that an attempt to give an actor an item always succeeds.

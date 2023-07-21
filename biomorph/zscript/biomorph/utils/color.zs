@@ -1,4 +1,4 @@
-extend class BIOM_Utils
+extend class biom_Utils
 {
 	static string FontColorToEscapeCode(int fontColor)
 	{

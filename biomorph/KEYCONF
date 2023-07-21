@@ -1,4 +1,4 @@
-addkeysection "$BIOM_MODTITLE" BIOM_Section
+addkeysection "$BIOM_MODTITLE" biom_Section
 
 // Controls ////////////////////////////////////////////////////////////////////
 

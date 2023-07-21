@@ -1,8 +1,8 @@
 /// A Pistol counterpart.
 /// Infinite ammo, 7-round magazine, highly damaging.
-class BIOM_Pistol : BIOM_Weapon
+class biom_Pistol : biom_Weapon
 {
-	protected BIOM_WeapDat_Pistol data;
+	protected biom_WeapDat_Pistol data;
 
 	Default
 	{
@@ -15,8 +15,8 @@ class BIOM_Pistol : BIOM_Weapon
 		Weapon.SelectionOrder SELORDER_PISTOL;
 		Weapon.SlotNumber 2;
 
-		BIOM_Weapon.DataClass 'BIOM_WeapDat_Pistol';
-		BIOM_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.DataClass 'biom_WeapDat_Pistol';
+		biom_Weapon.Grade BIOM_WEAPGRADE_3;
 	}
 
 	States
@@ -25,7 +25,7 @@ class BIOM_Pistol : BIOM_Weapon
 	}
 }
 
-class BIOM_WeapDat_Pistol : BIOM_WeaponData
+class biom_WeapDat_Pistol : biom_WeaponData
 {
 	final override void Reset()
 	{

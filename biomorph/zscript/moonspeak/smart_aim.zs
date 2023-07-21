@@ -1,5 +1,5 @@
 // kd: This will scan and pick a target automatically in front of you, kinda like the BFG9000 does.
-struct BIOM_SmartAim play {
+struct biom_SmartAim play {
 	void Begin (PlayerInfo player, double horizontal_fov = 38, double vertical_fov = 16) {
 		hor_fov			= abs(horizontal_fov);
 		ver_fov			= abs(vertical_fov);
@@ -18,7 +18,7 @@ struct BIOM_SmartAim play {
 	void Next (PlayerPawn owner_po) {
 		// kd: Targets under your crosshair are preferred, even if you already
 		// have a target.
-		let considered_mo = BIOM_ActorEx.BetterAimTarget(owner_po);
+		let considered_mo = biom_ActorEx.BetterAimTarget(owner_po);
 
 		// kd: We don't want to aim at stuff like statues or invulnerable
 		// monsters.
@@ -95,7 +95,7 @@ struct BIOM_SmartAim play {
 		}
 
 		if(
-		!BIOM_ActorEx.IsInPlayerFov(mo, owner.player, hor_fov, ver_fov) ||
+		!biom_ActorEx.IsInPlayerFov(mo, owner.player, hor_fov, ver_fov) ||
 		mo.health < 1 ||
 		!mo.IsHostile(owner) ||
 		mo.bdormant ||
@@ -130,9 +130,9 @@ struct BIOM_SmartAim play {
 		return is_ejecting;
 	}
 
-	BIOM_FovClosestMonster		closest_target;
+	biom_FovClosestMonster		closest_target;
 	bool						is_ejecting;
-	BIOM_FadeTick					eject_t;
+	biom_FadeTick					eject_t;
 
 	// kd: Parameters
 	double						hor_fov;

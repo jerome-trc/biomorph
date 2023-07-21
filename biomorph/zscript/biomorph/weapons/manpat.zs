@@ -1,8 +1,8 @@
 /// A Rocket Launcher counterpart.
 /// "Man-portable anti-tank".
-class BIOM_MANPAT : BIOM_Weapon
+class biom_MANPAT : biom_Weapon
 {
-	protected BIOM_WeapDat_MANPAT data;
+	protected biom_wdat_MANPAT data;
 
 	Default
 	{
@@ -15,8 +15,8 @@ class BIOM_MANPAT : BIOM_Weapon
 		Weapon.SelectionOrder SELORDER_RLAUNCHER;
 		Weapon.SlotNumber 5;
 
-		BIOM_Weapon.DataClass 'BIOM_WeapDat_MANPAT';
-		BIOM_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.DataClass 'biom_wdat_MANPAT';
+		biom_Weapon.Grade BIOM_WEAPGRADE_3;
 	}
 
 	States
@@ -25,7 +25,7 @@ class BIOM_MANPAT : BIOM_Weapon
 	}
 }
 
-class BIOM_WeapDat_MANPAT : BIOM_WeaponData
+class biom_wdat_MANPAT : biom_WeaponData
 {
 	final override void Reset()
 	{

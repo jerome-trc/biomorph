@@ -1,10 +1,10 @@
 /// Mutators can affect the player's own stats (e.g. powerup duration), what
 /// weapons the player has in a given slot, or the weapons themselves.
-class BIOM_Mutator abstract
+class biom_Mutator abstract
 {
-	abstract bool Eligible(readonly<BIOM_Player> pawn) const;
-	abstract BIOM_MutatorCategory Category(readonly<BIOM_Player> pawn) const;
-	abstract void Apply(BIOM_Player pawn) const;
+	abstract bool Eligible(readonly<biom_Player> pawn) const;
+	abstract biom_MutatorCategory Category(readonly<biom_Player> pawn) const;
+	abstract void Apply(biom_Player pawn) const;
 
 	/// Output does not need to be localized, but it must be fully colorized.
 	abstract string Tag() const;
@@ -16,7 +16,7 @@ class BIOM_Mutator abstract
 
 /// Are the effects of this mutator beneficial to the player,
 /// slightly detrimental, or neither?
-enum BIOM_MutatorCategory : uint8
+enum biom_MutatorCategory : uint8
 {
 	/// This mutator is (mildly) detrimental to the player or their arsenal,
 	/// but committing to it biases future mutators towards being upgrades.

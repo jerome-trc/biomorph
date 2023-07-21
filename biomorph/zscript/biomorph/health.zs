@@ -1,27 +1,27 @@
-mixin class BIOM_Health
+mixin class biom_Health
 {
 	private void OnFirstBerserkPickup(in out Actor other)
 	{
 		other.GiveInventory('PowerStrength', 1);
 		self.PrintPickupMessage(other.CheckLocalView(), "$BIOM_BERSERK_PKUPFIRST");
 
-		let pawn = BIOM_Player(other);
+		let pawn = biom_Player(other);
 
 		if (pawn != null)
 		{
-			let bsks = BIOM_CVar.BerserkSwitch(pawn.Player);
+			let bsks = biom_CVar.BerserkSwitch(pawn.Player);
 			bool prev = pawn.FindInventory('PowerStrength', true) != null;
 			bool select = bsks == BIOM_CV_BSKS_MELEE;
 			select |= (bsks == BIOM_CV_BSKS_ONLYFIRST && !prev);
 
 			if (select)
-				pawn.A_SelectWeapon('BIOM_Melee');
+				pawn.A_SelectWeapon('biom_Melee');
 		}
 	}
 
 	final override bool TryPickup(in out Actor other)
 	{
-		if (self is 'BIOM_Berserk' && self.bCountItem)
+		if (self is 'biom_Berserk' && self.bCountItem)
 			self.OnFirstBerserkPickup(other);
 
 		int amt = 0;
@@ -31,7 +31,7 @@ mixin class BIOM_Health
 			self.prevHealth = other.Player.Health;
 			let cap = other.GetMaxHealth() - other.Player.Health;
 
-			if (self is 'BIOM_HealthBonus' || self is 'BIOM_SuperHealth')
+			if (self is 'biom_HealthBonus' || self is 'biom_SuperHealth')
 				cap += 100;
 
 			cap = Max(cap, 0);
@@ -45,7 +45,7 @@ mixin class BIOM_Health
 			let cap = other.GetMaxHealth() - other.Health;
 			cap = Max(cap, 0);
 
-			if (self is 'BIOM_HealthBonus' || self is 'BIOM_SuperHealth')
+			if (self is 'biom_HealthBonus' || self is 'biom_SuperHealth')
 				cap += 100;
 
 			amt = Min(self.amount, cap);
@@ -69,17 +69,17 @@ mixin class BIOM_Health
 	}
 }
 
-class BIOM_HealthBonus : HealthBonus replaces HealthBonus
+class biom_HealthBonus : HealthBonus replaces HealthBonus
 {
-	mixin BIOM_Pickup;
-	mixin BIOM_Health;
+	mixin biom_Pickup;
+	mixin biom_Health;
 
 	Default
 	{
 		Tag "$BIOM_HEALTHBONUS_TAG";
 		-INVENTORY.ALWAYSPICKUP
 		Inventory.PickupMessage "$BIOM_HEALTHBONUS_PKUP";
-		BIOM_HealthBonus.CollectedMessage "$BIOM_HEALTHBONUS_COLLECTED";
+		biom_HealthBonus.CollectedMessage "$BIOM_HEALTHBONUS_COLLECTED";
 	}
 
 	States
@@ -90,16 +90,16 @@ class BIOM_HealthBonus : HealthBonus replaces HealthBonus
 	}
 }
 
-class BIOM_SmallHealth : Stimpack replaces Stimpack
+class biom_SmallHealth : Stimpack replaces Stimpack
 {
-	mixin BIOM_Pickup;
-	mixin BIOM_Health;
+	mixin biom_Pickup;
+	mixin biom_Health;
 
 	Default
 	{
 		Tag "$BIOM_SMALLHEALTH_TAG";
 		Inventory.PickupMessage "$BIOM_SMALLHEALTH_PKUP";
-		BIOM_SmallHealth.PartialPickupMessage "$BIOM_SMALLHEALTH_PARTIAL";
+		biom_SmallHealth.PartialPickupMessage "$BIOM_SMALLHEALTH_PARTIAL";
 		Health.LowMessage 25, "$BIOM_SMALLHEALTH_PKUPLOW";
 	}
 
@@ -111,16 +111,16 @@ class BIOM_SmallHealth : Stimpack replaces Stimpack
 	}
 }
 
-class BIOM_BigHealth : Medikit replaces Medikit
+class biom_BigHealth : Medikit replaces Medikit
 {
-	mixin BIOM_Pickup;
-	mixin BIOM_Health;
+	mixin biom_Pickup;
+	mixin biom_Health;
 
 	Default
 	{
 		Tag "$BIOM_BIGHEALTH_TAG";
 		Inventory.PickupMessage "$BIOM_BIGHEALTH_PKUP";
-		BIOM_BigHealth.PartialPickupMessage "$BIOM_BIGHEALTH_PARTIAL";
+		biom_BigHealth.PartialPickupMessage "$BIOM_BIGHEALTH_PARTIAL";
 		Health.LowMessage 25, "$BIOM_BIGHEALTH_PKUPLOW";
 	}
 
@@ -132,10 +132,10 @@ class BIOM_BigHealth : Medikit replaces Medikit
 	}
 }
 
-class BIOM_SuperHealth : Soulsphere replaces Soulsphere
+class biom_SuperHealth : Soulsphere replaces Soulsphere
 {
-	mixin BIOM_Pickup;
-	mixin BIOM_Health;
+	mixin biom_Pickup;
+	mixin biom_Health;
 
 	Default
 	{
@@ -145,8 +145,8 @@ class BIOM_SuperHealth : Soulsphere replaces Soulsphere
 		Tag "$BIOM_SUPERHEALTH_TAG";
 		Inventory.PickupMessage "$BIOM_SUPERHEALTH_PKUP";
 		Health.LowMessage 25, "$BIOM_SUPERHEALTH_PKUPLOW";
-		BIOM_SuperHealth.PartialPickupMessage "$BIOM_SUPERHEALTH_PARTIAL";
-		BIOM_SuperHealth.CollectedMessage "$BIOM_SUPERHEALTH_COLLECTED";
+		biom_SuperHealth.PartialPickupMessage "$BIOM_SUPERHEALTH_PARTIAL";
+		biom_SuperHealth.CollectedMessage "$BIOM_SUPERHEALTH_COLLECTED";
 	}
 
 	States

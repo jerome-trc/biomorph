@@ -1,6 +1,6 @@
 // kd: Might crop up sometimes:
 
-class BIOM_ActorEx play {
+class biom_ActorEx play {
 
 	// kd: This is like A_Explode, but through walls.
 	static void A_SuperExplode (
@@ -91,7 +91,7 @@ class BIOM_ActorEx play {
 	double		hor_fov,
 	double		ver_fov) {
 		if(to_whom_player && to_whom_player.mo && who) {
-			BIOM_Pos pos;
+			biom_Pos pos;
 			pos.OrientForPlayer(to_whom_player);
 			pos.FromActor(who);
 			return
@@ -154,7 +154,7 @@ class BIOM_ActorEx play {
 	static Actor AimTargetNoWalls (PlayerPawn mo) {
 		// console.printf("remember, no walls");
 
-		BIOM_NoWallsTracer tracer = new("BIOM_NoWallsTracer");
+		biom_NoWallsTracer tracer = new("biom_NoWallsTracer");
 
 		if(tracer == NULL) {
 			return NULL;
@@ -163,7 +163,7 @@ class BIOM_ActorEx play {
 		let start_pos	= mo.vec3offset(
 			0, 0, mo.height / 2 + mo.floorclip + mo.attackzoffset);
 		let start_sec	= mo.cursector;
-		let trace_dir	= BIOM_Vec.Direction(mo.angle, -mo.pitch);
+		let trace_dir	= biom_Vec.Direction(mo.angle, -mo.pitch);
 		let max_dist	= 25000.1337;
 		let trace_flags	= TRACE_HITSKY;
 
@@ -185,7 +185,7 @@ class BIOM_ActorEx play {
 	}
 }
 
-class BIOM_NoWallsTracer : LineTracer {
+class biom_NoWallsTracer : LineTracer {
 	protected Actor spotted_mo;
 	protected Actor user;
 
@@ -219,7 +219,7 @@ class BIOM_NoWallsTracer : LineTracer {
 
 // kd: Might also appear:
 
-class BIOM_MiscOps {
+class biom_MiscOps {
 
 	// kd: We decide to pretend 0 has 0 sign, since usually, we'll use this
 	// for stuff like movements. (See the Tick struct for a good example, in
@@ -235,7 +235,7 @@ class BIOM_MiscOps {
 
 // kd: Some assorted stuff.
 
-extend class BIOM_MiscOps {
+extend class biom_MiscOps {
 	// kd: Shortest linear modulo space movement from a to b. If you read this
 	// and don't understand it, write it yourself and it'll make sense.
 

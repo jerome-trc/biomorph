@@ -1,8 +1,8 @@
 /// A slot 3 weapon. Behaves functionally identically to vanilla Doom's shotgun.
 /// Abbreviation: `870`
-class BIOM_PumpShotgun : BIOM_Weapon
+class biom_PumpShotgun : biom_Weapon
 {
-	protected BIOM_WeapDat_PumpShotgun data;
+	protected biom_PumpShotgunData data;
 
 	Default
 	{
@@ -15,8 +15,8 @@ class BIOM_PumpShotgun : BIOM_Weapon
 		Weapon.SelectionOrder SELORDER_SHOTGUN;
 		Weapon.SlotNumber 3;
 
-		BIOM_Weapon.DataClass 'BIOM_WeapDat_PumpShotgun';
-		BIOM_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.DataClass 'biom_PumpShotgunData';
+		biom_Weapon.Grade BIOM_WEAPGRADE_3;
 	}
 
 	States
@@ -74,7 +74,7 @@ class BIOM_PumpShotgun : BIOM_Weapon
 	}
 }
 
-class BIOM_WeapDat_PumpShotgun : BIOM_WeaponData
+class biom_PumpShotgunData : biom_WeaponData
 {
 	final override void Reset()
 	{

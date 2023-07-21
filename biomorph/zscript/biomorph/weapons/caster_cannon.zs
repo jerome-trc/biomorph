@@ -1,8 +1,8 @@
 /// A BFG9000 counterpart.
 /// Derived from Final Doomer's Quantum Accelerator.
-class BIOM_CasterCannon : BIOM_Weapon
+class biom_CasterCannon : biom_Weapon
 {
-	protected BIOM_WeapDat_CasterCannon data;
+	protected biom_wdat_CasterCannon data;
 
 	Default
 	{
@@ -15,8 +15,8 @@ class BIOM_CasterCannon : BIOM_Weapon
 		Weapon.SelectionOrder SELORDER_BFG;
 		Weapon.SlotNumber 7;
 
-		BIOM_Weapon.DataClass 'BIOM_WeapDat_CasterCannon';
-		BIOM_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.DataClass 'biom_wdat_CasterCannon';
+		biom_Weapon.Grade BIOM_WEAPGRADE_3;
 	}
 
 	States
@@ -26,7 +26,7 @@ class BIOM_CasterCannon : BIOM_Weapon
 }
 
 
-class BIOM_WeapDat_CasterCannon : BIOM_WeaponData
+class biom_wdat_CasterCannon : biom_WeaponData
 {
 	final override void Reset()
 	{

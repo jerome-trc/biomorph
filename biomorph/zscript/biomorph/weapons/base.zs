@@ -1,4 +1,4 @@
-class BIOM_Weapon : DoomWeapon abstract
+class biom_Weapon : DoomWeapon abstract
 {
 	// `SelectionOrder` is for when ammo runs out; lower number, higher priority.
 
@@ -19,11 +19,11 @@ class BIOM_Weapon : DoomWeapon abstract
 	const SLOTPRIO_LOW = 0.3;
 	const SLOTPRIO_MIN = 0.0;
 
-	meta BIOM_WeaponGrade grade;
+	meta biom_WeaponGrade grade;
 	property Grade: grade;
 
 	/// Should never be `null`.
-	meta class<BIOM_WeaponData> dataClass;
+	meta class<biom_WeaponData> dataClass;
 	property DataClass: dataClass;
 
 	private uint DynFlags;
@@ -45,21 +45,21 @@ class BIOM_Weapon : DoomWeapon abstract
 		Radius 16;
 
 		Inventory.PickupMessage "";
-		Inventory.RestrictedTo 'BIOM_Player';
+		Inventory.RestrictedTo 'biom_Player';
 
 		Weapon.BobStyle 'InverseSmooth';
 		Weapon.BobRangeX 0.3;
 		Weapon.BobRangeY 0.5;
 		Weapon.BobSpeed 2.0;
 
-		BIOM_Weapon.Grade BIOM_WEAPGRADE_NONE;
+		biom_Weapon.Grade BIOM_WEAPGRADE_NONE;
 	}
 }
 
 /// An approximate measure of how "good" a weapon is on a 1-to-5 scale. Used by
 /// mutators to determine whether they constitute upgrades, downgrades, or
 /// sidegrades relative to what the player is currently using.
-enum BIOM_WeaponGrade : uint8
+enum biom_WeaponGrade : uint8
 {
 	/// The default; should only ever appear in normal code because someone forgot
 	/// to set it. Considered invalid by other code and is cause for exception.
@@ -76,12 +76,12 @@ enum BIOM_WeaponGrade : uint8
 /// The source of truth for a weapon's stats and behavior.
 /// - Every weapon subclasses this once.
 /// - Every player has one per weapon.
-class BIOM_WeaponData abstract
+class biom_WeaponData abstract
 {
 	/// For setting values to their defaults.
 	abstract void Reset();
 
-	readonly<BIOM_WeaponData> AsConst() const
+	readonly<biom_WeaponData> AsConst() const
 	{
 		return self;
 	}

@@ -1,4 +1,4 @@
-class BIOM_EventHandler : EventHandler
+class biom_EventHandler : EventHandler
 {
 	/// Passed in the event's `args[0]`.
 	enum UserEvent
@@ -9,7 +9,7 @@ class BIOM_EventHandler : EventHandler
 		USREVENT_MUTMENU,
 	}
 
-	private BIOM_Global globals;
+	private biom_Global globals;
 
 	final override void OnRegister()
 	{
@@ -17,7 +17,7 @@ class BIOM_EventHandler : EventHandler
 			Console.PrintF(Biomorph.LOGPFX_DEBUG .. "Registering event handler...");
 
 		if (self.globals == null)
-			self.globals = BIOM_Global.Get();
+			self.globals = biom_Global.Get();
 	}
 
 	final override void OnUnregister()
@@ -36,7 +36,7 @@ class BIOM_EventHandler : EventHandler
 			);
 		}
 
-		self.globals = BIOM_Global.Create();
+		self.globals = biom_Global.Create();
 	}
 
 	final override void WorldLoaded(WorldEvent event)
@@ -98,13 +98,13 @@ class BIOM_EventHandler : EventHandler
 			if (players[consolePlayer].health <= 0)
 				break;
 
-			if (!(players[consolePlayer].mo is 'BIOM_Player'))
+			if (!(players[consolePlayer].mo is 'biom_Player'))
 				break;
 
-			if (Menu.GetCurrentMenu() is 'BIOM_MutationMenu')
+			if (Menu.GetCurrentMenu() is 'biom_MutationMenu')
 				break;
 
-			Menu.SetMenu('BIOM_MutationMenu');
+			Menu.SetMenu('biom_MutationMenu');
 			break;
 		default:
 			Console.PrintF(

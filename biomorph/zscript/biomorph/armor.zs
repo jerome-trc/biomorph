@@ -1,6 +1,6 @@
-class BIOM_ArmorBonus : ArmorBonus replaces ArmorBonus
+class biom_ArmorBonus : ArmorBonus replaces ArmorBonus
 {
-	mixin BIOM_Pickup;
+	mixin biom_Pickup;
 
 	Default
 	{
@@ -8,7 +8,7 @@ class BIOM_ArmorBonus : ArmorBonus replaces ArmorBonus
 		Tag "$BIOM_ARMORBONUS_TAG";
 		Inventory.PickupMessage "$BIOM_ARMORBONUS_PKUP";
 		Inventory.PickupSound "biom/armorbonus/pkup";
-		BIOM_ArmorBonus.CollectedMessage "$BIOM_ARMORBONUS_COLLECTED";
+		biom_ArmorBonus.CollectedMessage "$BIOM_ARMORBONUS_COLLECTED";
 	}
 
 	States
@@ -54,7 +54,7 @@ class BIOM_ArmorBonus : ArmorBonus replaces ArmorBonus
 	}
 }
 
-mixin class BIOM_Armor
+mixin class biom_Armor
 {
 	final override bool Use(bool pickup)
 	{
@@ -132,17 +132,17 @@ mixin class BIOM_Armor
 	}
 }
 
-class BIOM_LightArmor : GreenArmor replaces GreenArmor
+class biom_LightArmor : GreenArmor replaces GreenArmor
 {
-	mixin BIOM_Pickup;
-	mixin BIOM_Armor;
+	mixin biom_Pickup;
+	mixin biom_Armor;
 
 	Default
 	{
 		Tag "$BIOM_LIGHTARMOR_TAG";
 		Inventory.PickupMessage "$BIOM_LIGHTARMOR_PKUP";
-		BIOM_LightArmor.PartialPickupMessage "$BIOM_LIGHTARMOR_PARTIAL";
-		BIOM_LightArmor.CollectedMessage "$BIOM_LIGHTARMOR_COLLECTED";
+		biom_LightArmor.PartialPickupMessage "$BIOM_LIGHTARMOR_PARTIAL";
+		biom_LightArmor.CollectedMessage "$BIOM_LIGHTARMOR_COLLECTED";
 	}
 
 	States
@@ -154,17 +154,17 @@ class BIOM_LightArmor : GreenArmor replaces GreenArmor
 	}
 }
 
-class BIOM_HeavyArmor : BlueArmor replaces BlueArmor
+class biom_HeavyArmor : BlueArmor replaces BlueArmor
 {
-	mixin BIOM_Pickup;
-	mixin BIOM_Armor;
+	mixin biom_Pickup;
+	mixin biom_Armor;
 
 	Default
 	{
 		Tag "$BIOM_HEAVYARMOR_TAG";
 		Inventory.PickupMessage "$BIOM_HEAVYARMOR_PKUP";
-		BIOM_HeavyArmor.PartialPickupMessage "$BIOM_HEAVYARMOR_PARTIAL";
-		BIOM_HeavyArmor.CollectedMessage "$BIOM_HEAVYARMOR_COLLECTED";
+		biom_HeavyArmor.PartialPickupMessage "$BIOM_HEAVYARMOR_PARTIAL";
+		biom_HeavyArmor.CollectedMessage "$BIOM_HEAVYARMOR_COLLECTED";
 	}
 
 	States
