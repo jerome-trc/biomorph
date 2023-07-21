@@ -100,6 +100,8 @@ class BIOM_StatusBar : BaseStatusBar
 				(14, -30), 0, Font.CR_WHITE
 			);
 		}
+
+		self.DrawFullscreenKeys();
 	}
 
 	/// Draw powerup icons at top left, along with the
@@ -129,6 +131,38 @@ class BIOM_StatusBar : BaseStatusBar
 			);
 
 			yPos += 32;
+		}
+	}
+
+	/// From gzdoom.pk3.
+	private void DrawFullscreenKeys()
+	{
+		// (GZ) Draw the keys. This does not use a special draw function like SBARINFO
+		// because the specifics will be different for each mod so it's easier to
+		// copy or reimplement the following piece of code instead of trying to
+		// write a complicated all-encompassing solution.
+
+		vector2 keypos = (-10, 2);
+		int rowc = 0;
+		double roww = 0;
+
+		for (let i = self.cPlayer.mo.inv; i != null; i = i.inv)
+		{
+			if (i is 'Key' && i.icon.IsValid())
+			{
+				self.DrawTexture(i.icon, keypos, DI_SCREEN_RIGHT_TOP | DI_ITEM_LEFT_TOP);
+				Vector2 size = TexMan.GetScaledSize(i.icon);
+				keypos.Y += size.Y + 2;
+				roww = max(roww, size.X);
+
+				if (++rowc == 3)
+				{
+					keypos.Y = 2;
+					keypos.X -= roww + 2;
+					roww = 0;
+					rowc = 0;
+				}
+			}
 		}
 	}
 }
