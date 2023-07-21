@@ -35,8 +35,16 @@ class BIOM_BlurSphere : BlurSphere replaces BlurSphere
 	{
 		+DONTGIB
 		Tag "$BIOM_BLURSPHERE_TAG";
+		RenderStyle 'Normal';
 		Inventory.PickupMessage "$BIOM_BLURSPHERE_PKUP";
 		Powerup.Type 'BIOM_PowerInvisibility';
+	}
+
+	States
+	{
+	Spawn:
+		CAMO ABCD 6 bright;
+		loop;
 	}
 }
 
@@ -47,6 +55,13 @@ class BIOM_Megasphere : Megasphere replaces Megasphere
 		+DONTGIB
 		Tag "$BIOM_MEGASPHERE_TAG";
 		Inventory.PickupMessage "$BIOM_MEGASPHERE_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		MKIT ABCD 6 bright;
+		loop;
 	}
 }
 

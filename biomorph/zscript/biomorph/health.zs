@@ -148,4 +148,11 @@ class BIOM_SuperHealth : Soulsphere replaces Soulsphere
 		BIOM_SuperHealth.PartialPickupMessage "$BIOM_SUPERHEALTH_PARTIAL";
 		BIOM_SuperHealth.CollectedMessage "$BIOM_SUPERHEALTH_COLLECTED";
 	}
+
+	States
+	{
+	Spawn:
+		PANA ABCD 6 bright;
+		loop;
+	}
 }

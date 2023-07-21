@@ -28,11 +28,11 @@
 	BIOM_BIGHEALTH_PKUP = "Used a trauma kit.";
 	BIOM_BIGHEALTH_PARTIAL = "Partially used a trauma kit.";
 	BIOM_BIGHEALTH_PKUPLOW = "Used an urgently-needed trauma kit.";
-	BIOM_SUPERHEALTH_TAG = "Soulsphere";
-	BIOM_SUPERHEALTH_PKUP = "Absorbed a Soulsphere.";
-	BIOM_SUPERHEALTH_PARTIAL = "Partially absorbed a Soulsphere.";
-	BIOM_SUPERHEALTH_PKUPLOW = "Absorbed a much-needed Soulsphere.";
-	BIOM_SUPERHEALTH_COLLECTED = "Did not absorb a Soulsphere, but counted it as collected.";
+	BIOM_SUPERHEALTH_TAG = "L.I.F.E. Kit";
+	BIOM_SUPERHEALTH_PKUP = "Used a L.I.F.E. Kit.";
+	BIOM_SUPERHEALTH_PARTIAL = "Partially used a L.I.F.E. Kit.";
+	BIOM_SUPERHEALTH_PKUPLOW = "Used a mucuh-needed L.I.F.E. Kit.";
+	BIOM_SUPERHEALTH_COLLECTED = "Did not use a L.I.F.E. Kit, but counted it as collected.";
 
 // Armour //////////////////////////////////////////////////////////////////////
 
@@ -86,14 +86,14 @@
 
 	BIOM_ALLMAP_TAG = "Computer Area Map";
 	BIOM_ALLMAP_PKUP = "Obtained a computer area map; your surroundings become clear.";
-	BIOM_BLURSPHERE_TAG = "Blursphere";
-	BIOM_BLURSPHERE_PKUP = "Absorbed a blursphere; you fade and shimmer.";
-	BIOM_INVULNERABILITY_TAG = "Styx Kit";
-	BIOM_INVULNERABILITY_PKUP = "Used a Styx Kit! You are invulnerable!";
+	BIOM_BLURSPHERE_TAG = "C.A.M.O. Kit";
+	BIOM_BLURSPHERE_PKUP = "Used a C.A.M.O. Kit; you fade and shimmer.";
+	BIOM_INVULNERABILITY_TAG = "S.T.Y.X. Kit";
+	BIOM_INVULNERABILITY_PKUP = "Used a S.T.Y.X. Kit! You are invulnerable!";
 	BIOM_INFRARED_TAG = "Light-Amp Visor";
 	BIOM_INFRARED_PKUP = "Donned a light amplification visor; the dark is illuminated.";
-	BIOM_MEGASPHERE_TAG = "Megasphere";
-	BIOM_MEGASPHERE_PKUP = "Absorbed a Megasphere! You feel rejuvenated.";
+	BIOM_MEGASPHERE_TAG = "M.E.G.A. Kit";
+	BIOM_MEGASPHERE_PKUP = "Used a M.E.G.A. Kit! You feel rejuvenated.";
 	BIOM_RADSUIT_TAG = "C.B.R.N. Suit";
 	BIOM_RADSUIT_PKUP = "Donned a C.B.R.N. suit; you're safe from environmental hazards.";
 
