@@ -61,7 +61,8 @@ Doom and Doom II's base sounds are the sole property of id Software LLC.
 
 The following audio files are provided courtesy of the YouTube channel [GunsOfTheWorld](https://www.youtube.com/@GunsOfTheWorld):
 
-- GMG1_0 through 2 (https://www.youtube.com/watch?v=DAUIi05Rckc)
+- GMG1_0 through 2 (https://www.youtube.com/watch?v=DAUIi05Rckc) <!-- Full-Auto SCAR-L -->
+- CBP1_0 through 2 (https://www.youtube.com/watch?v=5B8HE3RiBfQ) <!-- Desert Eagle 50 AE Part 2 -->
 
 #### Joblez_I
 

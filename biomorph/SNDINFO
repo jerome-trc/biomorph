@@ -67,6 +67,19 @@
 		biom/weap/dryfire/ballistic/2
 	}
 
+// Weapons, combat pistol //////////////////////////////////////////////////////
+
+	biom/weap/combatpistol/fire/0 CBP1_0
+	biom/weap/combatpistol/fire/1 CBP1_1
+	biom/weap/combatpistol/fire/2 CBP1_2
+
+	$random biom/weap/combatpistol/fire
+	{
+		biom/weap/combatpistol/fire/0
+		biom/weap/combatpistol/fire/1
+		biom/weap/combatpistol/fire/2
+	}
+
 // Weapons, GPMG ///////////////////////////////////////////////////////////////
 
 	biom/weap/gpmg/fire/0 GMG1_0
