@@ -54,6 +54,23 @@ class biom_Weapon : DoomWeapon abstract
 
 		biom_Weapon.Grade BIOM_WEAPGRADE_NONE;
 	}
+
+	// Actions /////////////////////////////////////////////////////////////////
+
+	protected action void A_biom_Recoil(
+		class<biom_RecoilThinker> recoil_t,
+		float scale = 1.0,
+		bool invert = false
+	)
+	{
+		biom_RecoilThinker.Create(recoil_t, biom_Weapon(invoker), scale, invert);
+	}
+
+	/// Use to assert that state machine flow does not fall through unintentionally.
+	protected action void A_Unreachable()
+	{
+		Biomorph.Unreachable("unexpected state flow fallthrough.");
+	}
 }
 
 /// An approximate measure of how "good" a weapon is on a 1-to-5 scale. Used by

@@ -67,6 +67,19 @@
 		biom/weap/dryfire/ballistic/2
 	}
 
+// Weapons, GPMG ///////////////////////////////////////////////////////////////
+
+	biom/weap/gpmg/fire/0 GMG1_0
+	biom/weap/gpmg/fire/1 GMG1_1
+	biom/weap/gpmg/fire/2 GMG1_2
+
+	$random biom/weap/gpmg/fire
+	{
+		biom/weap/gpmg/fire/0
+		biom/weap/gpmg/fire/1
+		biom/weap/gpmg/fire/2
+	}
+
 // Weapons, pump shotgun ///////////////////////////////////////////////////////
 
 	biom/weap/pumpshotgun/fire/0 870F_0
