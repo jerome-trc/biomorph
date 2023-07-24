@@ -69,15 +69,15 @@
 
 // Weapons, combat pistol //////////////////////////////////////////////////////
 
-	biom/weap/combatpistol/fire/0 CBP1_0
-	biom/weap/combatpistol/fire/1 CBP1_1
-	biom/weap/combatpistol/fire/2 CBP1_2
+	biom/weap/servicepistol/fire/0 SVP1_0
+	biom/weap/servicepistol/fire/1 SVP1_1
+	biom/weap/servicepistol/fire/2 SVP1_2
 
-	$random biom/weap/combatpistol/fire
+	$random biom/weap/servicepistol/fire
 	{
-		biom/weap/combatpistol/fire/0
-		biom/weap/combatpistol/fire/1
-		biom/weap/combatpistol/fire/2
+		biom/weap/servicepistol/fire/0
+		biom/weap/servicepistol/fire/1
+		biom/weap/servicepistol/fire/2
 	}
 
 // Weapons, GPMG ///////////////////////////////////////////////////////////////

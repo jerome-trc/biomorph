@@ -122,13 +122,13 @@
 	BIOM_MELEE_TAG = "Combatives";
 	BIOM_MELEE_OB = "%k beat %o to death.";
 
-	BIOM_PISTOL_TAG = "Service Pistol";
-	BIOM_PISTOL_PKUP = "Procured a service pistol.";
-	BIOM_PISTOL_OB = "%k served %o summary execution.";
-
 	BIOM_PUMPSHOTGUN_TAG = "Pump Shotgun";
 	BIOM_PUMPSHOTGUN_PKUP = "Procured a pump shotgun.";
 	BIOM_PUMPSHOTGUN_OB = "%k oppressed %o with a pump shotgun.";
+
+	BIOM_SERVICEPISTOL_TAG = "Service Pistol";
+	BIOM_SERVICEPISTOL_PKUP = "Procured a service pistol.";
+	BIOM_SERVICEPISTOL_OB = "%k served %o summary execution with a service pistol.";
 
 // Mutators ////////////////////////////////////////////////////////////////////
 

@@ -98,7 +98,7 @@ class biom_PlayerData
 		let ret = new('biom_PlayerData');
 
 		ret.weapons[BIOM_WEAPSLOT_1] = 'biom_Melee';
-		ret.weapons[BIOM_WEAPSLOT_2] = 'biom_Pistol';
+		ret.weapons[BIOM_WEAPSLOT_2] = 'biom_ServicePistol';
 		ret.weapons[BIOM_WEAPSLOT_3] = 'biom_PumpShotgun';
 		ret.weapons[BIOM_WEAPSLOT_3_SUPER] = 'biom_CombatStormgun';
 		ret.weapons[BIOM_WEAPSLOT_4] = 'biom_GPMG';

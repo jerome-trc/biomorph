@@ -10,4 +10,5 @@ The list of suffixes are:
 - 2 for "secondary" firing sprites.
 - 3 for any tertiary functions the weapon may have.
 - S for raise/lower sprites.
+- R for reload sprites.
 - Z for "spawn" sprites and the inventory icon.

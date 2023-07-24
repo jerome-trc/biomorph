@@ -17,7 +17,7 @@ class biom_Player : DoomPlayer
 		Player.StartItem 'biom_Slot67Ammo', 0;
 
 		Player.StartItem 'biom_Melee';
-		Player.StartItem 'biom_Pistol';
+		Player.StartItem 'biom_ServicePistol';
 	}
 
 	/// Inversely proportional to added movement inertia;
