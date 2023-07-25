@@ -5,10 +5,13 @@ class biom_ServicePistol : biom_Weapon
 {
 	protected biom_wdat_ServicePistol data;
 
+	flagdef slideBack: dynFlags, 31;
+
 	Default
 	{
 		Tag "$BIOM_SERVICEPISTOL_TAG";
 		Obituary "$BIOM_SERVICEPISTOL_OB";
+		Scale 0.33;
 
 		Inventory.Icon 'SVPZZ0';
 		Inventory.PickupMessage "$BIOM_SERVICEPISTOL_PKUP";
@@ -40,10 +43,10 @@ class biom_ServicePistol : biom_Weapon
 	Ready.Main:
 		// TODO: Diverge based on magazine state.
 	Ready.Chambered:
-		SVPA A 1 A_WeaponReady;
+		SVPA A 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		loop;
 	Ready.Empty:
-		SVP1 D 1 A_WeaponReady;
+		SVP1 D 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		loop;
 	Fire:
 		// Baseline time: 10 tics; 9 fewer than the vanilla Pistol.
@@ -77,6 +80,19 @@ class biom_ServicePistol : biom_Weapon
 	Flash.Finish:
 		TNT1 A 0 A_Light(0);
 		goto LightDone;
+	Reload:
+		// TODO: Separate set of frames for when a round isn't chambered.
+		SVPA A 1;
+		SVPR A 4;
+		SVPR B 4;
+		SVPR C 4;
+		SVPR D 4;
+		SVPR E 10;
+		SVPR F 4;
+		SVPR G 4;
+		SVPR H 4;
+		SVPR I 4;
+		goto Ready.Main;
 	}
 }
 

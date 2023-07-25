@@ -62,7 +62,7 @@ Doom and Doom II's base sounds are the sole property of id Software LLC.
 The following audio files are provided courtesy of the YouTube channel [GunsOfTheWorld](https://www.youtube.com/@GunsOfTheWorld):
 
 - GMG1_0 through 2 (https://www.youtube.com/watch?v=DAUIi05Rckc) <!-- Full-Auto SCAR-L -->
-- CBP1_0 through 2 (https://www.youtube.com/watch?v=5B8HE3RiBfQ) <!-- Desert Eagle 50 AE Part 2 -->
+- SVP1_0 through 2 (https://www.youtube.com/watch?v=5B8HE3RiBfQ) <!-- Desert Eagle 50 AE Part 2 -->
 
 #### Joblez_I
 
@@ -116,7 +116,9 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 
 ["Remington 870 with Magpul furniture"](https://sketchfab.com/3d-models/remington-870-with-magpul-furniture-07d1fce010ef4127931e8ddd516713f8) (used to render sprites for the Pump Shotgun) is provided by [Medji](https://sketchfab.com/Medji) under the Creative Commons Attribution 4.0 License.
 
-["Low-Poly Ultimax 100 Mk II"](https://sketchfab.com/3d-models/low-poly-ultimax-100-mk-ii-0d4aab1cd2dc4fd2866c2a96fb6b6fee) (used to render sprites for the GPMG) is provided by [TastyTony](https://sketchfab.com/TastyTony) under the Creative Commons Attribution 4.0 License.
+The following models are provided by [TastyTony]() under the Creative Commons Attribution 4.0 License:
+- ["Low-Poly Jericho 941](https://sketchfab.com/3d-models/low-poly-jericho-941-8cdb3801dc9e4815b3b8f5e0e4a82152) (used to render sprites for the Combat Pistol)
+- ["Low-Poly Ultimax 100 Mk II"](https://sketchfab.com/3d-models/low-poly-ultimax-100-mk-ii-0d4aab1cd2dc4fd2866c2a96fb6b6fee) (used to render sprites for the GPMG)
 
 ## 3D Materials
 
@@ -125,7 +127,7 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 The `WornPlastic` family of materials is courtesy of [Ryan King](https://www.youtube.com/watch?v=l0whu3494_c).
 
 The following materials are courtesy of [Julio Sillet](https://www.patreon.com/Sillet) under the BlenderKit Royalty Free License:
-- `Polymer.Black`, derived from ["Plastic Base 01"](https://www.blenderkit.com/asset-gallery-detail/62c6603d-9822-40c3-b830-209b4e51eb6a/)
+- `Polymer`, derived from ["Plastic Base 01"](https://www.blenderkit.com/asset-gallery-detail/62c6603d-9822-40c3-b830-209b4e51eb6a/)
 
 The [`Polymer.UniversalCamo`](https://www.blenderkit.com/asset-gallery-detail/65c2e74e-a493-4eba-bd99-ba8834b715e1/) material is courtesy of [Paco Salas](https://www.blenderkit.com/asset-gallery?query=author_id:205846) under the BlenderKit Royalty Free License.
 
