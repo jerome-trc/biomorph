@@ -22,7 +22,7 @@ The following graphics are edits of the work of id Software LLC:
 - powup_infiniteammo.png
 - powup_radsuit.png
 - All variants of WPKP
-- All variants of STYX
+- All frames of CAMO, MKIT, PANA, and STYX
 
 The following are edits of the work of [Ac!d](https://forum.zdoom.org/viewtopic.php?f=37&t=69513) (which are themselves edits of the works of 3D Realms Entertainment ApS):
 - PILSA0
@@ -31,7 +31,7 @@ The following are edits of the work of [Ac!d](https://forum.zdoom.org/viewtopic.
 - MEPIA0
 
 The following are edits of the work of [zrrion the insect](https://forum.zdoom.org/viewtopic.php?f=37&t=35797):
-- Sprites KVLR A through D
+- All frames of KVLR
 
 Sprites KVLR E through H are courtesy of id Software LLC, and edited by Realm667 user Infirnex.
 
@@ -39,15 +39,24 @@ Sprite CBRNE is courtesy of [Dr. Cosmobyte](https://forum.zdoom.org/viewtopic.ph
 
 Sprite RUCKA is derived from Sonik.o.fan's reshading of Doom 64's backpack sprite, which itself is courtesy of Midway Games Inc.
 
-Sprites STYX A through D use the work of Realm667 user CaptainToenail ("Adrenaline Kit").
+The following sprites are derived partially from the work of Realm667 user CaptainToenail ("Adrenaline Kit"):
+- All frames of CAMO
+- All frames of PANA
+- All frames of STYX
+- All frames of MKIT
 
-[This spritesheet](https://forum.zdoom.org/viewtopic.php?p=1240563#p1240563) by Sonik.o.fan provided the basis for the following graphics:
-- CBRN A through D
-- PNVG A and B
-- STYX A through D
+[This spritesheet](https://forum.zdoom.org/viewtopic.php?p=1240563#p1240563) by Sonik.o.fan was used either wholly or partially as the basis for the following graphics:
+- All frames of CAMO
+- All frames of CBRN
+- All frames of MKIT
+- All frames of PANA
+- All frames of PNVG
+- All frames of STYX
 
 [This spritesheet](https://forum.zdoom.org/viewtopic.php?t=37753) by Sgt. Shivers provided the basis used to create muzzle flashes for:
+- The GPMG (sprite set GMG1)
 - The Pump Shotgun (sprite set 870F)
+- The Service Pistol (sprite set SVP1)
 
 ## Fonts
 
