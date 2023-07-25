@@ -24,7 +24,7 @@ class biom_WeaponPickup : Inventory abstract
 
 		Height 14.0;
 		Radius 16.0;
-		Scale 0.65;
+		Scale 0.9;
 
 		Inventory.Amount 0;
 		Inventory.PickupMessage "";
