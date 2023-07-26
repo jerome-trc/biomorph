@@ -119,8 +119,8 @@
 	BIOM_MANPAT_PKUP = "Procured a man-portable anti-tank system.";
 	BIOM_MANPAT_OB = "%k blew %o into chunks.";
 
-	BIOM_MELEE_TAG = "Combatives";
-	BIOM_MELEE_OB = "%k beat %o to death.";
+	BIOM_UNARMED_TAG = "Combatives";
+	BIOM_UNARMED_OB = "%k beat %o to death.";
 
 	BIOM_PUMPSHOTGUN_TAG = "Pump Shotgun";
 	BIOM_PUMPSHOTGUN_PKUP = "Procured a pump shotgun.";
@@ -131,12 +131,6 @@
 	BIOM_SERVICEPISTOL_OB = "%k served %o summary execution with a service pistol.";
 
 // Mutators ////////////////////////////////////////////////////////////////////
-
-	BIOM_MUT_STORMGUNSLUG_TAG =
-		"\c[Cyan]Refit: Slug\c-";
-	BIOM_MUT_STORMGUNSLUG_SUMM =
-		"\c[White]All Stormguns change from firing shells to highly-accurate solid slugs.\c-";
-
 // Menu, game options //////////////////////////////////////////////////////////
 
 	BIOM_OPTTITLE = "\c[Cyan]Biomorph:\c[White] Preferences";

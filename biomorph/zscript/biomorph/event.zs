@@ -101,10 +101,7 @@ class biom_EventHandler : EventHandler
 			if (!(players[consolePlayer].mo is 'biom_Player'))
 				break;
 
-			if (Menu.GetCurrentMenu() is 'biom_MutationMenu')
-				break;
-
-			Menu.SetMenu('biom_MutationMenu');
+			// TODO: `biom_MutationMenu` when ZForms gets updated.
 			break;
 		default:
 			Console.PrintF(

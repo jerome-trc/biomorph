@@ -6,8 +6,6 @@ class biom_Global : Thinker
 	private uint playerCount;
 	/// One per active player.
 	private array<biom_PlayerData> playerData;
-	/// The prototype data that all the other code points back to.
-	private array<biom_Mutator> mutators;
 
 	readonly<biom_PlayerData> GetPlayerData(uint player) const
 	{
@@ -83,28 +81,23 @@ class biom_PlayerData
 {
 	/// What weapons will this player currently receive if they collect a weapon
 	/// pickup? No element will ever be `null`.
-	class<biom_Weapon> weapons[__BIOM_WEAPSLOT_COUNT__];
+	array<class <biom_Weapon> > weapons;
 	/// Each subclass of `biom_WeaponData` appears in this array exactly once.
 	array<biom_WeaponData> weaponData;
-	/// Invariants:
-	/// - Nodes are in a k-tree.
-	/// - Element 0 always has only the root node.
-	/// - Append-only. Removal only happens during a reset, at which point only
-	/// layer 0 with its root is left behind. Indices are otherwise always valid.
-	array<biom_MutatorNodeLayer> mutTree;
 
 	static biom_PlayerData Create()
 	{
 		let ret = new('biom_PlayerData');
 
-		ret.weapons[BIOM_WEAPSLOT_1] = 'biom_Melee';
-		ret.weapons[BIOM_WEAPSLOT_2] = 'biom_ServicePistol';
-		ret.weapons[BIOM_WEAPSLOT_3] = 'biom_PumpShotgun';
-		ret.weapons[BIOM_WEAPSLOT_3_SUPER] = 'biom_CombatStormgun';
-		ret.weapons[BIOM_WEAPSLOT_4] = 'biom_GPMG';
-		ret.weapons[BIOM_WEAPSLOT_5] = 'biom_MANPAT';
-		ret.weapons[BIOM_WEAPSLOT_6] = 'biom_BiteRifle';
-		ret.weapons[BIOM_WEAPSLOT_7] = 'biom_CasterCannon';
+		ret.weapons.Push((class<biom_Weapon>)('biom_Unarmed'));
+		// TODO: What should the starting Chainsaw replacement be?
+		ret.weapons.Push((class<biom_Weapon>)('biom_ServicePistol'));
+		ret.weapons.Push((class<biom_Weapon>)('biom_PumpShotgun'));
+		ret.weapons.Push((class<biom_Weapon>)('biom_CombatStormgun'));
+		ret.weapons.Push((class<biom_Weapon>)('biom_GPMG'));
+		ret.weapons.Push((class<biom_Weapon>)('biom_MANPAT'));
+		ret.weapons.Push((class<biom_Weapon>)('biom_BiteRifle'));
+		ret.weapons.Push((class<biom_Weapon>)('biom_CasterCannon'));
 
 		for (uint i = 0; i < allClasses.Size(); ++i)
 		{
@@ -117,16 +110,6 @@ class biom_PlayerData
 			ret.weaponData[e].Reset();
 		}
 
-		let root = new('biom_MutatorNode');
-		root.active = true;
-		root.children.Push(0);
-		root.children.Push(1);
-
-		let layer1 = new('biom_MutatorNodeLayer');
-		layer1.nodes.Push(root);
-
-		ret.mutTree.Push(layer1);
-
 		return ret;
 	}
 
@@ -134,41 +117,4 @@ class biom_PlayerData
 	{
 		return self;
 	}
-}
-
-/// Maps to one concentric ring in the mutation menu.
-class biom_MutatorNodeLayer
-{
-	array<biom_MutatorNode> nodes;
-}
-
-class biom_MutatorNode
-{
-	/// If `false`, this is just one choice available.
-	/// If `true`, the effects have been applied.
-	/// Always `true` for the root node.
-	bool active;
-	/// This is only `null` for the root node.
-	/// The backing value should be considered "owned" by `biom_Global`.
-	biom_Mutator mutator;
-
-	/// This is only `null` for the root node.
-	biom_MutatorNode parent;
-	/// Each element corresponds to an element in `biom_MutatorNodeLayer::nodes`,
-	/// and always points into the next layer.
-	array<uint> children;
-}
-
-/// Each variant corresponds to an element in `biom_PlayerData::weapons`.
-enum biom_WeaponSlot
-{
-	BIOM_WEAPSLOT_1 = 0,
-	BIOM_WEAPSLOT_2 = 1,
-	BIOM_WEAPSLOT_3 = 2,
-	BIOM_WEAPSLOT_3_SUPER = 3,
-	BIOM_WEAPSLOT_4 = 4,
-	BIOM_WEAPSLOT_5 = 5,
-	BIOM_WEAPSLOT_6 = 6,
-	BIOM_WEAPSLOT_7 = 7,
-	__BIOM_WEAPSLOT_COUNT__,
 }

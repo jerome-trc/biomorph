@@ -15,7 +15,8 @@ class biom_BiteRifle : biom_Weapon
 		Weapon.SlotNumber 6;
 
 		biom_Weapon.DataClass 'biom_wdat_BiteRifle';
-		biom_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.Grade BIOM_WEAPGRADE_2;
+		biom_Weapon.Family BIOM_WEAPFAM_ENERGY;
 	}
 
 	States

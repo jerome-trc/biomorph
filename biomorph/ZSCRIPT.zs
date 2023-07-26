@@ -58,8 +58,6 @@ class Biomorph abstract
 #include "zscript/biomorph/recoil.zs"
 #include "zscript/biomorph/sbar.zs"
 
-#include "zscript/biomorph/menus/mutation.zs"
-
 #include "zscript/biomorph/mutators/base.zs"
 
 #include "zscript/biomorph/utils/misc.zs"
@@ -81,6 +79,6 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/combat_stormgun.zs"
 #include "zscript/biomorph/weapons/gpmg.zs"
 #include "zscript/biomorph/weapons/manpat.zs"
-#include "zscript/biomorph/weapons/melee.zs"
 #include "zscript/biomorph/weapons/pump_shotgun.zs"
 #include "zscript/biomorph/weapons/service-pistol.zs"
+#include "zscript/biomorph/weapons/unarmed.zs"

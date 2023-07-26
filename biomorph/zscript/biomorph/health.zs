@@ -15,7 +15,7 @@ mixin class biom_Health
 			select |= (bsks == BIOM_CV_BSKS_ONLYFIRST && !prev);
 
 			if (select)
-				pawn.A_SelectWeapon('biom_Melee');
+				pawn.A_SelectWeapon('biom_Unarmed');
 		}
 	}
 

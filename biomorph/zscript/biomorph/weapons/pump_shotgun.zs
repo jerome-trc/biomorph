@@ -16,7 +16,8 @@ class biom_PumpShotgun : biom_Weapon
 		Weapon.SlotNumber 3;
 
 		biom_Weapon.DataClass 'biom_PumpShotgunData';
-		biom_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.Grade BIOM_WEAPGRADE_1;
+		biom_Weapon.Family BIOM_WEAPFAM_SHOTGUN;
 	}
 
 	States

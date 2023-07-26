@@ -19,13 +19,11 @@ class biom_GPMG : biom_Weapon
 
 		biom_Weapon.DataClass 'biom_wdat_GPMG';
 		biom_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.Family BIOM_WEAPFAM_AUTOGUN;
 	}
 
 	States
 	{
-	Spawn:
-		GMGZ Z -1;
-		stop;
 	Select:
 		TNT1 A 0 A_Raise;
 		loop;

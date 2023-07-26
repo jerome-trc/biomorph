@@ -22,6 +22,9 @@ class biom_Weapon : DoomWeapon abstract
 	meta biom_WeaponGrade grade;
 	property Grade: grade;
 
+	meta biom_WeaponFamily FAMILY;
+	property Family: FAMILY;
+
 	/// Should never be `null`.
 	meta class<biom_WeaponData> dataClass;
 	property DataClass: dataClass;
@@ -53,6 +56,14 @@ class biom_Weapon : DoomWeapon abstract
 		Weapon.BobSpeed 2.0;
 
 		biom_Weapon.Grade BIOM_WEAPGRADE_NONE;
+		biom_Weapon.Family __BIOM_WEAPFAM_COUNT__;
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		stop;
 	}
 
 	// Actions /////////////////////////////////////////////////////////////////
@@ -73,21 +84,21 @@ class biom_Weapon : DoomWeapon abstract
 	}
 }
 
-/// An approximate measure of how "good" a weapon is on a 1-to-5 scale. Used by
-/// mutators to determine whether they constitute upgrades, downgrades, or
-/// sidegrades relative to what the player is currently using.
+/// An approximate measure of how "good" a weapon is on a 1-to-3 scale.
+/// Affects only the number of mutation slots the weapon gets; better weapons
+/// have less room for modification, such that the difference between low- and
+/// high-grade weapons can be equalized by such modification.
 enum biom_WeaponGrade : uint8
 {
 	/// The default; should only ever appear in normal code because someone forgot
 	/// to set it. Considered invalid by other code and is cause for exception.
 	BIOM_WEAPGRADE_NONE,
+	/// This weapon gets 4 mutation slots.
 	BIOM_WEAPGRADE_1,
+	/// This weapon gets 2 mutation slots.
 	BIOM_WEAPGRADE_2,
-	/// An "average" weapon. Vanilla weapons would have this grade, and
-	/// therefore it's the grade for all the player's normal starting weapons.
+	/// This weapon gets 1 mutation slot.
 	BIOM_WEAPGRADE_3,
-	BIOM_WEAPGRADE_4,
-	BIOM_WEAPGRADE_5,
 }
 
 /// The source of truth for a weapon's stats and behavior.
@@ -102,4 +113,20 @@ class biom_WeaponData abstract
 	{
 		return self;
 	}
+}
+
+/// Corresponds loosely to the weapon's slot number but accounts for the
+/// difference between shotgun counterparts and super shotgun counterparts,
+/// both of which occupy slot number 3.
+enum biom_WeaponFamily : uint8
+{
+	BIOM_WEAPFAM_MELEE = 0,
+	BIOM_WEAPFAM_SIDEARM = 1,
+	BIOM_WEAPFAM_SHOTGUN = 2,
+	BIOM_WEAPFAM_SUPERSHOTGUN = 3,
+	BIOM_WEAPFAM_AUTOGUN = 4,
+	BIOM_WEAPFAM_LAUNCHER = 5,
+	BIOM_WEAPFAM_ENERGY = 6,
+	BIOM_WEAPFAM_SUPER = 7,
+	__BIOM_WEAPFAM_COUNT__,
 }

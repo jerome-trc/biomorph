@@ -1,25 +1,23 @@
-/// Take note that there's no discrete Chainsaw replacement in Biomorph. The item
-/// that replaces Chainsaw pickups is just an upgrade for the player's melee.
-class biom_Melee : biom_Weapon
+class biom_Unarmed : biom_Weapon
 {
 	flagdef rightHand: DynFlags, 31;
 
-	protected biom_wdat_Melee data;
+	protected biom_wdat_Unarmed data;
 
 	Default
 	{
 		+WEAPON.MELEEWEAPON
 
-		Tag "$BIOM_MELEE_TAG";
-		Obituary "$BIOM_MELEE_OB";
+		Tag "$BIOM_UNARMED_TAG";
+		Obituary "$BIOM_UNARMED_OB";
 
 		Inventory.Icon 'H2HCZ0';
 
 		Weapon.SelectionOrder SELORDER_FIST;
 		Weapon.SlotNumber 1;
 
-		biom_Weapon.DataClass 'biom_wdat_Melee';
-		biom_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.DataClass 'biom_wdat_Unarmed';
+		biom_Weapon.Grade BIOM_WEAPGRADE_1;
 	}
 
 	States
@@ -69,7 +67,7 @@ class biom_Melee : biom_Weapon
 	}
 }
 
-class biom_wdat_Melee : biom_WeaponData
+class biom_wdat_Unarmed : biom_WeaponData
 {
 	final override void Reset()
 	{

@@ -102,6 +102,18 @@ class biom_StatusBar : BaseStatusBar
 		}
 
 		self.DrawFullscreenKeys();
+
+		int invY = -20;
+
+		let hwc = self.pawn.GetData().weapons.Size() - 1;
+
+		DrawImage('PISTA0', (-24, invY + 12));
+		DrawString(
+			self.fontSmall,
+			String.Format("%d / %d", hwc, self.pawn.weaponCapacity),
+			(-44, invY), DI_TEXT_ALIGN_RIGHT,
+			hwc < self.pawn.weaponCapacity ? Font.CR_WHITE : Font.CR_YELLOW
+		);
 	}
 
 	/// Draw powerup icons at top left, along with the

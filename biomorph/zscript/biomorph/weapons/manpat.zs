@@ -17,6 +17,7 @@ class biom_MANPAT : biom_Weapon
 
 		biom_Weapon.DataClass 'biom_wdat_MANPAT';
 		biom_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.Family BIOM_WEAPFAM_LAUNCHER;
 	}
 
 	States

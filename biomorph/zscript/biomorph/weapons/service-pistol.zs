@@ -20,14 +20,12 @@ class biom_ServicePistol : biom_Weapon
 		Weapon.SlotNumber 2;
 
 		biom_Weapon.DataClass 'biom_wdat_ServicePistol';
-		biom_Weapon.Grade BIOM_WEAPGRADE_3;
+		biom_Weapon.Grade BIOM_WEAPGRADE_2;
+		biom_Weapon.Family BIOM_WEAPFAM_SIDEARM;
 	}
 
 	States
 	{
-	Spawn:
-		SVPZ Z -1;
-		stop;
 	Select:
 		TNT1 A 0 A_Raise;
 		loop;

@@ -2,6 +2,9 @@ class biom_Player : DoomPlayer
 {
 	protected readonly<biom_PlayerData> data;
 
+	uint8 weaponCapacity;
+	property WeaponCapacity: weaponCapacity;
+
 	Default
 	{
 		Tag "$BIOM_MODTITLE";
@@ -16,8 +19,10 @@ class biom_Player : DoomPlayer
 		Player.StartItem 'biom_Slot5Ammo', 0;
 		Player.StartItem 'biom_Slot67Ammo', 0;
 
-		Player.StartItem 'biom_Melee';
 		Player.StartItem 'biom_ServicePistol';
+		Player.StartItem 'biom_Unarmed';
+
+		biom_Player.WeaponCapacity 8;
 	}
 
 	/// Inversely proportional to added movement inertia;
