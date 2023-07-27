@@ -36,6 +36,7 @@ class biom_EventHandler : EventHandler
 			);
 		}
 
+		Self.IncompatibilityAssertions();
 		self.globals = biom_Global.Create();
 	}
 
@@ -111,6 +112,46 @@ class biom_EventHandler : EventHandler
 			);
 
 			break;
+		}
+	}
+
+	private static void IncompatibilityAssertions()
+	{
+		{
+			name htn = 'ThriftyHealth';
+			class<Health> ht = htn;
+
+			name atn = 'ThriftyAmmo';
+			class<Ammo> at = atn;
+
+			if (ht != null || at != null)
+			{
+				ThrowAbortException(
+					"\n---\n"
+					"Thrifty Health or Thrifty Ammo detected.\n"
+					"Biomorph already has waste-proof pickups "
+					"and is incompatible with these mods.\n"
+					"Disable them to continue.\n"
+					"---"
+				);
+			}
+		}
+
+		{
+			name tn = 'Zhs2_IS_BaseItem';
+			class<Inventory> t = tn;
+
+			if (t != null)
+			{
+				ThrowAbortException(
+					"\n---\n"
+					"Intelligent Supplies detected.\n"
+					"Biomorph already has waste-proof pickups "
+					"and is incompatible with this mod.\n"
+					"Disable it to continue.\n"
+					"---"
+				);
+			}
 		}
 	}
 }
