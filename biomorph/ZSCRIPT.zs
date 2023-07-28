@@ -57,6 +57,7 @@ class Biomorph abstract
 #include "zscript/biomorph/powerups.zs"
 #include "zscript/biomorph/recoil.zs"
 #include "zscript/biomorph/sbar.zs"
+#include "zscript/biomorph/static.zs"
 
 #include "zscript/biomorph/mutators/base.zs"
 

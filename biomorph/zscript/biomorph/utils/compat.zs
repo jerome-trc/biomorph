@@ -73,6 +73,69 @@ extend class biom_Utils
 /// Functions for checking which level set is being played.
 extend class biom_Utils
 {
+	/// Checks if the user's mod configuration includes the DoomRL Monster Pack.
+	static bool DoomRLMonsterPack()
+	{
+		name tn = 'RLMonsterpackThingo';
+		class<Actor> t = tn;
+		return t != null;
+	}
+
+	/// Checks if the current level is from Eviternity.
+	static bool Eviternity()
+	{
+		static const string EVITERNITY_CHECKSUMS[] = {
+			"9831c412420f16fa0de000fd1dbfe901",
+			"beecc27d3c8c07a83968a687a2dde6e5",
+			"baee63d6a50b6aed95e854ad492209dd",
+			"5797ac4531c129c5948130665e31542d",
+			"33b8501b10ce5e2555c03725f765a914",
+			"60d62607aff6dc8a05ea02e5615a8152",
+			"f819e7885813a1383f12bb49644bb412",
+			"8dd9f9f5d29d18d0d4b902a8c30dddd7",
+			"142fd784ed7258f7485aace4fd2d6b2a",
+			"9e83602d325677b8d7c3bc44bef9b03f",
+			"565e9732fd5a8f232e8fd9042328ce6a",
+			"449b980d0c12aa691eff320eafff228f",
+			"2fb41f5372ce5516cca2f117af1d3391",
+			"e02845a2b5a296a34910345df2729d74",
+			"ca40e6ddab6b5c924cdc36b1f851421e",
+			"9cee502cca6550a06dedd7881aa427d5",
+			"f1e331e5f4f5783bef5e8ac2346b45e1",
+			"63101445e0ccc310a06ecf47f585a20b",
+			"4b213789c03829eca0138ffe103e5a19",
+			"f34b3fd4d13ac763469a8e0d7379b9d0",
+			"0dacfa8721965f394181be83bebe7951",
+			"6b53e2052580cb5d9cba8f27b9552f66",
+			"551c4fd48490c1f2a69b0bbfdfeb576e",
+			"f0ee83a9cb1d1c708bfda339c40b79a8",
+			"196bc735473c593f924a59b238574c35",
+			"380e0b6fd8baec2125e145e5c0f40af9",
+			"a9650e9b73e9f7589885ef7d440987ce",
+			"ded749a5a2059dbfbf4e647937b4dc43",
+			"9d4b3a1426486c5fe8ae5736366e098f",
+			"5c5e5c08af3572f31cf27318679f2b4e",
+			"39820d2fa2045a526dcdecdfd99126ef",
+			"c1f312482636da54c2657bd2a2c3d59f"
+		};
+
+		string checksum = Level.GetChecksum();
+
+		for (uint i = 0; i < 32; i++)
+			if (checksum ~== EVITERNITY_CHECKSUMS[i])
+				return true;
+
+		return false;
+	}
+
+	/// Checks if the user's mod configuration includes LegenDoom Lite.
+	static bool LegenDoom()
+	{
+		name tn = 'LDLegendaryMonsterToken';
+		class<Inventory> t = tn;
+		return t != null;
+	}
+
 	/// Checks if the game is currently in the Sentinel's Lexicon.
 	/// See https://forum.zdoom.org/viewtopic.php?t=62724.
 	static bool Lexicon()
@@ -82,8 +145,8 @@ extend class biom_Utils
 		return lxvg_t != null;
 	}
 
-	/// Checks if the player is in a level from Valiant, its Vaccinated Edition,
-	/// or the Valiant levels bundled with the Sentinel's Lexicon.
+	/// Checks if the current level is from Valiant, its Vaccinated Edition,
+	/// or the version of Valiant bundled with the Sentinel's Lexicon.
 	static bool Valiant()
 	{
 		static const string VALIANT_CHECKSUMS[] = {
@@ -204,49 +267,4 @@ extend class biom_Utils
 		return false;
 	}
 
-	static bool Eviternity()
-	{
-		static const string EVITERNITY_CHECKSUMS[] = {
-			"9831c412420f16fa0de000fd1dbfe901",
-			"beecc27d3c8c07a83968a687a2dde6e5",
-			"baee63d6a50b6aed95e854ad492209dd",
-			"5797ac4531c129c5948130665e31542d",
-			"33b8501b10ce5e2555c03725f765a914",
-			"60d62607aff6dc8a05ea02e5615a8152",
-			"f819e7885813a1383f12bb49644bb412",
-			"8dd9f9f5d29d18d0d4b902a8c30dddd7",
-			"142fd784ed7258f7485aace4fd2d6b2a",
-			"9e83602d325677b8d7c3bc44bef9b03f",
-			"565e9732fd5a8f232e8fd9042328ce6a",
-			"449b980d0c12aa691eff320eafff228f",
-			"2fb41f5372ce5516cca2f117af1d3391",
-			"e02845a2b5a296a34910345df2729d74",
-			"ca40e6ddab6b5c924cdc36b1f851421e",
-			"9cee502cca6550a06dedd7881aa427d5",
-			"f1e331e5f4f5783bef5e8ac2346b45e1",
-			"63101445e0ccc310a06ecf47f585a20b",
-			"4b213789c03829eca0138ffe103e5a19",
-			"f34b3fd4d13ac763469a8e0d7379b9d0",
-			"0dacfa8721965f394181be83bebe7951",
-			"6b53e2052580cb5d9cba8f27b9552f66",
-			"551c4fd48490c1f2a69b0bbfdfeb576e",
-			"f0ee83a9cb1d1c708bfda339c40b79a8",
-			"196bc735473c593f924a59b238574c35",
-			"380e0b6fd8baec2125e145e5c0f40af9",
-			"a9650e9b73e9f7589885ef7d440987ce",
-			"ded749a5a2059dbfbf4e647937b4dc43",
-			"9d4b3a1426486c5fe8ae5736366e098f",
-			"5c5e5c08af3572f31cf27318679f2b4e",
-			"39820d2fa2045a526dcdecdfd99126ef",
-			"c1f312482636da54c2657bd2a2c3d59f"
-		};
-
-		string checksum = Level.GetChecksum();
-
-		for (uint i = 0; i < 32; i++)
-			if (checksum ~== EVITERNITY_CHECKSUMS[i])
-				return true;
-
-		return false;
-	}
 }

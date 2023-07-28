@@ -2,10 +2,21 @@
 
 class biom_Global : Thinker
 {
-	/// The monster value threshold between mutagen drops is divided by this.
+	const LOOT_VALUE_THRESHOLD = 3000;
+
+	/// The monster value threshold between loot drops is divided by this.
 	private uint playerCount;
 	/// One per active player.
 	private array<biom_PlayerData> playerData;
+	/// How close are the players to getting their next loot drop?
+	/// Whenever an enemy dies, this is increased based on approximately how
+	/// "valuable" that monster was, and then this gets drained for as many times
+	/// as it exceeds a threshold. For that many times, a loot item drops.
+	private uint lootValueBuf;
+	/// Applied after all other factors. This gets computed whenever a level is
+	/// loaded, and is used to scale down monster value as the total amount
+	/// of enemy health in a level grows.
+	private float lootValueMulti;
 
 	readonly<biom_PlayerData> GetPlayerData(uint player) const
 	{
@@ -20,6 +31,84 @@ class biom_Global : Thinker
 
 		Biomorph.Unreachable();
 		return null;
+	}
+
+	clearscope uint CalcMonsterValue(Actor monster) const
+	{
+		let ret = float(Max(monster.default.health, monster.GetMaxHealth(true)));
+
+		if (monster.bMissileMore)
+			ret *= 1.2;
+
+		if (monster.bMissileEvenMore)
+			ret *= 1.2;
+
+		return uint(ret * self.lootValueMulti);
+	}
+
+	clearscope uint MapTotalMonsterValue() const
+	{
+		let iter = ThinkerIterator.Create('Actor');
+		uint ret = 0;
+
+		while (true)
+		{
+			let mons = Actor(iter.Next());
+
+			if (mons == null)
+				break;
+
+			if (!mons.bIsMonster)
+				continue;
+
+			ret += self.CalcMonsterValue(mons);
+		}
+
+		return ret;
+	}
+
+	void AddLootValue(uint val)
+	{
+		self.lootValueBuf += val;
+	}
+
+	void OnWorldLoaded()
+	{
+		self.lootValueMulti = 1.0;
+
+		let iter = ThinkerIterator.Create('Actor');
+		uint hp = 0;
+
+		while (true)
+		{
+			let mons = Actor(iter.Next());
+
+			if (mons == null)
+				break;
+
+			if (!mons.bIsMonster)
+				continue;
+
+			hp += Max(mons.default.health, mons.GetMaxHealth(true));
+		}
+
+		self.lootValueMulti = 0.5 / Log10(float(hp));
+	}
+
+	bool DrainLootValueBuffer()
+	{
+		if (self.lootValueBuf >= LOOT_VALUE_THRESHOLD)
+		{
+			self.lootValueBuf -= LOOT_VALUE_THRESHOLD;
+			return true;
+		}
+
+		return false;
+	}
+
+	float LootValueMultiplier() const
+	{
+		return self.lootValueMulti;
 	}
 
 	static biom_Global Create()
@@ -79,6 +168,11 @@ class biom_Global : Thinker
 /// One exists per active player.
 class biom_PlayerData
 {
+	/// When calculating the total balance of this player's mutation stack, this
+	/// is the starting value. Given a vanilla configuration, this is always zero;
+	/// it is affected by, for instance, using LegenDoom Lite or the progression
+	/// of Corruption Cards.
+	int balanceMod;
 	/// What weapons will this player currently receive if they collect a weapon
 	/// pickup? No element will ever be `null`.
 	array<class <biom_Weapon> > weapons;

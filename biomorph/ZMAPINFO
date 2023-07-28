@@ -1,6 +1,6 @@
 GameInfo
 {
-	AddEventHandlers = "biom_EventHandler"
+	AddEventHandlers = "biom_EventHandler", "biom_Static"
 	BackpackType = "biom_Backpack"
 	PlayerClasses = "biom_Player"
 	StatusBarClass = "biom_StatusBar"
