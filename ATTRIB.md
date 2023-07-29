@@ -123,9 +123,11 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 
 ["Female Body Base Character Mesh"](https://www.blendswap.com/blend/4458) (used to render the arms of first-person view sprites) is provided by [cgcookie](https://www.blendswap.com/profile/8267https://www.blendswap.com/profile/8267) under the Creative Commons Attribution 2.0 Generic License.
 
+["HW_6 Draft Punk (detailing2)"](https://sketchfab.com/3d-models/hw-6-draft-punk-detailing2-625a4188ba404cdb8271ca7829a939c9) (used to render sprites for the Caster Cannon) is provided by [Vadim (vasateno)](https://sketchfab.com/mvasa69) under the Creative Commons Attribution 4.0 License.
+
 ["Remington 870 with Magpul furniture"](https://sketchfab.com/3d-models/remington-870-with-magpul-furniture-07d1fce010ef4127931e8ddd516713f8) (used to render sprites for the Pump Shotgun) is provided by [Medji](https://sketchfab.com/Medji) under the Creative Commons Attribution 4.0 License.
 
-The following models are provided by [TastyTony]() under the Creative Commons Attribution 4.0 License:
+The following models are provided by [TastyTony](https://sketchfab.com/TastyTony) under the Creative Commons Attribution 4.0 License:
 - ["Low-Poly Jericho 941](https://sketchfab.com/3d-models/low-poly-jericho-941-8cdb3801dc9e4815b3b8f5e0e4a82152) (used to render sprites for the Combat Pistol)
 - ["Low-Poly Ultimax 100 Mk II"](https://sketchfab.com/3d-models/low-poly-ultimax-100-mk-ii-0d4aab1cd2dc4fd2866c2a96fb6b6fee) (used to render sprites for the GPMG)
 
