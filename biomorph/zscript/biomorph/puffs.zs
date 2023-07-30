@@ -23,7 +23,8 @@ class biom_BulletPuff : BulletPuff
 					velX: FRandom(-24.0, 24.0),
 					velY: FRandom(-24.0, 24.0),
 					velZ: FRandom(0.0, 8.0),
-					accelZ: -9.81
+					accelZ: -9.81,
+					sizeStep: -1
 				);
 			}
 		}
