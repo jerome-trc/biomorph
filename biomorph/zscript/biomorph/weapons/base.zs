@@ -66,7 +66,57 @@ class biom_Weapon : DoomWeapon abstract
 		stop;
 	}
 
+	// Virtual/abstract methods ////////////////////////////////////////////////
+
+	/// Should return:
+	/// 1. Whether the weapon has a magazine.
+	/// 2. The magazine's current quantity.
+	/// 3. The magazine's capacity.
+	virtual bool, int, int GetMagazine(bool secondary = false) const
+	{
+		return false, -1, -1;
+	}
+
+	virtual ui void DrawToHUD(biom_StatusBar sbar) const {}
+
 	// Actions /////////////////////////////////////////////////////////////////
+
+	protected action state A_biom_CheckAmmo(
+		bool secondary = false,
+		statelabel fallback = 'Ready.Main',
+		statelabel reload = 'Reload',
+		statelabel dryfire = 'Dryfire'
+	)
+	{
+		if (invoker.SufficientAmmo(secondary))
+			return state(null);
+
+		let cv = biom_CVar.AutoReloadPre(invoker.owner.player);
+
+		if (!invoker.HasMagazine())
+		{
+			state dfs = ResolveState(dryfire);
+
+			if (dfs != null)
+				return dfs;
+			else
+				return ResolveState(fallback);
+		}
+
+		if (cv == BIOM_CV_AUTOREL_ALWAYS)
+		{
+			return ResolveState(reload);
+		}
+		else
+		{
+			state dfs = ResolveState(dryfire);
+
+			if (dfs != null)
+				return dfs;
+			else
+				return ResolveState(fallback);
+		}
+	}
 
 	protected action void A_biom_Recoil(
 		class<biom_RecoilThinker> recoil_t,
@@ -81,6 +131,53 @@ class biom_Weapon : DoomWeapon abstract
 	protected action void A_Unreachable()
 	{
 		Biomorph.Unreachable("unexpected state flow fallthrough.");
+	}
+
+	// Ammo helpers ////////////////////////////////////////////////////////////
+
+	bool SufficientAmmo(bool secondary = false) const
+	{
+		if (self.CheckInfiniteAmmo())
+			return true;
+
+		int magazine = -1, capacity = -1;
+		bool hasMagazine = false;
+		[hasMagazine, magazine, capacity] = self.GetMagazine(secondary);
+
+		if (!secondary)
+		{
+			if (hasMagazine)
+				return magazine >= self.ammoUse1;
+			else if (self.ammo1 != null)
+				return self.ammo1.amount >= self.ammoUse1;
+			else
+				return true;
+		}
+		else
+		{
+			if (hasMagazine)
+				return magazine >= self.ammoUse2;
+			else if (self.ammo2 != null)
+				return self.ammo2.amount >= self.ammoUse2;
+			else
+				return true;
+		}
+	}
+
+	bool CheckInfiniteAmmo() const
+	{
+		if (sv_infiniteammo)
+			return true;
+
+		return self.owner != null && self.owner.FindInventory('PowerInfiniteAmmo', true) != null;
+	}
+
+	bool HasMagazine(bool secondary = false) const
+	{
+		int magazine = -1, capacity = -1;
+		bool hasMagazine = false;
+		[hasMagazine, magazine, capacity] = self.GetMagazine(secondary);
+		return hasMagazine;
 	}
 }
 

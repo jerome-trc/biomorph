@@ -20,6 +20,7 @@ class biom_ServicePistol : biom_Weapon
 		Inventory.Icon 'SVPZZ0';
 		Inventory.PickupMessage "$BIOM_SERVICEPISTOL_PKUP";
 
+		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_PISTOL;
 		Weapon.SlotNumber 2;
 
@@ -51,6 +52,12 @@ class biom_ServicePistol : biom_Weapon
 		SVP1 D 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		loop;
 	Fire:
+		TNT1 A 0 {
+			if (invoker.magazine <= 0)
+				return ResolveState('Dryfire');
+
+			return state(null);
+		}
 		// Baseline time: 10 tics; 9 fewer than the vanilla Pistol.
 		SVPA A 1 offset(0 + 5, 32 + 5)
 		{
@@ -58,6 +65,7 @@ class biom_ServicePistol : biom_Weapon
 			A_GunFlash();
 			A_biom_Recoil('biom_recoil_Handgun');
 			A_FireBullets(0.5, 0.5, -1, RandomPick(22, 24), 'biom_BulletPuff', FBF_NORANDOM);
+			invoker.magazine -= 1;
 		}
 		SVP1 C 1 offset(0 + 3, 32 + 3);
 		SVP1 D 1 offset(0 + 2, 32 + 2);
@@ -65,12 +73,12 @@ class biom_ServicePistol : biom_Weapon
 		SVPA A 6 A_WeaponOffset(0.0, 32.0);
 		goto Ready.Main;
 	Dryfire:
-		SVPA A 1 offset(0, 32 + 1);
+		SVP1 D 1 offset(0, 32 + 1);
 		#### # 1 offset(0, 32 + 2);
 		#### # 1 offset(0, 32 + 3) A_StartSound("biom/dryfire/ballistic");
 		#### # 1 offset(0, 32 + 2);
 		#### # 1 offset(0, 32 + 1);
-		goto Ready.Main;
+		goto Ready.Empty;
 	Flash:
 		TNT1 A 0 A_Jump(256, 'Flash.A', 'Flash.B');
 		TNT1 A 0 A_Unreachable;
@@ -91,7 +99,7 @@ class biom_ServicePistol : biom_Weapon
 		SVPR C 4;
 		SVPR D 4;
 		SVPR E 10;
-		SVPR F 4;
+		SVPR F 4 { invoker.magazine = biom_ServicePistol.MAGAZINE_CAPACITY; }
 		SVPR G 4;
 		SVPR H 4;
 		SVPR I 4;
@@ -108,6 +116,11 @@ class biom_ServicePistol : biom_Weapon
 	{
 		super.DetachFromOwner();
 		self.magazine = 0;
+	}
+
+	override bool, int, int GetMagazine(bool secondary) const
+	{
+		return true, self.magazine, biom_ServicePistol.MAGAZINE_CAPACITY;
 	}
 }
 

@@ -14,6 +14,8 @@ class biom_GPMG : biom_Weapon
 		Inventory.Icon 'GMGZZ0';
 		Inventory.PickupMessage "$BIOM_GPMG_PKUP";
 
+		Weapon.AmmoType 'biom_Slot4Ammo';
+		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_CHAINGUN;
 		Weapon.SlotNumber 4;
 
@@ -40,6 +42,7 @@ class biom_GPMG : biom_Weapon
 		GMGA A 1 A_WeaponReady;
 		loop;
 	Fire:
+		TNT1 A 0 A_biom_CheckAmmo;
 		// Baseline time: 4 ticks, like the vanilla Chaingun.
 		GMGA A 1 offset(0 + 5, 32 + 5)
 		{
@@ -47,6 +50,7 @@ class biom_GPMG : biom_Weapon
 			A_GunFlash();
 			A_biom_Recoil('biom_recoil_Autogun');
 			A_FireBullets(3.0, 3.0, 1, RandomPick(18, 19), 'biom_BulletPuff', FBF_NORANDOM);
+			invoker.DepleteAmmo(false, false);
 		}
 		GMGA A 1 offset(0 + 3, 32 + 3);
 		GMGA A 1 offset(0 + 2, 32 + 2);

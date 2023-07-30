@@ -12,6 +12,8 @@ class biom_PumpShotgun : biom_Weapon
 		Inventory.Icon '870AZ0';
 		Inventory.PickupMessage "$BIOM_PUMPSHOTGUN_PKUP";
 
+		Weapon.AmmoType 'biom_Slot3Ammo';
+		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_SHOTGUN;
 		Weapon.SlotNumber 3;
 
@@ -38,6 +40,7 @@ class biom_PumpShotgun : biom_Weapon
 		870A A 1 A_WeaponReady;
 		loop;
 	Fire:
+		TNT1 A 0 A_biom_CheckAmmo;
 		// Baseline time: 7 ticks.
 		870A A 1;
 		870A A 2 offset(0 + 7, 32 + 7)
@@ -46,6 +49,7 @@ class biom_PumpShotgun : biom_Weapon
 			A_GunFlash();
 			A_FireBullets(4.0, 0.5, 10, 5, 'biom_BulletPuff', FBF_NONE);
 			A_biom_Recoil('biom_recoil_Shotgun');
+			invoker.DepleteAmmo(false, false);
 		}
 		870A A 1 offset(0 + 5, 32 + 5);
 		870A A 1 offset(0 + 2, 32 + 2);

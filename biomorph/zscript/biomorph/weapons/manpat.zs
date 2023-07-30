@@ -12,6 +12,8 @@ class biom_MANPAT : biom_Weapon
 		// Inventory.Icon 'MANPZ0';
 		Inventory.PickupMessage "$BIOM_MANPAT_PKUP";
 
+		Weapon.AmmoType 'biom_Slot5Ammo';
+		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_RLAUNCHER;
 		Weapon.SlotNumber 5;
 

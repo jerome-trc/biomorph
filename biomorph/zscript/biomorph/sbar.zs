@@ -55,10 +55,10 @@ class biom_StatusBar : BaseStatusBar
 	{
 		super.Draw(state, ticFrac);
 
-		if (state == HUD_StatusBar)
+		if (state == HUD_STATUSBAR)
 		{
 			self.BeginStatusBar();
-			DrawMainBar(ticFrac);
+			self.DrawMainBar(ticFrac);
 			return;
 		}
 
@@ -105,10 +105,17 @@ class biom_StatusBar : BaseStatusBar
 
 		int invY = -20;
 
-		let hwc = self.pawn.GetData().weapons.Size() - 1;
+		let weap = biom_Weapon(self.cPlayer.readyWeapon);
 
-		DrawImage('PISTA0', (-24, invY + 12));
-		DrawString(
+		if (weap != null)
+		{
+			self.DrawAmmoDetails(weap, invY);
+			weap.DrawToHUD(self);
+		}
+
+		let hwc = self.pawn.GetData().weapons.Size() - 1;
+		self.DrawImage('PISTA0', (-24, invY + 12));
+		self.DrawString(
 			self.fontSmall,
 			String.Format("%d / %d", hwc, self.pawn.weaponCapacity),
 			(-44, invY), DI_TEXT_ALIGN_RIGHT,
@@ -175,6 +182,69 @@ class biom_StatusBar : BaseStatusBar
 					rowc = 0;
 				}
 			}
+		}
+	}
+
+	void DrawAmmoDetails(biom_Weapon weap, in out int invY)
+	{
+		int magazine = -1, capacity = -1;
+		bool hasMagazine = false;
+
+		[hasMagazine, magazine, capacity] = weap.GetMagazine();
+
+		if (hasMagazine)
+		{
+			self.DrawString(
+				self.fontBig,
+				String.Format(
+					"%s / %s",
+					FormatNumber(magazine, 3, 6),
+					FormatNumber(capacity, 3, 6)
+				),
+				(-36, invY + 4),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_GOLD
+			);
+
+			invY -= 20;
+		}
+
+		if (weap.ammo1 != null)
+		{
+			self.DrawInventoryIcon(weap.ammo1, (-16, invY + 16));
+
+			self.DrawString(
+				self.fontBig,
+				String.Format(
+					"%s / %s",
+					FormatNumber(weap.ammo1.amount, 3, 6),
+					FormatNumber(weap.ammo1.maxAmount, 3, 6)
+				),
+				(-36, invY + 4),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_GOLD
+			);
+
+			invY -= 20;
+		}
+
+		if (weap.ammo2 != null && weap.ammo2 != weap.ammo1)
+		{
+			self.DrawInventoryIcon(weap.ammo2, (-16, invY + 16));
+
+			self.DrawString(
+				self.fontBig,
+				String.Format(
+					"%s / %s",
+					FormatNumber(weap.ammo2.amount, 3, 6),
+					FormatNumber(weap.ammo2.maxAmount, 3, 6)
+				),
+				(-36, invY + 4),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_GOLD
+			);
+
+			invY -= 20;
 		}
 	}
 }

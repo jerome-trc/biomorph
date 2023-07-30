@@ -14,6 +14,8 @@ class biom_CasterCannon : biom_Weapon
 		Inventory.Icon 'CSCZZ0';
 		Inventory.PickupMessage "$BIOM_CASTERCANNON_PKUP";
 
+		Weapon.AmmoType 'biom_Slot67Ammo';
+		Weapon.AmmoUse 40;
 		Weapon.SelectionOrder SELORDER_BFG;
 		Weapon.SlotNumber 7;
 
@@ -34,6 +36,7 @@ class biom_CasterCannon : biom_Weapon
 		CSCA A 1 A_WeaponReady;
 		loop;
 	Fire:
+		TNT1 A 0 A_biom_CheckAmmo;
 		CSCA A 27 {
 			A_StartSound("biom/castercannon/charge", CHAN_AUTO);
 			A_AlertMonsters(400);
@@ -45,6 +48,7 @@ class biom_CasterCannon : biom_Weapon
 			A_StartSound("biom/castercannon/fire", CHAN_AUTO);
 			A_FireProjectile('biom_CasterCannonRayEmitter', 0.0, false);
 			A_biom_CasterCannonRailAttacks();
+			invoker.DepleteAmmo(false, false);
 		}
 		CSCA A 1 {
 			A_biom_CasterCannonRailAttacks();
