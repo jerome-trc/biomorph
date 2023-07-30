@@ -51,24 +51,36 @@
 // Ammo ////////////////////////////////////////////////////////////////////////
 
 	BIOM_SLOT3AMMO_TAG = "\c[Gold]Shotshells\c-";
-	BIOM_SLOT3AMMO_SMALL_PKUP = "\c[White]Picked up a \c[Gold]handful of shotshells\c[White].";
-	BIOM_SLOT3AMMO_BIG_TAG = "\c[Gold]Shotshell Box\c-";
-	BIOM_SLOT3AMMO_BIG_PKUP = "\c[White]Picked up a \c[Gold]shotshell box\c[White].";
+	BIOM_SLOT3AMMOSMALL_TAG = "\c[Gold]Shotshells\c-";
+	BIOM_SLOT3AMMOSMALL_PKUP = "\c[White]Picked up a \c[Gold]handful of shotshells\c[White].";
+	BIOM_SLOT3AMMOSMALL_PARTIAL = "\c[White]Picked up part of a \c[Gold]handful of shotshells\c[White].";
+	BIOM_SLOT3AMMOBIG_TAG = "\c[Gold]Shotshell Box\c-";
+	BIOM_SLOT3AMMOBIG_PKUP = "\c[White]Picked up a \c[Gold]shotshell box\c[White].";
+	BIOM_SLOT3AMMOBIG_PARTIAL = "\c[White]Partially emptied a \c[Gold]shotshell box\c[White].";
 
-	BIOM_SLOT4AMMO_TAG = "\c[Gold]Rifle Cell\c-";
-	BIOM_SLOT4AMMO_SMALL_PKUP = "\c[White]Picked up a \c[Gold]rifle cell\c[White].";
-	BIOM_SLOT4AMMO_BIG_TAG = "\c[Gold]Rifle Cell Pack\c-";
-	BIOM_SLOT4AMMO_BIG_PKUP = "\c[White]Picked up a \c[Gold]rifle cell pack\c[White].";
+	BIOM_SLOT4AMMO_TAG = "\c[Gold]Rifle Cartridges\c-";
+	BIOM_SLOT4AMMOSMALL_TAG = "\c[Gold]Rifle Magazine\c-";
+	BIOM_SLOT4AMMOSMALL_PKUP = "\c[White]Picked up a \c[Gold]rifle magazine\c[White].";
+	BIOM_SLOT4AMMOSMALL_PARTIAL = "\c[White]Partially emptied a \c[Gold]rifle magazine\c[White].";
+	BIOM_SLOT4AMMOBIG_TAG = "\c[Gold]Cartridge Box\c-";
+	BIOM_SLOT4AMMOBIG_PKUP = "\c[White]Picked up a \c[Gold]cartridge box\c[White].";
+	BIOM_SLOT4AMMOBIG_PARTIAL = "\c[White]Partially emptied a \c[Gold]cartridge box\c[White].";
 
-	BIOM_SLOT5AMMO_TAG = "\c[Gold]Superdischarge Cell\c-";
-	BIOM_SLOT5AMMO_SMALL_PKUP = "\c[White]Picked up a \c[Gold]superdischarge cell\c[White].";
-	BIOM_SLOT5AMMO_BIG_TAG = "\c[Gold]Superdischarge Cell Pack\c-";
-	BIOM_SLOT5AMMO_BIG_PKUP = "\c[White]Picked up a \c[Gold]superdischarge cell pack\c[White].";
+	BIOM_SLOT5AMMO_TAG = "\c[Gold]Multirole Grenades\c-";
+	BIOM_SLOT5AMMOSMALL_TAG = "\c[Gold]Multirole Grenade\c-";
+	BIOM_SLOT5AMMOSMALL_PKUP = "\c[White]Picked up a \c[Gold]multirole grenade\c[White].";
+	// BIOM_SLOT5AMMOSMALL_PARTIAL = ""; Can't happen; item only gives 1.
+	BIOM_SLOT5AMMOBIG_TAG = "\c[Gold]Multirole Grenade Pack\c-";
+	BIOM_SLOT5AMMOBIG_PKUP = "\c[White]Picked up a \c[Gold]multirole grenade pack\c[White].";
+	BIOM_SLOT5AMMOBIG_PARTIAL = "\c[White]Partially emptied a \c[Gold]multirole grenade pack\c[White].";
 
-	BIOM_SLOT67AMMO_TAG = "\c[Gold]Nanoprint Cell\c-";
-	BIOM_SLOT67AMMO_SMALL_PKUP = "\c[White]Picked up a \c[Gold]nanoprint cell\c[White].";
-	BIOM_SLOT67AMMO_BIG_TAG = "\c[Gold]Nanoprint Cell Pack\c-";
-	BIOM_SLOT67AMMO_BIG_PKUP = "\c[White]Picked up a \c[Gold]nanoprint cell pack\c[White].";
+	BIOM_SLOT67AMMO_TAG = "\c[Gold]Nanoprint Cells\c-";
+	BIOM_SLOT67AMMOSMALL_TAG = "\c[Gold]Nanoprint Cell\c-";
+	BIOM_SLOT67AMMOSMALL_PKUP = "\c[White]Picked up a \c[Gold]nanoprint cell\c[White].";
+	BIOM_SLOT67AMMOSMALL_PARTIAL = "\c[White]Partially drained a \c[Gold]nanoprint cell\c[White].";
+	BIOM_SLOT67AMMOBIG_TAG = "\c[Gold]Nanoprint Cell Bank\c-";
+	BIOM_SLOT67AMMOBIG_PKUP = "\c[White]Picked up a \c[Gold]nanoprint cell bank\c[White].";
+	BIOM_SLOT67AMMOBIG_PARTIAL = "\c[White]Partially drained a \c[Gold]nanoprint cell bank\c[White].";
 
 	BIOM_BACKPACK_TAG = "\c[Gold]Backpack\c-";
 	BIOM_BACKPACK_PKUP = "\c[White]Obtained a \c[Gold]backpack\c[White] with some ammo.";

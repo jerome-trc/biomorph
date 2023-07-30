@@ -1,3 +1,44 @@
+mixin class biom_Ammo
+{
+	final override bool TryPickup(in out Actor other)
+	{
+		// If this returns null, either GZDoom or `biom_Player` is very broken.
+		let tgt = other.FindInventory(self.GetParentAmmo());
+		let prev = tgt.amount;
+		let cap = tgt.maxAmount - tgt.amount;
+		let amt = Min(amount, cap);
+		tgt.amount = Clamp(tgt.amount + amt, 0, tgt.maxAmount);
+		self.amount -= amt;
+
+		// If the player previously had this ammo but ran out, possibly switch
+		// to a weapon that uses it, but only if the player doesn't already
+		// have a weapon pending.
+		if (prev == 0 && other.player != null)
+		{
+			PlayerPawn(other).CheckWeaponSwitch(self.GetClass());
+		}
+
+		if (self.amount <= 0)
+		{
+			self.GoAwayAndDie();
+			return true;
+		}
+
+		if (amt > 0)
+			self.OnPartialPickup(other);
+
+		if (bCountItem)
+		{
+			PrintPickupMessage(other.CheckLocalView(), self.collectedMessage);
+			self.bCountItem = false;
+			self.level.found_Items++;
+			self.A_SetTranslation('BIO_Pkup_Counted');
+		}
+
+		return false;
+	}
+}
+
 class biom_Slot3Ammo : Ammo
 {
 	Default
@@ -48,13 +89,17 @@ class biom_Slot67Ammo : Ammo
 
 // Pickups, small //////////////////////////////////////////////////////////////
 
-class biom_Slot3Ammo_Small : biom_Slot3Ammo replaces Shell
+class biom_Slot3AmmoSmall : biom_Slot3Ammo replaces Shell
 {
+	mixin biom_Pickup;
+	mixin biom_Ammo;
+
 	Default
 	{
-		Tag "$BIOM_SLOT3AMMO_SMALL_TAG";
+		Tag "$BIOM_SLOT3AMMOSMALL_TAG";
 		Inventory.Amount 4;
-		Inventory.PickupMessage "$BIOM_SLOT3AMMO_SMALL_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT3AMMOSMALL_PKUP";
+		biom_Slot3AmmoSmall.PartialPickupMessage "$BIOM_SLOT3AMMOSMALL_PARTIAL";
 	}
 
 	States
@@ -65,13 +110,17 @@ class biom_Slot3Ammo_Small : biom_Slot3Ammo replaces Shell
 	}
 }
 
-class biom_Slot4Ammo_Small : biom_Slot4Ammo replaces Clip
+class biom_Slot4AmmoSmall : biom_Slot4Ammo replaces Clip
 {
+	mixin biom_Pickup;
+	mixin biom_Ammo;
+
 	Default
 	{
-		Tag "$BIOM_SLOT4AMMO_SMALL_TAG";
+		Tag "$BIOM_SLOT4AMMOSMALL_TAG";
 		Inventory.Amount 10;
-		Inventory.PickupMessage "$BIOM_SLOT4AMMO_SMALL_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT4AMMOSMALL_PKUP";
+		biom_Slot4AmmoSmall.PartialPickupMessage "$BIOM_SLOT4AMMOSMALL_PARTIAL";
 	}
 
 	States
@@ -82,13 +131,17 @@ class biom_Slot4Ammo_Small : biom_Slot4Ammo replaces Clip
 	}
 }
 
-class biom_Slot5Ammo_Small : biom_Slot5Ammo replaces RocketAmmo
+class biom_Slot5AmmoSmall : biom_Slot5Ammo replaces RocketAmmo
 {
+	mixin biom_Pickup;
+	mixin biom_Ammo;
+
 	Default
 	{
-		Tag "$BIOM_SLOT5AMMO_SMALL_TAG";
+		Tag "$BIOM_SLOT5AMMOSMALL_TAG";
 		Inventory.Amount 1;
-		Inventory.PickupMessage "$BIOM_SLOT5AMMO_SMALL_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT5AMMOSMALL_PKUP";
+		biom_Slot5AmmoSmall.PartialPickupMessage "$BIOM_SLOT5AMMOSMALL_PARTIAL";
 	}
 
 	States
@@ -99,13 +152,17 @@ class biom_Slot5Ammo_Small : biom_Slot5Ammo replaces RocketAmmo
 	}
 }
 
-class biom_Slot67Ammo_Small : biom_Slot67Ammo replaces Cell
+class biom_Slot67AmmoSmall : biom_Slot67Ammo replaces Cell
 {
+	mixin biom_Pickup;
+	mixin biom_Ammo;
+
 	Default
 	{
-		Tag "$BIOM_SLOT67AMMO_SMALL_TAG";
+		Tag "$BIOM_SLOT67AMMOSMALL_TAG";
 		Inventory.Amount 20;
-		Inventory.PickupMessage "$BIOM_SLOT67AMMO_SMALL_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT67AMMOSMALL_PKUP";
+		biom_Slot67AmmoSmall.PartialPickupMessage "$BIOM_SLOT67AMMOSMALL_PARTIAL";
 	}
 
 	States
@@ -118,13 +175,17 @@ class biom_Slot67Ammo_Small : biom_Slot67Ammo replaces Cell
 
 // Pickups, big ////////////////////////////////////////////////////////////////
 
-class biom_Slot3Ammo_Big : biom_Slot3Ammo replaces ShellBox
+class biom_Slot3AmmoBig : biom_Slot3Ammo replaces ShellBox
 {
+	mixin biom_Pickup;
+	mixin biom_Ammo;
+
 	Default
 	{
-		Tag "$BIOM_SLOT3AMMO_BIG_TAG";
+		Tag "$BIOM_SLOT3AMMOBIG_TAG";
 		Inventory.Amount 20;
-		Inventory.PickupMessage "$BIOM_SLOT3AMMO_BIG_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT3AMMOBIG_PKUP";
+		biom_Slot3AmmoBig.PartialPickupMessage "$BIOM_SLOT3AMMOBIG_PARTIAL";
 	}
 
 	States
@@ -135,13 +196,17 @@ class biom_Slot3Ammo_Big : biom_Slot3Ammo replaces ShellBox
 	}
 }
 
-class biom_Slot4Ammo_Big : biom_Slot4Ammo replaces ClipBox
+class biom_Slot4AmmoBig : biom_Slot4Ammo replaces ClipBox
 {
+	mixin biom_Pickup;
+	mixin biom_Ammo;
+
 	Default
 	{
-		Tag "$BIOM_SLOT4AMMO_BIG_TAG";
+		Tag "$BIOM_SLOT4AMMOBIG_TAG";
 		Inventory.Amount 50;
-		Inventory.PickupMessage "$BIOM_SLOT4AMMO_BIG_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT4AMMOBIG_PKUP";
+		biom_Slot4AmmoBig.PartialPickupMessage "$BIOM_SLOT4AMMOBIG_PARTIAL";
 	}
 
 	States
@@ -152,13 +217,17 @@ class biom_Slot4Ammo_Big : biom_Slot4Ammo replaces ClipBox
 	}
 }
 
-class biom_Slot5Ammo_Big : biom_Slot5Ammo replaces RocketBox
+class biom_Slot5AmmoBig : biom_Slot5Ammo replaces RocketBox
 {
+	mixin biom_Pickup;
+	mixin biom_Ammo;
+
 	Default
 	{
-		Tag "$BIOM_SLOT5AMMO_BIG_TAG";
+		Tag "$BIOM_SLOT5AMMOBIG_TAG";
 		Inventory.Amount 5;
-		Inventory.PickupMessage "$BIOM_SLOT5AMMO_BIG_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT5AMMOBIG_PKUP";
+		biom_Slot5AmmoBig.PartialPickupMessage "$BIOM_SLOT5AMMOBIG_PARTIAL";
 	}
 
 	States
@@ -169,13 +238,17 @@ class biom_Slot5Ammo_Big : biom_Slot5Ammo replaces RocketBox
 	}
 }
 
-class biom_Slot67Ammo_Big : biom_Slot67Ammo replaces CellPack
+class biom_Slot67AmmoBig : biom_Slot67Ammo replaces CellPack
 {
+	mixin biom_Pickup;
+	mixin biom_Ammo;
+
 	Default
 	{
-		Tag "$BIOM_SLOT67AMMO_BIG_TAG";
+		Tag "$BIOM_SLOT67AMMOBIG_TAG";
 		Inventory.Amount 100;
-		Inventory.PickupMessage "$BIOM_SLOT67AMMO_BIG_PKUP";
+		Inventory.PickupMessage "$BIOM_SLOT67AMMOBIG_PKUP";
+		biom_Slot67AmmoBig.PartialPickupMessage "$BIOM_SLOT67AMMOBIG_PARTIAL";
 	}
 
 	States

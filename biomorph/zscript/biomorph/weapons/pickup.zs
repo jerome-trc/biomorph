@@ -213,7 +213,7 @@ class biom_wpks_Shotgun : biom_WeaponPickupSpawner replaces Shotgun
 	Default
 	{
 		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot3';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot3Ammo_Small', 1;
+		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot3AmmoSmall', 1;
 	}
 }
 
@@ -222,7 +222,7 @@ class biom_wpks_SuperShotgun : biom_WeaponPickupSpawner replaces SuperShotgun
 	Default
 	{
 		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot3Super';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot3Ammo_Small', 2;
+		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot3AmmoSmall', 2;
 	}
 }
 
@@ -231,7 +231,7 @@ class biom_wpks_Chaingun : biom_WeaponPickupSpawner replaces Chaingun
 	Default
 	{
 		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot4';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot4Ammo_Small', 1;
+		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot4AmmoSmall', 1;
 	}
 }
 
@@ -240,7 +240,7 @@ class biom_wpks_RocketLauncher : biom_WeaponPickupSpawner replaces RocketLaunche
 	Default
 	{
 		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot5';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot5Ammo_Small', 2;
+		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot5AmmoSmall', 2;
 	}
 }
 
@@ -249,7 +249,7 @@ class biom_wpks_PlasmaRifle : biom_WeaponPickupSpawner replaces PlasmaRifle
 	Default
 	{
 		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot6';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot67Ammo_Small', 2;
+		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot67AmmoSmall', 2;
 	}
 }
 
@@ -258,6 +258,6 @@ class biom_wpks_BFG9000 : biom_WeaponPickupSpawner replaces BFG9000
 	Default
 	{
 		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot7';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot67Ammo_Small', 2;
+		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot67AmmoSmall', 2;
 	}
 }
