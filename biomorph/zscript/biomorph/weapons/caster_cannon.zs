@@ -1,5 +1,7 @@
-/// A BFG9000 counterpart.
-/// Derived from Final Doomer's Quantum Accelerator.
+/// A slot 7 weapon. Mechanically derived from Final Doomer's Quantum Accelerator;
+/// assume that all code in this class and its related symbols is adapted from
+/// the work of Yholl, used under no license.
+/// Abbreviation: `CSC`
 class biom_CasterCannon : biom_Weapon
 {
 	protected biom_wdat_CasterCannon data;
@@ -9,7 +11,7 @@ class biom_CasterCannon : biom_Weapon
 		Tag "$BIOM_CASTERCANNON_TAG";
 		Obituary "$BIOM_CASTERCANNON_OB";
 
-		// Inventory.Icon 'FDQAZ0';
+		Inventory.Icon 'CSCZZ0';
 		Inventory.PickupMessage "$BIOM_CASTERCANNON_PKUP";
 
 		Weapon.SelectionOrder SELORDER_BFG;
@@ -22,15 +24,166 @@ class biom_CasterCannon : biom_Weapon
 
 	States
 	{
-		// ???
+	Select:
+		CSCA A 1 A_Raise;
+		loop;
+	Deselect:
+		CSCA A 1 A_Lower;
+	Ready:
+	Ready.Main:
+		CSCA A 1 A_WeaponReady;
+		loop;
+	Fire:
+		CSCA A 27 {
+			A_StartSound("biom/weap/castercannon/charge", CHAN_AUTO);
+			A_AlertMonsters(400);
+		}
+	Fire.Main:
+		CSCA A 1 {
+			A_biom_Recoil('biom_recoil_BFG');
+			A_AlertMonsters();
+			A_StartSound("biom/weap/castercannon/fire", CHAN_AUTO);
+			A_FireProjectile('biom_CasterCannonRayEmitter', 0.0, false);
+			A_biom_CasterCannonRailAttacks();
+		}
+		CSCA A 1 {
+			A_biom_CasterCannonRailAttacks();
+		}
+		CSCA A 1 {
+			A_biom_CasterCannonRailAttacks();
+		}
+	Fire.Finish:
+		CSCA A 24;
+		goto Ready.Main;
+	Dryfire:
+		CSCA A 1 offset(0, 32 + 1);
+		#### # 1 offset(0, 32 + 2);
+		#### # 1 offset(0, 32 + 3) A_StartSound("biom/weap/dryfire/ballistic");
+		#### # 1 offset(0, 32 + 2);
+		#### # 1 offset(0, 32 + 1);
+		goto Ready.Main;
+	}
+
+	protected action void A_biom_CasterCannonRailAttacks()
+	{
+		A_RailAttack(
+			20 * Random(8, 16),
+			0,
+			false,
+			"", "White",
+			RGF_SILENT | RGF_FULLBRIGHT | RGF_NOPIERCING,
+			10,
+			null,
+			0, 0,
+			4096,
+			1,
+			16.0,
+			0.0,
+			null,
+			-4
+		);
+
+		A_RailAttack(
+			0,
+			4,
+			false,
+			"", "ffffff",
+			RGF_SILENT | RGF_FULLBRIGHT,
+			10,
+			'biom_NoOpPuff',
+			0, 0,
+			1024,
+			1,
+			0.5,
+			0.0,
+			null,
+			0
+		);
+
+		A_RailAttack(
+			0,
+			-4,
+			false,
+			"", "f999f9",
+			RGF_SILENT | RGF_FULLBRIGHT,
+			10,
+			'biom_NoOpPuff',
+			0, 0,
+			1024,
+			1,
+			0.5,
+			0.0,
+			null,
+			0
+		);
+
+		A_RailAttack(
+			0,
+			4,
+			false,
+			"", "f999f9",
+			RGF_SILENT | RGF_FULLBRIGHT,
+			10,
+			'biom_NoOpPuff',
+			0, 0,
+			1024,
+			1,
+			0.5,
+			0.0,
+			null,
+			-8
+		);
+
+		A_RailAttack(
+			0,
+			-4,
+			false,
+			"", "ffffff",
+			RGF_SILENT | RGF_FULLBRIGHT,
+			10,
+			'biom_NoOpPuff',
+			0, 0,
+			1024,
+			1,
+			0.5,
+			0.0,
+			null,
+			-8
+		);
 	}
 }
-
 
 class biom_wdat_CasterCannon : biom_WeaponData
 {
 	final override void Reset()
 	{
 		// ???
+	}
+}
+
+class biom_CasterCannonRayEmitter : Actor
+{
+	Default
+	{
+		Projectile;
+
+		Damage 0;
+		Speed 25.0;
+		Height 4.0;
+		Radius 4.0;
+		Species 'Player';
+
+		+NOCLIP
+		+THRUACTORS
+		+THRUSPECIES
+	}
+
+	States
+	{
+	Death:
+	Spawn:
+		TNT1 A 1;
+		TNT1 A 10 A_BFGSpray('BFGExtra');
+		stop;
 	}
 }

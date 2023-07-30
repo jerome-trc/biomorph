@@ -16,6 +16,8 @@ Biomorph makes use of code written for [Guncaster](https://forum.zdoom.org/viewt
 
 The GLDEFS for the Armour Bonus were devised by Realm667 user Infirnex.
 
+The state machine used by the Caster Cannon is derived from code written for [Final Doomer](https://forum.zdoom.org/viewtopic.php?t=55061) by Yholl, used under no license.
+
 ## Graphics
 
 The following graphics are edits of the work of id Software LLC:
@@ -108,6 +110,8 @@ The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), 
 - BIOPAIN 0 through to 3 (all amplified, 0 slowed down, 1 to 3 sped up) (["Heartbeat, Regular, Single, 01-01, LOOP.wav"](https://freesound.org/people/InspectorJ/sounds/485076/))
 
 BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people/Slave2theLight/sounds/157023/) by freesound user [Slave2theLight](https://freesound.org/people/Slave2theLight), used under the Attribution 4.0 License.
+
+CSC1_0 and CSC1_1 are derived from ["Electric Charge + Shot"](https://freesound.org/people/Teh_Bucket/sounds/518739/) by freesound user [Teh_Bucket](https://freesound.org/people/Teh_Bucket/), used under the Attribution 3.0 License.
 
 DRYFBAL 0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), licensed under Creative Commons 0.
 

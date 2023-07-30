@@ -44,6 +44,28 @@ class biom_IntangibleActor : Actor abstract
 	}
 }
 
+class biom_NoOpPuff : BulletPuff
+{
+	Default
+	{
+		+BLOODLESSIMPACT
+		+NODAMAGETHRUST
+		+NOTELEPORT
+		+PAINLESS
+		+THRUACTORS
+
+		Decal 'None';
+	}
+
+	States
+	{
+	Melee:
+	Spawn:
+		TNT1 A 5;
+		stop;
+	}
+}
+
 class biom_WanderingSpawner : biom_IntangibleActor
 {
 	private class<Actor> toSpawn;

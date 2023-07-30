@@ -67,6 +67,11 @@
 		biom/weap/dryfire/ballistic/2
 	}
 
+// Weapons, caster cannon //////////////////////////////////////////////////////
+
+	biom/weap/castercannon/charge CSC1_0
+	biom/weap/castercannon/fire CSC1_1
+
 // Weapons, combat pistol //////////////////////////////////////////////////////
 
 	biom/weap/servicepistol/fire/0 SVP1_0
