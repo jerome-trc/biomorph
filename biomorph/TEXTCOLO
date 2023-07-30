@@ -1,1 +1,11 @@
 MidGrey { #292929 #cacaca }
+
+Pink
+{
+	#331033  #FF60FF
+Console:
+	#000000  #AF10AB    0 127
+	#FF00FF  #FFFFFF  128 256
+Flat:
+	#9966CC
+}

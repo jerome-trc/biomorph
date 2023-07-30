@@ -17,117 +17,117 @@
 
 // Health //////////////////////////////////////////////////////////////////////
 
-	BIOM_HEALTHBONUS_TAG = "Health Cocktail";
-	BIOM_HEALTHBONUS_PKUP = "Took a health cocktail.";
-	BIOM_HEALTHBONUS_COLLECTED = "Did not use a health cocktail, but counted it as collected.";
-	BIOM_SMALLHEALTH_TAG = "Stimpack";
-	BIOM_SMALLHEALTH_PKUP = "Used a stimpack.";
-	BIOM_SMALLHEALTH_PARTIAL = "Partially used a stimpack.";
-	BIOM_SMALLHEALTH_PKUPLOW = "Used a badly-needed stimpack.";
-	BIOM_BIGHEALTH_TAG = "Trauma Kit";
-	BIOM_BIGHEALTH_PKUP = "Used a trauma kit.";
-	BIOM_BIGHEALTH_PARTIAL = "Partially used a trauma kit.";
-	BIOM_BIGHEALTH_PKUPLOW = "Used an urgently-needed trauma kit.";
-	BIOM_SUPERHEALTH_TAG = "L.I.F.E. Kit";
-	BIOM_SUPERHEALTH_PKUP = "Used a L.I.F.E. Kit.";
-	BIOM_SUPERHEALTH_PARTIAL = "Partially used a L.I.F.E. Kit.";
-	BIOM_SUPERHEALTH_PKUPLOW = "Used a mucuh-needed L.I.F.E. Kit.";
-	BIOM_SUPERHEALTH_COLLECTED = "Did not use a L.I.F.E. Kit, but counted it as collected.";
+	BIOM_HEALTHBONUS_TAG = "\c[LightBlue]Health Cocktail\c-";
+	BIOM_HEALTHBONUS_PKUP = "\c[White]Took a \c[LightBlue]health cocktail\c[White].";
+	BIOM_HEALTHBONUS_COLLECTED = "\c[White]Did not use a \c[LightBlue]health cocktail\c[White], but counted it as collected.";
+	BIOM_SMALLHEALTH_TAG = "\c[LightBlue]Stimpack\c-";
+	BIOM_SMALLHEALTH_PKUP = "\c[White]Used a \c[LightBlue]stimpack\c[White].";
+	BIOM_SMALLHEALTH_PARTIAL = "\c[White]Partially used a \c[LightBlue]stimpack\c[White].";
+	BIOM_SMALLHEALTH_PKUPLOW = "\c[White]Used a badly-needed \c[LightBlue]stimpack\c[White].";
+	BIOM_BIGHEALTH_TAG = "\c[LightBlue]Trauma Kit\c-";
+	BIOM_BIGHEALTH_PKUP = "\c[White]Used a \c[LightBlue]trauma kit\c[White].";
+	BIOM_BIGHEALTH_PARTIAL = "Partially used a \c[LightBlue]trauma kit\c[White].";
+	BIOM_BIGHEALTH_PKUPLOW = "\c[White]Used an urgently-needed \c[LightBlue]trauma kit\c[White].";
+	BIOM_SUPERHEALTH_TAG = "\c[LightBlue]L.I.F.E. Kit\c-";
+	BIOM_SUPERHEALTH_PKUP = "\c[White]Used a \c[LightBlue]L.I.F.E. Kit\c[White].";
+	BIOM_SUPERHEALTH_PARTIAL = "\c[White]Partially used a \c[LightBlue]L.I.F.E. Kit\c[White].";
+	BIOM_SUPERHEALTH_PKUPLOW = "\c[White]Used a mucuh-needed \c[LightBlue]L.I.F.E. Kit\c[White].";
+	BIOM_SUPERHEALTH_COLLECTED = "\c[White]Did not use a \c[LightBlue]L.I.F.E. Kit\c[White], but counted it as collected.";
 
 // Armour //////////////////////////////////////////////////////////////////////
 
-	BIOM_ARMORBONUS_TAG = "Armour Shard";
-	BIOM_ARMORBONUS_PKUP = "Jury-rigged some protection using an armour shard.";
-	BIOM_ARMORBONUS_COLLECTED = "Didn't pick up an Armour Shard, but counted it as collected.";
+	BIOM_ARMORBONUS_TAG = "\c[Green]Armour Shard\c-";
+	BIOM_ARMORBONUS_PKUP = "\c[White]Jury-rigged some protection using an \c[Green]armour shard\c[White].";
+	BIOM_ARMORBONUS_COLLECTED = "\c[White]Didn't pick up an \c[Green]armour shard\c[White], but counted it as collected.";
 
-	BIOM_LIGHTARMOR_TAG = "Security Vest";
-	BIOM_LIGHTARMOR_PKUP = "Picked up and donned a security vest.";
-	BIOM_LIGHTARMOR_PARTIAL = "Repaired your worn armour by scavenging a security vest.";
+	BIOM_LIGHTARMOR_TAG = "\c[Green]Security Vest\c-";
+	BIOM_LIGHTARMOR_PKUP = "\c[White]Picked up and donned a \c[Green]security vest\c[White].";
+	BIOM_LIGHTARMOR_PARTIAL = "\c[White]Repaired your worn armour by scavenging a \c[Green]security vest\c[White].";
 
-	BIOM_HEAVYARMOR_TAG = "Combat Rig";
-	BIOM_HEAVYARMOR_PKUP = "Picked up and donned a combat rig.";
-	BIOM_HEAVYARMOR_PARTIAL = "Repaired your worn armour by scavenging a combat rig.";
+	BIOM_HEAVYARMOR_TAG = "\c[Green]Combat Rig\c-";
+	BIOM_HEAVYARMOR_PKUP = "\c[White]Picked up and donned a \c[Green]combat rig\c[White].";
+	BIOM_HEAVYARMOR_PARTIAL = "\c[White]Repaired your worn armour by scavenging a \c[Green]combat rig\c[White].";
 
 // Ammo ////////////////////////////////////////////////////////////////////////
 
-	BIOM_SLOT3AMMO_TAG = "Stormgun Cell";
-	BIOM_SLOT3AMMO_SMALL_PKUP = "Picked up a stormgun cell.";
-	BIOM_SLOT3AMMO_BIG_TAG = "Stormgun Cell Pack";
-	BIOM_SLOT3AMMO_BIG_PKUP = "Picked up a stormgun cell pack.";
+	BIOM_SLOT3AMMO_TAG = "\c[Gold]Shotshells\c-";
+	BIOM_SLOT3AMMO_SMALL_PKUP = "\c[White]Picked up a \c[Gold]handful of shotshells\c[White].";
+	BIOM_SLOT3AMMO_BIG_TAG = "\c[Gold]Shotshell Box\c-";
+	BIOM_SLOT3AMMO_BIG_PKUP = "\c[White]Picked up a \c[Gold]shotshell box\c[White].";
 
-	BIOM_SLOT4AMMO_TAG = "Rifle Cell";
-	BIOM_SLOT4AMMO_SMALL_PKUP = "Picked up a rifle cell.";
-	BIOM_SLOT4AMMO_BIG_TAG = "Rifle Cell Pack";
-	BIOM_SLOT4AMMO_BIG_PKUP = "Picked up a rifle cell pack.";
+	BIOM_SLOT4AMMO_TAG = "\c[Gold]Rifle Cell\c-";
+	BIOM_SLOT4AMMO_SMALL_PKUP = "\c[White]Picked up a \c[Gold]rifle cell\c[White].";
+	BIOM_SLOT4AMMO_BIG_TAG = "\c[Gold]Rifle Cell Pack\c-";
+	BIOM_SLOT4AMMO_BIG_PKUP = "\c[White]Picked up a \c[Gold]rifle cell pack\c[White].";
 
-	BIOM_SLOT5AMMO_TAG = "Superdischarge Cell";
-	BIOM_SLOT5AMMO_SMALL_PKUP = "Picked up a superdischarge cell.";
-	BIOM_SLOT5AMMO_BIG_TAG = "Superdischarge Cell Pack";
-	BIOM_SLOT5AMMO_BIG_PKUP = "Picked up a superdischarge cell pack.";
+	BIOM_SLOT5AMMO_TAG = "\c[Gold]Superdischarge Cell\c-";
+	BIOM_SLOT5AMMO_SMALL_PKUP = "\c[White]Picked up a \c[Gold]superdischarge cell\c[White].";
+	BIOM_SLOT5AMMO_BIG_TAG = "\c[Gold]Superdischarge Cell Pack\c-";
+	BIOM_SLOT5AMMO_BIG_PKUP = "\c[White]Picked up a \c[Gold]superdischarge cell pack\c[White].";
 
-	BIOM_SLOT67AMMO_TAG = "Nanotube Cell";
-	BIOM_SLOT67AMMO_SMALL_PKUP = "Picked up a nanotube cell.";
-	BIOM_SLOT67AMMO_BIG_TAG = "Nanotube Cell Pack";
-	BIOM_SLOT67AMMO_BIG_PKUP = "Picked up a nanotube cell pack.";
+	BIOM_SLOT67AMMO_TAG = "\c[Gold]Nanoprint Cell\c-";
+	BIOM_SLOT67AMMO_SMALL_PKUP = "\c[White]Picked up a \c[Gold]nanoprint cell\c[White].";
+	BIOM_SLOT67AMMO_BIG_TAG = "\c[Gold]Nanoprint Cell Pack\c-";
+	BIOM_SLOT67AMMO_BIG_PKUP = "\c[White]Picked up a \c[Gold]nanoprint cell pack\c[White].";
 
-	BIOM_BACKPACK_TAG = "Backpack";
-	BIOM_BACKPACK_PKUP = "Obtained a backpack with some ammo.";
-	BIOM_BACKPACK_FIRSTPKUP = "Your ammo capacity is doubled.";
-	BIOM_BACKPACK_OVERFLOW = "Left some excess ammo behind from a backpack.";
+	BIOM_BACKPACK_TAG = "\c[Gold]Backpack\c-";
+	BIOM_BACKPACK_PKUP = "\c[White]Obtained a \c[Gold]backpack\c[White] with some ammo.";
+	BIOM_BACKPACK_FIRSTPKUP = "\c[White]Your ammo capacity is doubled.";
+	BIOM_BACKPACK_OVERFLOW = "\c[White]Left some excess ammo behind from a backpack.";
 
 // Powerups ////////////////////////////////////////////////////////////////////
 
-	BIOM_BERSERK_TAG = "Berserk Cocktail";
-	BIOM_BERSERK_PKUP = "Injected a berserk cocktail.";
-	BIOM_BERSERK_PKUPFIRST = "Used a berserk cocktail's enhancers, but left the healers.";
-	BIOM_BERSERK_PKUPLOW = "Injected a badly-needed berserk cocktail.";
-	BIOM_BERSERK_COLLECTED = "Didn't use a berserk coctail, but marked it as collected.";
-	BIOM_BERSERK_PARTIAL = "Injected part of a berserk coctail.";
+	BIOM_BERSERK_TAG = "\c[Pink]Berserk Cocktail\c-";
+	BIOM_BERSERK_PKUP = "\c[White]Injected a \c[Pink]berserk cocktail\c[White].";
+	BIOM_BERSERK_PKUPFIRST = "\c[White]Used a \c[Pink]berserk cocktail\c[White]'s enhancers, but left the healers.";
+	BIOM_BERSERK_PKUPLOW = "\c[White]Injected a badly-needed \c[Pink]berserk cocktail\c[White].";
+	BIOM_BERSERK_COLLECTED = "\c[White]Didn't use a \c[Pink]berserk cocktail\c[White], but marked it as collected.";
+	BIOM_BERSERK_PARTIAL = "\c[White]Injected part of a \c[Pink]berserk cocktail\c[White].";
 
-	BIOM_ALLMAP_TAG = "Computer Area Map";
-	BIOM_ALLMAP_PKUP = "Obtained a computer area map; your surroundings become clear.";
-	BIOM_BLURSPHERE_TAG = "C.A.M.O. Kit";
-	BIOM_BLURSPHERE_PKUP = "Used a C.A.M.O. Kit; you fade and shimmer.";
-	BIOM_INVULNERABILITY_TAG = "S.T.Y.X. Kit";
-	BIOM_INVULNERABILITY_PKUP = "Used a S.T.Y.X. Kit! You are invulnerable!";
-	BIOM_INFRARED_TAG = "Light-Amp Visor";
-	BIOM_INFRARED_PKUP = "Donned a light amplification visor; the dark is illuminated.";
-	BIOM_MEGASPHERE_TAG = "M.E.G.A. Kit";
-	BIOM_MEGASPHERE_PKUP = "Used a M.E.G.A. Kit! You feel rejuvenated.";
-	BIOM_RADSUIT_TAG = "C.B.R.N. Suit";
-	BIOM_RADSUIT_PKUP = "Donned a C.B.R.N. suit; you're safe from environmental hazards.";
+	BIOM_ALLMAP_TAG = "\c[Pink]Sonic Map\c-";
+	BIOM_ALLMAP_PKUP = "\c[White]Obtained a \c[Pink]sonic map\c[White]; your surroundings become clear.";
+	BIOM_BLURSPHERE_TAG = "\c[Pink]C.A.M.O. Kit\c-";
+	BIOM_BLURSPHERE_PKUP = "\c[White]Used a \c[Pink]C.A.M.O. Kit\c[White]; you fade and shimmer.";
+	BIOM_INVULNERABILITY_TAG = "\c[Pink]S.T.Y.X. Kit";
+	BIOM_INVULNERABILITY_PKUP = "\c[White]Used a \c[Pink]S.T.Y.X. Kit! You are invulnerable!";
+	BIOM_INFRARED_TAG = "\c[Pink]Night Vision Goggles";
+	BIOM_INFRARED_PKUP = "\c[White]Donned a pair of \c[Pink]night vision goggles\c[White]; the dark is illuminated.";
+	BIOM_MEGASPHERE_TAG = "\c[Pink]M.E.G.A. Kit\c-";
+	BIOM_MEGASPHERE_PKUP = "\c[White]Used a \c[Pink]M.E.G.A. Kit\c[White]! You feel rejuvenated.";
+	BIOM_RADSUIT_TAG = "\c[Pink]C.B.R.N. Suit\c-";
+	BIOM_RADSUIT_PKUP = "\c[White]Donned a \c[Pink]C.B.R.N. suit\c[White]; you're safe from environmental hazards.";
 
 // Weapons /////////////////////////////////////////////////////////////////////
 
-	BIOM_BITERIFLE_TAG = "Bite Rifle";
-	BIOM_BITERIFLE_PKUP = "Procured a bite rifle.";
+	BIOM_BITERIFLE_TAG = "\c[White]Bite Rifle";
+	BIOM_BITERIFLE_PKUP = "\c[White]Procured a \c[Cyan]bite rifle.";
 	BIOM_BITERIFLE_OB = "%k tickled %o to death.";
 
-	BIOM_CASTERCANNON_TAG = "Caster Cannon";
-	BIOM_CASTERCANNON_PKUP = "Procured a caster cannon.";
+	BIOM_CASTERCANNON_TAG = "\c[White]Caster Cannon";
+	BIOM_CASTERCANNON_PKUP = "\c[White]Procured a \c[Cyan]caster cannon.";
 	BIOM_CASTERCANNON_OB = "%k field-tested a caster cannon on %o.";
 
-	BIOM_COMBATSTORMGUN_TAG = "Combat Stormgun";
-	BIOM_COMBATSTORMGUN_PKUP = "Procured a combat stormgun.";
+	BIOM_COMBATSTORMGUN_TAG = "\c[White]Combat Stormgun";
+	BIOM_COMBATSTORMGUN_PKUP = "\c[White]Procured a \c[Cyan]combat stormgun.";
 	BIOM_COMBATSTORMGUN_OB = "%k perforated %o";
 
-	BIOM_GPMG_TAG = "G.P.M.G.";
-	BIOM_GPMG_PKUP = "Procured a general-purpose machine gun.";
+	BIOM_GPMG_TAG = "\c[White]G.P.M.G.";
+	BIOM_GPMG_PKUP = "\c[White]Procured a \c[Cyan]general-purpose machine gun.";
 	BIOM_GPMG_OB = "%k riddled %o.";
 
-	BIOM_MANPAT_TAG = "M.A.N.P.A.T.";
-	BIOM_MANPAT_PKUP = "Procured a man-portable anti-tank system.";
+	BIOM_MANPAT_TAG = "\c[White]M.A.N.P.A.T.";
+	BIOM_MANPAT_PKUP = "\c[White]Procured a \c[Cyan]man-portable anti-tank system.";
 	BIOM_MANPAT_OB = "%k blew %o into chunks.";
 
-	BIOM_UNARMED_TAG = "Combatives";
+	BIOM_UNARMED_TAG = "\c[White]Combatives";
 	BIOM_UNARMED_OB = "%k beat %o to death.";
 
-	BIOM_PUMPSHOTGUN_TAG = "Pump Shotgun";
-	BIOM_PUMPSHOTGUN_PKUP = "Procured a pump shotgun.";
+	BIOM_PUMPSHOTGUN_TAG = "\c[White]Pump Shotgun";
+	BIOM_PUMPSHOTGUN_PKUP = "\c[White]Procured a \c[Cyan]pump shotgun.";
 	BIOM_PUMPSHOTGUN_OB = "%k oppressed %o with a pump shotgun.";
 
-	BIOM_SERVICEPISTOL_TAG = "Service Pistol";
-	BIOM_SERVICEPISTOL_PKUP = "Procured a service pistol.";
+	BIOM_SERVICEPISTOL_TAG = "\c[White]Service Pistol";
+	BIOM_SERVICEPISTOL_PKUP = "\c[White]Procured a service pistol.";
 	BIOM_SERVICEPISTOL_OB = "%k served %o summary execution with a service pistol.";
 
 // Mutators ////////////////////////////////////////////////////////////////////
