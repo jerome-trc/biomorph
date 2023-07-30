@@ -6,6 +6,7 @@ class biom_ArmorBonus : ArmorBonus replaces ArmorBonus
 	{
 		-INVENTORY.ALWAYSPICKUP
 		Tag "$BIOM_ARMORBONUS_TAG";
+		Inventory.Icon 'KVLRE0';
 		Inventory.PickupMessage "$BIOM_ARMORBONUS_PKUP";
 		Inventory.PickupSound "biom/armorbonus/pkup";
 		biom_ArmorBonus.CollectedMessage "$BIOM_ARMORBONUS_COLLECTED";
@@ -140,6 +141,7 @@ class biom_LightArmor : GreenArmor replaces GreenArmor
 	Default
 	{
 		Tag "$BIOM_LIGHTARMOR_TAG";
+		Inventory.Icon 'KVLRA0';
 		Inventory.PickupMessage "$BIOM_LIGHTARMOR_PKUP";
 		biom_LightArmor.PartialPickupMessage "$BIOM_LIGHTARMOR_PARTIAL";
 		biom_LightArmor.CollectedMessage "$BIOM_LIGHTARMOR_COLLECTED";
@@ -162,6 +164,7 @@ class biom_HeavyArmor : BlueArmor replaces BlueArmor
 	Default
 	{
 		Tag "$BIOM_HEAVYARMOR_TAG";
+		Inventory.Icon 'KVLRC0';
 		Inventory.PickupMessage "$BIOM_HEAVYARMOR_PKUP";
 		biom_HeavyArmor.PartialPickupMessage "$BIOM_HEAVYARMOR_PARTIAL";
 		biom_HeavyArmor.CollectedMessage "$BIOM_HEAVYARMOR_COLLECTED";
