@@ -36,6 +36,8 @@
 
 // Armour //////////////////////////////////////////////////////////////////////
 
+	BIOM_DISCARDEDINFERIORARMOR = "\c[White]Discarded what was left of your lighter armour.";
+
 	BIOM_ARMORBONUS_TAG = "\c[Green]Armour Shard\c-";
 	BIOM_ARMORBONUS_PKUP = "\c[White]Jury-rigged some protection using an \c[Green]armour shard\c[White].";
 	BIOM_ARMORBONUS_COLLECTED = "\c[White]Didn't pick up an \c[Green]armour shard\c[White], but counted it as collected.";

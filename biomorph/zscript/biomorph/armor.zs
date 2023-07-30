@@ -24,7 +24,7 @@ class biom_ArmorBonus : ArmorBonus replaces ArmorBonus
 		let armor = BasicArmor(self.owner.FindInventory('BasicArmor'));
 		let spct = Clamp(self.savePercent, 0.0, 100.0) / 100.0;
 
-		// No null check here. I'd prefer to catch VM aborts early in testing
+		// No null check here. I'd prefer to catch VM aborts early in testing.
 
 		if (armor.SavePercent < spct)
 		{
@@ -38,7 +38,7 @@ class biom_ArmorBonus : ArmorBonus replaces ArmorBonus
 
 		if (armor.amount < self.maxSaveAmount)
 		{
-			armor.maxAmount = Max(armor.MaxAmount, self.maxSaveAmount);
+			armor.maxAmount = Max(armor.maxAmount, self.maxSaveAmount);
 			armor.amount++;
 			return true;
 		}
@@ -62,74 +62,88 @@ mixin class biom_Armor
 		let armor = BasicArmor(self.owner.FindInventory('BasicArmor'));
 		let spct = Clamp(self.savePercent, 0.0, 100.0) / 100.0;
 		int defSaveAmount = 0;
-		class<BasicArmorPickup> armor_t = armor.ArmorType;
+		class<BasicArmorPickup> armor_t = armor.armorType;
 
 		if (armor_t != null)
 		{
-			let defs = GetDefaultByType((class<BasicArmorPickup>)(armor.ArmorType));
-			defSaveAmount = defs.SaveAmount;
+			let defs = GetDefaultByType((class<BasicArmorPickup>)(armor.armorType));
+			defSaveAmount = defs.saveAmount;
 		}
-		else if ((class<Armor>)(armor.ArmorType) is 'BasicArmorBonus')
+		else if ((class<Armor>)(armor.armorType) is 'BasicArmorBonus')
 		{
 			defSaveAmount = 100;
 		}
 
-		if (armor.SavePercent >= spct && armor.Amount < defSaveAmount)
+		if (armor.savePercent >= spct && armor.amount < defSaveAmount)
 		{
-			let missing = armor.MaxAmount - armor.Amount;
+			let missing = armor.maxAmount - armor.amount;
 
 			if (missing <= 0)
 				return false;
 
 			int change = 0;
 
-			if (armor.SavePercent ~== spct)
+			if (armor.savePercent ~== spct)
 			{
 				change = Min(missing, self.saveAmount);
 				self.saveAmount -= change;
 			}
 			else
 			{
-				change = Min(missing, int(float(self.saveAmount) / 2.0));
+				change = Min(missing, int(Ceil((float(self.saveAmount) / 2.0))));
 				self.saveAmount -= change * 2;
 			}
 
 			if (self.bIgnoreSkill)
-				armor.Amount += change;
+				armor.amount += change;
 			else
-				armor.Amount += int(change * G_SkillPropertyFloat(SKILLP_ArmorFactor));
+				armor.amount += int(change * G_SkillPropertyFloat(SKILLP_ARMORFACTOR));
 
 			if (self.saveAmount <= 0)
 				return true;
 			else
-				self.OnPartialPickup(Owner);
+				self.OnPartialPickup(self.owner);
 		}
 		else if (armor.SavePercent < spct)
 		{
-			armor.SavePercent = spct;
-			armor.Amount = self.saveAmount + armor.BonusCount;
-			armor.MaxAmount = self.saveAmount;
-			armor.Icon = self.icon;
-			armor.MaxAbsorb = self.maxAbsorb;
-			armor.MaxFullAbsorb = self.maxFullAbsorb;
-			// (Rat) Why isn't this variable of type `class<T>`...?
-			armor.ArmorType = self.GetClassName();
-			armor.ActualSaveAmount = self.saveAmount;
+			if ((class<Armor>)(armor.armorType) != null)
+			{
+				self.PrintPickupMessage(
+					self.owner.CheckLocalView(),
+					"$BIOM_DISCARDEDINFERIORARMOR"
+				);
+
+				let s = Actor.Spawn('biom_LightArmor', self.owner.pos);
+				let discarded = biom_LightArmor(s);
+
+				discarded.amount = armor.amount;
+				discarded.saveAmount = armor.amount;
+			}
+
+			armor.savePercent = spct;
+			armor.amount = self.saveAmount + armor.BonusCount;
+			armor.maxAmount = self.saveAmount;
+			armor.icon = self.icon;
+			armor.maxAbsorb = self.maxAbsorb;
+			armor.maxFullAbsorb = self.maxFullAbsorb;
+			// (RAT) Why isn't this variable of type `class<T>`...?
+			armor.armorType = self.GetClassName();
+			armor.actualSaveAmount = self.saveAmount;
 			return true;
 		}
 
 		if (self.bCountItem)
-			self.MarkAsCollected(Owner);
+			self.MarkAsCollected(self.owner);
 
 		return false;
 	}
 
 	final override string PickupMessage()
 	{
-		if (SaveAmount <= 0)
-			return PartialPickupMessage;
+		if (self.saveAmount <= 0)
+			return self.partialPickupMessage;
 		else
-			return PickupMsg;
+			return self.pickupMsg;
 	}
 }
 
