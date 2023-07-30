@@ -48,13 +48,21 @@ class biom_BlurSphere : BlurSphere replaces BlurSphere
 	}
 }
 
-class biom_Megasphere : Megasphere replaces Megasphere
+class biom_Megasphere : Inventory replaces Megasphere
 {
+	mixin biom_Pickup;
+
 	Default
 	{
+		+COUNTITEM
 		+DONTGIB
+		+INVENTORY.ISARMOR
+		+INVENTORY.ISHEALTH
+
 		Tag "$BIOM_MEGASPHERE_TAG";
 		Inventory.PickupMessage "$BIOM_MEGASPHERE_PKUP";
+		Inventory.PickupSound "misc/p_pkup";
+		biom_Megasphere.CollectedMessage "$BIOM_MEGASPHERE_COLLECTED";
 	}
 
 	States
@@ -62,6 +70,36 @@ class biom_Megasphere : Megasphere replaces Megasphere
 	Spawn:
 		MKIT ABCD 6 bright;
 		loop;
+	}
+
+	final override bool TryPickup(in out Actor other)
+	{
+		bool fullHealth = false;
+
+		if (other.player != null)
+			fullHealth = other.player.health >= other.GetMaxHealth();
+		else
+			fullHealth = other.health >= other.GetMaxHealth();
+
+		// Should *never* be null.
+		let armor = BasicArmor(other.FindInventory('BasicArmor'));
+		let fullArmor = armor.armorType == 'biom_HeavyArmor' && armor.amount >= 200;
+
+		if (fullHealth && fullArmor)
+		{
+			if (self.bCountItem)
+				self.MarkAsCollected(other);
+
+			return false;
+		}
+
+		other.A_GiveInventory('MegasphereHealth', 1);
+		// TODO: Not using `BlueArmorForMegasphere` might break DeHackEd.
+		// Must investigate eventually; need sample data or bug reports.
+		other.A_GiveInventory('biom_HeavyArmor', 1);
+
+		self.GoAwayAndDie();
+		return true;
 	}
 }
 

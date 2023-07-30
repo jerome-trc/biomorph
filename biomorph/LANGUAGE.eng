@@ -95,7 +95,7 @@
 	BIOM_BERSERK_PKUP = "\c[White]Injected a \c[Pink]berserk cocktail\c[White].";
 	BIOM_BERSERK_PKUPFIRST = "\c[White]Used a \c[Pink]berserk cocktail\c[White]'s enhancers, but left the healers.";
 	BIOM_BERSERK_PKUPLOW = "\c[White]Injected a badly-needed \c[Pink]berserk cocktail\c[White].";
-	BIOM_BERSERK_COLLECTED = "\c[White]Didn't use a \c[Pink]berserk cocktail\c[White], but marked it as collected.";
+	BIOM_BERSERK_COLLECTED = "\c[White]Didn't use a \c[Pink]berserk cocktail\c[White], but counted it as collected.";
 	BIOM_BERSERK_PARTIAL = "\c[White]Injected part of a \c[Pink]berserk cocktail\c[White].";
 
 	BIOM_ALLMAP_TAG = "\c[Pink]Sonic Map\c-";
@@ -108,6 +108,7 @@
 	BIOM_INFRARED_PKUP = "\c[White]Donned a pair of \c[Pink]night vision goggles\c[White]; the dark is illuminated.";
 	BIOM_MEGASPHERE_TAG = "\c[Pink]M.E.G.A. Kit\c-";
 	BIOM_MEGASPHERE_PKUP = "\c[White]Used a \c[Pink]M.E.G.A. Kit\c[White]! You feel rejuvenated.";
+	BIOM_MEGASPHERE_COLLECTED = "\c[White]Didn't use a \c[Pink]M.E.G.A. Kit\c[White], but counted it as collected.";
 	BIOM_RADSUIT_TAG = "\c[Pink]C.B.R.N. Suit\c-";
 	BIOM_RADSUIT_PKUP = "\c[White]Donned a \c[Pink]C.B.R.N. suit\c[White]; you're safe from environmental hazards.";
 
