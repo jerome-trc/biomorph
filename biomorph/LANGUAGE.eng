@@ -166,6 +166,8 @@
 
 // Quit messages ///////////////////////////////////////////////////////////////
 
+	BIOM_QUITMSG_COWMAP =
+		"\c[Purple]There is no secret cow map.\c-";
 	BIOM_QUITMSG_DRONES =
 		"\c[Purple]Please don't go. The nanites need you. They look up to you.\c-";
 

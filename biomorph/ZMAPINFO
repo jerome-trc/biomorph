@@ -6,8 +6,8 @@ GameInfo
 	StatusBarClass = "biom_StatusBar"
 
 	QuitMessages =
-		// Flavour
-		"$BIOM_QUITMSG_DRONES"
+		// Flavour/easter egg
+		"$BIOM_QUITMSG_COWMAP", "$BIOM_QUITMSG_DRONES"
 }
 
 DamageType biom_NullDamage
