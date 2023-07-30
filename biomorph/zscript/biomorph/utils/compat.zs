@@ -1,4 +1,4 @@
-/// Functions for easily dealing with actor types which may not exist.
+// Functions for easily dealing with actor types which may not exist.
 extend class biom_Utils
 {
 	static class<Inventory> ExtInv(name tName)
@@ -70,7 +70,7 @@ extend class biom_Utils
 	}
 }
 
-/// Functions for checking which level set is being played.
+// Functions for checking which level set is being played.
 extend class biom_Utils
 {
 	/// Checks if the user's mod configuration includes the DoomRL Monster Pack.

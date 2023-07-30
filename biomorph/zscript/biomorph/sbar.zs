@@ -179,8 +179,8 @@ class biom_StatusBar : BaseStatusBar
 	}
 }
 
-/// The Doom status bar is left as-is; this code is a nearly-verbatim copy-paste
-/// from gzdoom.pk3/zscript/ui/statusbar/doom_sbar.zs.
+// The Doom status bar is left as-is; this code is a nearly-verbatim copy-paste
+// from gzdoom.pk3/zscript/ui/statusbar/doom_sbar.zs.
 extend class biom_StatusBar
 {
 	private void DrawMainBar(double ticFrac)
