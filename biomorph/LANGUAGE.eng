@@ -26,7 +26,7 @@
 	BIOM_SMALLHEALTH_PKUPLOW = "\c[White]Used a badly-needed \c[LightBlue]stimpack\c[White].";
 	BIOM_BIGHEALTH_TAG = "\c[LightBlue]Trauma Kit\c-";
 	BIOM_BIGHEALTH_PKUP = "\c[White]Used a \c[LightBlue]trauma kit\c[White].";
-	BIOM_BIGHEALTH_PARTIAL = "Partially used a \c[LightBlue]trauma kit\c[White].";
+	BIOM_BIGHEALTH_PARTIAL = "\c[White]Partially used a \c[LightBlue]trauma kit\c[White].";
 	BIOM_BIGHEALTH_PKUPLOW = "\c[White]Used an urgently-needed \c[LightBlue]trauma kit\c[White].";
 	BIOM_SUPERHEALTH_TAG = "\c[LightBlue]L.I.F.E. Kit\c-";
 	BIOM_SUPERHEALTH_PKUP = "\c[White]Used a \c[LightBlue]L.I.F.E. Kit\c[White].";
