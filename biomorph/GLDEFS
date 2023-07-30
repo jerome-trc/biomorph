@@ -48,20 +48,50 @@ pointlight biom_Antigen
 
 // Weapon pickups //////////////////////////////////////////////////////////////
 
-pointlight biom_WeaponPickupSmall
+pointlight biom_WeaponPickupSlot1
 {
-	color 1.0 1.0 1.0
+	color 1.0 0.0 0.0
 	size 16
 }
 
-pointlight biom_WeaponPickupMedium
+pointlight biom_WeaponPickupSlot2
 {
-	color 1.0 1.0 1.0
+	color 1.0 0.56 0.0
+	size 12
+}
+
+pointlight biom_WeaponPickupSlot3
+{
+	color 1.0 0.9 0.0
+	size 16
+}
+
+pointlight biom_WeaponPickupSlot3Super
+{
+	color 0.62 1.0 0.0
+	size 16
+}
+
+pointlight biom_WeaponPickupSlot4
+{
+	color 0.0 1.0 0.74
 	size 20
 }
 
-pointlight biom_WeaponPickupLarge
+pointlight biom_WeaponPickupSlot5
 {
-	color 1.0 1.0 1.0
+	color 0.0 0.58 1.0
+	size 20
+}
+
+pointlight biom_WeaponPickupSlot6
+{
+	color 0.66 0.0 1.0
+	size 20
+}
+
+pointlight biom_WeaponPickupSlot7
+{
+	color 0.95 0.0 1.0
 	size 24
 }

@@ -60,7 +60,7 @@ class biom_wpk_Slot1 : biom_WeaponPickup replaces Chainsaw
 	{
 	Spawn:
 		WPKP A 6;
-		#### # 6 bright light("biom_WeaponPickup_Medium");
+		#### # 6 bright light("biom_WeaponPickupSlot1");
 		loop;
 	}
 }
@@ -76,7 +76,7 @@ class biom_wpk_Slot2 : biom_WeaponPickup replaces Pistol
 	{
 	Spawn:
 		WPKP B 6;
-		#### # 6 bright light("biom_WeaponPickup_Small");
+		#### # 6 bright light("biom_WeaponPickupSlot2");
 		loop;
 	}
 }
@@ -92,7 +92,7 @@ class biom_wpk_Slot3 : biom_WeaponPickup
 	{
 	Spawn:
 		WPKP C 6;
-		#### # 6 bright light("biom_WeaponPickup_Medium");
+		#### # 6 bright light("biom_WeaponPickupSlot3");
 		loop;
 	}
 }
@@ -108,7 +108,7 @@ class biom_wpk_Slot3Super : biom_WeaponPickup
 	{
 	Spawn:
 		WPKP D 6;
-		#### # 6 bright light("biom_WeaponPickup_Medium");
+		#### # 6 bright light("biom_WeaponPickupSlot3Super");
 		loop;
 	}
 }
@@ -124,7 +124,7 @@ class biom_wpk_Slot4 : biom_WeaponPickup
 	{
 	Spawn:
 		WPKP E 6;
-		#### # 6 bright light("biom_WeaponPickup_Medium");
+		#### # 6 bright light("biom_WeaponPickupSlot4");
 		loop;
 	}
 }
@@ -140,7 +140,7 @@ class biom_wpk_Slot5 : biom_WeaponPickup
 	{
 	Spawn:
 		WPKP F 6;
-		#### # 6 bright light("biom_WeaponPickup_Large");
+		#### # 6 bright light("biom_WeaponPickupSlot5");
 		loop;
 	}
 }
@@ -156,7 +156,7 @@ class biom_wpk_Slot6 : biom_WeaponPickup
 	{
 	Spawn:
 		WPKP G 6;
-		#### # 6 bright light("biom_WeaponPickup_Medium");
+		#### # 6 bright light("biom_WeaponPickupSlot6");
 		loop;
 	}
 }
@@ -172,7 +172,7 @@ class biom_wpk_Slot7 : biom_WeaponPickup
 	{
 	Spawn:
 		WPKP H 6;
-		#### # 6 bright light("biom_WeaponPickup_Large");
+		#### # 6 bright light("biom_WeaponPickupSlot7");
 		loop;
 	}
 }
