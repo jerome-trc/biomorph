@@ -42,7 +42,7 @@ class biom_PumpShotgun : biom_Weapon
 		870A A 1;
 		870A A 2 offset(0 + 7, 32 + 7)
 		{
-			A_StartSound("biom/weap/pumpshotgun/fire", CHAN_WEAPON);
+			A_StartSound("biom/pumpshotgun/fire", CHAN_WEAPON);
 			A_GunFlash();
 		}
 		870A A 1 offset(0 + 5, 32 + 5);
@@ -52,13 +52,13 @@ class biom_PumpShotgun : biom_Weapon
 		goto Cycle;
 	Cycle:
 		// Baseline time: 40 ticks (4 faster than vanilla Shotgun).
-		870A B 2 A_StartSound("biom/weap/pumpshotgun/pumpback");
+		870A B 2 A_StartSound("biom/pumpshotgun/pumpback");
 		870A C 1;
 		870A D 3;
 		870A E 4;
 		870A FGHI 4;
 		870A HGF 2;
-		870A E 2 A_StartSound("biom/weap/pumpshotgun/pumpforward");
+		870A E 2 A_StartSound("biom/pumpshotgun/pumpforward");
 		870A DCA 2;
 		goto Ready.Main;
 	Flash:
@@ -68,7 +68,7 @@ class biom_PumpShotgun : biom_Weapon
 	Dryfire:
 		870A A 1 offset(0, 32 + 1);
 		#### # 1 offset(0, 32 + 2);
-		#### # 1 offset(0, 32 + 3) A_StartSound("biom/weap/dryfire/ballistic");
+		#### # 1 offset(0, 32 + 3) A_StartSound("biom/dryfire/ballistic");
 		#### # 1 offset(0, 32 + 2);
 		#### # 1 offset(0, 32 + 1);
 		goto Ready.Main;

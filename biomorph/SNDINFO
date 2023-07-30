@@ -56,60 +56,60 @@
 
 // Weapons, common /////////////////////////////////////////////////////////////
 
-	biom/weap/dryfire/ballistic/0 DRYFBAL0
-	biom/weap/dryfire/ballistic/1 DRYFBAL1
-	biom/weap/dryfire/ballistic/2 DRYFBAL2
+	biom/dryfire/ballistic/0 DRYFBAL0
+	biom/dryfire/ballistic/1 DRYFBAL1
+	biom/dryfire/ballistic/2 DRYFBAL2
 
-	$random biom/weap/dryfire/ballistic
+	$random biom/dryfire/ballistic
 	{
-		biom/weap/dryfire/ballistic/0
-		biom/weap/dryfire/ballistic/1
-		biom/weap/dryfire/ballistic/2
+		biom/dryfire/ballistic/0
+		biom/dryfire/ballistic/1
+		biom/dryfire/ballistic/2
 	}
 
 // Weapons, caster cannon //////////////////////////////////////////////////////
 
-	biom/weap/castercannon/charge CSC1_0
-	biom/weap/castercannon/fire CSC1_1
-
-// Weapons, combat pistol //////////////////////////////////////////////////////
-
-	biom/weap/servicepistol/fire/0 SVP1_0
-	biom/weap/servicepistol/fire/1 SVP1_1
-	biom/weap/servicepistol/fire/2 SVP1_2
-
-	$random biom/weap/servicepistol/fire
-	{
-		biom/weap/servicepistol/fire/0
-		biom/weap/servicepistol/fire/1
-		biom/weap/servicepistol/fire/2
-	}
+	biom/castercannon/charge CSC1_0
+	biom/castercannon/fire CSC1_1
 
 // Weapons, GPMG ///////////////////////////////////////////////////////////////
 
-	biom/weap/gpmg/fire/0 GMG1_0
-	biom/weap/gpmg/fire/1 GMG1_1
-	biom/weap/gpmg/fire/2 GMG1_2
+	biom/gpmg/fire/0 GMG1_0
+	biom/gpmg/fire/1 GMG1_1
+	biom/gpmg/fire/2 GMG1_2
 
-	$random biom/weap/gpmg/fire
+	$random biom/gpmg/fire
 	{
-		biom/weap/gpmg/fire/0
-		biom/weap/gpmg/fire/1
-		biom/weap/gpmg/fire/2
+		biom/gpmg/fire/0
+		biom/gpmg/fire/1
+		biom/gpmg/fire/2
 	}
 
 // Weapons, pump shotgun ///////////////////////////////////////////////////////
 
-	biom/weap/pumpshotgun/fire/0 870F_0
-	biom/weap/pumpshotgun/fire/1 870F_1
-	biom/weap/pumpshotgun/fire/2 870F_2
+	biom/pumpshotgun/fire/0 870F_0
+	biom/pumpshotgun/fire/1 870F_1
+	biom/pumpshotgun/fire/2 870F_2
 
-	$random biom/weap/pumpshotgun/fire
+	$random biom/pumpshotgun/fire
 	{
-		biom/weap/pumpshotgun/fire/0
-		biom/weap/pumpshotgun/fire/1
-		biom/weap/pumpshotgun/fire/2
+		biom/pumpshotgun/fire/0
+		biom/pumpshotgun/fire/1
+		biom/pumpshotgun/fire/2
 	}
 
-	biom/weap/pumpshotgun/pumpback PUMPBACK
-	biom/weap/pumpshotgun/pumpforward PUMPFORW
+	biom/pumpshotgun/pumpback PUMPBACK
+	biom/pumpshotgun/pumpforward PUMPFORW
+
+// Weapons, service pistol /////////////////////////////////////////////////////
+
+	biom/servicepistol/fire/0 SVP1_0
+	biom/servicepistol/fire/1 SVP1_1
+	biom/servicepistol/fire/2 SVP1_2
+
+	$random biom/servicepistol/fire
+	{
+		biom/servicepistol/fire/0
+		biom/servicepistol/fire/1
+		biom/servicepistol/fire/2
+	}

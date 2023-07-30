@@ -50,7 +50,7 @@ class biom_ServicePistol : biom_Weapon
 		// Baseline time: 10 tics; 9 fewer than the vanilla Pistol.
 		SVPA A 1 offset(0 + 5, 32 + 5)
 		{
-			A_StartSound("biom/weap/servicepistol/fire", CHAN_AUTO);
+			A_StartSound("biom/servicepistol/fire", CHAN_AUTO);
 			A_GunFlash();
 			A_biom_Recoil('biom_recoil_Handgun');
 		}
@@ -62,7 +62,7 @@ class biom_ServicePistol : biom_Weapon
 	Dryfire:
 		SVPA A 1 offset(0, 32 + 1);
 		#### # 1 offset(0, 32 + 2);
-		#### # 1 offset(0, 32 + 3) A_StartSound("biom/weap/dryfire/ballistic");
+		#### # 1 offset(0, 32 + 3) A_StartSound("biom/dryfire/ballistic");
 		#### # 1 offset(0, 32 + 2);
 		#### # 1 offset(0, 32 + 1);
 		goto Ready.Main;

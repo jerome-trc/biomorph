@@ -43,7 +43,7 @@ class biom_GPMG : biom_Weapon
 		// Baseline time: 4 ticks, like the vanilla Chaingun.
 		GMGA A 1 offset(0 + 5, 32 + 5)
 		{
-			A_StartSound("biom/weap/gpmg/fire", CHAN_AUTO);
+			A_StartSound("biom/gpmg/fire", CHAN_AUTO);
 			A_GunFlash();
 			A_biom_Recoil('biom_recoil_Autogun');
 		}
@@ -54,7 +54,7 @@ class biom_GPMG : biom_Weapon
 	Dryfire:
 		GMGA A 1 offset(0, 32 + 1);
 		#### # 1 offset(0, 32 + 2);
-		#### # 1 offset(0, 32 + 3) A_StartSound("biom/weap/dryfire/ballistic");
+		#### # 1 offset(0, 32 + 3) A_StartSound("biom/dryfire/ballistic");
 		#### # 1 offset(0, 32 + 2);
 		#### # 1 offset(0, 32 + 1);
 		goto Ready.Main;

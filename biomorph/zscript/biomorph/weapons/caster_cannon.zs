@@ -35,14 +35,14 @@ class biom_CasterCannon : biom_Weapon
 		loop;
 	Fire:
 		CSCA A 27 {
-			A_StartSound("biom/weap/castercannon/charge", CHAN_AUTO);
+			A_StartSound("biom/castercannon/charge", CHAN_AUTO);
 			A_AlertMonsters(400);
 		}
 	Fire.Main:
 		CSCA A 1 {
 			A_biom_Recoil('biom_recoil_BFG');
 			A_AlertMonsters();
-			A_StartSound("biom/weap/castercannon/fire", CHAN_AUTO);
+			A_StartSound("biom/castercannon/fire", CHAN_AUTO);
 			A_FireProjectile('biom_CasterCannonRayEmitter', 0.0, false);
 			A_biom_CasterCannonRailAttacks();
 		}
@@ -58,7 +58,7 @@ class biom_CasterCannon : biom_Weapon
 	Dryfire:
 		CSCA A 1 offset(0, 32 + 1);
 		#### # 1 offset(0, 32 + 2);
-		#### # 1 offset(0, 32 + 3) A_StartSound("biom/weap/dryfire/ballistic");
+		#### # 1 offset(0, 32 + 3) A_StartSound("biom/dryfire/ballistic");
 		#### # 1 offset(0, 32 + 2);
 		#### # 1 offset(0, 32 + 1);
 		goto Ready.Main;
