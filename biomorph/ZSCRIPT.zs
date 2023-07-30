@@ -55,6 +55,7 @@ class Biomorph abstract
 #include "zscript/biomorph/pickup.zs"
 #include "zscript/biomorph/player.zs"
 #include "zscript/biomorph/powerups.zs"
+#include "zscript/biomorph/puffs.zs"
 #include "zscript/biomorph/recoil.zs"
 #include "zscript/biomorph/sbar.zs"
 #include "zscript/biomorph/static.zs"

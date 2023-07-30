@@ -7,6 +7,10 @@ class biom_ServicePistol : biom_Weapon
 
 	flagdef slideBack: dynFlags, 31;
 
+	protected uint magazine;
+
+	const MAGAZINE_CAPACITY = 7;
+
 	Default
 	{
 		Tag "$BIOM_SERVICEPISTOL_TAG";
@@ -53,6 +57,7 @@ class biom_ServicePistol : biom_Weapon
 			A_StartSound("biom/servicepistol/fire", CHAN_AUTO);
 			A_GunFlash();
 			A_biom_Recoil('biom_recoil_Handgun');
+			A_FireBullets(0.5, 0.5, -1, RandomPick(22, 24), 'biom_BulletPuff', FBF_NORANDOM);
 		}
 		SVP1 C 1 offset(0 + 3, 32 + 3);
 		SVP1 D 1 offset(0 + 2, 32 + 2);
@@ -91,6 +96,18 @@ class biom_ServicePistol : biom_Weapon
 		SVPR H 4;
 		SVPR I 4;
 		goto Ready.Main;
+	}
+
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+		self.magazine = biom_ServicePistol.MAGAZINE_CAPACITY;
+	}
+
+	override void DetachFromOwner()
+	{
+		super.DetachFromOwner();
+		self.magazine = 0;
 	}
 }
 
