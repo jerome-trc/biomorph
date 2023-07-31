@@ -15,7 +15,6 @@ class biom_ServicePistol : biom_Weapon
 	{
 		Tag "$BIOM_SERVICEPISTOL_TAG";
 		Obituary "$BIOM_SERVICEPISTOL_OB";
-		Scale 0.33;
 
 		Inventory.Icon 'SVPZZ0';
 		Inventory.PickupMessage "$BIOM_SERVICEPISTOL_PKUP";
