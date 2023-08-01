@@ -57,6 +57,7 @@ class biom_TacticalShotgun : biom_Weapon
 			A_GunFlash();
 			A_FireBullets(4.0, 0.5, 10, 5, 'biom_BulletPuff', FBF_NONE);
 			A_biom_Recoil('biom_recoil_Shotgun');
+			A_AlertMonsters();
 			invoker.magazine -= 1;
 			invoker.bRoundChambered = false;
 		}

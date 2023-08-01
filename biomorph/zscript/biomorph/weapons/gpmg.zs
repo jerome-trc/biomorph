@@ -46,11 +46,12 @@ class biom_GPMG : biom_Weapon
 		// Baseline time: 4 ticks, like the vanilla Chaingun.
 		GMGA A 1 offset(0 + 5, 32 + 5)
 		{
+			A_FireBullets(3.0, 3.0, 1, RandomPick(18, 19), 'biom_BulletPuff', FBF_NORANDOM);
+			invoker.DepleteAmmo(false, false);
+			A_AlertMonsters();
 			A_StartSound("biom/gpmg/fire", CHAN_AUTO);
 			A_GunFlash();
 			A_biom_Recoil('biom_recoil_Autogun');
-			A_FireBullets(3.0, 3.0, 1, RandomPick(18, 19), 'biom_BulletPuff', FBF_NORANDOM);
-			invoker.DepleteAmmo(false, false);
 		}
 		GMGA A 1 offset(0 + 3, 32 + 3);
 		GMGA A 1 offset(0 + 2, 32 + 2);

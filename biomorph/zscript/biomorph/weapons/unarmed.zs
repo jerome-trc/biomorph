@@ -37,10 +37,13 @@ class biom_Unarmed : biom_Weapon
 	Rake.Left:
 		H2HC B 4 { invoker.bRightHand = true; }
 		H2HC C 1 A_biom_Recoil('biom_recoil_Rake');
-		H2HC D 2 A_biom_UnarmedFireBullets;
-		H2HC E 1 A_biom_UnarmedFireBullets;
-		H2HC F 1 A_biom_UnarmedFireBullets;
-		H2HC G 2 A_biom_UnarmedFireBullets;
+		H2HC D 2 {
+			A_biom_UnarmedAttack();
+			A_AlertMonsters();
+		}
+		H2HC E 1 A_biom_UnarmedAttack;
+		H2HC F 1 A_biom_UnarmedAttack;
+		H2HC G 2 A_biom_UnarmedAttack;
 		H2HC H 3;
 		H2HC I 4;
 		TNT1 A 4;
@@ -52,10 +55,13 @@ class biom_Unarmed : biom_Weapon
 	Rake.Right:
 		H2HC J 4 { invoker.bRightHand = false; }
 		H2HC K 1 A_biom_Recoil('biom_recoil_Rake');
-		H2HC L 2 A_biom_UnarmedFireBullets;
-		H2HC M 1 A_biom_UnarmedFireBullets;
-		H2HC N 1 A_biom_UnarmedFireBullets;
-		H2HC O 2 A_biom_UnarmedFireBullets;
+		H2HC L 2 {
+			A_biom_UnarmedAttack();
+			A_AlertMonsters();
+		}
+		H2HC M 1 A_biom_UnarmedAttack;
+		H2HC N 1 A_biom_UnarmedAttack;
+		H2HC O 2 A_biom_UnarmedAttack;
 		H2HC P 3;
 		H2HC Q 4;
 		TNT1 A 4;
@@ -66,7 +72,7 @@ class biom_Unarmed : biom_Weapon
 		goto Ready;
 	}
 
-	protected action void A_biom_UnarmedFireBullets()
+	protected action void A_biom_UnarmedAttack()
 	{
 		int damage = Random(20, 22);
 

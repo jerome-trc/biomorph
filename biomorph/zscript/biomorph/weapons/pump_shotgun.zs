@@ -45,11 +45,12 @@ class biom_PumpShotgun : biom_Weapon
 		870A A 1;
 		870A A 2 offset(0 + 7, 32 + 7)
 		{
+			A_FireBullets(4.0, 0.5, 10, 5, 'biom_BulletPuff', FBF_NONE);
+			invoker.DepleteAmmo(false, false);
+			A_AlertMonsters();
 			A_StartSound("biom/pumpshotgun/fire", CHAN_WEAPON);
 			A_GunFlash();
-			A_FireBullets(4.0, 0.5, 10, 5, 'biom_BulletPuff', FBF_NONE);
 			A_biom_Recoil('biom_recoil_Shotgun');
-			invoker.DepleteAmmo(false, false);
 		}
 		870A A 1 offset(0 + 5, 32 + 5);
 		870A A 1 offset(0 + 2, 32 + 2);
