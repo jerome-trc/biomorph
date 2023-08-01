@@ -67,6 +67,9 @@
 		biom/dryfire/ballistic/2
 	}
 
+	biom/shotgunpump/back PUMPBACK
+	biom/shotgunpump/forward PUMPFORW
+
 // Weapons, caster cannon //////////////////////////////////////////////////////
 
 	biom/castercannon/charge CSC1_0
@@ -85,22 +88,6 @@
 		biom/gpmg/fire/2
 	}
 
-// Weapons, pump shotgun ///////////////////////////////////////////////////////
-
-	biom/pumpshotgun/fire/0 870F_0
-	biom/pumpshotgun/fire/1 870F_1
-	biom/pumpshotgun/fire/2 870F_2
-
-	$random biom/pumpshotgun/fire
-	{
-		biom/pumpshotgun/fire/0
-		biom/pumpshotgun/fire/1
-		biom/pumpshotgun/fire/2
-	}
-
-	biom/pumpshotgun/pumpback PUMPBACK
-	biom/pumpshotgun/pumpforward PUMPFORW
-
 // Weapons, service pistol /////////////////////////////////////////////////////
 
 	biom/servicepistol/fire/0 SVP1_0
@@ -112,4 +99,17 @@
 		biom/servicepistol/fire/0
 		biom/servicepistol/fire/1
 		biom/servicepistol/fire/2
+	}
+
+// Weapons, tactical shotgun ///////////////////////////////////////////////////////
+
+	biom/tacshotgun/fire/0 TSGF_0
+	biom/tacshotgun/fire/1 TSGF_1
+	biom/tacshotgun/fire/2 TSGF_2
+
+	$random biom/tacshotgun/fire
+	{
+		biom/tacshotgun/fire/0
+		biom/tacshotgun/fire/1
+		biom/tacshotgun/fire/2
 	}

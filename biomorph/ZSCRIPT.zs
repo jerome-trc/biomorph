@@ -83,4 +83,5 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/manpat.zs"
 #include "zscript/biomorph/weapons/pump_shotgun.zs"
 #include "zscript/biomorph/weapons/service-pistol.zs"
+#include "zscript/biomorph/weapons/tactical-shotgun.zs"
 #include "zscript/biomorph/weapons/unarmed.zs"

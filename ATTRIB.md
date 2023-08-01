@@ -60,6 +60,8 @@ The following sprites are derived partially from the work of Realm667 user Capta
 - The Pump Shotgun (sprite set 870F)
 - The Service Pistol (sprite set SVP1)
 
+[This spritesheet](https://forum.zdoom.org/viewtopic.php?p=719301#p719301) by torridgristle provided the basis used to create muzzle flashes for the Tactical Shotgun (sprite set TSG1).
+
 ## Fonts
 
 The "Jenocide" family of fonts is the work of James "Jimmy" Paddock and is derived from "Archery Black" by ShyFonts.
@@ -82,9 +84,9 @@ https://forum.zdoom.org/viewtopic.php?f=37&t=65362
 The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY 3.0:
 
 - joblaudiopack.zip/
-	- g_ithaca_nopump_1.wav (870F_0)
-	- g_ithaca_nopump_2.wav (870F_1)
-	- g_ithaca_nopump_3.wav (870F_2)
+	- g_ithaca_nopump_1.wav (TSG1_0)
+	- g_ithaca_nopump_2.wav (TSG1_1)
+	- g_ithaca_nopump_3.wav (TSG1_2)
 - jobl_snd_pack_2.zip/
 	- shotguns/
 		- shotpumpback.wav (PUMPBACK)
@@ -136,6 +138,7 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 The following models are provided by [TastyTony](https://sketchfab.com/TastyTony) under the Creative Commons Attribution 4.0 License:
 - ["Low-Poly Jericho 941](https://sketchfab.com/3d-models/low-poly-jericho-941-8cdb3801dc9e4815b3b8f5e0e4a82152) (used to render sprites for the Service Pistol)
 - ["Low-Poly Keltec KSG"](https://sketchfab.com/3d-models/low-poly-keltec-ksg-6a49a720a5c44ce2acee91d094d6e03d) (used to render sprites for the Tactical Shotgun)
+- ["Low-Poly SKO-12"](https://sketchfab.com/3d-models/low-poly-sko-12-a59601a679214761aed579457d82dfc0) (used as part of the model used to render sprites for the Tactical Shotgun)
 - ["Low-Poly Ultimax 100 Mk II"](https://sketchfab.com/3d-models/low-poly-ultimax-100-mk-ii-0d4aab1cd2dc4fd2866c2a96fb6b6fee) (used to render sprites for the GPMG)
 
 ## 3D Materials

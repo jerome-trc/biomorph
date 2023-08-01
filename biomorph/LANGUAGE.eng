@@ -145,6 +145,10 @@
 	BIOM_SERVICEPISTOL_PKUP = "\c[White]Procured a service pistol.";
 	BIOM_SERVICEPISTOL_OB = "%k served %o summary execution with a service pistol.";
 
+	BIOM_TACTICALSHOTGUN_TAG = "\c[White]Tactical Shotgun";
+	BIOM_TACTICALSHOTGUN_PKUP = "\c[White]Procured a \c[Cyan]tactical shotgun\c[White].";
+	BIOM_TACTICALSHOTGUN_OB = "%k wasted %o with a tactical shotgun.";
+
 // Mutators ////////////////////////////////////////////////////////////////////
 // Menu, game options //////////////////////////////////////////////////////////
 

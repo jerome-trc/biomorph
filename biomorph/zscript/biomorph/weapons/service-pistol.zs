@@ -117,9 +117,18 @@ class biom_ServicePistol : biom_Weapon
 		self.magazine = 0;
 	}
 
-	override bool, int, int GetMagazine(bool secondary) const
+	override bool GetMagazine(in out biom_Magazine data, bool secondary) const
 	{
-		return true, self.magazine, biom_ServicePistol.MAGAZINE_CAPACITY;
+		data.current = self.magazine;
+		data.max = biom_TacticalShotgun.MAGAZINE_CAPACITY;
+		data.cost = 1;
+		data.output = 1;
+		return true;
+	}
+
+	override void FillMagazine(uint amt)
+	{
+		self.magazine += amt;
 	}
 }
 

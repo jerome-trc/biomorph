@@ -68,14 +68,13 @@ class biom_Weapon : DoomWeapon abstract
 
 	// Virtual/abstract methods ////////////////////////////////////////////////
 
-	/// Should return:
-	/// 1. Whether the weapon has a magazine.
-	/// 2. The magazine's current quantity.
-	/// 3. The magazine's capacity.
-	virtual bool, int, int GetMagazine(bool secondary = false) const
+	/// If you are overriding this, it should return `true`.
+	virtual bool GetMagazine(in out biom_Magazine data, bool secondary = false) const
 	{
-		return false, -1, -1;
+		return false;
 	}
+
+	virtual void FillMagazine(uint amt) {}
 
 	virtual ui void DrawToHUD(biom_StatusBar sbar) const {}
 
@@ -88,12 +87,10 @@ class biom_Weapon : DoomWeapon abstract
 		statelabel dryfire = 'Dryfire'
 	)
 	{
-		if (invoker.SufficientAmmo(secondary))
+		if (invoker.EnoughAmmo(secondary))
 			return state(null);
 
-		let cv = biom_CVar.AutoReloadPre(invoker.owner.player);
-
-		if (!invoker.HasMagazine())
+		if (!invoker.CanReload())
 		{
 			state dfs = ResolveState(dryfire);
 
@@ -102,6 +99,8 @@ class biom_Weapon : DoomWeapon abstract
 			else
 				return ResolveState(fallback);
 		}
+
+		let cv = biom_CVar.AutoReloadPre(invoker.owner.player);
 
 		if (cv == BIOM_CV_AUTOREL_ALWAYS)
 		{
@@ -118,6 +117,18 @@ class biom_Weapon : DoomWeapon abstract
 		}
 	}
 
+	/// Call on a `TNT1 A 0` state at the beginning of a `Reload` state sequence.
+	protected action state A_biom_CheckReload(
+		bool secondary = false,
+		statelabel fallback = 'Ready.Main'
+	)
+	{
+		if (invoker.CanReload(secondary))
+			return state(null);
+		else
+			return ResolveState(fallback);
+	}
+
 	protected action void A_biom_Recoil(
 		class<biom_RecoilThinker> recoil_t,
 		float scale = 1.0,
@@ -125,6 +136,39 @@ class biom_Weapon : DoomWeapon abstract
 	)
 	{
 		biom_RecoilThinker.Create(recoil_t, biom_Weapon(invoker), scale, invert);
+	}
+
+	protected action void A_biom_Reload(
+		uint amt = 0,
+		bool secondary = false
+	)
+	{
+		biom_Magazine mag;
+
+		if (!invoker.GetMagazine(mag, secondary))
+			Biomorph.Unreachable("Tried to reload a magazine-less weapon.");
+
+		if (mag.current >= mag.max)
+			return;
+
+		class<Ammo> reserve_t = !secondary ? invoker.ammoType1 : invoker.ammoType2;
+		int reserve = invoker.owner.CountInv(reserve_t);
+		int toLoad = -1, toDraw = -1;
+
+		if (amt > 0)
+		{
+			toLoad = amt * mag.output;
+		}
+		else
+		{
+			toLoad = mag.max - mag.current;
+			toLoad = int(Floor(float(toLoad) / float(mag.output)));
+		}
+
+		toDraw = Min(toLoad * mag.cost, reserve);
+		toLoad = Min(toLoad, toDraw) * mag.output;
+		invoker.owner.TakeInventory(reserve_t, toDraw);
+		invoker.FillMagazine(toLoad);
 	}
 
 	/// Use to assert that state machine flow does not fall through unintentionally.
@@ -135,19 +179,50 @@ class biom_Weapon : DoomWeapon abstract
 
 	// Ammo helpers ////////////////////////////////////////////////////////////
 
-	bool SufficientAmmo(bool secondary = false) const
+	bool CanReload(bool secondary = false) const
+	{
+		biom_Magazine m;
+
+		if (!self.GetMagazine(m, secondary))
+			return false;
+
+		if (m.current >= m.max)
+			return false;
+
+		Ammo reserve = !secondary ? self.ammo1 : self.ammo2;
+
+		return reserve.amount >= m.cost;
+	}
+
+	bool CheckInfiniteAmmo() const
+	{
+		if (sv_infiniteammo)
+			return true;
+
+		return
+			self.owner != null &&
+			self.owner.FindInventory('PowerInfiniteAmmo', true) != null;
+	}
+
+	bool HasMagazine(bool secondary = false) const
+	{
+		biom_Magazine m;
+		return self.GetMagazine(m, secondary);
+	}
+
+	/// i.e. to fire a round.
+	bool EnoughAmmo(bool secondary = false) const
 	{
 		if (self.CheckInfiniteAmmo())
 			return true;
 
-		int magazine = -1, capacity = -1;
-		bool hasMagazine = false;
-		[hasMagazine, magazine, capacity] = self.GetMagazine(secondary);
+		biom_Magazine mag;
+		bool hasMagazine = self.GetMagazine(mag, secondary);
 
 		if (!secondary)
 		{
 			if (hasMagazine)
-				return magazine >= self.ammoUse1;
+				return mag.current >= self.ammoUse1;
 			else if (self.ammo1 != null)
 				return self.ammo1.amount >= self.ammoUse1;
 			else
@@ -156,28 +231,12 @@ class biom_Weapon : DoomWeapon abstract
 		else
 		{
 			if (hasMagazine)
-				return magazine >= self.ammoUse2;
+				return mag.current >= self.ammoUse2;
 			else if (self.ammo2 != null)
 				return self.ammo2.amount >= self.ammoUse2;
 			else
 				return true;
 		}
-	}
-
-	bool CheckInfiniteAmmo() const
-	{
-		if (sv_infiniteammo)
-			return true;
-
-		return self.owner != null && self.owner.FindInventory('PowerInfiniteAmmo', true) != null;
-	}
-
-	bool HasMagazine(bool secondary = false) const
-	{
-		int magazine = -1, capacity = -1;
-		bool hasMagazine = false;
-		[hasMagazine, magazine, capacity] = self.GetMagazine(secondary);
-		return hasMagazine;
 	}
 }
 
@@ -226,4 +285,11 @@ enum biom_WeaponFamily : uint8
 	BIOM_WEAPFAM_ENERGY = 6,
 	BIOM_WEAPFAM_SUPER = 7,
 	__BIOM_WEAPFAM_COUNT__,
+}
+
+/// A helper structure allowing weapons to succinctly report the "interface"
+/// of their magazine code.
+struct biom_Magazine
+{
+	uint current, max, cost, output;
 }

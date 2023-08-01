@@ -187,19 +187,16 @@ class biom_StatusBar : BaseStatusBar
 
 	void DrawAmmoDetails(biom_Weapon weap, in out int invY)
 	{
-		int magazine = -1, capacity = -1;
-		bool hasMagazine = false;
+		biom_Magazine mag;
 
-		[hasMagazine, magazine, capacity] = weap.GetMagazine();
-
-		if (hasMagazine)
+		if (weap.GetMagazine(mag))
 		{
 			self.DrawString(
 				self.fontBig,
 				String.Format(
 					"%s / %s",
-					FormatNumber(magazine, 3, 6),
-					FormatNumber(capacity, 3, 6)
+					FormatNumber(mag.current, 3, 6),
+					FormatNumber(mag.max, 3, 6)
 				),
 				(-36, invY + 4),
 				DI_TEXT_ALIGN_RIGHT,
