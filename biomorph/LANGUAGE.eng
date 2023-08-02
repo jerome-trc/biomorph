@@ -198,6 +198,11 @@
 
 	BIOM_OPTTITLE = "\c[Cyan]Biomorph:\c[White] Preferences";
 
+	BIOM_OPTCAT_AUDIOVIS = "\c[Green]Visuals and Sounds\c-";
+	BIOM_OPTCAT_BALANCE = "\c[Green]Balance\c-";
+	BIOM_OPTCAT_CONTROL = "\c[Green]Control\c-";
+	BIOM_OPTCAT_GUI = "\c[Green]GUI\c-";
+
 	BIOM_OPTLBL_AUTORELOAD_PRE = "Firing an empty weapon reloads it";
 	BIOM_OPTLBL_AUTORELOAD_POST = "Auto-reload after emptying magazine";
 	BIOM_OPTVAL_AUTOREL_ALWAYS = "Always";
