@@ -109,7 +109,8 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 ARMRBON is courtesy of id Software LLC.
 
 The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), and are all used under the Attribution 4.0 License:
-- BIOPAIN 0 through to 3 (all amplified, 0 slowed down, 1 to 3 sped up) (["Heartbeat, Regular, Single, 01-01, LOOP.wav"](https://freesound.org/people/InspectorJ/sounds/485076/))
+- BIOPAIN 0 through 3 (all amplified, 0 slowed down, 1 to 3 sped up) (["Heartbeat, Regular, Single, 01-01, LOOP.wav"](https://freesound.org/people/InspectorJ/sounds/485076/))
+- BIOMDIE, from the same source as BIOPAIN 0 to 3.
 
 BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people/Slave2theLight/sounds/157023/) by freesound user [Slave2theLight](https://freesound.org/people/Slave2theLight), used under the Attribution 4.0 License.
 

@@ -54,6 +54,9 @@
 		biom/pawn/footstep/normal/9
 	}
 
+	$playersound biomorph other *death BIOMDIE
+	$playersound biomorph other *xdeath BIOMDIE
+
 // Weapons, common /////////////////////////////////////////////////////////////
 
 	biom/dryfire/ballistic/0 DRYFBAL0
