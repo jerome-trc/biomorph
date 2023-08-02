@@ -70,7 +70,8 @@ extend class biom_Utils
 	}
 }
 
-// Functions for checking which level set is being played.
+// Functions for inspecting the user's load configuration (e.g. what IWAD is being
+// used, what levelset is being played, what mods are active).
 extend class biom_Utils
 {
 	/// Checks if the user's mod configuration includes the DoomRL Monster Pack.
@@ -143,6 +144,40 @@ extend class biom_Utils
 		name lxvg_tn = 'Lexicon_VoteGun';
 		class<Weapon> lxvg_t = lxvg_tn;
 		return lxvg_t != null;
+	}
+
+	/// Checks if all of DOOM2's Super Shotgun sprites exist. If one is missing,
+	/// this is taken as a sign that the current IWAD has no Super Shotgun.
+	static bool SuperShotgunExists()
+	{
+		static const name SPRITE_NAMES[] = {
+			'SHT2A0',
+			'SHT2B0',
+			'SHT2C0',
+			'SHT2D0',
+			'SHT2E0',
+			'SHT2F0',
+			'SHT2G0',
+			'SHT2H0',
+			'SHT2I0',
+			'SHT2J0'
+		};
+
+		for (uint i = 0; i < SPRITE_NAMES.Size(); ++i)
+		{
+			let texid = TexMan.CheckForTexture(SPRITE_NAMES[i]);
+
+			if (!texid.Exists())
+				return false;
+
+			if (texid.IsNull())
+				return false;
+
+			if (!texid.IsValid())
+				return false;
+		}
+
+		return true;
 	}
 
 	/// Checks if the current level is from Valiant, its Vaccinated Edition,
@@ -266,5 +301,4 @@ extend class biom_Utils
 
 		return false;
 	}
-
 }

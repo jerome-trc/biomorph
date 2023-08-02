@@ -128,13 +128,14 @@ class biom_Global : Thinker
 		uint ms = MSTime();
 		let ret = new('biom_Global');
 		ret.ChangeStatNum(STAT_STATIC);
+		let ssgExists = biom_Utils.SuperShotgunExists();
 
 		for (uint i = 0; i < MAXPLAYERS; ++i)
 		{
 			if (!playerInGame[i])
 				continue;
 
-			ret.playerData.Push(biom_PlayerData.Create());
+			ret.playerData.Push(biom_PlayerData.Create(ssgExists));
 			ret.playerCount++;
 		}
 
@@ -179,7 +180,7 @@ class biom_PlayerData
 	/// Each subclass of `biom_WeaponData` appears in this array exactly once.
 	array<biom_WeaponData> weaponData;
 
-	static biom_PlayerData Create()
+	static biom_PlayerData Create(bool withSuperShotgun)
 	{
 		let ret = new('biom_PlayerData');
 
@@ -187,7 +188,10 @@ class biom_PlayerData
 		// TODO: What should the starting Chainsaw replacement be?
 		ret.weapons.Push((class<biom_Weapon>)('biom_ServicePistol'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_TacticalShotgun'));
-		ret.weapons.Push((class<biom_Weapon>)('biom_CombatStormgun'));
+
+		if (withSuperShotgun)
+			ret.weapons.Push((class<biom_Weapon>)('biom_CombatStormgun'));
+
 		ret.weapons.Push((class<biom_Weapon>)('biom_GPMG'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_MANPAT'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_BiteRifle'));
