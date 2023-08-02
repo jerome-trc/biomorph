@@ -295,9 +295,84 @@ class biom_StatusBar : BaseStatusBar
 				DI_TEXT_ALIGN_RIGHT,
 				Font.CR_GOLD
 			);
-
-			invY -= 20;
 		}
+
+		{
+			invY -= 12;
+
+			let s3 = self.pawn.FindInventory('biom_Slot4Ammo');
+
+			self.DrawString(
+				self.fontSmall,
+				String.Format(
+					"BULLETS %s/%s",
+					FormatNumber(s3.amount, 3, 6),
+					FormatNumber(s3.maxAmount, 3, 6)
+				),
+				(-16, invY),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_WHITE
+			);
+
+
+		}
+
+		{
+			invY -= 12;
+
+			let s3 = self.pawn.FindInventory('biom_Slot3Ammo');
+
+			self.DrawString(
+				self.fontSmall,
+				String.Format(
+					"SHELLS %s/%s",
+					FormatNumber(s3.amount, 3, 6),
+					FormatNumber(s3.maxAmount, 3, 6)
+				),
+				(-16, invY),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_WHITE
+			);
+		}
+
+		{
+			invY -= 12;
+
+			let s3 = self.pawn.FindInventory('biom_Slot5Ammo');
+
+			self.DrawString(
+				self.fontSmall,
+				String.Format(
+					"GRENADES %s/%s",
+					FormatNumber(s3.amount, 3, 6),
+					FormatNumber(s3.maxAmount, 3, 6)
+				),
+				(-16, invY),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_WHITE
+			);
+
+		}
+
+		{
+			invY -= 12;
+
+			let s3 = self.pawn.FindInventory('biom_Slot67Ammo');
+
+			self.DrawString(
+				self.fontSmall,
+				String.Format(
+					"NANO %s/%s",
+					FormatNumber(s3.amount, 3, 6),
+					FormatNumber(s3.maxAmount, 3, 6)
+				),
+				(-16, invY),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_WHITE
+			);
+		}
+
+		invY -= 20;
 	}
 }
 
