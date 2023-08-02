@@ -233,6 +233,12 @@
 	BIOM_QUITMSG_DRONES =
 		"\c[Purple]Please don't go. The nanites need you. They look up to you.\c-";
 
+// Miscellaneous ///////////////////////////////////////////////////////////////
+
+	BIOM_SBAR_MONSTERCOUNTERPFX = "M";
+	BIOM_SBAR_ITEMCOUNTERPFX = "I";
+	BIOM_SBAR_SECRETCOUNTERPFX = "S";
+
 // Lore ////////////////////////////////////////////////////////////////////////
 
 	BIOM_LORE_MAGICIAN =

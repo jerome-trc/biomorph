@@ -121,6 +121,46 @@ class biom_StatusBar : BaseStatusBar
 			(-44, invY), DI_TEXT_ALIGN_RIGHT,
 			hwc < self.pawn.weaponCapacity ? Font.CR_WHITE : Font.CR_YELLOW
 		);
+
+		self.DrawString(
+			self.fontSmall,
+			String.Format(
+				"\c[White]%s: \c-%s\c[White] / \c-%s",
+				StringTable.Localize("$BIOM_SBAR_MONSTERCOUNTERPFX"),
+				FormatNumber(Level.killed_Monsters, 1, 5),
+				FormatNumber(Level.total_Monsters, 1, 5)
+			),
+			(200, -26), 0,
+			Level.killed_Monsters >= Level.total_Monsters ?
+				Font.CR_GREEN :
+				Font.CR_WHITE
+		);
+		self.DrawString(
+			self.fontSmall,
+			String.Format(
+				"\c[White]%s: \c-%s\c[White] / \c-%s",
+				StringTable.Localize("$BIOM_SBAR_ITEMCOUNTERPFX"),
+				FormatNumber(Level.found_Items, 1, 5),
+				FormatNumber(Level.total_Items, 1, 5)
+			),
+			(200, -18), 0,
+			Level.found_Items >= Level.total_Items ?
+				Font.CR_GREEN :
+				Font.CR_WHITE
+		);
+		self.DrawString(
+			self.fontSmall,
+			String.Format(
+				"\c[White]%s: \c-%s\c[White] / \c-%s",
+				StringTable.Localize("$BIOM_SBAR_SECRETCOUNTERPFX"),
+				FormatNumber(Level.found_Secrets, 1, 2),
+				FormatNumber(Level.total_Secrets, 1, 2)
+			),
+			(200, -10), 0,
+			Level.found_Secrets >= Level.total_Secrets ?
+				Font.CR_GREEN :
+				Font.CR_WHITE
+		);
 	}
 
 	/// Draw powerup icons at top left, along with the
