@@ -224,6 +224,10 @@
 
 // Quit messages ///////////////////////////////////////////////////////////////
 
+	BIOM_QUITMSG_ARMORREPAIR=
+		"\c[White]Picking up \c[Green]light armor "
+		"\c[White]while wearing \c[Green]heavy armor "
+		"\c[White]will repair the latter regardless of how much of it remains.";
 	BIOM_QUITMSG_COWMAP =
 		"\c[Purple]There is no secret cow map.\c-";
 	BIOM_QUITMSG_DRONES =

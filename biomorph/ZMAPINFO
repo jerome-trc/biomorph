@@ -6,6 +6,8 @@ GameInfo
 	StatusBarClass = "biom_StatusBar"
 
 	QuitMessages =
+		// Hints
+		"$BIOM_QUITMSG_ARMORREPAIR",
 		// Flavour/easter egg
 		"$BIOM_QUITMSG_COWMAP", "$BIOM_QUITMSG_DRONES"
 }
