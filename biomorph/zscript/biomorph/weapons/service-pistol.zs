@@ -51,12 +51,7 @@ class biom_ServicePistol : biom_Weapon
 		SVP1 D 1 A_WeaponReady(WRF_ALLOWRELOAD);
 		loop;
 	Fire:
-		TNT1 A 0 {
-			if (invoker.magazine <= 0)
-				return ResolveState('Dryfire');
-
-			return state(null);
-		}
+		TNT1 A 0 A_biom_CheckAmmo;
 		// Baseline time: 10 tics; 9 fewer than the vanilla Pistol.
 		SVPA A 1 offset(0 + 5, 32 + 5)
 		{
@@ -121,7 +116,7 @@ class biom_ServicePistol : biom_Weapon
 	override bool GetMagazine(in out biom_Magazine data, bool secondary) const
 	{
 		data.current = self.magazine;
-		data.max = biom_TacticalShotgun.MAGAZINE_CAPACITY;
+		data.max = biom_ServicePistol.MAGAZINE_CAPACITY;
 		data.cost = 1;
 		data.output = 1;
 		return true;

@@ -191,6 +191,9 @@ class biom_Weapon : DoomWeapon abstract
 
 		Ammo reserve = !secondary ? self.ammo1 : self.ammo2;
 
+		if (reserve == null)
+			return true; // e.g. sidearms.
+
 		return reserve.amount >= m.cost;
 	}
 
