@@ -113,7 +113,9 @@ class biom_StatusBar : BaseStatusBar
 			weap.DrawToHUD(self);
 		}
 
-		let hwc = self.pawn.GetData().weapons.Size() - 1;
+		let pdat = self.pawn.GetData();
+
+		let hwc = pdat.weapons.Size() - 1;
 		self.DrawImage('PISTA0', (-24, invY + 12));
 		self.DrawString(
 			self.fontSmall,
@@ -161,6 +163,19 @@ class biom_StatusBar : BaseStatusBar
 				Font.CR_GREEN :
 				Font.CR_WHITE
 		);
+
+		for (int i = 0; i < pdat.weapons.Size(); ++i)
+		{
+			let defs = GetDefaultByType(pdat.weapons[i]);
+			let carried = self.pawn.FindInventory(pdat.weapons[i]) != null;
+
+			self.DrawTexture(
+				defs.icon,
+				(300 + (20 * i), -10),
+				alpha: carried ? 1.0 : 0.33,
+				scale: (0.25, 0.25)
+			);
+		}
 	}
 
 	/// Draw powerup icons at top left, along with the
