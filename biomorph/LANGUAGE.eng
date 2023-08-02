@@ -114,40 +114,79 @@
 
 // Weapons /////////////////////////////////////////////////////////////////////
 
-	BIOM_BITERIFLE_TAG = "\c[White]Bite Rifle";
-	BIOM_BITERIFLE_PKUP = "\c[White]Procured a \c[Cyan]bite rifle.";
-	BIOM_BITERIFLE_OB = "%k tickled %o to death.";
+	BIOM_BITERIFLE_TAG = "\c[White]Bite Rifle\c-";
+	BIOM_BITERIFLE_PKUP = "\c[White]Procured a \c[Cyan]bite rifle\c[White].";
+	BIOM_BITERIFLE_OB =
+		"\c[Green]%k "
+		"\c[White]tickled "
+		"\c[Red]%o "
+		"\c[White]to death with a \c[Cyan]bite rifle\c[White].";
 
-	BIOM_CASTERCANNON_TAG = "\c[White]Caster Cannon";
-	BIOM_CASTERCANNON_PKUP = "\c[White]Procured a \c[Cyan]caster cannon.";
-	BIOM_CASTERCANNON_OB = "%k field-tested a caster cannon on %o.";
+	BIOM_CASTERCANNON_TAG = "\c[White]Caster Cannon\c-";
+	BIOM_CASTERCANNON_PKUP = "\c[White]Procured a \c[Cyan]caster cannon\c[White].";
+	BIOM_CASTERCANNON_OB =
+		"\c[Green]%k "
+		"\c[White]field-tested a "
+		"\c[Cyan]caster cannon "
+		"\c[White]on "
+		"\c[Red]%o\c[White].";
 
-	BIOM_COMBATSTORMGUN_TAG = "\c[White]Combat Stormgun";
-	BIOM_COMBATSTORMGUN_PKUP = "\c[White]Procured a \c[Cyan]combat stormgun.";
-	BIOM_COMBATSTORMGUN_OB = "%k perforated %o";
+	BIOM_COMBATSTORMGUN_TAG = "\c[White]Combat Stormgun\c-";
+	BIOM_COMBATSTORMGUN_PKUP = "\c[White]Procured a \c[Cyan]combat stormgun\c[White].";
+	BIOM_COMBATSTORMGUN_OB =
+		"\c[Green]%k "
+		"\c[White]perforated "
+		"\c[Red]%o "
+		"\c[White]with a "
+		"\c[Cyan]combat stormgun\c[White].";
 
-	BIOM_GPMG_TAG = "\c[White]G.P.M.G.";
-	BIOM_GPMG_PKUP = "\c[White]Procured a \c[Cyan]general-purpose machine gun.";
-	BIOM_GPMG_OB = "%k riddled %o.";
+	BIOM_GPMG_TAG = "\c[White]G.P.M.G.\c-";
+	BIOM_GPMG_PKUP = "\c[White]Procured a \c[Cyan]general-purpose machine gun\c[White].";
+	BIOM_GPMG_OB =
+		"\c[Green]%k "
+		"\c[White]riddled "
+		"\c[Red]%o "
+		"\c[White]with a "
+		"\c[Cyan]G.P.M.G.";
 
-	BIOM_MANPAT_TAG = "\c[White]M.A.N.P.A.T.";
-	BIOM_MANPAT_PKUP = "\c[White]Procured a \c[Cyan]man-portable anti-tank system.";
-	BIOM_MANPAT_OB = "%k blew %o into chunks.";
+	BIOM_MANPAT_TAG = "\c[White]M.A.N.P.A.T.\c-";
+	BIOM_MANPAT_PKUP = "\c[White]Procured a \c[Cyan]man-portable anti-tank system\c[White].";
+	BIOM_MANPAT_OB =
+		"\c[Green]%k "
+		"\c[White]blew "
+		"\c[Red]%o "
+		"\c[White]into chunks with a "
+		"\c[Cyan]M.A.N.P.A.T.";
 
-	BIOM_UNARMED_TAG = "\c[White]Combatives";
-	BIOM_UNARMED_OB = "%k beat %o to death.";
+	BIOM_UNARMED_TAG = "\c[White]Combatives\c-";
+	BIOM_UNARMED_OB = "\c[Green]%k \c[White]clawed \c[Red]%o \c[White]open.";
 
-	BIOM_PUMPSHOTGUN_TAG = "\c[White]Pump Shotgun";
-	BIOM_PUMPSHOTGUN_PKUP = "\c[White]Procured a \c[Cyan]pump shotgun.";
-	BIOM_PUMPSHOTGUN_OB = "%k oppressed %o with a pump shotgun.";
+	BIOM_PUMPSHOTGUN_TAG = "\c[White]Pump Shotgun\c-";
+	BIOM_PUMPSHOTGUN_PKUP = "\c[White]Procured a \c[Cyan]pump shotgun\c[White].";
+	BIOM_PUMPSHOTGUN_OB =
+		"\c[Green]%k "
+		"\c[White]oppressed "
+		"\c[Red]%o "
+		"\c[White]with a "
+		"\c[Cyan]pump shotgun\c[White].";
 
-	BIOM_SERVICEPISTOL_TAG = "\c[White]Service Pistol";
-	BIOM_SERVICEPISTOL_PKUP = "\c[White]Procured a service pistol.";
-	BIOM_SERVICEPISTOL_OB = "%k served %o summary execution with a service pistol.";
+	BIOM_SERVICEPISTOL_TAG = "\c[White]Service Pistol\c-";
+	BIOM_SERVICEPISTOL_PKUP = "\c[White]Procured a \c[Cyan]service pistol\c[White].";
+	BIOM_SERVICEPISTOL_OB =
+		"\c[Green]%k "
+		"\c[White]served "
+		"\c[Red]%o "
+		"\c[White]summary execution with a "
+		"\c[Cyan]service pistol\c[White].";
 
-	BIOM_TACTICALSHOTGUN_TAG = "\c[White]Tactical Shotgun";
+	BIOM_TACTICALSHOTGUN_TAG = "\c[White]Tactical Shotgun\c-";
 	BIOM_TACTICALSHOTGUN_PKUP = "\c[White]Procured a \c[Cyan]tactical shotgun\c[White].";
-	BIOM_TACTICALSHOTGUN_OB = "%k wasted %o with a tactical shotgun.";
+	BIOM_TACTICALSHOTGUN_OB =
+		"\c[Green]%k "
+		"\c[White]wasted "
+		"\c[Red]%o "
+		"\c[White]with a "
+		"\c[Cyan]tactical shotgun\c[White].";
 
 // Mutators ////////////////////////////////////////////////////////////////////
 // Menu, game options //////////////////////////////////////////////////////////
