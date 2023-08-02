@@ -45,6 +45,7 @@ class biom_Slot3Ammo : Ammo
 	{
 		Tag "$BIOM_SLOT3AMMO_TAG";
 		Inventory.Icon 'SHELA0';
+		Inventory.Amount 0;
 		Inventory.MaxAmount 50;
 		Ammo.BackpackAmount 4;
 		Ammo.BackpackMaxAmount 100;
@@ -57,6 +58,7 @@ class biom_Slot4Ammo : Ammo
 	{
 		Tag "$BIOM_SLOT4AMMO_TAG";
 		Inventory.Icon 'CLIPA0';
+		Inventory.Amount 0;
 		Inventory.MaxAmount 200;
 		Ammo.BackpackAmount 10;
 		Ammo.BackpackMaxAmount 400;
@@ -69,6 +71,7 @@ class biom_Slot5Ammo : Ammo
 	{
 		Tag "$BIOM_SLOT5AMMO_TAG";
 		Inventory.Icon 'ROCKA0';
+		Inventory.Amount 0;
 		Inventory.MaxAmount 50;
 		Ammo.BackpackAmount 1;
 		Ammo.BackpackMaxAmount 100;
@@ -81,6 +84,7 @@ class biom_Slot67Ammo : Ammo
 	{
 		Tag "$BIOM_SLOT67AMMO_TAG";
 		Inventory.Icon 'CELLA0';
+		Inventory.Amount 0;
 		Inventory.MaxAmount 300;
 		Ammo.BackpackAmount 20;
 		Ammo.BackpackMaxAmount 600;
