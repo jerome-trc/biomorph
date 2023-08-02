@@ -15,6 +15,11 @@
 
 	BIOM_MODTITLE = "Biomorph";
 
+// Player pawn /////////////////////////////////////////////////////////////////
+
+	BIOM_PAWN_DISPLAYNAME = "Biomorph";
+	BIOM_PAWN_DISPLAYNAME_LAPSING = "Lapsing Biomorph";
+
 // Health //////////////////////////////////////////////////////////////////////
 
 	BIOM_HEALTHBONUS_TAG = "\c[LightBlue]Health Cocktail\c-";

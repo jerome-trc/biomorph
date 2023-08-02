@@ -7,11 +7,11 @@ class biom_Player : DoomPlayer
 
 	Default
 	{
-		Tag "$BIOM_MODTITLE";
+		Tag "$BIOM_PAWN_DISPLAYNAME";
 		Species 'Player';
 		BloodColor 'Cyan';
 
-		Player.DisplayName "$BIOM_MODTITLE";
+		Player.DisplayName "$BIOM_PAWN_DISPLAYNAME";
 		Player.SoundClass 'biomorph';
 
 		Player.StartItem 'biom_Slot3Ammo', 0;
@@ -105,5 +105,28 @@ class biom_Player : DoomPlayer
 	readonly<biom_Player> AsConst() const
 	{
 		return self;
+	}
+}
+
+class biom_PlayerPistolStart : biom_Player
+{
+	Default
+	{
+		Player.DisplayName "$BIOM_PAWN_DISPLAYNAME_LAPSING";
+	}
+
+	override void PreTravelled()
+	{
+		super.PreTravelled();
+		self.ClearInventory();
+		self.GiveDefaultInventory();
+		self.A_SetHealth(self.GetMaxHealth());
+
+		let bArmor = BasicArmor(self.FindInventory('BasicArmor'));
+		bArmor.savePercent = 0;
+		bArmor.armorType = 'None';
+		textureID nullTexID;
+		nullTexID.SetNull();
+		bArmor.icon = nullTexID;
 	}
 }

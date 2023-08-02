@@ -2,7 +2,8 @@ GameInfo
 {
 	AddEventHandlers = "biom_EventHandler", "biom_Static"
 	BackpackType = "biom_Backpack"
-	PlayerClasses = "biom_Player"
+	NoRandomPlayerClass = true
+	PlayerClasses = "biom_Player", "biom_PlayerPistolStart"
 	StatusBarClass = "biom_StatusBar"
 
 	QuitMessages =
