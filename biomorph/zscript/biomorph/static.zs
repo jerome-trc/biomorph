@@ -29,6 +29,24 @@ class biom_Static : StaticEventHandler
 
 			self.PopulateLegenDoomLoot();
 		}
+
+		name valiantCG_tn = 'ValiantChaingun';
+
+		if ((class<Weapon>)(valiantCG_tn) != null)
+		{
+			if (developer >= 1)
+			{
+				Console.PrintF(
+					Biomorph.LOGPFX_DEBUG ..
+					"Preparing Valiant replacement classes..."
+				);
+			}
+
+			self.replacements.Insert("ValiantPistol", "biom_wpk_Slot2");
+			self.replacements.Insert("ValiantShotgun", "biom_wpks_Shotgun");
+			self.replacements.Insert("ValiantChaingun", "biom_wpks_Chaingun");
+			self.replacements.Insert("ValiantSSG", "biom_wpks_SuperShotgun");
+		}
 	}
 
 	class<Actor> GetReplacement(name type)
