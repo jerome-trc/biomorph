@@ -28,7 +28,9 @@ class biom_CasterCannon : biom_Weapon
 		CSCA A 1 A_Raise;
 		loop;
 	Deselect:
-		CSCA A 1 A_Lower;
+	Deselect.Repeat:
+		TNT1 A 1 A_Lower;
+		loop;
 	Ready:
 	Ready.Main:
 		CSCA A 1 A_WeaponReady;
