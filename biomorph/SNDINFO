@@ -73,6 +73,10 @@
 	biom/shotgunpump/back PUMPBACK
 	biom/shotgunpump/forward PUMPFORW
 
+// Weapons, bite rifle /////////////////////////////////////////////////////////
+
+	biom/biterifle/fire/0 BTR1_0
+
 // Weapons, caster cannon //////////////////////////////////////////////////////
 
 	biom/castercannon/charge CSC1_0

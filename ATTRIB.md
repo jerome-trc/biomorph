@@ -62,6 +62,8 @@ The following sprites are derived partially from the work of Realm667 user Capta
 
 [This spritesheet](https://forum.zdoom.org/viewtopic.php?p=719301#p719301) by torridgristle provided the basis used to create muzzle flashes for the Tactical Shotgun (sprite set TSG1).
 
+[This spritesheet](https://forum.zdoom.org/viewtopic.php?p=801092#p801092) by (ZDoom forum user) johnny provided the basis used to create muzzle flashes for the Bite Rifle (sprite set BTR1).
+
 ## Fonts
 
 The "Jenocide" family of fonts is the work of James "Jimmy" Paddock and is derived from "Archery Black" by ShyFonts.
@@ -74,8 +76,9 @@ Doom and Doom II's base sounds are the sole property of id Software LLC.
 
 The following audio files are provided courtesy of the YouTube channel [GunsOfTheWorld](https://www.youtube.com/@GunsOfTheWorld):
 
-- GMG1_0 through 2 (https://www.youtube.com/watch?v=DAUIi05Rckc) <!-- Full-Auto SCAR-L -->
-- SVP1_0 through 2 (https://www.youtube.com/watch?v=5B8HE3RiBfQ) <!-- Desert Eagle 50 AE Part 2 -->
+- BTR1_0 (https://www.youtube.com/watch?v=JhSIFarVuFs) <!-- Remington Gamemaster Model 760 Carbine -->
+- GMG1_ 0 through 2 (https://www.youtube.com/watch?v=DAUIi05Rckc) <!-- Full-Auto SCAR-L -->
+- SVP1_ 0 through 2 (https://www.youtube.com/watch?v=5B8HE3RiBfQ) <!-- Desert Eagle 50 AE Part 2 -->
 
 #### Joblez_I
 
@@ -135,6 +138,8 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 ["Low-Poly Magpul RVG"](https://sketchfab.com/3d-models/low-poly-magpul-rvg-86b3580a65c441db9d3401712c5c9b6d) (used as part of the model used to render sprites for the Tactical Shotgun) is provided by [notcplkerry](https://sketchfab.com/notcplkerry) under the Creative Commons Attribution 4.0 License.
 
 ["Remington 870 with Magpul furniture"](https://sketchfab.com/3d-models/remington-870-with-magpul-furniture-07d1fce010ef4127931e8ddd516713f8) (used to render sprites for the Pump Shotgun) is provided by [Medji](https://sketchfab.com/Medji) under the Creative Commons Attribution 4.0 License.
+
+["SMG-M32](https://sketchfab.com/3d-models/smg-m32-3a5f98f75e804e5888379cbe640cc883) (used to render sprites for the Bite Rifle) is provided by [Frostoise](https://sketchfab.com/Frostoise) under the Creative Commons Attribution 4.0 License.
 
 The following models are provided by [TastyTony](https://sketchfab.com/TastyTony) under the Creative Commons Attribution 4.0 License:
 - ["Low-Poly Jericho 941](https://sketchfab.com/3d-models/low-poly-jericho-941-8cdb3801dc9e4815b3b8f5e0e4a82152) (used to render sprites for the Service Pistol)
