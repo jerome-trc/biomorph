@@ -1,8 +1,6 @@
 /// A Plasma Rifle counterpart.
 class biom_BiteRifle : biom_Weapon
 {
-	protected biom_wdat_BiteRifle data;
-
 	Default
 	{
 		Tag "$BIOM_BITERIFLE_TAG";

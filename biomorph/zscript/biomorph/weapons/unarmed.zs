@@ -2,8 +2,6 @@ class biom_Unarmed : biom_Weapon
 {
 	flagdef rightHand: DynFlags, 31;
 
-	protected biom_wdat_Unarmed data;
-
 	Default
 	{
 		+WEAPON.MELEEWEAPON

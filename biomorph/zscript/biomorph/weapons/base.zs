@@ -19,19 +19,21 @@ class biom_Weapon : DoomWeapon abstract
 	const SLOTPRIO_LOW = 0.3;
 	const SLOTPRIO_MIN = 0.0;
 
-	meta biom_WeaponGrade grade;
+	meta biom_WeaponGrade GRADE;
 	property Grade: grade;
 
 	meta biom_WeaponFamily FAMILY;
 	property Family: FAMILY;
 
 	/// Should never be `null`.
-	meta class<biom_WeaponData> dataClass;
-	property DataClass: dataClass;
+	meta class<biom_WeaponData> DATA_CLASS;
+	property DataClass: DATA_CLASS;
 
 	private uint dynFlags;
 	flagdef hitGround: dynFlags, 0;
 	// The last 4 flags (28 to 31) are reserved for derived classes.
+
+	protected readonly<biom_WeaponData> data;
 
 	Default
 	{
@@ -64,6 +66,33 @@ class biom_Weapon : DoomWeapon abstract
 	Spawn:
 		TNT1 A 0;
 		stop;
+	}
+
+	// Overrides ///////////////////////////////////////////////////////////////
+
+	override void AttachToOwner(Actor other)
+	{
+		super.AttachToOwner(other);
+
+		let pawn = biom_Player(other);
+
+		if (pawn == null)
+			return;
+
+		let pdat = pawn.GetOrInitData();
+
+		Biomorph.Assert(
+			pdat != null,
+			"Failed to get pawn data in `biom_Weapon::AttachToOwner`."
+		);
+
+		self.data = pdat.GetWeaponData(self.DATA_CLASS);
+	}
+
+	override void DetachFromOwner()
+	{
+		super.DetachFromOwner();
+		self.data = null;
 	}
 
 	// Virtual/abstract methods ////////////////////////////////////////////////

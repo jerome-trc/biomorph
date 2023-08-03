@@ -3,8 +3,6 @@
 /// Abbreviation: `TSG`
 class biom_TacticalShotgun : biom_Weapon
 {
-	protected biom_wdat_TacticalShotgun data;
-
 	flagdef roundChambered: dynFlags, 31;
 
 	protected uint magazine;

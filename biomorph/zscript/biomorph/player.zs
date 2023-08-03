@@ -32,7 +32,13 @@ class biom_Player : DoomPlayer
 	override void PostBeginPlay()
 	{
 		super.PostBeginPlay();
+
 		self.data = biom_Global.Get().FindPlayerData(self.player);
+
+		Biomorph.Assert(
+			self.data != null,
+			"Failed to get pawn data in `biom_Player::PostBeginPlay`."
+		);
 	}
 
 	override void Tick()
@@ -99,6 +105,17 @@ class biom_Player : DoomPlayer
 
 	readonly<biom_PlayerData> GetData() const
 	{
+		return self.data;
+	}
+
+	/// The status bar needs `GetData` to be `const` but weapon attach-to-owner
+	/// code runs before `EventHandler::NewGame` and `PlayerPawn::PostBeginPlay`,
+	/// so it needs special handling.
+	readonly<biom_PlayerData> GetOrInitData()
+	{
+		if (self.data == null)
+			self.data = biom_Global.Get().FindPlayerData(self.player);
+
 		return self.data;
 	}
 

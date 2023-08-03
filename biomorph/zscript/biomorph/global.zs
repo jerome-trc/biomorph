@@ -29,7 +29,7 @@ class biom_Global : Thinker
 			if (players[i] == pInfo)
 				return self.playerData[i].AsConst();
 
-		Biomorph.Unreachable();
+		Biomorph.Unreachable("failed to find a player datum.");
 		return null;
 	}
 
@@ -209,6 +209,15 @@ class biom_PlayerData
 		}
 
 		return ret;
+	}
+
+	readonly<biom_WeaponData> GetWeaponData(class<biom_WeaponData> t) const
+	{
+		for (int i = 0; i < self.weaponData.Size(); ++i)
+			if (weaponData[i].GetClass() == t)
+				return weaponData[i].AsConst();
+
+		return null;
 	}
 
 	readonly<biom_PlayerData> AsConst() const

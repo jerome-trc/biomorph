@@ -4,8 +4,6 @@
 /// Abbreviation: `CSC`
 class biom_CasterCannon : biom_Weapon
 {
-	protected biom_wdat_CasterCannon data;
-
 	Default
 	{
 		Tag "$BIOM_CASTERCANNON_TAG";

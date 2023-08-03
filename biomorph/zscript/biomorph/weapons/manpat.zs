@@ -2,8 +2,6 @@
 /// "Man-portable anti-tank".
 class biom_MANPAT : biom_Weapon
 {
-	protected biom_wdat_MANPAT data;
-
 	Default
 	{
 		Tag "$BIOM_MANPAT_TAG";

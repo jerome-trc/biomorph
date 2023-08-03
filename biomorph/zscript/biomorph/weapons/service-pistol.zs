@@ -3,8 +3,6 @@
 /// Abbreviation: `SVP`
 class biom_ServicePistol : biom_Weapon
 {
-	protected biom_wdat_ServicePistol data;
-
 	flagdef slideBack: dynFlags, 31;
 
 	protected uint magazine;

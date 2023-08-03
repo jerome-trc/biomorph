@@ -3,8 +3,6 @@
 /// Abbreviation: `GMG`
 class biom_GPMG : biom_Weapon
 {
-	protected biom_wdat_GPMG data;
-
 	Default
 	{
 		Tag "$BIOM_GPMG_TAG";
@@ -43,19 +41,22 @@ class biom_GPMG : biom_Weapon
 		loop;
 	Fire:
 		TNT1 A 0 A_biom_CheckAmmo;
-		// Baseline time: 4 ticks, like the vanilla Chaingun.
-		GMGA A 1 offset(0 + 5, 32 + 5)
-		{
-			A_FireBullets(3.0, 3.0, 1, RandomPick(18, 19), 'biom_BulletPuff', FBF_NORANDOM);
-			invoker.DepleteAmmo(false, false);
-			A_AlertMonsters();
-			A_StartSound("biom/gpmg/fire", CHAN_AUTO);
-			A_GunFlash();
-			A_biom_Recoil('biom_recoil_Autogun');
+		TNT1 A 0 {
+			if (!biom_wdat_GPMG(invoker.data).turbo)
+				return ResolveState('Fire.Normal');
+			else
+				return ResolveState('Fire.Turbo');
 		}
+	Fire.Normal:
+		// Baseline time: 4 ticks, like the vanilla Chaingun.
+		GMGA A 1 offset(0 + 5, 32 + 5) A_biom_GPMGFire;
 		GMGA A 1 offset(0 + 3, 32 + 3);
 		GMGA A 1 offset(0 + 2, 32 + 2);
 		GMGA A 1 offset(0 + 1, 32 + 1);
+		goto Ready.Main;
+	Fire.Turbo:
+		GMGA A 1 offset(0 + 5, 32 + 5) A_biom_GPMGFire;
+		GMGA A 1 offset(0 + 3, 32 + 3);
 		goto Ready.Main;
 	Dryfire:
 		GMGA A 1 offset(0, 32 + 1);
@@ -77,12 +78,29 @@ class biom_GPMG : biom_Weapon
 		TNT1 A 1 bright offset(0 + 1, 32 + 3) A_Light(0);
 		goto LightDone;
 	}
+
+	protected action void A_biom_GPMGFire()
+	{
+		A_FireBullets(3.0, 3.0, 1, RandomPick(18, 19), 'biom_BulletPuff', FBF_NORANDOM);
+		invoker.DepleteAmmo(false, false);
+		A_AlertMonsters();
+		A_StartSound("biom/gpmg/fire", CHAN_AUTO);
+		A_GunFlash();
+		A_biom_Recoil('biom_recoil_Autogun');
+	}
 }
 
 class biom_wdat_GPMG : biom_WeaponData
 {
+	/// When set, refire time is cut in half.
+	/// If the user is playing Valiant, this is the default.
+	bool turbo;
+
 	final override void Reset()
 	{
-		// ???
+		if (!biom_Utils.Valiant())
+			self.turbo = false;
+		else
+			self.turbo = true;
 	}
 }

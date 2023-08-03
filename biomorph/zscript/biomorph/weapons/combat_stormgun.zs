@@ -2,8 +2,6 @@
 /// Collecting one overrides the currently-head Shotgun counterpart, if any.
 class biom_CombatStormgun : biom_Weapon
 {
-	protected biom_wdat_CombatStormgun data;
-
 	Default
 	{
 		Tag "$BIOM_COMBATSTORMGUN_TAG";

@@ -36,6 +36,17 @@ class Biomorph abstract
 			);
 		}
 	}
+
+	static void Assert(bool cond, string msg = "")
+	{
+		if (!cond)
+		{
+			if (msg.Length() > 0)
+				ThrowAbortException(Biomorph.LOGPFX_ERR .. msg);
+			else
+				ThrowAbortException(Biomorph.LOGPFX_ERR .. "An assertion failed.");
+		}
+	}
 }
 
 // Third-party dependencies ////////////////////////////////////////////////////

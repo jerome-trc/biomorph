@@ -2,8 +2,6 @@
 /// Abbreviation: `870`
 class biom_PumpShotgun : biom_Weapon
 {
-	protected biom_PumpShotgunData data;
-
 	Default
 	{
 		Tag "$BIOM_PUMPSHOTGUN_TAG";
