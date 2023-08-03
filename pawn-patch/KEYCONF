@@ -1,1 +1,2 @@
 addplayerclass "biom_Player"
+addplayerclass "biom_PlayerPistolStart"
