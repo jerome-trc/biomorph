@@ -78,6 +78,7 @@ The following audio files are provided courtesy of the YouTube channel [GunsOfTh
 
 - BTR1_0 (https://www.youtube.com/watch?v=JhSIFarVuFs) <!-- Remington Gamemaster Model 760 Carbine -->
 - GMG1_ 0 through 2 (https://www.youtube.com/watch?v=DAUIi05Rckc) <!-- Full-Auto SCAR-L -->
+- PSGR_0, PSGS_0 (https://www.youtube.com/watch?v=zhxBwOeXNOk) <!-- Remington 870 Wingmaster 16 Gauge -->
 - SVP1_ 0 through 2 (https://www.youtube.com/watch?v=5B8HE3RiBfQ) <!-- Desert Eagle 50 AE Part 2 -->
 
 #### Joblez_I
@@ -87,6 +88,7 @@ https://forum.zdoom.org/viewtopic.php?f=37&t=65362
 The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY 3.0:
 
 - joblaudiopack.zip/
+	- generic_shotgun.wav (PSG1_0)
 	- g_ithaca_nopump_1.wav (TSG1_0)
 	- g_ithaca_nopump_2.wav (TSG1_1)
 	- g_ithaca_nopump_3.wav (TSG1_2)
