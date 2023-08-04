@@ -74,12 +74,55 @@ extend class biom_Utils
 // used, what levelset is being played, what mods are active).
 extend class biom_Utils
 {
+	/// Checks if the user's mod configuration includes Champions.
+	/// See https://forum.zdoom.org/viewtopic.php?t=60456.
+	static bool Champions()
+	{
+		name tn = 'champion_BaseController';
+		class<Thinker> t = tn;
+		return t != null;
+	}
+
+	/// Checks if the user's mod configuration includes Colourful Hell.
+	/// See https://forum.zdoom.org/viewtopic.php?t=47980.
+	static bool ColourfulHell()
+	{
+		name tn = 'CH_BonusEnemyBaseSpawner';
+		class<Actor> t = tn;
+		return t != null;
+	}
+
+	/// Checks if the user's mod configuration includes the Rainbow Tier Addon
+	/// for Colourful Hell. See https://forum.zdoom.org/viewtopic.php?t=73696.
+	/// Note that this does not call `biom_Utils.ColourfulHell`.
+	static bool ColourfulHellRainbow()
+	{
+		name tn = 'RainbowEssence';
+		class<Health> t = tn;
+		return t != null;
+	}
+
+	/// Checks if the user's mod configuration includes the Cyberaugmented Monster Pack.
+	/// See https://literally-bugsie.itch.io/cyberaugumented.
+	static bool CyberaugmentedMonsters()
+	{
+		name tn = 'DCYMonster';
+		class<Actor> t = tn;
+		return t != null;
+	}
+
 	/// Checks if the user's mod configuration includes the DoomRL Monster Pack.
 	static bool DoomRLMonsterPack()
 	{
 		name tn = 'RLMonsterpackThingo';
 		class<Actor> t = tn;
 		return t != null;
+	}
+
+	/// Note that this does not call `biom_Utils.DoomRLMonsterPack`.
+	static bool DoomRLMonsterPackAdaptive()
+	{
+		return skill == 7;
 	}
 
 	/// Checks if the current level is from Eviternity.
@@ -144,6 +187,15 @@ extend class biom_Utils
 		name lxvg_tn = 'Lexicon_VoteGun';
 		class<Weapon> lxvg_t = lxvg_tn;
 		return lxvg_t != null;
+	}
+
+	/// Checks if the user's mod configuration includes the Pandemonia Monster Pack.
+	/// See https://forum.zdoom.org/viewtopic.php?f=43&t=60984.
+	static bool PandemoniaMonsters()
+	{
+		name tn = 'PandMonster';
+		class<Actor> t = tn;
+		return t != null;
 	}
 
 	/// Checks if all of DOOM2's Super Shotgun sprites exist. If one is missing,

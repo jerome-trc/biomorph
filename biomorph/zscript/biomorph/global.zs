@@ -72,6 +72,78 @@ class biom_Global : Thinker
 		self.lootValueBuf += val;
 	}
 
+	bool DrainLootValueBuffer()
+	{
+		if (self.lootValueBuf >= LOOT_VALUE_THRESHOLD)
+		{
+			self.lootValueBuf -= LOOT_VALUE_THRESHOLD;
+			return true;
+		}
+
+		return false;
+	}
+
+	float LootValueMultiplier() const
+	{
+		return self.lootValueMulti;
+	}
+
+	/// Affects every player.
+	void ModifyBalance(int bal)
+	{
+		for (int i = 0; i < self.playerData.Size(); ++i)
+			self.playerData[i].balanceMod += bal;
+	}
+
+	static biom_Global Create()
+	{
+		let iter = ThinkerIterator.Create('biom_Global', STAT_STATIC);
+
+		if (iter.Next(true) != null)
+		{
+			Console.PrintF(
+				Biomorph.LOGPFX_WARN ..
+				"Attempted to re-create global data."
+			);
+
+			return null;
+		}
+
+		uint ms = MSTime();
+		let ret = new('biom_Global');
+		ret.ChangeStatNum(STAT_STATIC);
+		let ssgExists = biom_Utils.SuperShotgunExists();
+		let balMod = biom_Global.NewGameBalanceModifier();
+
+		for (uint i = 0; i < MAXPLAYERS; ++i)
+		{
+			if (!playerInGame[i])
+				continue;
+
+			let pdat = biom_PlayerData.Create(ssgExists);
+			pdat.balanceMod = balMod;
+			ret.playerData.Push(pdat);
+			ret.playerCount++;
+		}
+
+		if (developer >= 1)
+		{
+			Console.Printf(
+				Biomorph.LOGPFX_DEBUG ..
+				"Starting balance modifier: %d",
+				balMod
+			);
+
+			Console.PrintF(
+				Biomorph.LOGPFX_DEBUG ..
+				"Global init done (took %d ms).",
+				MsTime() - ms
+			);
+		}
+
+		return ret;
+	}
+
 	void OnWorldLoaded()
 	{
 		self.lootValueMulti = 1.0;
@@ -95,62 +167,6 @@ class biom_Global : Thinker
 		self.lootValueMulti = 0.5 / Log10(float(hp));
 	}
 
-	bool DrainLootValueBuffer()
-	{
-		if (self.lootValueBuf >= LOOT_VALUE_THRESHOLD)
-		{
-			self.lootValueBuf -= LOOT_VALUE_THRESHOLD;
-			return true;
-		}
-
-		return false;
-	}
-
-	float LootValueMultiplier() const
-	{
-		return self.lootValueMulti;
-	}
-
-	static biom_Global Create()
-	{
-		let iter = ThinkerIterator.Create('biom_Global', STAT_STATIC);
-
-		if (iter.Next(true) != null)
-		{
-			Console.PrintF(
-				Biomorph.LOGPFX_WARN ..
-				"Attempted to re-create global data."
-			);
-
-			return null;
-		}
-
-		uint ms = MSTime();
-		let ret = new('biom_Global');
-		ret.ChangeStatNum(STAT_STATIC);
-		let ssgExists = biom_Utils.SuperShotgunExists();
-
-		for (uint i = 0; i < MAXPLAYERS; ++i)
-		{
-			if (!playerInGame[i])
-				continue;
-
-			ret.playerData.Push(biom_PlayerData.Create(ssgExists));
-			ret.playerCount++;
-		}
-
-		if (developer >= 1)
-		{
-			Console.PrintF(
-				Biomorph.LOGPFX_DEBUG ..
-				"Global init done (took %d ms).",
-				MsTime() - ms
-			);
-		}
-
-		return ret;
-	}
-
 	static clearscope biom_Global Get()
 	{
 		let iter = ThinkerIterator.Create('biom_Global', STAT_STATIC);
@@ -163,6 +179,58 @@ class biom_Global : Thinker
 			Console.PrintF(Biomorph.LOGPFX_DEBUG .. "Global data teardown.");
 
 		super.OnDestroy();
+	}
+
+	/// Determines how much the mutation system should favor or disfavor the
+	/// players at the start of a new playthrough based on how much more difficult
+	/// or easy their experience is likely to be. As an example, the balance
+	/// is increased (i.e. make the players somewhat more powerful) if they are
+	/// playing with LegenDoom Lite or Colourful Hell, to offset that added challenge.
+	private static int NewGameBalanceModifier()
+	{
+		let ret = 0;
+
+		if (biom_Utils.ColourfulHell())
+		{
+			if (biom_Utils.ColourfulHellRainbow())
+				ret += BIOM_BALMOD_INC_L;
+			else
+				ret += BIOM_BALMOD_INC_M;
+		}
+
+		if (biom_Utils.DoomRLMonsterPack())
+		{
+			switch (skill)
+			{
+			case 3: // `hard`, a.k.a. "Standard".
+			{
+				ret += BIOM_BALMOD_INC_XS;
+				break;
+			}
+			case 4: // `nightmare`
+			case 5: // `technophobia`
+			{
+				ret += BIOM_BALMOD_INC_S;
+				break;
+			}
+			case 6: // `armageddon`
+			{
+				ret += BIOM_BALMOD_INC_M;
+				break;
+			}
+			// `adaptive` needs special handling.
+			default:
+				break;
+			}
+		}
+
+		if (biom_Utils.LegenDoom())
+			ret += BIOM_BALMOD_INC_S;
+
+		if (biom_Utils.PandemoniaMonsters())
+			ret += BIOM_BALMOD_INC_S;
+
+		return ret;
 	}
 }
 
@@ -225,3 +293,14 @@ class biom_PlayerData
 		return self;
 	}
 }
+
+const BIOM_BALMOD_INC_XS = 1;
+const BIOM_BALMOD_INC_S = 5;
+const BIOM_BALMOD_INC_M = 10;
+const BIOM_BALMOD_INC_L = 20;
+const BIOM_BALMOD_INC_XL = 40;
+const BIOM_BALMOD_DEC_XS = -BIOM_BALMOD_INC_XS;
+const BIOM_BALMOD_DEC_S = -BIOM_BALMOD_INC_S;
+const BIOM_BALMOD_DEC_M = -BIOM_BALMOD_INC_M;
+const BIOM_BALMOD_DEC_L = -BIOM_BALMOD_INC_L;
+const BIOM_BALMOD_DEC_XL = -BIOM_BALMOD_INC_XL;

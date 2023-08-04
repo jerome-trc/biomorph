@@ -23,3 +23,4 @@ Any part of Biomorph not covered by an attribution in the document linked above 
 - The main mod, under `/biomorph`.
 - Blender files used to generate sprites.
 - `/pawn-patch` to prevent crashes on WADs which would otherwise override the player class, such as Valiant.
+- A compatibility layer for [Corruption Cards](https://forum.zdoom.org/viewtopic.php?f=43&t=67939), adding bespoke gameplay integration, under `/ccards`.
