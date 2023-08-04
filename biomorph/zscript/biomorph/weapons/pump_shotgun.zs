@@ -72,7 +72,7 @@ class biom_PumpShotgun : biom_Weapon
 	Pump:
 		PSGA A 1;
 		PSG1 C 2 {
-			A_StartSound("biom/shotgunpump/back");
+			A_StartSound("biom/shotgunpump/back", CHAN_AUTO);
 			A_biom_Recoil('biom_recoil_ShotgunPump');
 			invoker.bRoundChambered = true;
 		}
@@ -105,7 +105,7 @@ class biom_PumpShotgun : biom_Weapon
 	Reload:
 		TNT1 A 0 A_biom_CheckReload;
 		// Baseline time for start + 1 shell + finish: 34 tics.
-		TNT1 A 0 A_StartSound("biom/pumpshotgun/switch");
+		TNT1 A 0 A_StartSound("biom/pumpshotgun/switch", CHAN_AUTO);
 		PSGR AB 3;
 		goto Reload.Repeat;
 	Reload.Repeat:

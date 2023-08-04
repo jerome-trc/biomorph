@@ -71,12 +71,12 @@ class biom_TacticalShotgun : biom_Weapon
 		}
 	Cycle:
 		TSG1 C 2 {
-			A_StartSound("biom/shotgunpump/back");
+			A_StartSound("biom/shotgunpump/back", CHAN_AUTO);
 			A_biom_Recoil('biom_recoil_ShotgunPump');
 			invoker.bRoundChambered = true;
 		}
 		TSG1 D 2;
-		TSG1 C 2 A_StartSound("biom/shotgunpump/forward");
+		TSG1 C 2 A_StartSound("biom/shotgunpump/forward", CHAN_AUTO);
 		TSGA A 5;
 		goto Ready.Main;
 	Dryfire:
