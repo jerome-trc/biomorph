@@ -171,7 +171,8 @@ class biom_StatusBar : BaseStatusBar
 
 			self.DrawTexture(
 				defs.icon,
-				(300 + (20 * i), -10),
+				(300 + (32 * i), -10),
+				flags: DI_ITEM_LEFT,
 				alpha: carried ? 1.0 : 0.33,
 				scale: (0.25, 0.25)
 			);
