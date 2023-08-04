@@ -24,8 +24,8 @@ class biom_WeaponPickup : Inventory abstract
 	override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
-		let pawn = biom_Player(toucher);
 
+		let pawn = biom_Player(toucher);
 		let pdat = pawn.GetData();
 
 		for (int i = 0; i < pdat.weapons.Size(); ++i)
@@ -44,6 +44,10 @@ class biom_WeaponPickup : Inventory abstract
 			pawn.GiveInventory(pdat.weapons[i], 1);
 			defs.PlayPickupSound(toucher);
 			self.PrintPickupMessage(pawn.CheckLocalView(), defs.PickupMessage());
+
+			if (!CVar.GetCVar("neverswitchonpickup", pawn.player).GetBool())
+				pawn.A_SelectWeapon(pdat.weapons[i]);
+
 			return;
 		}
 	}
