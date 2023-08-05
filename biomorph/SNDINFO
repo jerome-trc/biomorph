@@ -118,6 +118,9 @@
 		biom/servicepistol/fire/2
 	}
 
+	biom/servicepistol/unload SVPRUNLO
+	biom/servicepistol/load SVPRLOAD
+
 // Weapons, tactical shotgun ///////////////////////////////////////////////////////
 
 	biom/tacshotgun/fire/0 TSG1_0

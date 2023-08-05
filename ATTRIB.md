@@ -79,10 +79,10 @@ Doom and Doom II's base sounds are the sole property of id Software LLC.
 
 The following audio files are provided courtesy of the YouTube channel [GunsOfTheWorld](https://www.youtube.com/@GunsOfTheWorld):
 
-- BTR1_0 (https://www.youtube.com/watch?v=JhSIFarVuFs) <!-- Remington Gamemaster Model 760 Carbine -->
-- GMG1_ 0 through 2 (https://www.youtube.com/watch?v=DAUIi05Rckc) <!-- Full-Auto SCAR-L -->
-- PSGR_0, PSGS_0 (https://www.youtube.com/watch?v=zhxBwOeXNOk) <!-- Remington 870 Wingmaster 16 Gauge -->
-- SVP1_ 0 through 2 (https://www.youtube.com/watch?v=5B8HE3RiBfQ) <!-- Desert Eagle 50 AE Part 2 -->
+- BTR1* (https://www.youtube.com/watch?v=JhSIFarVuFs) <!-- Remington Gamemaster Model 760 Carbine -->
+- GMG1* (https://www.youtube.com/watch?v=DAUIi05Rckc) <!-- Full-Auto SCAR-L -->
+- PSGR*, PSGS* (https://www.youtube.com/watch?v=zhxBwOeXNOk) <!-- Remington 870 Wingmaster 16 Gauge -->
+- SVP1* and SVPR* (https://www.youtube.com/watch?v=5B8HE3RiBfQ) <!-- Desert Eagle 50 AE Part 2 -->
 
 #### Joblez_I
 
