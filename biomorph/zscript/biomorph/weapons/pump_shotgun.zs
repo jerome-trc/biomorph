@@ -109,14 +109,14 @@ class biom_PumpShotgun : biom_Weapon
 		PSGR AB 3;
 		goto Reload.Repeat;
 	Reload.Repeat:
-		PSGR CD 4;
-		PSGR E 5;
+		PSGR CD 4 A_biom_InterruptReload;
+		PSGR E 5 A_biom_InterruptReload;
 		PSGR F 3
 		{
 			A_biom_Reload(1);
 			A_StartSound("biom/pumpshotgun/load");
 		}
-		PSGR GHI 2;
+		PSGR GHI 2 A_biom_InterruptReload;
 		TNT1 A 0
 		{
 			if (invoker.CanReload())
@@ -161,6 +161,16 @@ class biom_PumpShotgun : biom_Weapon
 	override void FillMagazine(uint amt)
 	{
 		self.magazine += amt;
+	}
+
+	protected action state A_biom_InterruptReload()
+	{
+		if (invoker.owner.player != null &&
+			invoker.owner.player.pendingWeapon != WP_NOCHANGE)
+			return ResolveState('Reload.Finish');
+
+		A_ReFire();
+		return state(null);
 	}
 }
 
