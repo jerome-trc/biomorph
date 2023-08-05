@@ -24,10 +24,10 @@ class biom_Unarmed : biom_Weapon
 		H2HC A 1 A_WeaponReady;
 		loop;
 	Deselect:
-		H2HC A 1 A_Lower;
+		H2HC A 1 A_Lower(12);
 		loop;
 	Select:
-		H2HC A 1 A_Raise;
+		H2HC A 1 A_Raise(12);
 		loop;
 	Fire:
 		TNT1 A 0 A_JumpIf(invoker.bRightHand, 'Rake.Right');
