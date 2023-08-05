@@ -48,11 +48,11 @@
 	BIOM_ARMORBONUS_COLLECTED = "\c[White]Didn't pick up an \c[Green]armour shard\c[White], but counted it as collected.";
 
 	BIOM_LIGHTARMOR_TAG = "\c[Green]Security Vest\c-";
-	BIOM_LIGHTARMOR_PKUP = "\c[White]Picked up and donned a \c[Green]security vest\c[White].";
+	BIOM_LIGHTARMOR_PKUP = "\c[White]Donned a \c[Green]security vest\c[White].";
 	BIOM_LIGHTARMOR_PARTIAL = "\c[White]Repaired your worn armour by scavenging a \c[Green]security vest\c[White].";
 
 	BIOM_HEAVYARMOR_TAG = "\c[Green]Combat Rig\c-";
-	BIOM_HEAVYARMOR_PKUP = "\c[White]Picked up and donned a \c[Green]combat rig\c[White].";
+	BIOM_HEAVYARMOR_PKUP = "\c[White]Donned a \c[Green]combat rig\c[White].";
 	BIOM_HEAVYARMOR_PARTIAL = "\c[White]Repaired your worn armour by scavenging a \c[Green]combat rig\c[White].";
 
 // Ammo ////////////////////////////////////////////////////////////////////////
