@@ -135,7 +135,12 @@ class biom_PlayerPistolStart : biom_Player
 	override void PreTravelled()
 	{
 		super.PreTravelled();
+
 		self.ClearInventory();
+
+		for (int i = 0; i < self.data.weapons.Size(); ++i)
+			self.TakeInventory(self.data.weapons[i], 1);
+
 		self.GiveDefaultInventory();
 		self.A_SetHealth(self.GetMaxHealth());
 
