@@ -3,6 +3,7 @@
 
 const BFGF_NONE = 0; // EBFGSprayFlags
 const CPF_NONE = 0; // ECustomPunchFlags
+const DI_NONE = 0; // DI_Flags
 const FBF_NONE = 0; // EFireBulletsFlags
 const LAF_NONE = 0; // ELineAttackFlags
 const RGF_NONE = 0; // ERailFlags

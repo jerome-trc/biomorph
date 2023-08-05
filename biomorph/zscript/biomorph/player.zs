@@ -5,6 +5,8 @@ class biom_Player : DoomPlayer
 	uint8 weaponCapacity;
 	property WeaponCapacity: weaponCapacity;
 
+	private biom_WeaponFamily weaponsFound;
+
 	Default
 	{
 		Tag "$BIOM_PAWN_DISPLAYNAME";
@@ -34,6 +36,7 @@ class biom_Player : DoomPlayer
 		super.PostBeginPlay();
 
 		self.data = biom_Global.Get().FindPlayerData(self.player);
+		self.weaponsFound = BIOM_WEAPFAM_SIDEARM;
 
 		Biomorph.Assert(
 			self.data != null,
@@ -103,9 +106,36 @@ class biom_Player : DoomPlayer
 		}
 	}
 
+	override void ClearInventory()
+	{
+		super.ClearInventory();
+
+		for (int i = 0; i < self.data.weapons.Size(); ++i)
+			self.TakeInventory(self.data.weapons[i], 1);
+
+		self.weaponsFound = BIOM_WEAPFAM_SIDEARM;
+
+		let bArmor = BasicArmor(self.FindInventory('BasicArmor'));
+		bArmor.savePercent = 0;
+		bArmor.armorType = 'None';
+		textureID nullTexID;
+		nullTexID.SetNull();
+		bArmor.icon = nullTexID;
+	}
+
+	void OnWeaponFound(biom_WeaponFamily wf)
+	{
+		self.weaponsFound |= wf;
+	}
+
 	readonly<biom_PlayerData> GetData() const
 	{
 		return self.data;
+	}
+
+	biom_WeaponFamily GetWeaponsFound() const
+	{
+		return self.weaponsFound;
 	}
 
 	/// The status bar needs `GetData` to be `const` but weapon attach-to-owner
@@ -135,20 +165,8 @@ class biom_PlayerPistolStart : biom_Player
 	override void PreTravelled()
 	{
 		super.PreTravelled();
-
 		self.ClearInventory();
-
-		for (int i = 0; i < self.data.weapons.Size(); ++i)
-			self.TakeInventory(self.data.weapons[i], 1);
-
 		self.GiveDefaultInventory();
 		self.A_SetHealth(self.GetMaxHealth());
-
-		let bArmor = BasicArmor(self.FindInventory('BasicArmor'));
-		bArmor.savePercent = 0;
-		bArmor.armorType = 'None';
-		textureID nullTexID;
-		nullTexID.SetNull();
-		bArmor.icon = nullTexID;
 	}
 }

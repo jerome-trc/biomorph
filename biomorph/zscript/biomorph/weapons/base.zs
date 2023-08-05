@@ -58,7 +58,7 @@ class biom_Weapon : DoomWeapon abstract
 		Weapon.BobSpeed 2.0;
 
 		biom_Weapon.Grade BIOM_WEAPGRADE_NONE;
-		biom_Weapon.Family __BIOM_WEAPFAM_COUNT__;
+		biom_Weapon.Family BIOM_WEAPFAM_INVALID;
 	}
 
 	States
@@ -308,15 +308,16 @@ class biom_WeaponData abstract
 /// both of which occupy slot number 3.
 enum biom_WeaponFamily : uint8
 {
-	BIOM_WEAPFAM_MELEE = 0,
-	BIOM_WEAPFAM_SIDEARM = 1,
-	BIOM_WEAPFAM_SHOTGUN = 2,
-	BIOM_WEAPFAM_SUPERSHOTGUN = 3,
-	BIOM_WEAPFAM_AUTOGUN = 4,
-	BIOM_WEAPFAM_LAUNCHER = 5,
-	BIOM_WEAPFAM_ENERGY = 6,
-	BIOM_WEAPFAM_SUPER = 7,
-	__BIOM_WEAPFAM_COUNT__,
+	BIOM_WEAPFAM_INVALID = 0,
+	BIOM_WEAPFAM_MELEE = 1 << 0,
+	BIOM_WEAPFAM_SIDEARM = 1 << 1,
+	BIOM_WEAPFAM_SHOTGUN = 1 << 2,
+	BIOM_WEAPFAM_SUPERSHOTGUN = 1 << 3,
+	BIOM_WEAPFAM_AUTOGUN = 1 << 4,
+	BIOM_WEAPFAM_LAUNCHER = 1 << 5,
+	BIOM_WEAPFAM_ENERGY = 1 << 6,
+	BIOM_WEAPFAM_SUPER = 1 << 7,
+	BIOM_WEAPFAM_ALL = uint8.MAX,
 }
 
 /// A helper structure allowing weapons to succinctly report the "interface"

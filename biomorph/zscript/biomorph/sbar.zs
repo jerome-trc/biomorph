@@ -76,7 +76,7 @@ class biom_StatusBar : BaseStatusBar
 				FormatNumber(self.pawn.GetMaxHealth(true), 3, 5)
 			),
 			(44, -18),
-			0,
+			DI_NONE,
 			!berserk ? Font.CR_WHITE : Font.CR_DARKRED
 		);
 
@@ -92,12 +92,16 @@ class biom_StatusBar : BaseStatusBar
 			self.DrawString(
 				self.fontBig,
 				FormatNumber(armor.Amount, 3),
-				(44, -36), 0, Font.CR_DARKGREEN
+				(44, -36),
+				DI_NONE,
+				Font.CR_DARKGREEN
 			);
 			self.DrawString(
 				self.fontSmall,
 				FormatNumber(self.GetArmorSavePercent(), 3) .. "%",
-				(14, -30), 0, Font.CR_WHITE
+				(14, -30),
+				DI_NONE,
+				Font.CR_WHITE
 			);
 		}
 
@@ -120,7 +124,8 @@ class biom_StatusBar : BaseStatusBar
 		self.DrawString(
 			self.fontSmall,
 			String.Format("%d / %d", hwc, self.pawn.weaponCapacity),
-			(-44, invY), DI_TEXT_ALIGN_RIGHT,
+			(-44, invY),
+			DI_TEXT_ALIGN_RIGHT,
 			hwc < self.pawn.weaponCapacity ? Font.CR_WHITE : Font.CR_YELLOW
 		);
 
@@ -132,7 +137,8 @@ class biom_StatusBar : BaseStatusBar
 				FormatNumber(Level.killed_Monsters, 1, 5),
 				FormatNumber(Level.total_Monsters, 1, 5)
 			),
-			(200, -26), 0,
+			(200, -26),
+			DI_NONE,
 			Level.killed_Monsters >= Level.total_Monsters ?
 				Font.CR_GREEN :
 				Font.CR_WHITE
@@ -145,7 +151,8 @@ class biom_StatusBar : BaseStatusBar
 				FormatNumber(Level.found_Items, 1, 5),
 				FormatNumber(Level.total_Items, 1, 5)
 			),
-			(200, -18), 0,
+			(200, -18),
+			DI_NONE,
 			Level.found_Items >= Level.total_Items ?
 				Font.CR_GREEN :
 				Font.CR_WHITE
@@ -158,23 +165,34 @@ class biom_StatusBar : BaseStatusBar
 				FormatNumber(Level.found_Secrets, 1, 2),
 				FormatNumber(Level.total_Secrets, 1, 2)
 			),
-			(200, -10), 0,
+			(200, -10),
+			DI_NONE,
 			Level.found_Secrets >= Level.total_Secrets ?
 				Font.CR_GREEN :
 				Font.CR_WHITE
 		);
 
-		for (int i = 0; i < pdat.weapons.Size(); ++i)
-		{
-			let defs = GetDefaultByType(pdat.weapons[i]);
-			let carried = self.pawn.FindInventory(pdat.weapons[i]) != null;
+		self.DrawString(
+			self.fontSmall,
+			"ARMS:",
+			(270, -10),
+			DI_NONE,
+			Font.CR_WHITE
+		);
 
-			self.DrawTexture(
-				defs.icon,
-				(300 + (32 * i), -10),
-				flags: DI_ITEM_LEFT,
-				alpha: carried ? 1.0 : 0.33,
-				scale: (0.25, 0.25)
+		let weapsFound = self.pawn.GetWeaponsFound();
+
+		for (int i = 1; i <= 7; ++i)
+		{
+			let carried = (weapsFound & (1 << (i - 1))) != 0;
+
+			self.DrawString(
+				self.fontSmall,
+				String.Format("%d", i),
+				(300 + (i * 12), -10),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_CYAN,
+				alpha: carried ? 1.0 : 0.33
 			);
 		}
 	}

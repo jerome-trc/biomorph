@@ -1,7 +1,8 @@
 // Actor classes helping for developing, testing, and troubleshooting.
 
 /// When added to one's inventory, has the same effect as touching an infinite
-/// number of every kind of weapon pickup at once.
+/// number of every kind of weapon pickup at once. Note, however, that it does not
+/// set the pawn's found-weapon flags.
 class biom_Arsenal : Inventory
 {
 	override void AttachToOwner(Actor other)
