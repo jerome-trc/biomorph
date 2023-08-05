@@ -57,7 +57,8 @@ The following sprites are derived partially from the work of Realm667 user Capta
 
 [This spritesheet](https://forum.zdoom.org/viewtopic.php?t=37753) by Sgt. Shivers provided the basis used to create muzzle flashes for:
 - The GPMG (sprite set GMG1)
-- The Pump Shotgun (sprite set 870F)
+- The Pump Shotgun (sprite set PSG1)
+- The Multiple Grenade Launcher (sprite set MGL1)
 - The Service Pistol (sprite set SVP1)
 
 [This spritesheet](https://forum.zdoom.org/viewtopic.php?p=719301#p719301) by torridgristle provided the basis used to create muzzle flashes for the Tactical Shotgun (sprite set TSG1).
@@ -125,6 +126,8 @@ DRYFBAL 0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://fr
 
 COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/sounds/33781/) by freesound user [jobro](https://freesound.org/people/jobro), used under the Attribution 3.0 License.
 
+MGL1_0 is derived from ["Grenade_Fire_01.wav](https://freesound.org/people/xFromarge1/sounds/520045/) by freesound user [xFromarge1](https://freesound.org/people/xFromarge1/), used under Creative Commons 0.
+
 RUCKSACK is derived from ["zipping backback and rustling papers.wav"](https://freesound.org/people/TheSupremeMuffinPooter/sounds/333519/) by freesound user [TheSupremeMuffinPooter](https://freesound.org/people/TheSupremeMuffinPooter/), used under Creative Commons 0.
 
 USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/), used under Creative Commons 0.
@@ -146,6 +149,7 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 The following models are provided by [TastyTony](https://sketchfab.com/TastyTony) under the Creative Commons Attribution 4.0 License:
 - ["Low-Poly Jericho 941](https://sketchfab.com/3d-models/low-poly-jericho-941-8cdb3801dc9e4815b3b8f5e0e4a82152) (used to render sprites for the Service Pistol)
 - ["Low-Poly Keltec KSG"](https://sketchfab.com/3d-models/low-poly-keltec-ksg-6a49a720a5c44ce2acee91d094d6e03d) (used to render sprites for the Tactical Shotgun)
+- ["Low-Poly Milkor MGL Mk 1s"](https://sketchfab.com/3d-models/low-poly-milkor-mgl-mk-1s-f62f582eada147b8aeb3c08773379d29) (used to render sprites for the Multiple Grenade Launcher)
 - ["Low-Poly SKO-12"](https://sketchfab.com/3d-models/low-poly-sko-12-a59601a679214761aed579457d82dfc0) (used as part of the model used to render sprites for the Tactical Shotgun)
 - ["Low-Poly Ultimax 100 Mk II"](https://sketchfab.com/3d-models/low-poly-ultimax-100-mk-ii-0d4aab1cd2dc4fd2866c2a96fb6b6fee) (used to render sprites for the GPMG)
 

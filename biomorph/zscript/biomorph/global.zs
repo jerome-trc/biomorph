@@ -261,7 +261,7 @@ class biom_PlayerData
 			ret.weapons.Push((class<biom_Weapon>)('biom_CombatStormgun'));
 
 		ret.weapons.Push((class<biom_Weapon>)('biom_GPMG'));
-		ret.weapons.Push((class<biom_Weapon>)('biom_MANPAT'));
+		ret.weapons.Push((class<biom_Weapon>)('biom_MultiGL'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_BiteRifle'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_CasterCannon'));
 

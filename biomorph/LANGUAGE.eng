@@ -154,14 +154,14 @@
 		"\c[White]with a "
 		"\c[Cyan]G.P.M.G.";
 
-	BIOM_MANPAT_TAG = "\c[White]M.A.N.P.A.T.\c-";
-	BIOM_MANPAT_PKUP = "\c[White]Procured a \c[Cyan]man-portable anti-tank system\c[White].";
-	BIOM_MANPAT_OB =
+	BIOM_MULTIGL_TAG = "\c[White]M.G.L.\c-";
+	BIOM_MULTIGL_PKUP = "\c[White]Procured a \c[Cyan]multiple grenade launcher\c[White].";
+	BIOM_MULTIGL_OB =
 		"\c[Green]%k "
 		"\c[White]blew "
 		"\c[Red]%o "
-		"\c[White]into chunks with a "
-		"\c[Cyan]M.A.N.P.A.T.";
+		"\c[White]into chunks with an "
+		"\c[Cyan]M.G.L.";
 
 	BIOM_UNARMED_TAG = "\c[White]Combatives\c-";
 	BIOM_UNARMED_OB = "\c[Green]%k \c[White]clawed \c[Red]%o \c[White]open.";

@@ -92,7 +92,7 @@ class Biomorph abstract
 #include "zscript/biomorph/weapons/caster_cannon.zs"
 #include "zscript/biomorph/weapons/combat_stormgun.zs"
 #include "zscript/biomorph/weapons/gpmg.zs"
-#include "zscript/biomorph/weapons/manpat.zs"
+#include "zscript/biomorph/weapons/multi-gl.zs"
 #include "zscript/biomorph/weapons/pump_shotgun.zs"
 #include "zscript/biomorph/weapons/service-pistol.zs"
 #include "zscript/biomorph/weapons/tactical-shotgun.zs"
