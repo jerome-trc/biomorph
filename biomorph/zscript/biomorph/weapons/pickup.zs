@@ -198,7 +198,19 @@ class biom_WeaponPickupSpawner : biom_IntangibleActor
 	{
 		super.BeginPlay();
 
-		Actor.Spawn(self.WEAPON_CLASS, self.pos);
+		let wpkp = Actor.Spawn(self.WEAPON_CLASS, self.pos);
+
+		if (wpkp != null)
+		{
+			wpkp.ChangeTID(self.tid);
+
+			wpkp.special = self.special;
+			wpkp.args[0] = self.args[0];
+			wpkp.args[1] = self.args[1];
+			wpkp.args[2] = self.args[2];
+			wpkp.args[3] = self.args[3];
+			wpkp.args[4] = self.args[4];
+		}
 
 		if (Self.AMMO_CLASS == null)
 			return;
