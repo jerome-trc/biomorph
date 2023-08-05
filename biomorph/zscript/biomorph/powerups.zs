@@ -224,6 +224,7 @@ class biom_PowerInvisibility : PowerInvisibility
 	Default
 	{
 		Inventory.Icon 'PINSA0';
+		+INVENTORY.ADDITIVETIME
 	}
 }
 
@@ -232,6 +233,7 @@ class biom_PowerInvulnerable : PowerInvulnerable
 	Default
 	{
 		Inventory.Icon 'PINVA0';
+		+INVENTORY.ADDITIVETIME
 	}
 }
 
@@ -240,6 +242,7 @@ class biom_PowerIronFeet : PowerIronFeet
 	Default
 	{
 		Inventory.Icon "graphics/powup_radsuit.png";
+		+INVENTORY.ADDITIVETIME
 	}
 }
 
@@ -248,6 +251,7 @@ class biom_PowerLightAmp : PowerLightAmp
 	Default
 	{
 		Inventory.Icon 'PVISA0';
+		+INVENTORY.ADDITIVETIME
 	}
 }
 
