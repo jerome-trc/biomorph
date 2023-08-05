@@ -323,17 +323,22 @@ class biom_StatusBar : BaseStatusBar
 
 			self.DrawString(
 				self.fontSmall,
+				"BULLETS",
+				(-56, invY),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_GOLD
+			);
+			self.DrawString(
+				self.fontSmall,
 				String.Format(
-					"BULLETS %s/%s",
+					"%s\c[MidGrey]/\c[White]%s",
 					FormatNumber(s3.amount, 3, 6),
 					FormatNumber(s3.maxAmount, 3, 6)
 				),
-				(-16, invY),
+				(-8, invY),
 				DI_TEXT_ALIGN_RIGHT,
 				Font.CR_WHITE
 			);
-
-
 		}
 
 		{
@@ -343,12 +348,19 @@ class biom_StatusBar : BaseStatusBar
 
 			self.DrawString(
 				self.fontSmall,
+				"SHELLS",
+				(-56, invY),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_GOLD
+			);
+			self.DrawString(
+				self.fontSmall,
 				String.Format(
-					"SHELLS %s/%s",
+					"%s\c[MidGrey]/\c[White]%s",
 					FormatNumber(s3.amount, 3, 6),
 					FormatNumber(s3.maxAmount, 3, 6)
 				),
-				(-16, invY),
+				(-8, invY),
 				DI_TEXT_ALIGN_RIGHT,
 				Font.CR_WHITE
 			);
@@ -361,16 +373,22 @@ class biom_StatusBar : BaseStatusBar
 
 			self.DrawString(
 				self.fontSmall,
+				"GRENADES",
+				(-56, invY),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_GOLD
+			);
+			self.DrawString(
+				self.fontSmall,
 				String.Format(
-					"GRENADES %s/%s",
+					"%s\c[MidGrey]/\c[White]%s",
 					FormatNumber(s3.amount, 3, 6),
 					FormatNumber(s3.maxAmount, 3, 6)
 				),
-				(-16, invY),
+				(-8, invY),
 				DI_TEXT_ALIGN_RIGHT,
 				Font.CR_WHITE
 			);
-
 		}
 
 		{
@@ -380,12 +398,19 @@ class biom_StatusBar : BaseStatusBar
 
 			self.DrawString(
 				self.fontSmall,
+				"NANO",
+				(-56, invY),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_GOLD
+			);
+			self.DrawString(
+				self.fontSmall,
 				String.Format(
-					"NANO %s/%s",
+					"%s\c[MidGrey]/\c[White]%s",
 					FormatNumber(s3.amount, 3, 6),
 					FormatNumber(s3.maxAmount, 3, 6)
 				),
-				(-16, invY),
+				(-8, invY),
 				DI_TEXT_ALIGN_RIGHT,
 				Font.CR_WHITE
 			);
