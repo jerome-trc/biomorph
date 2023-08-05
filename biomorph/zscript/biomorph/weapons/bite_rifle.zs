@@ -79,11 +79,30 @@ class biom_wdat_BiteRifle : biom_WeaponData
 	}
 }
 
-class biom_Biter : PlasmaBall
+class biom_Biter : Actor
 {
 	Default
 	{
+		Projectile;
+
+		+RANDOMIZE
+		+ZDOOMTRANS
+
 		DamageFunction 30;
-		SeeSound "";
+		DeathSound "weapons/plasmax";
+		Height 8.0;
+		Obituary "$BIOM_BITERIFLE_OB";
+		Radius 13.0;
+		Speed 25.0;
+	}
+
+	States
+	{
+	Spawn:
+		BITE A 6;
+		loop;
+	Death:
+		BITE BCDE 2;
+		stop;
 	}
 }

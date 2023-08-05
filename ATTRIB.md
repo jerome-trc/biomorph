@@ -26,6 +26,8 @@ The following graphics are edits of the work of id Software LLC:
 - All variants of WPKP
 - All frames of CAMO, MKIT, PANA, and STYX
 
+All sprites in the BITE set are edits of the work of ZDoom forum user osjclatchford, with fixes by Hellstorm Archon.
+
 The following are edits of the work of [Ac!d](https://forum.zdoom.org/viewtopic.php?f=37&t=69513) (which are themselves edits of the works of 3D Realms Entertainment ApS):
 - PILSA0
 - RKITA0
