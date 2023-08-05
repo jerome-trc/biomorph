@@ -21,6 +21,33 @@ class biom_WeaponPickup : Inventory abstract
 		Inventory.RestrictedTo 'biom_Player';
 	}
 
+	/// Disallow collecting this pickup if the touching player does not have a
+	/// weapon of this pickup's family registered to this arsenal. If this were
+	/// allowed, a possible frustrating situation would be to accidentally walk
+	/// over, for example, a slot 7 pickup even though they have no slot 7 weapon
+	/// but are intended to mutate one back later.
+	override bool CanPickup(Actor toucher)
+	{
+		if (!super.CanPickup(toucher))
+			return false;
+
+		let pawn = biom_Player(toucher);
+		let pdat = pawn.GetData();
+
+		for (int i = 0; i < pdat.weapons.Size(); ++i)
+		{
+			if (pdat.weapons[i] is 'biom_Unarmed')
+				continue;
+
+			let defs = GetDefaultByType(pdat.weapons[i]);
+
+			if (defs.FAMILY == self.FAMILY)
+				return true;
+		}
+
+		return false;
+	}
+
 	override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
