@@ -1,4 +1,6 @@
-/// A Plasma Rifle counterpart.
+/// A slot 6 weapon. Behaves almost identically to the vanilla Plasma Rifle,
+/// except without the 20-tic post-fire cooldown period.
+/// Abbreviation: `BTR`
 class biom_BiteRifle : biom_Weapon
 {
 	Default
