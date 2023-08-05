@@ -55,6 +55,7 @@ class biom_PumpShotgun : biom_Weapon
 		{
 			A_FireBullets(4.0, 0.5, 10, 5, 'biom_BulletPuff', FBF_NONE);
 			invoker.magazine -= 1;
+			invoker.bRoundChambered = false;
 			A_AlertMonsters();
 			A_StartSound("biom/pumpshotgun/fire", CHAN_WEAPON);
 			A_GunFlash();
@@ -169,7 +170,14 @@ class biom_PumpShotgun : biom_Weapon
 			invoker.owner.player.pendingWeapon != WP_NOCHANGE)
 			return ResolveState('Reload.Finish');
 
-		A_ReFire();
+		if (invoker.magazine <= 0)
+			return state(null);
+
+		if (!invoker.bRoundChambered)
+			return ResolveState('Pump');
+		else
+			A_ReFire();
+
 		return state(null);
 	}
 }
