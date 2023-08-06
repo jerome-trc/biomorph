@@ -182,15 +182,17 @@ class biom_StatusBar : BaseStatusBar
 
 		let weapsFound = self.pawn.GetWeaponsFound();
 
-		for (int i = 1; i <= 7; ++i)
+		static const string STRINGS[] = { "1", "2", "3", "3S", "4", "5", "6", "7" };
+
+		for (int i = 0; i <= 7; ++i)
 		{
-			let carried = (weapsFound & (1 << (i - 1))) != 0;
+			let carried = (weapsFound & (1 << i)) != 0;
 
 			self.DrawString(
 				self.fontSmall,
-				String.Format("%d", i),
-				(300 + (i * 12), -10),
-				DI_TEXT_ALIGN_RIGHT,
+				STRINGS[i],
+				(300 + ((1 + i) * 16), -10),
+				DI_TEXT_ALIGN_CENTER,
 				Font.CR_CYAN,
 				alpha: carried ? 1.0 : 0.33
 			);
