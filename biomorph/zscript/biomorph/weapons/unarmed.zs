@@ -81,7 +81,7 @@ class biom_Unarmed : biom_Weapon
 			16, -8,
 			-1,
 			damage,
-			'biom_BulletPuff',
+			'biom_Bullet',
 			FBF_EXPLICITANGLE | FBF_NORANDOM,
 			100
 		);

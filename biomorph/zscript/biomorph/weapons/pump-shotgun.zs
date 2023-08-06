@@ -53,7 +53,7 @@ class biom_PumpShotgun : biom_Weapon
 		// Vanilla shotgun time to fire and pump: 44 tics.
 		PSGA A 2 offset(0 + 7, 32 + 7)
 		{
-			A_FireBullets(4.0, 0.5, 10, 5, 'biom_BulletPuff', FBF_NONE);
+			A_FireBullets(4.0, 0.5, 10, 5, 'biom_ShotPellet', FBF_NONE);
 			invoker.magazine -= 1;
 			invoker.bRoundChambered = false;
 			A_AlertMonsters();

@@ -53,7 +53,7 @@ class biom_ServicePistol : biom_Weapon
 		// Baseline time: 10 tics; 9 fewer than the vanilla Pistol.
 		SVPA A 1 offset(0 + 5, 32 + 5)
 		{
-			A_FireBullets(0.5, 0.5, -1, RandomPick(22, 24), 'biom_BulletPuff', FBF_NORANDOM);
+			A_FireBullets(0.5, 0.5, -1, RandomPick(22, 24), 'biom_Bullet', FBF_NORANDOM);
 			invoker.magazine -= 1;
 			A_AlertMonsters();
 			A_StartSound("biom/servicepistol/fire", CHAN_AUTO);

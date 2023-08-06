@@ -53,7 +53,7 @@ class biom_TacticalShotgun : biom_Weapon
 		{
 			A_StartSound("biom/tacshotgun/fire", CHAN_WEAPON);
 			A_GunFlash();
-			A_FireBullets(4.0, 0.5, 10, 5, 'biom_BulletPuff', FBF_NONE);
+			A_FireBullets(4.0, 0.5, 10, 5, 'biom_ShotPellet', FBF_NONE);
 			A_biom_Recoil('biom_recoil_Shotgun');
 			A_AlertMonsters();
 			invoker.magazine -= 1;

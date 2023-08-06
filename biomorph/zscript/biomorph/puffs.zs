@@ -1,9 +1,14 @@
 /// The baseline `BulletPuff` but with added spark particles.
-class biom_BulletPuff : BulletPuff
+class biom_Bullet : BulletPuff
 {
+	protected meta uint MIN_SPARKS, MAX_SPARKS;
+	property Sparks: MIN_SPARKS, MAX_SPARKS;
+
 	Default
 	{
 		-ALLOWPARTICLES
+
+		biom_Bullet.Sparks 5, 7;
 	}
 
 	States
@@ -13,7 +18,8 @@ class biom_BulletPuff : BulletPuff
 		TNT1 A 0 {
 			let tex = TexMan.CheckForTexture('PUFFA0');
 
-			for (uint i = 0; i < Random(6, 8); ++i) {
+			for (uint i = 0; i < Random(invoker.MIN_SPARKS, invoker.MAX_SPARKS); ++i)
+			{
 				A_SpawnParticleEx(
 					"ffffff",
 					tex,
@@ -29,5 +35,15 @@ class biom_BulletPuff : BulletPuff
 			}
 		}
 		goto super::Spawn;
+	}
+}
+
+/// Reduces the number of sparks emitted by [`biom_Bullet`],
+/// to offset the increased number of puffs emitted by shell-firing weapons.
+class biom_ShotPellet : biom_Bullet
+{
+	Default
+	{
+		biom_Bullet.Sparks 2, 4;
 	}
 }
