@@ -85,6 +85,7 @@ class biom_ServicePistol : biom_Weapon
 		TNT1 A 0 A_Light(0);
 		goto LightDone;
 	Reload:
+		TNT1 A 0 A_biom_CheckReload;
 		// TODO: Separate set of frames for when a round isn't chambered.
 		SVPA A 1;
 		SVPR A 4;
