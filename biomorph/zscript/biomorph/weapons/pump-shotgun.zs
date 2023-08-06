@@ -49,7 +49,7 @@ class biom_PumpShotgun : biom_Weapon
 		loop;
 	Fire:
 		TNT1 A 0 A_biom_CheckAmmo;
-		// Baseline time (pump included): 14 tics.
+		// Baseline time (pump included): 19 tics.
 		// Vanilla shotgun time to fire and pump: 44 tics.
 		PSGA A 2 offset(0 + 7, 32 + 7)
 		{
@@ -66,20 +66,20 @@ class biom_PumpShotgun : biom_Weapon
 		PSGA A 1 offset(0 + 1, 32 + 1);
 		TNT1 A 0 {
 			if (invoker.magazine == 0)
-				return ResolveState('Ready.Main');
+				return ResolveState('Reload');
 			else
 				return ResolveState('Pump');
 		}
 	Pump:
-		PSGA A 1;
-		PSG1 C 2 {
+		PSGA A 2;
+		PSG1 C 3 {
 			A_StartSound("biom/shotgunpump/back", CHAN_AUTO);
 			A_biom_Recoil('biom_recoil_ShotgunPump');
 			invoker.bRoundChambered = true;
 		}
-		PSG1 D 2;
-		PSG1 C 2 A_StartSound("biom/shotgunpump/forward");
-		PSGA A 1;
+		PSG1 D 3;
+		PSG1 C 3 A_StartSound("biom/shotgunpump/forward");
+		PSGA A 2;
 		PSGA A 1 A_ReFire;
 		goto Reload;
 	Flash:
@@ -105,14 +105,14 @@ class biom_PumpShotgun : biom_Weapon
 		goto Ready.Main;
 	Reload:
 		TNT1 A 0 A_biom_CheckReload;
-		// Baseline time for start + 1 shell + finish: 34 tics.
+		// Baseline time for start + 1 shell + finish: 29 tics.
 		TNT1 A 0 A_StartSound("biom/pumpshotgun/switch", CHAN_AUTO);
 		PSGR AB 3;
 		goto Reload.Repeat;
 	Reload.Repeat:
-		PSGR CD 4 A_biom_InterruptReload;
-		PSGR E 5 A_biom_InterruptReload;
-		PSGR F 3
+		PSGR CD 3 A_biom_InterruptReload;
+		PSGR E 3 A_biom_InterruptReload;
+		PSGR F 2
 		{
 			A_biom_Reload(1);
 			A_StartSound("biom/pumpshotgun/load");
