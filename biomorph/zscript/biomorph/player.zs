@@ -15,6 +15,7 @@ class biom_Player : DoomPlayer
 
 		Player.DisplayName "$BIOM_PAWN_DISPLAYNAME";
 		Player.SoundClass 'biomorph';
+		Player.ViewHeight 48.0;
 
 		Player.StartItem 'biom_Slot3Ammo', 0;
 		Player.StartItem 'biom_Slot4Ammo', 0;
