@@ -108,6 +108,7 @@ class biom_Grenade40mm : Grenade
 	Death:
 		MISL B 8 bright
 		{
+			invoker.bNoGravity = true;
 			invoker.scale *= 2.0;
 			A_Explode(128, 128);
 		}
