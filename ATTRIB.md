@@ -138,6 +138,8 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 
 ## 3D Meshes
 
+["DP-12"](https://sketchfab.com/3d-models/dp-12-d763a1fd66e24aa99a5eb39d46b76a59) (used to render sprites for the Double Pump Shotgun) is provided by [Commissar_Hal](https://sketchfab.com/Commissar_Hal) under the Creative Commons Attribution 4.0 License.
+
 ["Female Body Base Character Mesh"](https://www.blendswap.com/blend/4458) (used to render the arms of first-person view sprites) is provided by [cgcookie](https://www.blendswap.com/profile/8267https://www.blendswap.com/profile/8267) under the Creative Commons Attribution 2.0 Generic License.
 
 ["HW_6 Draft Punk (detailing2)"](https://sketchfab.com/3d-models/hw-6-draft-punk-detailing2-625a4188ba404cdb8271ca7829a939c9) (used to render sprites for the Caster Cannon) is provided by [Vadim (vasateno)](https://sketchfab.com/mvasa69) under the Creative Commons Attribution 4.0 License.
