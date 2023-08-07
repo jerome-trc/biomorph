@@ -91,10 +91,14 @@ class biom_StatusBar : BaseStatusBar
 
 			self.DrawString(
 				self.fontBig,
-				FormatNumber(armor.Amount, 3),
+				String.Format(
+					"\c[DarkGreen]%s \c[White]/ \c[DarkGreen]%s",
+					FormatNumber(armor.amount, 3),
+					FormatNumber(armor.maxAmount, 3)
+				),
 				(44, -36),
 				DI_NONE,
-				Font.CR_DARKGREEN
+				Font.CR_UNTRANSLATED
 			);
 			self.DrawString(
 				self.fontSmall,
