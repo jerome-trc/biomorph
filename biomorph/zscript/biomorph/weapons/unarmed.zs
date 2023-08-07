@@ -38,6 +38,7 @@ class biom_Unarmed : biom_Weapon
 		H2HC D 2 {
 			A_biom_UnarmedAttack();
 			A_AlertMonsters();
+			A_StartSound("biom/whoosh", CHAN_WEAPON);
 		}
 		H2HC E 1 A_biom_UnarmedAttack;
 		H2HC F 1 A_biom_UnarmedAttack;
@@ -56,6 +57,7 @@ class biom_Unarmed : biom_Weapon
 		H2HC L 2 {
 			A_biom_UnarmedAttack();
 			A_AlertMonsters();
+			A_StartSound("biom/whoosh", CHAN_WEAPON);
 		}
 		H2HC M 1 A_biom_UnarmedAttack;
 		H2HC N 1 A_biom_UnarmedAttack;

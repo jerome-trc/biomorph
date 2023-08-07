@@ -80,6 +80,25 @@
 	biom/shotgunpump/back PUMPBACK
 	biom/shotgunpump/forward PUMPFORW
 
+// Weapons, melee swing whoosh /////////////////////////////////////////////////
+
+	biom/whoosh/0 BWHOOSH0
+	biom/whoosh/1 BWHOOSH1
+	biom/whoosh/2 BWHOOSH2
+	biom/whoosh/3 BWHOOSH3
+	biom/whoosh/4 BWHOOSH4
+	biom/whoosh/5 BWHOOSH5
+
+	$random biom/whoosh
+	{
+		biom/whoosh/0
+		biom/whoosh/1
+		biom/whoosh/2
+		biom/whoosh/3
+		biom/whoosh/4
+		biom/whoosh/5
+	}
+
 // Weapons, bite rifle /////////////////////////////////////////////////////////
 
 	biom/biterifle/fire/0 BTR1_0
