@@ -92,6 +92,7 @@ class biom_Biter : Actor
 
 		DamageFunction 30;
 		DeathSound "weapons/plasmax";
+		Decal 'BulletChip';
 		Height 8.0;
 		Obituary "$BIOM_BITERIFLE_OB";
 		Radius 13.0;

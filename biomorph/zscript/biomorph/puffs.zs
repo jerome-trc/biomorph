@@ -8,6 +8,7 @@ class biom_Bullet : BulletPuff
 	{
 		-ALLOWPARTICLES
 
+		Decal 'BulletChip';
 		biom_Bullet.Sparks 5, 7;
 	}
 

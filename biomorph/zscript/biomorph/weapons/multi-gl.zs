@@ -90,6 +90,7 @@ class biom_Grenade40mm : Grenade
 
 		DamageFunction 100;
 		DeathSound "weapons/rocklx";
+		Decal 'Scorch';
 		Gravity 0.65;
 		Height 4.0;
 		Obituary "$BIOM_MULTIGL_OB";
