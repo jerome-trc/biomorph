@@ -24,7 +24,7 @@
 
 	BIOM_HEALTHBONUS_TAG = "\c[LightBlue]Health Cocktail\c-";
 	BIOM_HEALTHBONUS_PKUP = "\c[White]Took a \c[LightBlue]health cocktail\c[White].";
-	BIOM_HEALTHBONUS_COLLECTED = "\c[White]Did not use a \c[LightBlue]health cocktail\c[White], but counted it as collected.";
+	BIOM_HEALTHBONUS_FOUND = "\c[White]Did not use a \c[LightBlue]health cocktail\c[White], but marked it as found.";
 	BIOM_SMALLHEALTH_TAG = "\c[LightBlue]Stimpack\c-";
 	BIOM_SMALLHEALTH_PKUP = "\c[White]Used a \c[LightBlue]stimpack\c[White].";
 	BIOM_SMALLHEALTH_PARTIAL = "\c[White]Partially used a \c[LightBlue]stimpack\c[White].";
@@ -37,7 +37,7 @@
 	BIOM_SUPERHEALTH_PKUP = "\c[White]Used a \c[LightBlue]L.I.F.E. Kit\c[White].";
 	BIOM_SUPERHEALTH_PARTIAL = "\c[White]Partially used a \c[LightBlue]L.I.F.E. Kit\c[White].";
 	BIOM_SUPERHEALTH_PKUPLOW = "\c[White]Used a mucuh-needed \c[LightBlue]L.I.F.E. Kit\c[White].";
-	BIOM_SUPERHEALTH_COLLECTED = "\c[White]Did not use a \c[LightBlue]L.I.F.E. Kit\c[White], but counted it as collected.";
+	BIOM_SUPERHEALTH_FOUND = "\c[White]Did not fully use a \c[LightBlue]L.I.F.E. Kit\c[White], but marked it as found.";
 
 // Armour //////////////////////////////////////////////////////////////////////
 
@@ -45,7 +45,7 @@
 
 	BIOM_ARMORBONUS_TAG = "\c[Green]Armour Shard\c-";
 	BIOM_ARMORBONUS_PKUP = "\c[White]Jury-rigged some protection using an \c[Green]armour shard\c[White].";
-	BIOM_ARMORBONUS_COLLECTED = "\c[White]Didn't pick up an \c[Green]armour shard\c[White], but counted it as collected.";
+	BIOM_ARMORBONUS_FOUND = "\c[White]Didn't pick up an \c[Green]armour shard\c[White], but marked it as found.";
 
 	BIOM_LIGHTARMOR_TAG = "\c[Green]Security Vest\c-";
 	BIOM_LIGHTARMOR_PKUP = "\c[White]Donned a \c[Green]security vest\c[White].";
@@ -76,7 +76,7 @@
 	BIOM_SLOT5AMMO_TAG = "\c[Gold]Multirole Grenades\c-";
 	BIOM_SLOT5AMMOSMALL_TAG = "\c[Gold]Multirole Grenade\c-";
 	BIOM_SLOT5AMMOSMALL_PKUP = "\c[White]Picked up a \c[Gold]multirole grenade\c[White].";
-	// BIOM_SLOT5AMMOSMALL_PARTIAL = ""; Can't happen; item only gives 1.
+	// No need for a PARTIAL message; the item only gives 1.
 	BIOM_SLOT5AMMOBIG_TAG = "\c[Gold]Multirole Grenade Pack\c-";
 	BIOM_SLOT5AMMOBIG_PKUP = "\c[White]Picked up a \c[Gold]multirole grenade pack\c[White].";
 	BIOM_SLOT5AMMOBIG_PARTIAL = "\c[White]Partially emptied a \c[Gold]multirole grenade pack\c[White].";
@@ -100,7 +100,7 @@
 	BIOM_BERSERK_PKUP = "\c[White]Injected a \c[Pink]berserk cocktail\c[White].";
 	BIOM_BERSERK_PKUPFIRST = "\c[White]Used a \c[Pink]berserk cocktail\c[White]'s enhancers, but left the healers.";
 	BIOM_BERSERK_PKUPLOW = "\c[White]Injected a badly-needed \c[Pink]berserk cocktail\c[White].";
-	BIOM_BERSERK_COLLECTED = "\c[White]Didn't use a \c[Pink]berserk cocktail\c[White], but counted it as collected.";
+	BIOM_BERSERK_FOUND = "\c[White]Did not fully use a \c[Pink]berserk cocktail\c[White], but marked it as found.";
 	BIOM_BERSERK_PARTIAL = "\c[White]Injected part of a \c[Pink]berserk cocktail\c[White].";
 
 	BIOM_ALLMAP_TAG = "\c[Pink]Sonic Map\c-";
@@ -113,7 +113,7 @@
 	BIOM_INFRARED_PKUP = "\c[White]Donned a pair of \c[Pink]night vision goggles\c[White]; the dark is illuminated.";
 	BIOM_MEGASPHERE_TAG = "\c[Pink]M.E.G.A. Kit\c-";
 	BIOM_MEGASPHERE_PKUP = "\c[White]Used a \c[Pink]M.E.G.A. Kit\c[White]! You feel rejuvenated.";
-	BIOM_MEGASPHERE_COLLECTED = "\c[White]Didn't use a \c[Pink]M.E.G.A. Kit\c[White], but counted it as collected.";
+	BIOM_MEGASPHERE_FOUND = "\c[White]Didn't use a \c[Pink]M.E.G.A. Kit\c[White], but marked it as found.";
 	BIOM_RADSUIT_TAG = "\c[Pink]C.B.R.N. Suit\c-";
 	BIOM_RADSUIT_PKUP = "\c[White]Donned a \c[Pink]C.B.R.N. suit\c[White]; you're safe from environmental hazards.";
 

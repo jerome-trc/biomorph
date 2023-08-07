@@ -6,10 +6,12 @@ mixin class biom_Pickup
 		+DONTGIB
 	}
 
-	meta string PartialPickupMessage;
-	property PartialPickupMessage: PartialPickupMessage;
-	meta string CollectedMessage;
-	property CollectedMessage: CollectedMessage;
+	meta string PARTIAL_PICKUP_MESSAGE;
+	property PartialPickupMessage: PARTIAL_PICKUP_MESSAGE;
+	meta string FOUND_MESSAGE;
+	property FoundMessage: FOUND_MESSAGE;
+	meta string FINISHED_MESSAGE;
+	property FinishedMessage: FINISHED_MESSAGE;
 
 	/// Duplicates the behavior of `Inventory::PlayPickupSound()`.
 	private void PlayCollectedSound(Actor collector)
@@ -29,7 +31,7 @@ mixin class biom_Pickup
 	private void MarkAsCollected(Actor collector)
 	{
 		self.PlayCollectedSound(collector);
-		self.PrintPickupMessage(collector.CheckLocalView(), self.collectedMessage);
+		self.PrintPickupMessage(collector.CheckLocalView(), self.FOUND_MESSAGE);
 		self.bCountItem = false;
 		Level.Found_Items++;
 		self.A_SetTranslation('biom_Pkup_Counted');
@@ -47,7 +49,7 @@ mixin class biom_Pickup
 		else
 			self.PlayPickupSound(picker);
 
-		self.PrintPickupMessage(picker.CheckLocalView(), self.partialPickupMessage);
+		self.PrintPickupMessage(picker.CheckLocalView(), self.PARTIAL_PICKUP_MESSAGE);
 
 		if (self.amount <= (self.default.Amount * 0.25))
 			self.A_SetTranslation('biom_Pkup_25');

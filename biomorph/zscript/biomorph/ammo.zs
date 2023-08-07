@@ -29,7 +29,7 @@ mixin class biom_Ammo
 
 		if (bCountItem)
 		{
-			PrintPickupMessage(other.CheckLocalView(), self.collectedMessage);
+			PrintPickupMessage(other.CheckLocalView(), self.FOUND_MESSAGE);
 			self.bCountItem = false;
 			self.level.found_Items++;
 			self.A_SetTranslation('BIO_Pkup_Counted');

@@ -9,7 +9,7 @@ class biom_ArmorBonus : ArmorBonus replaces ArmorBonus
 		Inventory.Icon 'KVLRE0';
 		Inventory.PickupMessage "$BIOM_ARMORBONUS_PKUP";
 		Inventory.PickupSound "biom/armorbonus/pkup";
-		biom_ArmorBonus.CollectedMessage "$BIOM_ARMORBONUS_COLLECTED";
+		biom_ArmorBonus.FoundMessage "$BIOM_ARMORBONUS_FOUND";
 	}
 
 	States
@@ -141,9 +141,9 @@ mixin class biom_Armor
 	final override string PickupMessage()
 	{
 		if (self.saveAmount <= 0)
-			return self.partialPickupMessage;
+			return self.PARTIAL_PICKUP_MESSAGE;
 		else
-			return self.pickupMsg;
+			return self.PICKUPMSG;
 	}
 }
 
@@ -158,7 +158,7 @@ class biom_LightArmor : GreenArmor replaces GreenArmor
 		Inventory.Icon 'KVLRA0';
 		Inventory.PickupMessage "$BIOM_LIGHTARMOR_PKUP";
 		biom_LightArmor.PartialPickupMessage "$BIOM_LIGHTARMOR_PARTIAL";
-		biom_LightArmor.CollectedMessage "$BIOM_LIGHTARMOR_COLLECTED";
+		biom_LightArmor.FoundMessage "$BIOM_LIGHTARMOR_FOUND";
 	}
 
 	States
@@ -181,7 +181,7 @@ class biom_HeavyArmor : BlueArmor replaces BlueArmor
 		Inventory.Icon 'KVLRC0';
 		Inventory.PickupMessage "$BIOM_HEAVYARMOR_PKUP";
 		biom_HeavyArmor.PartialPickupMessage "$BIOM_HEAVYARMOR_PARTIAL";
-		biom_HeavyArmor.CollectedMessage "$BIOM_HEAVYARMOR_COLLECTED";
+		biom_HeavyArmor.FoundMessage "$BIOM_HEAVYARMOR_FOUND";
 	}
 
 	States

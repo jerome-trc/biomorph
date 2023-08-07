@@ -79,7 +79,7 @@ class biom_HealthBonus : HealthBonus replaces HealthBonus
 		Tag "$BIOM_HEALTHBONUS_TAG";
 		-INVENTORY.ALWAYSPICKUP
 		Inventory.PickupMessage "$BIOM_HEALTHBONUS_PKUP";
-		biom_HealthBonus.CollectedMessage "$BIOM_HEALTHBONUS_COLLECTED";
+		biom_HealthBonus.FoundMessage "$BIOM_HEALTHBONUS_FOUND";
 	}
 
 	States
@@ -146,7 +146,7 @@ class biom_SuperHealth : Soulsphere replaces Soulsphere
 		Inventory.PickupMessage "$BIOM_SUPERHEALTH_PKUP";
 		Health.LowMessage 25, "$BIOM_SUPERHEALTH_PKUPLOW";
 		biom_SuperHealth.PartialPickupMessage "$BIOM_SUPERHEALTH_PARTIAL";
-		biom_SuperHealth.CollectedMessage "$BIOM_SUPERHEALTH_COLLECTED";
+		biom_SuperHealth.FoundMessage "$BIOM_SUPERHEALTH_FOUND";
 	}
 
 	States

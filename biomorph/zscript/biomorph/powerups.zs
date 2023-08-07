@@ -17,7 +17,7 @@ class biom_Berserk : Health replaces Berserk
 		Inventory.PickupMessage "$BIOM_BERSERK_PKUP";
 		Inventory.PickupSound "misc/p_pkup";
 		Health.LowMessage 25, "$BIOM_BERSERK_PKUPLOW";
-		biom_Berserk.CollectedMessage "$BIOM_BERSERK_COLLECTED";
+		biom_Berserk.FoundMessage "$BIOM_BERSERK_FOUND";
 		biom_Berserk.PartialPickupMessage "$BIOM_BERSERK_PARTIAL";
 	}
 
@@ -62,7 +62,7 @@ class biom_Megasphere : Inventory replaces Megasphere
 		Tag "$BIOM_MEGASPHERE_TAG";
 		Inventory.PickupMessage "$BIOM_MEGASPHERE_PKUP";
 		Inventory.PickupSound "misc/p_pkup";
-		biom_Megasphere.CollectedMessage "$BIOM_MEGASPHERE_COLLECTED";
+		biom_Megasphere.FoundMessage "$BIOM_MEGASPHERE_FOUND";
 	}
 
 	States
