@@ -36,14 +36,10 @@ class biom_Unarmed : biom_Weapon
 	Rake.Left:
 		H2HC B 4 { invoker.bRightHand = true; }
 		H2HC C 1 A_biom_Recoil('biom_recoil_Rake');
-		H2HC D 2 {
-			A_biom_UnarmedAttack();
-			A_AlertMonsters();
-			A_StartSound("biom/whoosh", CHAN_WEAPON);
-		}
-		H2HC E 1 A_biom_UnarmedAttack;
-		H2HC F 1 A_biom_UnarmedAttack;
-		H2HC G 2 A_biom_UnarmedAttack;
+		H2HC D 2 A_biom_UnarmedAttackStart;
+		H2HC E 1 A_biom_UnarmedHitscan;
+		H2HC F 1 A_biom_UnarmedHitscan;
+		H2HC G 2 A_biom_UnarmedHitscan;
 		H2HC H 3;
 		H2HC I 4;
 		TNT1 A 4;
@@ -55,14 +51,10 @@ class biom_Unarmed : biom_Weapon
 	Rake.Right:
 		H2HC J 4 { invoker.bRightHand = false; }
 		H2HC K 1 A_biom_Recoil('biom_recoil_Rake');
-		H2HC L 2 {
-			A_biom_UnarmedAttack();
-			A_AlertMonsters();
-			A_StartSound("biom/whoosh", CHAN_WEAPON);
-		}
-		H2HC M 1 A_biom_UnarmedAttack;
-		H2HC N 1 A_biom_UnarmedAttack;
-		H2HC O 2 A_biom_UnarmedAttack;
+		H2HC L 2 A_biom_UnarmedAttackStart;
+		H2HC M 1 A_biom_UnarmedHitscan;
+		H2HC N 1 A_biom_UnarmedHitscan;
+		H2HC O 2 A_biom_UnarmedHitscan;
 		H2HC P 3;
 		H2HC Q 4;
 		TNT1 A 4;
@@ -73,7 +65,17 @@ class biom_Unarmed : biom_Weapon
 		goto Ready;
 	}
 
-	protected action void A_biom_UnarmedAttack()
+	protected action void A_biom_UnarmedAttackStart()
+	{
+		if (A_biom_UnarmedHitscan() == null)
+			A_SprayDecal("biom_ClawMark", offset: (0, 0, 48.0));
+
+		A_AlertMonsters();
+		A_StartSound("biom/whoosh", CHAN_WEAPON);
+	}
+
+	/// Returns the actor hit by the attack (may be null).
+	protected action Actor A_biom_UnarmedHitscan()
 	{
 		int damage = Random(20, 22);
 
@@ -98,6 +100,8 @@ class biom_Unarmed : biom_Weapon
 
 		if (tgt.lineTarget != null)
 			self.A_StartSound("baron/melee", CHAN_WEAPON);
+
+		return tgt.lineTarget;
 	}
 }
 
@@ -114,6 +118,6 @@ class biom_ClawRake : biom_Bullet
 	Default
 	{
 		AttackSound "biom/unarmed/wallhit";
-		Decal "";
+		Decal '';
 	}
 }
