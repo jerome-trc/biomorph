@@ -1,3 +1,4 @@
+/// Abbreviation: `H2H`
 class biom_Unarmed : biom_Weapon
 {
 	flagdef rightHand: DynFlags, 31;
@@ -76,17 +77,27 @@ class biom_Unarmed : biom_Weapon
 	{
 		int damage = Random(20, 22);
 
-		if (invoker.owner.FindInventory('PowerStrength') != null)
+		if (self.FindInventory('PowerStrength') != null)
 			damage *= 4;
 
-		A_FireBullets(
-			16, -8,
-			-1,
+		double ang = self.angle + Random2[Punch]() * (5.625 / 256);
+		double range = 100 + MELEEDELTA;
+		double pitch = self.AimLineAttack(ang, range, null, 0.0, ALF_CHECK3D);
+		FTranslatedLineTarget tgt;
+
+		self.LineAttack(
+			ang,
+			range,
+			pitch,
 			damage,
-			'biom_Bullet',
-			FBF_EXPLICITANGLE | FBF_NORANDOM,
-			100
+			'Melee',
+			'biom_ClawRake',
+			LAF_ISMELEEATTACK,
+			tgt
 		);
+
+		if (tgt.lineTarget != null)
+			self.A_StartSound("baron/melee", CHAN_WEAPON);
 	}
 }
 
@@ -95,5 +106,14 @@ class biom_wdat_Unarmed : biom_WeaponData
 	final override void Reset()
 	{
 		// ???
+	}
+}
+
+class biom_ClawRake : biom_Bullet
+{
+	Default
+	{
+		AttackSound "biom/unarmed/wallhit";
+		Decal "";
 	}
 }

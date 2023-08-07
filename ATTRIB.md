@@ -124,6 +124,8 @@ BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people
 
 All sounds prefixed with BWHOOSH are derived from ["Swoosh.wav"](https://freesound.org/people/Brsjak/sounds/482880/) by freesound user [Brsjak](https://freesound.org/people/Brsjak/), used under the Creative Commons Attribution 3.0 Unported License.
 
+All sounds prefixed with H2H1 are derived from ["scratching-2.mp3"](https://freesound.org/people/rottako/sounds/693594/) by freesound user [rottako](https://freesound.org/people/rottako), used under Creative Commons 0.
+
 CSC1_0 and CSC1_1 are derived from ["Electric Charge + Shot"](https://freesound.org/people/Teh_Bucket/sounds/518739/) by freesound user [Teh_Bucket](https://freesound.org/people/Teh_Bucket/), used under the Attribution 3.0 License.
 
 DRYFBAL 0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), licensed under Creative Commons 0.

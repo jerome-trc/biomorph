@@ -159,3 +159,24 @@
 		biom/tacshotgun/fire/1
 		biom/tacshotgun/fire/2
 	}
+
+// Weapons, unarmed ////////////////////////////////////////////////////////////
+
+	biom/unarmed/wallhit/0 H2H1_0
+	biom/unarmed/wallhit/1 H2H1_1
+	biom/unarmed/wallhit/2 H2H1_2
+	biom/unarmed/wallhit/3 H2H1_3
+	biom/unarmed/wallhit/4 H2H1_4
+	biom/unarmed/wallhit/5 H2H1_5
+	biom/unarmed/wallhit/6 H2H1_6
+
+	$random biom/unarmed/wallhit
+	{
+		biom/unarmed/wallhit/0
+		biom/unarmed/wallhit/1
+		biom/unarmed/wallhit/2
+		biom/unarmed/wallhit/3
+		biom/unarmed/wallhit/4
+		biom/unarmed/wallhit/5
+		biom/unarmed/wallhit/6
+	}
