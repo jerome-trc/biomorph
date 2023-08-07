@@ -108,7 +108,7 @@
 	BIOM_BLURSPHERE_TAG = "\c[Pink]C.A.M.O. Kit\c-";
 	BIOM_BLURSPHERE_PKUP = "\c[White]Used a \c[Pink]C.A.M.O. Kit\c[White]; you fade and shimmer.";
 	BIOM_INVULNERABILITY_TAG = "\c[Pink]S.T.Y.X. Kit";
-	BIOM_INVULNERABILITY_PKUP = "\c[White]Used a \c[Pink]S.T.Y.X. Kit! You are invulnerable!";
+	BIOM_INVULNERABILITY_PKUP = "\c[White]Used a \c[Pink]S.T.Y.X. Kit\c[White]! You are invulnerable!";
 	BIOM_INFRARED_TAG = "\c[Pink]Night Vision Goggles";
 	BIOM_INFRARED_PKUP = "\c[White]Donned a pair of \c[Pink]night vision goggles\c[White]; the dark is illuminated.";
 	BIOM_MEGASPHERE_TAG = "\c[Pink]M.E.G.A. Kit\c-";
