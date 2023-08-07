@@ -25,6 +25,10 @@ class biom_Global : Thinker
 
 	readonly<biom_PlayerData> FindPlayerData(PlayerInfo pInfo) const
 	{
+		// Happens if a single player dies and loads their last saved game.
+		if (self.playerData.Size() == 0)
+			return null;
+
 		for (uint i = 0; i < MAXPLAYERS; ++i)
 			if (players[i] == pInfo)
 				return self.playerData[i].AsConst();
