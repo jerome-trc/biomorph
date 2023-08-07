@@ -103,6 +103,7 @@ class biom_Slot3AmmoSmall : biom_Slot3Ammo replaces Shell
 		Tag "$BIOM_SLOT3AMMOSMALL_TAG";
 		Inventory.Amount 4;
 		Inventory.PickupMessage "$BIOM_SLOT3AMMOSMALL_PKUP";
+		Inventory.PickupSound "biom/slot3ammo/pickup";
 		biom_Slot3AmmoSmall.PartialPickupMessage "$BIOM_SLOT3AMMOSMALL_PARTIAL";
 	}
 
@@ -124,6 +125,7 @@ class biom_Slot4AmmoSmall : biom_Slot4Ammo replaces Clip
 		Tag "$BIOM_SLOT4AMMOSMALL_TAG";
 		Inventory.Amount 10;
 		Inventory.PickupMessage "$BIOM_SLOT4AMMOSMALL_PKUP";
+		Inventory.PickupSound "biom/slot4ammo/pickup";
 		biom_Slot4AmmoSmall.PartialPickupMessage "$BIOM_SLOT4AMMOSMALL_PARTIAL";
 	}
 
@@ -145,6 +147,7 @@ class biom_Slot5AmmoSmall : biom_Slot5Ammo replaces RocketAmmo
 		Tag "$BIOM_SLOT5AMMOSMALL_TAG";
 		Inventory.Amount 1;
 		Inventory.PickupMessage "$BIOM_SLOT5AMMOSMALL_PKUP";
+		Inventory.PickupSound "biom/slot5ammo/pickup";
 		biom_Slot5AmmoSmall.PartialPickupMessage "$BIOM_SLOT5AMMOSMALL_PARTIAL";
 	}
 
@@ -166,6 +169,7 @@ class biom_Slot67AmmoSmall : biom_Slot67Ammo replaces Cell
 		Tag "$BIOM_SLOT67AMMOSMALL_TAG";
 		Inventory.Amount 20;
 		Inventory.PickupMessage "$BIOM_SLOT67AMMOSMALL_PKUP";
+		Inventory.PickupSound "biom/slot67ammo/pickup";
 		biom_Slot67AmmoSmall.PartialPickupMessage "$BIOM_SLOT67AMMOSMALL_PARTIAL";
 	}
 
@@ -189,6 +193,7 @@ class biom_Slot3AmmoBig : biom_Slot3Ammo replaces ShellBox
 		Tag "$BIOM_SLOT3AMMOBIG_TAG";
 		Inventory.Amount 20;
 		Inventory.PickupMessage "$BIOM_SLOT3AMMOBIG_PKUP";
+		Inventory.PickupSound "biom/slot3ammo/pickup";
 		biom_Slot3AmmoBig.PartialPickupMessage "$BIOM_SLOT3AMMOBIG_PARTIAL";
 	}
 
@@ -210,6 +215,7 @@ class biom_Slot4AmmoBig : biom_Slot4Ammo replaces ClipBox
 		Tag "$BIOM_SLOT4AMMOBIG_TAG";
 		Inventory.Amount 50;
 		Inventory.PickupMessage "$BIOM_SLOT4AMMOBIG_PKUP";
+		Inventory.PickupSound "biom/slot4ammo/pickup";
 		biom_Slot4AmmoBig.PartialPickupMessage "$BIOM_SLOT4AMMOBIG_PARTIAL";
 	}
 
@@ -231,6 +237,7 @@ class biom_Slot5AmmoBig : biom_Slot5Ammo replaces RocketBox
 		Tag "$BIOM_SLOT5AMMOBIG_TAG";
 		Inventory.Amount 5;
 		Inventory.PickupMessage "$BIOM_SLOT5AMMOBIG_PKUP";
+		Inventory.PickupSound "biom/slot5ammo/pickup";
 		biom_Slot5AmmoBig.PartialPickupMessage "$BIOM_SLOT5AMMOBIG_PARTIAL";
 	}
 
@@ -252,6 +259,7 @@ class biom_Slot67AmmoBig : biom_Slot67Ammo replaces CellPack
 		Tag "$BIOM_SLOT67AMMOBIG_TAG";
 		Inventory.Amount 100;
 		Inventory.PickupMessage "$BIOM_SLOT67AMMOBIG_PKUP";
+		Inventory.PickupSound "biom/slot67ammo/pickup";
 		biom_Slot67AmmoBig.PartialPickupMessage "$BIOM_SLOT67AMMOBIG_PARTIAL";
 	}
 

@@ -57,6 +57,13 @@
 	$playersound biomorph other *death BIOMDIE
 	$playersound biomorph other *xdeath BIOMDIE
 
+// Ammo ////////////////////////////////////////////////////////////////////////
+
+	biom/slot3ammo/pickup AMM3PKUP
+	biom/slot4ammo/pickup AMM4PKUP
+	biom/slot5ammo/pickup AMM5PKUP
+	biom/slot67ammo/pickup AM67PKUP
+
 // Weapons, common /////////////////////////////////////////////////////////////
 
 	biom/dryfire/ballistic/0 DRYFBAL0

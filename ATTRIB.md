@@ -132,6 +132,14 @@ MGL1_0 is derived from ["Grenade_Fire_01.wav](https://freesound.org/people/xFrom
 
 RUCKSACK is derived from ["zipping backback and rustling papers.wav"](https://freesound.org/people/TheSupremeMuffinPooter/sounds/333519/) by freesound user [TheSupremeMuffinPooter](https://freesound.org/people/TheSupremeMuffinPooter/), used under Creative Commons 0.
 
+AMM3PKUP is derived from ["empty shotgun shells/casings hitting ground bouncing"](https://freesound.org/people/Metrolynn/sounds/620929/) by freesound user [Metrolynn](https://freesound.org/people/Metrolynn/), used under Creative Commons 0.
+
+AMM4PKUP is derived from ["180081 Casings Falling 01.WAV"](https://freesound.org/people/FST180081/sounds/441789/) by freesound user [FST180081](https://freesound.org/people/FST180081/sounds/441789/), used under Creative Commons 0.
+
+AMM5PKUP is derived from ["Metal Glass Objects Rattling.aif"](https://freesound.org/people/RutgerMuller/sounds/104363/) by freesound user [RutgerMuller](https://freesound.org/people/RutgerMuller), used under Creative Commons 0.
+
+AM67PKUP is derived from ["charging power"](https://freesound.org/people/JavierZumer/sounds/257229/) by freesound user [JavierZumer](https://freesound.org/people/JavierZumer/), used under the Creative Commons Attribution 4.0 License.
+
 USRFAIL0 (edited for a 20% speed increase) is derived from ["Wrong"](https://freesound.org/people/TheBuilder15/sounds/415764/) by freesound user [TheBuilder15](https://freesound.org/people/TheBuilder15/), used under Creative Commons 0.
 
 USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"](https://freesound.org/people/LittleRobotSoundFactory/sounds/288951/) by freesound user [LittleRobotSoundFactor](https://freesound.org/people/LittleRobotSoundFactory/), used under Creative Commons Attribution 3.0 Unported.
