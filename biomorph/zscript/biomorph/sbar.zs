@@ -71,17 +71,17 @@ class biom_StatusBar : BaseStatusBar
 		self.DrawString(
 			self.fontBig,
 			String.Format(
-				"%s / %s",
+				"\c[LightBlue]%s \c[White]/ \c[LightBlue]%s",
 				FormatNumber(self.cPlayer.Health, 3, 5),
 				FormatNumber(self.pawn.GetMaxHealth(true), 3, 5)
 			),
 			(44, -18),
 			DI_NONE,
-			!berserk ? Font.CR_WHITE : Font.CR_DARKRED
+			Font.CR_UNTRANSLATED
 		);
 
 		if (berserk)
-			self.DrawImage('graphics/bang_small.png', (36, -2));
+			self.DrawString(self.fontBig, "!", (34, -18), DI_NONE, Font.CR_DARKRED);
 
 		let armor = self.cPlayer.mo.FindInventory('BasicArmor');
 
