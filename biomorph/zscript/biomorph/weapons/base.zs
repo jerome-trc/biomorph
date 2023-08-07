@@ -111,12 +111,13 @@ class biom_Weapon : DoomWeapon abstract
 
 	protected action state A_biom_CheckAmmo(
 		bool secondary = false,
+		int multi = 1,
 		statelabel fallback = 'Ready.Main',
 		statelabel reload = 'Reload',
 		statelabel dryfire = 'Dryfire'
 	)
 	{
-		if (invoker.EnoughAmmo(secondary))
+		if (invoker.EnoughAmmo(secondary, multi))
 			return state(null);
 
 		if (!invoker.CanReload())
@@ -243,7 +244,7 @@ class biom_Weapon : DoomWeapon abstract
 	}
 
 	/// i.e. to fire a round.
-	bool EnoughAmmo(bool secondary = false) const
+	bool EnoughAmmo(bool secondary = false, int multi = 1) const
 	{
 		if (self.CheckInfiniteAmmo())
 			return true;
@@ -254,18 +255,18 @@ class biom_Weapon : DoomWeapon abstract
 		if (!secondary)
 		{
 			if (hasMagazine)
-				return mag.current >= self.ammoUse1;
+				return mag.current >= (self.ammoUse1 * multi);
 			else if (self.ammo1 != null)
-				return self.ammo1.amount >= self.ammoUse1;
+				return self.ammo1.amount >= (self.ammoUse1 * multi);
 			else
 				return true;
 		}
 		else
 		{
 			if (hasMagazine)
-				return mag.current >= self.ammoUse2;
+				return mag.current >= (self.ammoUse2 * multi);
 			else if (self.ammo2 != null)
-				return self.ammo2.amount >= self.ammoUse2;
+				return self.ammo2.amount >= (self.ammoUse2 * multi);
 			else
 				return true;
 		}

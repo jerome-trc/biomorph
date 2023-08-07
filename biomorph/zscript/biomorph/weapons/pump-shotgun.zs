@@ -23,6 +23,7 @@ class biom_PumpShotgun : biom_Weapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_SHOTGUN;
 		Weapon.SlotNumber 3;
+		Weapon.SlotPriority SLOTPRIO_LOW;
 		Weapon.UpSound "biom/pumpshotgun/switch";
 
 		biom_Weapon.DataClass 'biom_PumpShotgunData';
@@ -78,7 +79,7 @@ class biom_PumpShotgun : biom_Weapon
 			invoker.bRoundChambered = true;
 		}
 		PSG1 D 3;
-		PSG1 C 3 A_StartSound("biom/shotgunpump/forward");
+		PSG1 C 3 A_StartSound("biom/shotgunpump/forward", CHAN_AUTO);
 		PSGA A 2;
 		PSGA A 1 A_ReFire;
 		goto Reload;
@@ -115,7 +116,7 @@ class biom_PumpShotgun : biom_Weapon
 		PSGR F 2
 		{
 			A_biom_Reload(1);
-			A_StartSound("biom/pumpshotgun/load");
+			A_StartSound("biom/pumpshotgun/load", CHAN_AUTO);
 		}
 		PSGR GHI 2 A_biom_InterruptReload;
 		TNT1 A 0
@@ -142,6 +143,7 @@ class biom_PumpShotgun : biom_Weapon
 	{
 		super.PostBeginPlay();
 		self.magazine = biom_PumpShotgun.MAGAZINE_CAPACITY;
+		self.bRoundChambered = true;
 	}
 
 	override void DetachFromOwner()

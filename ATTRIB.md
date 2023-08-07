@@ -97,8 +97,14 @@ The following audio files are provided by ZDoom forum user Joblez_I, under CC-BY
 	- g_ithaca_nopump_3.wav (TSG1_2)
 - jobl_snd_pack_2.zip/
 	- shotguns/
+		- remington870-1.wav (PSD2_0)
+		- remington870-2.wav (PSD2_1)
+		- remington870-3.wav (PSD2_2)
 		- shotpumpback.wav (PUMPBACK)
 		- shotpumpfor.wav (PUMPFORW)
+		- trenchgun-1.wav (PSD1_0)
+		- trenchgun-2.wav (PSD1_1)
+		- trenchgun-3.wav (PSD1_2)
 
 #### CturiX Kemilon
 

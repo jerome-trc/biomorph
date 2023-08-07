@@ -22,6 +22,7 @@ class biom_TacticalShotgun : biom_Weapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder SELORDER_SHOTGUN;
 		Weapon.SlotNumber 3;
+		Weapon.SlotPriority SLOTPRIO_LOW;
 
 		biom_Weapon.DataClass 'biom_wdat_TacticalShotgun';
 		biom_Weapon.Grade BIOM_WEAPGRADE_1;
@@ -118,6 +119,7 @@ class biom_TacticalShotgun : biom_Weapon
 	{
 		super.PostBeginPlay();
 		self.magazine = biom_TacticalShotgun.MAGAZINE_CAPACITY;
+		self.bRoundChambered = true;
 	}
 
 	override void DetachFromOwner()

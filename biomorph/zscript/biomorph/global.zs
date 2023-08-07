@@ -258,7 +258,7 @@ class biom_PlayerData
 		ret.weapons.Push((class<biom_Weapon>)('biom_PumpShotgun'));
 
 		if (withSuperShotgun)
-			ret.weapons.Push((class<biom_Weapon>)('biom_CombatStormgun'));
+			ret.weapons.Push((class<biom_Weapon>)('biom_DoublePumpShotgun'));
 
 		ret.weapons.Push((class<biom_Weapon>)('biom_GPMG'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_MultiGL'));

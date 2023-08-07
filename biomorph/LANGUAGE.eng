@@ -136,14 +136,14 @@
 		"\c[White]on "
 		"\c[Red]%o\c[White].";
 
-	BIOM_COMBATSTORMGUN_TAG = "\c[White]Combat Stormgun\c-";
-	BIOM_COMBATSTORMGUN_PKUP = "\c[White]Procured a \c[Cyan]combat stormgun\c[White].";
-	BIOM_COMBATSTORMGUN_OB =
+	BIOM_DOUBLEPUMPSHOTGUN_TAG = "\c[White]Double Pump Shotgun\c-";
+	BIOM_DOUBLEPUMPSHOTGUN_PKUP = "\c[White]Procured a \c[Cyan]double pump shotgun\c[White].";
+	BIOM_DOUBLEPUMPSHOTGUN_OB =
 		"\c[Green]%k "
 		"\c[White]perforated "
 		"\c[Red]%o "
 		"\c[White]with a "
-		"\c[Cyan]combat stormgun\c[White].";
+		"\c[Cyan]double pump shotgun\c[White].";
 
 	BIOM_GPMG_TAG = "\c[White]G.P.M.G.\c-";
 	BIOM_GPMG_PKUP = "\c[White]Procured a \c[Cyan]general-purpose machine gun\c[White].";

@@ -108,6 +108,30 @@
 	biom/castercannon/charge CSC1_0
 	biom/castercannon/fire CSC1_1
 
+// Weapons, double pump shotgun ////////////////////////////////////////////////
+
+	biom/doublepumpshotgun/fire/single/0 PSD1_0
+	biom/doublepumpshotgun/fire/single/1 PSD1_1
+	biom/doublepumpshotgun/fire/single/2 PSD1_2
+
+	$random biom/doublepumpshotgun/fire/single
+	{
+		biom/doublepumpshotgun/fire/single/0
+		biom/doublepumpshotgun/fire/single/1
+		biom/doublepumpshotgun/fire/single/2
+	}
+
+	biom/doublepumpshotgun/fire/double/0 PSD2_0
+	biom/doublepumpshotgun/fire/double/1 PSD2_1
+	biom/doublepumpshotgun/fire/double/2 PSD2_2
+
+	$random biom/doublepumpshotgun/fire/double
+	{
+		biom/doublepumpshotgun/fire/double/0
+		biom/doublepumpshotgun/fire/double/1
+		biom/doublepumpshotgun/fire/double/2
+	}
+
 // Weapons, GPMG ///////////////////////////////////////////////////////////////
 
 	biom/gpmg/fire/0 GMG1_0
