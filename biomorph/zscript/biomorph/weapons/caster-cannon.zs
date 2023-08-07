@@ -29,7 +29,7 @@ class biom_CasterCannon : biom_Weapon
 		loop;
 	Deselect:
 	Deselect.Repeat:
-		TNT1 A 1 A_Lower;
+		CSCA A 1 A_Lower;
 		loop;
 	Ready:
 	Ready.Main:
@@ -37,12 +37,14 @@ class biom_CasterCannon : biom_Weapon
 		loop;
 	Fire:
 		TNT1 A 0 A_biom_CheckAmmo;
-		CSCA A 27 {
+		CSCA A 27
+		{
 			A_StartSound("biom/castercannon/charge", CHAN_AUTO);
 			A_AlertMonsters(400);
 		}
 	Fire.Main:
-		CSCA A 1 {
+		CSCA A 1
+		{
 			A_biom_Recoil('biom_recoil_BFG');
 			A_AlertMonsters();
 			A_StartSound("biom/castercannon/fire", CHAN_AUTO);
@@ -50,14 +52,24 @@ class biom_CasterCannon : biom_Weapon
 			A_biom_CasterCannonRailAttacks();
 			invoker.DepleteAmmo(false, false);
 		}
-		CSCA A 1 {
+		CSCA A 1
+		{
 			A_biom_CasterCannonRailAttacks();
 		}
-		CSCA A 1 {
+		CSCA A 1
+		{
 			A_biom_CasterCannonRailAttacks();
 		}
+		goto Fire.Finish;
 	Fire.Finish:
-		CSCA A 24;
+		CSCA A 3 offset(0 + 15, 32 + 15);
+		CSCA A 3 offset(0 + 9, 32 + 9);
+		CSCA A 3 offset(0 + 6, 32 + 6);
+		CSCA A 3 offset(0 + 4, 32 + 4);
+		CSCA A 3 offset(0 + 3, 32 + 3);
+		CSCA A 3 offset(0 + 2, 32 + 2);
+		CSCA A 3 offset(0 + 1, 32 + 1);
+		CSCA A 3;
 		goto Ready.Main;
 	Dryfire:
 		CSCA A 1 offset(0, 32 + 1);
@@ -83,7 +95,7 @@ class biom_CasterCannon : biom_Weapon
 			1,
 			16.0,
 			0.0,
-			null,
+			'biom_CasterCannonRailSpawn',
 			-4
 		);
 
@@ -162,6 +174,34 @@ class biom_wdat_CasterCannon : biom_WeaponData
 	final override void Reset()
 	{
 		// ???
+	}
+}
+
+class biom_CasterCannonRailSpawn : Actor
+{
+	Default
+	{
+		+NOCLIP
+		+NOGRAVITY
+		+NOINTERACTION
+		+THRUACTORS
+
+		Alpha 0.75;
+		Height 4.0;
+		RenderStyle 'Add';
+		Radius 4.0;
+		Scale 0.25;
+		Translation "biom_Pink";
+	}
+
+	States
+	{
+	Spawn:
+		BFS1 AB 1 bright;
+		BFE1 AB 1 bright;
+		BFE1 C 1 bright;
+		BFE1 DEF 1 bright;
+		stop;
 	}
 }
 
