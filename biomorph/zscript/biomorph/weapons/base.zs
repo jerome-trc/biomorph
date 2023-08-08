@@ -81,10 +81,9 @@ class biom_Weapon : DoomWeapon abstract
 
 		let pdat = pawn.GetOrInitData();
 
-		Biomorph.Assert(
-			pdat != null,
-			"Failed to get pawn data in `biom_Weapon::AttachToOwner`."
-		);
+		// See `biom_Player::PostBeginPlay`.
+		if (pdat == null)
+			return;
 
 		self.data = pdat.GetWeaponData(self.DATA_CLASS);
 	}

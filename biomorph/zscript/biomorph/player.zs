@@ -36,7 +36,15 @@ class biom_Player : DoomPlayer
 	{
 		super.PostBeginPlay();
 
-		self.data = biom_Global.Get().FindPlayerData(self.player);
+		let globals = biom_Global.Get();
+
+		// This can happen if the player dies and loads a saved game.
+		// Between starting and finishing the load, the engine is briefly in
+		// an incoherent state and this branch happens.
+		if (globals == null)
+			return;
+
+		self.data = globals.FindPlayerData(self.player);
 		self.weaponsFound = BIOM_WEAPFAM_SIDEARM;
 
 		Biomorph.Assert(
@@ -124,6 +132,18 @@ class biom_Player : DoomPlayer
 		bArmor.icon = nullTexID;
 	}
 
+	override void GiveDefaultInventory()
+	{
+		super.GiveDefaultInventory();
+
+		if (biom_Utils.Valiant())
+		{
+			let s4 = Ammo(self.FindInventory('biom_Slot4Ammo'));
+			s4.maxAmount = Max(s4.maxAmount, 300);
+			s4.backpackMaxAmount = Max(s4.backpackMaxAmount, 600);
+		}
+	}
+
 	void OnWeaponFound(biom_WeaponFamily wf)
 	{
 		self.weaponsFound |= wf;
@@ -145,7 +165,15 @@ class biom_Player : DoomPlayer
 	readonly<biom_PlayerData> GetOrInitData()
 	{
 		if (self.data == null)
-			self.data = biom_Global.Get().FindPlayerData(self.player);
+		{
+			let globals = biom_Global.Get();
+
+			// See `PostBeginPlay` for details on this.
+			if (globals == null)
+				return null;
+
+			self.data = globals.FindPlayerData(self.player);
+		}
 
 		return self.data;
 	}
