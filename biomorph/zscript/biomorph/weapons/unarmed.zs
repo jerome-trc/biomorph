@@ -83,7 +83,7 @@ class biom_Unarmed : biom_Weapon
 			damage *= 4;
 
 		double ang = self.angle + Random2[Punch]() * (5.625 / 256);
-		double range = 100 + MELEEDELTA;
+		double range = 64 + MELEEDELTA;
 		double pitch = self.AimLineAttack(ang, range, null, 0.0, ALF_CHECK3D);
 		FTranslatedLineTarget tgt;
 
