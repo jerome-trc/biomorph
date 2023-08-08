@@ -55,6 +55,13 @@ class biom_DoublePumpShotgun : biom_Weapon
 		loop;
 	Fire:
 		TNT1 A 0 A_biom_CheckAmmo(multi: 2);
+		TNT1 A 0
+		{
+			if (!invoker.bLeftChambered)
+				return ResolveState('Fire.Single');
+
+			return state(null);
+		}
 		goto Fire.Double;
 	AltFire:
 		TNT1 A 0 A_biom_CheckAmmo;
