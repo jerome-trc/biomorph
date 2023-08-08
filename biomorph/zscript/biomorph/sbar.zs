@@ -121,18 +121,6 @@ class biom_StatusBar : BaseStatusBar
 			weap.DrawToHUD(self);
 		}
 
-		let pdat = self.pawn.GetData();
-
-		let hwc = pdat.weapons.Size() - 1;
-		self.DrawImage('PISTA0', (-24, invY + 12));
-		self.DrawString(
-			self.fontSmall,
-			String.Format("%d / %d", hwc, self.pawn.weaponCapacity),
-			(-44, invY),
-			DI_TEXT_ALIGN_RIGHT,
-			hwc < self.pawn.weaponCapacity ? Font.CR_WHITE : Font.CR_YELLOW
-		);
-
 		self.DrawString(
 			self.fontSmall,
 			String.Format(
