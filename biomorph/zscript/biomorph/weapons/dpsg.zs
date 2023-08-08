@@ -90,6 +90,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 		PSDA A 1 offset(0 + 5, 32 + 5);
 		PSDA A 1 offset(0 + 2, 32 + 2);
 		PSDA A 1 offset(0 + 1, 32 + 1);
+		PSDA A 5;
 		TNT1 A 0
 		{
 			if (invoker.magazine == 0)
@@ -159,7 +160,15 @@ class biom_DoublePumpShotgun : biom_Weapon
 		goto Ready.Main;
 	Reload:
 		TNT1 A 0 A_biom_CheckReload;
-		TNT1 A 0 A_StartSound("biom/pumpshotgun/switch", CHAN_AUTO);
+		TNT1 A 0
+		{
+			// Shells are cleared from chambers and reloaded in pairs.
+			if (!invoker.CanReloadTwoShells())
+				return ResolveState('Ready.Main');
+
+			A_StartSound("biom/pumpshotgun/switch", CHAN_AUTO);
+			return state(null);
+		}
 		PSDA A 3;
 		PSDR ABC 3 A_biom_InterruptReload;
 		goto Reload.Repeat;
@@ -169,13 +178,13 @@ class biom_DoublePumpShotgun : biom_Weapon
 		{
 			biom_Magazine mag;
 			invoker.GetMagazine(mag);
-			A_biom_Reload(Min(2, mag.max - mag.current));
+			A_biom_Reload(2);
 			A_StartSound("biom/pumpshotgun/load", CHAN_AUTO);
 		}
 		PSDR DD 3 A_biom_InterruptReload;
 		TNT1 A 0
 		{
-			if (invoker.CanReload())
+			if (invoker.CanReloadTwoShells())
 				return ResolveState('Reload.Repeat');
 			else
 				return ResolveState('Reload.Finish');
@@ -197,7 +206,8 @@ class biom_DoublePumpShotgun : biom_Weapon
 
 	Baseline timing stats (tics):
 	- Vanilla Super Shotgun: 62
-	- Fire: 5
+	- Fire (double): 5
+	- Fire (single): 10
 	- Pump: 17
 	- Reload: 39
 
@@ -241,7 +251,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 			12.0,
 			7.5,
 			biom_DoublePumpShotgun.NUM_PELLETS * multi,
-			5,
+			6,
 			'biom_ShotPellet',
 			FBF_NONE
 		);
@@ -269,6 +279,14 @@ class biom_DoublePumpShotgun : biom_Weapon
 		}
 
 		return state(null);
+	}
+
+	protected bool CanReloadTwoShells() const
+	{
+		biom_Magazine mag;
+		self.GetMagazine(mag);
+		let delta = mag.max - mag.current;
+		return delta >= 2;
 	}
 }
 
