@@ -72,12 +72,12 @@ class biom_DoublePumpShotgun : biom_Weapon
 			if (invoker.bLeftChambered)
 			{
 				invoker.bLeftChambered = false;
-				A_biom_DoublePumpShotgunFire('Flash.Left');
+				A_biom_DoublePumpShotgunFireSingle('Flash.Left');
 			}
 			else
 			{
 				invoker.bRightChambered = false;
-				A_biom_DoublePumpShotgunFire('Flash.Right');
+				A_biom_DoublePumpShotgunFireSingle('Flash.Right');
 			}
 		}
 		PSDA A 1 offset(0 + 5, 32 + 5);
@@ -95,7 +95,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 	Fire.Double:
 		PSDA A 2 offset(0 + 9, 32 + 9)
 		{
-			A_FireBullets(4.0, 0.5, invoker.NUM_PELLETS * 2, 5, 'biom_ShotPellet', FBF_NONE);
+			A_biom_DoublePumpShotgunFireBullets(2);
 			invoker.bLeftChambered = false;
 			invoker.bRightChambered = false;
 			invoker.magazine -= 2;
@@ -116,7 +116,8 @@ class biom_DoublePumpShotgun : biom_Weapon
 		}
 	Pump:
 		PSDA A 2;
-		PSD1 D 4 {
+		PSD1 D 4
+		{
 			A_StartSound("biom/shotgunpump/back", CHAN_AUTO);
 			A_biom_Recoil('biom_recoil_ShotgunPump');
 			invoker.bLeftChambered = true;
@@ -151,14 +152,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 		goto Ready.Main;
 	Reload:
 		TNT1 A 0 A_biom_CheckReload;
-		TNT1 A 0
-		{
-			if (!invoker.bLeftChambered && invoker.bRightChambered)
-				return ResolveState('Ready.Main');
-
-			A_StartSound("biom/pumpshotgun/switch", CHAN_AUTO);
-			return state(null);
-		}
+		TNT1 A 0 A_StartSound("biom/pumpshotgun/switch", CHAN_AUTO);
 		PSDA A 3;
 		PSDR ABC 3 A_biom_InterruptReload;
 		goto Reload.Repeat;
@@ -180,7 +174,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 				return ResolveState('Reload.Finish');
 		}
 	Reload.Finish:
-		PSDR CBA 3 A_biom_InterruptReload;
+		PSDR CBA 3;
 		PSDA A 3;
 		TNT1 A 0
 		{
@@ -224,14 +218,26 @@ class biom_DoublePumpShotgun : biom_Weapon
 		self.magazine += amt;
 	}
 
-	protected action void A_biom_DoublePumpShotgunFire(statelabel flash)
+	protected action void A_biom_DoublePumpShotgunFireSingle(statelabel flash)
 	{
-		A_FireBullets(4.0, 0.5, invoker.NUM_PELLETS, 5, 'biom_ShotPellet', FBF_NONE);
+		A_biom_DoublePumpShotgunFireBullets(1);
 		invoker.magazine -= 1;
 		A_AlertMonsters();
 		A_StartSound("biom/doublepumpshotgun/fire/single", CHAN_WEAPON);
 		A_GunFlash(flash);
 		A_biom_Recoil('biom_recoil_Shotgun');
+	}
+
+	protected action void A_biom_DoublePumpShotgunFireBullets(uint multi)
+	{
+		A_FireBullets(
+			12.0,
+			7.5,
+			biom_DoublePumpShotgun.NUM_PELLETS * multi,
+			5,
+			'biom_ShotPellet',
+			FBF_NONE
+		);
 	}
 
 	protected action state A_biom_InterruptReload()
@@ -246,7 +252,14 @@ class biom_DoublePumpShotgun : biom_Weapon
 		if (!invoker.bRightChambered)
 			return ResolveState('Pump');
 		else
+		{
+			if (invoker.owner.player.cmd.buttons & BT_ALTATTACK)
+				invoker.bAltFire = true;
+			else
+				invoker.bAltFire = false;
+
 			A_ReFire();
+		}
 
 		return state(null);
 	}
