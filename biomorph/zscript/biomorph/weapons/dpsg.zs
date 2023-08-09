@@ -80,10 +80,14 @@ class biom_DoublePumpShotgun : biom_Weapon
 				invoker.bLeftChambered = false;
 				A_biom_DoublePumpShotgunFireSingle('Flash.Left');
 			}
-			else
+			else if (invoker.bRightChambered)
 			{
 				invoker.bRightChambered = false;
 				A_biom_DoublePumpShotgunFireSingle('Flash.Right');
+			}
+			else
+			{
+				Biomorph.Unreachable();
 			}
 		}
 		PSDA A 1 offset(0 + 5, 32 + 5);
@@ -134,7 +138,15 @@ class biom_DoublePumpShotgun : biom_Weapon
 		PSD1 D 4 A_StartSound("biom/shotgunpump/forward", CHAN_AUTO);
 		PSDA A 2;
 		PSDA A 1 A_ReFire;
-		goto Reload;
+		PSDA A 1
+		{
+			if (invoker.owner.player != null &&
+				invoker.owner.player.pendingWeapon != WP_NOCHANGE)
+				return ResolveState('Ready.Main');
+			else
+				return ResolveState('Reload');
+		}
+		stop; // Unreachable
 	Flash.Left:
 		PSD1 A 1 bright offset(0 + 7, 32 + 7) A_Light(2);
 		PSD1 A 1 bright offset(0 + 7, 32 + 7) A_Light(1);
@@ -282,6 +294,9 @@ class biom_DoublePumpShotgun : biom_Weapon
 
 	protected bool CanReloadTwoShells() const
 	{
+		if (!self.CanReload())
+			return false;
+
 		biom_Magazine mag;
 		self.GetMagazine(mag);
 		let delta = mag.max - mag.current;

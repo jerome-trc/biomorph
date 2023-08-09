@@ -64,7 +64,8 @@ class biom_PumpShotgun : biom_Weapon
 		PSGA A 1 offset(0 + 5, 32 + 5);
 		PSGA A 1 offset(0 + 2, 32 + 2);
 		PSGA A 1 offset(0 + 1, 32 + 1);
-		TNT1 A 0 {
+		TNT1 A 0
+		{
 			if (invoker.magazine == 0)
 				return ResolveState('Reload');
 			else
@@ -72,16 +73,25 @@ class biom_PumpShotgun : biom_Weapon
 		}
 	Pump:
 		PSGA A 2;
-		PSG1 C 3 {
+		PSG1 C 3
+		{
 			A_StartSound("biom/shotgunpump/back", CHAN_AUTO);
 			A_biom_Recoil('biom_recoil_ShotgunPump');
 			invoker.bRoundChambered = true;
 		}
 		PSG1 D 3;
 		PSG1 C 3 A_StartSound("biom/shotgunpump/forward", CHAN_AUTO);
-		PSGA A 2;
-		PSGA A 1 A_ReFire;
-		goto Reload;
+		PSGA A 1;
+		PSGA A 1 A_ReFire();
+		PSGA A 1
+		{
+			if (invoker.owner.player != null &&
+				invoker.owner.player.pendingWeapon != WP_NOCHANGE)
+				return ResolveState('Ready.Main');
+			else
+				return ResolveState('Reload');
+		}
+		stop; // Unreachable
 	Flash:
 		TNT1 A 0 A_Jump(256, 'Flash.A', 'Flash.B');
 		TNT1 A 0 A_Unreachable;
