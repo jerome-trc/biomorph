@@ -81,7 +81,7 @@ class biom_GPMG : biom_Weapon
 
 	protected action void A_biom_GPMGFire()
 	{
-		A_FireBullets(3.0, 3.0, 1, RandomPick(18, 19), 'biom_Bullet', FBF_NORANDOM);
+		A_FireBullets(3.0, 3.0, -1, RandomPick(18, 19), 'biom_Bullet', FBF_NORANDOM);
 		invoker.DepleteAmmo(false, false);
 		A_AlertMonsters();
 		A_StartSound("biom/gpmg/fire", CHAN_AUTO);
