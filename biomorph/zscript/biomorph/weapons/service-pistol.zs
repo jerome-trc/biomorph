@@ -90,11 +90,11 @@ class biom_ServicePistol : biom_Weapon
 		SVPR A 4;
 		SVPR B 4;
 		SVPR C 4;
-		SVPR D 4 A_StartSound("biom/servicepistol/unload", CHAN_7);
+		SVPR D 4 A_StartSound("biom/servicepistol/unload", CHAN_AUTO);
 		SVPR E 10;
 		SVPR F 4 { invoker.magazine = biom_ServicePistol.MAGAZINE_CAPACITY; }
-		SVPR G 4 A_StartSound("biom/servicepistol/load", CHAN_7);
-		SVPR H 4;
+		SVPR G 4 A_StartSound("biom/servicepistol/load", CHAN_AUTO);
+		SVPR H 4 A_StartSound("biom/servicepistol/sliderelease", CHAN_AUTO);
 		SVPR I 4;
 		goto Ready.Main;
 	}
