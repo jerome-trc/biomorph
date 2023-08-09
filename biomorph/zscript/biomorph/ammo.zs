@@ -135,6 +135,14 @@ class biom_Slot4AmmoSmall : biom_Slot4Ammo replaces Clip
 		CLIP A -1;
 		stop;
 	}
+
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+
+		if (biom_Utils.Valiant())
+			self.amount = 15;
+	}
 }
 
 class biom_Slot5AmmoSmall : biom_Slot5Ammo replaces RocketAmmo
@@ -224,6 +232,14 @@ class biom_Slot4AmmoBig : biom_Slot4Ammo replaces ClipBox
 	Spawn:
 		AMMO A -1;
 		stop;
+	}
+
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+
+		if (biom_Utils.Valiant())
+			self.amount = 75;
 	}
 }
 
