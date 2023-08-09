@@ -72,7 +72,7 @@ class Biomorph abstract
 #include "zscript/biomorph/sbar.zs"
 #include "zscript/biomorph/static.zs"
 
-#include "zscript/biomorph/mutators/base.zs"
+#include "zscript/biomorph/alteration/base.zs"
 
 #include "zscript/biomorph/utils/misc.zs"
 #include "zscript/biomorph/utils/actor.zs"

@@ -120,6 +120,8 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 
 #### Other
 
+ALTRLEVEL is derived from ["low gong bash"](https://freesound.org/people/hiddenpersuader/sounds/155460/) by freesound user [hiddenpersuader](https://freesound.org/people/hiddenpersuader/), used under Creative Commons 0.
+
 ARMRBON is courtesy of id Software LLC.
 
 The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), and are all used under the Attribution 4.0 License:

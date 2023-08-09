@@ -193,7 +193,7 @@
 		"\c[White]with a "
 		"\c[Cyan]tactical shotgun\c[White].";
 
-// Mutators ////////////////////////////////////////////////////////////////////
+// Alterations /////////////////////////////////////////////////////////////////
 // Menu, game options //////////////////////////////////////////////////////////
 
 	BIOM_OPTTITLE = "\c[Cyan]Biomorph:\c[White] Preferences";
@@ -230,7 +230,7 @@
 
 	BIOM_UNASSIGNED_KEY = "\c[Gray]Unassigned Key\c-";
 
-	BIOM_KB_MUTMENU = "Mutator Menu";
+	BIOM_KB_PLAYERMENU = "Player Menu";
 
 // Quit messages ///////////////////////////////////////////////////////////////
 
@@ -244,6 +244,8 @@
 		"\c[Purple]Please don't go. The nanites need you. They look up to you.\c-";
 
 // Miscellaneous ///////////////////////////////////////////////////////////////
+
+	BIOM_ALTERLEVEL = "\c[White]You have gained a \c[Cyan]mutation point\c[White].";
 
 	BIOM_SBAR_MONSTERCOUNTERPFX = "M";
 	BIOM_SBAR_ITEMCOUNTERPFX = "I";

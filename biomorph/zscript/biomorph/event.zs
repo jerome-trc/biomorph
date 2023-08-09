@@ -3,8 +3,8 @@ class biom_EventHandler : EventHandler
 	/// Passed in the event's `args[0]`.
 	enum UserEvent
 	{
-		/// Opens the mutation menu.
-		USREVENT_MUTMENU,
+		/// Opens the player menu.
+		USREVENT_PLAYERMENU,
 		/// Prints a list of all available debug event aliases.
 		USREVENT_HELP,
 		USREVENT_LOOTSIM,
@@ -73,7 +73,7 @@ class biom_EventHandler : EventHandler
 
 		switch (event.args[0])
 		{
-		case USREVENT_MUTMENU:
+		case USREVENT_PLAYERMENU:
 			if (gameState != GS_LEVEL)
 				break;
 
@@ -83,7 +83,7 @@ class biom_EventHandler : EventHandler
 			if (!(players[consolePlayer].mo is 'biom_Player'))
 				break;
 
-			// TODO: `biom_MutationMenu` when ZForms gets updated.
+			// TODO: Player menu when ZForms gets updated.
 			break;
 		case USREVENT_HELP:
 			if (!event.isManual)
@@ -152,10 +152,17 @@ class biom_EventHandler : EventHandler
 			return;
 
 		self.globals.AddLootValue(self.globals.CalcMonsterValue(event.thing));
+		let thresholdPassed = false;
 
 		while (self.globals.DrainLootValueBuffer())
 		{
-			// ???
+			thresholdPassed = true;
+		}
+
+		if (thresholdPassed)
+		{
+			S_StartSound("biom/alter/levelup", CHAN_AUTO);
+			Console.MidPrint('JenocideFontRed', "$BIOM_ALTERLEVEL", true);
 		}
 	}
 

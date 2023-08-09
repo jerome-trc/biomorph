@@ -27,7 +27,6 @@ class biom_PumpShotgun : biom_Weapon
 		Weapon.UpSound "biom/pumpshotgun/switch";
 
 		biom_Weapon.DataClass 'biom_PumpShotgunData';
-		biom_Weapon.Grade BIOM_WEAPGRADE_1;
 		biom_Weapon.Family BIOM_WEAPFAM_SHOTGUN;
 	}
 

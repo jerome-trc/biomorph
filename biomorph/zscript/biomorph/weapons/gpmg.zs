@@ -18,7 +18,6 @@ class biom_GPMG : biom_Weapon
 		Weapon.SlotNumber 4;
 
 		biom_Weapon.DataClass 'biom_wdat_GPMG';
-		biom_Weapon.Grade BIOM_WEAPGRADE_3;
 		biom_Weapon.Family BIOM_WEAPFAM_AUTOGUN;
 	}
 

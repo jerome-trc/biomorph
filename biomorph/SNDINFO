@@ -64,6 +64,10 @@
 	biom/slot5ammo/pickup AMM5PKUP
 	biom/slot67ammo/pickup AM67PKUP
 
+// Alteration system ///////////////////////////////////////////////////////////
+
+	biom/alter/levelup ALTRLEVL
+
 // Weapons, common /////////////////////////////////////////////////////////////
 
 	biom/dryfire/ballistic/0 DRYFBAL0

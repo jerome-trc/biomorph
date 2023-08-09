@@ -25,7 +25,6 @@ class biom_TacticalShotgun : biom_Weapon
 		Weapon.SlotPriority SLOTPRIO_LOW;
 
 		biom_Weapon.DataClass 'biom_wdat_TacticalShotgun';
-		biom_Weapon.Grade BIOM_WEAPGRADE_1;
 		biom_Weapon.Family BIOM_WEAPFAM_SHOTGUN;
 	}
 

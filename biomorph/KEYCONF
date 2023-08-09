@@ -2,7 +2,7 @@ addkeysection "$BIOM_MODTITLE" biom_Section
 
 // Controls ////////////////////////////////////////////////////////////////////
 
-addmenukey "$BIOM_KB_MUTMENU" "event biom_console 0"
+addmenukey "$BIOM_KB_PLAYERMENU" "event biom_console 0"
 defaultbind M "event biom_console 0"
 
 // Debug event aliases /////////////////////////////////////////////////////////

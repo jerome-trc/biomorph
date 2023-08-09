@@ -19,9 +19,6 @@ class biom_Weapon : DoomWeapon abstract
 	const SLOTPRIO_LOW = 0.3;
 	const SLOTPRIO_MIN = 0.0;
 
-	meta biom_WeaponGrade GRADE;
-	property Grade: grade;
-
 	meta biom_WeaponFamily FAMILY;
 	property Family: FAMILY;
 
@@ -57,7 +54,6 @@ class biom_Weapon : DoomWeapon abstract
 		Weapon.BobRangeY 0.5;
 		Weapon.BobSpeed 2.0;
 
-		biom_Weapon.Grade BIOM_WEAPGRADE_NONE;
 		biom_Weapon.Family BIOM_WEAPFAM_INVALID;
 	}
 
@@ -270,23 +266,6 @@ class biom_Weapon : DoomWeapon abstract
 				return true;
 		}
 	}
-}
-
-/// An approximate measure of how "good" a weapon is on a 1-to-3 scale.
-/// Affects only the number of mutation slots the weapon gets; better weapons
-/// have less room for modification, such that the difference between low- and
-/// high-grade weapons can be equalized by such modification.
-enum biom_WeaponGrade : uint8
-{
-	/// The default; should only ever appear in normal code because someone forgot
-	/// to set it. Considered invalid by other code and is cause for exception.
-	BIOM_WEAPGRADE_NONE,
-	/// This weapon gets 4 mutation slots.
-	BIOM_WEAPGRADE_1,
-	/// This weapon gets 2 mutation slots.
-	BIOM_WEAPGRADE_2,
-	/// This weapon gets 1 mutation slot.
-	BIOM_WEAPGRADE_3,
 }
 
 /// The source of truth for a weapon's stats and behavior.

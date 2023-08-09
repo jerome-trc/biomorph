@@ -16,7 +16,6 @@ class biom_Unarmed : biom_Weapon
 		Weapon.SlotNumber 1;
 
 		biom_Weapon.DataClass 'biom_wdat_Unarmed';
-		biom_Weapon.Grade BIOM_WEAPGRADE_1;
 	}
 
 	States

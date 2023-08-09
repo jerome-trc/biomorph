@@ -32,7 +32,6 @@ class biom_DoublePumpShotgun : biom_Weapon
 		Weapon.SlotPriority SLOTPRIO_HIGH;
 
 		biom_Weapon.DataClass 'biom_wdat_DoublePumpShotgun';
-		biom_Weapon.Grade BIOM_WEAPGRADE_2;
 		biom_Weapon.Family BIOM_WEAPFAM_SUPERSHOTGUN;
 	}
 

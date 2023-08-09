@@ -26,7 +26,6 @@ class biom_Mutagen : Inventory
 	}
 }
 
-/// Usable by a player to completely reset their mutation tree.
 class biom_Antigen : Inventory
 {
 	Default

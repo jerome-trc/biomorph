@@ -22,7 +22,6 @@ class biom_ServicePistol : biom_Weapon
 		Weapon.SlotNumber 2;
 
 		biom_Weapon.DataClass 'biom_wdat_ServicePistol';
-		biom_Weapon.Grade BIOM_WEAPGRADE_2;
 		biom_Weapon.Family BIOM_WEAPFAM_SIDEARM;
 	}
 

@@ -18,7 +18,6 @@ class biom_CasterCannon : biom_Weapon
 		Weapon.SlotNumber 7;
 
 		biom_Weapon.DataClass 'biom_wdat_CasterCannon';
-		biom_Weapon.Grade BIOM_WEAPGRADE_3;
 		biom_Weapon.Family BIOM_WEAPFAM_SUPER;
 	}
 

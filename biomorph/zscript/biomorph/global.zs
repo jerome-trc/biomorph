@@ -185,7 +185,7 @@ class biom_Global : Thinker
 		super.OnDestroy();
 	}
 
-	/// Determines how much the mutation system should favor or disfavor the
+	/// Determines how much the alteration system should favor or disfavor the
 	/// players at the start of a new playthrough based on how much more difficult
 	/// or easy their experience is likely to be. As an example, the balance
 	/// is increased (i.e. make the players somewhat more powerful) if they are
@@ -241,7 +241,7 @@ class biom_Global : Thinker
 /// One exists per active player.
 class biom_PlayerData
 {
-	/// When calculating the total balance of this player's mutation stack, this
+	/// When calculating the total balance of this player's alteration stack, this
 	/// is the starting value. Given a vanilla configuration, this is always zero;
 	/// it is affected by, for instance, using LegenDoom Lite or the progression
 	/// of Corruption Cards.

@@ -17,7 +17,6 @@ class biom_MultiGL : biom_Weapon
 		Weapon.SlotNumber 5;
 
 		biom_Weapon.DataClass 'biom_wdat_MultiGL';
-		biom_Weapon.Grade BIOM_WEAPGRADE_3;
 		biom_Weapon.Family BIOM_WEAPFAM_LAUNCHER;
 	}
 

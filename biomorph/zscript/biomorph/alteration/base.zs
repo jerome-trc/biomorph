@@ -1,4 +1,4 @@
-class biom_Mutator abstract
+class biom_Alterant abstract
 {
 	/// Output does not need to be localized, but it must be fully colorized.
 	abstract string Tag() const;
