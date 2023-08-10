@@ -98,7 +98,7 @@ class biom_Unarmed : biom_Weapon
 		);
 
 		if (tgt.lineTarget != null)
-			self.A_StartSound("baron/melee", CHAN_WEAPON);
+			self.A_StartSound("baron/melee", CHAN_7);
 
 		return tgt.lineTarget;
 	}

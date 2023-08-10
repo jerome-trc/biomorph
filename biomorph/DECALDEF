@@ -3,6 +3,6 @@ decal biom_ClawMark
 	pic CLAWMARK
 	x-scale 0.25
 	y-scale 0.25
-	shade "20 20 20"
+	shade "09 09 09"
 	randomflipx
 }
