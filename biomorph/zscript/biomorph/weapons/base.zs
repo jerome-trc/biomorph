@@ -182,7 +182,7 @@ class biom_Weapon : DoomWeapon abstract
 
 		if (amt > 0)
 		{
-			toLoad = amt * mag.output;
+			toLoad = amt;
 		}
 		else
 		{

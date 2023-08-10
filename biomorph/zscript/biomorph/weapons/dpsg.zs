@@ -189,7 +189,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 		{
 			biom_Magazine mag;
 			invoker.GetMagazine(mag);
-			A_biom_Reload(2);
+			A_biom_Reload(1);
 			A_StartSound("biom/pumpshotgun/load", CHAN_AUTO);
 		}
 		PSDR DD 3 A_biom_InterruptReload;
@@ -236,8 +236,8 @@ class biom_DoublePumpShotgun : biom_Weapon
 	{
 		data.current = self.magazine;
 		data.max = biom_DoublePumpShotgun.MAGAZINE_CAPACITY;
-		data.cost = 1;
-		data.output = 1;
+		data.cost = 2;
+		data.output = 2;
 		return true;
 	}
 
