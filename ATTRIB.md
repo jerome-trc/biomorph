@@ -169,6 +169,8 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 
 ["Remington 870 with Magpul furniture"](https://sketchfab.com/3d-models/remington-870-with-magpul-furniture-07d1fce010ef4127931e8ddd516713f8) (used to render sprites for the Pump Shotgun) is provided by [Medji](https://sketchfab.com/Medji) under the Creative Commons Attribution 4.0 License.
 
+["Rusty Sledgehammer"](https://sketchfab.com/3d-models/rusty-sledgehammer-d249f94f8d0b4be7a925d17be3bed919) (used to render sprites for the Sledgehammer) is provided by [Einheri](https://sketchfab.com/Einheri) under the Creative Commons Attribution 4.0 License.
+
 ["SMG-M32](https://sketchfab.com/3d-models/smg-m32-3a5f98f75e804e5888379cbe640cc883) (used to render sprites for the Bite Rifle) is provided by [Frostoise](https://sketchfab.com/Frostoise) under the Creative Commons Attribution 4.0 License.
 
 The following models are provided by [TastyTony](https://sketchfab.com/TastyTony) under the Creative Commons Attribution 4.0 License:
