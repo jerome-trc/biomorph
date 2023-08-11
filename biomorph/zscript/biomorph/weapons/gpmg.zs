@@ -7,7 +7,7 @@ class biom_GPMG : biom_Weapon
 	{
 		Tag "$BIOM_GPMG_TAG";
 		Obituary "$BIOM_GPMG_OB";
-		Scale 0.5;
+		Scale 0.75;
 
 		Inventory.Icon 'GMGZZ0';
 		Inventory.PickupMessage "$BIOM_GPMG_PKUP";
