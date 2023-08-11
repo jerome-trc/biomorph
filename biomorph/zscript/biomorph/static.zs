@@ -24,6 +24,12 @@ class biom_Static : StaticEventHandler
 			if (alter == null || alter.IsAbstract())
 				continue;
 
+			if (alter is 'biom_WeaponAlterant')
+			{
+				self.RegisterWeaponAlterant((class<biom_WeaponAlterant>)(alter));
+				continue;
+			}
+
 			self.alterants.Push(biom_Alterant(new(alter)));
 		}
 
@@ -62,6 +68,21 @@ class biom_Static : StaticEventHandler
 	}
 
 	// Alterants ///////////////////////////////////////////////////////////////
+
+	void RegisterWeaponAlterant(class<biom_WeaponAlterant> alter)
+	{
+		for (int i = 0; i < allClasses.Size(); ++i)
+		{
+			let weap = (class<biom_Weapon>)(allClasses[i]);
+
+			if (weap == null || weap.IsAbstract())
+				continue;
+
+			let proto = biom_WeaponAlterant(new(alter));
+			proto.weaponType = weap;
+			self.alterants.Push(proto);
+		}
+	}
 
 	void GenerateAlterantBatch(
 		in out biom_PendingAlterants pending,
