@@ -208,49 +208,94 @@ class biom_Global : Thinker
 	private static int NewGameBalanceModifier()
 	{
 		let ret = 0;
+		array<string> reports;
 
 		if (biom_Utils.ColourfulHell())
 		{
+			let bm = 0;
+
 			if (biom_Utils.ColourfulHellRainbow())
-				ret += BIOM_BALMOD_INC_L;
+				bm = BIOM_BALMOD_INC_L;
 			else if (biom_Utils.ColourfulHellAdaptive())
 			{} // Needs special handling.
 			else
-				ret += BIOM_BALMOD_INC_M;
+				bm = BIOM_BALMOD_INC_M;
+
+			reports.Push(
+				String.Format(
+					StringTable.Localize("$BIOM_BALMODREPORT"),
+					"Colourful Hell",
+					bm
+				)
+			);
 		}
 
 		if (biom_Utils.DoomRLMonsterPack())
 		{
+			let bm = 0;
+
 			switch (skill)
 			{
 			case 3: // `hard`, a.k.a. "Standard".
 			{
-				ret += BIOM_BALMOD_INC_XS;
+				bm = BIOM_BALMOD_INC_XS;
 				break;
 			}
 			case 4: // `nightmare`
 			case 5: // `technophobia`
 			{
-				ret += BIOM_BALMOD_INC_S;
+				bm = BIOM_BALMOD_INC_S;
 				break;
 			}
 			case 6: // `armageddon`
 			{
-				ret += BIOM_BALMOD_INC_M;
+				bm = BIOM_BALMOD_INC_M;
 				break;
 			}
 			// `adaptive` needs special handling.
 			default:
 				break;
 			}
+
+			ret += bm;
+
+			reports.Push(
+				String.Format(
+					StringTable.Localize("$BIOM_BALMODREPORT"),
+					"DoomRL Monsters",
+					bm
+				)
+			);
 		}
 
 		if (biom_Utils.LegenDoom())
+		{
 			ret += BIOM_BALMOD_INC_S;
+
+			reports.Push(
+				String.Format(
+					StringTable.Localize("$BIOM_BALMODREPORT"),
+					"LegenDoom Lite",
+					BIOM_BALMOD_INC_S
+				)
+			);
+		}
 
 		if (biom_Utils.PandemoniaMonsters())
+		{
 			ret += BIOM_BALMOD_INC_S;
 
+			reports.Push(
+				String.Format(
+					StringTable.Localize("$BIOM_BALMODREPORT"),
+					"Pandemonia Monsters",
+					BIOM_BALMOD_INC_S
+				)
+			);
+		}
+
+		let reporter = biom_BalanceModifierReporter.Create();
+		reporter.reports.Move(reports);
 		return ret;
 	}
 }
@@ -350,5 +395,48 @@ struct biom_PendingAlterants
 			self.upgrades.Size() <= 0 &&
 			self.sidegrades.Size() <= 0 &&
 			self.downgrades.Size() <= 0;
+	}
+}
+
+/// Gradually prints messages to all users' HUDs to tell them what factors are
+/// affecting the baseline balance at the start of a new game.
+class biom_BalanceModifierReporter : Thinker
+{
+	array<string> reports;
+	uint ticsUntilNext;
+
+	static biom_BalanceModifierReporter Create()
+	{
+		let ret = new('biom_BalanceModifierReporter');
+		ret.ticsUntilNext = TICRATE * 2;
+		return ret;
+	}
+
+	final override void Tick()
+	{
+		super.Tick();
+
+		if (self.bDestroyed)
+			return;
+
+		if (self.reports.Size() <= 0)
+			self.Destroy();
+
+		self.ticsUntilNext -= 1;
+
+		if (ticsUntilNext == 0)
+		{
+			ticsUntilNext = TICRATE * 2;
+
+			Console.MidPrint(
+				'JenocideFontRed',
+				self.reports[self.reports.Size() - 1],
+				true
+			);
+
+			S_StartSound("biom/alter/levelup", CHAN_AUTO);
+
+			self.reports.Pop();
+		}
 	}
 }

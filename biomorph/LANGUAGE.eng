@@ -194,6 +194,15 @@
 		"\c[Cyan]tactical shotgun\c[White].";
 
 // Alterations /////////////////////////////////////////////////////////////////
+// Balance modifier reporting //////////////////////////////////////////////////
+
+	BIOM_BALMODREPORT =
+		"\c[Red]%s\c[White] detected."
+		"\n\n"
+		"\c[Green]+%d \c[White]genetic stability.";
+
+	// Names of detected mods (e.g. "LegenDoom Lite") aren't localized, of course.
+
 // Menu, game options //////////////////////////////////////////////////////////
 
 	BIOM_OPTTITLE = "\c[Cyan]Biomorph:\c[White] Preferences";
