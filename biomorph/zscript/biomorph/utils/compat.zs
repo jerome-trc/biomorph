@@ -92,6 +92,15 @@ extend class biom_Utils
 		return t != null;
 	}
 
+	/// Checks if the user's mod configuration includes the Adaptive Addon
+	/// for Colourful Hell. Note that this does not call `biom_Utils.ColourfulHell`.
+	static bool ColourfulHellAdaptive()
+	{
+		name tn = 'CHAdaptiveSpawner';
+		class<Actor> t = tn;
+		return t != null;
+	}
+
 	/// Checks if the user's mod configuration includes the Rainbow Tier Addon
 	/// for Colourful Hell. See https://forum.zdoom.org/viewtopic.php?t=73696.
 	/// Note that this does not call `biom_Utils.ColourfulHell`.

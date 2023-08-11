@@ -226,6 +226,16 @@
 
 	BIOM_OPTLBL_QUAKE = "Screen Shake";
 
+// Menu, player ////////////////////////////////////////////////////////////////
+
+	BIOM_PLAYERMENU_TITLE = "\c[Cyan]Player Menu";
+
+	BIOM_PLAYERMENU_BALANCE = "Genetic Stability: %d";
+
+	BIOM_PLAYERMENU_HEADER_UPGRADES = "Upgrades";
+	BIOM_PLAYERMENU_HEADER_SIDEGRADES = "Sidegrades";
+	BIOM_PLAYERMENU_HEADER_DOWNGRADES = "Downgrades";
+
 // Keybindings /////////////////////////////////////////////////////////////////
 
 	BIOM_UNASSIGNED_KEY = "\c[Gray]Unassigned Key\c-";

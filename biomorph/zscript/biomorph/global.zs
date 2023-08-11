@@ -99,6 +99,21 @@ class biom_Global : Thinker
 			self.playerData[i].balanceMod += bal;
 	}
 
+	void NextAlteration()
+	{
+		let sdat = biom_Static(StaticEventHandler.Find('biom_Static'));
+
+		for (int i = 0; i < self.playerData.Size(); ++i)
+		{
+			let pdat = self.playerData[i];
+
+			if (pdat.pendingAlterants.IsEmpty())
+				sdat.GenerateAlterantBatch(pdat.pendingAlterants, pdat.GetPawn());
+			else
+				pdat.pendingAlterations += 1;
+		}
+	}
+
 	static biom_Global Create()
 	{
 		let iter = ThinkerIterator.Create('biom_Global', STAT_STATIC);
@@ -124,7 +139,7 @@ class biom_Global : Thinker
 			if (!playerInGame[i])
 				continue;
 
-			let pdat = biom_PlayerData.Create(ssgExists);
+			let pdat = biom_PlayerData.Create(players[i], ssgExists);
 			pdat.balanceMod = balMod;
 			ret.playerData.Push(pdat);
 			ret.playerCount++;
@@ -198,6 +213,8 @@ class biom_Global : Thinker
 		{
 			if (biom_Utils.ColourfulHellRainbow())
 				ret += BIOM_BALMOD_INC_L;
+			else if (biom_Utils.ColourfulHellAdaptive())
+			{} // Needs special handling.
 			else
 				ret += BIOM_BALMOD_INC_M;
 		}
@@ -241,6 +258,7 @@ class biom_Global : Thinker
 /// One exists per active player.
 class biom_PlayerData
 {
+	PlayerInfo pInfo;
 	/// When calculating the total balance of this player's alteration stack, this
 	/// is the starting value. Given a vanilla configuration, this is always zero;
 	/// it is affected by, for instance, using LegenDoom Lite or the progression
@@ -251,10 +269,17 @@ class biom_PlayerData
 	array<class <biom_Weapon> > weapons;
 	/// Each subclass of `biom_WeaponData` appears in this array exactly once.
 	array<biom_WeaponData> weaponData;
+	biom_PendingAlterants pendingAlterants;
+	/// It is impossible to buffer multiple batches of alterants, since a player's
+	/// choice in one batch affects eligibility in future batches. As such, this
+	/// is how many batches of alterants are waiting to be offered once the player's
+	/// choice for the current batch has been made.
+	uint pendingAlterations;
 
-	static biom_PlayerData Create(bool withSuperShotgun)
+	static biom_PlayerData Create(PlayerInfo pInfo, bool withSuperShotgun)
 	{
 		let ret = new('biom_PlayerData');
+		ret.pInfo = pInfo;
 
 		ret.weapons.Push((class<biom_Weapon>)('biom_Unarmed'));
 		// TODO: What should the starting Chainsaw replacement be?
@@ -296,15 +321,34 @@ class biom_PlayerData
 	{
 		return self;
 	}
+
+	biom_Player GetPawn() const
+	{
+		for (uint i = 0; i < MAXPLAYERS; ++i)
+		{
+			if (players[i] != self.pInfo)
+				continue;
+
+			let ret = biom_Player(players[i].mo);
+			Biomorph.Assert(ret != null);
+			return ret;
+		}
+
+		return null;
+	}
 }
 
-const BIOM_BALMOD_INC_XS = 1;
-const BIOM_BALMOD_INC_S = 5;
-const BIOM_BALMOD_INC_M = 10;
-const BIOM_BALMOD_INC_L = 20;
-const BIOM_BALMOD_INC_XL = 40;
-const BIOM_BALMOD_DEC_XS = -BIOM_BALMOD_INC_XS;
-const BIOM_BALMOD_DEC_S = -BIOM_BALMOD_INC_S;
-const BIOM_BALMOD_DEC_M = -BIOM_BALMOD_INC_M;
-const BIOM_BALMOD_DEC_L = -BIOM_BALMOD_INC_L;
-const BIOM_BALMOD_DEC_XL = -BIOM_BALMOD_INC_XL;
+/// A compositional aid for `biom_PlayerData`.
+struct biom_PendingAlterants
+{
+	array<biom_Alterant> upgrades, sidegrades, downgrades;
+
+	/// i.e. is there currently an open batch of alterants on offer?
+	bool IsEmpty() const
+	{
+		return
+			self.upgrades.Size() <= 0 &&
+			self.sidegrades.Size() <= 0 &&
+			self.downgrades.Size() <= 0;
+	}
+}

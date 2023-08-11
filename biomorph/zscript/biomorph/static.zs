@@ -1,9 +1,11 @@
-/// A singleton of this type holds loot tables, since these do not need to be
-/// written to save games but must always be present (disallowing `transient`).
+/// A singleton of this type holds loot tables and alterant prototypes, since
+/// these do not need to be written to save games but must always be present
+/// (thus disallowing `transient`).
 class biom_Static : StaticEventHandler
 {
 	/// Used by `biom_EventHandler::CheckReplacement`.
 	private Dictionary replacements;
+	private Array<biom_Alterant> alterants;
 
 	final override void OnRegister()
 	{
@@ -13,6 +15,16 @@ class biom_Static : StaticEventHandler
 				Biomorph.LOGPFX_DEBUG ..
 				"Registering static event handler..."
 			);
+		}
+
+		for (int i = 0; i < allClasses.Size(); ++i)
+		{
+			let alter = (class<biom_Alterant>)(allClasses[i]);
+
+			if (alter == null || alter.IsAbstract())
+				continue;
+
+			self.alterants.Push(biom_Alterant(new(alter)));
 		}
 
 		self.replacements = Dictionary.Create();
@@ -48,6 +60,42 @@ class biom_Static : StaticEventHandler
 			self.replacements.Insert("ValiantSSG", "biom_wpks_SuperShotgun");
 		}
 	}
+
+	// Alterants ///////////////////////////////////////////////////////////////
+
+	void GenerateAlterantBatch(
+		in out biom_PendingAlterants pending,
+		biom_Player pawn
+	)
+	{
+		Array<biom_Alterant> upgrades, sidegrades, downgrades;
+
+		for (int i = 0; i < self.alterants.Size(); ++i)
+		{
+			let alter = self.alterants[i];
+
+			if (!alter.Compatible(pawn.AsConst()))
+				continue;
+
+			if (alter.IsSidegrade())
+			{
+				sidegrades.Push(alter);
+			}
+			else
+			{
+				let bal = alter.Balance();
+
+				if (bal > 0)
+					upgrades.Push(alter);
+				else if (bal < 0)
+					downgrades.Push(alter);
+				else
+					sidegrades.Push(alter);
+			}
+		}
+	}
+
+	// Loot ////////////////////////////////////////////////////////////////////
 
 	class<Actor> GetReplacement(name type)
 	{

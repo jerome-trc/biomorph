@@ -58,3 +58,11 @@ OptionValue "biom_MultiReloadMode"
 	0, "$BIOM_OPTVAL_MRM_AUTO"
 	1, "$BIOM_OPTVAL_MRM_HOLD"
 }
+
+// Inaccessible from the title menu ////////////////////////////////////////////
+
+OptionMenu "biom_PlayerMenu"
+{
+	class biom_PlayerMenu
+	title "$BIOM_PLAYERMENU_TITLE"
+}

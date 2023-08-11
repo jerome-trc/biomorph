@@ -83,7 +83,10 @@ class biom_EventHandler : EventHandler
 			if (!(players[consolePlayer].mo is 'biom_Player'))
 				break;
 
-			// TODO: Player menu when ZForms gets updated.
+			if (Menu.GetCurrentMenu() is 'biom_PlayerMenu')
+				break;
+
+			Menu.SetMenu('biom_PlayerMenu');
 			break;
 		case USREVENT_HELP:
 			if (!event.isManual)
@@ -146,6 +149,54 @@ class biom_EventHandler : EventHandler
 		}
 	}
 
+	final override void NetworkProcess(ConsoleEvent event)
+	{
+		if (!(event.name ~== "biom_alter"))
+			return;
+
+		if (event.args[0] == -1)
+			return;
+
+		switch (event.args[0])
+		{
+		case -1:
+			return; // User cancelled.
+		case 0: // Downgrade
+			if (developer >= 1)
+			{
+				Console.PrintF(
+					Biomorph.LOGPFX_DEBUG ..
+					"Applying downgrade alterant: %d",
+					event.args[1]
+				);
+			}
+
+			return;
+		case 1: // Sidegrade
+			if (developer >= 1)
+			{
+				Console.PrintF(
+					Biomorph.LOGPFX_DEBUG ..
+					"Applying sidegrade alterant: %d",
+					event.args[1]
+				);
+			}
+
+			return;
+		case 2: // Upgrade
+			if (developer >= 1)
+			{
+				Console.PrintF(
+					Biomorph.LOGPFX_DEBUG ..
+					"Applying upgrade alterant: %d",
+					event.args[1]
+				);
+			}
+
+			return;
+		}
+	}
+
 	final override void WorldThingDied(WorldEvent event)
 	{
 		if (event.thing == null || !event.thing.bIsMonster)
@@ -156,6 +207,7 @@ class biom_EventHandler : EventHandler
 
 		while (self.globals.DrainLootValueBuffer())
 		{
+			self.globals.NextAlteration();
 			thresholdPassed = true;
 		}
 
