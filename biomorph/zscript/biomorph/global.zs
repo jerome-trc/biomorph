@@ -270,13 +270,25 @@ class biom_Global : Thinker
 
 		if (biom_Utils.LegenDoom())
 		{
-			ret += BIOM_BALMOD_INC_S;
+			let bm = 0;
+
+			if (CVar.GetCVar("LD_diemode").GetBool())
+			{
+				bm = BIOM_BALMOD_INC_XL * 2;
+			}
+			else
+			{
+				let cvChance = CVar.GetCVar("LD_legendarychance").GetInt();
+				bm = BIOM_BALMOD_INC_M + (BIOM_BALMOD_INC_S * cvChance);
+			}
+
+			ret += bm;
 
 			reports.Push(
 				String.Format(
 					StringTable.Localize("$BIOM_BALMODREPORT"),
 					"LegenDoom Lite",
-					BIOM_BALMOD_INC_S
+					bm
 				)
 			);
 		}
