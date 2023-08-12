@@ -125,6 +125,8 @@ ALTRLEVEL is derived from ["low gong bash"](https://freesound.org/people/hiddenp
 
 ARMRBON is courtesy of id Software LLC.
 
+BIGHEAL is derived from ["Lifepak 12 touched.wav"](https://freesound.org/people/residentsparking/sounds/243638/) by freesound user [residentsparking](https://freesound.org/people/residentsparking), used under Creative Commons 0.
+
 The following sounds are courtesy of [Jonathan Shaw](https://www.jshaw.co.uk/), and are all used under the Attribution 4.0 License:
 - BIOPAIN 0 through 3 (all amplified, 0 slowed down, 1 to 3 sped up) (["Heartbeat, Regular, Single, 01-01, LOOP.wav"](https://freesound.org/people/InspectorJ/sounds/485076/))
 - BIOMDIE, from the same source as BIOPAIN 0 to 3.

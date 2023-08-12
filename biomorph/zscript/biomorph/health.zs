@@ -120,6 +120,7 @@ class biom_BigHealth : Medikit replaces Medikit
 	{
 		Tag "$BIOM_BIGHEALTH_TAG";
 		Inventory.PickupMessage "$BIOM_BIGHEALTH_PKUP";
+		Inventory.PickupSound "biom/bighealth/pickup";
 		biom_BigHealth.PartialPickupMessage "$BIOM_BIGHEALTH_PARTIAL";
 		Health.LowMessage 25, "$BIOM_BIGHEALTH_PKUPLOW";
 	}
