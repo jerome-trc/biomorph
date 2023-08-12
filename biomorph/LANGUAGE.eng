@@ -154,7 +154,7 @@
 		"\c[White]with a "
 		"\c[Cyan]G.P.M.G.";
 
-	BIOM_MULTIGL_TAG = "\c[White]M.G.L.\c-";
+	BIOM_MULTIGL_TAG = "\c[White]Multiple Grenade Launcher\c-";
 	BIOM_MULTIGL_PKUP = "\c[White]Procured a \c[Cyan]multiple grenade launcher\c[White].";
 	BIOM_MULTIGL_OB =
 		"\c[Green]%k "
