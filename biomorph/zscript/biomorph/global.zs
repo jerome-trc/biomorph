@@ -230,6 +230,19 @@ class biom_Global : Thinker
 			);
 		}
 
+		if (biom_Utils.CyberaugmentedMonsters())
+		{
+			ret += BIOM_BALMOD_INC_S;
+
+			reports.Push(
+				String.Format(
+					StringTable.Localize("$BIOM_BALMODREPORT"),
+					"Cyberaugmented Monsters",
+					BIOM_BALMOD_INC_S
+				)
+			);
+		}
+
 		if (biom_Utils.DoomRLMonsterPack())
 		{
 			let bm = 0;
