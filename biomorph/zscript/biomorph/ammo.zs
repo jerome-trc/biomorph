@@ -315,4 +315,76 @@ class biom_Backpack : BackpackItem replaces Backpack
 		if (!preexisting)
 			self.PrintPickupMessage(toucher.CheckLocalView(), "$BIOM_BACKPACK_FIRSTPKUP");
 	}
+
+	final override bool HandlePickup(Inventory item)
+	{
+		if (!(item is 'BackpackItem'))
+			return false;
+
+		bool overflow = false;
+
+		for (let i = self.owner.inv; i != null; i = i.inv)
+		{
+			let a = Ammo(i);
+
+			if (a == null || a.GetParentAmmo() != a.GetClass())
+				continue;
+
+			if (a.amount < a.maxAmount || sv_unlimited_pickup)
+			{
+				int amt = a.default.backpackAmount;
+
+				if (!self.bIgnoreSkill)
+					amt = int(amt * G_SkillPropertyFloat(SKILLP_AMMOFACTOR));
+
+				a.amount += amt;
+
+				if (!sv_unlimited_pickup)
+					a.amount = Min(a.amount, a.maxAmount);
+			}
+			else
+			{
+				class<Ammo> t = null;
+
+				switch (a.GetClassName())
+				{
+				case 'biom_Slot3Ammo':
+				{
+					t = 'biom_Slot3AmmoSmall';
+					break;
+				}
+				case 'biom_Slot4Ammo':
+				{
+					t = 'biom_Slot4AmmoSmall';
+					break;
+				}
+				case 'biom_Slot5Ammo':
+				{
+					t = 'biom_Slot5AmmoSmall';
+					break;
+				}
+				case 'biom_Slot67Ammo':
+				{
+					t = 'biom_Slot67AmmoSmall';
+					break;
+				}
+				default: Biomorph.Unreachable();
+				}
+
+				overflow = true;
+				Actor.Spawn(t, item.pos, ALLOW_REPLACE);
+			}
+		}
+
+		if (overflow)
+		{
+			self.PrintPickupMessage(
+				self.owner.CheckLocalView(),
+				"$BIOM_BACKPACK_OVERFLOW"
+			);
+		}
+
+		item.bPickupGood = true;
+		return true;
+	}
 }
