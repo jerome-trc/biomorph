@@ -145,6 +145,8 @@ COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/soun
 
 MGL1_0 is derived from ["Grenade_Fire_01.wav](https://freesound.org/people/xFromarge1/sounds/520045/) by freesound user [xFromarge1](https://freesound.org/people/xFromarge1/), used under Creative Commons 0.
 
+PCASTDIE is derived from ["Big Sci-Fi Explosion/Bomb (Close) [Mixed]"](https://freesound.org/people/EFlexMusic/sounds/393374/) by freesound user [EFlexMusic](https://freesound.org/people/EFlexMusic), used under the Creative Commons Attribution NonCommercial 3.0 License.
+
 RUCKSACK is derived from ["zipping backback and rustling papers.wav"](https://freesound.org/people/TheSupremeMuffinPooter/sounds/333519/) by freesound user [TheSupremeMuffinPooter](https://freesound.org/people/TheSupremeMuffinPooter/), used under Creative Commons 0.
 
 AMM3PKUP is derived from ["empty shotgun shells/casings hitting ground bouncing"](https://freesound.org/people/Metrolynn/sounds/620929/) by freesound user [Metrolynn](https://freesound.org/people/Metrolynn/), used under Creative Commons 0.

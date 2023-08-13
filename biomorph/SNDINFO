@@ -72,6 +72,10 @@
 
 	biom/alter/levelup ALTRLEVL
 
+// Projectiles, particle cast //////////////////////////////////////////////////
+
+	biom/particlecast/die PCASTDIE
+
 // Weapons, common /////////////////////////////////////////////////////////////
 
 	biom/dryfire/ballistic/0 DRYFBAL0

@@ -77,7 +77,11 @@ class biom_CasterCannonRayEmitter : Actor
 	Death:
 	Spawn:
 		TNT1 A 1;
-		TNT1 A 10 A_BFGSpray('BFGExtra');
+		TNT1 A 10
+		{
+			A_BFGSpray('BFGExtra');
+			A_StartSound("biom/particlecast/die", volume: 1.0, attenuation: 0.1);
+		}
 		stop;
 	}
 }
