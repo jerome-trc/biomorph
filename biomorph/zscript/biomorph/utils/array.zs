@@ -20,8 +20,8 @@ extend class biom_Utils
 		return ret / int(arr.Size());
 	}
 
-	// The first return value is the actual maximum.
-	// The second is the first element in the array to be the maximum.
+	/// The first return value is the actual maximum.
+	/// The second is the first element in the array to be the maximum.
 	static int, uint IntArrayMax(array<int> arr)
 	{
 		uint idx = arr.Size();
@@ -39,8 +39,8 @@ extend class biom_Utils
 		return max, idx;
 	}
 
-	// The first return value is the actual minimum.
-	// The second is the first element in the array to be the minimum.
+	/// The first return value is the actual minimum.
+	/// The second is the first element in the array to be the minimum.
 	static int, uint IntArrayMin(array<int> arr)
 	{
 		uint idx = arr.Size();
@@ -58,8 +58,8 @@ extend class biom_Utils
 		return min, idx;
 	}
 
-	// The first return value is the actual maximum.
-	// The second is the first element in the array to be the maximum.
+	/// The first return value is the actual maximum.
+	/// The second is the first element in the array to be the maximum.
 	static uint, uint UintArrayMax(array<uint> arr)
 	{
 		uint idx = arr.Size(), max = uint.MIN;
@@ -76,8 +76,8 @@ extend class biom_Utils
 		return max, idx;
 	}
 
-	// The first return value is the actual minimum.
-	// The second is the first element in the array to be the minimum.
+	/// The first return value is the actual minimum.
+	/// The second is the first element in the array to be the minimum.
 	static uint, uint UintArrayMin(array<uint> arr)
 	{
 		uint idx = arr.Size(), min = uint.MAX;
@@ -94,8 +94,8 @@ extend class biom_Utils
 		return min, idx;
 	}
 
-	// The first return value is the actual maximum.
-	// The second is the first element in the array to be the maximum.
+	/// The first return value is the actual maximum.
+	/// The second is the first element in the array to be the maximum.
 	static uint, uint Uint8ArrayMax(array<uint8> arr)
 	{
 		uint idx = arr.Size(), max = uint8.MIN;
@@ -112,8 +112,8 @@ extend class biom_Utils
 		return max, idx;
 	}
 
-	// The first return value is the actual minimum.
-	// The second is the first element in the array to be the minimum.
+	/// The first return value is the actual minimum.
+	/// The second is the first element in the array to be the minimum.
 	static uint, uint Uint8ArrayMin(array<uint8> arr)
 	{
 		uint idx = arr.Size(), min = uint8.MAX;
