@@ -368,7 +368,7 @@ class biom_Backpack : BackpackItem replaces Backpack
 					t = 'biom_Slot67AmmoSmall';
 					break;
 				}
-				default: Biomorph.Unreachable();
+				default: { continue; } // Hexen, Heretic, or Strife.
 				}
 
 				overflow = true;
