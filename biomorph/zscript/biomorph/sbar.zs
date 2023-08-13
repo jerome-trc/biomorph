@@ -174,7 +174,16 @@ class biom_StatusBar : BaseStatusBar
 
 		let weapsFound = self.pawn.GetWeaponsFound();
 
-		static const string STRINGS[] = { "1", "2", "3", "3S", "4", "5", "6", "7" };
+		static const string STRINGS[] = {
+			"\c[Red]1",
+			"\c[Orange]2",
+			"\c[Yellow]3",
+			"\c[Green]3S",
+			"\c[Cyan]4",
+			"\c[LightBlue]5",
+			"\c[Purple]6",
+			"\c[Pink]7"
+		};
 
 		for (int i = 0; i <= 7; ++i)
 		{
@@ -185,7 +194,7 @@ class biom_StatusBar : BaseStatusBar
 				STRINGS[i],
 				(300 + ((1 + i) * 16), -10),
 				DI_TEXT_ALIGN_CENTER,
-				Font.CR_CYAN,
+				Font.CR_UNTRANSLATED,
 				alpha: carried ? 1.0 : 0.33
 			);
 		}
