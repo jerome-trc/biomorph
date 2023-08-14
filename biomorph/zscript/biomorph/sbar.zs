@@ -121,6 +121,27 @@ class biom_StatusBar : BaseStatusBar
 			weap.DrawToHUD(self);
 		}
 
+		if (self.IsInventoryBarVisible())
+		{
+			self.DrawInventoryBar(
+				self.invBarState, (0, -32), self.invBarSlots.GetInt(),
+				DI_SCREEN_CENTER_BOTTOM, HX_SHADOW
+			);
+		}
+		else if (!Level.noInventoryBar && self.pawn.invSel != null)
+		{
+			self.DrawInventoryIcon(self.pawn.invSel, (-22, invY + 12));
+			self.DrawString(
+				self.fontBig,
+				FormatNumber(self.pawn.invSel.amount, 3),
+				(-40, invY - 10),
+				DI_TEXT_ALIGN_RIGHT,
+				Font.CR_WHITE
+			);
+
+			invY -= 40;
+		}
+
 		self.DrawString(
 			self.fontSmall,
 			String.Format(
