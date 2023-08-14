@@ -27,7 +27,7 @@ class biom_Biter : Actor
 	}
 }
 
-class biom_CasterCannonRailSpawn : Actor
+class biom_BiteCastRailSpawn : Actor
 {
 	Default
 	{
@@ -55,7 +55,31 @@ class biom_CasterCannonRailSpawn : Actor
 	}
 }
 
-class biom_CasterCannonRayEmitter : Actor
+class biom_BiteCastRay : Actor
+{
+	Default
+	{
+		+FORCERADIUSDMG
+		+MTHRUSPECIES
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+PUFFGETSOWNER
+
+		Species 'Player';
+		DamageType 'BFG';
+		Scale 0.75;
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Explode(20, 64, 0);
+		stop;
+	}
+}
+
+class biom_BiteCastRayEmitter : Actor
 {
 	Default
 	{
@@ -79,7 +103,7 @@ class biom_CasterCannonRayEmitter : Actor
 		TNT1 A 1;
 		TNT1 A 10
 		{
-			A_BFGSpray('BFGExtra');
+			A_BFGSpray('biom_BiteCastRay');
 			A_StartSound("biom/particlecast/die", volume: 1.0, attenuation: 0.1);
 		}
 		stop;

@@ -47,18 +47,12 @@ class biom_CasterCannon : biom_Weapon
 			A_biom_Recoil('biom_recoil_BFG');
 			A_AlertMonsters();
 			A_StartSound("biom/castercannon/fire", CHAN_AUTO);
-			A_FireProjectile('biom_CasterCannonRayEmitter', 0.0, false);
+			A_FireProjectile('biom_BiteCastRayEmitter', 0.0, false);
 			A_biom_CasterCannonRailAttacks();
 			invoker.DepleteAmmo(false, false);
 		}
-		CSCA A 1
-		{
-			A_biom_CasterCannonRailAttacks();
-		}
-		CSCA A 1
-		{
-			A_biom_CasterCannonRailAttacks();
-		}
+		CSCA A 1 A_biom_CasterCannonRailAttacks();
+		CSCA A 1 A_biom_CasterCannonRailAttacks();
 		goto Fire.Finish;
 	Fire.Finish:
 		CSCA A 3 offset(0 + 15, 32 + 15);
@@ -88,13 +82,13 @@ class biom_CasterCannon : biom_Weapon
 			"", "White",
 			RGF_SILENT | RGF_FULLBRIGHT | RGF_NOPIERCING,
 			10,
-			null,
+			'biom_BiteCastPuff',
 			0, 0,
 			4096,
 			1,
 			16.0,
 			0.0,
-			'biom_CasterCannonRailSpawn',
+			'biom_BiteCastRailSpawn',
 			-4
 		);
 
