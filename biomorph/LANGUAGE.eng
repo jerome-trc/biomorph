@@ -194,6 +194,20 @@
 		"\c[Cyan]tactical shotgun\c[White].";
 
 // Alterations /////////////////////////////////////////////////////////////////
+
+	BIOM_ALTERLEVEL =
+		"\c[White]Your half-demon form changes shape before your eyes."
+		"\n\n"
+		"\c[White]Open the player menu to choose your next mutation.";
+
+	BIOM_PLAYERRESETITEM_TAG = "\c[White]Antigen Sample";
+	BIOM_PLAYERRESETTITEM_PKUP = "\c[White]Acquired an antigen sample.";
+
+	BIOM_ALTERITEM_USEFAIL_PENDINGBATCH =
+		"\c[Brick]Accept or discard your current mutation first.";
+	BIOM_ALTERITEM_USEFAIL_NOCOMPATIBLEWEAPS =
+		"\c[Brick]None of the weapons in your arsenal are compatible with this mutagen.";
+
 // Balance modifier reporting //////////////////////////////////////////////////
 
 	BIOM_BALMODREPORT =
@@ -263,8 +277,6 @@
 		"\c[Purple]Please don't go. The nanites need you. They look up to you.\c-";
 
 // Miscellaneous ///////////////////////////////////////////////////////////////
-
-	BIOM_ALTERLEVEL = "\c[White]You have gained a \c[Cyan]mutation point\c[White].";
 
 	BIOM_SBAR_MONSTERCOUNTERPFX = "M";
 	BIOM_SBAR_ITEMCOUNTERPFX = "I";

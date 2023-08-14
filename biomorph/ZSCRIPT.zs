@@ -63,7 +63,6 @@ class Biomorph abstract
 #include "zscript/biomorph/event.zs"
 #include "zscript/biomorph/global.zs"
 #include "zscript/biomorph/health.zs"
-#include "zscript/biomorph/mutagen.zs"
 #include "zscript/biomorph/pickup.zs"
 #include "zscript/biomorph/player.zs"
 #include "zscript/biomorph/powerups.zs"

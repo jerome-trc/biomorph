@@ -32,15 +32,15 @@ object biom_ArmorBonus
 	frame ARSDD { light biom_ArmorBonusD }
 }
 
-// Mutagens/antigens ///////////////////////////////////////////////////////////
+// Alteration-related //////////////////////////////////////////////////////////
 
-pointlight biom_Mutagen
+pointlight biom_AlterantItem
 {
 	color 0.1 1.0 0.97
 	size 18
 }
 
-pointlight biom_Antigen
+pointlight biom_PlayerResetItem
 {
 	color 1.0 1.0 1.0
 	size 20

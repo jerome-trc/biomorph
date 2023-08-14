@@ -53,7 +53,8 @@ class biom_PumpShotgun : biom_Weapon
 		// Vanilla shotgun time to fire and pump: 44 tics.
 		PSGA A 2 offset(0 + 7, 32 + 7)
 		{
-			A_FireBullets(4.0, 0.5, 10, 5, 'biom_ShotPellet', FBF_NONE);
+			let data = biom_PumpShotgunData(invoker.data);
+			A_FireBullets(4.0, 0.5, 10, 5, data.payload.type, FBF_NONE);
 			invoker.magazine -= 1;
 			invoker.bRoundChambered = false;
 			A_AlertMonsters();
@@ -195,8 +196,16 @@ class biom_PumpShotgun : biom_Weapon
 
 class biom_PumpShotgunData : biom_WeaponData
 {
-	final override void Reset()
+	biom_PayloadData payload;
+
+	override void Reset()
 	{
-		// ???
+		self.payload = new('biom_PayloadData');
+		self.payload.type = 'biom_ShotPellet';
+	}
+
+	override biom_PayloadData GetPayload(bool secondary) const
+	{
+		return self.payload;
 	}
 }

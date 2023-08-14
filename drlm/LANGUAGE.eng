@@ -1,0 +1,6 @@
+[eng default]
+
+BIOMRL_ALTER_PLASMATIC_TAG = "Plasmatic Shot";
+BIOMRL_ALTER_PLASMATIC_SUMMARY = "Shot pellets explode into plasma.";
+BIOMRL_ALTI_PLASMATIC_TAG = "\c[White]Mutagen: \c[Cyan]Plasmatic Shot";
+BIOMRL_ALTI_PLASMATIC_PKUP = "\c[White]Acquired a sample of \c[Cyan]Plasmatic Shot \c[White]mutagen.";

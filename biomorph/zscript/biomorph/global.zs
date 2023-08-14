@@ -18,12 +18,12 @@ class biom_Global : Thinker
 	/// of enemy health in a level grows.
 	private float lootValueMulti;
 
-	readonly<biom_PlayerData> GetPlayerData(uint player) const
+	biom_PlayerData GetPlayerData(uint player) const
 	{
-		return self.playerData[player].AsConst();
+		return self.playerData[player];
 	}
 
-	readonly<biom_PlayerData> FindPlayerData(PlayerInfo pInfo) const
+	biom_PlayerData FindPlayerData(PlayerInfo pInfo) const
 	{
 		// Happens if a single player dies and loads their last saved game.
 		if (self.playerData.Size() == 0)
@@ -31,7 +31,7 @@ class biom_Global : Thinker
 
 		for (uint i = 0; i < MAXPLAYERS; ++i)
 			if (players[i] == pInfo)
-				return self.playerData[i].AsConst();
+				return self.playerData[i];
 
 		Biomorph.Unreachable("failed to find a player datum.");
 		return null;
@@ -101,16 +101,10 @@ class biom_Global : Thinker
 
 	void NextAlteration()
 	{
-		let sdat = biom_Static(StaticEventHandler.Find('biom_Static'));
-
 		for (int i = 0; i < self.playerData.Size(); ++i)
 		{
 			let pdat = self.playerData[i];
-
-			if (pdat.pendingAlterants.IsEmpty())
-				sdat.GenerateAlterantBatch(pdat.pendingAlterants, pdat.GetPawn());
-			else
-				pdat.pendingAlterations += 1;
+			pdat.NextAlteration();
 		}
 	}
 
@@ -378,11 +372,33 @@ class biom_PlayerData
 		return ret;
 	}
 
+	play void NextAlteration()
+	{
+		if (self.pendingAlterants.IsEmpty())
+		{
+			let sdat = biom_Static.Get();
+			sdat.GenerateAlterantBatch(self.pendingAlterants, self.GetPawn());
+		}
+		else
+		{
+			self.pendingAlterations += 1;
+		}
+	}
+
 	readonly<biom_WeaponData> GetWeaponData(class<biom_WeaponData> t) const
 	{
 		for (int i = 0; i < self.weaponData.Size(); ++i)
 			if (weaponData[i].GetClass() == t)
 				return weaponData[i].AsConst();
+
+		return null;
+	}
+
+	biom_WeaponData GetWeaponDataMut(class<biom_WeaponData> t) const
+	{
+		for (int i = 0; i < self.weaponData.Size(); ++i)
+			if (weaponData[i].GetClass() == t)
+				return weaponData[i];
 
 		return null;
 	}

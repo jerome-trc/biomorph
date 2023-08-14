@@ -1,6 +1,6 @@
 class biom_Player : DoomPlayer
 {
-	protected readonly<biom_PlayerData> data;
+	protected biom_PlayerData data;
 
 	uint8 weaponCapacity;
 	property WeaponCapacity: weaponCapacity;
@@ -151,6 +151,11 @@ class biom_Player : DoomPlayer
 
 	readonly<biom_PlayerData> GetData() const
 	{
+		return self.data.AsConst();
+	}
+
+	biom_PlayerData GetDataMut()
+	{
 		return self.data;
 	}
 
@@ -175,7 +180,7 @@ class biom_Player : DoomPlayer
 			self.data = globals.FindPlayerData(self.player);
 		}
 
-		return self.data;
+		return self.data.AsConst();
 	}
 
 	readonly<biom_Player> AsConst() const
@@ -197,5 +202,32 @@ class biom_PlayerPistolStart : biom_Player
 		self.ClearInventory();
 		self.GiveDefaultInventory();
 		self.A_SetHealth(self.GetMaxHealth());
+	}
+}
+
+class biom_PlayerResetItem : Inventory
+{
+	Default
+	{
+		-COUNTITEM
+		+DONTGIB
+		+FLOATBOB
+		+INVENTORY.INVBAR
+
+		Tag "$BIOM_PLAYERRESETITEM_TAG";
+		Height 16.0;
+		Radius 20.0;
+
+		Inventory.Amount 1;
+		Inventory.MaxAmount 99;
+		Inventory.PickupMessage "$BIOM_PLAYERRESETITEM_PKUP";
+	}
+
+	States
+	{
+	Spawn:
+		ANTG A 6;
+		#### B 6 bright light("biom_PlayerResetItem");
+		loop;
 	}
 }

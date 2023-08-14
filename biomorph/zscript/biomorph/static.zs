@@ -5,7 +5,14 @@ class biom_Static : StaticEventHandler
 {
 	/// Used by `biom_EventHandler::CheckReplacement`.
 	private Dictionary replacements;
+	/// Used by `biom_EventHandler::WorldThingDied`.
+	private Dictionary legendaryLoot;
 	private Array<biom_Alterant> alterants;
+
+	static biom_Static Get()
+	{
+		return biom_Static(StaticEventHandler.Find('biom_Static'));
+	}
 
 	final override void OnRegister()
 	{
@@ -69,6 +76,40 @@ class biom_Static : StaticEventHandler
 
 	// Alterants ///////////////////////////////////////////////////////////////
 
+	readonly<biom_Alterant> GetAlterant(class<biom_Alterant> type) const
+	{
+		for (int i = 0; i < self.alterants.Size(); ++i)
+			if (self.alterants[i].GetClass() == type)
+				return self.alterants[i].AsConst();
+
+		return null;
+	}
+
+	readonly<biom_WeaponAlterant> GetWeaponAlterant(
+		class<biom_WeaponAlterant> type,
+		class<biom_Weapon> weaponType
+	) const
+	{
+		for (int i = 0; i < self.alterants.Size(); ++i)
+		{
+			let alter = biom_WeaponAlterant(self.alterants[i]);
+
+			if (alter == null)
+				continue;
+
+			if (alter.GetClass() != type)
+				continue;
+
+			if (alter.weaponType != weaponType)
+				continue;
+
+			let b = alter.AsConst();
+			return biom_WeaponAlterant(b);
+		}
+
+		return null;
+	}
+
 	void RegisterWeaponAlterant(class<biom_WeaponAlterant> alter)
 	{
 		for (int i = 0; i < allClasses.Size(); ++i)
@@ -128,6 +169,16 @@ class biom_Static : StaticEventHandler
 		return null;
 	}
 
+	class<Actor> GetLegendaryLoot(name type)
+	{
+		let tn = self.legendaryLoot.At(type);
+
+		if (tn.Length() != 0)
+			return (class<Actor>)(tn);
+
+		return null;
+	}
+
 	private void PopulateLegenDoomLoot()
 	{
 		if (biom_Utils.DoomRLMonsterPack())
@@ -137,6 +188,17 @@ class biom_Static : StaticEventHandler
 				Console.PrintF(
 					Biomorph.LOGPFX_DEBUG ..
 					"Populating legendary loot table for the DoomRL Monster Pack..."
+				);
+			}
+
+			name tn = 'BiomorphDoomRL';
+			class t = tn;
+
+			if (t != null)
+			{
+				self.legendaryLoot.Insert(
+					"RLFormerSergeantCombatShotgun",
+					"biomrl_alti_Plasmatic"
 				);
 			}
 		}

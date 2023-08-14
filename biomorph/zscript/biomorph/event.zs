@@ -202,6 +202,17 @@ class biom_EventHandler : EventHandler
 		if (event.thing == null || !event.thing.bIsMonster)
 			return;
 
+		if (biom_Utils.IsLegendary(event.thing))
+		{
+			let sdat = self.GetStaticData();
+			let l = sdat.GetLegendaryLoot(event.thing.GetClassName());
+
+			if (l != null)
+			{
+				Actor.Spawn(l, event.thing.pos);
+			}
+		}
+
 		self.globals.AddLootValue(self.globals.CalcMonsterValue(event.thing));
 		let thresholdPassed = false;
 
@@ -235,7 +246,7 @@ class biom_EventHandler : EventHandler
 		if (self.staticData != null)
 			return self.staticData;
 
-		let e = biom_Static(StaticEventHandler.Find('biom_Static'));
+		let e = biom_Static.Get();
 		self.staticData = e;
 		return self.staticData;
 	}

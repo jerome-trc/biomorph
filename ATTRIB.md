@@ -117,6 +117,7 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 		- Console scroll.wav (BIOMFAIL)
 	- MC11/
 		- bolt_actuate.wav (SVPSLIDE)
+		- gunbirth1.wav (ALTRITEM)
 		- hankland.wav (BIOMLAND)
 
 #### Other

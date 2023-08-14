@@ -268,20 +268,6 @@ class biom_Weapon : DoomWeapon abstract
 	}
 }
 
-/// The source of truth for a weapon's stats and behavior.
-/// - Every weapon subclasses this once.
-/// - Every player has one per weapon.
-class biom_WeaponData abstract
-{
-	/// For setting values to their defaults.
-	abstract void Reset();
-
-	readonly<biom_WeaponData> AsConst() const
-	{
-		return self;
-	}
-}
-
 /// Corresponds loosely to the weapon's slot number but accounts for the
 /// difference between shotgun counterparts and super shotgun counterparts,
 /// both of which occupy slot number 3.
@@ -304,4 +290,28 @@ enum biom_WeaponFamily : uint8
 struct biom_Magazine
 {
 	uint current, max, cost, output;
+}
+
+/// The source of truth for a weapon's stats and behavior.
+/// - Every weapon subclasses this once.
+/// - Every player has one per weapon.
+class biom_WeaponData abstract
+{
+	/// For setting values to their defaults.
+	abstract void Reset();
+
+	virtual biom_PayloadData GetPayload(bool secondary = false) const
+	{
+		return null;
+	}
+
+	readonly<biom_WeaponData> AsConst() const
+	{
+		return self;
+	}
+}
+
+class biom_PayloadData
+{
+	class<Actor> type;
 }
