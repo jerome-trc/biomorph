@@ -245,18 +245,18 @@ class biom_Global : Thinker
 			{
 			case 3: // `hard`, a.k.a. "Standard".
 			{
-				bm = BIOM_BALMOD_INC_XS;
+				bm = BIOM_BALMOD_INC_S;
 				break;
 			}
 			case 4: // `nightmare`
 			case 5: // `technophobia`
 			{
-				bm = BIOM_BALMOD_INC_S;
+				bm = BIOM_BALMOD_INC_M;
 				break;
 			}
 			case 6: // `armageddon`
 			{
-				bm = BIOM_BALMOD_INC_M;
+				bm = BIOM_BALMOD_INC_L;
 				break;
 			}
 			// `adaptive` needs special handling.
