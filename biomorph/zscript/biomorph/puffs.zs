@@ -142,6 +142,44 @@ class biom_Bullet : biom_Puff
 	}
 }
 
+class biom_ElectricPuff : biom_Puff
+{
+	Default
+	{
+		+PUFFONACTORS
+
+		Decal 'PlasmaScorchLower1';
+		RenderStyle 'Add';
+		VSpeed 0.0;
+	}
+
+	States
+	{
+	Spawn:
+		RZAP A 2 bright light("biom_ElecPuff");
+		RZAP B 2 bright light("biom_ElecPuff");
+		RZAP CDEFGHI 2 bright light("biom_ElecPuff");
+		stop;
+	Melee:
+		goto Spawn;
+	}
+}
+
+class biom_ElecPunchPuff : biom_ElectricPuff
+{
+	States
+	{
+	Melee:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+			A_StartSound("skeleton/melee", CHAN_AUTO);
+			A_StartSound("biom/elecpunch/hit", CHAN_AUTO);
+		}
+		goto Spawn;
+	}
+}
+
 /// Reduces the number of sparks emitted by [`biom_Bullet`],
 /// to offset the increased number of puffs emitted by shell-firing weapons.
 class biom_ShotPellet : biom_Bullet

@@ -43,6 +43,8 @@ Sprite CBRNE is courtesy of [Dr. Cosmobyte](https://forum.zdoom.org/viewtopic.ph
 
 Sprite RUCKA is derived from Sonik.o.fan's reshading of Doom 64's backpack sprite, which itself is courtesy of Midway Games Inc.
 
+All RZAP sprites are courtesy of the Librequake Project, id Software LLC, and Banjo Software, with edits by Realm667 user KILLA DIO.
+
 The following sprites are derived partially from the work of Realm667 user CaptainToenail ("Adrenaline Kit"):
 - All frames of CAMO
 - All frames of PANA
@@ -117,6 +119,9 @@ The following audio files are provided by CturiX Kemilon, under a "Typical Creat
 		- Console scroll.wav (BIOMFAIL)
 	- MC11/
 		- bolt_actuate.wav (SVPSLIDE)
+		- elec1.wav (EPN_HIT0)
+		- elec2.wav (EPN_HIT1)
+		- elec3.wav (EPN_HIT2)
 		- gunbirth1.wav (ALTRITEM)
 		- hankland.wav (BIOMLAND)
 
@@ -142,6 +147,8 @@ CSC1_0 and CSC1_1 are derived from ["Electric Charge + Shot"](https://freesound.
 
 DRYFBAL 0 through 2 are derived from ["GUNRif_M1 GARAND DRY FIRE_MP"](https://freesound.org/people/MPierluissi/sounds/460852/) by freesound user [MPierluissi](https://freesound.org/people/MPierluissi), licensed under Creative Commons 0.
 
+Sounds in the EPNA series are derived from ["shortzap2.wav"](https://freesound.org/people/jameswrowles/sounds/248250/) by freesound user [jameswrowles](https://freesound.org/people/jameswrowles), used under the Creative Commons Attribution 4.0 License.
+
 COUNTIT is derived from ["3 beep a.wav"](https://freesound.org/people/jobro/sounds/33781/) by freesound user [jobro](https://freesound.org/people/jobro), used under the Attribution 3.0 License.
 
 MGL1_0 is derived from ["Grenade_Fire_01.wav](https://freesound.org/people/xFromarge1/sounds/520045/) by freesound user [xFromarge1](https://freesound.org/people/xFromarge1/), used under Creative Commons 0.
@@ -164,6 +171,8 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 
 ## 3D Meshes
 
+["3 Pack of Storm Lightning"](https://sketchfab.com/3d-models/3-pack-of-storm-lightning-8acf90c132754b6bb9ab2b60ebd9465f) (used to render sprites for the Electric Punch) is provided by [Incg5764](https://sketchfab.com/incg5764) under the Creative Commons Attribution 4.0 License.
+
 ["DP-12"](https://sketchfab.com/3d-models/dp-12-d763a1fd66e24aa99a5eb39d46b76a59) (used to render sprites for the Double Pump Shotgun) is provided by [Commissar_Hal](https://sketchfab.com/Commissar_Hal) under the Creative Commons Attribution 4.0 License.
 
 ["Female Body Base Character Mesh"](https://www.blendswap.com/blend/4458) (used to render the arms of first-person view sprites) is provided by [cgcookie](https://www.blendswap.com/profile/8267https://www.blendswap.com/profile/8267) under the Creative Commons Attribution 2.0 Generic License.
@@ -173,8 +182,6 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 ["Low-Poly Magpul RVG"](https://sketchfab.com/3d-models/low-poly-magpul-rvg-86b3580a65c441db9d3401712c5c9b6d) (used as part of the model used to render sprites for the Tactical Shotgun) is provided by [notcplkerry](https://sketchfab.com/notcplkerry) under the Creative Commons Attribution 4.0 License.
 
 ["Remington 870 with Magpul furniture"](https://sketchfab.com/3d-models/remington-870-with-magpul-furniture-07d1fce010ef4127931e8ddd516713f8) (used to render sprites for the Pump Shotgun) is provided by [Medji](https://sketchfab.com/Medji) under the Creative Commons Attribution 4.0 License.
-
-["Rusty Sledgehammer"](https://sketchfab.com/3d-models/rusty-sledgehammer-d249f94f8d0b4be7a925d17be3bed919) (used to render sprites for the Sledgehammer) is provided by [Einheri](https://sketchfab.com/Einheri) under the Creative Commons Attribution 4.0 License.
 
 ["SMG-M32](https://sketchfab.com/3d-models/smg-m32-3a5f98f75e804e5888379cbe640cc883) (used to render sprites for the Bite Rifle) is provided by [Frostoise](https://sketchfab.com/Frostoise) under the Creative Commons Attribution 4.0 License.
 

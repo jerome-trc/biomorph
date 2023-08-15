@@ -145,6 +145,28 @@
 		biom/doublepumpshotgun/fire/double/2
 	}
 
+// Weapons, electric punch /////////////////////////////////////////////////////
+
+	biom/elecpunch/idle/0 EPNA_0
+	biom/elecpunch/idle/1 EPNA_1
+
+	$random biom/elecpunch/idle
+	{
+		biom/elecpunch/idle/0
+		biom/elecpunch/idle/1
+	}
+
+	biom/elecpunch/hit/0 EPN_HIT0
+	biom/elecpunch/hit/1 EPN_HIT1
+	biom/elecpunch/hit/2 EPN_HIT2
+
+	$random biom/elecpunch/hit
+	{
+		biom/elecpunch/hit/0
+		biom/elecpunch/hit/1
+		biom/elecpunch/hit/2
+	}
+
 // Weapons, GPMG ///////////////////////////////////////////////////////////////
 
 	biom/gpmg/fire/0 GMG1_0

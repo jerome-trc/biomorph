@@ -145,6 +145,15 @@
 		"\c[White]with a "
 		"\c[Cyan]double pump shotgun\c[White].";
 
+	BIOM_ELECPUNCH_TAG = "\c[White]Conjury: Fulgurite";
+	BIOM_ELECPUNCH_PKUP = "\c[White]Procured conjury, designation \c[Cyan]'Fulgurite'\c[White].";
+	BIOM_ELECPUNCH_OB =
+		"\c[Green]%k "
+		"\c[White]zapped "
+		"\c[Red]%o "
+		"\c[White]using conjury "
+		"\c[Cyan]'Fulgurite'\c[White].";
+
 	BIOM_GPMG_TAG = "\c[White]G.P.M.G.\c-";
 	BIOM_GPMG_PKUP = "\c[White]Procured a \c[Cyan]general-purpose machine gun\c[White].";
 	BIOM_GPMG_OB =

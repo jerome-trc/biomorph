@@ -347,6 +347,7 @@ class biom_PlayerData
 
 		ret.weapons.Push((class<biom_Weapon>)('biom_Unarmed'));
 		// TODO: What should the starting Chainsaw replacement be?
+		ret.weapons.Push((class<biom_Weapon>)('biom_ElecPunch'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_ServicePistol'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_PumpShotgun'));
 
