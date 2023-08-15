@@ -2,14 +2,6 @@
 
 Gameplay mod for GZDoom intended to introduce variety into player arsenals through randomness mixed with choices.
 
-Inspirations and relevant prior art:
-- [Final Doomer](https://forum.zdoom.org/viewtopic.php?t=55061) (by Yholl, Sgt. Shivers, et al.)
-- [DoomRL Arsenal](https://forum.zdoom.org/viewtopic.php?f=43&t=37044) (by Yholl et al.)
-- [DoomRL Arsenal Extended](https://forum.zdoom.org/viewtopic.php?t=70549) (by Cutmanmike et al.)
-- [LegenDoom](https://forum.zdoom.org/viewtopic.php?t=51035) (by Yholl et al.)
-- [Custom Gun](https://forum.zdoom.org/viewtopic.php?f=43&t=54303) (by Mikk-)
-- [Gun Bonsai](https://forum.zdoom.org/viewtopic.php?t=76080) (by ToxicFrog et al.)
-
 Biomorph is early in development; expect its features and graphical/audio presentation to change rapidly.
 
 A complete list of attributions and third-party licensing information can be found [here](/ATTRIB.md).
