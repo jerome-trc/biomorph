@@ -140,7 +140,9 @@ class biom_ElecPunchDebuff : Thinker
 
 		self.lifetime += 1;
 
-		if (self.lifetime >= (TICRATE * 3))
+		if (self.lifetime >= (TICRATE * 3) ||
+			self.target == null ||
+			self.target.health <= 0)
 		{
 			self.Destroy();
 		}
