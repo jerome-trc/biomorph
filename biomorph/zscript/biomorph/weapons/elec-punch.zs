@@ -5,6 +5,8 @@ class biom_ElecPunch : biom_Weapon
 {
 	Default
 	{
+		+WEAPON.MELEEWEAPON
+
 		Tag "$BIOM_ELECPUNCH_TAG";
 		Obituary "$BIOM_ELECPUNCH_OB";
 
@@ -21,11 +23,11 @@ class biom_ElecPunch : biom_Weapon
 	States
 	{
 	Select:
-		EPNA A 1 A_Raise;
+		EPNA A 1 A_Raise(12);
 		loop;
 	Deselect:
 	Deselect.Repeat:
-		EPNA A 1 A_Lower;
+		EPNA A 1 A_Lower(12);
 		loop;
 	Ready:
 	Ready.Main:
