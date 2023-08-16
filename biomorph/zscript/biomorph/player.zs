@@ -14,6 +14,7 @@ class biom_Player : DoomPlayer
 		BloodColor 'Cyan';
 
 		Player.DisplayName "$BIOM_PAWN_DISPLAYNAME";
+		Player.FallingScreamSpeed 20.0, 40.0;
 		Player.SoundClass 'biomorph';
 		Player.ViewHeight 48.0;
 

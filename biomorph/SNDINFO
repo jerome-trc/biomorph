@@ -15,6 +15,8 @@
 
 // Player pawn /////////////////////////////////////////////////////////////////
 
+	$playeralias biomorph other *falling biom/pawn/fall
+	biom/pawn/fall BIOMFALL
 	$playeralias biomorph other *land biom/pawn/land
 	biom/pawn/land BIOMLAND
 	$playeralias biomorph other *usefail biom/pawn/usefail
