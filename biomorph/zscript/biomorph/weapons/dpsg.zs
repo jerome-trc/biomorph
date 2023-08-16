@@ -262,7 +262,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 			12.0,
 			7.5,
 			biom_DoublePumpShotgun.NUM_PELLETS * multi,
-			6,
+			5,
 			'biom_ShotPellet',
 			FBF_NONE
 		);
