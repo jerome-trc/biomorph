@@ -67,7 +67,7 @@ class biom_Unarmed : biom_Weapon
 	protected action void A_biom_UnarmedAttackStart()
 	{
 		if (A_biom_UnarmedHitscan() == null)
-			A_SprayDecal("biom_ClawMark", offset: (0, 0, 48.0));
+			A_SprayDecal("biom_ClawMark", dist: 64 + MELEEDELTA, offset: (0, 0, 48.0));
 
 		A_AlertMonsters();
 		A_StartSound("biom/whoosh", CHAN_WEAPON);
