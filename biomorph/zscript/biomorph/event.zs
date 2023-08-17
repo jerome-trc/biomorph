@@ -51,8 +51,6 @@ class biom_EventHandler : EventHandler
 				"Handling event: `WorldLoaded`..."
 			);
 		}
-
-		self.globals.OnWorldLoaded();
 	}
 
 	final override void WorldUnloaded(WorldEvent event)
@@ -130,7 +128,7 @@ class biom_EventHandler : EventHandler
 			}
 
 			let output = Biomorph.LOGPFX_INFO .. "running loot simulation.\n";
-			output.AppendFormat("	Current loot value multiplier: %.2f\n", self.globals.LootValueMultiplier());
+			output.AppendFormat("	Current loot value multiplier: %.5f\n", self.globals.LootValueMultiplier());
 			let total = self.globals.MapTotalMonsterValue();
 			output.AppendFormat("	Total monster value in map: %d\n", total);
 			let numDrops = total / biom_Global.LOOT_VALUE_THRESHOLD;
@@ -197,6 +195,12 @@ class biom_EventHandler : EventHandler
 		}
 	}
 
+	final override void WorldTick()
+	{
+		if (level.mapTime == 7)
+			self.globals.CalculateLootValueMultiplier();
+	}
+
 	final override void WorldThingDied(WorldEvent event)
 	{
 		if (event.thing == null || !event.thing.bIsMonster)
@@ -222,11 +226,20 @@ class biom_EventHandler : EventHandler
 			thresholdPassed = true;
 		}
 
-		if (thresholdPassed)
+		if (!thresholdPassed)
+			return;
+
+		S_StartSound("biom/alter/levelup", CHAN_AUTO);
+
+		for (uint i = 0; i < MAXPLAYERS; ++i)
 		{
-			S_StartSound("biom/alter/levelup", CHAN_AUTO);
-			Console.MidPrint('JenocideFontRed', "$BIOM_ALTERLEVEL", true);
+			if (!playerInGame[i])
+				continue;
+
+			players[i].mo.A_Print("$BIOM_ALTERLEVEL", 2.0, 'JenocideFontRed');
 		}
+
+		// Console.MidPrint('JenocideFontRed', "$BIOM_ALTERLEVEL", true);
 	}
 
 	final override void CheckReplacement(ReplaceEvent event)

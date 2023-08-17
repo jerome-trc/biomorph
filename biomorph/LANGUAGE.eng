@@ -217,6 +217,9 @@
 	BIOM_ALTERITEM_USEFAIL_NOCOMPATIBLEWEAPS =
 		"\c[Brick]None of the weapons in your arsenal are compatible with this mutagen.";
 
+	BIOM_ALTER_MAXHEALTH_TAG = "L.I.F.E. Blood Infusion";
+	BIOM_ALTER_MAXHEALTH_SUMMARY = "Your maximum health is \c[Green]increased by 5\c[White].";
+
 // Balance modifier reporting //////////////////////////////////////////////////
 
 	BIOM_BALMODREPORT =

@@ -2,11 +2,14 @@
 /// and viewing lore.
 class biom_PlayerMenu : biom_TooltipOptionMenu
 {
+	private biom_Player pawn;
+
 	final override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
 		super.InitDynamic(parent, desc);
 
 		let player = players[consolePlayer];
+		self.pawn = biom_Player(player.mo);
 		let pdat = biom_Global.Get().FindPlayerData(player);
 
 		self.TooltipGeometry(0.5, 1.0, 0.75, 1.0, 0.5);
@@ -19,8 +22,11 @@ class biom_PlayerMenu : biom_TooltipOptionMenu
 			let item = new('OptionMenuItemStaticText');
 
 			item.InitDirect(
-				String.Format("$BIOM_PLAYERMENU_BALANCE", pdat.balanceMod),
-				Font.CR_CYAN
+				String.Format(
+					StringTable.Localize("$BIOM_PLAYERMENU_BALANCE"),
+					pdat.balanceMod
+				),
+				Font.CR_WHITE
 			);
 
 			self.mDesc.mItems.Push(item);
@@ -74,34 +80,39 @@ class biom_PlayerMenu : biom_TooltipOptionMenu
 	}
 
 	/// `kind` is 0 for downgrades, 1 for sidegrades, and 2 for upgrades.
-	private void PushAlterantOption(biom_Alterant alter, int kind, int index)
+	private void PushAlterantOption(biom_PendingAlterant alter, int kind, int index)
 	{
 		let omi = new('biom_OptionMenuItem');
 
-		string b;
-		let bal = alter.Balance();
-		int c = Font.CR_WHITE;
+		int bal = 0;
+		string balString;
+		int fontColor = Font.CR_WHITE;
+
+		if ((alter.inner is 'biom_PawnAlterant'))
+			bal = biom_PawnAlterant(alter.inner).Balance(self.pawn.AsConst());
+		else if (alter.inner is 'biom_WeaponAlterant')
+			bal = biom_WeaponAlterant(alter.inner).Balance(alter.weaponData);
 
 		if (bal > 0)
 		{
-			b = String.Format("+%d", bal);
-			c = Font.CR_GREEN;
+			balString = String.Format("+%d", bal);
+			fontColor = Font.CR_GREEN;
 		}
 		else if (bal < 0)
 		{
-			b = String.Format("-%d", bal);
-			c = Font.CR_RED;
+			balString = String.Format("%d", bal);
+			fontColor = Font.CR_RED;
 		}
 		else
 		{
-			b = String.Format("%d", bal);
-			c = Font.CR_WHITE;
+			balString = String.Format("%d", bal);
+			fontColor = Font.CR_WHITE;
 		}
 
-		omi.Init(alter.Tag(), b, "biom_alter", c);
+		omi.Init(alter.inner.Tag(), balString, "biom_alter", fontColor);
 		omi.WithArgs(kind, index, 0);
 		self.mDesc.mItems.push(omi);
-		self.PushTooltip(alter.Summary());
+		self.PushTooltip(alter.inner.Summary());
 	}
 }
 
@@ -135,7 +146,7 @@ class biom_OptionMenuItem : OptionMenuItem
 
 	override int Draw(OptionMenuDescriptor d, int y, int indent, bool selected)
 	{
-		self.DrawLabel(indent, y, self.fontColor);
+		self.DrawLabel(indent, y, Font.CR_CYAN);
 		self.DrawValue(indent, y, self.fontColor, self.content);
 		return indent;
 	}

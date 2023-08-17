@@ -1,18 +1,15 @@
 class biom_Alterant abstract
 {
-	abstract void Apply(biom_Player pawn) const;
-	/// If returning `false`, also return a string (localization not necessary)
-	/// explaining to the user why this alterant is incompatible.
-	abstract bool, string Compatible(readonly<biom_Player> pawn) const;
-	/// Positive return values means this alterant makes the player stronger;
-	/// negative return values means this alterant makes the player weaker.
-	abstract int Balance() const;
 	/// If returning `false`, whether this alterant is an upgrade or downgrade
 	/// is determined by the return value of `Balance`. If that returns 0,
 	/// this alterant is considered a sidegrade regardless of the return value
 	/// of this function.
 	abstract bool IsSidegrade() const;
+	/// Dictates if this alterant is allowed to appear in batches. Return `false`
+	/// if you want the only possible source for this alterant to be loot items.
+	abstract bool Natural() const;
 
+	/// A flavor name.
 	/// Output does not need to be localized, but it must be fully colorized.
 	abstract string Tag() const;
 	/// Output does not need to be localized, but it must be fully colorized.
@@ -24,19 +21,33 @@ class biom_Alterant abstract
 		ret.SetNull();
 		return ret;
 	}
-
-	readonly<biom_Alterant> AsConst() const
-	{
-		return self;
-	}
 }
 
-/// Whereas one prototype instance for each direct subtype of `biom_Alterant` is
-/// stored, the set of prototype instances kept for each subtype of this class is
-/// the Cartesian product of all subtypes of this class and all subtypes of `biom_Weapon`.
+class biom_PawnAlterant : biom_Alterant abstract
+{
+	abstract play void Apply(biom_Player pawn) const;
+	/// If returning `false`, also return a string (localization not necessary)
+	/// explaining to the user why this alterant is incompatible.
+	abstract bool, string Compatible(readonly<biom_Player> pawn) const;
+
+	abstract int Balance(readonly<biom_Player> pawn) const;
+}
+
 class biom_WeaponAlterant : biom_Alterant abstract
 {
-	class<biom_Weapon> weaponType;
+	abstract void Apply(biom_WeaponData wdat) const;
+	/// If returning `false`, also return a string (localization not necessary)
+	/// explaining to the user why this alterant is incompatible.
+	abstract bool, string Compatible(readonly<biom_WeaponData> wdat) const;
+
+	abstract int Balance(readonly<biom_WeaponData> wdat) const;
+}
+
+class biom_PendingAlterant
+{
+	biom_Alterant inner;
+	/// `null` if `inner` is a `biom_PawnAlterant`.
+	readonly<biom_WeaponData> weaponData;
 }
 
 const BIOM_BALMOD_INC_XS = 1;
@@ -94,49 +105,46 @@ class biom_AlterantItem : Inventory abstract
 
 		let sdat = biom_Static.Get();
 
-		if (self.ALTERANT is 'biom_WeaponAlterant')
+		if (self.alterant is 'biom_PawnAlterant')
 		{
-			let weap = self.ApplicableWeapon(pawn.AsConst());
+			let alter = sdat.GetPawnAlterant((class<biom_PawnAlterant>)(self.ALTERANT));
+			let compat = false;
+			let msg = "";
 
-			if (weap == null)
-			{
-				pawn.A_Log("$BIOM_ALTERITEM_USEFAIL_NOCOMPATIBLEWEAPS");
-				return false;
-			}
-
-			let alter = sdat.GetWeaponAlterant(
-				(class<biom_WeaponAlterant>)(self.ALTERANT),
-				weap
-			);
-
-			Biomorph.Assert(alter != null);
-		}
-		else
-		{
-			let alter = sdat.GetAlterant(self.ALTERANT);
-			Biomorph.Assert(alter != null);
-
-			bool compat = false;
-			string compatMsg = "";
-			[compat, compatMsg] = alter.Compatible(pawn.AsConst());
+			[compat, msg] = alter.Compatible(pawn.AsConst());
 
 			if (!compat)
 			{
-				pawn.A_Log(compatMsg);
+				pawn.A_Log(msg);
 				return false;
 			}
+
+			let p = new('biom_PendingAlterant');
+			p.inner = alter;
+			pdat.NextAlteration(p);
+			return true;
+		}
+		else if (self.alterant is 'biom_WeaponAlterant')
+		{
+			let alter = sdat.GetWeaponAlterant((class<biom_WeaponAlterant>)(self.ALTERANT));
+
+			for (int i = 0; i < pdat.weapons.Size(); ++i)
+			{
+				let wtdefs = GetDefaultByType(pdat.weapons[i]);
+				let wdat = pdat.GetWeaponData(wtdefs.DATA_CLASS);
+				let compat = alter.Compatible(wdat.AsConst());
+
+				let p = new('biom_PendingAlterant');
+				p.inner = alter;
+				p.weaponData = wdat;
+				pdat.NextAlteration(p);
+				return true;
+			}
+
+			pawn.A_Log("$BIOM_ALTERITEM_USEFAIL_NOCOMPATIBLEWEAPS");
+			return false;
 		}
 
-		pdat.NextAlteration();
-		return true;
-	}
-
-	/// When attempting to use this item, it will check if its alterant type
-	/// inherits from `biom_WeaponAlterant`. If so, it will invoke this function
-	/// to find a weapon type to pair with the alterant type.
-	/// Returning `null` is always valid.
-	virtual class<biom_Weapon> ApplicableWeapon(readonly<biom_Player> pawn) const
-	{
-		return null;
+		return false;
 	}
 }

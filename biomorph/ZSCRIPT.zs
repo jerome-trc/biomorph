@@ -73,6 +73,7 @@ class Biomorph abstract
 #include "zscript/biomorph/static.zs"
 
 #include "zscript/biomorph/alter/base.zs"
+#include "zscript/biomorph/alter/health.zs"
 
 #include "zscript/biomorph/menus/player.zs"
 

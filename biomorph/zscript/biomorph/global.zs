@@ -78,9 +78,9 @@ class biom_Global : Thinker
 
 	bool DrainLootValueBuffer()
 	{
-		if (self.lootValueBuf >= LOOT_VALUE_THRESHOLD)
+		if (self.lootValueBuf >= biom_Global.LOOT_VALUE_THRESHOLD)
 		{
-			self.lootValueBuf -= LOOT_VALUE_THRESHOLD;
+			self.lootValueBuf -= biom_Global.LOOT_VALUE_THRESHOLD;
 			return true;
 		}
 
@@ -102,10 +102,7 @@ class biom_Global : Thinker
 	void NextAlteration()
 	{
 		for (int i = 0; i < self.playerData.Size(); ++i)
-		{
-			let pdat = self.playerData[i];
-			pdat.NextAlteration();
-		}
+			self.playerData[i].NextAlteration(null);
 	}
 
 	static biom_Global Create()
@@ -157,7 +154,14 @@ class biom_Global : Thinker
 		return ret;
 	}
 
-	void OnWorldLoaded()
+	/// Can not be called by `EventHandler::OnWorldLoaded`, since not all monsters
+	/// may have finished their replacement process yet.
+	void CalculateLootValueMultiplier()
+	{
+		self.LootValueMultiplierFormulaV1();
+	}
+
+	private void LootValueMultiplierFormulaV1()
 	{
 		self.lootValueMulti = 1.0;
 
@@ -166,18 +170,42 @@ class biom_Global : Thinker
 
 		while (true)
 		{
-			let mons = Actor(iter.Next());
+			let monster = Actor(iter.Next());
 
-			if (mons == null)
+			if (monster == null)
 				break;
 
-			if (!mons.bIsMonster)
+			if (!monster.bIsMonster)
 				continue;
 
-			hp += Max(mons.default.health, mons.GetMaxHealth(true));
+			hp += Max(monster.default.health, monster.GetMaxHealth(true));
 		}
 
 		self.lootValueMulti = 0.5 / Log10(float(hp));
+	}
+
+	private void LootValueMultiplierFormulaV2()
+	{
+		let lvm = 1.0;
+
+		let iter = ThinkerIterator.Create('Actor');
+
+		while (true)
+		{
+			let monster = Actor(iter.Next());
+
+			if (monster == null)
+				break;
+
+			if (!monster.bIsMonster)
+				continue;
+
+			let h = Max(monster.default.health, monster.GetMaxHealth(true));
+			let hf = Log10(float(h)) * 0.00275;
+			lvm -= hf;
+		}
+
+		self.lootValueMulti = Max(lvm, 0.01);
 	}
 
 	static clearscope biom_Global Get()
@@ -373,12 +401,18 @@ class biom_PlayerData
 		return ret;
 	}
 
-	play void NextAlteration()
+	/// `specific` is only for use with alterant items, so `null` is a valid argument.
+	play void NextAlteration(biom_PendingAlterant specific)
 	{
 		if (self.pendingAlterants.IsEmpty())
 		{
 			let sdat = biom_Static.Get();
-			sdat.GenerateAlterantBatch(self.pendingAlterants, self.GetPawn());
+
+			sdat.GenerateAlterantBatch(
+				self.pendingAlterants,
+				self.GetPawn(),
+				specific
+			);
 		}
 		else
 		{
@@ -428,7 +462,7 @@ class biom_PlayerData
 /// A compositional aid for `biom_PlayerData`.
 struct biom_PendingAlterants
 {
-	array<biom_Alterant> upgrades, sidegrades, downgrades;
+	array<biom_PendingAlterant> upgrades, sidegrades, downgrades;
 
 	/// i.e. is there currently an open batch of alterants on offer?
 	bool IsEmpty() const

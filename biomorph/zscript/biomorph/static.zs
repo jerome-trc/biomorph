@@ -3,11 +3,13 @@
 /// (thus disallowing `transient`).
 class biom_Static : StaticEventHandler
 {
+	private array<biom_WeaponAlterant> weaponAlterants;
+	private array<biom_PawnAlterant> pawnAlterants;
+
 	/// Used by `biom_EventHandler::CheckReplacement`.
 	private Dictionary replacements;
 	/// Used by `biom_EventHandler::WorldThingDied`.
 	private Dictionary legendaryLoot;
-	private Array<biom_Alterant> alterants;
 
 	static biom_Static Get()
 	{
@@ -24,21 +26,7 @@ class biom_Static : StaticEventHandler
 			);
 		}
 
-		for (int i = 0; i < allClasses.Size(); ++i)
-		{
-			let alter = (class<biom_Alterant>)(allClasses[i]);
-
-			if (alter == null || alter.IsAbstract())
-				continue;
-
-			if (alter is 'biom_WeaponAlterant')
-			{
-				self.RegisterWeaponAlterant((class<biom_WeaponAlterant>)(alter));
-				continue;
-			}
-
-			self.alterants.Push(biom_Alterant(new(alter)));
-		}
+		self.RegisterAlterantPrototypes();
 
 		self.replacements = Dictionary.Create();
 
@@ -76,83 +64,215 @@ class biom_Static : StaticEventHandler
 
 	// Alterants ///////////////////////////////////////////////////////////////
 
-	readonly<biom_Alterant> GetAlterant(class<biom_Alterant> type) const
+	biom_PawnAlterant GetPawnAlterant(class<biom_PawnAlterant> type) const
 	{
-		for (int i = 0; i < self.alterants.Size(); ++i)
-			if (self.alterants[i].GetClass() == type)
-				return self.alterants[i].AsConst();
+		for (int i = 0; i < self.pawnAlterants.Size(); ++i)
+			if (self.pawnAlterants[i].GetClass() == type)
+				return self.pawnAlterants[i];
 
 		return null;
 	}
 
-	readonly<biom_WeaponAlterant> GetWeaponAlterant(
-		class<biom_WeaponAlterant> type,
-		class<biom_Weapon> weaponType
-	) const
+	biom_WeaponAlterant GetWeaponAlterant(class<biom_WeaponAlterant> type) const
 	{
-		for (int i = 0; i < self.alterants.Size(); ++i)
-		{
-			let alter = biom_WeaponAlterant(self.alterants[i]);
-
-			if (alter == null)
-				continue;
-
-			if (alter.GetClass() != type)
-				continue;
-
-			if (alter.weaponType != weaponType)
-				continue;
-
-			let b = alter.AsConst();
-			return biom_WeaponAlterant(b);
-		}
+		for (int i = 0; i < self.weaponAlterants.Size(); ++i)
+			if (self.weaponAlterants[i].GetClass() == type)
+				return self.weaponAlterants[i];
 
 		return null;
 	}
 
-	void RegisterWeaponAlterant(class<biom_WeaponAlterant> alter)
-	{
-		for (int i = 0; i < allClasses.Size(); ++i)
-		{
-			let weap = (class<biom_Weapon>)(allClasses[i]);
+	/// This is per kind (downgrade, sidegrade, upgrade), not in total.
+	const ALTERANT_BATCH_SIZE = 5;
 
-			if (weap == null || weap.IsAbstract())
-				continue;
-
-			let proto = biom_WeaponAlterant(new(alter));
-			proto.weaponType = weap;
-			self.alterants.Push(proto);
-		}
-	}
-
+	/// `specific` is only for use with alterant items, so `null` is a valid argument.
 	void GenerateAlterantBatch(
 		in out biom_PendingAlterants pending,
-		biom_Player pawn
+		biom_Player pawn,
+		biom_PendingAlterant specific
 	)
 	{
-		Array<biom_Alterant> upgrades, sidegrades, downgrades;
+		let pdat = pawn.GetData();
 
-		for (int i = 0; i < self.alterants.Size(); ++i)
+		array<biom_PendingAlterant> upgrades, sidegrades, downgrades;
+
+		let
+			wrtUpgrades = new('biom_WeightedRandom'),
+			wrtSidegrades = new('biom_WeightedRandom'),
+			wrtDowngrades = new('biom_WeightedRandom');
+
+		if (specific != null)
 		{
-			let alter = self.alterants[i];
+			biom_Static.AddPendingAlterant(
+				upgrades,
+				sidegrades,
+				downgrades,
+				wrtUpgrades,
+				wrtSidegrades,
+				wrtDowngrades,
+				specific,
+				pawn.AsConst()
+			);
+		}
 
-			if (!alter.Compatible(pawn.AsConst()))
+		for (int i = 0; i < self.pawnAlterants.Size(); ++i)
+		{
+			let alter = self.pawnAlterants[i];
+
+			if (!alter.Natural() || !alter.Compatible(pawn.AsConst()))
 				continue;
 
-			if (alter.IsSidegrade())
+			let bal = alter.Balance(pawn.AsConst());
+
+			let p = new('biom_PendingAlterant');
+			p.inner = alter;
+
+			biom_Static.AddPendingAlterant(
+				upgrades,
+				sidegrades,
+				downgrades,
+				wrtUpgrades,
+				wrtSidegrades,
+				wrtDowngrades,
+				p,
+				pawn.AsConst()
+			);
+		}
+
+		for (int i = 0; i < self.weaponAlterants.Size(); ++i)
+		{
+			let alter = self.weaponAlterants[i];
+
+			for (int ii = 0; ii < pdat.weapons.Size(); ++ii)
 			{
-				sidegrades.Push(alter);
+				let wtdefs = GetDefaultByType(pdat.weapons[ii]);
+				let wdat = pdat.GetWeaponData(wtdefs.DATA_CLASS);
+
+				if (!alter.Natural() || !alter.Compatible(wdat))
+					continue;
+
+				let bal = alter.Balance(wdat);
+
+				let p = new('biom_PendingAlterant');
+				p.inner = alter;
+				p.weaponData = wdat;
+
+				biom_Static.AddPendingAlterant(
+					upgrades,
+					sidegrades,
+					downgrades,
+					wrtUpgrades,
+					wrtSidegrades,
+					wrtDowngrades,
+					p,
+					pawn.AsConst()
+				);
+			}
+		}
+
+		if (upgrades.Size() <= ALTERANT_BATCH_SIZE)
+			pending.upgrades.Move(upgrades);
+		else
+			biom_Static.SelectRandomAlterants(pending.upgrades, upgrades, wrtUpgrades);
+
+		if (sidegrades.Size() <= ALTERANT_BATCH_SIZE)
+			pending.sidegrades.Move(sidegrades);
+		else
+			biom_Static.SelectRandomAlterants(pending.sidegrades, sidegrades, wrtSidegrades);
+
+		if (downgrades.Size() <= ALTERANT_BATCH_SIZE)
+			pending.downgrades.Move(downgrades);
+		else
+			biom_Static.SelectRandomAlterants(pending.downgrades, downgrades, wrtDowngrades);
+	}
+
+	private static void AddPendingAlterant(
+		in out array<biom_PendingAlterant> upgrades,
+		in out array<biom_PendingAlterant> sidegrades,
+		in out array<biom_PendingAlterant> downgrades,
+		biom_WeightedRandom wrtUpgrades,
+		biom_WeightedRandom wrtSidegrades,
+		biom_WeightedRandom wrtDowngrades,
+		biom_PendingAlterant p,
+		readonly<biom_Player> pawn
+	)
+	{
+		int bal = 0;
+
+		if (p.inner is 'biom_PawnAlterant')
+		{
+			bal = biom_PawnAlterant(p.inner).Balance(pawn);
+		}
+		else if (p.inner is 'biom_WeaponAlterant')
+		{
+			bal = biom_WeaponAlterant(p.inner).Balance(p.weaponData);
+		}
+
+		if (p.inner.IsSidegrade())
+		{
+			{
+				sidegrades.Push(p);
+				wrtSidegrades.Add(1);
+			}
+		}
+		else
+		{
+			if (bal > 0)
+			{
+				upgrades.Push(p);
+				wrtUpgrades.Add(1);
+			}
+			else if (bal < 0)
+			{
+				downgrades.Push(p);
+				wrtDowngrades.Add(1);
 			}
 			else
 			{
-				let bal = alter.Balance();
+				sidegrades.Push(p);
+				wrtSidegrades.Add(1);
+			}
+		}
+	}
 
-				if (bal > 0)
-					upgrades.Push(alter);
-				else if (bal < 0)
-					downgrades.Push(alter);
-				else
-					sidegrades.Push(alter);
+	private static void SelectRandomAlterants(
+		in out array<biom_PendingAlterant> pending,
+		in out array<biom_PendingAlterant> candidates,
+		biom_WeightedRandom weights
+	)
+	{
+		array<uint> selected;
+
+		for (uint i = 0; i < ALTERANT_BATCH_SIZE; ++i)
+		{
+			uint r = uint.MAX;
+
+			do
+			{
+				r = weights.Result();
+			} while (selected.Find(r) != selected.Size());
+
+			pending.Push(candidates[r]);
+			selected.Push(r);
+		}
+	}
+
+	private void RegisterAlterantPrototypes()
+	{
+		for (int i = 0; i < allClasses.Size(); ++i)
+		{
+			if (allClasses[i].IsAbstract())
+				continue;
+
+			if (allClasses[i] is 'biom_PawnAlterant')
+			{
+				let t = (class<biom_PawnAlterant>)(allClasses[i]);
+				self.pawnAlterants.Push(biom_PawnAlterant(new(t)));
+			}
+			else if (allClasses[i] is 'biom_WeaponAlterant')
+			{
+				let t = (class<biom_WeaponAlterant>)(allClasses[i]);
+				self.weaponAlterants.Push(biom_WeaponAlterant(new(t)));
 			}
 		}
 	}
