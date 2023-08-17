@@ -29,6 +29,7 @@ class biom_Static : StaticEventHandler
 		self.RegisterAlterantPrototypes();
 
 		self.replacements = Dictionary.Create();
+		self.legendaryLoot = Dictionary.Create();
 
 		if (biom_Utils.LegenDoom())
 		{
