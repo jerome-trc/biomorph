@@ -33,11 +33,6 @@ class biomrl_walt_Plasmatic : biom_WeaponAlterant
 		return BIOM_BALMOD_DEC_XS * 2;
 	}
 
-	final override bool IsSidegrade() const
-	{
-		return false;
-	}
-
 	final override bool Natural() const
 	{
 		return false;

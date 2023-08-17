@@ -7,6 +7,7 @@ class biom_PlayerMenu : biom_TooltipOptionMenu
 	final override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
 		super.InitDynamic(parent, desc);
+		self.mDesc.mSelectedItem = -1;
 
 		let player = players[consolePlayer];
 		self.pawn = biom_Player(player.mo);
@@ -33,13 +34,23 @@ class biom_PlayerMenu : biom_TooltipOptionMenu
 		}
 
 		{
+			let omi = new('biom_OptionMenuItem');
+			omi.Init("$BIOM_PLAYERMENU_DISCARD", "", "biom_alter", true, Font.CR_WHITE);
+			omi.WithArgs(-1, int.MAX, int.MAX);
+			self.mDesc.mItems.push(omi);
+		}
+
+		{
 			let item = new('OptionMenuItemStaticText');
 			item.InitDirect("$BIOM_PLAYERMENU_HEADER_UPGRADES", Font.CR_GOLD);
 			self.mDesc.mItems.Push(item);
 		}
 
 		for (int i = 0; i < pdat.pendingAlterants.upgrades.Size(); ++i)
-			self.PushAlterantOption(pdat.pendingAlterants.upgrades[i], 2, i);
+		{
+			let p = pdat.pendingAlterants.upgrades[i];
+			self.PushAlterantOption(p, BIOM_ALTK_UPGRADE, i);
+		}
 
 		{
 			let item = new('OptionMenuItemStaticText');
@@ -48,7 +59,10 @@ class biom_PlayerMenu : biom_TooltipOptionMenu
 		}
 
 		for (int i = 0; i < pdat.pendingAlterants.sidegrades.Size(); ++i)
-			self.PushAlterantOption(pdat.pendingAlterants.sidegrades[i], 1, i);
+		{
+			let p = pdat.pendingAlterants.sidegrades[i];
+			self.PushAlterantOption(p, BIOM_ALTK_SIDEGRADE, i);
+		}
 
 		{
 			let item = new('OptionMenuItemStaticText');
@@ -57,9 +71,10 @@ class biom_PlayerMenu : biom_TooltipOptionMenu
 		}
 
 		for (int i = 0; i < pdat.pendingAlterants.downgrades.Size(); ++i)
-			self.PushAlterantOption(pdat.pendingAlterants.downgrades[i], 0, i);
-
-		self.mDesc.mSelectedItem = -1;
+		{
+			let p = pdat.pendingAlterants.downgrades[i];
+			self.PushAlterantOption(p, BIOM_ALTK_DOWNGRADE, i);
+		}
 	}
 
 	final override void Ticker()
@@ -71,16 +86,11 @@ class biom_PlayerMenu : biom_TooltipOptionMenu
 		}
 	}
 
-	final override bool MenuEvent(int key, bool fromController)
-	{
-		if (key == Menu.MKEY_BACK)
-			EventHandler.SendNetworkEvent("biom_alter", -1);
-
-		return super.MenuEvent(key, fromController);
-	}
-
-	/// `kind` is 0 for downgrades, 1 for sidegrades, and 2 for upgrades.
-	private void PushAlterantOption(biom_PendingAlterant alter, int kind, int index)
+	private void PushAlterantOption(
+		biom_PendingAlterant alter,
+		biom_AlterantKind kind,
+		int index
+	)
 	{
 		let omi = new('biom_OptionMenuItem');
 
@@ -91,7 +101,7 @@ class biom_PlayerMenu : biom_TooltipOptionMenu
 		if ((alter.inner is 'biom_PawnAlterant'))
 			bal = biom_PawnAlterant(alter.inner).Balance(self.pawn.AsConst());
 		else if (alter.inner is 'biom_WeaponAlterant')
-			bal = biom_WeaponAlterant(alter.inner).Balance(alter.weaponData);
+			bal = biom_WeaponAlterant(alter.inner).Balance(alter.weaponData.AsConst());
 
 		if (bal > 0)
 		{
@@ -109,8 +119,9 @@ class biom_PlayerMenu : biom_TooltipOptionMenu
 			fontColor = Font.CR_WHITE;
 		}
 
-		omi.Init(alter.inner.Tag(), balString, "biom_alter", fontColor);
-		omi.WithArgs(kind, index, 0);
+		let canSelect = self.pawn.GetData().balanceMod >= bal;
+		omi.Init(alter.inner.Tag(), balString, "biom_alter", canSelect, fontColor);
+		omi.WithArgs(kind, index, int.MAX);
 		self.mDesc.mItems.push(omi);
 		self.PushTooltip(alter.inner.Summary());
 	}
@@ -121,11 +132,13 @@ class biom_OptionMenuItem : OptionMenuItem
 	string eventName, content;
 	int fontColor;
 	int args[3];
+	bool canSelect;
 
 	biom_OptionMenuItem Init(
 		string label,
 		string content,
 		string eventName,
+		bool canSelect,
 		int fontColor,
 		bool centered = false
 	)
@@ -133,6 +146,7 @@ class biom_OptionMenuItem : OptionMenuItem
 		super.Init(label, eventName, centered);
 		self.content = content;
 		self.eventName = eventName;
+		self.canSelect = canSelect;
 		return self;
 	}
 
@@ -144,11 +158,17 @@ class biom_OptionMenuItem : OptionMenuItem
 		return self;
 	}
 
-	override int Draw(OptionMenuDescriptor d, int y, int indent, bool selected)
+	final override int Draw(OptionMenuDescriptor d, int y, int indent, bool selected)
 	{
-		self.DrawLabel(indent, y, Font.CR_CYAN);
+		let c = self.canSelect ? Font.CR_CYAN : Font.CR_DARKGRAY;
+		self.DrawLabel(indent, y, c);
 		self.DrawValue(indent, y, self.fontColor, self.content);
 		return indent;
+	}
+
+	final override bool Selectable()
+	{
+		return self.canSelect;
 	}
 
 	final override bool MenuEvent(int key, bool fromController)

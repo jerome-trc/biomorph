@@ -211,6 +211,10 @@
 
 	BIOM_PLAYERRESETITEM_TAG = "\c[White]Antigen Sample";
 	BIOM_PLAYERRESETTITEM_PKUP = "\c[White]Acquired an antigen sample.";
+	BIOM_PLAYERRESETITEM_CONFIRM =
+		"\c[White]This will undo every mutation you have ever applied."
+		"\n\n"
+		"\c[White]Are you sure? Use again to confirm, or wait 3 seconds to cancel.";
 
 	BIOM_ALTERITEM_USEFAIL_PENDINGBATCH =
 		"\c[Brick]Accept or discard your current mutation first.";
@@ -265,6 +269,7 @@
 
 	BIOM_PLAYERMENU_TITLE = "\c[Cyan]Player Menu";
 
+	BIOM_PLAYERMENU_DISCARD = "Discard";
 	BIOM_PLAYERMENU_BALANCE = "Genetic Stability: %d";
 
 	BIOM_PLAYERMENU_HEADER_UPGRADES = "Upgrades";

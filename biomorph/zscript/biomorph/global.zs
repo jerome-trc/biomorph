@@ -2,10 +2,8 @@
 
 class biom_Global : Thinker
 {
-	const LOOT_VALUE_THRESHOLD = 3000;
+	const LOOT_VALUE_THRESHOLD = 2500;
 
-	/// The monster value threshold between loot drops is divided by this.
-	private uint playerCount;
 	/// One per active player.
 	private array<biom_PlayerData> playerData;
 	/// How close are the players to getting their next loot drop?
@@ -133,7 +131,6 @@ class biom_Global : Thinker
 			let pdat = biom_PlayerData.Create(players[i], ssgExists);
 			pdat.balanceMod = balMod;
 			ret.playerData.Push(pdat);
-			ret.playerCount++;
 		}
 
 		if (developer >= 1)
@@ -463,6 +460,13 @@ class biom_PlayerData
 struct biom_PendingAlterants
 {
 	array<biom_PendingAlterant> upgrades, sidegrades, downgrades;
+
+	void Clear()
+	{
+		self.upgrades.Clear();
+		self.sidegrades.Clear();
+		self.downgrades.Clear();
+	}
 
 	/// i.e. is there currently an open batch of alterants on offer?
 	bool IsEmpty() const

@@ -297,7 +297,8 @@ struct biom_Magazine
 /// - Every player has one per weapon.
 class biom_WeaponData abstract
 {
-	/// For setting values to their defaults.
+	/// Called in order to initialize this data when a new game is started
+	/// and to undo the effects of all applied alterants.
 	abstract void Reset();
 
 	virtual biom_PayloadData GetPayload(bool secondary = false) const

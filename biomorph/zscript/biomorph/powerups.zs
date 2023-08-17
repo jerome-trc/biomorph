@@ -13,7 +13,6 @@ class biom_Berserk : Health replaces Berserk
 
 		Tag "$BIOM_BERSERK_TAG";
 		Inventory.Amount 100;
-		Inventory.MaxAmount 100;
 		Inventory.PickupMessage "$BIOM_BERSERK_PKUP";
 		Inventory.PickupSound "misc/p_pkup";
 		Health.LowMessage 25, "$BIOM_BERSERK_PKUPLOW";

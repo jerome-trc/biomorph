@@ -2,7 +2,10 @@ class biom_palt_MaxHealth : biom_PawnAlterant
 {
 	final override void Apply(biom_Player pawn) const
 	{
-		pawn.maxHealth += 5;
+		if (pawn.maxHealth == 0)
+			pawn.maxHealth = 105;
+		else
+			pawn.maxHealth += 5;
 	}
 
 	final override bool, string Compatible(readonly<biom_Player> _) const
@@ -13,11 +16,6 @@ class biom_palt_MaxHealth : biom_PawnAlterant
 	final override int Balance(readonly<biom_Player> _) const
 	{
 		return BIOM_BALMOD_DEC_XS * 2;
-	}
-
-	final override bool IsSidegrade() const
-	{
-		return false;
 	}
 
 	final override bool Natural() const

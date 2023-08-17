@@ -4,10 +4,23 @@ class biom_Alterant abstract
 	/// is determined by the return value of `Balance`. If that returns 0,
 	/// this alterant is considered a sidegrade regardless of the return value
 	/// of this function.
-	abstract bool IsSidegrade() const;
+	virtual bool IsSidegrade() const
+	{
+		return false;
+	}
+
 	/// Dictates if this alterant is allowed to appear in batches. Return `false`
 	/// if you want the only possible source for this alterant to be loot items.
-	abstract bool Natural() const;
+	virtual bool Natural() const
+	{
+		return true;
+	}
+
+	/// The returned value gets clamped by calling code to the 0-255 range (inclusive).
+	virtual uint Weight() const
+	{
+		return uint8.MAX;
+	}
 
 	/// A flavor name.
 	/// Output does not need to be localized, but it must be fully colorized.
@@ -47,7 +60,14 @@ class biom_PendingAlterant
 {
 	biom_Alterant inner;
 	/// `null` if `inner` is a `biom_PawnAlterant`.
-	readonly<biom_WeaponData> weaponData;
+	biom_WeaponData weaponData;
+}
+
+enum biom_AlterantKind : uint8
+{
+	BIOM_ALTK_DOWNGRADE,
+	BIOM_ALTK_SIDEGRADE,
+	BIOM_ALTK_UPGRADE
 }
 
 const BIOM_BALMOD_INC_XS = 1;
@@ -131,7 +151,7 @@ class biom_AlterantItem : Inventory abstract
 			for (int i = 0; i < pdat.weapons.Size(); ++i)
 			{
 				let wtdefs = GetDefaultByType(pdat.weapons[i]);
-				let wdat = pdat.GetWeaponData(wtdefs.DATA_CLASS);
+				let wdat = pdat.GetWeaponDataMut(wtdefs.DATA_CLASS);
 				let compat = alter.Compatible(wdat.AsConst());
 
 				let p = new('biom_PendingAlterant');

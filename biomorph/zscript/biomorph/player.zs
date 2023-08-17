@@ -150,6 +150,36 @@ class biom_Player : DoomPlayer
 		self.weaponsFound |= wf;
 	}
 
+	/// Called in order to undo the effects of all applied alterants.
+	void Reset()
+	{
+		self.bDontThrust = self.default.bDontThrust;
+		self.bCantSeek = self.default.bCantSeek;
+
+		self.maxHealth = self.default.maxHealth;
+		self.bonusHealth = self.default.bonusHealth;
+		self.stamina = self.default.stamina;
+
+		self.forwardMove1 = self.default.forwardMove1;
+		self.forwardMove2 = self.default.forwardMove2;
+		self.sideMove1 = self.default.sideMove1;
+		self.sideMove2 = self.default.sideMove2;
+		self.jumpZ = self.default.jumpZ;
+		self.friction = self.default.friction;
+		self.gravity = self.default.gravity;
+		self.mass = self.default.mass;
+		self.maxStepHeight = self.default.maxStepHeight;
+		self.maxSlopeSteepness = self.default.maxSlopeSteepness;
+
+		self.useRange = self.default.useRange;
+		self.airCapacity = self.default.airCapacity;
+		self.radiusDamageFactor = self.default.radiusDamageFactor;
+		self.selfDamageFactor = self.default.selfDamageFactor;
+
+		for (int i = 0; i < self.data.weaponData.Size(); ++i)
+			self.data.weaponData[i].Reset();
+	}
+
 	readonly<biom_PlayerData> GetData() const
 	{
 		return self.data.AsConst();
@@ -208,6 +238,8 @@ class biom_PlayerPistolStart : biom_Player
 
 class biom_PlayerResetItem : Inventory
 {
+	bool primed;
+
 	Default
 	{
 		-COUNTITEM
@@ -222,6 +254,8 @@ class biom_PlayerResetItem : Inventory
 		Inventory.Amount 1;
 		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "$BIOM_PLAYERRESETITEM_PKUP";
+		Inventory.RestrictedTo 'biom_Player';
+		Inventory.UseSound "";
 	}
 
 	States
@@ -230,5 +264,59 @@ class biom_PlayerResetItem : Inventory
 		ANTG A 6;
 		#### B 6 bright light("biom_PlayerResetItem");
 		loop;
+	}
+
+	final override bool Use(bool pickup)
+	{
+		let pawn = biom_Player(self.owner);
+
+		if (!self.primed)
+		{
+			string prompt = String.Format("$BIOM_PLAYERRESETITEM_CONFIRM");
+			pawn.A_Print(prompt, 3.0);
+			pawn.A_StartSound("biom/ui/beep", CHAN_AUTO);
+			self.primed = true;
+			return false;
+		}
+		else
+		{
+			pawn.A_Print("", 0.0); // Flush confirmation prompt off the screen.
+			self.primed = false;
+			pawn.Reset();
+			return true;
+		}
+	}
+}
+
+class biom_PlayerResetDisarmer : Thinker
+{
+	private biom_PlayerResetItem toDisarm;
+	private uint lifetime;
+
+	static biom_PlayerResetDisarmer Create(biom_PlayerResetItem toDisarm)
+	{
+		let ret = new('biom_PlayerResetDisarmer');
+		ret.toDisarm = toDisarm;
+		return ret;
+	}
+
+	final override void Tick()
+	{
+		super.Tick();
+
+		if (self.bDestroyed)
+			return;
+
+		self.lifetime += 1;
+
+		if (self.lifetime >= (TICRATE * 3))
+		{
+			toDisarm.primed = false;
+
+			if (!self.bDestroyed)
+				self.Destroy();
+
+			return;
+		}
 	}
 }

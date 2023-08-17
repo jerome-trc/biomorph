@@ -152,14 +152,26 @@ class biom_EventHandler : EventHandler
 		if (!(event.name ~== "biom_alter"))
 			return;
 
-		if (event.args[0] == -1)
-			return;
+		let pawn = biom_Player(players[consolePlayer].mo);
+		let pdat = pawn.GetDataMut();
+		biom_PendingAlterant alter = null;
 
 		switch (event.args[0])
 		{
 		case -1:
-			return; // User cancelled.
-		case 0: // Downgrade
+		{
+			pdat.pendingAlterants.Clear();
+
+			if (pdat.pendingAlterations >= 1)
+			{
+				pdat.pendingAlterations -= 1;
+				pdat.NextAlteration(null);
+			}
+
+			return;
+		}
+		case BIOM_ALTK_DOWNGRADE:
+		{
 			if (developer >= 1)
 			{
 				Console.PrintF(
@@ -169,8 +181,11 @@ class biom_EventHandler : EventHandler
 				);
 			}
 
-			return;
-		case 1: // Sidegrade
+			alter = pdat.pendingAlterants.downgrades[event.args[1]];
+			break;
+		}
+		case BIOM_ALTK_SIDEGRADE:
+		{
 			if (developer >= 1)
 			{
 				Console.PrintF(
@@ -180,8 +195,11 @@ class biom_EventHandler : EventHandler
 				);
 			}
 
-			return;
-		case 2: // Upgrade
+			alter = pdat.pendingAlterants.sidegrades[event.args[1]];
+			break;
+		}
+		case BIOM_ALTK_UPGRADE:
+		{
 			if (developer >= 1)
 			{
 				Console.PrintF(
@@ -191,8 +209,17 @@ class biom_EventHandler : EventHandler
 				);
 			}
 
-			return;
+			alter = pdat.pendingAlterants.upgrades[event.args[1]];
+			break;
 		}
+		}
+
+		if (alter.inner is 'biom_PawnAlterant')
+			biom_PawnAlterant(alter.inner).Apply(pawn);
+		else if (alter.inner is 'biom_WeaponAlterant')
+			biom_WeaponAlterant(alter.inner).Apply(alter.weaponData);
+
+		pdat.pendingAlterants.Clear();
 	}
 
 	final override void WorldTick()
@@ -238,8 +265,6 @@ class biom_EventHandler : EventHandler
 
 			players[i].mo.A_Print("$BIOM_ALTERLEVEL", 2.0, 'JenocideFontRed');
 		}
-
-		// Console.MidPrint('JenocideFontRed', "$BIOM_ALTERLEVEL", true);
 	}
 
 	final override void CheckReplacement(ReplaceEvent event)

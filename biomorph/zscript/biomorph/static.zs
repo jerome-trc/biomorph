@@ -147,12 +147,12 @@ class biom_Static : StaticEventHandler
 			for (int ii = 0; ii < pdat.weapons.Size(); ++ii)
 			{
 				let wtdefs = GetDefaultByType(pdat.weapons[ii]);
-				let wdat = pdat.GetWeaponData(wtdefs.DATA_CLASS);
+				let wdat = pdat.GetWeaponDataMut(wtdefs.DATA_CLASS);
 
-				if (!alter.Natural() || !alter.Compatible(wdat))
+				if (!alter.Natural() || !alter.Compatible(wdat.AsConst()))
 					continue;
 
-				let bal = alter.Balance(wdat);
+				let bal = alter.Balance(wdat.AsConst());
 
 				let p = new('biom_PendingAlterant');
 				p.inner = alter;
@@ -199,6 +199,7 @@ class biom_Static : StaticEventHandler
 	)
 	{
 		int bal = 0;
+		uint weight = Clamp(p.inner.Weight(), 0, uint8.MAX);
 
 		if (p.inner is 'biom_PawnAlterant')
 		{
@@ -206,32 +207,32 @@ class biom_Static : StaticEventHandler
 		}
 		else if (p.inner is 'biom_WeaponAlterant')
 		{
-			bal = biom_WeaponAlterant(p.inner).Balance(p.weaponData);
+			bal = biom_WeaponAlterant(p.inner).Balance(p.weaponData.AsConst());
 		}
 
 		if (p.inner.IsSidegrade())
 		{
 			{
 				sidegrades.Push(p);
-				wrtSidegrades.Add(1);
+				wrtSidegrades.Add(weight);
 			}
 		}
 		else
 		{
-			if (bal > 0)
+			if (bal < 0)
 			{
 				upgrades.Push(p);
-				wrtUpgrades.Add(1);
+				wrtUpgrades.Add(weight);
 			}
-			else if (bal < 0)
+			else if (bal > 0)
 			{
 				downgrades.Push(p);
-				wrtDowngrades.Add(1);
+				wrtDowngrades.Add(weight);
 			}
 			else
 			{
 				sidegrades.Push(p);
-				wrtSidegrades.Add(1);
+				wrtSidegrades.Add(weight);
 			}
 		}
 	}
