@@ -93,6 +93,7 @@ class Biomorph abstract
 
 #include "zscript/biomorph/weapons/bite-rifle.zs"
 #include "zscript/biomorph/weapons/caster-cannon.zs"
+#include "zscript/biomorph/weapons/coilgun.zs"
 #include "zscript/biomorph/weapons/dpsg.zs"
 #include "zscript/biomorph/weapons/elec-punch.zs"
 #include "zscript/biomorph/weapons/gpmg.zs"

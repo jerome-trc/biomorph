@@ -123,6 +123,10 @@
 	biom/castercannon/charge CSC1_0
 	biom/castercannon/fire CSC1_1
 
+// Weapons, coilgun ////////////////////////////////////////////////////////////
+
+	biom/coilgun/fire COI1FIRE
+
 // Weapons, double pump shotgun ////////////////////////////////////////////////
 
 	biom/doublepumpshotgun/fire/single/0 PSD1_0

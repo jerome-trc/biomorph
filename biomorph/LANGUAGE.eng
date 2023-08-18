@@ -136,6 +136,15 @@
 		"\c[White]on "
 		"\c[Red]%o\c[White].";
 
+	BIOM_COILGUN_TAG = "\c[White]Coilgun\c-";
+	BIOM_COILGUN_PKUP = "\c[White]Procured a \c[Cyan]coilgun\c[White].";
+	BIOM_CASTERCANNON_OB =
+		"\c[Green]%k "
+		"\c[White]used a "
+		"\c[Cyan]coilgun "
+		"\c[White]to put a tungsten slug through "
+		"\c[Red]%o\c[White].";
+
 	BIOM_DOUBLEPUMPSHOTGUN_TAG = "\c[White]Double Pump Shotgun\c-";
 	BIOM_DOUBLEPUMPSHOTGUN_PKUP = "\c[White]Procured a \c[Cyan]double pump shotgun\c[White].";
 	BIOM_DOUBLEPUMPSHOTGUN_OB =

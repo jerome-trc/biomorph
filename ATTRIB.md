@@ -143,6 +143,8 @@ BIOSTEP 0 through 9 are derived from ["Boot foley"](https://freesound.org/people
 
 All sounds prefixed with BWHOOSH are derived from ["Swoosh.wav"](https://freesound.org/people/Brsjak/sounds/482880/) by freesound user [Brsjak](https://freesound.org/people/Brsjak/), used under the Creative Commons Attribution 3.0 Unported License.
 
+COI1FIRE is derived from ["shipboard_railgun.mp3"](https://freesound.org/people/deleted_user_1941307/sounds/155790/) by freesound user [deleted_user_1941307](https://freesound.org/people/deleted_user_1941307), used under the Creative Commons 0 License.
+
 All sounds prefixed with H2H1 are derived from ["scratching-2.mp3"](https://freesound.org/people/rottako/sounds/693594/) by freesound user [rottako](https://freesound.org/people/rottako), used under Creative Commons 0.
 
 CSC1_0 and CSC1_1 are derived from ["Electric Charge + Shot"](https://freesound.org/people/Teh_Bucket/sounds/518739/) by freesound user [Teh_Bucket](https://freesound.org/people/Teh_Bucket/), used under the Attribution 3.0 License.
@@ -182,6 +184,8 @@ USRINPT0 (pitched down for USRINPUT1) is derived from ["Click_Electronic_01.wav"
 ["HW_6 Draft Punk (detailing2)"](https://sketchfab.com/3d-models/hw-6-draft-punk-detailing2-625a4188ba404cdb8271ca7829a939c9) (used to render sprites for the Caster Cannon) is provided by [Vadim (vasateno)](https://sketchfab.com/mvasa69) under the Creative Commons Attribution 4.0 License.
 
 ["Low-Poly Magpul RVG"](https://sketchfab.com/3d-models/low-poly-magpul-rvg-86b3580a65c441db9d3401712c5c9b6d) (used as part of the model used to render sprites for the Tactical Shotgun) is provided by [notcplkerry](https://sketchfab.com/notcplkerry) under the Creative Commons Attribution 4.0 License.
+
+[""](https://sketchfab.com/3d-models/old-sci-fi-gun-7c280b2889bf4e0aa05a8f91848e01ea) (used to render sprites for the Coilgun) is provided by [sarychev.r](https://sketchfab.com/sarychev.r42) under the Creative Commons Attribution 4.0 License.
 
 ["Remington 870 with Magpul furniture"](https://sketchfab.com/3d-models/remington-870-with-magpul-furniture-07d1fce010ef4127931e8ddd516713f8) (used to render sprites for the Pump Shotgun) is provided by [Medji](https://sketchfab.com/Medji) under the Creative Commons Attribution 4.0 License.
 
