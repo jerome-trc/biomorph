@@ -266,6 +266,22 @@ class biom_Weapon : DoomWeapon abstract
 				return true;
 		}
 	}
+
+	// Static //////////////////////////////////////////////////////////////////
+
+	static void GiveTo(biom_Player pawn, readonly<biom_Weapon> prototype)
+	{
+		pawn.GiveInventory(prototype.GetClass(), 1);
+		prototype.PlayPickupSound(pawn);
+
+		let pickupMessage = String.Format(
+			StringTable.Localize("$BIOM_WEAPONPICKUP"),
+			StringTable.Localize(prototype.PickupMessage()),
+			prototype.SLOTNUMBER
+		);
+
+		prototype.PrintPickupMessage(pawn.CheckLocalView(), pickupMessage);
+	}
 }
 
 /// Corresponds loosely to the weapon's slot number but accounts for the

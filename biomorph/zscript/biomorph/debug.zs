@@ -27,9 +27,7 @@ class biom_Arsenal : Inventory
 			if (pawn.FindInventory(pdat.weapons[i]) != null)
 				continue;
 
-			pawn.GiveInventory(pdat.weapons[i], 1);
-			defs.PlayPickupSound(other);
-			self.PrintPickupMessage(pawn.CheckLocalView(), defs.PickupMessage());
+			biom_Weapon.GiveTo(pawn, GetDefaultByType(pdat.weapons[i]));
 		}
 	}
 }

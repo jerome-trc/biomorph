@@ -119,6 +119,8 @@
 
 // Weapons /////////////////////////////////////////////////////////////////////
 
+	BIOM_WEAPONPICKUP = "%s \c[White][slot \c[Orange]%d\c[White]]";
+
 	BIOM_BITERIFLE_TAG = "\c[White]Bite Rifle\c-";
 	BIOM_BITERIFLE_PKUP = "\c[White]Procured a \c[Cyan]bite rifle\c[White].";
 	BIOM_BITERIFLE_OB =

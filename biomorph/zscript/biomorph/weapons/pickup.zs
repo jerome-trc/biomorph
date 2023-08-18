@@ -47,9 +47,7 @@ class biom_WeaponPickup : Inventory abstract
 			if (pawn.FindInventory(pdat.weapons[i]) != null)
 				continue;
 
-			pawn.GiveInventory(pdat.weapons[i], 1);
-			defs.PlayPickupSound(toucher);
-			self.PrintPickupMessage(pawn.CheckLocalView(), defs.PickupMessage());
+			biom_Weapon.GiveTo(pawn, defs);
 
 			if (!CVar.GetCVar("neverswitchonpickup", pawn.player).GetBool())
 				pawn.A_SelectWeapon(pdat.weapons[i]);
