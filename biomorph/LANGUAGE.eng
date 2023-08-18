@@ -43,9 +43,9 @@
 
 	BIOM_DISCARDEDINFERIORARMOR = "\c[White]Discarded what was left of your lighter armour.";
 
-	BIOM_ARMORBONUS_TAG = "\c[Green]Armour Shard\c-";
-	BIOM_ARMORBONUS_PKUP = "\c[White]Jury-rigged some protection using an \c[Green]armour shard\c[White].";
-	BIOM_ARMORBONUS_FOUND = "\c[White]Didn't pick up an \c[Green]armour shard\c[White], but marked it as found.";
+	BIOM_ARMORBONUS_TAG = "\c[Green]Strike Face\c-";
+	BIOM_ARMORBONUS_PKUP = "\c[White]Jury-rigged some protection using a \c[Green]strike face\c[White].";
+	BIOM_ARMORBONUS_FOUND = "\c[White]Didn't pick up a \c[Green]strike face\c[White], but marked it as found.";
 
 	BIOM_LIGHTARMOR_TAG = "\c[Green]Security Vest\c-";
 	BIOM_LIGHTARMOR_PKUP = "\c[White]Donned a \c[Green]security vest\c[White].";
