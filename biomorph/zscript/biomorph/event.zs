@@ -51,6 +51,20 @@ class biom_EventHandler : EventHandler
 				"Handling event: `WorldLoaded`..."
 			);
 		}
+
+		if (biom_Utils.DoomRLMonsterPack() && biom_Utils.DoomRLMonsterPackAdaptive())
+		{
+			let reporter = biom_BalanceModifierReporter.Create();
+
+			reporter.reports.Push(
+				String.Format(
+					StringTable.Localize("$BIOM_BALMODREPORT_DRLMADAPTIVE"),
+					BIOM_BALMOD_INC_XS
+				)
+			);
+
+			self.globals.ModifyBalance(BIOM_BALMOD_INC_XS);
+		}
 	}
 
 	final override void WorldUnloaded(WorldEvent event)

@@ -241,6 +241,10 @@
 		"\c[Red]%s\c[White] detected."
 		"\n\n"
 		"\c[Green]+%d \c[White]genetic stability.";
+	BIOM_BALMODREPORT_DRLMADAPTIVE =
+		"\c[Red]DoomRL Monsters\c[White] danger level increased."
+		"\n\n"
+		"\c[Green]+%d \c[White]genetic stability.";
 
 	// Names of detected mods (e.g. "LegenDoom Lite") aren't localized, of course.
 

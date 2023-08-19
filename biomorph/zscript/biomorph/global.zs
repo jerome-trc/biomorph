@@ -262,43 +262,20 @@ class biom_Global : Thinker
 			);
 		}
 
-		if (biom_Utils.DoomRLMonsterPack())
+		if (biom_Utils.DeHackEdAttack())
 		{
-			let bm = 0;
-
-			switch (skill)
-			{
-			case 3: // `hard`, a.k.a. "Standard".
-			{
-				bm = BIOM_BALMOD_INC_S;
-				break;
-			}
-			case 4: // `nightmare`
-			case 5: // `technophobia`
-			{
-				bm = BIOM_BALMOD_INC_M;
-				break;
-			}
-			case 6: // `armageddon`
-			{
-				bm = BIOM_BALMOD_INC_L;
-				break;
-			}
-			// `adaptive` needs special handling.
-			default:
-				break;
-			}
-
-			ret += bm;
+			ret += BIOM_BALMOD_INC_S;
 
 			reports.Push(
 				String.Format(
 					StringTable.Localize("$BIOM_BALMODREPORT"),
-					"DoomRL Monsters",
-					bm
+					"DeHackEd Attack",
+					BIOM_BALMOD_INC_S
 				)
 			);
 		}
+
+		biom_Global.DoomRLMonstersBalanceModifier(ret, reports);
 
 		if (biom_Utils.LegenDoom())
 		{
@@ -338,9 +315,86 @@ class biom_Global : Thinker
 			);
 		}
 
+		{
+			let bm = biom_Global.X10Point5BalanceModifier();
+
+			if (bm > 0)
+			{
+				ret += bm;
+
+				reports.Push(
+					String.Format(
+						StringTable.Localize("$BIOM_BALMODREPORT"),
+						"10.5x",
+						bm
+					)
+				);
+			}
+		}
+
 		let reporter = biom_BalanceModifierReporter.Create();
 		reporter.reports.Move(reports);
 		return ret;
+	}
+
+	private static void DoomRLMonstersBalanceModifier(
+		in out int balance,
+		in out array<string> reports
+	)
+	{
+		if (!biom_Utils.DoomRLMonsterPack())
+			return;
+
+		let bm = 0;
+
+		switch (skill)
+		{
+		case 3: // `hard`, a.k.a. "Standard".
+		{
+			bm = BIOM_BALMOD_INC_S;
+			break;
+		}
+		case 4: // `nightmare`
+		case 5: // `technophobia`
+		{
+			bm = BIOM_BALMOD_INC_M;
+			break;
+		}
+		case 6: // `armageddon`
+		{
+			bm = BIOM_BALMOD_INC_L;
+			break;
+		}
+		// `adaptive` needs special handling.
+		default:
+			return;
+		}
+
+		balance += bm;
+
+		reports.Push(
+			String.Format(
+				StringTable.Localize("$BIOM_BALMODREPORT"),
+				"DoomRL Monsters",
+				bm
+			)
+		);
+	}
+
+	/// See https://forum.zdoom.org/viewtopic.php?t=65962.
+	private static int X10Point5BalanceModifier()
+	{
+		let x5 = CVar.GetCVar("x5_multiplier");
+
+		if (x5 == null)
+			return 0;
+
+		let percent = (x5.GetInt() - 100);
+
+		if (percent <= 0)
+			return 0;
+
+		return int(Floor(float(percent) / 25.0));
 	}
 }
 
@@ -483,7 +537,7 @@ struct biom_PendingAlterants
 class biom_BalanceModifierReporter : Thinker
 {
 	array<string> reports;
-	uint ticsUntilNext;
+	private uint ticsUntilNext;
 
 	static biom_BalanceModifierReporter Create()
 	{

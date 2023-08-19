@@ -120,6 +120,15 @@ extend class biom_Utils
 		return t != null;
 	}
 
+	/// Checks if the user's mod configuration includes DeHackEd Attack.
+	/// See https://forum.zdoom.org/viewtopic.php?t=72362.
+	static bool DeHackEdAttack()
+	{
+		name tn = 'DEHRandomSpawner';
+		class<RandomSpawner> t = tn;
+		return t != null;
+	}
+
 	/// Checks if the user's mod configuration includes the DoomRL Monster Pack.
 	static bool DoomRLMonsterPack()
 	{
