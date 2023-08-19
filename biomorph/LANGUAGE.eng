@@ -36,7 +36,7 @@
 	BIOM_SUPERHEALTH_TAG = "\c[LightBlue]L.I.F.E. Kit\c-";
 	BIOM_SUPERHEALTH_PKUP = "\c[White]Used a \c[LightBlue]L.I.F.E. Kit\c[White].";
 	BIOM_SUPERHEALTH_PARTIAL = "\c[White]Partially used a \c[LightBlue]L.I.F.E. Kit\c[White].";
-	BIOM_SUPERHEALTH_PKUPLOW = "\c[White]Used a mucuh-needed \c[LightBlue]L.I.F.E. Kit\c[White].";
+	BIOM_SUPERHEALTH_PKUPLOW = "\c[White]Used a much-needed \c[LightBlue]L.I.F.E. Kit\c[White].";
 	BIOM_SUPERHEALTH_FOUND = "\c[White]Did not fully use a \c[LightBlue]L.I.F.E. Kit\c[White], but marked it as found.";
 
 // Armour //////////////////////////////////////////////////////////////////////
