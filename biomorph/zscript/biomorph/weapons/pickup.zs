@@ -3,6 +3,11 @@ class biom_WeaponPickup : Inventory abstract
 	protected meta biom_WeaponFamily FAMILY;
 	property Family: FAMILY;
 
+	/// Note that game skill factor still applies.
+	protected meta class<Inventory> AMMO_CLASS;
+	protected meta uint AMMO_COUNT;
+	property AmmoGive: AMMO_CLASS, AMMO_COUNT;
+
 	Default
 	{
 		+DONTGIB
@@ -21,7 +26,20 @@ class biom_WeaponPickup : Inventory abstract
 		Inventory.RestrictedTo 'biom_Player';
 	}
 
-	override void DoPickupSpecial(Actor toucher)
+	final override void BeginPlay()
+	{
+		super.BeginPlay();
+
+		if (Self.AMMO_CLASS == null)
+			return;
+
+		let c = Self.AMMO_COUNT * G_SkillPropertyFloat(SKILLP_AMMOFACTOR);
+
+		for (uint i = 0; i < c; ++i)
+			Actor.Spawn(self.AMMO_CLASS, self.pos);
+	}
+
+	final override void DoPickupSpecial(Actor toucher)
 	{
 		super.DoPickupSpecial(toucher);
 
@@ -87,11 +105,12 @@ class biom_wpk_Slot2 : biom_WeaponPickup replaces Pistol
 	}
 }
 
-class biom_wpk_Slot3 : biom_WeaponPickup
+class biom_wpk_Slot3 : biom_WeaponPickup replaces Shotgun
 {
 	Default
 	{
 		biom_WeaponPickup.Family BIOM_WEAPFAM_SHOTGUN;
+		biom_WeaponPickup.AmmoGive 'biom_Slot3AmmoSmall', 1;
 	}
 
 	States
@@ -103,11 +122,12 @@ class biom_wpk_Slot3 : biom_WeaponPickup
 	}
 }
 
-class biom_wpk_Slot3Super : biom_WeaponPickup
+class biom_wpk_Slot3Super : biom_WeaponPickup replaces SuperShotgun
 {
 	Default
 	{
 		biom_WeaponPickup.Family BIOM_WEAPFAM_SUPERSHOTGUN;
+		biom_WeaponPickup.AmmoGive 'biom_Slot3AmmoSmall', 2;
 	}
 
 	States
@@ -119,11 +139,12 @@ class biom_wpk_Slot3Super : biom_WeaponPickup
 	}
 }
 
-class biom_wpk_Slot4 : biom_WeaponPickup
+class biom_wpk_Slot4 : biom_WeaponPickup replaces Chaingun
 {
 	Default
 	{
 		biom_WeaponPickup.Family BIOM_WEAPFAM_AUTOGUN;
+		biom_WeaponPickup.AmmoGive 'biom_Slot4AmmoSmall', 1;
 	}
 
 	States
@@ -135,11 +156,12 @@ class biom_wpk_Slot4 : biom_WeaponPickup
 	}
 }
 
-class biom_wpk_Slot5 : biom_WeaponPickup
+class biom_wpk_Slot5 : biom_WeaponPickup replaces RocketLauncher
 {
 	Default
 	{
 		biom_WeaponPickup.Family BIOM_WEAPFAM_LAUNCHER;
+		biom_WeaponPickup.AmmoGive 'biom_Slot5AmmoSmall', 2;
 	}
 
 	States
@@ -151,11 +173,12 @@ class biom_wpk_Slot5 : biom_WeaponPickup
 	}
 }
 
-class biom_wpk_Slot6 : biom_WeaponPickup
+class biom_wpk_Slot6 : biom_WeaponPickup replaces PlasmaRifle
 {
 	Default
 	{
 		biom_WeaponPickup.Family BIOM_WEAPFAM_ENERGY;
+		biom_WeaponPickup.AmmoGive 'biom_Slot67AmmoSmall', 2;
 	}
 
 	States
@@ -167,11 +190,12 @@ class biom_wpk_Slot6 : biom_WeaponPickup
 	}
 }
 
-class biom_wpk_Slot7 : biom_WeaponPickup
+class biom_wpk_Slot7 : biom_WeaponPickup replaces BFG9000
 {
 	Default
 	{
 		biom_WeaponPickup.Family BIOM_WEAPFAM_SUPER;
+		biom_WeaponPickup.AmmoGive 'biom_Slot67AmmoSmall', 2;
 	}
 
 	States
@@ -180,102 +204,5 @@ class biom_wpk_Slot7 : biom_WeaponPickup
 		WPKP H 6;
 		#### # 6 bright light("biom_WeaponPickupSlot7");
 		loop;
-	}
-}
-
-/// An indirection over [`biom_WeaponPickup`]'s children to add accompanying ammo items.
-/// That class can't do it since it gets dropped if the player swaps out one of
-/// their weapon types.
-class biom_WeaponPickupSpawner : biom_IntangibleActor
-{
-	protected meta class<biom_WeaponPickup> WEAPON_CLASS;
-	property WeaponClass: WEAPON_CLASS;
-
-	/// Note that game skill factor still applies.
-	protected meta class<Inventory> AMMO_CLASS;
-	protected meta uint AMMO_COUNT;
-	property AmmoGive: AMMO_CLASS, AMMO_COUNT;
-
-	override void BeginPlay()
-	{
-		super.BeginPlay();
-
-		let wpkp = Actor.Spawn(self.WEAPON_CLASS, self.pos);
-
-		if (wpkp != null)
-		{
-			wpkp.ChangeTID(self.tid);
-
-			wpkp.special = self.special;
-			wpkp.args[0] = self.args[0];
-			wpkp.args[1] = self.args[1];
-			wpkp.args[2] = self.args[2];
-			wpkp.args[3] = self.args[3];
-			wpkp.args[4] = self.args[4];
-		}
-
-		if (Self.AMMO_CLASS == null)
-			return;
-
-		let c = Self.AMMO_COUNT * G_SkillPropertyFloat(SKILLP_AMMOFACTOR);
-
-		for (uint i = 0; i < c; ++i)
-			Actor.Spawn(self.AMMO_CLASS, self.pos);
-
-		self.Destroy();
-	}
-}
-
-class biom_wpks_Shotgun : biom_WeaponPickupSpawner replaces Shotgun
-{
-	Default
-	{
-		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot3';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot3AmmoSmall', 1;
-	}
-}
-
-class biom_wpks_SuperShotgun : biom_WeaponPickupSpawner replaces SuperShotgun
-{
-	Default
-	{
-		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot3Super';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot3AmmoSmall', 2;
-	}
-}
-
-class biom_wpks_Chaingun : biom_WeaponPickupSpawner replaces Chaingun
-{
-	Default
-	{
-		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot4';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot4AmmoSmall', 1;
-	}
-}
-
-class biom_wpks_RocketLauncher : biom_WeaponPickupSpawner replaces RocketLauncher
-{
-	Default
-	{
-		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot5';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot5AmmoSmall', 2;
-	}
-}
-
-class biom_wpks_PlasmaRifle : biom_WeaponPickupSpawner replaces PlasmaRifle
-{
-	Default
-	{
-		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot6';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot67AmmoSmall', 2;
-	}
-}
-
-class biom_wpks_BFG9000 : biom_WeaponPickupSpawner replaces BFG9000
-{
-	Default
-	{
-		biom_WeaponPickupSpawner.WeaponClass 'biom_wpk_Slot7';
-		biom_WeaponPickupSpawner.AmmoGive 'biom_Slot67AmmoSmall', 2;
 	}
 }
