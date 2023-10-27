@@ -73,32 +73,71 @@ class biom_Megasphere : Inventory replaces Megasphere
 
 	final override bool TryPickup(in out Actor other)
 	{
-		bool fullHealth = false;
+		let excess = Actor.Spawn('biom_ExtraMegasphereHealth', self.pos);
 
-		if (other.player != null)
-			fullHealth = other.player.health >= other.GetMaxHealth();
-		else
-			fullHealth = other.health >= other.GetMaxHealth();
-
-		// Should *never* be null.
-		let armor = BasicArmor(other.FindInventory('BasicArmor'));
-		let fullArmor = armor.armorType == 'biom_HeavyArmor' && armor.amount >= 200;
-
-		if (fullHealth && fullArmor)
+		if (excess != null)
 		{
-			if (self.bCountItem)
-				self.MarkAsCollected(other);
+			self.PrintPickupMessage(other.CheckLocalView(), "$BIOM_MEGAPSHERE_EXCESS_HEALTH");
+			let emh = biom_ExtraMegasphereHealth(excess);
 
-			return false;
+			if (other.player != null)
+				emh.amount = other.player.health;
+			else
+				emh.amount = other.health;
 		}
 
 		other.A_GiveInventory('MegasphereHealth', 1);
-		// TODO: Not using `BlueArmorForMegasphere` might break DeHackEd.
-		// Must investigate eventually; need sample data or bug reports.
-		other.A_GiveInventory('biom_HeavyArmor', 1);
+
+		let bArmor = BasicArmor(other.FindInventory('BasicArmor'));
+
+		if ((class<Armor>)(bArmor.armorType) is 'biom_HeavyArmor')
+		{
+			let excess = Actor.Spawn('biom_HeavyArmor', self.pos);
+			let ema = biom_HeavyArmor(excess);
+			ema.amount = bArmor.amount;
+			self.PrintPickupMessage(other.CheckLocalView(), "$BIOM_MEGAPSHERE_EXCESS_ARMOR");
+		}
+		else
+		{
+			// TODO: Not using `BlueArmorForMegasphere` might break DeHackEd.
+			// Must investigate eventually; need sample data or bug reports.
+			other.A_GiveInventory('biom_HeavyArmor', 1);
+		}
 
 		self.GoAwayAndDie();
 		return true;
+	}
+}
+
+class biom_ExtraMegasphereHealth : biom_SuperHealth
+{
+	Default
+	{
+		-COUNTITEM;
+		+INVENTORY.FANCYPICKUPSOUND;
+
+		Tag "$BIOM_EXTRAMEGASPHEREHEALTH_TAG";
+		Inventory.Amount int.MIN;
+		Inventory.PickupMessage "$BIOM_EXTRAMEGASPHEREHEALTH_PKUP";
+		Inventory.PickupSound "misc/p_pkup";
+		biom_SuperHealth.PartialPickupMessage "$BIOM_EXTRAMEGASPHEREHEALTH_PARTIAL";
+		Health.LowMessage 25, "$BIOM_EXTRAMEGASPHEREHEALTH_PKUPLOW";
+	}
+
+	States
+	{
+	Spawn:
+		SOUL ABCDCB 6 bright;
+		loop;
+	}
+
+	/// For ensuring proper initialization.
+	final override bool TryPickup(in out Actor other)
+	{
+		if (self.amount <= 0)
+			return false;
+
+		return super.TryPickup(other);
 	}
 }
 

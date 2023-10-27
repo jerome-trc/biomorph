@@ -25,33 +25,31 @@ mixin class biom_Health
 			self.OnFirstBerserkPickup(other);
 
 		int amt = 0;
+		let cap = int.MIN;
 
 		if (other.Player != null)
 		{
-			self.prevHealth = other.Player.Health;
-			let cap = other.GetMaxHealth() - other.Player.Health;
+			self.prevHealth = other.player.health;
+			cap = other.GetMaxHealth() - other.player.health;
 
 			if (self is 'biom_HealthBonus' || self is 'biom_SuperHealth')
 				cap += 100;
 
 			cap = Max(cap, 0);
-			amt = Min(self.amount, cap);
-			other.GiveBody(amt, self.maxAmount);
-			self.amount -= amt;
 		}
 		else
 		{
-			self.prevHealth = other.Health;
-			let cap = other.GetMaxHealth() - other.Health;
+			self.prevHealth = other.health;
+			cap = other.GetMaxHealth() - other.health;
 			cap = Max(cap, 0);
 
 			if (self is 'biom_HealthBonus' || self is 'biom_SuperHealth')
 				cap += 100;
-
-			amt = Min(self.amount, cap);
-			other.GiveBody(amt, self.maxAmount);
-			self.amount -= amt;
 		}
+
+		amt = Min(self.amount, cap);
+		other.GiveBody(amt, self.maxAmount);
+		self.amount -= amt;
 
 		if (self.amount <= 0)
 		{

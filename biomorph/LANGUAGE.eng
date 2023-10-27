@@ -113,9 +113,15 @@
 	BIOM_INFRARED_PKUP = "\c[White]Donned a pair of \c[Pink]night vision goggles\c[White]; the dark is illuminated.";
 	BIOM_MEGASPHERE_TAG = "\c[Pink]M.E.G.A. Kit\c-";
 	BIOM_MEGASPHERE_PKUP = "\c[White]Used a \c[Pink]M.E.G.A. Kit\c[White]! You feel rejuvenated.";
-	BIOM_MEGASPHERE_FOUND = "\c[White]Didn't use a \c[Pink]M.E.G.A. Kit\c[White], but marked it as found.";
+	BIOM_MEGAPSHERE_EXCESS_HEALTH = "\c[White]Your excess health coalesces into a soulsphere.";
+	BIOM_MEGAPSHERE_EXCESS_ARMOR = "\c[White]Discarded your excess armour for spiritual armour.";
 	BIOM_RADSUIT_TAG = "\c[Pink]C.B.R.N. Suit\c-";
 	BIOM_RADSUIT_PKUP = "\c[White]Donned a \c[Pink]C.B.R.N. suit\c[White]; you're safe from environmental hazards.";
+
+	BIOM_EXTRAMEGASPHEREHEALTH_TAG = "\c[Pink]Soulsphere\c-";
+	BIOM_EXTRAMEGASPHEREHEALTH_PKUP = "\c[White]Re-absorbed health from a \c[Pink]soulsphere\c[White].";
+	BIOM_EXTRAMEGASPHEREHEALTH_PARTIAL = "\c[White]Re-absorbed some health from a \c[Pink]soulsphere\c[White].";
+	BIOM_EXTRAMEGASPHEREHEALTH_PKUPLOW = "\c[White]Re-absorbed sorely-needed health from a \c[Pink]soulsphere\c[White].";
 
 // Weapons /////////////////////////////////////////////////////////////////////
 
