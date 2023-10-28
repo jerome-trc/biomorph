@@ -14,7 +14,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 
 	protected uint magazine;
 
-	const MAGAZINE_CAPACITY = 7 * 2;
+	const MAGAZINE_CAPACITY = 6 * 2;
 	const NUM_PELLETS = 10;
 
 	Default
