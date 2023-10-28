@@ -126,7 +126,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 				return ResolveState('Pump');
 		}
 	Pump:
-		PSDA A 2;
+		PSDA A 3;
 		PSD1 D 4
 		{
 			A_StartSound("biom/shotgunpump/back", CHAN_AUTO);
@@ -134,7 +134,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 			invoker.bLeftChambered = true;
 			invoker.bRightChambered = true;
 		}
-		PSD1 E 4;
+		PSD1 E 7;
 		PSD1 D 4 A_StartSound("biom/shotgunpump/forward", CHAN_AUTO);
 		PSDA A 2;
 		PSDA A 1 A_ReFire;
@@ -181,18 +181,22 @@ class biom_DoublePumpShotgun : biom_Weapon
 			return state(null);
 		}
 		PSDA A 3;
-		PSDR ABC 3 A_biom_InterruptReload;
+		PSDR ABC 2 A_biom_InterruptReload;
 		goto Reload.Repeat;
 	Reload.Repeat:
-		PSDR DD 3 A_biom_InterruptReload;
-		PSDR E 3
+		PSDR DD 4 A_biom_InterruptReload;
+		PSDR E 2
 		{
 			biom_Magazine mag;
 			invoker.GetMagazine(mag);
 			A_biom_Reload(1);
 			A_StartSound("biom/pumpshotgun/load", CHAN_AUTO);
 		}
-		PSDR DD 3 A_biom_InterruptReload;
+		PSDR E 1
+		{
+			A_StartSound("biom/pumpshotgun/load", CHAN_AUTO);
+		}
+		PSDR DD 4 A_biom_InterruptReload;
 		TNT1 A 0
 		{
 			if (invoker.CanReloadTwoShells())
@@ -201,7 +205,7 @@ class biom_DoublePumpShotgun : biom_Weapon
 				return ResolveState('Reload.Finish');
 		}
 	Reload.Finish:
-		PSDR CBA 3;
+		PSDR CBA 2;
 		PSDA A 3;
 		TNT1 A 0
 		{
@@ -219,8 +223,8 @@ class biom_DoublePumpShotgun : biom_Weapon
 	- Vanilla Super Shotgun: 62
 	- Fire (double): 5
 	- Fire (single): 10
-	- Pump: 17
-	- Reload: 39
+	- Pump: 21
+	- Reload: 37
 
 	*/
 
