@@ -9,7 +9,7 @@ class biom_PumpShotgun : biom_Weapon
 
 	protected uint magazine;
 
-	const MAGAZINE_CAPACITY = 8;
+	const MAGAZINE_CAPACITY = 6;
 
 	Default
 	{
