@@ -49,8 +49,6 @@ class biom_PumpShotgun : biom_Weapon
 		loop;
 	Fire:
 		TNT1 A 0 A_biom_CheckAmmo;
-		// Baseline time (pump included): 19 tics.
-		// Vanilla shotgun time to fire and pump: 44 tics.
 		PSGA A 2 offset(0 + 7, 32 + 7)
 		{
 			let data = biom_PumpShotgunData(invoker.data);
@@ -73,15 +71,15 @@ class biom_PumpShotgun : biom_Weapon
 				return ResolveState('Pump');
 		}
 	Pump:
-		PSGA A 2;
-		PSG1 C 3
+		PSGA A 3;
+		PSG1 C 3 offset(0 + 3, 32 + 5)
 		{
 			A_StartSound("biom/shotgunpump/back", CHAN_AUTO);
 			A_biom_Recoil('biom_recoil_ShotgunPump');
 			invoker.bRoundChambered = true;
 		}
-		PSG1 D 3;
-		PSG1 C 3 A_StartSound("biom/shotgunpump/forward", CHAN_AUTO);
+		PSG1 D 7 offset(0 + 5, 32 + 9);
+		PSG1 C 3 offset(0 + 3, 32 + 5) A_StartSound("biom/shotgunpump/forward", CHAN_AUTO);
 		PSGA A 1;
 		PSGA A 1 A_ReFire();
 		PSGA A 1
@@ -116,7 +114,6 @@ class biom_PumpShotgun : biom_Weapon
 		goto Ready.Main;
 	Reload:
 		TNT1 A 0 A_biom_CheckReload;
-		// Baseline time for start + 1 shell + finish: 29 tics.
 		TNT1 A 0 A_StartSound("biom/pumpshotgun/switch", CHAN_AUTO);
 		PSGR AB 3;
 		goto Reload.Repeat;
@@ -148,6 +145,16 @@ class biom_PumpShotgun : biom_Weapon
 		}
 		stop; // Unreachable
 	}
+
+	/*
+
+	Baseline timing stats (tics):
+	- Vanilla Shotgun: 44
+	- Fire: 5
+	- Pump: 17
+	- Reload (1 shell): 29
+
+	*/
 
 	override void PostBeginPlay()
 	{
