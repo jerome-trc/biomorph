@@ -121,6 +121,11 @@ class biom_Grenade40mm : Grenade
 		+THRUGHOST
 		+USEBOUNCESTATE
 
+		// These get enabled dynamically.
+		-BOUNCEONCEILINGS
+		-BOUNCEONFLOORS
+		-BOUNCEONWALLS
+
 		BounceCount 2;
 		BounceFactor 0.25;
 		WallBounceFactor 0.5;

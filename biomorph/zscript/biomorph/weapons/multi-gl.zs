@@ -38,12 +38,19 @@ class biom_MultiGL : biom_Weapon
 		MGLA A 1 A_WeaponReady;
 		loop;
 	Fire:
+	AltFire:
 		TNT1 A 0 A_biom_CheckAmmo;
-		// Baseline time: 20 tics.
-		// Vanilla Rocket Launcher firing time: 20 tics.
 		MGL1 A 3 offset(0 + 7, 32 + 7)
 		{
-			SpawnPlayerMissile('biom_Grenade40mm');
+			let proj = SpawnPlayerMissile('biom_Grenade40mm');
+
+			if (proj != null && invoker.bAltFire)
+			{
+				proj.bBounceOnCeilings = true;
+				proj.bBounceOnFloors = true;
+				proj.bBounceOnWalls = true;
+			}
+
 			invoker.DepleteAmmo(false, false);
 			A_AlertMonsters();
 			A_StartSound("biom/multigl/fire", CHAN_WEAPON);
@@ -62,6 +69,19 @@ class biom_MultiGL : biom_Weapon
 		#### # 1 offset(0, 32 + 1);
 		goto Ready.Main;
 	}
+
+	protected action void A_biom_MultiGLFire()
+	{
+
+	}
+
+	/*
+
+	Baseline timing stats (tics):
+	- Vanilla Rocket Launcher: 20
+	- Fire: 20
+
+	*/
 }
 
 class biom_wdat_MultiGL : biom_WeaponData
