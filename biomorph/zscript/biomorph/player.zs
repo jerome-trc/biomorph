@@ -66,7 +66,7 @@ class biom_Player : DoomPlayer
 			// Bump up the player's speed to compensate for the deceleration
 			// TODO (NASH): math here is shit and wrong, please fix
 			double s = 1.0 + (1.0 - DECEL_MULT);
-			self.speed = s * 2.2;
+			self.speed = s * 2.4;
 
 			// Decelerate the player, if not in pain
 			self.vel.X *= DECEL_MULT;
@@ -75,6 +75,7 @@ class biom_Player : DoomPlayer
 			// Make the view bobbing match the player's movement
 			self.viewBob = DECEL_MULT;
 		}
+
 
 		if (!self.player.onGround || self.vel.Length() < 0.1)
 			return;
