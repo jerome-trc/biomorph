@@ -21,6 +21,7 @@
 	biom/pawn/land BIOMLAND
 	$playeralias biomorph other *usefail biom/pawn/usefail
 	biom/pawn/usefail BIOMFAIL
+	$playeralias biomorph other *grunt biom/pawn/usefail
 
 	$playeralias biomorph other *pain25 biom/pawn/pain/25
 	$playeralias biomorph other *pain50 biom/pawn/pain/50
