@@ -52,10 +52,12 @@ class biom_GPMG : biom_Weapon
 		GMGA A 1 offset(0 + 3, 32 + 3);
 		GMGA A 1 offset(0 + 2, 32 + 2);
 		GMGA A 1 offset(0 + 1, 32 + 1);
+		TNT1 A 0 A_ReFire;
 		goto Ready.Main;
 	Fire.Turbo:
 		GMGA A 1 offset(0 + 5, 32 + 5) A_biom_GPMGFire;
 		GMGA A 1 offset(0 + 3, 32 + 3);
+		TNT1 A 0 A_ReFire;
 		goto Ready.Main;
 	Dryfire:
 		GMGA A 1 offset(0, 32 + 1);
@@ -80,7 +82,12 @@ class biom_GPMG : biom_Weapon
 
 	protected action void A_biom_GPMGFire()
 	{
-		A_FireBullets(3.0, 3.0, -1, RandomPick(18, 19), 'biom_Bullet', FBF_NORANDOM);
+		float spread = 3.0;
+
+		if (invoker.owner.player.refire >= 4)
+			spread = 1.0;
+
+		A_FireBullets(spread, spread, -1, RandomPick(18, 19), 'biom_Bullet', FBF_NORANDOM);
 		invoker.DepleteAmmo(false, false);
 		A_AlertMonsters();
 		A_StartSound("biom/gpmg/fire", CHAN_AUTO);
