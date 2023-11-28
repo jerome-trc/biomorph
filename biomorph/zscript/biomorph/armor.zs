@@ -59,20 +59,21 @@ mixin class biom_Armor
 {
 	final override bool Use(bool pickup)
 	{
-		let bonusBased = false;
+		let max100 = false;
 		let armor = BasicArmor(self.owner.FindInventory('BasicArmor'));
 		let spct = Clamp(self.savePercent, 0.0, 100.0) / 100.0;
 		int defSaveAmount = 0;
-		class<BasicArmorPickup> armor_t = armor.armorType;
+		class<BasicArmorPickup> barmor_t = armor.armorType;
+		class<Armor> armor_t = armor.armorType;
 
-		if (armor_t != null)
+		if (barmor_t != null)
 		{
 			let defs = GetDefaultByType((class<BasicArmorPickup>)(armor.armorType));
 			defSaveAmount = defs.saveAmount;
 		}
-		else if ((class<Armor>)(armor.armorType) is 'BasicArmorBonus')
+		else if (armor_t is 'BasicArmorBonus' || armor_t is 'biom_LightArmor')
 		{
-			bonusBased = true;
+			max100 = true;
 			defSaveAmount = 100;
 		}
 
@@ -80,7 +81,7 @@ mixin class biom_Armor
 		{
 			let missing = armor.maxAmount - armor.amount;
 
-			if (self is 'biom_LightArmor' && bonusBased)
+			if (self is 'biom_LightArmor' && max100)
 				missing -= 100;
 
 			if (missing <= 0)
@@ -126,7 +127,7 @@ mixin class biom_Armor
 			}
 
 			armor.savePercent = spct;
-			armor.amount = self.saveAmount + armor.BonusCount;
+			armor.amount = self.saveAmount + armor.bonusCount;
 			armor.maxAmount = self.saveAmount;
 			armor.icon = self.icon;
 			armor.maxAbsorb = self.maxAbsorb;
