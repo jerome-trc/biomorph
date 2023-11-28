@@ -232,7 +232,10 @@ class biom_StatusBar : BaseStatusBar
 			int yOffs = self.notifyLineCount.GetInt() * 16;
 			let powup = Powerup(i);
 
-			if (powup == null || !powup.Icon || powup is 'PowerStrength')
+			if (powup == null ||
+				powup.icon.IsNull() ||
+				!powup.icon.Exists() ||
+				!powup.icon.IsValid())
 				continue;
 
 			self.DrawInventoryIcon(powup, (20, yOffs + yPos));
