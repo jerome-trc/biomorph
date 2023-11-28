@@ -122,6 +122,8 @@ class biom_Grenade40mm : Grenade
 		+USEBOUNCESTATE
 
 		// These get enabled dynamically.
+		-ALLOWBOUNCEONACTORS
+		-BOUNCEONACTORS
 		-BOUNCEONCEILINGS
 		-BOUNCEONFLOORS
 		-BOUNCEONWALLS

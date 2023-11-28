@@ -46,6 +46,8 @@ class biom_MultiGL : biom_Weapon
 
 			if (proj != null && invoker.bAltFire)
 			{
+				proj.bAllowBounceOnActors = true;
+				proj.bBounceOnActors = true;
 				proj.bBounceOnCeilings = true;
 				proj.bBounceOnFloors = true;
 				proj.bBounceOnWalls = true;
@@ -68,11 +70,6 @@ class biom_MultiGL : biom_Weapon
 		#### # 1 offset(0, 32 + 2);
 		#### # 1 offset(0, 32 + 1);
 		goto Ready.Main;
-	}
-
-	protected action void A_biom_MultiGLFire()
-	{
-
 	}
 
 	/*
