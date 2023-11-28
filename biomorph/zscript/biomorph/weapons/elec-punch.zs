@@ -1,7 +1,7 @@
 /// An unarmed, magical punch which comes out quickly, has a relatively slow post-fire
 /// recovery period, and applies a 3-second stun to non-boss enemies.
 /// Abbreviation: `EPN`
-class biom_ElecPunch : biom_Weapon
+class biom_ElecPunch : biom_MeleeWeapon
 {
 	Default
 	{
@@ -110,6 +110,11 @@ class biom_ElecPunch : biom_Weapon
 		}
 		EPN1 DCBA 3;
 		goto Ready.Main;
+	}
+
+	override int, int UnarmedDamageBonus() const
+	{
+		return 18, 4;
 	}
 }
 

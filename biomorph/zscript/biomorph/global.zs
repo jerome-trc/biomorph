@@ -409,8 +409,9 @@ class biom_PlayerData
 	int balanceMod;
 	/// What weapons will this player currently receive if they collect a weapon
 	/// pickup? No element will ever be `null`.
-	array<class <biom_Weapon> > weapons;
+	array<class<biom_Weapon> > weapons;
 	/// Each subclass of `biom_WeaponData` appears in this array exactly once.
+	/// No element will ever be `null`.
 	array<biom_WeaponData> weaponData;
 	biom_PendingAlterants pendingAlterants;
 	/// It is impossible to buffer multiple batches of alterants, since a player's
@@ -425,7 +426,6 @@ class biom_PlayerData
 		ret.pInfo = pInfo;
 
 		ret.weapons.Push((class<biom_Weapon>)('biom_Unarmed'));
-		// TODO: What should the starting Chainsaw replacement be?
 		ret.weapons.Push((class<biom_Weapon>)('biom_ElecPunch'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_ServicePistol'));
 		ret.weapons.Push((class<biom_Weapon>)('biom_PumpShotgun'));

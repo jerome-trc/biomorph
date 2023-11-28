@@ -284,6 +284,20 @@ class biom_Weapon : DoomWeapon abstract
 	}
 }
 
+class biom_MeleeWeapon : biom_Weapon abstract
+{
+	/// The first return value is a damage bonus granted to unarmed attacks if the
+	/// user is not in possession of berserk; the second return value is granted
+	/// if the user is in possession of berserk.
+	/// The effect is additive - if the player is in possession of multiple melee
+	/// weapons, all bonuses get applied - and takes effect *before* berserk
+	/// quadruples the base damage emitted by the PRNG.
+	virtual int, int UnarmedDamageBonus() const
+	{
+		return 0, 0;
+	}
+}
+
 /// Corresponds loosely to the weapon's slot number but accounts for the
 /// difference between shotgun counterparts and super shotgun counterparts,
 /// both of which occupy slot number 3.

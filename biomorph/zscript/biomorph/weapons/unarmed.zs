@@ -1,5 +1,5 @@
 /// Abbreviation: `H2H`
-class biom_Unarmed : biom_Weapon
+class biom_Unarmed : biom_MeleeWeapon
 {
 	flagdef rightHand: DynFlags, 31;
 
@@ -76,10 +76,34 @@ class biom_Unarmed : biom_Weapon
 	/// Returns the actor hit by the attack (may be null).
 	protected action Actor A_biom_UnarmedHitscan()
 	{
+		bool berserk = false;
 		int damage = Random(20, 22);
+		int berserkBonus = 0, noBerserkBonus = 0;
 
-		if (self.FindInventory('PowerStrength') != null)
+		for (let i = invoker.owner.inv; i != null; i = i.inv)
+		{
+			if (i is 'PowerStrength')
+			{
+				berserk = true;
+			}
+			else if (i is 'biom_MeleeWeapon')
+			{
+				int noBerserk = 0, yesBerserk = 0;
+				[noBerserk, yesBerserk] = biom_MeleeWeapon(i).UnarmedDamageBonus();
+				berserkBonus += yesBerserk;
+				noBerserkBOnus += noBerserk;
+			}
+		}
+
+		if (berserk)
+		{
+			damage += berserkBonus;
 			damage *= 4;
+		}
+		else
+		{
+			damage += noBerserkBonus;
+		}
 
 		double ang = self.angle + Random2[Punch]() * (5.625 / 256);
 		double range = 64 + MELEEDELTA;
