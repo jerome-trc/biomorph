@@ -67,7 +67,7 @@ class biom_Megasphere : Inventory replaces Megasphere
 	States
 	{
 	Spawn:
-		MKIT ABCD 6 bright;
+		MKIT ABCD 6 bright light("biom_Megasphere");
 		loop;
 	}
 
@@ -127,7 +127,7 @@ class biom_ExtraMegasphereHealth : biom_SuperHealth
 	States
 	{
 	Spawn:
-		SOUL ABCDCB 6 bright;
+		SOUL ABCDCB 6 bright light("biom_SuperHealth");
 		loop;
 	}
 
@@ -162,7 +162,7 @@ class biom_Invuln : InvulnerabilitySphere replaces InvulnerabilitySphere
 	States
 	{
 	Spawn:
-		STYX ABCD 6 bright;
+		STYX ABCD 6 bright light("biom_Inulvn");
 		loop;
 	}
 }

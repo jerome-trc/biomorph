@@ -151,7 +151,7 @@ class biom_SuperHealth : Soulsphere replaces Soulsphere
 	States
 	{
 	Spawn:
-		PANA ABCD 6 bright;
+		PANA ABCD 6 bright light("biom_SuperHealth");
 		loop;
 	}
 }
