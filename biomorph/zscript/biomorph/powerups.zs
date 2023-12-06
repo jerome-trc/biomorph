@@ -156,7 +156,7 @@ class biom_Invuln : InvulnerabilitySphere replaces InvulnerabilitySphere
 		super.BeginPlay();
 
 		if (biom_Utils.Eviternity())
-			BlendColor = Color(0, 182, 0, 3);
+			self.blendColor = Color(0, 182, 0, 3);
 	}
 
 	States
