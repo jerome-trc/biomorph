@@ -57,9 +57,9 @@ class biom_Static : StaticEventHandler
 			}
 
 			self.replacements.Insert("ValiantPistol", "biom_wpk_Slot2");
-			self.replacements.Insert("ValiantShotgun", "biom_wpks_Shotgun");
-			self.replacements.Insert("ValiantChaingun", "biom_wpks_Chaingun");
-			self.replacements.Insert("ValiantSSG", "biom_wpks_SuperShotgun");
+			self.replacements.Insert("ValiantShotgun", "biom_wpk_Slot3");
+			self.replacements.Insert("ValiantSSG", "biom_wpk_Slot3Super");
+			self.replacements.Insert("ValiantChaingun", "biom_wpk_Slot4");
 		}
 	}
 
