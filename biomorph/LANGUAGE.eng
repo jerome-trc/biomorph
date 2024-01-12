@@ -303,16 +303,37 @@
 
 	BIOM_KB_PLAYERMENU = "Player Menu";
 
-// Quit messages ///////////////////////////////////////////////////////////////
+// Quit messages, hints ////////////////////////////////////////////////////////
 
 	BIOM_QUITMSG_ARMORREPAIR=
 		"\c[White]Picking up \c[Green]light armor "
 		"\c[White]while wearing \c[Green]heavy armor "
 		"\c[White]will repair the latter regardless of how much of it remains.";
+
+// Quit messages, flavour //////////////////////////////////////////////////////
+
+	BIOM_QUITMSG_ALLMEANSNOENDS =
+		"\c[Purple]Never allow yourself to become all means with no ends.\c-";
+	BIOM_QUITMSG_BURDEN =
+		"\c[Purple]May we be equal to the burden.\c-";
 	BIOM_QUITMSG_COWMAP =
 		"\c[Purple]There is no secret cow map.\c-";
+	BIOM_QUITMSG_COWPOWERS =
+		"\c[Purple]This mod has no super cow powers.\c-";
+	BIOM_QUITMSG_DESTINY =
+		"\c[Purple]I know who you are. You are destiny.\c-";
 	BIOM_QUITMSG_DRONES =
 		"\c[Purple]Please don't go. The nanites need you. They look up to you.\c-";
+	BIOM_QUITMSG_HAPPINESS =
+		"\c[Purple]May nothing but happiness come through your door.\c-";
+	BIOM_QUITMSG_OUGHTTOCRAWL =
+		"\c[Purple]Things have learned to walk that ought to crawl.\c-";
+	BIOM_QUITMSG_HELL =
+		"\c[Purple]Perhaps this is hell.\c-";
+	BIOM_QUITMSG_SIXBILLION =
+		"\c[Purple]Kill six billion demons.\c-";
+	BIOM_QUITMSG_SLEEP =
+		"\c[Purple]Sleep is good.\c-";
 
 // Miscellaneous ///////////////////////////////////////////////////////////////
 
